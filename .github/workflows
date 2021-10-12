@@ -1,0 +1,20 @@
+name: Checking Clean Build
+on: [push]
+      
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Download
+        run: wget https://github.com/OSS-SSH/linux/archive/${GITHUB_SHA}.zip
+            
+      - name: Unzip
+        run: unzip -qq ${GITHUB_SHA}.zip
+        
+      - name: Build
+        run: ./install-deps.sh
+             ./build-linux.sh ${GITHUB_SHA}
