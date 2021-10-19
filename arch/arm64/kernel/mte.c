@@ -32,16 +32,22 @@ DEFINE_STATIC_KEY_FALSE(mte_async_mode);
 EXPORT_SYMBOL_GPL(mte_async_mode);
 #endif
 
+<<<<<<< HEAD
 static void mte_sync_page_tags(struct page *page, pte_t *ptep, bool check_swap)
+=======
+static void mte_sync_page_tags(struct page *page, pte_t old_pte,
+			       bool check_swap, bool pte_is_tagged)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
-	pte_t old_pte = READ_ONCE(*ptep);
-
 	if (check_swap && is_swap_pte(old_pte)) {
 		swp_entry_t entry = pte_to_swp_entry(old_pte);
 
 		if (!non_swap_entry(entry) && mte_restore_tags(entry, page))
 			return;
 	}
+
+	if (!pte_is_tagged)
+		return;
 
 	page_kasan_tag_reset(page);
 	/*
@@ -55,16 +61,22 @@ static void mte_sync_page_tags(struct page *page, pte_t *ptep, bool check_swap)
 	mte_clear_page_tags(page_address(page));
 }
 
-void mte_sync_tags(pte_t *ptep, pte_t pte)
+void mte_sync_tags(pte_t old_pte, pte_t pte)
 {
 	struct page *page = pte_page(pte);
 	long i, nr_pages = compound_nr(page);
 	bool check_swap = nr_pages == 1;
+	bool pte_is_tagged = pte_tagged(pte);
+
+	/* Early out if there's nothing to do */
+	if (!check_swap && !pte_is_tagged)
+		return;
 
 	/* if PG_mte_tagged is set, tags have already been initialised */
 	for (i = 0; i < nr_pages; i++, page++) {
 		if (!test_and_set_bit(PG_mte_tagged, &page->flags))
-			mte_sync_page_tags(page, ptep, check_swap);
+			mte_sync_page_tags(page, old_pte, check_swap,
+					   pte_is_tagged);
 	}
 }
 
@@ -120,6 +132,7 @@ static inline void __mte_enable_kernel(const char *mode, unsigned long tcf)
 	isb();
 
 	pr_info_once("MTE: enabled in %s mode at EL1\n", mode);
+<<<<<<< HEAD
 }
 
 #ifdef CONFIG_KASAN_HW_TAGS
@@ -135,6 +148,23 @@ void mte_enable_kernel_sync(void)
 	__mte_enable_kernel("synchronous", SCTLR_ELx_TCF_SYNC);
 }
 
+=======
+}
+
+#ifdef CONFIG_KASAN_HW_TAGS
+void mte_enable_kernel_sync(void)
+{
+	/*
+	 * Make sure we enter this function when no PE has set
+	 * async mode previously.
+	 */
+	WARN_ONCE(system_uses_mte_async_mode(),
+			"MTE async mode enabled system wide!");
+
+	__mte_enable_kernel("synchronous", SCTLR_ELx_TCF_SYNC);
+}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 void mte_enable_kernel_async(void)
 {
 	__mte_enable_kernel("asynchronous", SCTLR_ELx_TCF_ASYNC);

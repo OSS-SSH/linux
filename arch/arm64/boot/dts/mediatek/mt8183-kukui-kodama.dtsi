@@ -62,11 +62,19 @@
 	pinctrl-0 = <&i2c2_pins>;
 	status = "okay";
 	clock-frequency = <400000>;
+<<<<<<< HEAD
+=======
+	vbus-supply = <&mt6358_vcamio_reg>;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	eeprom@58 {
 		compatible = "atmel,24c64";
 		reg = <0x58>;
 		pagesize = <32>;
+<<<<<<< HEAD
+=======
+		vcc-supply = <&mt6358_vcamio_reg>;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	};
 };
 
@@ -75,11 +83,19 @@
 	pinctrl-0 = <&i2c4_pins>;
 	status = "okay";
 	clock-frequency = <400000>;
+<<<<<<< HEAD
+=======
+	vbus-supply = <&mt6358_vcn18_reg>;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	eeprom@54 {
 		compatible = "atmel,24c64";
 		reg = <0x54>;
 		pagesize = <32>;
+<<<<<<< HEAD
+=======
+		vcc-supply = <&mt6358_vcn18_reg>;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	};
 };
 

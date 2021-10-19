@@ -102,7 +102,12 @@
 
 #define INTEL_FAM6_TIGERLAKE_L		0x8C	/* Willow Cove */
 #define INTEL_FAM6_TIGERLAKE		0x8D	/* Willow Cove */
+<<<<<<< HEAD
 #define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Willow Cove */
+=======
+
+#define INTEL_FAM6_SAPPHIRERAPIDS_X	0x8F	/* Golden Cove */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #define INTEL_FAM6_ALDERLAKE		0x97	/* Golden Cove / Gracemont */
 #define INTEL_FAM6_ALDERLAKE_L		0x9A	/* Golden Cove / Gracemont */

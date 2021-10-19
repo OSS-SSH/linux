@@ -146,7 +146,10 @@ Legacy
 
 	irq_domain_add_simple()
 	irq_domain_add_legacy()
+<<<<<<< HEAD
 	irq_domain_add_legacy_isa()
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	irq_domain_create_simple()
 	irq_domain_create_legacy()
 

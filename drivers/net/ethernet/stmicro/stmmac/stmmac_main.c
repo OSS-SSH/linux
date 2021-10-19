@@ -931,6 +931,11 @@ static void stmmac_validate(struct phylink_config *config,
 	if ((max_speed > 0) && (max_speed < 1000)) {
 		phylink_set(mask, 1000baseT_Full);
 		phylink_set(mask, 1000baseX_Full);
+	} else if (priv->plat->has_gmac4) {
+		if (!max_speed || max_speed >= 2500) {
+			phylink_set(mac_supported, 2500baseT_Full);
+			phylink_set(mac_supported, 2500baseX_Full);
+		}
 	} else if (priv->plat->has_xgmac) {
 		if (!max_speed || (max_speed >= 2500)) {
 			phylink_set(mac_supported, 2500baseT_Full);
@@ -996,29 +1001,29 @@ static void stmmac_validate(struct phylink_config *config,
 	linkmode_andnot(state->advertising, state->advertising, mask);
 
 	/* If PCS is supported, check which modes it supports. */
-	stmmac_xpcs_validate(priv, &priv->hw->xpcs_args, supported, state);
-}
-
-static void stmmac_mac_pcs_get_state(struct phylink_config *config,
-				     struct phylink_link_state *state)
-{
-	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
-
-	state->link = 0;
-	stmmac_xpcs_get_state(priv, &priv->hw->xpcs_args, state);
+	if (priv->hw->xpcs)
+		xpcs_validate(priv->hw->xpcs, supported, state);
 }
 
 static void stmmac_mac_config(struct phylink_config *config, unsigned int mode,
 			      const struct phylink_link_state *state)
 {
-	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
-
-	stmmac_xpcs_config(priv, &priv->hw->xpcs_args, state);
+	/* Nothing to do, xpcs_config() handles everything */
 }
 
-static void stmmac_mac_an_restart(struct phylink_config *config)
+static void stmmac_fpe_link_state_handle(struct stmmac_priv *priv, bool is_up)
 {
-	/* Not Supported */
+	struct stmmac_fpe_cfg *fpe_cfg = priv->plat->fpe_cfg;
+	enum stmmac_fpe_state *lo_state = &fpe_cfg->lo_fpe_state;
+	enum stmmac_fpe_state *lp_state = &fpe_cfg->lp_fpe_state;
+	bool *hs_enable = &fpe_cfg->hs_enable;
+
+	if (is_up && *hs_enable) {
+		stmmac_fpe_send_mpacket(priv, priv->ioaddr, MPACKET_VERIFY);
+	} else {
+		*lo_state = FPE_STATE_OFF;
+		*lp_state = FPE_STATE_OFF;
+	}
 }
 
 static void stmmac_fpe_link_state_handle(struct stmmac_priv *priv, bool is_up)
@@ -1059,8 +1064,6 @@ static void stmmac_mac_link_up(struct phylink_config *config,
 {
 	struct stmmac_priv *priv = netdev_priv(to_net_dev(config->dev));
 	u32 ctrl;
-
-	stmmac_xpcs_link_up(priv, &priv->hw->xpcs_args, speed, interface);
 
 	ctrl = readl(priv->ioaddr + MAC_CTRL_REG);
 	ctrl &= ~priv->hw->link.speed_mask;
@@ -1154,9 +1157,7 @@ static void stmmac_mac_link_up(struct phylink_config *config,
 
 static const struct phylink_mac_ops stmmac_phylink_mac_ops = {
 	.validate = stmmac_validate,
-	.mac_pcs_get_state = stmmac_mac_pcs_get_state,
 	.mac_config = stmmac_mac_config,
-	.mac_an_restart = stmmac_mac_an_restart,
 	.mac_link_down = stmmac_mac_link_down,
 	.mac_link_up = stmmac_mac_link_up,
 };
@@ -1196,7 +1197,6 @@ static void stmmac_check_pcs_mode(struct stmmac_priv *priv)
  */
 static int stmmac_init_phy(struct net_device *dev)
 {
-	struct ethtool_wolinfo wol = { .cmd = ETHTOOL_GWOL };
 	struct stmmac_priv *priv = netdev_priv(dev);
 	struct device_node *node;
 	int ret;
@@ -1222,14 +1222,19 @@ static int stmmac_init_phy(struct net_device *dev)
 		ret = phylink_connect_phy(priv->phylink, phydev);
 	}
 
-	phylink_ethtool_get_wol(priv->phylink, &wol);
-	device_set_wakeup_capable(priv->device, !!wol.supported);
+	if (!priv->plat->pmt) {
+		struct ethtool_wolinfo wol = { .cmd = ETHTOOL_GWOL };
+
+		phylink_ethtool_get_wol(priv->phylink, &wol);
+		device_set_wakeup_capable(priv->device, !!wol.supported);
+	}
 
 	return ret;
 }
 
 static int stmmac_phy_setup(struct stmmac_priv *priv)
 {
+	struct stmmac_mdio_bus_data *mdio_bus_data = priv->plat->mdio_bus_data;
 	struct fwnode_handle *fwnode = of_fwnode_handle(priv->plat->phylink_node);
 	int mode = priv->plat->phy_interface;
 	struct phylink *phylink;
@@ -1237,8 +1242,14 @@ static int stmmac_phy_setup(struct stmmac_priv *priv)
 	priv->phylink_config.dev = &priv->dev->dev;
 	priv->phylink_config.type = PHYLINK_NETDEV;
 	priv->phylink_config.pcs_poll = true;
+<<<<<<< HEAD
 	priv->phylink_config.ovr_an_inband =
 		priv->plat->mdio_bus_data->xpcs_an_inband;
+=======
+	if (priv->plat->mdio_bus_data)
+		priv->phylink_config.ovr_an_inband =
+			mdio_bus_data->xpcs_an_inband;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (!fwnode)
 		fwnode = dev_fwnode(priv->device);
@@ -1247,6 +1258,9 @@ static int stmmac_phy_setup(struct stmmac_priv *priv)
 				 mode, &stmmac_phylink_mac_ops);
 	if (IS_ERR(phylink))
 		return PTR_ERR(phylink);
+
+	if (priv->hw->xpcs)
+		phylink_set_pcs(phylink, &priv->hw->xpcs->pcs);
 
 	priv->phylink = phylink;
 	return 0;
@@ -3169,7 +3183,8 @@ static void stmmac_safety_feat_configuration(struct stmmac_priv *priv)
 {
 	if (priv->dma_cap.asp) {
 		netdev_info(priv->dev, "Enabling Safety Features\n");
-		stmmac_safety_feat_config(priv, priv->ioaddr, priv->dma_cap.asp);
+		stmmac_safety_feat_config(priv, priv->ioaddr, priv->dma_cap.asp,
+					  priv->plat->safety_feat_cfg);
 	} else {
 		netdev_info(priv->dev, "No Safety Features support found\n");
 	}
@@ -3286,11 +3301,19 @@ static int stmmac_hw_setup(struct net_device *dev, bool init_ptp)
 
 	if (priv->use_riwt) {
 		u32 queue;
+<<<<<<< HEAD
 
 		for (queue = 0; queue < rx_cnt; queue++) {
 			if (!priv->rx_riwt[queue])
 				priv->rx_riwt[queue] = DEF_DMA_RIWT;
 
+=======
+
+		for (queue = 0; queue < rx_cnt; queue++) {
+			if (!priv->rx_riwt[queue])
+				priv->rx_riwt[queue] = DEF_DMA_RIWT;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			stmmac_rx_watchdog(priv, priv->ioaddr,
 					   priv->rx_riwt[queue], queue);
 		}
@@ -3382,6 +3405,282 @@ static void stmmac_free_irq(struct net_device *dev,
 				irq_set_affinity_hint(priv->rx_irq[j], NULL);
 				free_irq(priv->rx_irq[j], &priv->rx_queue[j]);
 			}
+<<<<<<< HEAD
+=======
+		}
+
+		if (priv->sfty_ue_irq > 0 && priv->sfty_ue_irq != dev->irq)
+			free_irq(priv->sfty_ue_irq, dev);
+		fallthrough;
+	case REQ_IRQ_ERR_SFTY_UE:
+		if (priv->sfty_ce_irq > 0 && priv->sfty_ce_irq != dev->irq)
+			free_irq(priv->sfty_ce_irq, dev);
+		fallthrough;
+	case REQ_IRQ_ERR_SFTY_CE:
+		if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq)
+			free_irq(priv->lpi_irq, dev);
+		fallthrough;
+	case REQ_IRQ_ERR_LPI:
+		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
+			free_irq(priv->wol_irq, dev);
+		fallthrough;
+	case REQ_IRQ_ERR_WOL:
+		free_irq(dev->irq, dev);
+		fallthrough;
+	case REQ_IRQ_ERR_MAC:
+	case REQ_IRQ_ERR_NO:
+		/* If MAC IRQ request error, no more IRQ to free */
+		break;
+	}
+}
+
+static int stmmac_request_irq_multi_msi(struct net_device *dev)
+{
+	struct stmmac_priv *priv = netdev_priv(dev);
+	enum request_irq_err irq_err;
+	cpumask_t cpu_mask;
+	int irq_idx = 0;
+	char *int_name;
+	int ret;
+	int i;
+
+	/* For common interrupt */
+	int_name = priv->int_name_mac;
+	sprintf(int_name, "%s:%s", dev->name, "mac");
+	ret = request_irq(dev->irq, stmmac_mac_interrupt,
+			  0, int_name, dev);
+	if (unlikely(ret < 0)) {
+		netdev_err(priv->dev,
+			   "%s: alloc mac MSI %d (error: %d)\n",
+			   __func__, dev->irq, ret);
+		irq_err = REQ_IRQ_ERR_MAC;
+		goto irq_error;
+	}
+
+	/* Request the Wake IRQ in case of another line
+	 * is used for WoL
+	 */
+	if (priv->wol_irq > 0 && priv->wol_irq != dev->irq) {
+		int_name = priv->int_name_wol;
+		sprintf(int_name, "%s:%s", dev->name, "wol");
+		ret = request_irq(priv->wol_irq,
+				  stmmac_mac_interrupt,
+				  0, int_name, dev);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: alloc wol MSI %d (error: %d)\n",
+				   __func__, priv->wol_irq, ret);
+			irq_err = REQ_IRQ_ERR_WOL;
+			goto irq_error;
+		}
+	}
+
+	/* Request the LPI IRQ in case of another line
+	 * is used for LPI
+	 */
+	if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq) {
+		int_name = priv->int_name_lpi;
+		sprintf(int_name, "%s:%s", dev->name, "lpi");
+		ret = request_irq(priv->lpi_irq,
+				  stmmac_mac_interrupt,
+				  0, int_name, dev);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: alloc lpi MSI %d (error: %d)\n",
+				   __func__, priv->lpi_irq, ret);
+			irq_err = REQ_IRQ_ERR_LPI;
+			goto irq_error;
+		}
+	}
+
+	/* Request the Safety Feature Correctible Error line in
+	 * case of another line is used
+	 */
+	if (priv->sfty_ce_irq > 0 && priv->sfty_ce_irq != dev->irq) {
+		int_name = priv->int_name_sfty_ce;
+		sprintf(int_name, "%s:%s", dev->name, "safety-ce");
+		ret = request_irq(priv->sfty_ce_irq,
+				  stmmac_safety_interrupt,
+				  0, int_name, dev);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: alloc sfty ce MSI %d (error: %d)\n",
+				   __func__, priv->sfty_ce_irq, ret);
+			irq_err = REQ_IRQ_ERR_SFTY_CE;
+			goto irq_error;
+		}
+	}
+
+	/* Request the Safety Feature Uncorrectible Error line in
+	 * case of another line is used
+	 */
+	if (priv->sfty_ue_irq > 0 && priv->sfty_ue_irq != dev->irq) {
+		int_name = priv->int_name_sfty_ue;
+		sprintf(int_name, "%s:%s", dev->name, "safety-ue");
+		ret = request_irq(priv->sfty_ue_irq,
+				  stmmac_safety_interrupt,
+				  0, int_name, dev);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: alloc sfty ue MSI %d (error: %d)\n",
+				   __func__, priv->sfty_ue_irq, ret);
+			irq_err = REQ_IRQ_ERR_SFTY_UE;
+			goto irq_error;
+		}
+	}
+
+	/* Request Rx MSI irq */
+	for (i = 0; i < priv->plat->rx_queues_to_use; i++) {
+		if (priv->rx_irq[i] == 0)
+			continue;
+
+		int_name = priv->int_name_rx_irq[i];
+		sprintf(int_name, "%s:%s-%d", dev->name, "rx", i);
+		ret = request_irq(priv->rx_irq[i],
+				  stmmac_msi_intr_rx,
+				  0, int_name, &priv->rx_queue[i]);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: alloc rx-%d  MSI %d (error: %d)\n",
+				   __func__, i, priv->rx_irq[i], ret);
+			irq_err = REQ_IRQ_ERR_RX;
+			irq_idx = i;
+			goto irq_error;
+		}
+		cpumask_clear(&cpu_mask);
+		cpumask_set_cpu(i % num_online_cpus(), &cpu_mask);
+		irq_set_affinity_hint(priv->rx_irq[i], &cpu_mask);
+	}
+
+	/* Request Tx MSI irq */
+	for (i = 0; i < priv->plat->tx_queues_to_use; i++) {
+		if (priv->tx_irq[i] == 0)
+			continue;
+
+		int_name = priv->int_name_tx_irq[i];
+		sprintf(int_name, "%s:%s-%d", dev->name, "tx", i);
+		ret = request_irq(priv->tx_irq[i],
+				  stmmac_msi_intr_tx,
+				  0, int_name, &priv->tx_queue[i]);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: alloc tx-%d  MSI %d (error: %d)\n",
+				   __func__, i, priv->tx_irq[i], ret);
+			irq_err = REQ_IRQ_ERR_TX;
+			irq_idx = i;
+			goto irq_error;
+		}
+		cpumask_clear(&cpu_mask);
+		cpumask_set_cpu(i % num_online_cpus(), &cpu_mask);
+		irq_set_affinity_hint(priv->tx_irq[i], &cpu_mask);
+	}
+
+	return 0;
+
+irq_error:
+	stmmac_free_irq(dev, irq_err, irq_idx);
+	return ret;
+}
+
+static int stmmac_request_irq_single(struct net_device *dev)
+{
+	struct stmmac_priv *priv = netdev_priv(dev);
+	enum request_irq_err irq_err;
+	int ret;
+
+	ret = request_irq(dev->irq, stmmac_interrupt,
+			  IRQF_SHARED, dev->name, dev);
+	if (unlikely(ret < 0)) {
+		netdev_err(priv->dev,
+			   "%s: ERROR: allocating the IRQ %d (error: %d)\n",
+			   __func__, dev->irq, ret);
+		irq_err = REQ_IRQ_ERR_MAC;
+		goto irq_error;
+	}
+
+	/* Request the Wake IRQ in case of another line
+	 * is used for WoL
+	 */
+	if (priv->wol_irq > 0 && priv->wol_irq != dev->irq) {
+		ret = request_irq(priv->wol_irq, stmmac_interrupt,
+				  IRQF_SHARED, dev->name, dev);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: ERROR: allocating the WoL IRQ %d (%d)\n",
+				   __func__, priv->wol_irq, ret);
+			irq_err = REQ_IRQ_ERR_WOL;
+			goto irq_error;
+		}
+	}
+
+	/* Request the IRQ lines */
+	if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq) {
+		ret = request_irq(priv->lpi_irq, stmmac_interrupt,
+				  IRQF_SHARED, dev->name, dev);
+		if (unlikely(ret < 0)) {
+			netdev_err(priv->dev,
+				   "%s: ERROR: allocating the LPI IRQ %d (%d)\n",
+				   __func__, priv->lpi_irq, ret);
+			irq_err = REQ_IRQ_ERR_LPI;
+			goto irq_error;
+		}
+	}
+
+	return 0;
+
+irq_error:
+	stmmac_free_irq(dev, irq_err, 0);
+	return ret;
+}
+
+static int stmmac_request_irq(struct net_device *dev)
+{
+	struct stmmac_priv *priv = netdev_priv(dev);
+	int ret;
+
+	/* Request the IRQ lines */
+	if (priv->plat->multi_msi_en)
+		ret = stmmac_request_irq_multi_msi(dev);
+	else
+		ret = stmmac_request_irq_single(dev);
+
+	return ret;
+}
+
+/**
+ *  stmmac_open - open entry point of the driver
+ *  @dev : pointer to the device structure.
+ *  Description:
+ *  This function is the open entry point of the driver.
+ *  Return value:
+ *  0 on success and an appropriate (-)ve integer as defined in errno.h
+ *  file on failure.
+ */
+int stmmac_open(struct net_device *dev)
+{
+	struct stmmac_priv *priv = netdev_priv(dev);
+	int mode = priv->plat->phy_interface;
+	int bfsize = 0;
+	u32 chan;
+	int ret;
+
+	ret = pm_runtime_get_sync(priv->device);
+	if (ret < 0) {
+		pm_runtime_put_noidle(priv->device);
+		return ret;
+	}
+
+	if (priv->hw->pcs != STMMAC_PCS_TBI &&
+	    priv->hw->pcs != STMMAC_PCS_RTBI &&
+	    (!priv->hw->xpcs ||
+	     xpcs_get_an_mode(priv->hw->xpcs, mode) != DW_AN_C73)) {
+		ret = stmmac_init_phy(dev);
+		if (ret) {
+			netdev_err(priv->dev,
+				   "%s: Cannot attach to PHY (error: %d)\n",
+				   __func__, ret);
+			goto init_phy_error;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		}
 
 		if (priv->sfty_ue_irq > 0 && priv->sfty_ue_irq != dev->irq)
@@ -4558,12 +4857,519 @@ static int stmmac_xdp_xmit_xdpf(struct stmmac_priv *priv, int queue,
 		tx_desc = &tx_q->dma_entx[entry].basic;
 	else
 		tx_desc = tx_q->dma_tx + entry;
+<<<<<<< HEAD
 
 	if (dma_map) {
 		dma_addr = dma_map_single(priv->device, xdpf->data,
 					  xdpf->len, DMA_TO_DEVICE);
 		if (dma_mapping_error(priv->device, dma_addr))
 			return STMMAC_XDP_CONSUMED;
+=======
+
+	if (dma_map) {
+		dma_addr = dma_map_single(priv->device, xdpf->data,
+					  xdpf->len, DMA_TO_DEVICE);
+		if (dma_mapping_error(priv->device, dma_addr))
+			return STMMAC_XDP_CONSUMED;
+
+		tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_XDP_NDO;
+	} else {
+		struct page *page = virt_to_page(xdpf->data);
+
+		dma_addr = page_pool_get_dma_addr(page) + sizeof(*xdpf) +
+			   xdpf->headroom;
+		dma_sync_single_for_device(priv->device, dma_addr,
+					   xdpf->len, DMA_BIDIRECTIONAL);
+
+		tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_XDP_TX;
+	}
+
+	tx_q->tx_skbuff_dma[entry].buf = dma_addr;
+	tx_q->tx_skbuff_dma[entry].map_as_page = false;
+	tx_q->tx_skbuff_dma[entry].len = xdpf->len;
+	tx_q->tx_skbuff_dma[entry].last_segment = true;
+	tx_q->tx_skbuff_dma[entry].is_jumbo = false;
+
+	tx_q->xdpf[entry] = xdpf;
+
+	stmmac_set_desc_addr(priv, tx_desc, dma_addr);
+
+	stmmac_prepare_tx_desc(priv, tx_desc, 1, xdpf->len,
+			       true, priv->mode, true, true,
+			       xdpf->len);
+
+	tx_q->tx_count_frames++;
+
+	if (tx_q->tx_count_frames % priv->tx_coal_frames[queue] == 0)
+		set_ic = true;
+	else
+		set_ic = false;
+
+	if (set_ic) {
+		tx_q->tx_count_frames = 0;
+		stmmac_set_tx_ic(priv, tx_desc);
+		priv->xstats.tx_set_ic_bit++;
+	}
+
+	stmmac_enable_dma_transmission(priv, priv->ioaddr);
+
+	entry = STMMAC_GET_ENTRY(entry, priv->dma_tx_size);
+	tx_q->cur_tx = entry;
+
+	return STMMAC_XDP_TX;
+}
+
+static int stmmac_xdp_get_tx_queue(struct stmmac_priv *priv,
+				   int cpu)
+{
+	int index = cpu;
+
+	if (unlikely(index < 0))
+		index = 0;
+
+	while (index >= priv->plat->tx_queues_to_use)
+		index -= priv->plat->tx_queues_to_use;
+
+	return index;
+}
+
+static int stmmac_xdp_xmit_back(struct stmmac_priv *priv,
+				struct xdp_buff *xdp)
+{
+	struct xdp_frame *xdpf = xdp_convert_buff_to_frame(xdp);
+	int cpu = smp_processor_id();
+	struct netdev_queue *nq;
+	int queue;
+	int res;
+
+	if (unlikely(!xdpf))
+		return STMMAC_XDP_CONSUMED;
+
+	queue = stmmac_xdp_get_tx_queue(priv, cpu);
+	nq = netdev_get_tx_queue(priv->dev, queue);
+
+	__netif_tx_lock(nq, cpu);
+	/* Avoids TX time-out as we are sharing with slow path */
+	nq->trans_start = jiffies;
+
+	res = stmmac_xdp_xmit_xdpf(priv, queue, xdpf, false);
+	if (res == STMMAC_XDP_TX)
+		stmmac_flush_tx_descriptors(priv, queue);
+
+	__netif_tx_unlock(nq);
+
+	return res;
+}
+
+static int __stmmac_xdp_run_prog(struct stmmac_priv *priv,
+				 struct bpf_prog *prog,
+				 struct xdp_buff *xdp)
+{
+	u32 act;
+	int res;
+
+	act = bpf_prog_run_xdp(prog, xdp);
+	switch (act) {
+	case XDP_PASS:
+		res = STMMAC_XDP_PASS;
+		break;
+	case XDP_TX:
+		res = stmmac_xdp_xmit_back(priv, xdp);
+		break;
+	case XDP_REDIRECT:
+		if (xdp_do_redirect(priv->dev, xdp, prog) < 0)
+			res = STMMAC_XDP_CONSUMED;
+		else
+			res = STMMAC_XDP_REDIRECT;
+		break;
+	default:
+		bpf_warn_invalid_xdp_action(act);
+		fallthrough;
+	case XDP_ABORTED:
+		trace_xdp_exception(priv->dev, prog, act);
+		fallthrough;
+	case XDP_DROP:
+		res = STMMAC_XDP_CONSUMED;
+		break;
+	}
+
+	return res;
+}
+
+static struct sk_buff *stmmac_xdp_run_prog(struct stmmac_priv *priv,
+					   struct xdp_buff *xdp)
+{
+	struct bpf_prog *prog;
+	int res;
+
+	prog = READ_ONCE(priv->xdp_prog);
+	if (!prog) {
+		res = STMMAC_XDP_PASS;
+		goto out;
+	}
+
+	res = __stmmac_xdp_run_prog(priv, prog, xdp);
+out:
+	return ERR_PTR(-res);
+}
+
+static void stmmac_finalize_xdp_rx(struct stmmac_priv *priv,
+				   int xdp_status)
+{
+	int cpu = smp_processor_id();
+	int queue;
+
+	queue = stmmac_xdp_get_tx_queue(priv, cpu);
+
+	if (xdp_status & STMMAC_XDP_TX)
+		stmmac_tx_timer_arm(priv, queue);
+
+	if (xdp_status & STMMAC_XDP_REDIRECT)
+		xdp_do_flush();
+}
+
+static struct sk_buff *stmmac_construct_skb_zc(struct stmmac_channel *ch,
+					       struct xdp_buff *xdp)
+{
+	unsigned int metasize = xdp->data - xdp->data_meta;
+	unsigned int datasize = xdp->data_end - xdp->data;
+	struct sk_buff *skb;
+
+	skb = __napi_alloc_skb(&ch->rxtx_napi,
+			       xdp->data_end - xdp->data_hard_start,
+			       GFP_ATOMIC | __GFP_NOWARN);
+	if (unlikely(!skb))
+		return NULL;
+
+	skb_reserve(skb, xdp->data - xdp->data_hard_start);
+	memcpy(__skb_put(skb, datasize), xdp->data, datasize);
+	if (metasize)
+		skb_metadata_set(skb, metasize);
+
+	return skb;
+}
+
+static void stmmac_dispatch_skb_zc(struct stmmac_priv *priv, u32 queue,
+				   struct dma_desc *p, struct dma_desc *np,
+				   struct xdp_buff *xdp)
+{
+	struct stmmac_channel *ch = &priv->channel[queue];
+	unsigned int len = xdp->data_end - xdp->data;
+	enum pkt_hash_types hash_type;
+	int coe = priv->hw->rx_csum;
+	struct sk_buff *skb;
+	u32 hash;
+
+	skb = stmmac_construct_skb_zc(ch, xdp);
+	if (!skb) {
+		priv->dev->stats.rx_dropped++;
+		return;
+	}
+
+	stmmac_get_rx_hwtstamp(priv, p, np, skb);
+	stmmac_rx_vlan(priv->dev, skb);
+	skb->protocol = eth_type_trans(skb, priv->dev);
+
+	if (unlikely(!coe))
+		skb_checksum_none_assert(skb);
+	else
+		skb->ip_summed = CHECKSUM_UNNECESSARY;
+
+	if (!stmmac_get_rx_hash(priv, p, &hash, &hash_type))
+		skb_set_hash(skb, hash, hash_type);
+
+	skb_record_rx_queue(skb, queue);
+	napi_gro_receive(&ch->rxtx_napi, skb);
+
+	priv->dev->stats.rx_packets++;
+	priv->dev->stats.rx_bytes += len;
+}
+
+static bool stmmac_rx_refill_zc(struct stmmac_priv *priv, u32 queue, u32 budget)
+{
+	struct stmmac_rx_queue *rx_q = &priv->rx_queue[queue];
+	unsigned int entry = rx_q->dirty_rx;
+	struct dma_desc *rx_desc = NULL;
+	bool ret = true;
+
+	budget = min(budget, stmmac_rx_dirty(priv, queue));
+
+	while (budget-- > 0 && entry != rx_q->cur_rx) {
+		struct stmmac_rx_buffer *buf = &rx_q->buf_pool[entry];
+		dma_addr_t dma_addr;
+		bool use_rx_wd;
+
+		if (!buf->xdp) {
+			buf->xdp = xsk_buff_alloc(rx_q->xsk_pool);
+			if (!buf->xdp) {
+				ret = false;
+				break;
+			}
+		}
+
+		if (priv->extend_desc)
+			rx_desc = (struct dma_desc *)(rx_q->dma_erx + entry);
+		else
+			rx_desc = rx_q->dma_rx + entry;
+
+		dma_addr = xsk_buff_xdp_get_dma(buf->xdp);
+		stmmac_set_desc_addr(priv, rx_desc, dma_addr);
+		stmmac_set_desc_sec_addr(priv, rx_desc, 0, false);
+		stmmac_refill_desc3(priv, rx_q, rx_desc);
+
+		rx_q->rx_count_frames++;
+		rx_q->rx_count_frames += priv->rx_coal_frames[queue];
+		if (rx_q->rx_count_frames > priv->rx_coal_frames[queue])
+			rx_q->rx_count_frames = 0;
+
+		use_rx_wd = !priv->rx_coal_frames[queue];
+		use_rx_wd |= rx_q->rx_count_frames > 0;
+		if (!priv->use_riwt)
+			use_rx_wd = false;
+
+		dma_wmb();
+		stmmac_set_rx_owner(priv, rx_desc, use_rx_wd);
+
+		entry = STMMAC_GET_ENTRY(entry, priv->dma_rx_size);
+	}
+
+	if (rx_desc) {
+		rx_q->dirty_rx = entry;
+		rx_q->rx_tail_addr = rx_q->dma_rx_phy +
+				     (rx_q->dirty_rx * sizeof(struct dma_desc));
+		stmmac_set_rx_tail_ptr(priv, priv->ioaddr, rx_q->rx_tail_addr, queue);
+	}
+
+	return ret;
+}
+
+static int stmmac_rx_zc(struct stmmac_priv *priv, int limit, u32 queue)
+{
+	struct stmmac_rx_queue *rx_q = &priv->rx_queue[queue];
+	unsigned int count = 0, error = 0, len = 0;
+	int dirty = stmmac_rx_dirty(priv, queue);
+	unsigned int next_entry = rx_q->cur_rx;
+	unsigned int desc_size;
+	struct bpf_prog *prog;
+	bool failure = false;
+	int xdp_status = 0;
+	int status = 0;
+
+	if (netif_msg_rx_status(priv)) {
+		void *rx_head;
+
+		netdev_dbg(priv->dev, "%s: descriptor ring:\n", __func__);
+		if (priv->extend_desc) {
+			rx_head = (void *)rx_q->dma_erx;
+			desc_size = sizeof(struct dma_extended_desc);
+		} else {
+			rx_head = (void *)rx_q->dma_rx;
+			desc_size = sizeof(struct dma_desc);
+		}
+
+		stmmac_display_ring(priv, rx_head, priv->dma_rx_size, true,
+				    rx_q->dma_rx_phy, desc_size);
+	}
+	while (count < limit) {
+		struct stmmac_rx_buffer *buf;
+		unsigned int buf1_len = 0;
+		struct dma_desc *np, *p;
+		int entry;
+		int res;
+
+		if (!count && rx_q->state_saved) {
+			error = rx_q->state.error;
+			len = rx_q->state.len;
+		} else {
+			rx_q->state_saved = false;
+			error = 0;
+			len = 0;
+		}
+
+		if (count >= limit)
+			break;
+
+read_again:
+		buf1_len = 0;
+		entry = next_entry;
+		buf = &rx_q->buf_pool[entry];
+
+		if (dirty >= STMMAC_RX_FILL_BATCH) {
+			failure = failure ||
+				  !stmmac_rx_refill_zc(priv, queue, dirty);
+			dirty = 0;
+		}
+
+		if (priv->extend_desc)
+			p = (struct dma_desc *)(rx_q->dma_erx + entry);
+		else
+			p = rx_q->dma_rx + entry;
+
+		/* read the status of the incoming frame */
+		status = stmmac_rx_status(priv, &priv->dev->stats,
+					  &priv->xstats, p);
+		/* check if managed by the DMA otherwise go ahead */
+		if (unlikely(status & dma_own))
+			break;
+
+		/* Prefetch the next RX descriptor */
+		rx_q->cur_rx = STMMAC_GET_ENTRY(rx_q->cur_rx,
+						priv->dma_rx_size);
+		next_entry = rx_q->cur_rx;
+
+		if (priv->extend_desc)
+			np = (struct dma_desc *)(rx_q->dma_erx + next_entry);
+		else
+			np = rx_q->dma_rx + next_entry;
+
+		prefetch(np);
+
+		if (priv->extend_desc)
+			stmmac_rx_extended_status(priv, &priv->dev->stats,
+						  &priv->xstats,
+						  rx_q->dma_erx + entry);
+		if (unlikely(status == discard_frame)) {
+			xsk_buff_free(buf->xdp);
+			buf->xdp = NULL;
+			dirty++;
+			error = 1;
+			if (!priv->hwts_rx_en)
+				priv->dev->stats.rx_errors++;
+		}
+
+		if (unlikely(error && (status & rx_not_ls)))
+			goto read_again;
+		if (unlikely(error)) {
+			count++;
+			continue;
+		}
+
+		/* Ensure a valid XSK buffer before proceed */
+		if (!buf->xdp)
+			break;
+
+		/* XSK pool expects RX frame 1:1 mapped to XSK buffer */
+		if (likely(status & rx_not_ls)) {
+			xsk_buff_free(buf->xdp);
+			buf->xdp = NULL;
+			dirty++;
+			count++;
+			goto read_again;
+		}
+
+		/* XDP ZC Frame only support primary buffers for now */
+		buf1_len = stmmac_rx_buf1_len(priv, p, status, len);
+		len += buf1_len;
+
+		/* ACS is set; GMAC core strips PAD/FCS for IEEE 802.3
+		 * Type frames (LLC/LLC-SNAP)
+		 *
+		 * llc_snap is never checked in GMAC >= 4, so this ACS
+		 * feature is always disabled and packets need to be
+		 * stripped manually.
+		 */
+		if (likely(!(status & rx_not_ls)) &&
+		    (likely(priv->synopsys_id >= DWMAC_CORE_4_00) ||
+		     unlikely(status != llc_snap))) {
+			buf1_len -= ETH_FCS_LEN;
+			len -= ETH_FCS_LEN;
+		}
+
+		/* RX buffer is good and fit into a XSK pool buffer */
+		buf->xdp->data_end = buf->xdp->data + buf1_len;
+		xsk_buff_dma_sync_for_cpu(buf->xdp, rx_q->xsk_pool);
+
+		prog = READ_ONCE(priv->xdp_prog);
+		res = __stmmac_xdp_run_prog(priv, prog, buf->xdp);
+
+		switch (res) {
+		case STMMAC_XDP_PASS:
+			stmmac_dispatch_skb_zc(priv, queue, p, np, buf->xdp);
+			xsk_buff_free(buf->xdp);
+			break;
+		case STMMAC_XDP_CONSUMED:
+			xsk_buff_free(buf->xdp);
+			priv->dev->stats.rx_dropped++;
+			break;
+		case STMMAC_XDP_TX:
+		case STMMAC_XDP_REDIRECT:
+			xdp_status |= res;
+			break;
+		}
+
+		buf->xdp = NULL;
+		dirty++;
+		count++;
+	}
+
+	if (status & rx_not_ls) {
+		rx_q->state_saved = true;
+		rx_q->state.error = error;
+		rx_q->state.len = len;
+	}
+
+	stmmac_finalize_xdp_rx(priv, xdp_status);
+
+	if (xsk_uses_need_wakeup(rx_q->xsk_pool)) {
+		if (failure || stmmac_rx_dirty(priv, queue) > 0)
+			xsk_set_rx_need_wakeup(rx_q->xsk_pool);
+		else
+			xsk_clear_rx_need_wakeup(rx_q->xsk_pool);
+
+		return (int)count;
+	}
+
+	return failure ? limit : (int)count;
+}
+
+/**
+ * stmmac_rx - manage the receive process
+ * @priv: driver private structure
+ * @limit: napi bugget
+ * @queue: RX queue index.
+ * Description :  this the function called by the napi poll method.
+ * It gets all the frames inside the ring.
+ */
+static int stmmac_rx(struct stmmac_priv *priv, int limit, u32 queue)
+{
+	struct stmmac_rx_queue *rx_q = &priv->rx_queue[queue];
+	struct stmmac_channel *ch = &priv->channel[queue];
+	unsigned int count = 0, error = 0, len = 0;
+	int status = 0, coe = priv->hw->rx_csum;
+	unsigned int next_entry = rx_q->cur_rx;
+	enum dma_data_direction dma_dir;
+	unsigned int desc_size;
+	struct sk_buff *skb = NULL;
+	struct xdp_buff xdp;
+	int xdp_status = 0;
+	int buf_sz;
+
+	dma_dir = page_pool_get_dma_dir(rx_q->page_pool);
+	buf_sz = DIV_ROUND_UP(priv->dma_buf_sz, PAGE_SIZE) * PAGE_SIZE;
+
+	if (netif_msg_rx_status(priv)) {
+		void *rx_head;
+
+		netdev_dbg(priv->dev, "%s: descriptor ring:\n", __func__);
+		if (priv->extend_desc) {
+			rx_head = (void *)rx_q->dma_erx;
+			desc_size = sizeof(struct dma_extended_desc);
+		} else {
+			rx_head = (void *)rx_q->dma_rx;
+			desc_size = sizeof(struct dma_desc);
+		}
+
+		stmmac_display_ring(priv, rx_head, priv->dma_rx_size, true,
+				    rx_q->dma_rx_phy, desc_size);
+	}
+	while (count < limit) {
+		unsigned int buf1_len = 0, buf2_len = 0;
+		enum pkt_hash_types hash_type;
+		struct stmmac_rx_buffer *buf;
+		struct dma_desc *np, *p;
+		int entry;
+		u32 hash;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		tx_q->tx_skbuff_dma[entry].buf_type = STMMAC_TXBUF_T_XDP_NDO;
 	} else {
@@ -5134,7 +5940,7 @@ read_again:
 
 		/* Buffer is good. Go on. */
 
-		prefetch(page_address(buf->page));
+		prefetch(page_address(buf->page) + buf->page_offset);
 		if (buf->sec_page)
 			prefetch(page_address(buf->sec_page));
 
@@ -5167,12 +5973,18 @@ read_again:
 			dma_sync_single_for_cpu(priv->device, buf->addr,
 						buf1_len, dma_dir);
 
+<<<<<<< HEAD
 			xdp.data = page_address(buf->page) + buf->page_offset;
 			xdp.data_end = xdp.data + buf1_len;
 			xdp.data_hard_start = page_address(buf->page);
 			xdp_set_data_meta_invalid(&xdp);
 			xdp.frame_sz = buf_sz;
 			xdp.rxq = &rx_q->xdp_rxq;
+=======
+			xdp_init_buff(&xdp, buf_sz, &rx_q->xdp_rxq);
+			xdp_prepare_buff(&xdp, page_address(buf->page),
+					 buf->page_offset, buf1_len, false);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 			pre_len = xdp.data_end - xdp.data_hard_start -
 				  buf->page_offset;
@@ -5644,6 +6456,7 @@ static irqreturn_t stmmac_interrupt(int irq, void *dev_id)
 	stmmac_dma_interrupt(priv);
 
 	return IRQ_HANDLED;
+<<<<<<< HEAD
 }
 
 static irqreturn_t stmmac_mac_interrupt(int irq, void *dev_id)
@@ -5671,6 +6484,35 @@ static irqreturn_t stmmac_safety_interrupt(int irq, void *dev_id)
 	struct net_device *dev = (struct net_device *)dev_id;
 	struct stmmac_priv *priv = netdev_priv(dev);
 
+=======
+}
+
+static irqreturn_t stmmac_mac_interrupt(int irq, void *dev_id)
+{
+	struct net_device *dev = (struct net_device *)dev_id;
+	struct stmmac_priv *priv = netdev_priv(dev);
+
+	if (unlikely(!dev)) {
+		netdev_err(priv->dev, "%s: invalid dev pointer\n", __func__);
+		return IRQ_NONE;
+	}
+
+	/* Check if adapter is up */
+	if (test_bit(STMMAC_DOWN, &priv->state))
+		return IRQ_HANDLED;
+
+	/* To handle Common interrupts */
+	stmmac_common_interrupt(priv);
+
+	return IRQ_HANDLED;
+}
+
+static irqreturn_t stmmac_safety_interrupt(int irq, void *dev_id)
+{
+	struct net_device *dev = (struct net_device *)dev_id;
+	struct stmmac_priv *priv = netdev_priv(dev);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (unlikely(!dev)) {
 		netdev_err(priv->dev, "%s: invalid dev pointer\n", __func__);
 		return IRQ_NONE;
@@ -5888,11 +6730,20 @@ static int stmmac_set_mac_address(struct net_device *ndev, void *addr)
 	struct stmmac_priv *priv = netdev_priv(ndev);
 	int ret = 0;
 
+	ret = pm_runtime_get_sync(priv->device);
+	if (ret < 0) {
+		pm_runtime_put_noidle(priv->device);
+		return ret;
+	}
+
 	ret = eth_mac_addr(ndev, addr);
 	if (ret)
-		return ret;
+		goto set_mac_error;
 
 	stmmac_set_umac_addr(priv, priv->hw, ndev->dev_addr, 0);
+
+set_mac_error:
+	pm_runtime_put(priv->device);
 
 	return ret;
 }
@@ -6219,6 +7070,12 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
 	bool is_double = false;
 	int ret;
 
+	ret = pm_runtime_get_sync(priv->device);
+	if (ret < 0) {
+		pm_runtime_put_noidle(priv->device);
+		return ret;
+	}
+
 	if (be16_to_cpu(proto) == ETH_P_8021AD)
 		is_double = true;
 
@@ -6532,7 +7389,8 @@ static int stmmac_hw_init(struct stmmac_priv *priv)
 		 * register (if supported).
 		 */
 		priv->plat->enh_desc = priv->dma_cap.enh_desc;
-		priv->plat->pmt = priv->dma_cap.pmt_remote_wake_up;
+		priv->plat->pmt = priv->dma_cap.pmt_remote_wake_up &&
+				!priv->plat->use_phy_wol;
 		priv->hw->pmt = priv->plat->pmt;
 		if (priv->dma_cap.hash_tb_sz) {
 			priv->hw->multicast_filter_bins =
@@ -6841,6 +7699,11 @@ int stmmac_dvr_probe(struct device *device,
 			reset_control_reset(priv->plat->stmmac_rst);
 	}
 
+	ret = reset_control_deassert(priv->plat->stmmac_ahb_rst);
+	if (ret == -ENOTSUPP)
+		dev_err(priv->device, "unable to bring out of ahb reset: %pe\n",
+			ERR_PTR(ret));
+
 	/* Init MAC and get the capabilities */
 	ret = stmmac_hw_init(priv);
 	if (ret)
@@ -6992,6 +7855,15 @@ int stmmac_dvr_probe(struct device *device,
 		}
 	}
 
+	if (priv->plat->speed_mode_2500)
+		priv->plat->speed_mode_2500(ndev, priv->plat->bsp_priv);
+
+	if (priv->plat->mdio_bus_data && priv->plat->mdio_bus_data->has_xpcs) {
+		ret = stmmac_xpcs_setup(priv->mii);
+		if (ret)
+			goto error_xpcs_setup;
+	}
+
 	ret = stmmac_phy_setup(priv);
 	if (ret) {
 		netdev_err(ndev, "failed to setup phy (%d)\n", ret);
@@ -7028,6 +7900,7 @@ error_serdes_powerup:
 	unregister_netdev(ndev);
 error_netdev_register:
 	phylink_destroy(priv->phylink);
+error_xpcs_setup:
 error_phy_setup:
 	if (priv->hw->pcs != STMMAC_PCS_TBI &&
 	    priv->hw->pcs != STMMAC_PCS_RTBI)
@@ -7036,7 +7909,10 @@ error_mdio_register:
 	stmmac_napi_del(ndev);
 error_hw_init:
 	destroy_workqueue(priv->wq);
+<<<<<<< HEAD
 	stmmac_bus_clks_config(priv, false);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	bitmap_free(priv->af_xdp_zc_qps);
 
 	return ret;
@@ -7073,6 +7949,10 @@ int stmmac_dvr_remove(struct device *dev)
 	phylink_destroy(priv->phylink);
 	if (priv->plat->stmmac_rst)
 		reset_control_assert(priv->plat->stmmac_rst);
+<<<<<<< HEAD
+=======
+	reset_control_assert(priv->plat->stmmac_ahb_rst);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	pm_runtime_put(dev);
 	pm_runtime_disable(dev);
 	if (priv->hw->pcs != STMMAC_PCS_TBI &&

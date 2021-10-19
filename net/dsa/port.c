@@ -132,6 +132,7 @@ static int dsa_port_inherit_brport_flags(struct dsa_port *dp,
 
 	for_each_set_bit(flag, &mask, 32) {
 		struct switchdev_brport_flags flags = {0};
+<<<<<<< HEAD
 
 		flags.mask = BIT(flag);
 
@@ -141,6 +142,40 @@ static int dsa_port_inherit_brport_flags(struct dsa_port *dp,
 		err = dsa_port_bridge_flags(dp, flags, extack);
 		if (err && err != -EOPNOTSUPP)
 			return err;
+	}
+
+	return 0;
+}
+
+static void dsa_port_clear_brport_flags(struct dsa_port *dp)
+{
+	const unsigned long val = BR_FLOOD | BR_MCAST_FLOOD | BR_BCAST_FLOOD;
+	const unsigned long mask = BR_LEARNING | BR_FLOOD | BR_MCAST_FLOOD |
+				   BR_BCAST_FLOOD;
+	int flag, err;
+
+	for_each_set_bit(flag, &mask, 32) {
+		struct switchdev_brport_flags flags = {0};
+
+		flags.mask = BIT(flag);
+		flags.val = val & BIT(flag);
+
+		err = dsa_port_bridge_flags(dp, flags, NULL);
+		if (err && err != -EOPNOTSUPP)
+			dev_err(dp->ds->dev,
+				"failed to clear bridge port flag %lu: %pe\n",
+				flags.val, ERR_PTR(err));
+=======
+
+		flags.mask = BIT(flag);
+
+		if (br_port_flag_is_set(brport_dev, BIT(flag)))
+			flags.val = BIT(flag);
+
+		err = dsa_port_bridge_flags(dp, flags, extack);
+		if (err && err != -EOPNOTSUPP)
+			return err;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	return 0;
@@ -194,6 +229,58 @@ static int dsa_port_switchdev_sync(struct dsa_port *dp,
 	if (err && err != -EOPNOTSUPP)
 		return err;
 
+	err = br_mdb_replay(br, brport_dev, dp, true,
+			    &dsa_slave_switchdev_blocking_notifier, extack);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	/* Forwarding and termination FDB entries on the port */
+	err = br_fdb_replay(br, brport_dev, dp, true,
+			    &dsa_slave_switchdev_notifier);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	/* Termination FDB entries on the bridge itself */
+	err = br_fdb_replay(br, br, dp, true, &dsa_slave_switchdev_notifier);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	err = br_vlan_replay(br, brport_dev, dp, true,
+			     &dsa_slave_switchdev_blocking_notifier, extack);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	return 0;
+}
+
+<<<<<<< HEAD
+static int dsa_port_switchdev_sync(struct dsa_port *dp,
+				   struct netlink_ext_ack *extack)
+{
+	struct net_device *brport_dev = dsa_port_to_bridge_port(dp);
+	struct net_device *br = dp->bridge_dev;
+	int err;
+
+	err = dsa_port_inherit_brport_flags(dp, extack);
+	if (err)
+		return err;
+
+	err = dsa_port_set_state(dp, br_port_get_stp_state(brport_dev));
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	err = dsa_port_vlan_filtering(dp, br_vlan_enabled(br), extack);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	err = dsa_port_mrouter(dp->cpu_dp, br_multicast_router(br), extack);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	err = dsa_port_ageing_time(dp, br_get_ageing_time(br));
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
 	err = br_mdb_replay(br, brport_dev,
 			    &dsa_slave_switchdev_blocking_notifier,
 			    extack);
@@ -207,13 +294,45 @@ static int dsa_port_switchdev_sync(struct dsa_port *dp,
 	err = br_vlan_replay(br, brport_dev,
 			     &dsa_slave_switchdev_blocking_notifier,
 			     extack);
+=======
+static int dsa_port_switchdev_unsync_objs(struct dsa_port *dp,
+					  struct net_device *br,
+					  struct netlink_ext_ack *extack)
+{
+	struct net_device *brport_dev = dsa_port_to_bridge_port(dp);
+	int err;
+
+	/* Delete the switchdev objects left on this port */
+	err = br_mdb_replay(br, brport_dev, dp, false,
+			    &dsa_slave_switchdev_blocking_notifier, extack);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	/* Forwarding and termination FDB entries on the port */
+	err = br_fdb_replay(br, brport_dev, dp, false,
+			    &dsa_slave_switchdev_notifier);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	/* Termination FDB entries on the bridge itself */
+	err = br_fdb_replay(br, br, dp, false, &dsa_slave_switchdev_notifier);
+	if (err && err != -EOPNOTSUPP)
+		return err;
+
+	err = br_vlan_replay(br, brport_dev, dp, false,
+			     &dsa_slave_switchdev_blocking_notifier, extack);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (err && err != -EOPNOTSUPP)
 		return err;
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static void dsa_port_switchdev_unsync(struct dsa_port *dp)
+=======
+static void dsa_port_switchdev_unsync_attrs(struct dsa_port *dp)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	/* Configure the port for standalone mode (no address learning,
 	 * flood everything).
@@ -269,14 +388,26 @@ int dsa_port_bridge_join(struct dsa_port *dp, struct net_device *br,
 	err = dsa_port_switchdev_sync(dp, extack);
 	if (err)
 		goto out_rollback_unbridge;
+<<<<<<< HEAD
 
 	return 0;
 
+=======
+
+	return 0;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 out_rollback_unbridge:
 	dsa_broadcast(DSA_NOTIFIER_BRIDGE_LEAVE, &info);
 out_rollback:
 	dp->bridge_dev = NULL;
 	return err;
+}
+
+int dsa_port_pre_bridge_leave(struct dsa_port *dp, struct net_device *br,
+			      struct netlink_ext_ack *extack)
+{
+	return dsa_port_switchdev_unsync_objs(dp, br, extack);
 }
 
 void dsa_port_bridge_leave(struct dsa_port *dp, struct net_device *br)
@@ -298,7 +429,11 @@ void dsa_port_bridge_leave(struct dsa_port *dp, struct net_device *br)
 	if (err)
 		pr_err("DSA: failed to notify DSA_NOTIFIER_BRIDGE_LEAVE\n");
 
+<<<<<<< HEAD
 	dsa_port_switchdev_unsync(dp);
+=======
+	dsa_port_switchdev_unsync_attrs(dp);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 int dsa_port_lag_change(struct dsa_port *dp,
@@ -351,6 +486,7 @@ int dsa_port_lag_join(struct dsa_port *dp, struct net_device *lag,
 	bridge_dev = netdev_master_upper_dev_get(lag);
 	if (!bridge_dev || !netif_is_bridge_master(bridge_dev))
 		return 0;
+<<<<<<< HEAD
 
 	err = dsa_port_bridge_join(dp, bridge_dev, extack);
 	if (err)
@@ -358,12 +494,30 @@ int dsa_port_lag_join(struct dsa_port *dp, struct net_device *lag,
 
 	return 0;
 
+=======
+
+	err = dsa_port_bridge_join(dp, bridge_dev, extack);
+	if (err)
+		goto err_bridge_join;
+
+	return 0;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 err_bridge_join:
 	dsa_port_notify(dp, DSA_NOTIFIER_LAG_LEAVE, &info);
 err_lag_join:
 	dp->lag_dev = NULL;
 	dsa_lag_unmap(dp->ds->dst, lag);
 	return err;
+}
+
+int dsa_port_pre_lag_leave(struct dsa_port *dp, struct net_device *lag,
+			   struct netlink_ext_ack *extack)
+{
+	if (dp->bridge_dev)
+		return dsa_port_pre_bridge_leave(dp, dp->bridge_dev, extack);
+
+	return 0;
 }
 
 void dsa_port_lag_leave(struct dsa_port *dp, struct net_device *lag)
@@ -567,11 +721,11 @@ int dsa_port_mrouter(struct dsa_port *dp, bool mrouter,
 }
 
 int dsa_port_mtu_change(struct dsa_port *dp, int new_mtu,
-			bool propagate_upstream)
+			bool targeted_match)
 {
 	struct dsa_notifier_mtu_info info = {
 		.sw_index = dp->ds->index,
-		.propagate_upstream = propagate_upstream,
+		.targeted_match = targeted_match,
 		.port = dp->index,
 		.mtu = new_mtu,
 	};
@@ -604,6 +758,44 @@ int dsa_port_fdb_del(struct dsa_port *dp, const unsigned char *addr,
 	};
 
 	return dsa_port_notify(dp, DSA_NOTIFIER_FDB_DEL, &info);
+}
+
+int dsa_port_host_fdb_add(struct dsa_port *dp, const unsigned char *addr,
+			  u16 vid)
+{
+	struct dsa_notifier_fdb_info info = {
+		.sw_index = dp->ds->index,
+		.port = dp->index,
+		.addr = addr,
+		.vid = vid,
+	};
+	struct dsa_port *cpu_dp = dp->cpu_dp;
+	int err;
+
+	err = dev_uc_add(cpu_dp->master, addr);
+	if (err)
+		return err;
+
+	return dsa_port_notify(dp, DSA_NOTIFIER_HOST_FDB_ADD, &info);
+}
+
+int dsa_port_host_fdb_del(struct dsa_port *dp, const unsigned char *addr,
+			  u16 vid)
+{
+	struct dsa_notifier_fdb_info info = {
+		.sw_index = dp->ds->index,
+		.port = dp->index,
+		.addr = addr,
+		.vid = vid,
+	};
+	struct dsa_port *cpu_dp = dp->cpu_dp;
+	int err;
+
+	err = dev_uc_del(cpu_dp->master, addr);
+	if (err)
+		return err;
+
+	return dsa_port_notify(dp, DSA_NOTIFIER_HOST_FDB_DEL, &info);
 }
 
 int dsa_port_fdb_dump(struct dsa_port *dp, dsa_fdb_dump_cb_t *cb, void *data)
@@ -639,6 +831,42 @@ int dsa_port_mdb_del(const struct dsa_port *dp,
 	};
 
 	return dsa_port_notify(dp, DSA_NOTIFIER_MDB_DEL, &info);
+}
+
+int dsa_port_host_mdb_add(const struct dsa_port *dp,
+			  const struct switchdev_obj_port_mdb *mdb)
+{
+	struct dsa_notifier_mdb_info info = {
+		.sw_index = dp->ds->index,
+		.port = dp->index,
+		.mdb = mdb,
+	};
+	struct dsa_port *cpu_dp = dp->cpu_dp;
+	int err;
+
+	err = dev_mc_add(cpu_dp->master, mdb->addr);
+	if (err)
+		return err;
+
+	return dsa_port_notify(dp, DSA_NOTIFIER_HOST_MDB_ADD, &info);
+}
+
+int dsa_port_host_mdb_del(const struct dsa_port *dp,
+			  const struct switchdev_obj_port_mdb *mdb)
+{
+	struct dsa_notifier_mdb_info info = {
+		.sw_index = dp->ds->index,
+		.port = dp->index,
+		.mdb = mdb,
+	};
+	struct dsa_port *cpu_dp = dp->cpu_dp;
+	int err;
+
+	err = dev_mc_del(cpu_dp->master, mdb->addr);
+	if (err)
+		return err;
+
+	return dsa_port_notify(dp, DSA_NOTIFIER_HOST_MDB_DEL, &info);
 }
 
 int dsa_port_vlan_add(struct dsa_port *dp,

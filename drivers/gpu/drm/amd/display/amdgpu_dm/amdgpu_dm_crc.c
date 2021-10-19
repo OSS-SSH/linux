@@ -176,7 +176,7 @@ int amdgpu_dm_crtc_configure_crc_source(struct drm_crtc *crtc,
 
 	/* Configuration will be deferred to stream enable. */
 	if (!stream_state)
-		return 0;
+		return -EINVAL;
 
 	mutex_lock(&adev->dm.dc_lock);
 
@@ -525,6 +525,7 @@ cleanup:
 	spin_unlock_irqrestore(&drm_dev->event_lock, flags1);
 }
 
+<<<<<<< HEAD
 void amdgpu_dm_crtc_secure_display_resume(struct amdgpu_device *adev)
 {
 	struct drm_crtc *crtc;
@@ -586,6 +587,8 @@ void amdgpu_dm_crtc_secure_display_suspend(struct amdgpu_device *adev)
 
 }
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 struct crc_rd_work *amdgpu_dm_crtc_secure_display_create_work(void)
 {
 	struct crc_rd_work *crc_rd_wrk = NULL;

@@ -6,7 +6,11 @@
 #include <time.h>
 #include <sys/mman.h>
 #include <sys/syscall.h>
+<<<<<<< HEAD
 #include "fexit_sleep.skel.h"
+=======
+#include "fexit_sleep.lskel.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 static int do_sleep(void *skel)
 {
@@ -58,8 +62,13 @@ void test_fexit_sleep(void)
 	 * waiting for percpu_ref_kill to confirm). The other one
 	 * will be freed quickly.
 	 */
+<<<<<<< HEAD
 	close(bpf_program__fd(fexit_skel->progs.nanosleep_fentry));
 	close(bpf_program__fd(fexit_skel->progs.nanosleep_fexit));
+=======
+	close(fexit_skel->progs.nanosleep_fentry.prog_fd);
+	close(fexit_skel->progs.nanosleep_fexit.prog_fd);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	fexit_sleep__detach(fexit_skel);
 
 	/* kill the thread to unwind sys_nanosleep stack through the trampoline */

@@ -742,6 +742,7 @@ static int vfio_iommu_group_notifier(struct notifier_block *nb,
  */
 void vfio_init_group_dev(struct vfio_device *device, struct device *dev,
 			 const struct vfio_device_ops *ops)
+<<<<<<< HEAD
 {
 	init_completion(&device->comp);
 	device->dev = dev;
@@ -751,6 +752,17 @@ EXPORT_SYMBOL_GPL(vfio_init_group_dev);
 
 int vfio_register_group_dev(struct vfio_device *device)
 {
+=======
+{
+	init_completion(&device->comp);
+	device->dev = dev;
+	device->ops = ops;
+}
+EXPORT_SYMBOL_GPL(vfio_init_group_dev);
+
+int vfio_register_group_dev(struct vfio_device *device)
+{
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct vfio_device *existing_device;
 	struct iommu_group *iommu_group;
 	struct vfio_group *group;
@@ -1369,8 +1381,17 @@ static int vfio_group_get_device_fd(struct vfio_group *group, char *buf)
 	if (IS_ERR(device))
 		return PTR_ERR(device);
 
+<<<<<<< HEAD
+=======
+	if (!try_module_get(device->dev->driver->owner)) {
+		vfio_device_put(device);
+		return -ENODEV;
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	ret = device->ops->open(device);
 	if (ret) {
+		module_put(device->dev->driver->owner);
 		vfio_device_put(device);
 		return ret;
 	}
@@ -1382,6 +1403,10 @@ static int vfio_group_get_device_fd(struct vfio_group *group, char *buf)
 	ret = get_unused_fd_flags(O_CLOEXEC);
 	if (ret < 0) {
 		device->ops->release(device);
+<<<<<<< HEAD
+=======
+		module_put(device->dev->driver->owner);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		vfio_device_put(device);
 		return ret;
 	}
@@ -1392,6 +1417,10 @@ static int vfio_group_get_device_fd(struct vfio_group *group, char *buf)
 		put_unused_fd(ret);
 		ret = PTR_ERR(filep);
 		device->ops->release(device);
+<<<<<<< HEAD
+=======
+		module_put(device->dev->driver->owner);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		vfio_device_put(device);
 		return ret;
 	}
@@ -1549,6 +1578,11 @@ static int vfio_device_fops_release(struct inode *inode, struct file *filep)
 	struct vfio_device *device = filep->private_data;
 
 	device->ops->release(device);
+<<<<<<< HEAD
+=======
+
+	module_put(device->dev->driver->owner);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	vfio_group_try_dissolve_container(device->group);
 

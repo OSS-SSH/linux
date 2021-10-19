@@ -118,6 +118,15 @@ int afs_write_end(struct file *file, struct address_space *mapping,
 	_enter("{%llx:%llu},{%lx}",
 	       vnode->fid.vid, vnode->fid.vnode, page->index);
 
+	if (!PageUptodate(page)) {
+		if (copied < len) {
+			copied = 0;
+			goto out;
+		}
+
+		SetPageUptodate(page);
+	}
+
 	if (copied == 0)
 		goto out;
 
@@ -132,8 +141,11 @@ int afs_write_end(struct file *file, struct address_space *mapping,
 		write_sequnlock(&vnode->cb_lock);
 	}
 
+<<<<<<< HEAD
 	ASSERT(PageUptodate(page));
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (PagePrivate(page)) {
 		priv = page_private(page);
 		f = afs_page_dirty_from(page, priv);
@@ -454,6 +466,7 @@ static void afs_extend_writeback(struct address_space *mapping,
 			if (xas_retry(&xas, page))
 				continue;
 			if (xa_is_value(page))
+<<<<<<< HEAD
 				break;
 			if (page->index != index)
 				break;
@@ -467,6 +480,21 @@ static void afs_extend_writeback(struct address_space *mapping,
 			if (unlikely(page != xas_reload(&xas)))
 				break;
 
+=======
+				break;
+			if (page->index != index)
+				break;
+
+			if (!page_cache_get_speculative(page)) {
+				xas_reset(&xas);
+				continue;
+			}
+
+			/* Has the page moved or been split? */
+			if (unlikely(page != xas_reload(&xas)))
+				break;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			if (!trylock_page(page))
 				break;
 			if (!PageDirty(page) || PageWriteback(page)) {
@@ -730,7 +758,11 @@ static int afs_writepages_region(struct address_space *mapping,
 			return ret;
 		}
 
+<<<<<<< HEAD
 		start += ret * PAGE_SIZE;
+=======
+		start += ret;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		cond_resched();
 	} while (wbc->nr_to_write > 0);
@@ -837,6 +869,7 @@ vm_fault_t afs_page_mkwrite(struct vm_fault *vmf)
 	struct inode *inode = file_inode(file);
 	struct afs_vnode *vnode = AFS_FS_I(inode);
 	unsigned long priv;
+	vm_fault_t ret = VM_FAULT_RETRY;
 
 	_enter("{{%llx:%llu}},{%lx}", vnode->fid.vid, vnode->fid.vnode, page->index);
 
@@ -848,6 +881,7 @@ vm_fault_t afs_page_mkwrite(struct vm_fault *vmf)
 #ifdef CONFIG_AFS_FSCACHE
 	if (PageFsCache(page) &&
 	    wait_on_page_fscache_killable(page) < 0)
+<<<<<<< HEAD
 		return VM_FAULT_RETRY;
 #endif
 
@@ -856,6 +890,16 @@ vm_fault_t afs_page_mkwrite(struct vm_fault *vmf)
 
 	if (lock_page_killable(page) < 0)
 		return VM_FAULT_RETRY;
+=======
+		goto out;
+#endif
+
+	if (wait_on_page_writeback_killable(page))
+		goto out;
+
+	if (lock_page_killable(page) < 0)
+		goto out;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* We mustn't change page->private until writeback is complete as that
 	 * details the portion of the page we need to write back and we might
@@ -863,7 +907,11 @@ vm_fault_t afs_page_mkwrite(struct vm_fault *vmf)
 	 */
 	if (wait_on_page_writeback_killable(page) < 0) {
 		unlock_page(page);
+<<<<<<< HEAD
 		return VM_FAULT_RETRY;
+=======
+		goto out;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	priv = afs_page_dirty(page, 0, thp_size(page));
@@ -877,8 +925,10 @@ vm_fault_t afs_page_mkwrite(struct vm_fault *vmf)
 	}
 	file_update_time(file);
 
+	ret = VM_FAULT_LOCKED;
+out:
 	sb_end_pagefault(inode->i_sb);
-	return VM_FAULT_LOCKED;
+	return ret;
 }
 
 /*

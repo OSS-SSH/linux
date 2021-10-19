@@ -4686,8 +4686,11 @@ static const struct alg_test_desc alg_test_descs[] = {
 		.test = alg_test_null,
 	}, {
 		.alg = "drbg_nopr_hmac_sha512",
-		.test = alg_test_null,
+		.test = alg_test_drbg,
 		.fips_allowed = 1,
+		.suite = {
+			.drbg = __VECS(drbg_nopr_hmac_sha512_tv_template)
+		}
 	}, {
 		.alg = "drbg_nopr_sha1",
 		.fips_allowed = 1,
@@ -4899,6 +4902,7 @@ static const struct alg_test_desc alg_test_descs[] = {
 		}
 	}, {
 #endif
+<<<<<<< HEAD
 #ifndef CONFIG_CRYPTO_FIPS
 		.alg = "ecdh-nist-p192",
 		.test = alg_test_kpp,
@@ -4913,6 +4917,26 @@ static const struct alg_test_desc alg_test_descs[] = {
 		.fips_allowed = 1,
 		.suite = {
 			.kpp = __VECS(ecdh_p256_tv_template)
+=======
+		.alg = "ecdh-nist-p192",
+		.test = alg_test_kpp,
+		.suite = {
+			.kpp = __VECS(ecdh_p192_tv_template)
+		}
+	}, {
+		.alg = "ecdh-nist-p256",
+		.test = alg_test_kpp,
+		.fips_allowed = 1,
+		.suite = {
+			.kpp = __VECS(ecdh_p256_tv_template)
+		}
+	}, {
+		.alg = "ecdh-nist-p384",
+		.test = alg_test_kpp,
+		.fips_allowed = 1,
+		.suite = {
+			.kpp = __VECS(ecdh_p384_tv_template)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		}
 	}, {
 		.alg = "ecdsa-nist-p192",

@@ -11,6 +11,10 @@
 #include <linux/vmalloc.h>
 #include <linux/kexec.h>
 #include <linux/of.h>
+<<<<<<< HEAD
+=======
+#include <linux/ima.h>
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "ima.h"
 
 #ifdef CONFIG_IMA_KEXEC

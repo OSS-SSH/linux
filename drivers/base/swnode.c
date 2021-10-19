@@ -1043,9 +1043,23 @@ int device_add_software_node(struct device *dev, const struct software_node *nod
 
 		swnode = software_node_to_swnode(node);
 	}
+<<<<<<< HEAD
 
 	set_secondary_fwnode(dev, &swnode->fwnode);
 	software_node_notify(dev, KOBJ_ADD);
+=======
+
+	set_secondary_fwnode(dev, &swnode->fwnode);
+
+	/*
+	 * If the device has been fully registered by the time this function is
+	 * called, software_node_notify() must be called separately so that the
+	 * symlinks get created and the reference count of the node is kept in
+	 * balance.
+	 */
+	if (device_is_registered(dev))
+		software_node_notify(dev, KOBJ_ADD);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	return 0;
 }
@@ -1065,7 +1079,8 @@ void device_remove_software_node(struct device *dev)
 	if (!swnode)
 		return;
 
-	software_node_notify(dev, KOBJ_REMOVE);
+	if (device_is_registered(dev))
+		software_node_notify(dev, KOBJ_REMOVE);
 	set_secondary_fwnode(dev, NULL);
 	kobject_put(&swnode->kobj);
 }
@@ -1119,8 +1134,12 @@ int software_node_notify(struct device *dev, unsigned long action)
 
 	switch (action) {
 	case KOBJ_ADD:
+<<<<<<< HEAD
 		ret = sysfs_create_link_nowarn(&dev->kobj, &swnode->kobj,
 					       "software_node");
+=======
+		ret = sysfs_create_link(&dev->kobj, &swnode->kobj, "software_node");
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		if (ret)
 			break;
 

@@ -130,8 +130,17 @@ static inline bool xp_aligned_validate_desc(struct xsk_buff_pool *pool,
 {
 	u64 chunk;
 
+<<<<<<< HEAD
 	if (desc->len > pool->chunk_size)
 		return false;
+=======
+	chunk = xp_aligned_extract_addr(pool, desc->addr);
+	if (likely(desc->len)) {
+		chunk_end = xp_aligned_extract_addr(pool, desc->addr + desc->len - 1);
+		if (chunk != chunk_end)
+			return false;
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	chunk = xp_aligned_extract_addr(pool, desc->addr);
 	if (chunk >= pool->addrs_cnt)

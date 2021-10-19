@@ -485,7 +485,11 @@ static int adm9240_in_write(struct device *dev, u32 attr, int channel, long val)
 		reg = ADM9240_REG_IN_MIN(channel);
 		break;
 	case hwmon_in_max:
+<<<<<<< HEAD
 		reg = ADM9240_REG_IN(channel);
+=======
+		reg = ADM9240_REG_IN_MAX(channel);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		break;
 	default:
 		return -EOPNOTSUPP;

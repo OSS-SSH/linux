@@ -126,8 +126,11 @@ int sk_msg_zerocopy_from_iter(struct sock *sk, struct iov_iter *from,
 			      struct sk_msg *msg, u32 bytes);
 int sk_msg_memcopy_from_iter(struct sock *sk, struct iov_iter *from,
 			     struct sk_msg *msg, u32 bytes);
+<<<<<<< HEAD
 int sk_msg_wait_data(struct sock *sk, struct sk_psock *psock, int flags,
 		     long timeo, int *err);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
 		   int len, int flags);
 
@@ -348,7 +351,7 @@ static inline void sk_psock_report_error(struct sk_psock *psock, int err)
 	struct sock *sk = psock->sk;
 
 	sk->sk_err = err;
-	sk->sk_error_report(sk);
+	sk_error_report(sk);
 }
 
 struct sk_psock *sk_psock_init(struct sock *sk, int node);

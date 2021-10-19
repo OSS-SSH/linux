@@ -9,11 +9,14 @@
 #include "xfs_format.h"
 #include "xfs_trans_resv.h"
 #include "xfs_mount.h"
-#include "xfs_sb.h"
 #include "xfs_alloc.h"
 #include "xfs_ialloc.h"
 #include "xfs_health.h"
 #include "xfs_btree.h"
+<<<<<<< HEAD
+=======
+#include "xfs_ag.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "scrub/scrub.h"
 #include "scrub/common.h"
 #include "scrub/trace.h"
@@ -71,11 +74,11 @@ xchk_fscount_warmup(
 	xfs_agnumber_t		agno;
 	int			error = 0;
 
-	for (agno = 0; agno < mp->m_sb.sb_agcount; agno++) {
-		pag = xfs_perag_get(mp, agno);
-
+	for_each_perag(mp, agno, pag) {
+		if (xchk_should_terminate(sc, &error))
+			break;
 		if (pag->pagi_init && pag->pagf_init)
-			goto next_loop_perag;
+			continue;
 
 		/* Lock both AG headers. */
 		error = xfs_ialloc_read_agi(mp, sc->tp, agno, &agi_bp);
@@ -89,21 +92,15 @@ xchk_fscount_warmup(
 		 * These are supposed to be initialized by the header read
 		 * function.
 		 */
-		error = -EFSCORRUPTED;
-		if (!pag->pagi_init || !pag->pagf_init)
+		if (!pag->pagi_init || !pag->pagf_init) {
+			error = -EFSCORRUPTED;
 			break;
+		}
 
 		xfs_buf_relse(agf_bp);
 		agf_bp = NULL;
 		xfs_buf_relse(agi_bp);
 		agi_bp = NULL;
-next_loop_perag:
-		xfs_perag_put(pag);
-		pag = NULL;
-		error = 0;
-
-		if (xchk_should_terminate(sc, &error))
-			break;
 	}
 
 	if (agf_bp)
@@ -196,13 +193,14 @@ retry:
 	fsc->ifree = 0;
 	fsc->fdblocks = 0;
 
-	for (agno = 0; agno < mp->m_sb.sb_agcount; agno++) {
-		pag = xfs_perag_get(mp, agno);
+	for_each_perag(mp, agno, pag) {
+		if (xchk_should_terminate(sc, &error))
+			break;
 
 		/* This somehow got unset since the warmup? */
 		if (!pag->pagi_init || !pag->pagf_init) {
-			xfs_perag_put(pag);
-			return -EFSCORRUPTED;
+			error = -EFSCORRUPTED;
+			break;
 		}
 
 		/* Count all the inodes */
@@ -216,10 +214,15 @@ retry:
 			fsc->fdblocks += pag->pagf_btreeblks;
 		} else {
 			error = xchk_fscount_btreeblks(sc, fsc, agno);
+<<<<<<< HEAD
 			if (error) {
 				xfs_perag_put(pag);
 				break;
 			}
+=======
+			if (error)
+				break;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		}
 
 		/*
@@ -229,12 +232,9 @@ retry:
 		fsc->fdblocks -= pag->pag_meta_resv.ar_reserved;
 		fsc->fdblocks -= pag->pag_rmapbt_resv.ar_orig_reserved;
 
-		xfs_perag_put(pag);
-
-		if (xchk_should_terminate(sc, &error))
-			break;
 	}
-
+	if (pag)
+		xfs_perag_put(pag);
 	if (error)
 		return error;
 

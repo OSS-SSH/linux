@@ -249,8 +249,12 @@ static void orangefs_readahead(struct readahead_control *rac)
 {
 	loff_t offset;
 	struct iov_iter iter;
+<<<<<<< HEAD
 	struct file *file = rac->file;
 	struct inode *inode = file->f_mapping->host;
+=======
+	struct inode *inode = rac->mapping->host;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct xarray *i_pages;
 	struct page *page;
 	loff_t new_start = readahead_pos(rac);
@@ -269,14 +273,22 @@ static void orangefs_readahead(struct readahead_control *rac)
 		readahead_expand(rac, new_start, new_len);
 
 	offset = readahead_pos(rac);
+<<<<<<< HEAD
 	i_pages = &file->f_mapping->i_pages;
+=======
+	i_pages = &rac->mapping->i_pages;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	iov_iter_xarray(&iter, READ, i_pages, offset, readahead_length(rac));
 
 	/* read in the pages. */
 	if ((ret = wait_for_direct_io(ORANGEFS_IO_READ, inode,
 			&offset, &iter, readahead_length(rac),
+<<<<<<< HEAD
 			inode->i_size, NULL, NULL, file)) < 0)
+=======
+			inode->i_size, NULL, NULL, rac->file)) < 0)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		gossip_debug(GOSSIP_FILE_DEBUG,
 			"%s: wait_for_direct_io failed. \n", __func__);
 	else

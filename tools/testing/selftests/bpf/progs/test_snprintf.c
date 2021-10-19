@@ -3,7 +3,10 @@
 
 #include <linux/bpf.h>
 #include <bpf/bpf_helpers.h>
+<<<<<<< HEAD
 #include <bpf/bpf_tracing.h>
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 __u32 pid = 0;
 

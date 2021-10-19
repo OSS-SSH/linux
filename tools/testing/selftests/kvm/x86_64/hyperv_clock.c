@@ -7,6 +7,10 @@
 #include "test_util.h"
 #include "kvm_util.h"
 #include "processor.h"
+<<<<<<< HEAD
+=======
+#include "hyperv.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 struct ms_hyperv_tsc_page {
 	volatile u32 tsc_sequence;
@@ -15,6 +19,7 @@ struct ms_hyperv_tsc_page {
 	volatile s64 tsc_offset;
 } __packed;
 
+<<<<<<< HEAD
 #define HV_X64_MSR_GUEST_OS_ID			0x40000000
 #define HV_X64_MSR_TIME_REF_COUNT		0x40000020
 #define HV_X64_MSR_REFERENCE_TSC		0x40000021
@@ -22,6 +27,8 @@ struct ms_hyperv_tsc_page {
 #define HV_X64_MSR_REENLIGHTENMENT_CONTROL	0x40000106
 #define HV_X64_MSR_TSC_EMULATION_CONTROL	0x40000107
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 /* Simplified mul_u64_u64_shr() */
 static inline u64 mul_u64_u64_shr64(u64 a, u64 b)
 {
@@ -220,7 +227,11 @@ int main(void)
 
 	vcpu_set_hv_cpuid(vm, VCPU_ID);
 
+<<<<<<< HEAD
 	tsc_page_gva = vm_vaddr_alloc(vm, getpagesize(), 0x10000, 0, 0);
+=======
+	tsc_page_gva = vm_vaddr_alloc_page(vm);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	memset(addr_gpa2hva(vm, tsc_page_gva), 0x0, getpagesize());
 	TEST_ASSERT((addr_gva2gpa(vm, tsc_page_gva) & (getpagesize() - 1)) == 0,
 		"TSC page has to be page aligned\n");

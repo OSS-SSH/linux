@@ -550,6 +550,7 @@ static int igt_vma_rotate_remap(void *arg)
 		{ .width = 2, .height = 2, .src_stride = 2 },
 		{ .width = 4, .height = 4, .src_stride = 4 },
 		{ .width = 8, .height = 8, .src_stride = 8 },
+<<<<<<< HEAD
 
 		{ .width = 3, .height = 5, .src_stride = 3 },
 		{ .width = 3, .height = 5, .src_stride = 4 },
@@ -559,6 +560,17 @@ static int igt_vma_rotate_remap(void *arg)
 		{ .width = 5, .height = 3, .src_stride = 7 },
 		{ .width = 5, .height = 3, .src_stride = 9 },
 
+=======
+
+		{ .width = 3, .height = 5, .src_stride = 3 },
+		{ .width = 3, .height = 5, .src_stride = 4 },
+		{ .width = 3, .height = 5, .src_stride = 5 },
+
+		{ .width = 5, .height = 3, .src_stride = 5 },
+		{ .width = 5, .height = 3, .src_stride = 7 },
+		{ .width = 5, .height = 3, .src_stride = 9 },
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		{ .width = 4, .height = 6, .src_stride = 6 },
 		{ .width = 6, .height = 4, .src_stride = 6 },
 
@@ -940,6 +952,7 @@ static int igt_vma_remapped_gtt(void *arg)
 		{ .width = 2, .height = 2, .src_stride = 2 },
 		{ .width = 4, .height = 4, .src_stride = 4 },
 		{ .width = 8, .height = 8, .src_stride = 8 },
+<<<<<<< HEAD
 
 		{ .width = 3, .height = 5, .src_stride = 3 },
 		{ .width = 3, .height = 5, .src_stride = 4 },
@@ -949,6 +962,17 @@ static int igt_vma_remapped_gtt(void *arg)
 		{ .width = 5, .height = 3, .src_stride = 7 },
 		{ .width = 5, .height = 3, .src_stride = 9 },
 
+=======
+
+		{ .width = 3, .height = 5, .src_stride = 3 },
+		{ .width = 3, .height = 5, .src_stride = 4 },
+		{ .width = 3, .height = 5, .src_stride = 5 },
+
+		{ .width = 5, .height = 3, .src_stride = 5 },
+		{ .width = 5, .height = 3, .src_stride = 7 },
+		{ .width = 5, .height = 3, .src_stride = 9 },
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		{ .width = 4, .height = 6, .src_stride = 6 },
 		{ .width = 6, .height = 4, .src_stride = 6 },
 
@@ -966,6 +990,9 @@ static int igt_vma_remapped_gtt(void *arg)
 	struct drm_i915_gem_object *obj;
 	intel_wakeref_t wakeref;
 	int err = 0;
+
+	if (!i915_ggtt_has_aperture(&i915->ggtt))
+		return 0;
 
 	obj = i915_gem_object_create_internal(i915, 10 * 10 * PAGE_SIZE);
 	if (IS_ERR(obj))

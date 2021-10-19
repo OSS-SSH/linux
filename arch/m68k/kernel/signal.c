@@ -623,7 +623,12 @@ static inline void siginfo_build_tests(void)
 	BUILD_BUG_ON(offsetof(siginfo_t, si_pkey) != 0x12);
 
 	/* _sigfault._perf */
+<<<<<<< HEAD
 	BUILD_BUG_ON(offsetof(siginfo_t, si_perf) != 0x10);
+=======
+	BUILD_BUG_ON(offsetof(siginfo_t, si_perf_data) != 0x10);
+	BUILD_BUG_ON(offsetof(siginfo_t, si_perf_type) != 0x14);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* _sigpoll */
 	BUILD_BUG_ON(offsetof(siginfo_t, si_band)   != 0x0c);

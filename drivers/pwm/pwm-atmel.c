@@ -436,8 +436,11 @@ static int atmel_pwm_probe(struct platform_device *pdev)
 
 	atmel_pwm->chip.dev = &pdev->dev;
 	atmel_pwm->chip.ops = &atmel_pwm_ops;
+<<<<<<< HEAD
 	atmel_pwm->chip.of_xlate = of_pwm_xlate_with_flags;
 	atmel_pwm->chip.of_pwm_n_cells = 3;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	atmel_pwm->chip.npwm = 4;
 
 	ret = pwmchip_add(&atmel_pwm->chip);

@@ -6,6 +6,10 @@
 
 #include "system.h"
 
+<<<<<<< HEAD
+=======
+#include <stddef.h>
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <linux/errno.h>
 #include <linux/auxvec.h>
 #include <linux/signal.h>

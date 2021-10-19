@@ -169,7 +169,7 @@ static void __init kasan_shallow_populate(void *start, void *end)
 
 void __init kasan_init(void)
 {
-	phys_addr_t _start, _end;
+	phys_addr_t p_start, p_end;
 	u64 i;
 
 	/*
@@ -189,9 +189,15 @@ void __init kasan_init(void)
 			(void *)kasan_mem_to_shadow((void *)VMALLOC_END));
 
 	/* Populate the linear mapping */
+<<<<<<< HEAD
 	for_each_mem_range(i, &_start, &_end) {
 		void *start = (void *)__va(_start);
 		void *end = (void *)__va(_end);
+=======
+	for_each_mem_range(i, &p_start, &p_end) {
+		void *start = (void *)__va(p_start);
+		void *end = (void *)__va(p_end);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		if (start >= end)
 			break;
@@ -201,7 +207,11 @@ void __init kasan_init(void)
 
 	/* Populate kernel, BPF, modules mapping */
 	kasan_populate(kasan_mem_to_shadow((const void *)MODULES_VADDR),
+<<<<<<< HEAD
 		       kasan_mem_to_shadow((const void *)BPF_JIT_REGION_END));
+=======
+		       kasan_mem_to_shadow((const void *)MODULES_VADDR + SZ_2G));
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	for (i = 0; i < PTRS_PER_PTE; i++)
 		set_pte(&kasan_early_shadow_pte[i],

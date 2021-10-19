@@ -50,6 +50,10 @@
 #include <linux/cpuhotplug.h>
 #include <linux/io.h>
 #include <linux/irqchip.h>
+<<<<<<< HEAD
+=======
+#include <linux/irqchip/arm-vgic-info.h>
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <linux/irqdomain.h>
 #include <linux/limits.h>
 #include <linux/of_address.h>
@@ -787,6 +791,15 @@ static int aic_init_cpu(unsigned int cpu)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static struct gic_kvm_info vgic_info __initdata = {
+	.type			= GIC_V3,
+	.no_maint_irq_mask	= true,
+	.no_hw_deactivation	= true,
+};
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int __init aic_of_ic_init(struct device_node *node, struct device_node *parent)
 {
 	int i;
@@ -843,6 +856,11 @@ static int __init aic_of_ic_init(struct device_node *node, struct device_node *p
 			  "irqchip/apple-aic/ipi:starting",
 			  aic_init_cpu, NULL);
 
+<<<<<<< HEAD
+=======
+	vgic_set_kvm_info(&vgic_info);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	pr_info("Initialized with %d IRQs, %d FIQs, %d vIPIs\n",
 		irqc->nr_hw, AIC_NR_FIQ, AIC_NR_SWIPI);
 

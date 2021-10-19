@@ -221,7 +221,11 @@ static inline bool is_active(struct msm_gem_object *msm_obj)
 /* imported/exported objects are not purgeable: */
 static inline bool is_unpurgeable(struct msm_gem_object *msm_obj)
 {
+<<<<<<< HEAD
 	return msm_obj->base.dma_buf && msm_obj->base.import_attach;
+=======
+	return msm_obj->base.import_attach || msm_obj->pin_count;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 static inline bool is_purgeable(struct msm_gem_object *msm_obj)
@@ -271,7 +275,11 @@ static inline void mark_unpurgeable(struct msm_gem_object *msm_obj)
 
 static inline bool is_unevictable(struct msm_gem_object *msm_obj)
 {
+<<<<<<< HEAD
 	return is_unpurgeable(msm_obj) || msm_obj->pin_count || msm_obj->vaddr;
+=======
+	return is_unpurgeable(msm_obj) || msm_obj->vaddr;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 static inline void mark_evictable(struct msm_gem_object *msm_obj)
@@ -328,6 +336,7 @@ struct msm_gem_submit {
 	struct dma_fence *fence;
 	struct msm_gpu_submitqueue *queue;
 	struct pid *pid;    /* submitting process */
+	bool fault_dumped;  /* Limit devcoredump dumping to one per submit */
 	bool valid;         /* true if no cmdstream patching needed */
 	bool in_rb;         /* "sudo" mode, copy cmds into RB */
 	struct msm_ringbuffer *ring;

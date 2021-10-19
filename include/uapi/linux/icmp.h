@@ -20,7 +20,10 @@
 
 #include <linux/types.h>
 #include <asm/byteorder.h>
+<<<<<<< HEAD
 #include <linux/in.h>
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <linux/if.h>
 #include <linux/in6.h>
 
@@ -154,7 +157,11 @@ struct icmp_ext_echo_iio {
 		struct {
 			struct icmp_ext_echo_ctype3_hdr ctype3_hdr;
 			union {
+<<<<<<< HEAD
 				struct in_addr	ipv4_addr;
+=======
+				__be32		ipv4_addr;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				struct in6_addr	ipv6_addr;
 			} ip_addr;
 		} addr;

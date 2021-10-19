@@ -11,8 +11,11 @@
 
 #include "amd_iommu_types.h"
 
+<<<<<<< HEAD
 extern int amd_iommu_init_dma_ops(void);
 extern int amd_iommu_init_passthrough(void);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 extern irqreturn_t amd_iommu_int_thread(int irq, void *data);
 extern irqreturn_t amd_iommu_int_handler(int irq, void *data);
 extern void amd_iommu_apply_erratum_63(u16 devid);

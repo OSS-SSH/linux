@@ -79,8 +79,11 @@ struct scmi_protocol_events {
 
 int scmi_notification_init(struct scmi_handle *handle);
 void scmi_notification_exit(struct scmi_handle *handle);
+<<<<<<< HEAD
 
 struct scmi_protocol_handle;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 int scmi_register_protocol_events(const struct scmi_handle *handle, u8 proto_id,
 				  const struct scmi_protocol_handle *ph,
 				  const struct scmi_protocol_events *ee);

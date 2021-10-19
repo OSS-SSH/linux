@@ -474,14 +474,22 @@ static int stm32_rproc_attach(struct rproc *rproc)
 static int stm32_rproc_detach(struct rproc *rproc)
 {
 	struct stm32_rproc *ddata = rproc->priv;
+<<<<<<< HEAD
 	int err, dummy_data, idx;
+=======
+	int err, idx;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* Inform the remote processor of the detach */
 	idx = stm32_rproc_mbox_idx(rproc, STM32_MBX_DETACH);
 	if (idx >= 0 && ddata->mb[idx].chan) {
+<<<<<<< HEAD
 		/* A dummy data is sent to allow to block on transmit */
 		err = mbox_send_message(ddata->mb[idx].chan,
 					&dummy_data);
+=======
+		err = mbox_send_message(ddata->mb[idx].chan, "stop");
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		if (err < 0)
 			dev_warn(&rproc->dev, "warning: remote FW detach without ack\n");
 	}
@@ -493,15 +501,13 @@ static int stm32_rproc_detach(struct rproc *rproc)
 static int stm32_rproc_stop(struct rproc *rproc)
 {
 	struct stm32_rproc *ddata = rproc->priv;
-	int err, dummy_data, idx;
+	int err, idx;
 
 	/* request shutdown of the remote processor */
 	if (rproc->state != RPROC_OFFLINE) {
 		idx = stm32_rproc_mbox_idx(rproc, STM32_MBX_SHUTDOWN);
 		if (idx >= 0 && ddata->mb[idx].chan) {
-			/* a dummy data is sent to allow to block on transmit */
-			err = mbox_send_message(ddata->mb[idx].chan,
-						&dummy_data);
+			err = mbox_send_message(ddata->mb[idx].chan, "detach");
 			if (err < 0)
 				dev_warn(&rproc->dev, "warning: remote FW shutdown without ack\n");
 		}
@@ -556,7 +562,7 @@ static void stm32_rproc_kick(struct rproc *rproc, int vqid)
 			continue;
 		if (!ddata->mb[i].chan)
 			return;
-		err = mbox_send_message(ddata->mb[i].chan, (void *)(long)vqid);
+		err = mbox_send_message(ddata->mb[i].chan, "kick");
 		if (err < 0)
 			dev_err(&rproc->dev, "%s: failed (%s, err:%d)\n",
 				__func__, ddata->mb[i].name, err);
@@ -580,7 +586,11 @@ static int stm32_rproc_da_to_pa(struct rproc *rproc,
 			continue;
 
 		*pa = da - p_mem->dev_addr + p_mem->bus_addr;
+<<<<<<< HEAD
 		dev_dbg(dev, "da %llx to pa %#x\n", da, *pa);
+=======
+		dev_dbg(dev, "da %llx to pa %pap\n", da, pa);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		return 0;
 	}

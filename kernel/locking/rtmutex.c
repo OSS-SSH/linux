@@ -1135,7 +1135,11 @@ void __sched rt_mutex_init_waiter(struct rt_mutex_waiter *waiter)
  *
  * Must be called with lock->wait_lock held and interrupts disabled
  */
+<<<<<<< HEAD
 static int __sched __rt_mutex_slowlock(struct rt_mutex *lock, int state,
+=======
+static int __sched __rt_mutex_slowlock(struct rt_mutex *lock, unsigned int state,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				       struct hrtimer_sleeper *timeout,
 				       struct rt_mutex_waiter *waiter)
 {
@@ -1190,7 +1194,11 @@ static void __sched rt_mutex_handle_deadlock(int res, int detect_deadlock,
 /*
  * Slow path lock function:
  */
+<<<<<<< HEAD
 static int __sched rt_mutex_slowlock(struct rt_mutex *lock, int state,
+=======
+static int __sched rt_mutex_slowlock(struct rt_mutex *lock, unsigned int state,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				     struct hrtimer_sleeper *timeout,
 				     enum rtmutex_chainwalk chwalk)
 {

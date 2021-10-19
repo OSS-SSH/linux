@@ -29,7 +29,10 @@ properties:
 
   clocks:
     minItems: 2
+<<<<<<< HEAD
     maxItems: 5
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     items:
       - {}
       - {}
@@ -41,7 +44,10 @@ properties:
 
   clock-names:
     minItems: 2
+<<<<<<< HEAD
     maxItems: 5
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     items:
       - {}
       - {}

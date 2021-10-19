@@ -11,7 +11,11 @@
  * The same segment is shared by percpu area and stack canary.  On
  * x86_64, percpu symbols are zero based and %gs (64-bit) points to the
  * base of percpu area.  The first occupant of the percpu area is always
+<<<<<<< HEAD
  * fixed_percpu_data which contains stack_canary at the approproate
+=======
+ * fixed_percpu_data which contains stack_canary at the appropriate
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * offset.  On x86_32, the stack canary is just a regular percpu
  * variable.
  *

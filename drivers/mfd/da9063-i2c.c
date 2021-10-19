@@ -448,7 +448,11 @@ static int da9063_i2c_probe(struct i2c_client *i2c,
 					DA9063_TWOWIRE_TO);
 		if (ret < 0) {
 			dev_err(da9063->dev, "Failed to set Two-Wire Bus Mode.\n");
+<<<<<<< HEAD
 			return -EIO;
+=======
+			return ret;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		}
 	}
 

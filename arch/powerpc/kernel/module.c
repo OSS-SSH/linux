@@ -92,12 +92,21 @@ int module_finalize(const Elf_Ehdr *hdr,
 static __always_inline void *
 __module_alloc(unsigned long size, unsigned long start, unsigned long end)
 {
+<<<<<<< HEAD
+=======
+	pgprot_t prot = strict_module_rwx_enabled() ? PAGE_KERNEL : PAGE_KERNEL_EXEC;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/*
 	 * Don't do huge page allocations for modules yet until more testing
 	 * is done. STRICT_MODULE_RWX may require extra work to support this
 	 * too.
 	 */
+<<<<<<< HEAD
 	return __vmalloc_node_range(size, 1, start, end, GFP_KERNEL, PAGE_KERNEL_EXEC,
+=======
+	return __vmalloc_node_range(size, 1, start, end, GFP_KERNEL, prot,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				    VM_FLUSH_RESET_PERMS | VM_NO_HUGE_VMAP,
 				    NUMA_NO_NODE, __builtin_return_address(0));
 }

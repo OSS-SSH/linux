@@ -30,6 +30,8 @@
 #include "dmub_dcn30.h"
 #include "dmub_dcn301.h"
 #include "dmub_dcn302.h"
+#include "dmub_dcn303.h"
+#include "dmub_dcn31.h"
 #include "os_types.h"
 /*
  * Note: the DMUB service is standalone. No additional headers should be
@@ -142,6 +144,7 @@ static bool dmub_srv_hw_setup(struct dmub_srv *dmub, enum dmub_asic asic)
 	case DMUB_ASIC_DCN30:
 	case DMUB_ASIC_DCN301:
 	case DMUB_ASIC_DCN302:
+	case DMUB_ASIC_DCN303:
 		dmub->regs = &dmub_srv_dcn20_regs;
 
 		funcs->reset = dmub_dcn20_reset;
@@ -159,6 +162,19 @@ static bool dmub_srv_hw_setup(struct dmub_srv *dmub, enum dmub_asic asic)
 		funcs->get_fw_status = dmub_dcn20_get_fw_boot_status;
 		funcs->enable_dmub_boot_options = dmub_dcn20_enable_dmub_boot_options;
 		funcs->skip_dmub_panel_power_sequence = dmub_dcn20_skip_dmub_panel_power_sequence;
+		funcs->get_current_time = dmub_dcn20_get_current_time;
+
+		// Out mailbox register access functions for RN and above
+		funcs->setup_out_mailbox = dmub_dcn20_setup_out_mailbox;
+		funcs->get_outbox1_wptr = dmub_dcn20_get_outbox1_wptr;
+		funcs->set_outbox1_rptr = dmub_dcn20_set_outbox1_rptr;
+
+		//outbox0 call stacks
+		funcs->setup_outbox0 = dmub_dcn20_setup_outbox0;
+		funcs->get_outbox0_wptr = dmub_dcn20_get_outbox0_wptr;
+		funcs->set_outbox0_rptr = dmub_dcn20_set_outbox0_rptr;
+
+		funcs->get_diagnostic_data = dmub_dcn20_get_diagnostic_data;
 
 		// Out mailbox register access functions for RN and above
 		funcs->setup_out_mailbox = dmub_dcn20_setup_out_mailbox;
@@ -193,6 +209,43 @@ static bool dmub_srv_hw_setup(struct dmub_srv *dmub, enum dmub_asic asic)
 			funcs->backdoor_load = dmub_dcn30_backdoor_load;
 			funcs->setup_windows = dmub_dcn30_setup_windows;
 		}
+		if (asic == DMUB_ASIC_DCN303) {
+			dmub->regs = &dmub_srv_dcn303_regs;
+
+			funcs->backdoor_load = dmub_dcn30_backdoor_load;
+			funcs->setup_windows = dmub_dcn30_setup_windows;
+		}
+		break;
+
+	case DMUB_ASIC_DCN31:
+		dmub->regs_dcn31 = &dmub_srv_dcn31_regs;
+		funcs->reset = dmub_dcn31_reset;
+		funcs->reset_release = dmub_dcn31_reset_release;
+		funcs->backdoor_load = dmub_dcn31_backdoor_load;
+		funcs->setup_windows = dmub_dcn31_setup_windows;
+		funcs->setup_mailbox = dmub_dcn31_setup_mailbox;
+		funcs->get_inbox1_rptr = dmub_dcn31_get_inbox1_rptr;
+		funcs->set_inbox1_wptr = dmub_dcn31_set_inbox1_wptr;
+		funcs->setup_out_mailbox = dmub_dcn31_setup_out_mailbox;
+		funcs->get_outbox1_wptr = dmub_dcn31_get_outbox1_wptr;
+		funcs->set_outbox1_rptr = dmub_dcn31_set_outbox1_rptr;
+		funcs->is_supported = dmub_dcn31_is_supported;
+		funcs->is_hw_init = dmub_dcn31_is_hw_init;
+		funcs->set_gpint = dmub_dcn31_set_gpint;
+		funcs->is_gpint_acked = dmub_dcn31_is_gpint_acked;
+		funcs->get_gpint_response = dmub_dcn31_get_gpint_response;
+		funcs->get_fw_status = dmub_dcn31_get_fw_boot_status;
+		funcs->enable_dmub_boot_options = dmub_dcn31_enable_dmub_boot_options;
+		funcs->skip_dmub_panel_power_sequence = dmub_dcn31_skip_dmub_panel_power_sequence;
+		//outbox0 call stacks
+		funcs->setup_outbox0 = dmub_dcn31_setup_outbox0;
+		funcs->get_outbox0_wptr = dmub_dcn31_get_outbox0_wptr;
+		funcs->set_outbox0_rptr = dmub_dcn31_set_outbox0_rptr;
+
+		funcs->get_diagnostic_data = dmub_dcn31_get_diagnostic_data;
+
+		funcs->get_current_time = dmub_dcn31_get_current_time;
+
 		break;
 
 	default:
@@ -453,6 +506,7 @@ enum dmub_status dmub_srv_hw_init(struct dmub_srv *dmub,
 	cw3.offset.quad_part = bios_fb->gpu_addr;
 	cw3.region.base = DMUB_CW3_BASE;
 	cw3.region.top = cw3.region.base + bios_fb->size;
+<<<<<<< HEAD
 
 	cw4.offset.quad_part = mail_fb->gpu_addr;
 	cw4.region.base = DMUB_CW4_BASE;
@@ -502,6 +556,57 @@ enum dmub_status dmub_srv_hw_init(struct dmub_srv *dmub,
 	rb_params.capacity = DMUB_RB_SIZE;
 	dmub_rb_init(&dmub->inbox1_rb, &rb_params);
 
+=======
+
+	cw4.offset.quad_part = mail_fb->gpu_addr;
+	cw4.region.base = DMUB_CW4_BASE;
+	cw4.region.top = cw4.region.base + mail_fb->size;
+
+	/**
+	 * Doubled the mailbox region to accomodate inbox and outbox.
+	 * Note: Currently, currently total mailbox size is 16KB. It is split
+	 * equally into 8KB between inbox and outbox. If this config is
+	 * changed, then uncached base address configuration of outbox1
+	 * has to be updated in funcs->setup_out_mailbox.
+	 */
+	inbox1.base = cw4.region.base;
+	inbox1.top = cw4.region.base + DMUB_RB_SIZE;
+	outbox1.base = inbox1.top;
+	outbox1.top = cw4.region.top;
+
+	cw5.offset.quad_part = tracebuff_fb->gpu_addr;
+	cw5.region.base = DMUB_CW5_BASE;
+	cw5.region.top = cw5.region.base + tracebuff_fb->size;
+
+	outbox0.base = DMUB_REGION5_BASE + TRACE_BUFFER_ENTRY_OFFSET;
+	outbox0.top = outbox0.base + tracebuff_fb->size - TRACE_BUFFER_ENTRY_OFFSET;
+
+	cw6.offset.quad_part = fw_state_fb->gpu_addr;
+	cw6.region.base = DMUB_CW6_BASE;
+	cw6.region.top = cw6.region.base + fw_state_fb->size;
+
+	dmub->fw_state = fw_state_fb->cpu_addr;
+
+	dmub->scratch_mem_fb = *scratch_mem_fb;
+
+	if (dmub->hw_funcs.setup_windows)
+		dmub->hw_funcs.setup_windows(dmub, &cw2, &cw3, &cw4, &cw5, &cw6);
+
+	if (dmub->hw_funcs.setup_outbox0)
+		dmub->hw_funcs.setup_outbox0(dmub, &outbox0);
+
+	if (dmub->hw_funcs.setup_mailbox)
+		dmub->hw_funcs.setup_mailbox(dmub, &inbox1);
+	if (dmub->hw_funcs.setup_out_mailbox)
+		dmub->hw_funcs.setup_out_mailbox(dmub, &outbox1);
+
+	dmub_memset(&rb_params, 0, sizeof(rb_params));
+	rb_params.ctx = dmub;
+	rb_params.base_address = mail_fb->cpu_addr;
+	rb_params.capacity = DMUB_RB_SIZE;
+	dmub_rb_init(&dmub->inbox1_rb, &rb_params);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	// Initialize outbox1 ring buffer
 	rb_params.ctx = dmub;
 	rb_params.base_address = (void *) ((uint8_t *) (mail_fb->cpu_addr) + DMUB_RB_SIZE);
@@ -513,6 +618,13 @@ enum dmub_status dmub_srv_hw_init(struct dmub_srv *dmub,
 	outbox0_rb_params.base_address = (void *)((uintptr_t)(tracebuff_fb->cpu_addr) + TRACE_BUFFER_ENTRY_OFFSET);
 	outbox0_rb_params.capacity = tracebuff_fb->size - dmub_align(TRACE_BUFFER_ENTRY_OFFSET, 64);
 	dmub_rb_init(&dmub->outbox0_rb, &outbox0_rb_params);
+<<<<<<< HEAD
+=======
+
+	/* Report to DMUB what features are supported by current driver */
+	if (dmub->hw_funcs.enable_dmub_boot_options)
+		dmub->hw_funcs.enable_dmub_boot_options(dmub, params);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (dmub->hw_funcs.reset_release)
 		dmub->hw_funcs.reset_release(dmub);
@@ -744,3 +856,14 @@ bool dmub_srv_get_outbox0_msg(struct dmub_srv *dmub, struct dmcub_trace_buf_entr
 
 	return dmub_rb_out_trace_buffer_front(&dmub->outbox0_rb, (void *)entry);
 }
+<<<<<<< HEAD
+=======
+
+bool dmub_srv_get_diagnostic_data(struct dmub_srv *dmub, struct dmub_diagnostic_data *diag_data)
+{
+	if (!dmub || !dmub->hw_funcs.get_diagnostic_data || !diag_data)
+		return false;
+	dmub->hw_funcs.get_diagnostic_data(dmub, diag_data);
+	return true;
+}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

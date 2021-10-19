@@ -463,7 +463,13 @@ enum mt7615_reg_base {
 #define MT_LPON_TCR0(_n)		MT_LPON(0x010 + ((_n) * 4))
 #define MT_LPON_TCR2(_n)		MT_LPON(0x0f8 + ((_n) - 2) * 4)
 #define MT_LPON_TCR_MODE		GENMASK(1, 0)
+<<<<<<< HEAD
 #define MT_LPON_TCR_WRITE		BIT(0)
+=======
+#define MT_LPON_TCR_READ		GENMASK(1, 0)
+#define MT_LPON_TCR_WRITE		BIT(0)
+#define MT_LPON_TCR_ADJUST		BIT(1)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #define MT_LPON_UTTR0			MT_LPON(0x018)
 #define MT_LPON_UTTR1			MT_LPON(0x01c)

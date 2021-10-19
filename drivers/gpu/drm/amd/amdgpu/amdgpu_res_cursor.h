@@ -28,6 +28,10 @@
 
 #include <drm/drm_mm.h>
 #include <drm/ttm/ttm_resource.h>
+<<<<<<< HEAD
+=======
+#include <drm/ttm/ttm_range_manager.h>
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /* state back for walking over vram_mgr and gtt_mgr allocations */
 struct amdgpu_res_cursor {
@@ -53,7 +57,11 @@ static inline void amdgpu_res_first(struct ttm_resource *res,
 {
 	struct drm_mm_node *node;
 
+<<<<<<< HEAD
 	if (!res || !res->mm_node) {
+=======
+	if (!res) {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		cur->start = start;
 		cur->size = size;
 		cur->remaining = size;
@@ -63,7 +71,11 @@ static inline void amdgpu_res_first(struct ttm_resource *res,
 
 	BUG_ON(start + size > res->num_pages << PAGE_SHIFT);
 
+<<<<<<< HEAD
 	node = res->mm_node;
+=======
+	node = to_ttm_range_mgr_node(res)->mm_nodes;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	while (start >= node->size << PAGE_SHIFT)
 		start -= node++->size << PAGE_SHIFT;
 

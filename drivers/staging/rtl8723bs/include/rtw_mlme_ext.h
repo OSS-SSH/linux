@@ -194,6 +194,7 @@ enum {
 	/*  Add new channel plan above this line =============== */
 	RT_CHANNEL_DOMAIN_2G_MAX,
 };
+<<<<<<< HEAD
 
 enum {
 	RT_CHANNEL_DOMAIN_5G_NULL = 0x00,
@@ -235,6 +236,8 @@ enum {
 	RT_CHANNEL_DOMAIN_5G_FCC4_NO_DFS = 0x22,
 	RT_CHANNEL_DOMAIN_5G_MAX,
 };
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #define rtw_is_channel_plan_valid(chplan) (chplan < RT_CHANNEL_DOMAIN_MAX || chplan == RT_CHANNEL_DOMAIN_REALTEK_DEFINE)
 
@@ -247,6 +250,7 @@ struct rt_channel_plan_2g {
 	unsigned char Channel[MAX_CHANNEL_NUM_2G];
 	unsigned char Len;
 };
+<<<<<<< HEAD
 
 struct rt_channel_plan_5g {
 	unsigned char Channel[MAX_CHANNEL_NUM_5G];
@@ -256,6 +260,11 @@ struct rt_channel_plan_5g {
 struct rt_channel_plan_map {
 	unsigned char Index2G;
 	unsigned char Index5G;
+=======
+
+struct rt_channel_plan_map {
+	unsigned char Index2G;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
 
 enum {
@@ -348,13 +357,13 @@ struct FW_Sta_Info {
  * When the driver scanned RTW_SCAN_NUM_OF_CH channels, it would switch back to AP's operating channel for
  * RTW_STAY_AP_CH_MILLISECOND * SURVEY_TO milliseconds.
  * Example:
- * For chip supports 2.4G + 5GHz and AP mode is operating in channel 1,
+ * For chip supports 2.4G and AP mode is operating in channel 1,
  * RTW_SCAN_NUM_OF_CH is 8, RTW_STAY_AP_CH_MILLISECOND is 3 and SURVEY_TO is 100.
  * When it's STA mode gets set_scan command,
  * it would
  * 1. Doing the scan on channel 1.2.3.4.5.6.7.8
  * 2. Back to channel 1 for 300 milliseconds
- * 3. Go through doing site survey on channel 9.10.11.36.40.44.48.52
+ * 3. Go through doing site survey on channel 9.10.11
  * 4. Back to channel 1 for 300 milliseconds
  * 5. ... and so on, till survey done.
  */
@@ -411,7 +420,10 @@ struct rt_channel_info {
 };
 
 int rtw_ch_set_search_ch(struct rt_channel_info *ch_set, const u32 ch);
+<<<<<<< HEAD
 bool rtw_mlme_band_check(struct adapter *adapter, const u32 ch);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /*  P2P_MAX_REG_CLASSES - Maximum number of regulatory classes */
 #define P2P_MAX_REG_CLASSES 10
@@ -804,38 +816,6 @@ enum {
 
 
 #ifdef _RTW_MLME_EXT_C_
-
-static struct fwevent wlanevents[] =
-{
-	{0, rtw_dummy_event_callback},	/*0*/
-	{0, NULL},
-	{0, NULL},
-	{0, NULL},
-	{0, NULL},
-	{0, NULL},
-	{0, NULL},
-	{0, NULL},
-	{0, &rtw_survey_event_callback},		/*8*/
-	{sizeof(struct surveydone_event), &rtw_surveydone_event_callback},	/*9*/
-
-	{0, &rtw_joinbss_event_callback},		/*10*/
-	{sizeof(struct stassoc_event), &rtw_stassoc_event_callback},
-	{sizeof(struct stadel_event), &rtw_stadel_event_callback},
-	{0, &rtw_atimdone_event_callback},
-	{0, rtw_dummy_event_callback},
-	{0, NULL},	/*15*/
-	{0, NULL},
-	{0, NULL},
-	{0, NULL},
-	{0, rtw_fwdbg_event_callback},
-	{0, NULL},	 /*20*/
-	{0, NULL},
-	{0, NULL},
-	{0, &rtw_cpwm_event_callback},
-	{0, NULL},
-	{0, &rtw_wmm_event_callback},
-
-};
 
 #endif/* _RTL8192C_CMD_C_ */
 

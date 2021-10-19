@@ -328,9 +328,15 @@
 #define	RPMSG_S16_LE		0x0
 #define	RPMSG_S24_LE		0x1
 #define	RPMSG_S32_LE		0x2
+<<<<<<< HEAD
 #define	RPMSG_DSD_U16_LE	0x3
 #define	RPMSG_DSD_U24_LE	0x4
 #define	RPMSG_DSD_U32_LE	0x5
+=======
+#define	RPMSG_DSD_U16_LE	49  /* SNDRV_PCM_FORMAT_DSD_U16_LE */
+#define	RPMSG_DSD_U24_LE	0x4
+#define	RPMSG_DSD_U32_LE	50  /* SNDRV_PCM_FORMAT_DSD_U32_LE */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #define	RPMSG_CH_LEFT		0x0
 #define	RPMSG_CH_RIGHT		0x1

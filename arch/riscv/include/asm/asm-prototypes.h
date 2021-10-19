@@ -25,4 +25,10 @@ DECLARE_DO_ERROR_INFO(do_trap_ecall_s);
 DECLARE_DO_ERROR_INFO(do_trap_ecall_m);
 DECLARE_DO_ERROR_INFO(do_trap_break);
 
+<<<<<<< HEAD
+=======
+asmlinkage unsigned long get_overflow_stack(void);
+asmlinkage void handle_bad_stack(struct pt_regs *regs);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #endif /* _ASM_RISCV_PROTOTYPES_H */

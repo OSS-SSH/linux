@@ -62,7 +62,11 @@
 #include "mxc-jpeg-hw.h"
 #include "mxc-jpeg.h"
 
+<<<<<<< HEAD
 static struct mxc_jpeg_fmt mxc_formats[] = {
+=======
+static const struct mxc_jpeg_fmt mxc_formats[] = {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	{
 		.name		= "JPEG",
 		.fourcc		= V4L2_PIX_FMT_JPEG,
@@ -341,7 +345,11 @@ static inline struct mxc_jpeg_ctx *mxc_jpeg_fh_to_ctx(struct v4l2_fh *fh)
 	return container_of(fh, struct mxc_jpeg_ctx, fh);
 }
 
+<<<<<<< HEAD
 static int enum_fmt(struct mxc_jpeg_fmt *mxc_formats, int n,
+=======
+static int enum_fmt(const struct mxc_jpeg_fmt *mxc_formats, int n,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		    struct v4l2_fmtdesc *f, u32 type)
 {
 	int i, num = 0;
@@ -368,13 +376,22 @@ static int enum_fmt(struct mxc_jpeg_fmt *mxc_formats, int n,
 	return 0;
 }
 
+<<<<<<< HEAD
 static struct mxc_jpeg_fmt *mxc_jpeg_find_format(struct mxc_jpeg_ctx *ctx,
 						 u32 pixelformat)
+=======
+static const struct mxc_jpeg_fmt *mxc_jpeg_find_format(struct mxc_jpeg_ctx *ctx,
+						       u32 pixelformat)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	unsigned int k;
 
 	for (k = 0; k < MXC_JPEG_NUM_FORMATS; k++) {
+<<<<<<< HEAD
 		struct mxc_jpeg_fmt *fmt = &mxc_formats[k];
+=======
+		const struct mxc_jpeg_fmt *fmt = &mxc_formats[k];
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		if (fmt->fourcc == pixelformat)
 			return fmt;
@@ -1536,7 +1553,11 @@ static int mxc_jpeg_enum_fmt_vid_out(struct file *file, void *priv,
 				MXC_JPEG_FMT_TYPE_RAW);
 }
 
+<<<<<<< HEAD
 static int mxc_jpeg_try_fmt(struct v4l2_format *f, struct mxc_jpeg_fmt *fmt,
+=======
+static int mxc_jpeg_try_fmt(struct v4l2_format *f, const struct mxc_jpeg_fmt *fmt,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			    struct mxc_jpeg_ctx *ctx, int q_type)
 {
 	struct v4l2_pix_format_mplane *pix_mp = &f->fmt.pix_mp;
@@ -1612,7 +1633,11 @@ static int mxc_jpeg_try_fmt_vid_cap(struct file *file, void *priv,
 	struct mxc_jpeg_ctx *ctx = mxc_jpeg_fh_to_ctx(priv);
 	struct mxc_jpeg_dev *jpeg = ctx->mxc_jpeg;
 	struct device *dev = jpeg->dev;
+<<<<<<< HEAD
 	struct mxc_jpeg_fmt *fmt;
+=======
+	const struct mxc_jpeg_fmt *fmt;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u32 fourcc = f->fmt.pix_mp.pixelformat;
 
 	int q_type = (jpeg->mode == MXC_JPEG_DECODE) ?
@@ -1643,7 +1668,11 @@ static int mxc_jpeg_try_fmt_vid_out(struct file *file, void *priv,
 	struct mxc_jpeg_ctx *ctx = mxc_jpeg_fh_to_ctx(priv);
 	struct mxc_jpeg_dev *jpeg = ctx->mxc_jpeg;
 	struct device *dev = jpeg->dev;
+<<<<<<< HEAD
 	struct mxc_jpeg_fmt *fmt;
+=======
+	const struct mxc_jpeg_fmt *fmt;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u32 fourcc = f->fmt.pix_mp.pixelformat;
 
 	int q_type = (jpeg->mode == MXC_JPEG_ENCODE) ?
@@ -1890,7 +1919,11 @@ static const struct v4l2_file_operations mxc_jpeg_fops = {
 	.mmap		= v4l2_m2m_fop_mmap,
 };
 
+<<<<<<< HEAD
 static struct v4l2_m2m_ops mxc_jpeg_m2m_ops = {
+=======
+static const struct v4l2_m2m_ops mxc_jpeg_m2m_ops = {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.device_run	= mxc_jpeg_device_run,
 };
 

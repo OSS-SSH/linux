@@ -300,6 +300,10 @@ struct ipa_data {
 	const struct ipa_clock_data *clock_data;
 };
 
+<<<<<<< HEAD
+=======
+extern const struct ipa_data ipa_data_v3_1;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 extern const struct ipa_data ipa_data_v3_5_1;
 extern const struct ipa_data ipa_data_v4_2;
 extern const struct ipa_data ipa_data_v4_5;

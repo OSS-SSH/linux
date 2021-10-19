@@ -564,7 +564,11 @@ enum mod_hdcp_status mod_hdcp_hdcp2_dp_transition(struct mod_hdcp *hdcp,
 	case D2_A5_AUTHENTICATED:
 		if (input->rxstatus_read == FAIL ||
 				input->reauth_request_check == FAIL) {
+<<<<<<< HEAD
 			fail_and_restart_in_ms(0, &status, output);
+=======
+			fail_and_restart_in_ms(100, &status, output);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			break;
 		} else if (input->link_integrity_check_dp == FAIL) {
 			if (hdcp->connection.hdcp2_retry_count >= 1)

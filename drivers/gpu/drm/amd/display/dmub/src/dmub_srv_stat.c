@@ -35,6 +35,7 @@
  */
 
 /**
+<<<<<<< HEAD
  *****************************************************************************
  *  Function: dmub_srv_stat_get_notification
  *
@@ -49,6 +50,15 @@
  *  @return
  *     dmub_status
  *****************************************************************************
+=======
+ * dmub_srv_stat_get_notification - Retrieves a dmub outbox notification, set up dmub notification
+ *                                  structure with message information. Also a pending bit if queue
+ *                                  is having more notifications
+ *  @dmub: dmub srv structure
+ *  @notify: dmub notification structure to be filled up
+ *
+ *  Returns: dmub_status
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  */
 enum dmub_status dmub_srv_stat_get_notification(struct dmub_srv *dmub,
 						struct dmub_notification *notify)

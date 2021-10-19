@@ -14,8 +14,14 @@
 #include <asm/set_memory.h>	/* For set_memory_x() */
 #include <linux/compiler.h>	/* For unreachable() */
 #include <linux/cpu.h>		/* For cpu_down() */
+<<<<<<< HEAD
 
 /**
+=======
+#include <linux/reboot.h>
+
+/*
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * kexec_image_info - Print received image details
  */
 static void
@@ -39,7 +45,11 @@ kexec_image_info(const struct kimage *image)
 	}
 }
 
+<<<<<<< HEAD
 /**
+=======
+/*
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * machine_kexec_prepare - Initialize kexec
  *
  * This function is called from do_kexec_load, when the user has
@@ -100,7 +110,11 @@ machine_kexec_prepare(struct kimage *image)
 }
 
 
+<<<<<<< HEAD
 /**
+=======
+/*
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * machine_kexec_cleanup - Cleanup any leftovers from
  *			   machine_kexec_prepare
  *
@@ -135,7 +149,11 @@ void machine_shutdown(void)
 #endif
 }
 
+<<<<<<< HEAD
 /**
+=======
+/*
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * machine_crash_shutdown - Prepare to kexec after a kernel crash
  *
  * This function is called by crash_kexec just before machine_kexec
@@ -151,7 +169,11 @@ machine_crash_shutdown(struct pt_regs *regs)
 	pr_info("Starting crashdump kernel...\n");
 }
 
+<<<<<<< HEAD
 /**
+=======
+/*
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * machine_kexec - Jump to the loaded kimage
  *
  * This function is called by kernel_kexec which is called by the
@@ -188,6 +210,10 @@ machine_kexec(struct kimage *image)
 	/* Jump to the relocation code */
 	pr_notice("Bye...\n");
 	kexec_method(first_ind_entry, jump_addr, fdt_addr,
+<<<<<<< HEAD
 		     this_hart_id, va_pa_offset);
+=======
+		     this_hart_id, kernel_map.va_pa_offset);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	unreachable();
 }

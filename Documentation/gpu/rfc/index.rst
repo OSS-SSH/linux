@@ -15,3 +15,10 @@ host such documentation:
 
 * Once the code has landed move all the documentation to the right places in
   the main core, helper or driver sections.
+<<<<<<< HEAD
+=======
+
+.. toctree::
+
+    i915_gem_lmem.rst
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

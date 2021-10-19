@@ -840,7 +840,11 @@ bool kvm_unmap_gfn_range_hv(struct kvm *kvm, struct kvm_gfn_range *range)
 			kvm_unmap_radix(kvm, range->slot, gfn);
 	} else {
 		for (gfn = range->start; gfn < range->end; gfn++)
+<<<<<<< HEAD
 			kvm_unmap_rmapp(kvm, range->slot, range->start);
+=======
+			kvm_unmap_rmapp(kvm, range->slot, gfn);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	return false;

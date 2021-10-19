@@ -8,7 +8,6 @@
 #include <linux/shmem_fs.h>
 #include <linux/swap.h>
 
-#include <drm/drm.h> /* for drm_legacy.h! */
 #include <drm/drm_cache.h>
 
 #include "gt/intel_gt.h"
@@ -187,10 +186,42 @@ int i915_gem_object_pread_phys(struct drm_i915_gem_object *obj,
 }
 
 static int i915_gem_object_shmem_to_phys(struct drm_i915_gem_object *obj)
+<<<<<<< HEAD
+=======
 {
 	struct sg_table *pages;
 	int err;
 
+	pages = __i915_gem_object_unset_pages(obj);
+
+	err = i915_gem_object_get_pages_phys(obj);
+	if (err)
+		goto err_xfer;
+
+	/* Perma-pin (until release) the physical set of pages */
+	__i915_gem_object_pin_pages(obj);
+
+	if (!IS_ERR_OR_NULL(pages))
+		i915_gem_object_put_pages_shmem(obj, pages);
+
+	i915_gem_object_release_memory_region(obj);
+	return 0;
+
+err_xfer:
+	if (!IS_ERR_OR_NULL(pages)) {
+		unsigned int sg_page_sizes = i915_sg_dma_sizes(pages->sgl);
+
+		__i915_gem_object_set_pages(obj, pages, sg_page_sizes);
+	}
+	return err;
+}
+
+int i915_gem_object_attach_phys(struct drm_i915_gem_object *obj, int align)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+{
+	int err;
+
+<<<<<<< HEAD
 	pages = __i915_gem_object_unset_pages(obj);
 
 	err = i915_gem_object_get_pages_phys(obj);
@@ -213,6 +244,39 @@ err_xfer:
 		__i915_gem_object_set_pages(obj, pages, sg_page_sizes);
 	}
 	return err;
+=======
+	assert_object_held(obj);
+
+	if (align > obj->base.size)
+		return -EINVAL;
+
+	if (!i915_gem_object_is_shmem(obj))
+		return -EINVAL;
+
+	if (!i915_gem_object_has_struct_page(obj))
+		return 0;
+
+	err = i915_gem_object_unbind(obj, I915_GEM_OBJECT_UNBIND_ACTIVE);
+	if (err)
+		return err;
+
+	if (obj->mm.madv != I915_MADV_WILLNEED)
+		return -EFAULT;
+
+	if (i915_gem_object_has_tiling_quirk(obj))
+		return -EFAULT;
+
+	if (obj->mm.mapping || i915_gem_object_has_pinned_pages(obj))
+		return -EBUSY;
+
+	if (unlikely(obj->mm.madv != I915_MADV_WILLNEED)) {
+		drm_dbg(obj->base.dev,
+			"Attempting to obtain a purgeable object\n");
+		return -EFAULT;
+	}
+
+	return i915_gem_object_shmem_to_phys(obj);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 int i915_gem_object_attach_phys(struct drm_i915_gem_object *obj, int align)

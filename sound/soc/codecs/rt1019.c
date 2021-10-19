@@ -372,8 +372,13 @@ static int rt1019_set_dai_pll(struct snd_soc_dai *dai, int pll_id, int source,
 		RT1019_AUTO_BITS_SEL_MANU | RT1019_AUTO_CLK_SEL_MANU);
 	snd_soc_component_update_bits(component, RT1019_PLL_1,
 		RT1019_PLL_M_MASK | RT1019_PLL_M_BP_MASK | RT1019_PLL_Q_8_8_MASK,
+<<<<<<< HEAD
 		(pll_code.m_bp ? 0 : pll_code.m_code) << RT1019_PLL_M_SFT |
 		pll_code.m_bp << RT1019_PLL_M_BP_SFT |
+=======
+		((pll_code.m_bp ? 0 : pll_code.m_code) << RT1019_PLL_M_SFT) |
+		(pll_code.m_bp << RT1019_PLL_M_BP_SFT) |
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		((pll_code.n_code >> 8) & RT1019_PLL_Q_8_8_MASK));
 	snd_soc_component_update_bits(component, RT1019_PLL_2,
 		RT1019_PLL_Q_7_0_MASK, pll_code.n_code & RT1019_PLL_Q_7_0_MASK);
@@ -522,6 +527,10 @@ static const struct snd_soc_component_driver soc_component_dev_rt1019 = {
 	.num_dapm_widgets	= ARRAY_SIZE(rt1019_dapm_widgets),
 	.dapm_routes		= rt1019_dapm_routes,
 	.num_dapm_routes	= ARRAY_SIZE(rt1019_dapm_routes),
+<<<<<<< HEAD
+=======
+	.non_legacy_dai_naming	= 1,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
 
 static const struct regmap_config rt1019_regmap = {

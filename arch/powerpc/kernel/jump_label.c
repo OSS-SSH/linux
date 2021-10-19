@@ -11,10 +11,14 @@
 void arch_jump_label_transform(struct jump_entry *entry,
 			       enum jump_label_type type)
 {
+<<<<<<< HEAD
 	struct ppc_inst *addr = (struct ppc_inst *)jump_entry_code(entry);
+=======
+	u32 *addr = (u32 *)jump_entry_code(entry);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (type == JUMP_LABEL_JMP)
 		patch_branch(addr, jump_entry_target(entry), 0);
 	else
-		patch_instruction(addr, ppc_inst(PPC_INST_NOP));
+		patch_instruction(addr, ppc_inst(PPC_RAW_NOP()));
 }

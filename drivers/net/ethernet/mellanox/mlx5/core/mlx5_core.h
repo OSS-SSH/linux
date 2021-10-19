@@ -164,6 +164,7 @@ int mlx5_query_mcam_reg(struct mlx5_core_dev *dev, u32 *mcap, u8 feature_group,
 int mlx5_query_qcam_reg(struct mlx5_core_dev *mdev, u32 *qcam,
 			u8 feature_group, u8 access_reg_group);
 
+<<<<<<< HEAD
 void mlx5_lag_add(struct mlx5_core_dev *dev, struct net_device *netdev);
 void mlx5_lag_remove(struct mlx5_core_dev *dev);
 
@@ -185,6 +186,12 @@ mlx5_irq_get_affinity_mask(struct mlx5_irq_table *irq_table, int vecidx);
 struct cpu_rmap *mlx5_irq_get_rmap(struct mlx5_irq_table *table);
 int mlx5_irq_get_num_comp(struct mlx5_irq_table *table);
 struct mlx5_irq_table *mlx5_irq_table_get(struct mlx5_core_dev *dev);
+=======
+void mlx5_lag_add_netdev(struct mlx5_core_dev *dev, struct net_device *netdev);
+void mlx5_lag_remove_netdev(struct mlx5_core_dev *dev, struct net_device *netdev);
+void mlx5_lag_add_mdev(struct mlx5_core_dev *dev);
+void mlx5_lag_remove_mdev(struct mlx5_core_dev *dev);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 int mlx5_events_init(struct mlx5_core_dev *dev);
 void mlx5_events_cleanup(struct mlx5_core_dev *dev);

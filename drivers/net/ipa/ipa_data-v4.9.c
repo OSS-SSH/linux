@@ -263,116 +263,232 @@ static const struct ipa_resource_data ipa_resource_data = {
 
 /* IPA-resident memory region data for an SoC having IPA v4.9 */
 static const struct ipa_mem ipa_mem_local_data[] = {
+<<<<<<< HEAD
 	[IPA_MEM_UC_SHARED] = {
+=======
+	{
+		.id		= IPA_MEM_UC_SHARED,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0000,
 		.size		= 0x0080,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_UC_INFO] = {
+=======
+	{
+		.id		= IPA_MEM_UC_INFO,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0080,
 		.size		= 0x0200,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_V4_FILTER_HASHED] = { .offset		= 0x0288,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
 	[IPA_MEM_V4_FILTER] = {
+=======
+	{
+		.id		= IPA_MEM_V4_FILTER_HASHED,
+		.offset		= 0x0288,
+		.size		= 0x0078,
+		.canary_count	= 2,
+	},
+	{
+		.id		= IPA_MEM_V4_FILTER,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0308,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_V6_FILTER_HASHED] = {
+=======
+	{
+		.id		= IPA_MEM_V6_FILTER_HASHED,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0388,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_V6_FILTER] = {
+=======
+	{
+		.id		= IPA_MEM_V6_FILTER,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0408,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_V4_ROUTE_HASHED] = {
+=======
+	{
+		.id		= IPA_MEM_V4_ROUTE_HASHED,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0488,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_V4_ROUTE] = {
+=======
+	{
+		.id		= IPA_MEM_V4_ROUTE,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0508,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_V6_ROUTE_HASHED] = {
+=======
+	{
+		.id		= IPA_MEM_V6_ROUTE_HASHED,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0588,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_V6_ROUTE] = {
+=======
+	{
+		.id		= IPA_MEM_V6_ROUTE,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0608,
 		.size		= 0x0078,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_MODEM_HEADER] = {
+=======
+	{
+		.id		= IPA_MEM_MODEM_HEADER,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0688,
 		.size		= 0x0240,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_AP_HEADER] = {
+=======
+	{
+		.id		= IPA_MEM_AP_HEADER,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x08c8,
 		.size		= 0x0200,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_MODEM_PROC_CTX] = {
+=======
+	{
+		.id		= IPA_MEM_MODEM_PROC_CTX,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x0ad0,
 		.size		= 0x0b20,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_AP_PROC_CTX] = {
+=======
+	{
+		.id		= IPA_MEM_AP_PROC_CTX,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x15f0,
 		.size		= 0x0200,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_NAT_TABLE] = {
+=======
+	{
+		.id		= IPA_MEM_NAT_TABLE,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x1800,
 		.size		= 0x0d00,
 		.canary_count	= 4,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_STATS_QUOTA_MODEM] = {
+=======
+	{
+		.id		= IPA_MEM_STATS_QUOTA_MODEM,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x2510,
 		.size		= 0x0030,
 		.canary_count	= 4,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_STATS_QUOTA_AP] = {
+=======
+	{
+		.id		= IPA_MEM_STATS_QUOTA_AP,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x2540,
 		.size		= 0x0048,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_STATS_TETHERING] = {
+=======
+	{
+		.id		= IPA_MEM_STATS_TETHERING,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x2588,
 		.size		= 0x0238,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_STATS_FILTER_ROUTE] = {
+=======
+	{
+		.id		= IPA_MEM_STATS_FILTER_ROUTE,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x27c0,
 		.size		= 0x0800,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_STATS_DROP] = {
+=======
+	{
+		.id		= IPA_MEM_STATS_DROP,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x2fc0,
 		.size		= 0x0020,
 		.canary_count	= 0,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_MODEM] = {
+=======
+	{
+		.id		= IPA_MEM_MODEM,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x2fe8,
 		.size		= 0x0800,
 		.canary_count	= 2,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_UC_EVENT_RING] = {
+=======
+	{
+		.id		= IPA_MEM_UC_EVENT_RING,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x3800,
 		.size		= 0x1000,
 		.canary_count	= 1,
 	},
+<<<<<<< HEAD
 	[IPA_MEM_PDN_CONFIG] = {
+=======
+	{
+		.id		= IPA_MEM_PDN_CONFIG,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.offset		= 0x4800,
 		.size		= 0x0050,
 		.canary_count	= 0,

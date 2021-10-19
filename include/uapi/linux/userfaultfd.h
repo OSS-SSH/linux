@@ -31,7 +31,12 @@
 			   UFFD_FEATURE_MISSING_SHMEM |		\
 			   UFFD_FEATURE_SIGBUS |		\
 			   UFFD_FEATURE_THREAD_ID |		\
+<<<<<<< HEAD
 			   UFFD_FEATURE_MINOR_HUGETLBFS)
+=======
+			   UFFD_FEATURE_MINOR_HUGETLBFS |	\
+			   UFFD_FEATURE_MINOR_SHMEM)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #define UFFD_API_IOCTLS				\
 	((__u64)1 << _UFFDIO_REGISTER |		\
 	 (__u64)1 << _UFFDIO_UNREGISTER |	\
@@ -80,8 +85,13 @@
 				      struct uffdio_zeropage)
 #define UFFDIO_WRITEPROTECT	_IOWR(UFFDIO, _UFFDIO_WRITEPROTECT, \
 				      struct uffdio_writeprotect)
+<<<<<<< HEAD
 #define UFFDIO_CONTINUE		_IOR(UFFDIO, _UFFDIO_CONTINUE,	\
 				     struct uffdio_continue)
+=======
+#define UFFDIO_CONTINUE		_IOWR(UFFDIO, _UFFDIO_CONTINUE,	\
+				      struct uffdio_continue)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /* read() structure */
 struct uffd_msg {
@@ -185,6 +195,12 @@ struct uffdio_api {
 	 * UFFD_FEATURE_MINOR_HUGETLBFS indicates that minor faults
 	 * can be intercepted (via REGISTER_MODE_MINOR) for
 	 * hugetlbfs-backed pages.
+<<<<<<< HEAD
+=======
+	 *
+	 * UFFD_FEATURE_MINOR_SHMEM indicates the same support as
+	 * UFFD_FEATURE_MINOR_HUGETLBFS, but for shmem-backed pages instead.
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	 */
 #define UFFD_FEATURE_PAGEFAULT_FLAG_WP		(1<<0)
 #define UFFD_FEATURE_EVENT_FORK			(1<<1)
@@ -196,6 +212,10 @@ struct uffdio_api {
 #define UFFD_FEATURE_SIGBUS			(1<<7)
 #define UFFD_FEATURE_THREAD_ID			(1<<8)
 #define UFFD_FEATURE_MINOR_HUGETLBFS		(1<<9)
+<<<<<<< HEAD
+=======
+#define UFFD_FEATURE_MINOR_SHMEM		(1<<10)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	__u64 features;
 
 	__u64 ioctls;

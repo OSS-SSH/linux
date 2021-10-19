@@ -2,7 +2,7 @@
 /*
  * HiSilicon SoC DDRC uncore Hardware event counters support
  *
- * Copyright (C) 2017 Hisilicon Limited
+ * Copyright (C) 2017 HiSilicon Limited
  * Author: Shaokun Zhang <zhangshaokun@hisilicon.com>
  *         Anurup M <anurup.m@huawei.com>
  *
@@ -339,6 +339,7 @@ static struct attribute *hisi_ddrc_pmu_v1_format_attr[] = {
 };
 
 static const struct attribute_group hisi_ddrc_pmu_v1_format_group = {
+<<<<<<< HEAD
 	.name = "format",
 	.attrs = hisi_ddrc_pmu_v1_format_attr,
 };
@@ -353,6 +354,22 @@ static const struct attribute_group hisi_ddrc_pmu_v2_format_group = {
 	.attrs = hisi_ddrc_pmu_v2_format_attr,
 };
 
+=======
+	.name = "format",
+	.attrs = hisi_ddrc_pmu_v1_format_attr,
+};
+
+static struct attribute *hisi_ddrc_pmu_v2_format_attr[] = {
+	HISI_PMU_FORMAT_ATTR(event, "config:0-7"),
+	NULL
+};
+
+static const struct attribute_group hisi_ddrc_pmu_v2_format_group = {
+	.name = "format",
+	.attrs = hisi_ddrc_pmu_v2_format_attr,
+};
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static struct attribute *hisi_ddrc_pmu_v1_events_attr[] = {
 	HISI_PMU_EVENT_ATTR(flux_wr,		0x00),
 	HISI_PMU_EVENT_ATTR(flux_rd,		0x01),
@@ -537,7 +554,6 @@ static int hisi_ddrc_pmu_probe(struct platform_device *pdev)
 		dev_err(ddrc_pmu->dev, "DDRC PMU register failed!\n");
 		cpuhp_state_remove_instance_nocalls(
 			CPUHP_AP_PERF_ARM_HISI_DDRC_ONLINE, &ddrc_pmu->node);
-		irq_set_affinity_hint(ddrc_pmu->irq, NULL);
 	}
 
 	return ret;
@@ -550,8 +566,6 @@ static int hisi_ddrc_pmu_remove(struct platform_device *pdev)
 	perf_pmu_unregister(&ddrc_pmu->pmu);
 	cpuhp_state_remove_instance_nocalls(CPUHP_AP_PERF_ARM_HISI_DDRC_ONLINE,
 					    &ddrc_pmu->node);
-	irq_set_affinity_hint(ddrc_pmu->irq, NULL);
-
 	return 0;
 }
 

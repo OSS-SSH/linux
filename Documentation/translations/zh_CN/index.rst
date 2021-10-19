@@ -4,6 +4,9 @@
 
 	\renewcommand\thesection*
 	\renewcommand\thesubsection*
+	\kerneldocCJKon
+
+.. _linux_doc_zh:
 
 .. _linux_doc_zh:
 
@@ -72,11 +75,18 @@ TODOlist:
    dev-tools/index
    doc-guide/index
    kernel-hacking/index
+<<<<<<< HEAD
+=======
+   maintainer/index
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 TODOList:
 
 * trace/index
+<<<<<<< HEAD
 * maintainer/index
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 * fault-injection/index
 * livepatch/index
 * rust/index
@@ -153,6 +163,10 @@ TODOList:
    arm64/index
    riscv/index
    openrisc/index
+<<<<<<< HEAD
+=======
+   parisc/index
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 TODOList:
 
@@ -160,7 +174,10 @@ TODOList:
 * ia64/index
 * m68k/index
 * nios2/index
+<<<<<<< HEAD
 * parisc/index
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 * powerpc/index
 * s390/index
 * sh/index

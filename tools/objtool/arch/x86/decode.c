@@ -19,6 +19,10 @@
 #include <objtool/elf.h>
 #include <objtool/arch.h>
 #include <objtool/warn.h>
+<<<<<<< HEAD
+=======
+#include <objtool/endianness.h>
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <arch/elf.h>
 
 static int is_x86_64(const struct elf *elf)
@@ -683,7 +687,11 @@ static int elf_add_alternative(struct elf *elf,
 	sec = find_section_by_name(elf, ".altinstructions");
 	if (!sec) {
 		sec = elf_create_section(elf, ".altinstructions",
+<<<<<<< HEAD
 					 SHF_WRITE, size, 0);
+=======
+					 SHF_ALLOC, size, 0);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		if (!sec) {
 			WARN_ELF("elf_create_section");
@@ -725,7 +733,11 @@ static int elf_add_alternative(struct elf *elf,
 		return -1;
 	}
 
+<<<<<<< HEAD
 	alt->cpuid = cpuid;
+=======
+	alt->cpuid = bswap_if_needed(cpuid);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	alt->instrlen = orig_len;
 	alt->replacementlen = repl_len;
 
@@ -746,6 +758,13 @@ int arch_rewrite_retpolines(struct objtool_file *file)
 
 	list_for_each_entry(insn, &file->retpoline_call_list, call_node) {
 
+<<<<<<< HEAD
+=======
+		if (insn->type != INSN_JUMP_DYNAMIC &&
+		    insn->type != INSN_CALL_DYNAMIC)
+			continue;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		if (!strcmp(insn->sec->name, ".text.__x86.indirect_thunk"))
 			continue;
 

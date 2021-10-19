@@ -28,8 +28,14 @@ struct netns_sysctl_ipv6 {
 	int ip6_rt_gc_elasticity;
 	int ip6_rt_mtu_expires;
 	int ip6_rt_min_advmss;
+<<<<<<< HEAD
 	u8 bindv6only;
 	u8 multipath_hash_policy;
+=======
+	u32 multipath_hash_fields;
+	u8 multipath_hash_policy;
+	u8 bindv6only;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u8 flowlabel_consistency;
 	u8 auto_flowlabels;
 	int icmpv6_time;

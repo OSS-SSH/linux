@@ -64,7 +64,11 @@
 #define FEATURE_SMUIO_CG_BIT            28
 #define FEATURE_THM_CG_BIT              29
 #define FEATURE_CLK_CG_BIT              30
+<<<<<<< HEAD
 #define FEATURE_SPARE_31_BIT            31
+=======
+#define FEATURE_EDC_BIT                 31
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #define FEATURE_SPARE_32_BIT            32
 #define FEATURE_SPARE_33_BIT            33
 #define FEATURE_SPARE_34_BIT            34
@@ -439,8 +443,16 @@ typedef struct {
   int8_t   XgmiOffset;     // in Amps
   uint8_t  Padding_TelemetryXgmi;
 
+<<<<<<< HEAD
   //reserved
   uint32_t reserved[15];
+=======
+  uint16_t  EdcPowerLimit;
+  uint16_t  spare6;
+
+  //reserved
+  uint32_t reserved[14];
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 } PPTable_t;
 

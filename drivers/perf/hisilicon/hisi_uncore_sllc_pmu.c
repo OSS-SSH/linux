@@ -2,7 +2,11 @@
 /*
  * HiSilicon SLLC uncore Hardware event counters support
  *
+<<<<<<< HEAD
  * Copyright (C) 2020 Hisilicon Limited
+=======
+ * Copyright (C) 2020 HiSilicon Limited
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * Author: Shaokun Zhang <zhangshaokun@hisilicon.com>
  *
  * This code is based on the uncore PMUs like arm-cci and arm-ccn.
@@ -366,7 +370,11 @@ static struct attribute *hisi_sllc_pmu_identifier_attrs[] = {
 	NULL
 };
 
+<<<<<<< HEAD
 static struct attribute_group hisi_sllc_pmu_identifier_group = {
+=======
+static const struct attribute_group hisi_sllc_pmu_identifier_group = {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.attrs = hisi_sllc_pmu_identifier_attrs,
 };
 
@@ -465,7 +473,10 @@ static int hisi_sllc_pmu_probe(struct platform_device *pdev)
 		dev_err(sllc_pmu->dev, "PMU register failed, ret = %d\n", ret);
 		cpuhp_state_remove_instance(CPUHP_AP_PERF_ARM_HISI_SLLC_ONLINE,
 					    &sllc_pmu->node);
+<<<<<<< HEAD
 		irq_set_affinity_hint(sllc_pmu->irq, NULL);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		return ret;
 	}
 
@@ -481,8 +492,11 @@ static int hisi_sllc_pmu_remove(struct platform_device *pdev)
 	perf_pmu_unregister(&sllc_pmu->pmu);
 	cpuhp_state_remove_instance_nocalls(CPUHP_AP_PERF_ARM_HISI_SLLC_ONLINE,
 					    &sllc_pmu->node);
+<<<<<<< HEAD
 	irq_set_affinity_hint(sllc_pmu->irq, NULL);
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	return 0;
 }
 

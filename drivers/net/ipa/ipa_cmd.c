@@ -200,12 +200,14 @@ bool ipa_cmd_table_valid(struct ipa *ipa, const struct ipa_mem *mem,
 /* Validate the memory region that holds headers */
 static bool ipa_cmd_header_valid(struct ipa *ipa)
 {
-	const struct ipa_mem *mem = &ipa->mem[IPA_MEM_MODEM_HEADER];
 	struct device *dev = &ipa->pdev->dev;
+	const struct ipa_mem *mem;
 	u32 offset_max;
 	u32 size_max;
+	u32 offset;
 	u32 size;
 
+<<<<<<< HEAD
 	/* In ipa_cmd_hdr_init_local_add() we record the offset and size
 	 * of the header table memory area.  Make sure the offset and size
 	 * fit in the fields that need to hold them, and that the entire
@@ -217,24 +219,64 @@ static bool ipa_cmd_header_valid(struct ipa *ipa)
 		dev_err(dev, "header table region offset too large\n");
 		dev_err(dev, "    (0x%04x + 0x%04x > 0x%04x)\n",
 			ipa->mem_offset, mem->offset, offset_max);
+=======
+	/* In ipa_cmd_hdr_init_local_add() we record the offset and size of
+	 * the header table memory area in an immediate command.  Make sure
+	 * the offset and size fit in the fields that need to hold them, and
+	 * that the entire range is within the overall IPA memory range.
+	 */
+	offset_max = field_max(HDR_INIT_LOCAL_FLAGS_HDR_ADDR_FMASK);
+	size_max = field_max(HDR_INIT_LOCAL_FLAGS_TABLE_SIZE_FMASK);
+
+	/* The header memory area contains both the modem and AP header
+	 * regions.  The modem portion defines the address of the region.
+	 */
+	mem = ipa_mem_find(ipa, IPA_MEM_MODEM_HEADER);
+	offset = mem->offset;
+	size = mem->size;
+
+	/* Make sure the offset fits in the IPA command */
+	if (offset > offset_max || ipa->mem_offset > offset_max - offset) {
+		dev_err(dev, "header table region offset too large\n");
+		dev_err(dev, "    (0x%04x + 0x%04x > 0x%04x)\n",
+			ipa->mem_offset, offset, offset_max);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		return false;
 	}
 
+<<<<<<< HEAD
 	size_max = field_max(HDR_INIT_LOCAL_FLAGS_TABLE_SIZE_FMASK);
 	size = ipa->mem[IPA_MEM_MODEM_HEADER].size;
 	size += ipa->mem[IPA_MEM_AP_HEADER].size;
 
+=======
+	/* Add the size of the AP portion (if defined) to the combined size */
+	mem = ipa_mem_find(ipa, IPA_MEM_AP_HEADER);
+	if (mem)
+		size += mem->size;
+
+	/* Make sure the combined size fits in the IPA command */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (size > size_max) {
 		dev_err(dev, "header table region size too large\n");
 		dev_err(dev, "    (0x%04x > 0x%08x)\n", size, size_max);
 
 		return false;
 	}
+<<<<<<< HEAD
 	if (size > ipa->mem_size || mem->offset > ipa->mem_size - size) {
 		dev_err(dev, "header table region out of range\n");
 		dev_err(dev, "    (0x%04x + 0x%04x > 0x%04x)\n",
 			mem->offset, size, ipa->mem_size);
+=======
+
+	/* Make sure the entire combined area fits in IPA memory */
+	if (size > ipa->mem_size || offset > ipa->mem_size - size) {
+		dev_err(dev, "header table region out of range\n");
+		dev_err(dev, "    (0x%04x + 0x%04x > 0x%04x)\n",
+			offset, size, ipa->mem_size);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		return false;
 	}

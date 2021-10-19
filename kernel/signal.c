@@ -412,8 +412,8 @@ __sigqueue_alloc(int sig, struct task_struct *t, gfp_t gfp_flags,
 		 int override_rlimit, const unsigned int sigqueue_flags)
 {
 	struct sigqueue *q = NULL;
-	struct user_struct *user;
-	int sigpending;
+	struct ucounts *ucounts = NULL;
+	long sigpending;
 
 	/*
 	 * Protect access to @t credentials. This can go away when all
@@ -424,13 +424,26 @@ __sigqueue_alloc(int sig, struct task_struct *t, gfp_t gfp_flags,
 	 * changes from/to zero.
 	 */
 	rcu_read_lock();
-	user = __task_cred(t)->user;
-	sigpending = atomic_inc_return(&user->sigpending);
-	if (sigpending == 1)
-		get_uid(user);
+	ucounts = task_ucounts(t);
+	sigpending = inc_rlimit_ucounts(ucounts, UCOUNT_RLIMIT_SIGPENDING, 1);
+	switch (sigpending) {
+	case 1:
+		if (likely(get_ucounts(ucounts)))
+			break;
+		fallthrough;
+	case LONG_MAX:
+		/*
+		 * we need to decrease the ucount in the userns tree on any
+		 * failure to avoid counts leaking.
+		 */
+		dec_rlimit_ucounts(ucounts, UCOUNT_RLIMIT_SIGPENDING, 1);
+		rcu_read_unlock();
+		return NULL;
+	}
 	rcu_read_unlock();
 
 	if (override_rlimit || likely(sigpending <= task_rlimit(t, RLIMIT_SIGPENDING))) {
+<<<<<<< HEAD
 		/*
 		 * Preallocation does not hold sighand::siglock so it can't
 		 * use the cache. The lockless caching requires that only
@@ -441,19 +454,25 @@ __sigqueue_alloc(int sig, struct task_struct *t, gfp_t gfp_flags,
 			q = kmem_cache_alloc(sigqueue_cachep, gfp_flags);
 		else
 			WRITE_ONCE(t->sigqueue_cache, NULL);
+=======
+		q = kmem_cache_alloc(sigqueue_cachep, gfp_flags);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	} else {
 		print_dropped_signal(sig);
 	}
 
 	if (unlikely(q == NULL)) {
-		if (atomic_dec_and_test(&user->sigpending))
-			free_uid(user);
+		if (dec_rlimit_ucounts(ucounts, UCOUNT_RLIMIT_SIGPENDING, 1))
+			put_ucounts(ucounts);
 	} else {
 		INIT_LIST_HEAD(&q->list);
 		q->flags = sigqueue_flags;
+<<<<<<< HEAD
 		q->user = user;
+=======
+		q->ucounts = ucounts;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
-
 	return q;
 }
 
@@ -492,9 +511,17 @@ static void __sigqueue_free(struct sigqueue *q)
 {
 	if (q->flags & SIGQUEUE_PREALLOC)
 		return;
+<<<<<<< HEAD
 	if (atomic_dec_and_test(&q->user->sigpending))
 		free_uid(q->user);
 	sigqueue_cache_or_free(q);
+=======
+	if (q->ucounts && dec_rlimit_ucounts(q->ucounts, UCOUNT_RLIMIT_SIGPENDING, 1)) {
+		put_ucounts(q->ucounts);
+		q->ucounts = NULL;
+	}
+	kmem_cache_free(sigqueue_cachep, q);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 void flush_sigqueue(struct sigpending *queue)
@@ -1236,6 +1263,7 @@ static inline bool has_si_pid_and_uid(struct kernel_siginfo *info)
 	case SIL_TIMER:
 	case SIL_POLL:
 	case SIL_FAULT:
+	case SIL_FAULT_TRAPNO:
 	case SIL_FAULT_MCEERR:
 	case SIL_FAULT_BNDERR:
 	case SIL_FAULT_PKUERR:
@@ -1803,6 +1831,21 @@ int force_sig_pkuerr(void __user *addr, u32 pkey)
 	return force_sig_info(&info);
 }
 #endif
+
+int force_sig_perf(void __user *addr, u32 type, u64 sig_data)
+{
+	struct kernel_siginfo info;
+
+	clear_siginfo(&info);
+	info.si_signo     = SIGTRAP;
+	info.si_errno     = 0;
+	info.si_code      = TRAP_PERF;
+	info.si_addr      = addr;
+	info.si_perf_data = sig_data;
+	info.si_perf_type = type;
+
+	return force_sig_info(&info);
+}
 
 /* For the crazy architectures that include trap information in
  * the errno field, instead of an actual errno value.
@@ -2564,6 +2607,7 @@ static void hide_si_addr_tag_bits(struct ksignal *ksig)
 {
 	switch (siginfo_layout(ksig->sig, ksig->info.si_code)) {
 	case SIL_FAULT:
+	case SIL_FAULT_TRAPNO:
 	case SIL_FAULT_MCEERR:
 	case SIL_FAULT_BNDERR:
 	case SIL_FAULT_PKUERR:
@@ -2852,6 +2896,8 @@ static void signal_delivered(struct ksignal *ksig, int stepping)
 	if (!(ksig->ka.sa.sa_flags & SA_NODEFER))
 		sigaddset(&blocked, ksig->sig);
 	set_current_blocked(&blocked);
+	if (current->sas_ss_flags & SS_AUTODISARM)
+		sas_ss_reset(current);
 	tracehook_signal_handler(stepping);
 }
 
@@ -3251,6 +3297,13 @@ enum siginfo_layout siginfo_layout(unsigned sig, int si_code)
 #endif
 			else if ((sig == SIGTRAP) && (si_code == TRAP_PERF))
 				layout = SIL_PERF_EVENT;
+<<<<<<< HEAD
+=======
+#ifdef __ARCH_SI_TRAPNO
+			else if (layout == SIL_FAULT)
+				layout = SIL_FAULT_TRAPNO;
+#endif
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		}
 		else if (si_code <= NSIGPOLL)
 			layout = SIL_POLL;
@@ -3354,35 +3407,32 @@ void copy_siginfo_to_external32(struct compat_siginfo *to,
 		break;
 	case SIL_FAULT:
 		to->si_addr = ptr_to_compat(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
+		break;
+	case SIL_FAULT_TRAPNO:
+		to->si_addr = ptr_to_compat(from->si_addr);
 		to->si_trapno = from->si_trapno;
-#endif
 		break;
 	case SIL_FAULT_MCEERR:
 		to->si_addr = ptr_to_compat(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
-		to->si_trapno = from->si_trapno;
-#endif
 		to->si_addr_lsb = from->si_addr_lsb;
 		break;
 	case SIL_FAULT_BNDERR:
 		to->si_addr = ptr_to_compat(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
-		to->si_trapno = from->si_trapno;
-#endif
 		to->si_lower = ptr_to_compat(from->si_lower);
 		to->si_upper = ptr_to_compat(from->si_upper);
 		break;
 	case SIL_FAULT_PKUERR:
 		to->si_addr = ptr_to_compat(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
-		to->si_trapno = from->si_trapno;
-#endif
 		to->si_pkey = from->si_pkey;
 		break;
 	case SIL_PERF_EVENT:
 		to->si_addr = ptr_to_compat(from->si_addr);
+<<<<<<< HEAD
 		to->si_perf = from->si_perf;
+=======
+		to->si_perf_data = from->si_perf_data;
+		to->si_perf_type = from->si_perf_type;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		break;
 	case SIL_CHLD:
 		to->si_pid = from->si_pid;
@@ -3438,35 +3488,32 @@ static int post_copy_siginfo_from_user32(kernel_siginfo_t *to,
 		break;
 	case SIL_FAULT:
 		to->si_addr = compat_ptr(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
+		break;
+	case SIL_FAULT_TRAPNO:
+		to->si_addr = compat_ptr(from->si_addr);
 		to->si_trapno = from->si_trapno;
-#endif
 		break;
 	case SIL_FAULT_MCEERR:
 		to->si_addr = compat_ptr(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
-		to->si_trapno = from->si_trapno;
-#endif
 		to->si_addr_lsb = from->si_addr_lsb;
 		break;
 	case SIL_FAULT_BNDERR:
 		to->si_addr = compat_ptr(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
-		to->si_trapno = from->si_trapno;
-#endif
 		to->si_lower = compat_ptr(from->si_lower);
 		to->si_upper = compat_ptr(from->si_upper);
 		break;
 	case SIL_FAULT_PKUERR:
 		to->si_addr = compat_ptr(from->si_addr);
-#ifdef __ARCH_SI_TRAPNO
-		to->si_trapno = from->si_trapno;
-#endif
 		to->si_pkey = from->si_pkey;
 		break;
 	case SIL_PERF_EVENT:
 		to->si_addr = compat_ptr(from->si_addr);
+<<<<<<< HEAD
 		to->si_perf = from->si_perf;
+=======
+		to->si_perf_data = from->si_perf_data;
+		to->si_perf_type = from->si_perf_type;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		break;
 	case SIL_CHLD:
 		to->si_pid    = from->si_pid;
@@ -4180,11 +4227,7 @@ int __save_altstack(stack_t __user *uss, unsigned long sp)
 	int err = __put_user((void __user *)t->sas_ss_sp, &uss->ss_sp) |
 		__put_user(t->sas_ss_flags, &uss->ss_flags) |
 		__put_user(t->sas_ss_size, &uss->ss_size);
-	if (err)
-		return err;
-	if (t->sas_ss_flags & SS_AUTODISARM)
-		sas_ss_reset(t);
-	return 0;
+	return err;
 }
 
 #ifdef CONFIG_COMPAT
@@ -4239,11 +4282,7 @@ int __compat_save_altstack(compat_stack_t __user *uss, unsigned long sp)
 			 &uss->ss_sp) |
 		__put_user(t->sas_ss_flags, &uss->ss_flags) |
 		__put_user(t->sas_ss_size, &uss->ss_size);
-	if (err)
-		return err;
-	if (t->sas_ss_flags & SS_AUTODISARM)
-		sas_ss_reset(t);
-	return 0;
+	return err;
 }
 #endif
 
@@ -4644,11 +4683,17 @@ static inline void siginfo_buildtime_checks(void)
 
 	/* sigfault */
 	CHECK_OFFSET(si_addr);
+	CHECK_OFFSET(si_trapno);
 	CHECK_OFFSET(si_addr_lsb);
 	CHECK_OFFSET(si_lower);
 	CHECK_OFFSET(si_upper);
 	CHECK_OFFSET(si_pkey);
+<<<<<<< HEAD
 	CHECK_OFFSET(si_perf);
+=======
+	CHECK_OFFSET(si_perf_data);
+	CHECK_OFFSET(si_perf_type);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* sigpoll */
 	CHECK_OFFSET(si_band);
@@ -4710,7 +4755,7 @@ void kdb_send_sig(struct task_struct *t, int sig)
 	}
 	new_t = kdb_prev_t != t;
 	kdb_prev_t = t;
-	if (t->state != TASK_RUNNING && new_t) {
+	if (!task_is_running(t) && new_t) {
 		spin_unlock(&t->sighand->siglock);
 		kdb_printf("Process is not RUNNING, sending a signal from "
 			   "kdb risks deadlock\n"

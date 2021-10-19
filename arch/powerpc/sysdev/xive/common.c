@@ -1115,6 +1115,7 @@ static int xive_ipi_irq_domain_alloc(struct irq_domain *domain, unsigned int vir
 	}
 	return 0;
 }
+<<<<<<< HEAD
 
 static const struct irq_domain_ops xive_ipi_irq_domain_ops = {
 	.alloc  = xive_ipi_irq_domain_alloc,
@@ -1167,6 +1168,59 @@ static int __init xive_request_ipi(void)
 		WARN(ret < 0, "Failed to request IPI %d: %d\n", xid->irq, ret);
 	}
 
+=======
+
+static const struct irq_domain_ops xive_ipi_irq_domain_ops = {
+	.alloc  = xive_ipi_irq_domain_alloc,
+};
+
+static int __init xive_request_ipi(void)
+{
+	struct fwnode_handle *fwnode;
+	struct irq_domain *ipi_domain;
+	unsigned int node;
+	int ret = -ENOMEM;
+
+	fwnode = irq_domain_alloc_named_fwnode("XIVE-IPI");
+	if (!fwnode)
+		goto out;
+
+	ipi_domain = irq_domain_create_linear(fwnode, nr_node_ids,
+					      &xive_ipi_irq_domain_ops, NULL);
+	if (!ipi_domain)
+		goto out_free_fwnode;
+
+	xive_ipis = kcalloc(nr_node_ids, sizeof(*xive_ipis), GFP_KERNEL | __GFP_NOFAIL);
+	if (!xive_ipis)
+		goto out_free_domain;
+
+	for_each_node(node) {
+		struct xive_ipi_desc *xid = &xive_ipis[node];
+		struct xive_ipi_alloc_info info = { node };
+
+		/* Skip nodes without CPUs */
+		if (cpumask_empty(cpumask_of_node(node)))
+			continue;
+
+		/*
+		 * Map one IPI interrupt per node for all cpus of that node.
+		 * Since the HW interrupt number doesn't have any meaning,
+		 * simply use the node number.
+		 */
+		ret = irq_domain_alloc_irqs(ipi_domain, 1, node, &info);
+		if (ret < 0)
+			goto out_free_xive_ipis;
+		xid->irq = ret;
+
+		snprintf(xid->name, sizeof(xid->name), "IPI-%d", node);
+
+		ret = request_irq(xid->irq, xive_muxed_ipi_action,
+				  IRQF_PERCPU | IRQF_NO_THREAD, xid->name, NULL);
+
+		WARN(ret < 0, "Failed to request IPI %d: %d\n", xid->irq, ret);
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	return ret;
 
 out_free_xive_ipis:

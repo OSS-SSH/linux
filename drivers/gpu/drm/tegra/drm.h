@@ -25,7 +25,11 @@
 #include "trace.h"
 
 /* XXX move to include/uapi/drm/drm_fourcc.h? */
+<<<<<<< HEAD
 #define DRM_FORMAT_MOD_NVIDIA_SECTOR_LAYOUT BIT(22)
+=======
+#define DRM_FORMAT_MOD_NVIDIA_SECTOR_LAYOUT BIT_ULL(22)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 struct reset_control;
 

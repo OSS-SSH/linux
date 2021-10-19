@@ -64,7 +64,10 @@ static const char * const SCH5627_IN_LABELS[SCH5627_NO_IN] = {
 
 struct sch5627_data {
 	unsigned short addr;
+<<<<<<< HEAD
 	struct sch56xx_watchdog_data *watchdog;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u8 control;
 	u8 temp_max[SCH5627_NO_TEMPS];
 	u8 temp_crit[SCH5627_NO_TEMPS];
@@ -109,12 +112,21 @@ abort:
 	mutex_unlock(&data->update_lock);
 	return ret;
 }
+<<<<<<< HEAD
 
 static int sch5627_update_fan(struct sch5627_data *data)
 {
 	int ret = 0;
 	int i, val;
 
+=======
+
+static int sch5627_update_fan(struct sch5627_data *data)
+{
+	int ret = 0;
+	int i, val;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	mutex_lock(&data->update_lock);
 
 	/* Cache the values for 1 second */
@@ -139,9 +151,15 @@ static int sch5627_update_in(struct sch5627_data *data)
 {
 	int ret = 0;
 	int i, val;
+<<<<<<< HEAD
 
 	mutex_lock(&data->update_lock);
 
+=======
+
+	mutex_lock(&data->update_lock);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* Trigger a Vbat voltage measurement every 5 minutes */
 	if (time_after(jiffies, data->last_battery + 300 * HZ)) {
 		sch56xx_write_virtual_reg(data->addr, SCH5627_REG_CTRL, data->control | 0x10);
@@ -222,6 +240,7 @@ static int reg_to_rpm(u16 reg)
 
 static umode_t sch5627_is_visible(const void *drvdata, enum hwmon_sensor_types type, u32 attr,
 				  int channel)
+<<<<<<< HEAD
 {
 	return 0444;
 }
@@ -229,6 +248,15 @@ static umode_t sch5627_is_visible(const void *drvdata, enum hwmon_sensor_types t
 static int sch5627_read(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel,
 			long *val)
 {
+=======
+{
+	return 0444;
+}
+
+static int sch5627_read(struct device *dev, enum hwmon_sensor_types type, u32 attr, int channel,
+			long *val)
+{
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct sch5627_data *data = dev_get_drvdata(dev);
 	int ret;
 
@@ -357,6 +385,7 @@ static const struct hwmon_chip_info sch5627_chip_info = {
 	.info = sch5627_info,
 };
 
+<<<<<<< HEAD
 static int sch5627_remove(struct platform_device *pdev)
 {
 	struct sch5627_data *data = platform_get_drvdata(pdev);
@@ -367,6 +396,8 @@ static int sch5627_remove(struct platform_device *pdev)
 	return 0;
 }
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int sch5627_probe(struct platform_device *pdev)
 {
 	struct sch5627_data *data;
@@ -460,9 +491,9 @@ static int sch5627_probe(struct platform_device *pdev)
 		return PTR_ERR(hwmon_dev);
 
 	/* Note failing to register the watchdog is not a fatal error */
-	data->watchdog = sch56xx_watchdog_register(&pdev->dev, data->addr,
-			(build_code << 24) | (build_id << 8) | hwmon_rev,
-			&data->update_lock, 1);
+	sch56xx_watchdog_register(&pdev->dev, data->addr,
+				  (build_code << 24) | (build_id << 8) | hwmon_rev,
+				  &data->update_lock, 1);
 
 	return 0;
 }
@@ -472,7 +503,6 @@ static struct platform_driver sch5627_driver = {
 		.name	= DRVNAME,
 	},
 	.probe		= sch5627_probe,
-	.remove		= sch5627_remove,
 };
 
 module_platform_driver(sch5627_driver);

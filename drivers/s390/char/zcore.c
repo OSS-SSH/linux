@@ -15,6 +15,10 @@
 #include <linux/init.h>
 #include <linux/slab.h>
 #include <linux/debugfs.h>
+<<<<<<< HEAD
+=======
+#include <linux/panic_notifier.h>
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <linux/reboot.h>
 
 #include <asm/asm-offsets.h>

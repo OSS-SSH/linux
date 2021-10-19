@@ -12,8 +12,13 @@
 #define BCM63XX_BANK_GPIOS 32
 
 struct bcm63xx_pinctrl_soc {
+<<<<<<< HEAD
 	struct pinctrl_ops *pctl_ops;
 	struct pinmux_ops *pmx_ops;
+=======
+	const struct pinctrl_ops *pctl_ops;
+	const struct pinmux_ops *pmx_ops;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	const struct pinctrl_pin_desc *pins;
 	unsigned npins;

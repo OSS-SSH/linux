@@ -106,10 +106,10 @@ static void rn_update_clocks_update_dpp_dto(struct clk_mgr_internal *clk_mgr,
 	for (i = 0; i < clk_mgr->base.ctx->dc->res_pool->pipe_count; i++) {
 		int dpp_inst, dppclk_khz, prev_dppclk_khz;
 
-		/* Loop index will match dpp->inst if resource exists,
-		 * and we want to avoid dependency on dpp object
+		/* Loop index may not match dpp->inst if some pipes disabled,
+		 * so select correct inst from res_pool
 		 */
-		dpp_inst = i;
+		dpp_inst = clk_mgr->base.ctx->dc->res_pool->dpps[i]->inst;
 		dppclk_khz = context->res_ctx.pipe_ctx[i].plane_res.bw.dppclk_khz;
 
 		prev_dppclk_khz = clk_mgr->dccg->pipe_dppclk_khz[i];
@@ -846,6 +846,13 @@ static unsigned int find_socclk_for_voltage(struct dpm_clocks *clock_table, unsi
 {
 	int i;
 
+<<<<<<< HEAD
+=======
+static unsigned int find_socclk_for_voltage(struct dpm_clocks *clock_table, unsigned int voltage)
+{
+	int i;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	for (i = 0; i < PP_SMU_NUM_SOCCLK_DPM_LEVELS; i++) {
 		if (clock_table->SocClocks[i].Vol == voltage)
 			return clock_table->SocClocks[i].Freq;
@@ -854,6 +861,10 @@ static unsigned int find_socclk_for_voltage(struct dpm_clocks *clock_table, unsi
 	ASSERT(0);
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static unsigned int find_dcfclk_for_voltage(struct dpm_clocks *clock_table, unsigned int voltage)
 {
 	int i;

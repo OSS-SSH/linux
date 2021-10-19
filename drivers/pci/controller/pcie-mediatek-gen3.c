@@ -1012,6 +1012,10 @@ static const struct of_device_id mtk_pcie_of_match[] = {
 	{ .compatible = "mediatek,mt8192-pcie" },
 	{},
 };
+<<<<<<< HEAD
+=======
+MODULE_DEVICE_TABLE(of, mtk_pcie_of_match);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 static struct platform_driver mtk_pcie_driver = {
 	.probe = mtk_pcie_probe,

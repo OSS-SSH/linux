@@ -1414,6 +1414,10 @@ static int tc_bridge_attach(struct drm_bridge *bridge,
 	if (flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)
 		return 0;
 
+<<<<<<< HEAD
+=======
+	tc->aux.drm_dev = drm;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	ret = drm_dp_aux_register(&tc->aux);
 	if (ret < 0)
 		return ret;

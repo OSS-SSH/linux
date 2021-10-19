@@ -71,8 +71,12 @@ void __init kvm_hyp_reserve(void)
 	}
 
 	hyp_mem_pages += hyp_s1_pgtable_pages();
+<<<<<<< HEAD
 	hyp_mem_pages += host_s2_mem_pgtable_pages();
 	hyp_mem_pages += host_s2_dev_pgtable_pages();
+=======
+	hyp_mem_pages += host_s2_pgtable_pages();
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/*
 	 * The hyp_vmemmap needs to be backed by pages, but these pages

@@ -15,15 +15,18 @@
 /* clk control registers */
 /* BD71815 */
 #define BD71815_REG_OUT32K	0x1d
+<<<<<<< HEAD
 /* BD70528 */
 #define BD70528_REG_OUT32K	0x2c
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 /* BD71828 */
 #define BD71828_REG_OUT32K	0x4B
 /* BD71837 and BD71847 */
 #define BD718XX_REG_OUT32K	0x2E
 
 /*
- * BD71837, BD71847, BD70528 and BD71828 all use bit [0] to clk output control
+ * BD71837, BD71847, and BD71828 all use bit [0] to clk output control
  */
 #define CLK_OUT_EN_MASK		BIT(0)
 
@@ -116,8 +119,8 @@ static int bd71837_clk_probe(struct platform_device *pdev)
 		c->reg = BD71828_REG_OUT32K;
 		c->mask = CLK_OUT_EN_MASK;
 		break;
-	case ROHM_CHIP_TYPE_BD70528:
-		c->reg = BD70528_REG_OUT32K;
+	case ROHM_CHIP_TYPE_BD71815:
+		c->reg = BD71815_REG_OUT32K;
 		c->mask = CLK_OUT_EN_MASK;
 		break;
 	case ROHM_CHIP_TYPE_BD71815:
@@ -150,7 +153,6 @@ static int bd71837_clk_probe(struct platform_device *pdev)
 static const struct platform_device_id bd718x7_clk_id[] = {
 	{ "bd71837-clk", ROHM_CHIP_TYPE_BD71837 },
 	{ "bd71847-clk", ROHM_CHIP_TYPE_BD71847 },
-	{ "bd70528-clk", ROHM_CHIP_TYPE_BD70528 },
 	{ "bd71828-clk", ROHM_CHIP_TYPE_BD71828 },
 	{ "bd71815-clk", ROHM_CHIP_TYPE_BD71815 },
 	{ },
@@ -168,6 +170,10 @@ static struct platform_driver bd71837_clk = {
 module_platform_driver(bd71837_clk);
 
 MODULE_AUTHOR("Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>");
+<<<<<<< HEAD
 MODULE_DESCRIPTION("BD718(15/18/28/37/47/50) and BD70528 chip clk driver");
+=======
+MODULE_DESCRIPTION("BD718(15/18/28/37/47/50) and chip clk driver");
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 MODULE_LICENSE("GPL");
 MODULE_ALIAS("platform:bd718xx-clk");

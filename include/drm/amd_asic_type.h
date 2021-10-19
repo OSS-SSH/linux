@@ -59,6 +59,11 @@ enum amd_asic_type {
 	CHIP_NAVY_FLOUNDER,	/* 30 */
 	CHIP_VANGOGH,	/* 31 */
 	CHIP_DIMGREY_CAVEFISH,	/* 32 */
+<<<<<<< HEAD
+=======
+	CHIP_BEIGE_GOBY,	/* 33 */
+	CHIP_YELLOW_CARP,	/* 34 */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	CHIP_LAST,
 };
 

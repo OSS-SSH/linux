@@ -71,6 +71,7 @@ can be used to verify that a test is executing particular functions or lines
 of code. This is useful for determining how much of the kernel is being tested,
 and for finding corner-cases which are not covered by the appropriate test.
 
+<<<<<<< HEAD
 :doc:`gcov` is GCC's coverage testing tool, which can be used with the kernel
 to get global or per-module coverage. Unlike KCOV, it does not record per-task
 coverage. Coverage data can be read from debugfs, and interpreted using the
@@ -80,6 +81,17 @@ usual gcov tooling.
 capturing coverage on a per-task level. It's therefore useful for fuzzing and
 other situations where information about code executed during, for example, a
 single syscall is useful.
+=======
+Documentation/dev-tools/gcov.rst is GCC's coverage testing tool, which can be
+used with the kernel to get global or per-module coverage. Unlike KCOV, it
+does not record per-task coverage. Coverage data can be read from debugfs,
+and interpreted using the usual gcov tooling.
+
+Documentation/dev-tools/kcov.rst is a feature which can be built in to the
+kernel to allow capturing coverage on a per-task level. It's therefore useful
+for fuzzing and other situations where information about code executed during,
+for example, a single syscall is useful.
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 
 Dynamic Analysis Tools

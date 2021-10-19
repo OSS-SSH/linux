@@ -46,6 +46,35 @@ static int bpa_rs600_read_byte_data(struct i2c_client *client, int page, int reg
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * The BPA-RS600 violates the PMBus spec. Specifically it treats the
+ * mantissa as unsigned. Deal with this here to allow the PMBus core
+ * to work with correctly encoded data.
+ */
+static int bpa_rs600_read_vin(struct i2c_client *client)
+{
+	int ret, exponent, mantissa;
+
+	ret = pmbus_read_word_data(client, 0, 0xff, PMBUS_READ_VIN);
+	if (ret < 0)
+		return ret;
+
+	if (ret & BIT(10)) {
+		exponent = ret >> 11;
+		mantissa = ret & 0x7ff;
+
+		exponent++;
+		mantissa >>= 1;
+
+		ret = (exponent << 11) | mantissa;
+	}
+
+	return ret;
+}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int bpa_rs600_read_word_data(struct i2c_client *client, int page, int phase, int reg)
 {
 	int ret;
@@ -85,6 +114,12 @@ static int bpa_rs600_read_word_data(struct i2c_client *client, int page, int pha
 		/* These commands return data but it is invalid/un-documented */
 		ret = -ENXIO;
 		break;
+<<<<<<< HEAD
+=======
+	case PMBUS_READ_VIN:
+		ret = bpa_rs600_read_vin(client);
+		break;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	default:
 		if (reg >= PMBUS_VIRT_BASE)
 			ret = -ENXIO;

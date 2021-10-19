@@ -6,6 +6,7 @@
 #include <perf/threadmap.h>
 #include <perf/evsel.h>
 #include <internal/tests.h>
+#include "tests.h"
 
 static int libperf_print(enum libperf_print_level level,
 			 const char *fmt, va_list ap)
@@ -184,7 +185,11 @@ static int test_stat_user_read(int event)
 	return 0;
 }
 
+<<<<<<< HEAD
 int main(int argc, char **argv)
+=======
+int test_evsel(int argc, char **argv)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	__T_START;
 

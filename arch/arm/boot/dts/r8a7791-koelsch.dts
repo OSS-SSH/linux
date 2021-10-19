@@ -81,7 +81,11 @@
 	keyboard {
 		compatible = "gpio-keys";
 
+<<<<<<< HEAD
 		pinctrl-0 = <&sw2_pins>;
+=======
+		pinctrl-0 = <&keyboard_pins>;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		pinctrl-names = "default";
 
 		key-1 {
@@ -622,7 +626,11 @@
 		function = "audio_clk";
 	};
 
+<<<<<<< HEAD
 	sw2_pins: sw2 {
+=======
+	keyboard_pins: keyboard {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		pins = "GP_5_0", "GP_5_1", "GP_5_2", "GP_5_3";
 		bias-pull-up;
 	};

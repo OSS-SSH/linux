@@ -58,6 +58,11 @@ RISC-V Linux Kernel SV39
                                                               |
   ____________________________________________________________|____________________________________________________________
                     |            |                  |         |
+<<<<<<< HEAD
    ffffffff00000000 |   -4    GB | ffffffff7fffffff |    2 GB | modules
    ffffffff80000000 |   -2    GB | ffffffffffffffff |    2 GB | kernel, BPF
+=======
+   ffffffff00000000 |   -4    GB | ffffffff7fffffff |    2 GB | modules, BPF
+   ffffffff80000000 |   -2    GB | ffffffffffffffff |    2 GB | kernel
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
   __________________|____________|__________________|_________|____________________________________________________________

@@ -1,3 +1,7 @@
 libbpf-y := libbpf.o bpf.o nlattr.o btf.o libbpf_errno.o str_error.o \
 	    netlink.o bpf_prog_linfo.o libbpf_probes.o xsk.o hashmap.o \
+<<<<<<< HEAD
 	    btf_dump.o ringbuf.o strset.o linker.o
+=======
+	    btf_dump.o ringbuf.o strset.o linker.o gen_loader.o
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

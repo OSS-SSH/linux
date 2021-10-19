@@ -68,13 +68,21 @@ int notrace unwind_frame(struct task_struct *tsk, struct stackframe *frame)
 	unsigned long fp = frame->fp;
 	struct stack_info info;
 
+<<<<<<< HEAD
 	if (fp & 0xf)
-		return -EINVAL;
-
+=======
 	if (!tsk)
 		tsk = current;
 
-	if (!on_accessible_stack(tsk, fp, &info))
+	/* Final frame; nothing to unwind */
+	if (fp == (unsigned long)task_pt_regs(tsk)->stackframe)
+		return -ENOENT;
+
+	if (fp & 0x7)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+		return -EINVAL;
+
+	if (!on_accessible_stack(tsk, fp, 16, &info))
 		return -EINVAL;
 
 	if (test_bit(info.type, frame->stacks_done))
@@ -155,7 +163,7 @@ NOKPROBE_SYMBOL(walk_stackframe);
 
 static void dump_backtrace_entry(unsigned long where, const char *loglvl)
 {
-	printk("%s %pS\n", loglvl, (void *)where);
+	printk("%s %pSb\n", loglvl, (void *)where);
 }
 
 void dump_backtrace(struct pt_regs *regs, struct task_struct *tsk,

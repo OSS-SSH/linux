@@ -355,7 +355,11 @@ static umode_t corsairpsu_hwmon_power_is_visible(const struct corsairpsu_data *p
 		return 0444;
 	default:
 		return 0;
+<<<<<<< HEAD
 	};
+=======
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 static umode_t corsairpsu_hwmon_in_is_visible(const struct corsairpsu_data *priv, u32 attr,
@@ -376,7 +380,11 @@ static umode_t corsairpsu_hwmon_in_is_visible(const struct corsairpsu_data *priv
 		break;
 	default:
 		break;
+<<<<<<< HEAD
 	};
+=======
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	return res;
 }
@@ -385,6 +393,7 @@ static umode_t corsairpsu_hwmon_curr_is_visible(const struct corsairpsu_data *pr
 						int channel)
 {
 	umode_t res = 0444;
+<<<<<<< HEAD
 
 	switch (attr) {
 	case hwmon_curr_input:
@@ -441,6 +450,64 @@ static int corsairpsu_hwmon_temp_read(struct corsairpsu_data *priv, u32 attr, in
 		break;
 	}
 
+=======
+
+	switch (attr) {
+	case hwmon_curr_input:
+		if (channel == 0 && !priv->in_curr_cmd_support)
+			res = 0;
+		break;
+	case hwmon_curr_label:
+	case hwmon_curr_crit:
+		if (channel > 0 && !(priv->curr_crit_support & BIT(channel - 1)))
+			res = 0;
+		break;
+	default:
+		break;
+	}
+
+	return res;
+}
+
+static umode_t corsairpsu_hwmon_ops_is_visible(const void *data, enum hwmon_sensor_types type,
+					       u32 attr, int channel)
+{
+	const struct corsairpsu_data *priv = data;
+
+	switch (type) {
+	case hwmon_temp:
+		return corsairpsu_hwmon_temp_is_visible(priv, attr, channel);
+	case hwmon_fan:
+		return corsairpsu_hwmon_fan_is_visible(priv, attr, channel);
+	case hwmon_power:
+		return corsairpsu_hwmon_power_is_visible(priv, attr, channel);
+	case hwmon_in:
+		return corsairpsu_hwmon_in_is_visible(priv, attr, channel);
+	case hwmon_curr:
+		return corsairpsu_hwmon_curr_is_visible(priv, attr, channel);
+	default:
+		return 0;
+	}
+}
+
+static int corsairpsu_hwmon_temp_read(struct corsairpsu_data *priv, u32 attr, int channel,
+				      long *val)
+{
+	int err = -EOPNOTSUPP;
+
+	switch (attr) {
+	case hwmon_temp_input:
+		return corsairpsu_get_value(priv, channel ? PSU_CMD_TEMP1 : PSU_CMD_TEMP0,
+					    channel, val);
+	case hwmon_temp_crit:
+		*val = priv->temp_crit[channel];
+		err = 0;
+		break;
+	default:
+		break;
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	return err;
 }
 
@@ -771,6 +838,16 @@ static int corsairpsu_raw_event(struct hid_device *hdev, struct hid_report *repo
 	return 0;
 }
 
+#ifdef CONFIG_PM
+static int corsairpsu_resume(struct hid_device *hdev)
+{
+	struct corsairpsu_data *priv = hid_get_drvdata(hdev);
+
+	/* some PSUs turn off the microcontroller during standby, so a reinit is required */
+	return corsairpsu_init(priv);
+}
+#endif
+
 static const struct hid_device_id corsairpsu_idtable[] = {
 	{ HID_USB_DEVICE(0x1b1c, 0x1c03) }, /* Corsair HX550i */
 	{ HID_USB_DEVICE(0x1b1c, 0x1c04) }, /* Corsair HX650i */
@@ -793,6 +870,10 @@ static struct hid_driver corsairpsu_driver = {
 	.probe		= corsairpsu_probe,
 	.remove		= corsairpsu_remove,
 	.raw_event	= corsairpsu_raw_event,
+#ifdef CONFIG_PM
+	.resume		= corsairpsu_resume,
+	.reset_resume	= corsairpsu_resume,
+#endif
 };
 module_hid_driver(corsairpsu_driver);
 

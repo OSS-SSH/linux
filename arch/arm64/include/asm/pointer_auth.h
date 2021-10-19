@@ -31,16 +31,20 @@ struct ptrauth_keys_user {
 	struct ptrauth_key apga;
 };
 
+<<<<<<< HEAD
 struct ptrauth_keys_kernel {
 	struct ptrauth_key apia;
 };
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #define __ptrauth_key_install_nosync(k, v)			\
 do {								\
 	struct ptrauth_key __pki_v = (v);			\
 	write_sysreg_s(__pki_v.lo, SYS_ ## k ## KEYLO_EL1);	\
 	write_sysreg_s(__pki_v.hi, SYS_ ## k ## KEYHI_EL1);	\
 } while (0)
+<<<<<<< HEAD
 
 static inline void ptrauth_keys_install_user(struct ptrauth_keys_user *keys)
 {
@@ -68,6 +72,14 @@ static inline void ptrauth_keys_init_user(struct ptrauth_keys_user *keys)
 
 	ptrauth_keys_install_user(keys);
 }
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+
+#ifdef CONFIG_ARM64_PTR_AUTH_KERNEL
+
+struct ptrauth_keys_kernel {
+	struct ptrauth_key apia;
+};
 
 static __always_inline void ptrauth_keys_init_kernel(struct ptrauth_keys_kernel *keys)
 {
@@ -82,6 +94,35 @@ static __always_inline void ptrauth_keys_switch_kernel(struct ptrauth_keys_kerne
 
 	__ptrauth_key_install_nosync(APIA, keys->apia);
 	isb();
+}
+
+#endif /* CONFIG_ARM64_PTR_AUTH_KERNEL */
+
+static inline void ptrauth_keys_install_user(struct ptrauth_keys_user *keys)
+{
+	if (system_supports_address_auth()) {
+		__ptrauth_key_install_nosync(APIB, keys->apib);
+		__ptrauth_key_install_nosync(APDA, keys->apda);
+		__ptrauth_key_install_nosync(APDB, keys->apdb);
+	}
+
+	if (system_supports_generic_auth())
+		__ptrauth_key_install_nosync(APGA, keys->apga);
+}
+
+static inline void ptrauth_keys_init_user(struct ptrauth_keys_user *keys)
+{
+	if (system_supports_address_auth()) {
+		get_random_bytes(&keys->apia, sizeof(keys->apia));
+		get_random_bytes(&keys->apib, sizeof(keys->apib));
+		get_random_bytes(&keys->apda, sizeof(keys->apda));
+		get_random_bytes(&keys->apdb, sizeof(keys->apdb));
+	}
+
+	if (system_supports_generic_auth())
+		get_random_bytes(&keys->apga, sizeof(keys->apga));
+
+	ptrauth_keys_install_user(keys);
 }
 
 extern int ptrauth_prctl_reset_keys(struct task_struct *tsk, unsigned long arg);
@@ -120,11 +161,14 @@ static __always_inline void ptrauth_enable(void)
 
 #define ptrauth_thread_switch_user(tsk)                                        \
 	ptrauth_keys_install_user(&(tsk)->thread.keys_user)
+<<<<<<< HEAD
 
 #define ptrauth_thread_init_kernel(tsk)					\
 	ptrauth_keys_init_kernel(&(tsk)->thread.keys_kernel)
 #define ptrauth_thread_switch_kernel(tsk)				\
 	ptrauth_keys_switch_kernel(&(tsk)->thread.keys_kernel)
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #else /* CONFIG_ARM64_PTR_AUTH */
 #define ptrauth_enable()
@@ -134,10 +178,25 @@ static __always_inline void ptrauth_enable(void)
 #define ptrauth_strip_insn_pac(lr)	(lr)
 #define ptrauth_suspend_exit()
 #define ptrauth_thread_init_user()
+<<<<<<< HEAD
+=======
+#define ptrauth_thread_switch_user(tsk)
+#endif /* CONFIG_ARM64_PTR_AUTH */
+
+#ifdef CONFIG_ARM64_PTR_AUTH_KERNEL
+#define ptrauth_thread_init_kernel(tsk)					\
+	ptrauth_keys_init_kernel(&(tsk)->thread.keys_kernel)
+#define ptrauth_thread_switch_kernel(tsk)				\
+	ptrauth_keys_switch_kernel(&(tsk)->thread.keys_kernel)
+#else
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #define ptrauth_thread_init_kernel(tsk)
 #define ptrauth_thread_switch_user(tsk)
 #define ptrauth_thread_switch_kernel(tsk)
-#endif /* CONFIG_ARM64_PTR_AUTH */
+#endif /* CONFIG_ARM64_PTR_AUTH_KERNEL */
+
+#define PR_PAC_ENABLED_KEYS_MASK                                               \
+	(PR_PAC_APIAKEY | PR_PAC_APIBKEY | PR_PAC_APDAKEY | PR_PAC_APDBKEY)
 
 #define PR_PAC_ENABLED_KEYS_MASK                                               \
 	(PR_PAC_APIAKEY | PR_PAC_APIBKEY | PR_PAC_APDAKEY | PR_PAC_APDBKEY)

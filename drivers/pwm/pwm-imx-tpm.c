@@ -363,8 +363,11 @@ static int pwm_imx_tpm_probe(struct platform_device *pdev)
 
 	tpm->chip.dev = &pdev->dev;
 	tpm->chip.ops = &imx_tpm_pwm_ops;
+<<<<<<< HEAD
 	tpm->chip.of_xlate = of_pwm_xlate_with_flags;
 	tpm->chip.of_pwm_n_cells = 3;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* get number of channels */
 	val = readl(tpm->base + PWM_IMX_TPM_PARAM);

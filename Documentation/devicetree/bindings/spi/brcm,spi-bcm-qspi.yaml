@@ -56,7 +56,10 @@ properties:
 
   reg-names:
     minItems: 1
+<<<<<<< HEAD
     maxItems: 5
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     items:
       - const: mspi
       - const: bspi
@@ -71,7 +74,10 @@ properties:
   interrupt-names:
     oneOf:
       - minItems: 1
+<<<<<<< HEAD
         maxItems: 7
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
         items:
           - const: mspi_done
           - const: mspi_halted

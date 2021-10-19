@@ -139,6 +139,26 @@ xfs_trans_log_inode(
 	    xfs_sb_version_hasbigtime(&ip->i_mount->m_sb) &&
 	    !xfs_inode_has_bigtime(ip)) {
 		ip->i_diflags2 |= XFS_DIFLAG2_BIGTIME;
+<<<<<<< HEAD
+=======
+		flags |= XFS_ILOG_CORE;
+	}
+
+	/*
+	 * Inode verifiers on older kernels don't check that the extent size
+	 * hint is an integer multiple of the rt extent size on a directory
+	 * with both rtinherit and extszinherit flags set.  If we're logging a
+	 * directory that is misconfigured in this way, clear the hint.
+	 */
+	if ((ip->i_diflags & XFS_DIFLAG_RTINHERIT) &&
+	    (ip->i_diflags & XFS_DIFLAG_EXTSZINHERIT) &&
+	    (ip->i_extsize % ip->i_mount->m_sb.sb_rextsize) > 0) {
+		xfs_info_once(ip->i_mount,
+	"Correcting misaligned extent size hint in inode 0x%llx.", ip->i_ino);
+		ip->i_diflags &= ~(XFS_DIFLAG_EXTSIZE |
+				   XFS_DIFLAG_EXTSZINHERIT);
+		ip->i_extsize = 0;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		flags |= XFS_ILOG_CORE;
 	}
 

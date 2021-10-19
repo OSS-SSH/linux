@@ -131,6 +131,10 @@ static void signal_our_withdraw(struct gfs2_sbd *sdp)
 	if (test_bit(SDF_NORECOVERY, &sdp->sd_flags) || !sdp->sd_jdesc)
 		return;
 
+<<<<<<< HEAD
+=======
+	gfs2_ail_drain(sdp); /* frees all transactions */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	inode = sdp->sd_jdesc->jd_inode;
 	ip = GFS2_I(inode);
 	i_gl = ip->i_gl;

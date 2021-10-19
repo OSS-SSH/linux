@@ -110,6 +110,10 @@ static int llcp_sock_bind(struct socket *sock, struct sockaddr *addr, int alen)
 	if (!llcp_sock->service_name) {
 		nfc_llcp_local_put(llcp_sock->local);
 		llcp_sock->local = NULL;
+<<<<<<< HEAD
+=======
+		llcp_sock->dev = NULL;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		ret = -ENOMEM;
 		goto put_dev;
 	}
@@ -119,6 +123,7 @@ static int llcp_sock_bind(struct socket *sock, struct sockaddr *addr, int alen)
 		llcp_sock->local = NULL;
 		kfree(llcp_sock->service_name);
 		llcp_sock->service_name = NULL;
+		llcp_sock->dev = NULL;
 		ret = -EADDRINUSE;
 		goto put_dev;
 	}

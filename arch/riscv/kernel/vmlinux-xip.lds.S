@@ -12,7 +12,10 @@
 
 #include <asm/vmlinux.lds.h>
 #include <asm/page.h>
+<<<<<<< HEAD
 #include <asm/pgtable.h>
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <asm/cache.h>
 #include <asm/thread_info.h>
 
@@ -99,9 +102,28 @@ SECTIONS
 	}
 	PERCPU_SECTION(L1_CACHE_BYTES)
 
+<<<<<<< HEAD
 	. = ALIGN(PAGE_SIZE);
 	__init_end = .;
 
+=======
+	. = ALIGN(8);
+	.alternative : {
+		__alt_start = .;
+		*(.alternative)
+		__alt_end = .;
+	}
+	__init_end = .;
+
+	. = ALIGN(16);
+	.xip.traps : {
+		__xip_traps_start = .;
+		*(.xip.traps)
+		__xip_traps_end = .;
+	}
+
+	. = ALIGN(PAGE_SIZE);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.sdata : {
 		__global_pointer$ = . + 0x800;
 		*(.sdata*)

@@ -18,10 +18,9 @@
 #include <asm/mach-ralink/ralink_regs.h>
 #include <asm/mach-ralink/mt7621.h>
 
-#include <pinmux.h>
-
 #include "common.h"
 
+<<<<<<< HEAD
 #define MT7621_GPIO_MODE_UART1		1
 #define MT7621_GPIO_MODE_I2C		2
 #define MT7621_GPIO_MODE_UART3_MASK	0x3
@@ -108,6 +107,9 @@ static struct rt2880_pmx_group mt7621_pinmux_data[] = {
 	GRP("rgmii1", rgmii1_grp, 1, MT7621_GPIO_MODE_RGMII1),
 	{ 0 }
 };
+=======
+static void *detect_magic __initdata = detect_memory_region;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 phys_addr_t mips_cpc_default_phys_base(void)
 {
@@ -219,7 +221,10 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
 		(rev & CHIP_REV_ECO_MASK));
 
 	soc_info->mem_detect = mt7621_memory_detect;
+<<<<<<< HEAD
 	rt2880_pinmux_data = mt7621_pinmux_data;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	soc_dev_init(soc_info, rev);
 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # SPDX_License_Identifier: GPL_2.0
+=======
+# SPDX-License-Identifier: GPL-2.0
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 dtb-$(CONFIG_MACH_LOONGSON64)	+= loongson64_2core_2k1000.dtb
 dtb-$(CONFIG_MACH_LOONGSON64)	+= loongson64c_4core_ls7a.dtb
 dtb-$(CONFIG_MACH_LOONGSON64)	+= loongson64c_4core_rs780e.dtb

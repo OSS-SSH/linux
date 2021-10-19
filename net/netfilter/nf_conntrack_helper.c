@@ -214,7 +214,11 @@ EXPORT_SYMBOL_GPL(nf_ct_helper_ext_add);
 static struct nf_conntrack_helper *
 nf_ct_lookup_helper(struct nf_conn *ct, struct net *net)
 {
+<<<<<<< HEAD
 	struct nf_conntrack_net *cnet = net_generic(net, nf_conntrack_net_id);
+=======
+	struct nf_conntrack_net *cnet = nf_ct_pernet(net);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (!cnet->sysctl_auto_assign_helper) {
 		if (cnet->auto_assign_helper_warned)
@@ -560,7 +564,11 @@ static const struct nf_ct_ext_type helper_extend = {
 
 void nf_conntrack_helper_pernet_init(struct net *net)
 {
+<<<<<<< HEAD
 	struct nf_conntrack_net *cnet = net_generic(net, nf_conntrack_net_id);
+=======
+	struct nf_conntrack_net *cnet = nf_ct_pernet(net);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	cnet->sysctl_auto_assign_helper = nf_ct_auto_assign_helper;
 }

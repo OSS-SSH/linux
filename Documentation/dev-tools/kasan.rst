@@ -312,6 +312,7 @@ checking gets disabled.
 
 Shadow memory
 -------------
+<<<<<<< HEAD
 
 The kernel maps memory in several different parts of the address space.
 The range of kernel virtual addresses is large: there is not enough real
@@ -319,6 +320,15 @@ memory to support a real shadow region for every address that could be
 accessed by the kernel. Therefore, KASAN only maps real shadow for certain
 parts of the address space.
 
+=======
+
+The kernel maps memory in several different parts of the address space.
+The range of kernel virtual addresses is large: there is not enough real
+memory to support a real shadow region for every address that could be
+accessed by the kernel. Therefore, KASAN only maps real shadow for certain
+parts of the address space.
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 Default behaviour
 ~~~~~~~~~~~~~~~~~
 
@@ -372,10 +382,17 @@ architectures that do not have a fixed module region.
 
 For developers
 --------------
+<<<<<<< HEAD
 
 Ignoring accesses
 ~~~~~~~~~~~~~~~~~
 
+=======
+
+Ignoring accesses
+~~~~~~~~~~~~~~~~~
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 Software KASAN modes use compiler instrumentation to insert validity checks.
 Such instrumentation might be incompatible with some parts of the kernel, and
 therefore needs to be disabled.
@@ -447,11 +464,10 @@ When a test fails due to a failed ``kmalloc``::
 
 When a test fails due to a missing KASAN report::
 
-        # kmalloc_double_kzfree: EXPECTATION FAILED at lib/test_kasan.c:629
-        Expected kasan_data->report_expected == kasan_data->report_found, but
-        kasan_data->report_expected == 1
-        kasan_data->report_found == 0
-        not ok 28 - kmalloc_double_kzfree
+        # kmalloc_double_kzfree: EXPECTATION FAILED at lib/test_kasan.c:974
+        KASAN failure expected in "kfree_sensitive(ptr)", but none occurred
+        not ok 44 - kmalloc_double_kzfree
+
 
 At the end the cumulative status of all KASAN tests is printed. On success::
 

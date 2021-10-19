@@ -31,7 +31,11 @@ DECLARE_EVENT_CLASS(cma_alloc_class,
 		__entry->align = align;
 	),
 
+<<<<<<< HEAD
 	TP_printk("name=%s pfn=%lx page=%p count=%lu align=%u",
+=======
+	TP_printk("name=%s pfn=0x%lx page=%p count=%lu align=%u",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		  __get_str(name),
 		  __entry->pfn,
 		  __entry->page,
@@ -60,7 +64,11 @@ TRACE_EVENT(cma_release,
 		__entry->count = count;
 	),
 
+<<<<<<< HEAD
 	TP_printk("name=%s pfn=%lx page=%p count=%lu",
+=======
+	TP_printk("name=%s pfn=0x%lx page=%p count=%lu",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		  __get_str(name),
 		  __entry->pfn,
 		  __entry->page,

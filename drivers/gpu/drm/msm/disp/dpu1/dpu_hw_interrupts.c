@@ -30,6 +30,7 @@
 #define MDP_INTF_5_OFF_REV_7xxx             0x39000
 
 /**
+<<<<<<< HEAD
  * WB interrupt status bit definitions
  */
 #define DPU_INTR_WB_0_DONE BIT(0)
@@ -169,6 +170,8 @@
  */
 #define DPU_INTR_BACKLIGHT_UPDATED BIT(0)
 /**
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * struct dpu_intr_reg - array of DPU register sets
  * @clr_off:	offset to CLEAR reg
  * @en_off:	offset to ENABLE reg
@@ -180,22 +183,10 @@ struct dpu_intr_reg {
 	u32 status_off;
 };
 
-/**
- * struct dpu_irq_type - maps each irq with i/f
- * @intr_type:		type of interrupt listed in dpu_intr_type
- * @instance_idx:	instance index of the associated HW block in DPU
- * @irq_mask:		corresponding bit in the interrupt status reg
- * @reg_idx:		which reg set to use
- */
-struct dpu_irq_type {
-	u32 intr_type;
-	u32 instance_idx;
-	u32 irq_mask;
-	u32 reg_idx;
-};
-
 /*
  * struct dpu_intr_reg -  List of DPU interrupt registers
+ *
+ * When making changes be sure to sync with dpu_hw_intr_reg
  */
 static const struct dpu_intr_reg dpu_intr_set[] = {
 	{
@@ -265,6 +256,7 @@ static const struct dpu_intr_reg dpu_intr_set[] = {
 	},
 };
 
+<<<<<<< HEAD
 /*
  * struct dpu_irq_type - IRQ mapping table use for lookup an irq_idx in this
  *			 table that have a matching interface type and
@@ -1347,19 +1339,33 @@ static const struct dpu_irq_type dpu_irq_map[] = {
 
 static int dpu_hw_intr_irqidx_lookup(struct dpu_hw_intr *intr,
 	enum dpu_intr_type intr_type, u32 instance_idx)
-{
-	int i;
+=======
+#define DPU_IRQ_REG(irq_idx)	(irq_idx / 32)
+#define DPU_IRQ_MASK(irq_idx)	(BIT(irq_idx % 32))
 
+static void dpu_hw_intr_clear_intr_status_nolock(struct dpu_hw_intr *intr,
+		int irq_idx)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+{
+	int reg_idx;
+
+<<<<<<< HEAD
 	for (i = 0; i < ARRAY_SIZE(dpu_irq_map); i++) {
 		if (intr_type == dpu_irq_map[i].intr_type &&
 			instance_idx == dpu_irq_map[i].instance_idx &&
 			!(intr->obsolete_irq & BIT(dpu_irq_map[i].intr_type)))
 			return i;
 	}
+=======
+	if (!intr)
+		return;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
-	pr_debug("IRQ lookup fail!! intr_type=%d, instance_idx=%d\n",
-			intr_type, instance_idx);
-	return -EINVAL;
+	reg_idx = DPU_IRQ_REG(irq_idx);
+	DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off, DPU_IRQ_MASK(irq_idx));
+
+	/* ensure register writes go through */
+	wmb();
 }
 
 static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
@@ -1368,9 +1374,9 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
 {
 	int reg_idx;
 	int irq_idx;
-	int start_idx;
-	int end_idx;
 	u32 irq_status;
+	u32 enable_mask;
+	int bit;
 	unsigned long irq_flags;
 
 	if (!intr)
@@ -1383,24 +1389,39 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
 	 */
 	spin_lock_irqsave(&intr->irq_lock, irq_flags);
 	for (reg_idx = 0; reg_idx < ARRAY_SIZE(dpu_intr_set); reg_idx++) {
-		irq_status = intr->save_irq_status[reg_idx];
+		if (!test_bit(reg_idx, &intr->irq_mask))
+			continue;
 
+<<<<<<< HEAD
 		/*
 		 * Each Interrupt register has a range of 64 indexes, and
 		 * that is static for dpu_irq_map.
 		 */
 		start_idx = reg_idx * 64;
 		end_idx = start_idx + 64;
+=======
+		/* Read interrupt status */
+		irq_status = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].status_off);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
-		if (!test_bit(reg_idx, &intr->irq_mask) ||
-			start_idx >= ARRAY_SIZE(dpu_irq_map))
+		/* Read enable mask */
+		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[reg_idx].en_off);
+
+		/* and clear the interrupt */
+		if (irq_status)
+			DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
+				     irq_status);
+
+		/* Finally update IRQ status based on enable mask */
+		irq_status &= enable_mask;
+
+		if (!irq_status)
 			continue;
 
 		/*
-		 * Search through matching intr status from irq map.
-		 * start_idx and end_idx defined the search range in
-		 * the dpu_irq_map.
+		 * Search through matching intr status.
 		 */
+<<<<<<< HEAD
 		for (irq_idx = start_idx;
 				(irq_idx < end_idx) && irq_status;
 				irq_idx++)
@@ -1428,41 +1449,71 @@ static void dpu_hw_intr_dispatch_irq(struct dpu_hw_intr *intr,
 				 */
 				irq_status &= ~dpu_irq_map[irq_idx].irq_mask;
 			}
+=======
+		while ((bit = ffs(irq_status)) != 0) {
+			irq_idx = DPU_IRQ_IDX(reg_idx, bit - 1);
+			/*
+			 * Once a match on irq mask, perform a callback
+			 * to the given cbfunc. cbfunc will take care
+			 * the interrupt status clearing. If cbfunc is
+			 * not provided, then the interrupt clearing
+			 * is here.
+			 */
+			if (cbfunc)
+				cbfunc(arg, irq_idx);
+
+			dpu_hw_intr_clear_intr_status_nolock(intr, irq_idx);
+
+			/*
+			 * When callback finish, clear the irq_status
+			 * with the matching mask. Once irq_status
+			 * is all cleared, the search can be stopped.
+			 */
+			irq_status &= ~BIT(bit - 1);
+		}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
+
+	/* ensure register writes go through */
+	wmb();
+
 	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
 }
 
-static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
+static int dpu_hw_intr_enable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
 {
 	int reg_idx;
-	unsigned long irq_flags;
 	const struct dpu_intr_reg *reg;
-	const struct dpu_irq_type *irq;
 	const char *dbgstr = NULL;
 	uint32_t cache_irq_mask;
 
 	if (!intr)
 		return -EINVAL;
 
-	if (irq_idx < 0 || irq_idx >= ARRAY_SIZE(dpu_irq_map)) {
+	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
 		return -EINVAL;
 	}
 
-	irq = &dpu_irq_map[irq_idx];
-	reg_idx = irq->reg_idx;
+	/*
+	 * The cache_irq_mask and hardware RMW operations needs to be done
+	 * under irq_lock and it's the caller's responsibility to ensure that's
+	 * held.
+	 */
+	assert_spin_locked(&intr->irq_lock);
+
+	reg_idx = DPU_IRQ_REG(irq_idx);
 	reg = &dpu_intr_set[reg_idx];
 
-	spin_lock_irqsave(&intr->irq_lock, irq_flags);
 	cache_irq_mask = intr->cache_irq_mask[reg_idx];
-	if (cache_irq_mask & irq->irq_mask) {
+	if (cache_irq_mask & DPU_IRQ_MASK(irq_idx)) {
 		dbgstr = "DPU IRQ already set:";
 	} else {
 		dbgstr = "DPU IRQ enabled:";
 
-		cache_irq_mask |= irq->irq_mask;
+		cache_irq_mask |= DPU_IRQ_MASK(irq_idx);
 		/* Cleaning any pending interrupt */
-		DPU_REG_WRITE(&intr->hw, reg->clr_off, irq->irq_mask);
+		DPU_REG_WRITE(&intr->hw, reg->clr_off, DPU_IRQ_MASK(irq_idx));
 		/* Enabling interrupts with the new mask */
 		DPU_REG_WRITE(&intr->hw, reg->en_off, cache_irq_mask);
 
@@ -1471,45 +1522,49 @@ static int dpu_hw_intr_enable_irq(struct dpu_hw_intr *intr, int irq_idx)
 
 		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
 	}
-	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
 
-	pr_debug("%s MASK:0x%.8x, CACHE-MASK:0x%.8x\n", dbgstr,
-			irq->irq_mask, cache_irq_mask);
+	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
+			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
 
 	return 0;
 }
 
-static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
+static int dpu_hw_intr_disable_irq_locked(struct dpu_hw_intr *intr, int irq_idx)
 {
 	int reg_idx;
 	const struct dpu_intr_reg *reg;
-	const struct dpu_irq_type *irq;
 	const char *dbgstr = NULL;
 	uint32_t cache_irq_mask;
 
 	if (!intr)
 		return -EINVAL;
 
-	if (irq_idx < 0 || irq_idx >= ARRAY_SIZE(dpu_irq_map)) {
+	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
 		return -EINVAL;
 	}
 
-	irq = &dpu_irq_map[irq_idx];
-	reg_idx = irq->reg_idx;
+	/*
+	 * The cache_irq_mask and hardware RMW operations needs to be done
+	 * under irq_lock and it's the caller's responsibility to ensure that's
+	 * held.
+	 */
+	assert_spin_locked(&intr->irq_lock);
+
+	reg_idx = DPU_IRQ_REG(irq_idx);
 	reg = &dpu_intr_set[reg_idx];
 
 	cache_irq_mask = intr->cache_irq_mask[reg_idx];
-	if ((cache_irq_mask & irq->irq_mask) == 0) {
+	if ((cache_irq_mask & DPU_IRQ_MASK(irq_idx)) == 0) {
 		dbgstr = "DPU IRQ is already cleared:";
 	} else {
 		dbgstr = "DPU IRQ mask disable:";
 
-		cache_irq_mask &= ~irq->irq_mask;
+		cache_irq_mask &= ~DPU_IRQ_MASK(irq_idx);
 		/* Disable interrupts based on the new mask */
 		DPU_REG_WRITE(&intr->hw, reg->en_off, cache_irq_mask);
 		/* Cleaning any pending interrupt */
-		DPU_REG_WRITE(&intr->hw, reg->clr_off, irq->irq_mask);
+		DPU_REG_WRITE(&intr->hw, reg->clr_off, DPU_IRQ_MASK(irq_idx));
 
 		/* ensure register write goes through */
 		wmb();
@@ -1517,27 +1572,8 @@ static int dpu_hw_intr_disable_irq_nolock(struct dpu_hw_intr *intr, int irq_idx)
 		intr->cache_irq_mask[reg_idx] = cache_irq_mask;
 	}
 
-	pr_debug("%s MASK:0x%.8x, CACHE-MASK:0x%.8x\n", dbgstr,
-			irq->irq_mask, cache_irq_mask);
-
-	return 0;
-}
-
-static int dpu_hw_intr_disable_irq(struct dpu_hw_intr *intr, int irq_idx)
-{
-	unsigned long irq_flags;
-
-	if (!intr)
-		return -EINVAL;
-
-	if (irq_idx < 0 || irq_idx >= ARRAY_SIZE(dpu_irq_map)) {
-		pr_err("invalid IRQ index: [%d]\n", irq_idx);
-		return -EINVAL;
-	}
-
-	spin_lock_irqsave(&intr->irq_lock, irq_flags);
-	dpu_hw_intr_disable_irq_nolock(intr, irq_idx);
-	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+	pr_debug("%s MASK:0x%.8lx, CACHE-MASK:0x%.8x\n", dbgstr,
+			DPU_IRQ_MASK(irq_idx), cache_irq_mask);
 
 	return 0;
 }
@@ -1580,58 +1616,6 @@ static int dpu_hw_intr_disable_irqs(struct dpu_hw_intr *intr)
 	return 0;
 }
 
-static void dpu_hw_intr_get_interrupt_statuses(struct dpu_hw_intr *intr)
-{
-	int i;
-	u32 enable_mask;
-	unsigned long irq_flags;
-
-	if (!intr)
-		return;
-
-	spin_lock_irqsave(&intr->irq_lock, irq_flags);
-	for (i = 0; i < ARRAY_SIZE(dpu_intr_set); i++) {
-		if (!test_bit(i, &intr->irq_mask))
-			continue;
-
-		/* Read interrupt status */
-		intr->save_irq_status[i] = DPU_REG_READ(&intr->hw,
-				dpu_intr_set[i].status_off);
-
-		/* Read enable mask */
-		enable_mask = DPU_REG_READ(&intr->hw, dpu_intr_set[i].en_off);
-
-		/* and clear the interrupt */
-		if (intr->save_irq_status[i])
-			DPU_REG_WRITE(&intr->hw, dpu_intr_set[i].clr_off,
-					intr->save_irq_status[i]);
-
-		/* Finally update IRQ status based on enable mask */
-		intr->save_irq_status[i] &= enable_mask;
-	}
-
-	/* ensure register writes go through */
-	wmb();
-
-	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
-}
-
-static void dpu_hw_intr_clear_intr_status_nolock(struct dpu_hw_intr *intr,
-		int irq_idx)
-{
-	int reg_idx;
-
-	if (!intr)
-		return;
-
-	reg_idx = dpu_irq_map[irq_idx].reg_idx;
-	DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
-			dpu_irq_map[irq_idx].irq_mask);
-
-	/* ensure register writes go through */
-	wmb();
-}
-
 static u32 dpu_hw_intr_get_interrupt_status(struct dpu_hw_intr *intr,
 		int irq_idx, bool clear)
 {
@@ -1642,17 +1626,17 @@ static u32 dpu_hw_intr_get_interrupt_status(struct dpu_hw_intr *intr,
 	if (!intr)
 		return 0;
 
-	if (irq_idx >= ARRAY_SIZE(dpu_irq_map) || irq_idx < 0) {
+	if (irq_idx < 0 || irq_idx >= intr->total_irqs) {
 		pr_err("invalid IRQ index: [%d]\n", irq_idx);
 		return 0;
 	}
 
 	spin_lock_irqsave(&intr->irq_lock, irq_flags);
 
-	reg_idx = dpu_irq_map[irq_idx].reg_idx;
+	reg_idx = DPU_IRQ_REG(irq_idx);
 	intr_status = DPU_REG_READ(&intr->hw,
 			dpu_intr_set[reg_idx].status_off) &
-					dpu_irq_map[irq_idx].irq_mask;
+		DPU_IRQ_MASK(irq_idx);
 	if (intr_status && clear)
 		DPU_REG_WRITE(&intr->hw, dpu_intr_set[reg_idx].clr_off,
 				intr_status);
@@ -1665,17 +1649,30 @@ static u32 dpu_hw_intr_get_interrupt_status(struct dpu_hw_intr *intr,
 	return intr_status;
 }
 
+static unsigned long dpu_hw_intr_lock(struct dpu_hw_intr *intr)
+{
+	unsigned long irq_flags;
+
+	spin_lock_irqsave(&intr->irq_lock, irq_flags);
+
+	return irq_flags;
+}
+
+static void dpu_hw_intr_unlock(struct dpu_hw_intr *intr, unsigned long irq_flags)
+{
+	spin_unlock_irqrestore(&intr->irq_lock, irq_flags);
+}
+
 static void __setup_intr_ops(struct dpu_hw_intr_ops *ops)
 {
-	ops->irq_idx_lookup = dpu_hw_intr_irqidx_lookup;
-	ops->enable_irq = dpu_hw_intr_enable_irq;
-	ops->disable_irq = dpu_hw_intr_disable_irq;
+	ops->enable_irq_locked = dpu_hw_intr_enable_irq_locked;
+	ops->disable_irq_locked = dpu_hw_intr_disable_irq_locked;
 	ops->dispatch_irqs = dpu_hw_intr_dispatch_irq;
 	ops->clear_all_irqs = dpu_hw_intr_clear_irqs;
 	ops->disable_all_irqs = dpu_hw_intr_disable_irqs;
-	ops->get_interrupt_statuses = dpu_hw_intr_get_interrupt_statuses;
-	ops->clear_intr_status_nolock = dpu_hw_intr_clear_intr_status_nolock;
 	ops->get_interrupt_status = dpu_hw_intr_get_interrupt_status;
+	ops->lock = dpu_hw_intr_lock;
+	ops->unlock = dpu_hw_intr_unlock;
 }
 
 static void __intr_offset(struct dpu_mdss_cfg *m,
@@ -1701,7 +1698,7 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
 	__intr_offset(m, addr, &intr->hw);
 	__setup_intr_ops(&intr->ops);
 
-	intr->irq_idx_tbl_size = ARRAY_SIZE(dpu_irq_map);
+	intr->total_irqs = ARRAY_SIZE(dpu_intr_set) * 32;
 
 	intr->cache_irq_mask = kcalloc(ARRAY_SIZE(dpu_intr_set), sizeof(u32),
 			GFP_KERNEL);
@@ -1710,16 +1707,11 @@ struct dpu_hw_intr *dpu_hw_intr_init(void __iomem *addr,
 		return ERR_PTR(-ENOMEM);
 	}
 
-	intr->save_irq_status = kcalloc(ARRAY_SIZE(dpu_intr_set), sizeof(u32),
-			GFP_KERNEL);
-	if (intr->save_irq_status == NULL) {
-		kfree(intr->cache_irq_mask);
-		kfree(intr);
-		return ERR_PTR(-ENOMEM);
-	}
-
 	intr->irq_mask = m->mdss_irqs;
+<<<<<<< HEAD
 	intr->obsolete_irq = m->obsolete_irq;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	spin_lock_init(&intr->irq_lock);
 
@@ -1730,7 +1722,6 @@ void dpu_hw_intr_destroy(struct dpu_hw_intr *intr)
 {
 	if (intr) {
 		kfree(intr->cache_irq_mask);
-		kfree(intr->save_irq_status);
 		kfree(intr);
 	}
 }

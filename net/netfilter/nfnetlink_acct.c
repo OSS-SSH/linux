@@ -314,14 +314,18 @@ static int nfnl_acct_get(struct sk_buff *skb, const struct nfnl_info *info,
 			kfree_skb(skb2);
 			break;
 		}
+<<<<<<< HEAD
 		ret = netlink_unicast(info->sk, skb2, NETLINK_CB(skb).portid,
 				      MSG_DONTWAIT);
 		if (ret > 0)
 			ret = 0;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
-		/* this avoids a loop in nfnetlink. */
-		return ret == -EAGAIN ? -ENOBUFS : ret;
+		ret = nfnetlink_unicast(skb2, info->net, NETLINK_CB(skb).portid);
+		break;
 	}
+
 	return ret;
 }
 

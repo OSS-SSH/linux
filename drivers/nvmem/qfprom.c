@@ -122,6 +122,10 @@ static const struct qfprom_soc_compatible_data sc7280_qfprom = {
 	.keepout = sc7280_qfprom_keepout,
 	.nkeepout = ARRAY_SIZE(sc7280_qfprom_keepout)
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 /**
  * qfprom_disable_fuse_blowing() - Undo enabling of fuse blowing.
  * @priv: Our driver data.
@@ -195,9 +199,15 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
 	}
 
 	/*
+<<<<<<< HEAD
 	 * Hardware requires 1.8V min for fuse blowing; this may be
 	 * a rail shared do don't specify a max--regulator constraints
 	 * will handle.
+=======
+	 * Hardware requires a minimum voltage for fuse blowing.
+	 * This may be a shared rail so don't specify a maximum.
+	 * Regulator constraints will cap to the actual maximum.
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	 */
 	ret = regulator_set_voltage(priv->vcc, qfprom_blow_uV, INT_MAX);
 	if (ret) {
@@ -399,7 +409,11 @@ static int qfprom_probe(struct platform_device *pdev)
 
 		if (major_version == 7 && minor_version == 8)
 			priv->soc_data = &qfprom_7_8_data;
+<<<<<<< HEAD
 		if (major_version == 7 && minor_version == 15)
+=======
+		else if (major_version == 7 && minor_version == 15)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			priv->soc_data = &qfprom_7_15_data;
 
 		priv->vcc = devm_regulator_get(&pdev->dev, "vcc");

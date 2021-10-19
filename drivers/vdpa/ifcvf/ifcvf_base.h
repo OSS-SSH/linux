@@ -19,6 +19,7 @@
 #include <uapi/linux/virtio_config.h>
 #include <uapi/linux/virtio_pci.h>
 
+<<<<<<< HEAD
 #define N3000_VENDOR_ID		0x1AF4
 #define N3000_DEVICE_ID		0x1041
 #define N3000_SUBSYS_VENDOR_ID	0x8086
@@ -34,6 +35,11 @@
 #define C5000X_PL_BLK_SUBSYS_VENDOR_ID	0x8086
 #define C5000X_PL_BLK_SUBSYS_DEVICE_ID	0x0002
 
+=======
+#define N3000_DEVICE_ID		0x1041
+#define N3000_SUBSYS_DEVICE_ID	0x001A
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #define IFCVF_NET_SUPPORTED_FEATURES \
 		((1ULL << VIRTIO_NET_F_MAC)			| \
 		 (1ULL << VIRTIO_F_ANY_LAYOUT)			| \
@@ -73,6 +79,7 @@ struct vring_info {
 	u16 last_avail_idx;
 	bool ready;
 	void __iomem *notify_addr;
+	phys_addr_t notify_pa;
 	u32 irq;
 	struct vdpa_callback cb;
 	char msix_name[256];
@@ -87,6 +94,7 @@ struct ifcvf_hw {
 	u8 notify_bar;
 	/* Notificaiton bar address */
 	void __iomem *notify_base;
+	phys_addr_t notify_base_pa;
 	u32 notify_off_multiplier;
 	u64 req_features;
 	u64 hw_features;

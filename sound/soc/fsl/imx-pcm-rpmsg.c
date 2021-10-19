@@ -161,10 +161,17 @@ static int imx_rpmsg_pcm_hw_params(struct snd_soc_component *component,
 		msg->s_msg.param.format   = RPMSG_S24_LE;
 		break;
 	case SNDRV_PCM_FORMAT_DSD_U16_LE:
+<<<<<<< HEAD
 		msg->s_msg.param.format   = SNDRV_PCM_FORMAT_DSD_U16_LE;
 		break;
 	case SNDRV_PCM_FORMAT_DSD_U32_LE:
 		msg->s_msg.param.format   = SNDRV_PCM_FORMAT_DSD_U32_LE;
+=======
+		msg->s_msg.param.format   = RPMSG_DSD_U16_LE;
+		break;
+	case SNDRV_PCM_FORMAT_DSD_U32_LE:
+		msg->s_msg.param.format   = RPMSG_DSD_U32_LE;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		break;
 	default:
 		msg->s_msg.param.format   = RPMSG_S32_LE;
@@ -544,7 +551,11 @@ static int imx_rpmsg_pcm_ack(struct snd_soc_component *component,
 	struct rpmsg_msg *msg;
 	unsigned long flags;
 	int buffer_tail = 0;
+<<<<<<< HEAD
 	int written_num = 0;
+=======
+	int written_num;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (!rpmsg->force_lpa)
 		return 0;

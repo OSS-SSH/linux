@@ -29,7 +29,11 @@ then
 	echo "Usage: $scriptname /path/to/old/run [ options ]"
 	exit 1
 fi
+<<<<<<< HEAD
 if ! cp "$oldrun/batches" $T/batches.oldrun
+=======
+if ! cp "$oldrun/scenarios" $T/scenarios.oldrun
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 then
 	# Later on, can reconstitute this from console.log files.
 	echo Prior run batches file does not exist: $oldrun/batches
@@ -143,6 +147,11 @@ then
 	usage
 fi
 rm -f "$rundir"/*/{console.log,console.log.diags,qemu_pid,qemu-retval,Warnings,kvm-test-1-run.sh.out,kvm-test-1-run-qemu.sh.out,vmlinux} "$rundir"/log
+<<<<<<< HEAD
+=======
+touch "$rundir/log"
+echo $scriptname $args | tee -a "$rundir/log"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 echo $oldrun > "$rundir/re-run"
 if ! test -d "$rundir/../../bin"
 then
@@ -165,6 +174,7 @@ done
 grep '^#' $i | sed -e 's/^# //' > $T/qemu-cmd-settings
 . $T/qemu-cmd-settings
 
+<<<<<<< HEAD
 grep -v '^#' $T/batches.oldrun | awk '
 BEGIN {
 	oldbatch = 1;
@@ -181,6 +191,14 @@ BEGIN {
 
 END {
 	print "kvm-test-1-run-batch.sh" curbatch
+=======
+grep -v '^#' $T/scenarios.oldrun | awk '
+{
+	curbatch = "";
+	for (i = 2; i <= NF; i++)
+		curbatch = curbatch " " $i;
+	print "kvm-test-1-run-batch.sh" curbatch;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }' > $T/runbatches.sh
 
 if test -n "$dryrun"
@@ -188,6 +206,7 @@ then
 	echo ---- Dryrun complete, directory: $rundir | tee -a "$rundir/log"
 else
 	( cd "$rundir"; sh $T/runbatches.sh )
+<<<<<<< HEAD
 	kcsan-collapse.sh "$rundir" | tee -a "$rundir/log"
 	echo | tee -a "$rundir/log"
 	echo ---- Results directory: $rundir | tee -a "$rundir/log"
@@ -196,4 +215,7 @@ else
 	cat $T/kvm-recheck.sh.out | tee -a "$rundir/log"
 	echo " --- Done at `date` (`get_starttime_duration $starttime`) exitcode $ret" | tee -a "$rundir/log"
 	exit $ret
+=======
+	kvm-end-run-stats.sh "$rundir" "$starttime"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 fi

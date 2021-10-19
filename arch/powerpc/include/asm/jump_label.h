@@ -50,7 +50,11 @@ l_yes:
 1098:	nop;					\
 	.pushsection __jump_table, "aw";	\
 	.long 1098b - ., LABEL - .;		\
+<<<<<<< HEAD
 	FTR_ENTRY_LONG KEY;			\
+=======
+	FTR_ENTRY_LONG KEY - .;			\
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.popsection
 #endif
 

@@ -138,8 +138,11 @@ static int mxs_pwm_probe(struct platform_device *pdev)
 
 	mxs->chip.dev = &pdev->dev;
 	mxs->chip.ops = &mxs_pwm_ops;
+<<<<<<< HEAD
 	mxs->chip.of_xlate = of_pwm_xlate_with_flags;
 	mxs->chip.of_pwm_n_cells = 3;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	ret = of_property_read_u32(np, "fsl,pwm-number", &mxs->chip.npwm);
 	if (ret < 0) {

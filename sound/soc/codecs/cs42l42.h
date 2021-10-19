@@ -79,7 +79,7 @@
 #define CS42L42_HP_PDN_SHIFT		3
 #define CS42L42_HP_PDN_MASK		(1 << CS42L42_HP_PDN_SHIFT)
 #define CS42L42_ADC_PDN_SHIFT		2
-#define CS42L42_ADC_PDN_MASK		(1 << CS42L42_HP_PDN_SHIFT)
+#define CS42L42_ADC_PDN_MASK		(1 << CS42L42_ADC_PDN_SHIFT)
 #define CS42L42_PDN_ALL_SHIFT		0
 #define CS42L42_PDN_ALL_MASK		(1 << CS42L42_PDN_ALL_SHIFT)
 
@@ -755,6 +755,10 @@
 
 #define CS42L42_NUM_SUPPLIES	5
 #define CS42L42_BOOT_TIME_US	3000
+<<<<<<< HEAD
+=======
+#define CS42L42_PLL_DIVOUT_TIME_US	800
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #define CS42L42_CLOCK_SWITCH_DELAY_US 150
 #define CS42L42_PLL_LOCK_POLL_US	250
 #define CS42L42_PLL_LOCK_TIMEOUT_US	1250
@@ -773,10 +777,18 @@ struct  cs42l42_private {
 	struct regulator_bulk_data supplies[CS42L42_NUM_SUPPLIES];
 	struct gpio_desc *reset_gpio;
 	struct completion pdn_done;
+<<<<<<< HEAD
 	struct snd_soc_jack jack;
 	int bclk;
 	u32 sclk;
 	u32 srate;
+=======
+	struct snd_soc_jack *jack;
+	int bclk;
+	u32 sclk;
+	u32 srate;
+	u8 pll_divout;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u8 plug_state;
 	u8 hs_type;
 	u8 ts_inv;
@@ -787,6 +799,10 @@ struct  cs42l42_private {
 	u8 bias_thresholds[CS42L42_NUM_BIASES];
 	u8 hs_bias_ramp_rate;
 	u8 hs_bias_ramp_time;
+<<<<<<< HEAD
+=======
+	u8 hs_bias_sense_en;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u8 stream_use;
 };
 

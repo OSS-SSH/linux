@@ -32,7 +32,11 @@ u64 __hyp_vmemmap;
  */
 static struct hyp_page *__find_buddy_nocheck(struct hyp_pool *pool,
 					     struct hyp_page *p,
+<<<<<<< HEAD
 					     unsigned int order)
+=======
+					     unsigned short order)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	phys_addr_t addr = hyp_page_to_phys(p);
 
@@ -51,21 +55,64 @@ static struct hyp_page *__find_buddy_nocheck(struct hyp_pool *pool,
 /* Find a buddy page currently available for allocation */
 static struct hyp_page *__find_buddy_avail(struct hyp_pool *pool,
 					   struct hyp_page *p,
+<<<<<<< HEAD
 					   unsigned int order)
 {
 	struct hyp_page *buddy = __find_buddy_nocheck(pool, p, order);
 
 	if (!buddy || buddy->order != order || list_empty(&buddy->node))
+=======
+					   unsigned short order)
+{
+	struct hyp_page *buddy = __find_buddy_nocheck(pool, p, order);
+
+	if (!buddy || buddy->order != order || buddy->refcount)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		return NULL;
 
 	return buddy;
 
 }
 
+<<<<<<< HEAD
 static void __hyp_attach_page(struct hyp_pool *pool,
 			      struct hyp_page *p)
 {
 	unsigned int order = p->order;
+=======
+/*
+ * Pages that are available for allocation are tracked in free-lists, so we use
+ * the pages themselves to store the list nodes to avoid wasting space. As the
+ * allocator always returns zeroed pages (which are zeroed on the hyp_put_page()
+ * path to optimize allocation speed), we also need to clean-up the list node in
+ * each page when we take it out of the list.
+ */
+static inline void page_remove_from_list(struct hyp_page *p)
+{
+	struct list_head *node = hyp_page_to_virt(p);
+
+	__list_del_entry(node);
+	memset(node, 0, sizeof(*node));
+}
+
+static inline void page_add_to_list(struct hyp_page *p, struct list_head *head)
+{
+	struct list_head *node = hyp_page_to_virt(p);
+
+	INIT_LIST_HEAD(node);
+	list_add_tail(node, head);
+}
+
+static inline struct hyp_page *node_to_page(struct list_head *node)
+{
+	return hyp_virt_to_page(node);
+}
+
+static void __hyp_attach_page(struct hyp_pool *pool,
+			      struct hyp_page *p)
+{
+	unsigned short order = p->order;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct hyp_page *buddy;
 
 	memset(hyp_page_to_virt(p), 0, PAGE_SIZE << p->order);
@@ -83,13 +130,18 @@ static void __hyp_attach_page(struct hyp_pool *pool,
 			break;
 
 		/* Take the buddy out of its list, and coallesce with @p */
+<<<<<<< HEAD
 		list_del_init(&buddy->node);
+=======
+		page_remove_from_list(buddy);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		buddy->order = HYP_NO_ORDER;
 		p = min(p, buddy);
 	}
 
 	/* Mark the new head, and insert it */
 	p->order = order;
+<<<<<<< HEAD
 	list_add_tail(&p->node, &pool->free_area[order]);
 }
 
@@ -100,15 +152,26 @@ static void hyp_attach_page(struct hyp_page *p)
 	hyp_spin_lock(&pool->lock);
 	__hyp_attach_page(pool, p);
 	hyp_spin_unlock(&pool->lock);
+=======
+	page_add_to_list(p, &pool->free_area[order]);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 static struct hyp_page *__hyp_extract_page(struct hyp_pool *pool,
 					   struct hyp_page *p,
+<<<<<<< HEAD
 					   unsigned int order)
 {
 	struct hyp_page *buddy;
 
 	list_del_init(&p->node);
+=======
+					   unsigned short order)
+{
+	struct hyp_page *buddy;
+
+	page_remove_from_list(p);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	while (p->order > order) {
 		/*
 		 * The buddy of order n - 1 currently has HYP_NO_ORDER as it
@@ -119,12 +182,17 @@ static struct hyp_page *__hyp_extract_page(struct hyp_pool *pool,
 		p->order--;
 		buddy = __find_buddy_nocheck(pool, p, p->order);
 		buddy->order = p->order;
+<<<<<<< HEAD
 		list_add_tail(&buddy->node, &pool->free_area[buddy->order]);
+=======
+		page_add_to_list(buddy, &pool->free_area[buddy->order]);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	return p;
 }
 
+<<<<<<< HEAD
 void hyp_put_page(void *addr)
 {
 	struct hyp_page *p = hyp_virt_to_page(addr);
@@ -143,6 +211,60 @@ void hyp_get_page(void *addr)
 void *hyp_alloc_pages(struct hyp_pool *pool, unsigned int order)
 {
 	unsigned int i = order;
+=======
+static inline void hyp_page_ref_inc(struct hyp_page *p)
+{
+	BUG_ON(p->refcount == USHRT_MAX);
+	p->refcount++;
+}
+
+static inline int hyp_page_ref_dec_and_test(struct hyp_page *p)
+{
+	p->refcount--;
+	return (p->refcount == 0);
+}
+
+static inline void hyp_set_page_refcounted(struct hyp_page *p)
+{
+	BUG_ON(p->refcount);
+	p->refcount = 1;
+}
+
+static void __hyp_put_page(struct hyp_pool *pool, struct hyp_page *p)
+{
+	if (hyp_page_ref_dec_and_test(p))
+		__hyp_attach_page(pool, p);
+}
+
+/*
+ * Changes to the buddy tree and page refcounts must be done with the hyp_pool
+ * lock held. If a refcount change requires an update to the buddy tree (e.g.
+ * hyp_put_page()), both operations must be done within the same critical
+ * section to guarantee transient states (e.g. a page with null refcount but
+ * not yet attached to a free list) can't be observed by well-behaved readers.
+ */
+void hyp_put_page(struct hyp_pool *pool, void *addr)
+{
+	struct hyp_page *p = hyp_virt_to_page(addr);
+
+	hyp_spin_lock(&pool->lock);
+	__hyp_put_page(pool, p);
+	hyp_spin_unlock(&pool->lock);
+}
+
+void hyp_get_page(struct hyp_pool *pool, void *addr)
+{
+	struct hyp_page *p = hyp_virt_to_page(addr);
+
+	hyp_spin_lock(&pool->lock);
+	hyp_page_ref_inc(p);
+	hyp_spin_unlock(&pool->lock);
+}
+
+void *hyp_alloc_pages(struct hyp_pool *pool, unsigned short order)
+{
+	unsigned short i = order;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct hyp_page *p;
 
 	hyp_spin_lock(&pool->lock);
@@ -156,11 +278,19 @@ void *hyp_alloc_pages(struct hyp_pool *pool, unsigned int order)
 	}
 
 	/* Extract it from the tree at the right order */
+<<<<<<< HEAD
 	p = list_first_entry(&pool->free_area[i], struct hyp_page, node);
 	p = __hyp_extract_page(pool, p, order);
 
 	hyp_spin_unlock(&pool->lock);
 	hyp_set_page_refcounted(p);
+=======
+	p = node_to_page(pool->free_area[i].next);
+	p = __hyp_extract_page(pool, p, order);
+
+	hyp_set_page_refcounted(p);
+	hyp_spin_unlock(&pool->lock);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	return hyp_page_to_virt(p);
 }
@@ -181,15 +311,25 @@ int hyp_pool_init(struct hyp_pool *pool, u64 pfn, unsigned int nr_pages,
 
 	/* Init the vmemmap portion */
 	p = hyp_phys_to_page(phys);
+<<<<<<< HEAD
 	memset(p, 0, sizeof(*p) * nr_pages);
 	for (i = 0; i < nr_pages; i++) {
 		p[i].pool = pool;
 		INIT_LIST_HEAD(&p[i].node);
+=======
+	for (i = 0; i < nr_pages; i++) {
+		p[i].order = 0;
+		hyp_set_page_refcounted(&p[i]);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	/* Attach the unused pages to the buddy tree */
 	for (i = reserved_pages; i < nr_pages; i++)
+<<<<<<< HEAD
 		__hyp_attach_page(pool, &p[i]);
+=======
+		__hyp_put_page(pool, &p[i]);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	return 0;
 }

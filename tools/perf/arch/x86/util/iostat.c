@@ -322,7 +322,11 @@ static int iostat_event_group(struct evlist *evl,
 	}
 
 	evlist__for_each_entry(evl, evsel) {
+<<<<<<< HEAD
 		evsel->priv = list->rps[evsel->idx / metrics_count];
+=======
+		evsel->priv = list->rps[evsel->core.idx / metrics_count];
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 	list->nr_entries = 0;
 err:
@@ -428,7 +432,11 @@ void iostat_print_metric(struct perf_stat_config *config, struct evsel *evsel,
 {
 	double iostat_value = 0;
 	u64 prev_count_val = 0;
+<<<<<<< HEAD
 	const char *iostat_metric = iostat_metric_by_idx(evsel->idx);
+=======
+	const char *iostat_metric = iostat_metric_by_idx(evsel->core.idx);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u8 die = ((struct iio_root_port *)evsel->priv)->die;
 	struct perf_counts_values *count = perf_counts(evsel->counts, die, 0);
 

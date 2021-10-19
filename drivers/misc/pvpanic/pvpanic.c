@@ -13,6 +13,10 @@
 #include <linux/mod_devicetable.h>
 #include <linux/module.h>
 #include <linux/platform_device.h>
+<<<<<<< HEAD
+=======
+#include <linux/panic_notifier.h>
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <linux/types.h>
 #include <linux/cdev.h>
 #include <linux/list.h>
@@ -60,6 +64,7 @@ static struct notifier_block pvpanic_panic_nb = {
 	.priority = 1, /* let this called before broken drm_fb_helper */
 };
 
+<<<<<<< HEAD
 int pvpanic_probe(struct pvpanic_instance *pi)
 {
 	if (!pi || !pi->base)
@@ -79,6 +84,12 @@ void pvpanic_remove(struct pvpanic_instance *pi)
 
 	if (!pi)
 		return;
+=======
+static void pvpanic_remove(void *param)
+{
+	struct pvpanic_instance *pi_cur, *pi_next;
+	struct pvpanic_instance *pi = param;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	spin_lock(&pvpanic_lock);
 	list_for_each_entry_safe(pi_cur, pi_next, &pvpanic_list, list) {
@@ -89,7 +100,23 @@ void pvpanic_remove(struct pvpanic_instance *pi)
 	}
 	spin_unlock(&pvpanic_lock);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(pvpanic_remove);
+=======
+
+int devm_pvpanic_probe(struct device *dev, struct pvpanic_instance *pi)
+{
+	if (!pi || !pi->base)
+		return -EINVAL;
+
+	spin_lock(&pvpanic_lock);
+	list_add(&pi->list, &pvpanic_list);
+	spin_unlock(&pvpanic_lock);
+
+	return devm_add_action_or_reset(dev, pvpanic_remove, pi);
+}
+EXPORT_SYMBOL_GPL(devm_pvpanic_probe);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 static int pvpanic_init(void)
 {

@@ -44,7 +44,7 @@ static int perf_evsel__roundtrip_cache_name_test(void)
 
 			for (i = 0; i < PERF_COUNT_HW_CACHE_RESULT_MAX; i++) {
 				__evsel__hw_cache_type_op_res_name(type, op, i, name, sizeof(name));
-				if (evsel->idx != idx)
+				if (evsel->core.idx != idx)
 					continue;
 
 				++idx;
@@ -84,9 +84,15 @@ static int __perf_evsel__name_array_test(const char *names[], int nr_names,
 
 	err = 0;
 	evlist__for_each_entry(evlist, evsel) {
+<<<<<<< HEAD
 		if (strcmp(evsel__name(evsel), names[evsel->idx / distance])) {
 			--err;
 			pr_debug("%s != %s\n", evsel__name(evsel), names[evsel->idx / distance]);
+=======
+		if (strcmp(evsel__name(evsel), names[evsel->core.idx / distance])) {
+			--err;
+			pr_debug("%s != %s\n", evsel__name(evsel), names[evsel->core.idx / distance]);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		}
 	}
 

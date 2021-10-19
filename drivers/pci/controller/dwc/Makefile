@@ -38,6 +38,10 @@ ifdef CONFIG_ACPI
 ifdef CONFIG_PCI_QUIRKS
 obj-$(CONFIG_ARM64) += pcie-al.o
 obj-$(CONFIG_ARM64) += pcie-hisi.o
+<<<<<<< HEAD
 obj-$(CONFIG_ARM64) += pcie-tegra194.o
+=======
+obj-$(CONFIG_ARM64) += pcie-tegra194-acpi.o
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 endif
 endif

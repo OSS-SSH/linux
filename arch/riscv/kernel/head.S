@@ -81,9 +81,15 @@ pe_head_start:
 #ifdef CONFIG_MMU
 relocate:
 	/* Relocate return address */
+<<<<<<< HEAD
 	la a1, kernel_virt_addr
 	XIP_FIXUP_OFFSET a1
 	REG_L a1, 0(a1)
+=======
+	la a1, kernel_map
+	XIP_FIXUP_OFFSET a1
+	REG_L a1, KERNEL_MAP_VIRT_ADDR(a1)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	la a2, _start
 	sub a1, a1, a2
 	add ra, ra, a1

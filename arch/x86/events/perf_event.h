@@ -229,6 +229,10 @@ struct cpu_hw_events {
 	 */
 	struct perf_event	*events[X86_PMC_IDX_MAX]; /* in counter order */
 	unsigned long		active_mask[BITS_TO_LONGS(X86_PMC_IDX_MAX)];
+<<<<<<< HEAD
+=======
+	unsigned long		dirty[BITS_TO_LONGS(X86_PMC_IDX_MAX)];
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	int			enabled;
 
 	int			n_events; /* the # of events in the below arrays */
@@ -1244,6 +1248,8 @@ void reserve_ds_buffers(void);
 
 void release_lbr_buffers(void);
 
+void reserve_lbr_buffers(void);
+
 extern struct event_constraint bts_constraint;
 extern struct event_constraint vlbr_constraint;
 
@@ -1390,6 +1396,10 @@ static inline void release_ds_buffers(void)
 }
 
 static inline void release_lbr_buffers(void)
+{
+}
+
+static inline void reserve_lbr_buffers(void)
 {
 }
 

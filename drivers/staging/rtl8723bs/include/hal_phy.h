@@ -6,6 +6,7 @@
  ******************************************************************************/
 #ifndef __HAL_PHY_H__
 #define __HAL_PHY_H__
+<<<<<<< HEAD
 
 
 #if DISABLE_BB_RF
@@ -20,6 +21,8 @@
 #define	HAL_RF_ENABLE				1
 #endif
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 /*  */
 /*  Antenna detection method, i.e., using single tone detection or RSSI reported from each antenna detected. */
 /*  Added by Roger, 2013.05.22. */
@@ -31,6 +34,7 @@
 
 
 /*--------------------------Define Parameters-------------------------------*/
+<<<<<<< HEAD
 enum band_type {
 	BAND_ON_2_4G = 0,
 	BAND_ON_5G,
@@ -38,6 +42,8 @@ enum band_type {
 	BANDMAX
 };
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 enum {
 	RF_TYPE_MIN = 0,	/*  0 */
 	RF_8225 = 1,		/*  1 11b/g RF for verification only */
@@ -65,13 +71,10 @@ enum rf_path {
 
 enum wireless_mode {
 	WIRELESS_MODE_UNKNOWN = 0x00,
-	WIRELESS_MODE_A = 0x01,
 	WIRELESS_MODE_B = 0x02,
 	WIRELESS_MODE_G = 0x04,
 	WIRELESS_MODE_AUTO = 0x08,
 	WIRELESS_MODE_N_24G = 0x10,
-	WIRELESS_MODE_N_5G = 0x20,
-	WIRELESS_MODE_AC_5G = 0x40,
 	WIRELESS_MODE_AC_24G  = 0x80,
 	WIRELESS_MODE_AC_ONLY  = 0x100,
 };

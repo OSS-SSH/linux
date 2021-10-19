@@ -67,9 +67,13 @@ properties:
     maxItems: 1
 
   clock-names:
+<<<<<<< HEAD
     maxItems: 1
     items:
       - const: fck
+=======
+    const: fck
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
   resets:
     maxItems: 1
@@ -80,7 +84,10 @@ properties:
 
   dma-names:
     minItems: 1
+<<<<<<< HEAD
     maxItems: 2
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     items:
       - const: rx
       - const: rx
@@ -99,6 +106,7 @@ properties:
       Indicates that the channel acts as primary among the bonded channels.
 
   port:
+<<<<<<< HEAD
     type: object
     description:
       Child port node corresponding to the data input, in accordance with the
@@ -117,14 +125,33 @@ properties:
               port.
 
           sync-active:
+=======
+    $ref: /schemas/graph.yaml#/properties/port
+    unevaluatedProperties: false
+    description:
+      Child port node corresponding to the data input. The port node must
+      contain at least one endpoint.
+
+    properties:
+      endpoint:
+        $ref: /schemas/graph.yaml#/$defs/endpoint-base
+        unevaluatedProperties: false
+
+        properties:
+          sync-active:
+            $ref: /schemas/types.yaml#/definitions/uint32
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
             enum: [0, 1]
             description:
               Indicates sync signal polarity, 0/1 for low/high respectively.
               This property maps to SYNCAC bit in the hardware manual. The
               default is 1 (active high).
 
+<<<<<<< HEAD
         additionalProperties: false
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 required:
   - compatible
   - reg

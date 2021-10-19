@@ -19,13 +19,20 @@
    :maxdepth: 2
 
    gcov
+<<<<<<< HEAD
+=======
+   kasan
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 Todolist:
 
  - coccinelle
  - sparse
  - kcov
+<<<<<<< HEAD
  - kasan
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  - ubsan
  - kmemleak
  - kcsan

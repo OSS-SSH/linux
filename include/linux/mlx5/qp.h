@@ -550,8 +550,13 @@ static inline const char *mlx5_qp_state_str(int state)
 static inline int mlx5_get_qp_default_ts(struct mlx5_core_dev *dev)
 {
 	return !MLX5_CAP_ROCE(dev, qp_ts_format) ?
+<<<<<<< HEAD
 		       MLX5_QPC_TIMESTAMP_FORMAT_FREE_RUNNING :
 		       MLX5_QPC_TIMESTAMP_FORMAT_DEFAULT;
+=======
+		       MLX5_TIMESTAMP_FORMAT_FREE_RUNNING :
+		       MLX5_TIMESTAMP_FORMAT_DEFAULT;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 #endif /* MLX5_QP_H */

@@ -1332,6 +1332,7 @@ __mlxsw_sp_qdisc_ets_graft(struct mlxsw_sp_port *mlxsw_sp_port,
 			   u8 band, u32 child_handle)
 {
 	struct mlxsw_sp_qdisc *old_qdisc;
+	u32 parent;
 
 	if (band < mlxsw_sp_qdisc->num_classes &&
 	    mlxsw_sp_qdisc->qdiscs[band].handle == child_handle)
@@ -1352,7 +1353,13 @@ __mlxsw_sp_qdisc_ets_graft(struct mlxsw_sp_port *mlxsw_sp_port,
 	if (old_qdisc)
 		mlxsw_sp_qdisc_destroy(mlxsw_sp_port, old_qdisc);
 
+<<<<<<< HEAD
 	mlxsw_sp_qdisc = mlxsw_sp_qdisc->ops->find_class(mlxsw_sp_qdisc, band);
+=======
+	parent = TC_H_MAKE(mlxsw_sp_qdisc->handle, band + 1);
+	mlxsw_sp_qdisc = mlxsw_sp_qdisc->ops->find_class(mlxsw_sp_qdisc,
+							 parent);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (!WARN_ON(!mlxsw_sp_qdisc))
 		mlxsw_sp_qdisc_destroy(mlxsw_sp_port, mlxsw_sp_qdisc);
 

@@ -10,6 +10,7 @@ syshdr := $(srctree)/scripts/syscallhdr.sh
 systbl := $(srctree)/scripts/syscalltbl.sh
 
 quiet_cmd_syshdr = SYSHDR  $@
+<<<<<<< HEAD
       cmd_syshdr = $(CONFIG_SHELL) $(syshdr) --emit-nr --abis $(abis) $< $@
 
 quiet_cmd_systbl = SYSTBL  $@
@@ -29,6 +30,17 @@ $(kapi)/syscall_table_32.h: $(syscall) $(systbl) FORCE
 
 $(kapi)/syscall_table_64.h: abis := common,64
 $(kapi)/syscall_table_64.h: $(syscall) $(systbl) FORCE
+=======
+      cmd_syshdr = $(CONFIG_SHELL) $(syshdr) --emit-nr --abis common,$* $< $@
+
+quiet_cmd_systbl = SYSTBL  $@
+      cmd_systbl = $(CONFIG_SHELL) $(systbl) --abis common,$* $< $@
+
+$(uapi)/unistd_%.h: $(syscall) $(syshdr) FORCE
+	$(call if_changed,syshdr)
+
+$(kapi)/syscall_table_%.h: $(syscall) $(systbl) FORCE
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	$(call if_changed,systbl)
 
 uapisyshdr-y		+= unistd_32.h unistd_64.h

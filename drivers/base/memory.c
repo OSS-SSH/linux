@@ -218,14 +218,24 @@ static int memory_block_offline(struct memory_block *mem)
 	struct zone *zone;
 	int ret;
 
+<<<<<<< HEAD
 	zone = page_zone(pfn_to_page(start_pfn));
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/*
 	 * Unaccount before offlining, such that unpopulated zone and kthreads
 	 * can properly be torn down in offline_pages().
 	 */
+<<<<<<< HEAD
 	if (nr_vmemmap_pages)
 		adjust_present_page_count(zone, -nr_vmemmap_pages);
+=======
+	if (nr_vmemmap_pages) {
+		zone = page_zone(pfn_to_page(start_pfn));
+		adjust_present_page_count(zone, -nr_vmemmap_pages);
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	ret = offline_pages(start_pfn + nr_vmemmap_pages,
 			    nr_pages - nr_vmemmap_pages);
@@ -596,7 +606,7 @@ static struct attribute *memory_memblk_attrs[] = {
 	NULL
 };
 
-static struct attribute_group memory_memblk_attr_group = {
+static const struct attribute_group memory_memblk_attr_group = {
 	.attrs = memory_memblk_attrs,
 };
 
@@ -772,7 +782,7 @@ static struct attribute *memory_root_attrs[] = {
 	NULL
 };
 
-static struct attribute_group memory_root_attr_group = {
+static const struct attribute_group memory_root_attr_group = {
 	.attrs = memory_root_attrs,
 };
 

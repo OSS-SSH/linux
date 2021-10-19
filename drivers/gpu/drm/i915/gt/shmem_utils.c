@@ -8,6 +8,7 @@
 #include <linux/shmem_fs.h>
 
 #include "gem/i915_gem_object.h"
+#include "gem/i915_gem_lmem.h"
 #include "shmem_utils.h"
 
 struct file *shmem_create_from_data(const char *name, void *data, size_t len)
@@ -39,7 +40,12 @@ struct file *shmem_create_from_object(struct drm_i915_gem_object *obj)
 		return file;
 	}
 
+<<<<<<< HEAD
 	ptr = i915_gem_object_pin_map_unlocked(obj, I915_MAP_WB);
+=======
+	ptr = i915_gem_object_pin_map_unlocked(obj, i915_gem_object_is_lmem(obj) ?
+						I915_MAP_WC : I915_MAP_WB);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (IS_ERR(ptr))
 		return ERR_CAST(ptr);
 

@@ -40,13 +40,15 @@ int rxe_ib_get_hw_stats(struct ib_device *ibdev,
 	return ARRAY_SIZE(rxe_counter_name);
 }
 
+<<<<<<< HEAD
 struct rdma_hw_stats *rxe_ib_alloc_hw_stats(struct ib_device *ibdev,
 					    u32 port_num)
+=======
+struct rdma_hw_stats *rxe_ib_alloc_hw_port_stats(struct ib_device *ibdev,
+						 u32 port_num)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	BUILD_BUG_ON(ARRAY_SIZE(rxe_counter_name) != RXE_NUM_OF_COUNTERS);
-	/* We support only per port stats */
-	if (!port_num)
-		return NULL;
 
 	return rdma_alloc_hw_stats_struct(rxe_counter_name,
 					  ARRAY_SIZE(rxe_counter_name),

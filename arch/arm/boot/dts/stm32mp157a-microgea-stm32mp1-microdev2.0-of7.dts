@@ -89,7 +89,11 @@
 };
 
 &pinctrl {
+<<<<<<< HEAD
 	ltdc_pins: ltdc {
+=======
+	ltdc_pins: ltdc-0 {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		pins {
 			pinmux = <STM32_PINMUX('G', 10, AF14)>,	/* LTDC_B2 */
 				 <STM32_PINMUX('H', 12, AF14)>,	/* LTDC_R6 */

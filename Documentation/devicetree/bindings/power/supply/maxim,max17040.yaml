@@ -89,7 +89,11 @@ examples:
         reg = <0x36>;
         maxim,alert-low-soc-level = <10>;
         interrupt-parent = <&gpio7>;
+<<<<<<< HEAD
         interrupts = <2 IRQ_TYPE_EDGE_FALLING>;
+=======
+        interrupts = <2 IRQ_TYPE_LEVEL_LOW>;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
         wakeup-source;
       };
     };

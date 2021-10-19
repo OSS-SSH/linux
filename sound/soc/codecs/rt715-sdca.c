@@ -997,7 +997,11 @@ int rt715_sdca_init(struct device *dev, struct regmap *mbq_regmap,
 	 * HW init will be performed when device reports present
 	 */
 	rt715->hw_init = false;
+<<<<<<< HEAD
 	rt715->first_init = false;
+=======
+	rt715->first_hw_init = false;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	ret = devm_snd_soc_register_component(dev,
 			&soc_codec_dev_rt715_sdca,
@@ -1018,7 +1022,11 @@ int rt715_sdca_io_init(struct device *dev, struct sdw_slave *slave)
 	/*
 	 * PM runtime is only enabled when a Slave reports as Attached
 	 */
+<<<<<<< HEAD
 	if (!rt715->first_init) {
+=======
+	if (!rt715->first_hw_init) {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		/* set autosuspend parameters */
 		pm_runtime_set_autosuspend_delay(&slave->dev, 3000);
 		pm_runtime_use_autosuspend(&slave->dev);
@@ -1031,7 +1039,11 @@ int rt715_sdca_io_init(struct device *dev, struct sdw_slave *slave)
 
 		pm_runtime_enable(&slave->dev);
 
+<<<<<<< HEAD
 		rt715->first_init = true;
+=======
+		rt715->first_hw_init = true;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	pm_runtime_get_noresume(&slave->dev);
@@ -1054,6 +1066,12 @@ int rt715_sdca_io_init(struct device *dev, struct sdw_slave *slave)
 		rt715_sdca_index_update_bits(rt715, RT715_VENDOR_REG,
 			RT715_REV_1, 0x40, 0x40);
 	}
+<<<<<<< HEAD
+=======
+	/* DFLL Calibration trigger */
+	rt715_sdca_index_update_bits(rt715, RT715_VENDOR_REG,
+			RT715_DFLL_VAD, 0x1, 0x1);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* trigger mode = VAD enable */
 	regmap_write(rt715->regmap,
 		SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_SMPU_TRIG_ST_EN,

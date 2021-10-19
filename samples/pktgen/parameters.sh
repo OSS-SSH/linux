@@ -11,6 +11,7 @@ function usage() {
     echo "  -d : (\$DEST_IP)   destination IP. CIDR (e.g. 198.18.0.0/15) is also allowed"
     echo "  -m : (\$DST_MAC)   destination MAC-addr"
     echo "  -p : (\$DST_PORT)  destination PORT range (e.g. 433-444) is also allowed"
+    echo "  -k : (\$UDP_CSUM)  enable UDP tx checksum"
     echo "  -t : (\$THREADS)   threads to start"
     echo "  -f : (\$F_THREAD)  index of first thread (zero indexed CPU number)"
     echo "  -c : (\$SKB_CLONE) SKB clones send before alloc new SKB"
@@ -26,7 +27,11 @@ function usage() {
 
 ##  --- Parse command line arguments / parameters ---
 ## echo "Commandline options:"
+<<<<<<< HEAD
 while getopts "s:i:d:m:p:f:t:c:n:b:w:vxh6a" option; do
+=======
+while getopts "s:i:d:m:p:f:t:c:n:b:w:vxh6ak" option; do
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     case $option in
         i) # interface
           export DEV=$OPTARG
@@ -88,6 +93,13 @@ while getopts "s:i:d:m:p:f:t:c:n:b:w:vxh6a" option; do
           export APPEND=yes
           info "Append mode: APPEND=$APPEND"
           ;;
+<<<<<<< HEAD
+=======
+        k)
+          export UDP_CSUM=yes
+          info "UDP tx checksum: UDP_CSUM=$UDP_CSUM"
+          ;;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
         h|?|*)
           usage;
           err 2 "[ERROR] Unknown parameters!!!"

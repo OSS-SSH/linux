@@ -968,6 +968,7 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 SYSCALL_DEFINE4(quotactl_path, unsigned int, cmd, const char __user *,
 		mountpoint, qid_t, id, void __user *, addr)
 {
@@ -989,10 +990,35 @@ SYSCALL_DEFINE4(quotactl_path, unsigned int, cmd, const char __user *,
 
 	if (quotactl_cmd_write(cmds)) {
 		ret = mnt_want_write(mountpath.mnt);
+=======
+SYSCALL_DEFINE4(quotactl_fd, unsigned int, fd, unsigned int, cmd,
+		qid_t, id, void __user *, addr)
+{
+	struct super_block *sb;
+	unsigned int cmds = cmd >> SUBCMDSHIFT;
+	unsigned int type = cmd & SUBCMDMASK;
+	struct fd f;
+	int ret;
+
+	f = fdget_raw(fd);
+	if (!f.file)
+		return -EBADF;
+
+	ret = -EINVAL;
+	if (type >= MAXQUOTAS)
+		goto out;
+
+	if (quotactl_cmd_write(cmds)) {
+		ret = mnt_want_write(f.file->f_path.mnt);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		if (ret)
 			goto out;
 	}
 
+<<<<<<< HEAD
+=======
+	sb = f.file->f_path.mnt->mnt_sb;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (quotactl_cmd_onoff(cmds))
 		down_write(&sb->s_umount);
 	else
@@ -1006,9 +1032,15 @@ SYSCALL_DEFINE4(quotactl_path, unsigned int, cmd, const char __user *,
 		up_read(&sb->s_umount);
 
 	if (quotactl_cmd_write(cmds))
+<<<<<<< HEAD
 		mnt_drop_write(mountpath.mnt);
 out:
 	path_put(&mountpath);
 
+=======
+		mnt_drop_write(f.file->f_path.mnt);
+out:
+	fdput(f);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	return ret;
 }

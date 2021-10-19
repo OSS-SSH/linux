@@ -18,10 +18,15 @@
 #include <linux/cpumask.h>
 #include <linux/init.h>
 #include <linux/percpu.h>
+#include <linux/rcupdate.h>
 #include <linux/sched.h>
 #include <linux/smp.h>
 
+<<<<<<< HEAD
 static DEFINE_PER_CPU(struct scale_freq_data *, sft_data);
+=======
+static DEFINE_PER_CPU(struct scale_freq_data __rcu *, sft_data);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static struct cpumask scale_freq_counters_mask;
 static bool scale_freq_invariant;
 
@@ -34,8 +39,60 @@ bool topology_scale_freq_invariant(void)
 {
 	return cpufreq_supports_freq_invariance() ||
 	       supports_scale_freq_counters(cpu_online_mask);
+<<<<<<< HEAD
+=======
 }
 
+static void update_scale_freq_invariant(bool status)
+{
+	if (scale_freq_invariant == status)
+		return;
+
+	/*
+	 * Task scheduler behavior depends on frequency invariance support,
+	 * either cpufreq or counter driven. If the support status changes as
+	 * a result of counter initialisation and use, retrigger the build of
+	 * scheduling domains to ensure the information is propagated properly.
+	 */
+	if (topology_scale_freq_invariant() == status) {
+		scale_freq_invariant = status;
+		rebuild_sched_domains_energy();
+	}
+}
+
+void topology_set_scale_freq_source(struct scale_freq_data *data,
+				    const struct cpumask *cpus)
+{
+	struct scale_freq_data *sfd;
+	int cpu;
+
+	/*
+	 * Avoid calling rebuild_sched_domains() unnecessarily if FIE is
+	 * supported by cpufreq.
+	 */
+	if (cpumask_empty(&scale_freq_counters_mask))
+		scale_freq_invariant = topology_scale_freq_invariant();
+
+	rcu_read_lock();
+
+	for_each_cpu(cpu, cpus) {
+		sfd = rcu_dereference(*per_cpu_ptr(&sft_data, cpu));
+
+		/* Use ARCH provided counters whenever possible */
+		if (!sfd || sfd->source != SCALE_FREQ_SOURCE_ARCH) {
+			rcu_assign_pointer(per_cpu(sft_data, cpu), data);
+			cpumask_set_cpu(cpu, &scale_freq_counters_mask);
+		}
+	}
+
+	rcu_read_unlock();
+
+	update_scale_freq_invariant(true);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+}
+EXPORT_SYMBOL_GPL(topology_set_scale_freq_source);
+
+<<<<<<< HEAD
 static void update_scale_freq_invariant(bool status)
 {
 	if (scale_freq_invariant == status)
@@ -97,11 +154,44 @@ void topology_clear_scale_freq_source(enum scale_freq_source source,
 
 	update_scale_freq_invariant(false);
 }
+=======
+void topology_clear_scale_freq_source(enum scale_freq_source source,
+				      const struct cpumask *cpus)
+{
+	struct scale_freq_data *sfd;
+	int cpu;
+
+	rcu_read_lock();
+
+	for_each_cpu(cpu, cpus) {
+		sfd = rcu_dereference(*per_cpu_ptr(&sft_data, cpu));
+
+		if (sfd && sfd->source == source) {
+			rcu_assign_pointer(per_cpu(sft_data, cpu), NULL);
+			cpumask_clear_cpu(cpu, &scale_freq_counters_mask);
+		}
+	}
+
+	rcu_read_unlock();
+
+	/*
+	 * Make sure all references to previous sft_data are dropped to avoid
+	 * use-after-free races.
+	 */
+	synchronize_rcu();
+
+	update_scale_freq_invariant(false);
+}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 EXPORT_SYMBOL_GPL(topology_clear_scale_freq_source);
 
 void topology_scale_freq_tick(void)
 {
+<<<<<<< HEAD
 	struct scale_freq_data *sfd = *this_cpu_ptr(&sft_data);
+=======
+	struct scale_freq_data *sfd = rcu_dereference_sched(*this_cpu_ptr(&sft_data));
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (sfd)
 		sfd->set_freq_scale();

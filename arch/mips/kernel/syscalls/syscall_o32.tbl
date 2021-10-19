@@ -430,7 +430,11 @@
 440	o32	process_madvise			sys_process_madvise
 441	o32	epoll_pwait2			sys_epoll_pwait2		compat_sys_epoll_pwait2
 442	o32	mount_setattr			sys_mount_setattr
+<<<<<<< HEAD
 443	o32	quotactl_path			sys_quotactl_path
+=======
+443	o32	quotactl_fd			sys_quotactl_fd
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 444	o32	landlock_create_ruleset		sys_landlock_create_ruleset
 445	o32	landlock_add_rule		sys_landlock_add_rule
 446	o32	landlock_restrict_self		sys_landlock_restrict_self

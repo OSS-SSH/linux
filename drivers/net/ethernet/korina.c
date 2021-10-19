@@ -518,6 +518,7 @@ drop_packet:
 	spin_unlock_irqrestore(&lp->lock, flags);
 
 	return NETDEV_TX_OK;
+<<<<<<< HEAD
 }
 
 static int korina_mdio_wait(struct korina_private *lp)
@@ -529,6 +530,19 @@ static int korina_mdio_wait(struct korina_private *lp)
 					 1, 1000);
 }
 
+=======
+}
+
+static int korina_mdio_wait(struct korina_private *lp)
+{
+	u32 value;
+
+	return readl_poll_timeout_atomic(&lp->eth_regs->miimind,
+					 value, value & ETH_MII_IND_BSY,
+					 1, 1000);
+}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int korina_mdio_read(struct net_device *dev, int phy, int reg)
 {
 	struct korina_private *lp = netdev_priv(dev);
@@ -544,10 +558,17 @@ static int korina_mdio_read(struct net_device *dev, int phy, int reg)
 	ret = korina_mdio_wait(lp);
 	if (ret < 0)
 		return ret;
+<<<<<<< HEAD
 
 	if (readl(&lp->eth_regs->miimind) & ETH_MII_IND_NV)
 		return -EINVAL;
 
+=======
+
+	if (readl(&lp->eth_regs->miimind) & ETH_MII_IND_NV)
+		return -EINVAL;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	ret = readl(&lp->eth_regs->miimrdd);
 	writel(0, &lp->eth_regs->miimcmd);
 	return ret;
@@ -1315,23 +1336,41 @@ static int korina_probe(struct platform_device *pdev)
 	lp->tx_irq = platform_get_irq_byname(pdev, "tx");
 
 	p = devm_platform_ioremap_resource_byname(pdev, "emac");
+<<<<<<< HEAD
 	if (!p) {
 		printk(KERN_ERR DRV_NAME ": cannot remap registers\n");
 		return -ENOMEM;
+=======
+	if (IS_ERR(p)) {
+		printk(KERN_ERR DRV_NAME ": cannot remap registers\n");
+		return PTR_ERR(p);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 	lp->eth_regs = p;
 
 	p = devm_platform_ioremap_resource_byname(pdev, "dma_rx");
+<<<<<<< HEAD
 	if (!p) {
 		printk(KERN_ERR DRV_NAME ": cannot remap Rx DMA registers\n");
 		return -ENOMEM;
+=======
+	if (IS_ERR(p)) {
+		printk(KERN_ERR DRV_NAME ": cannot remap Rx DMA registers\n");
+		return PTR_ERR(p);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 	lp->rx_dma_regs = p;
 
 	p = devm_platform_ioremap_resource_byname(pdev, "dma_tx");
+<<<<<<< HEAD
 	if (!p) {
 		printk(KERN_ERR DRV_NAME ": cannot remap Tx DMA registers\n");
 		return -ENOMEM;
+=======
+	if (IS_ERR(p)) {
+		printk(KERN_ERR DRV_NAME ": cannot remap Tx DMA registers\n");
+		return PTR_ERR(p);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 	lp->tx_dma_regs = p;
 

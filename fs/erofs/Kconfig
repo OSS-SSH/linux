@@ -75,4 +75,7 @@ config EROFS_FS_ZIP
 	  Enable fixed-sized output compression for EROFS.
 
 	  If you don't want to enable compression feature, say N.
+<<<<<<< HEAD
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

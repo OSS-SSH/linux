@@ -115,9 +115,15 @@ u64 notrace trace_clock_global(void)
 	prev_time = READ_ONCE(trace_clock_struct.prev_time);
 	now = sched_clock_cpu(this_cpu);
 
+<<<<<<< HEAD
 	/* Make sure that now is always greater than prev_time */
 	if ((s64)(now - prev_time) < 0)
 		now = prev_time + 1;
+=======
+	/* Make sure that now is always greater than or equal to prev_time */
+	if ((s64)(now - prev_time) < 0)
+		now = prev_time;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/*
 	 * If in an NMI context then dont risk lockups and simply return
@@ -131,7 +137,11 @@ u64 notrace trace_clock_global(void)
 		/* Reread prev_time in case it was already updated */
 		prev_time = READ_ONCE(trace_clock_struct.prev_time);
 		if ((s64)(now - prev_time) < 0)
+<<<<<<< HEAD
 			now = prev_time + 1;
+=======
+			now = prev_time;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		trace_clock_struct.prev_time = now;
 
