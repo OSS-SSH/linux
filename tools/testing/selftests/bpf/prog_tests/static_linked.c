@@ -14,12 +14,16 @@ void test_static_linked(void)
 		return;
 
 	skel->rodata->rovar1 = 1;
+<<<<<<< HEAD
 	skel->bss->static_var1 = 2;
 	skel->bss->static_var11 = 3;
 
 	skel->rodata->rovar2 = 4;
 	skel->bss->static_var2 = 5;
 	skel->bss->static_var22 = 6;
+=======
+	skel->rodata->rovar2 = 4;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	err = test_static_linked__load(skel);
 	if (!ASSERT_OK(err, "skel_load"))
@@ -32,8 +36,13 @@ void test_static_linked(void)
 	/* trigger */
 	usleep(1);
 
+<<<<<<< HEAD
 	ASSERT_EQ(skel->bss->var1, 1 * 2 + 2 + 3, "var1");
 	ASSERT_EQ(skel->bss->var2, 4 * 3 + 5 + 6, "var2");
+=======
+	ASSERT_EQ(skel->data->var1, 1 * 2 + 2 + 3, "var1");
+	ASSERT_EQ(skel->data->var2, 4 * 3 + 5 + 6, "var2");
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 cleanup:
 	test_static_linked__destroy(skel);

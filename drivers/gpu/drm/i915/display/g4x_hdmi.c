@@ -8,6 +8,10 @@
 #include "g4x_hdmi.h"
 #include "intel_audio.h"
 #include "intel_connector.h"
+<<<<<<< HEAD
+=======
+#include "intel_de.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "intel_display_types.h"
 #include "intel_dpio_phy.h"
 #include "intel_fifo_underrun.h"

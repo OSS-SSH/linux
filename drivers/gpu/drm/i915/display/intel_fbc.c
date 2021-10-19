@@ -43,6 +43,7 @@
 #include "i915_drv.h"
 #include "i915_trace.h"
 #include "i915_vgpu.h"
+#include "intel_de.h"
 #include "intel_display_types.h"
 #include "intel_fbc.h"
 #include "intel_frontbuffer.h"
@@ -67,7 +68,11 @@ static int intel_fbc_calculate_cfb_size(struct drm_i915_private *dev_priv,
 	int lines;
 
 	intel_fbc_get_plane_source_size(cache, NULL, &lines);
+<<<<<<< HEAD
 	if (IS_DISPLAY_VER(dev_priv, 7))
+=======
+	if (DISPLAY_VER(dev_priv) == 7)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		lines = min(lines, 2048);
 	else if (DISPLAY_VER(dev_priv) >= 8)
 		lines = min(lines, 2560);
@@ -109,7 +114,11 @@ static void i8xx_fbc_activate(struct drm_i915_private *dev_priv)
 		cfb_pitch = params->fb.stride;
 
 	/* FBC_CTL wants 32B or 64B units */
+<<<<<<< HEAD
 	if (IS_DISPLAY_VER(dev_priv, 2))
+=======
+	if (DISPLAY_VER(dev_priv) == 2)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		cfb_pitch = (cfb_pitch / 32) - 1;
 	else
 		cfb_pitch = (cfb_pitch / 64) - 1;
@@ -118,7 +127,11 @@ static void i8xx_fbc_activate(struct drm_i915_private *dev_priv)
 	for (i = 0; i < (FBC_LL_SIZE / 32) + 1; i++)
 		intel_de_write(dev_priv, FBC_TAG(i), 0);
 
+<<<<<<< HEAD
 	if (IS_DISPLAY_VER(dev_priv, 4)) {
+=======
+	if (DISPLAY_VER(dev_priv) == 4) {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		u32 fbc_ctl2;
 
 		/* Set it up... */
@@ -302,7 +315,7 @@ static void gen7_fbc_activate(struct drm_i915_private *dev_priv)
 	int threshold = dev_priv->fbc.threshold;
 
 	/* Display WA #0529: skl, kbl, bxt. */
-	if (IS_GEN9_BC(dev_priv) || IS_BROXTON(dev_priv)) {
+	if (DISPLAY_VER(dev_priv) == 9) {
 		u32 val = intel_de_read(dev_priv, CHICKEN_MISC_4);
 
 		val &= ~(FBC_STRIDE_OVERRIDE | FBC_STRIDE_MASK);
@@ -445,7 +458,8 @@ static int find_compression_threshold(struct drm_i915_private *dev_priv,
 	 * reserved range size, so it always assumes the maximum (8mb) is used.
 	 * If we enable FBC using a CFB on that memory range we'll get FIFO
 	 * underruns, even if that range is not reserved by the BIOS. */
-	if (IS_BROADWELL(dev_priv) || IS_GEN9_BC(dev_priv))
+	if (IS_BROADWELL(dev_priv) || (DISPLAY_VER(dev_priv) == 9 &&
+				       !IS_BROXTON(dev_priv)))
 		end = resource_size(&dev_priv->dsm) - 8 * 1024 * 1024;
 	else
 		end = U64_MAX;
@@ -590,6 +604,7 @@ static bool stride_is_valid(struct drm_i915_private *dev_priv,
 	if (stride < 512)
 		return false;
 
+<<<<<<< HEAD
 	if (IS_DISPLAY_VER(dev_priv, 2) || IS_DISPLAY_VER(dev_priv, 3))
 		return stride == 4096 || stride == 8192;
 
@@ -598,6 +613,16 @@ static bool stride_is_valid(struct drm_i915_private *dev_priv,
 
 	/* Display WA #1105: skl,bxt,kbl,cfl,glk */
 	if ((IS_DISPLAY_VER(dev_priv, 9) || IS_GEMINILAKE(dev_priv)) &&
+=======
+	if (DISPLAY_VER(dev_priv) == 2 || DISPLAY_VER(dev_priv) == 3)
+		return stride == 4096 || stride == 8192;
+
+	if (DISPLAY_VER(dev_priv) == 4 && !IS_G4X(dev_priv) && stride < 2048)
+		return false;
+
+	/* Display WA #1105: skl,bxt,kbl,cfl,glk */
+	if ((DISPLAY_VER(dev_priv) == 9 || IS_GEMINILAKE(dev_priv)) &&
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	    modifier == DRM_FORMAT_MOD_LINEAR && stride & 511)
 		return false;
 
@@ -617,7 +642,11 @@ static bool pixel_format_is_valid(struct drm_i915_private *dev_priv,
 	case DRM_FORMAT_XRGB1555:
 	case DRM_FORMAT_RGB565:
 		/* 16bpp not supported on gen2 */
+<<<<<<< HEAD
 		if (IS_DISPLAY_VER(dev_priv, 2))
+=======
+		if (DISPLAY_VER(dev_priv) == 2)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			return false;
 		/* WaFbcOnly1to1Ratio:ctg */
 		if (IS_G4X(dev_priv))
@@ -735,11 +764,11 @@ static void intel_fbc_update_state_cache(struct intel_crtc *crtc,
 	cache->fence_y_offset = intel_plane_fence_y_offset(plane_state);
 
 	drm_WARN_ON(&dev_priv->drm, plane_state->flags & PLANE_HAS_FENCE &&
-		    !plane_state->vma->fence);
+		    !plane_state->ggtt_vma->fence);
 
 	if (plane_state->flags & PLANE_HAS_FENCE &&
-	    plane_state->vma->fence)
-		cache->fence_id = plane_state->vma->fence->id;
+	    plane_state->ggtt_vma->fence)
+		cache->fence_id = plane_state->ggtt_vma->fence->id;
 	else
 		cache->fence_id = -1;
 
@@ -759,7 +788,7 @@ static u16 intel_fbc_gen9_wa_cfb_stride(struct drm_i915_private *dev_priv)
 	struct intel_fbc *fbc = &dev_priv->fbc;
 	struct intel_fbc_state_cache *cache = &fbc->state_cache;
 
-	if ((IS_GEN9_BC(dev_priv) || IS_BROXTON(dev_priv)) &&
+	if ((DISPLAY_VER(dev_priv) == 9) &&
 	    cache->fb.modifier != I915_FORMAT_MOD_X_TILED)
 		return DIV_ROUND_UP(cache->plane.src_w, 32 * fbc->threshold) * 8;
 	else

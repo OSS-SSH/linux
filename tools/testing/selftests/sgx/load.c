@@ -141,6 +141,7 @@ bool encl_load(const char *path, struct encl *encl)
 	fd = open(device_path, O_RDWR);
 	if (fd < 0) {
 		perror("Unable to open /dev/sgx_enclave");
+<<<<<<< HEAD
 		goto err;
 	}
 
@@ -176,10 +177,41 @@ bool encl_load(const char *path, struct encl *encl)
 	ptr = mmap(NULL, PAGE_SIZE, PROT_EXEC, MAP_SHARED, fd, 0);
 	if (ptr == (void *)-1) {
 		fprintf(stderr, ERR_MSG, device_path);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		goto err;
 	}
 	munmap(ptr, PAGE_SIZE);
 
+<<<<<<< HEAD
+=======
+	ret = stat(device_path, &sb);
+	if (ret) {
+		perror("device file stat()");
+		goto err;
+	}
+
+	ptr = mmap(NULL, PAGE_SIZE, PROT_READ, MAP_SHARED, fd, 0);
+	if (ptr == (void *)-1) {
+		perror("mmap for read");
+		goto err;
+	}
+	munmap(ptr, PAGE_SIZE);
+
+#define ERR_MSG \
+"mmap() succeeded for PROT_READ, but failed for PROT_EXEC.\n" \
+" Check that /dev does not have noexec set:\n" \
+" \tmount | grep \"/dev .*noexec\"\n" \
+" If so, remount it executable: mount -o remount,exec /dev\n\n"
+
+	ptr = mmap(NULL, PAGE_SIZE, PROT_EXEC, MAP_SHARED, fd, 0);
+	if (ptr == (void *)-1) {
+		fprintf(stderr, ERR_MSG);
+		goto err;
+	}
+	munmap(ptr, PAGE_SIZE);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	encl->fd = fd;
 
 	if (!encl_map_bin(path, encl))
@@ -238,9 +270,6 @@ bool encl_load(const char *path, struct encl *encl)
 
 		seg->offset = (phdr->p_offset & PAGE_MASK) - src_offset;
 		seg->size = (phdr->p_filesz + PAGE_SIZE - 1) & PAGE_MASK;
-
-		printf("0x%016lx 0x%016lx 0x%02x\n", seg->offset, seg->size,
-		       seg->prot);
 
 		j++;
 	}

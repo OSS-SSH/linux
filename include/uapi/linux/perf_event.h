@@ -464,7 +464,11 @@ struct perf_event_attr {
 
 	/*
 	 * User provided data if sigtrap=1, passed back to user via
+<<<<<<< HEAD
 	 * siginfo_t::si_perf, e.g. to permit user to identify the event.
+=======
+	 * siginfo_t::si_perf_data, e.g. to permit user to identify the event.
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	 */
 	__u64	sig_data;
 };

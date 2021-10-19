@@ -1094,7 +1094,11 @@ int xsk_socket__create_shared(struct xsk_socket **xsk_ptr,
 			goto out_put_ctx;
 		}
 		if (xsk->fd == umem->fd)
+<<<<<<< HEAD
 			umem->rx_ring_setup_done = true;
+=======
+			umem->tx_ring_setup_done = true;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	err = xsk_get_mmap_offsets(xsk->fd, &off);

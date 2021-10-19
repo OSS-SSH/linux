@@ -200,7 +200,8 @@ struct vmw_ttm_tt {
 const size_t vmw_tt_size = sizeof(struct vmw_ttm_tt);
 
 /**
- * Helper functions to advance a struct vmw_piter iterator.
+ * __vmw_piter_non_sg_next: Helper functions to advance
+ * a struct vmw_piter iterator.
  *
  * @viter: Pointer to the iterator.
  *
@@ -222,7 +223,8 @@ static bool __vmw_piter_sg_next(struct vmw_piter *viter)
 
 
 /**
- * Helper functions to return a pointer to the current page.
+ * __vmw_piter_non_sg_page: Helper functions to return a pointer
+ * to the current page.
  *
  * @viter: Pointer to the iterator
  *
@@ -236,7 +238,8 @@ static struct page *__vmw_piter_non_sg_page(struct vmw_piter *viter)
 }
 
 /**
- * Helper functions to return the DMA address of the current page.
+ * __vmw_piter_phys_addr: Helper functions to return the DMA
+ * address of the current page.
  *
  * @viter: Pointer to the iterator
  *
@@ -658,6 +661,7 @@ static void vmw_evict_flags(struct ttm_buffer_object *bo,
 	*placement = vmw_sys_placement;
 }
 
+<<<<<<< HEAD
 static int vmw_verify_access(struct ttm_buffer_object *bo, struct file *filp)
 {
 	struct ttm_object_file *tfile =
@@ -666,6 +670,8 @@ static int vmw_verify_access(struct ttm_buffer_object *bo, struct file *filp)
 	return vmw_user_bo_verify_access(bo, tfile);
 }
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int vmw_ttm_io_mem_reserve(struct ttm_device *bdev, struct ttm_resource *mem)
 {
 	struct vmw_private *dev_priv = container_of(bdev, struct vmw_private, bdev);
@@ -724,7 +730,7 @@ static int vmw_move(struct ttm_buffer_object *bo,
 		    struct ttm_resource *new_mem,
 		    struct ttm_place *hop)
 {
-	struct ttm_resource_manager *old_man = ttm_manager_type(bo->bdev, bo->mem.mem_type);
+	struct ttm_resource_manager *old_man = ttm_manager_type(bo->bdev, bo->resource->mem_type);
 	struct ttm_resource_manager *new_man = ttm_manager_type(bo->bdev, new_mem->mem_type);
 	int ret;
 
@@ -734,11 +740,15 @@ static int vmw_move(struct ttm_buffer_object *bo,
 			return ret;
 	}
 
+<<<<<<< HEAD
 	vmw_move_notify(bo, &bo->mem, new_mem);
+=======
+	vmw_move_notify(bo, bo->resource, new_mem);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (old_man->use_tt && new_man->use_tt) {
-		if (bo->mem.mem_type == TTM_PL_SYSTEM) {
-			ttm_bo_assign_mem(bo, new_mem);
+		if (bo->resource->mem_type == TTM_PL_SYSTEM) {
+			ttm_bo_move_null(bo, new_mem);
 			return 0;
 		}
 		ret = ttm_bo_wait_ctx(bo, ctx);
@@ -746,7 +756,7 @@ static int vmw_move(struct ttm_buffer_object *bo,
 			goto fail;
 
 		vmw_ttm_unbind(bo->bdev, bo->ttm);
-		ttm_resource_free(bo, &bo->mem);
+		ttm_resource_free(bo, &bo->resource);
 		ttm_bo_assign_mem(bo, new_mem);
 		return 0;
 	} else {
@@ -756,7 +766,11 @@ static int vmw_move(struct ttm_buffer_object *bo,
 	}
 	return 0;
 fail:
+<<<<<<< HEAD
 	vmw_move_notify(bo, new_mem, &bo->mem);
+=======
+	vmw_move_notify(bo, new_mem, bo->resource);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	return ret;
 }
 
@@ -768,7 +782,10 @@ struct ttm_device_funcs vmw_bo_driver = {
 	.eviction_valuable = ttm_bo_eviction_valuable,
 	.evict_flags = vmw_evict_flags,
 	.move = vmw_move,
+<<<<<<< HEAD
 	.verify_access = vmw_verify_access,
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.swap_notify = vmw_swap_notify,
 	.io_mem_reserve = &vmw_ttm_io_mem_reserve,
 };

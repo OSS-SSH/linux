@@ -28,6 +28,10 @@ struct amdgpu_mmhub_ras_funcs {
 				      void *ras_error_status);
 	void (*query_ras_error_status)(struct amdgpu_device *adev);
 	void (*reset_ras_error_count)(struct amdgpu_device *adev);
+<<<<<<< HEAD
+=======
+	void (*reset_ras_error_status)(struct amdgpu_device *adev);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
 
 struct amdgpu_mmhub_funcs {

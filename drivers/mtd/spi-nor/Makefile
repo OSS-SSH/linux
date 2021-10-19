@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0
 
+<<<<<<< HEAD
 spi-nor-objs			:= core.o sfdp.o swp.o otp.o
+=======
+spi-nor-objs			:= core.o sfdp.o swp.o otp.o sysfs.o
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 spi-nor-objs			+= atmel.o
 spi-nor-objs			+= catalyst.o
 spi-nor-objs			+= eon.o

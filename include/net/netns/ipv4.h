@@ -126,6 +126,10 @@ struct netns_ipv4 {
 	u8 sysctl_tcp_syn_retries;
 	u8 sysctl_tcp_synack_retries;
 	u8 sysctl_tcp_syncookies;
+<<<<<<< HEAD
+=======
+	u8 sysctl_tcp_migrate_req;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	int sysctl_tcp_reordering;
 	u8 sysctl_tcp_retries1;
 	u8 sysctl_tcp_retries2;
@@ -210,6 +214,10 @@ struct netns_ipv4 {
 #endif
 #endif
 #ifdef CONFIG_IP_ROUTE_MULTIPATH
+<<<<<<< HEAD
+=======
+	u32 sysctl_fib_multipath_hash_fields;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u8 sysctl_fib_multipath_use_neigh;
 	u8 sysctl_fib_multipath_hash_policy;
 #endif

@@ -421,11 +421,22 @@ static int ssp_dai_hw_params(struct snd_pcm_substream *substream,
 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
 	struct snd_soc_component *component = snd_soc_rtdcom_lookup(rtd, SOF_AUDIO_PCM_DRV_NAME);
 	struct snd_sof_dev *sdev = snd_soc_component_get_drvdata(component);
+<<<<<<< HEAD
+=======
+	struct sof_ipc_fw_version *v = &sdev->fw_ready.version;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct sof_ipc_dai_config *config;
 	struct snd_sof_dai *sof_dai;
 	struct sof_ipc_reply reply;
 	int ret;
 
+<<<<<<< HEAD
+=======
+	/* DAI_CONFIG IPC during hw_params is not supported in older firmware */
+	if (v->abi_version < SOF_ABI_VER(3, 18, 0))
+		return 0;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	list_for_each_entry(sof_dai, &sdev->dai_list, list) {
 		if (!sof_dai->cpu_dai_name || !sof_dai->dai_config)
 			continue;

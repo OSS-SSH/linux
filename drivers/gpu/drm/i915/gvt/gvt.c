@@ -46,6 +46,7 @@ static const char * const supported_hypervisors[] = {
 	[INTEL_GVT_HYPERVISOR_KVM] = "KVM",
 };
 
+<<<<<<< HEAD
 static struct intel_vgpu_type *
 intel_gvt_find_vgpu_type(struct intel_gvt *gvt, unsigned int type_group_id)
 {
@@ -158,6 +159,8 @@ static void intel_gvt_cleanup_vgpu_type_groups(struct intel_gvt *gvt)
 	}
 }
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static const struct intel_gvt_ops intel_gvt_ops = {
 	.emulate_cfg_read = intel_vgpu_emulate_cfg_read,
 	.emulate_cfg_write = intel_vgpu_emulate_cfg_write,
@@ -169,8 +172,6 @@ static const struct intel_gvt_ops intel_gvt_ops = {
 	.vgpu_reset = intel_gvt_reset_vgpu,
 	.vgpu_activate = intel_gvt_activate_vgpu,
 	.vgpu_deactivate = intel_gvt_deactivate_vgpu,
-	.gvt_find_vgpu_type = intel_gvt_find_vgpu_type,
-	.get_gvt_attrs = intel_get_gvt_attrs,
 	.vgpu_query_plane = intel_vgpu_query_plane,
 	.vgpu_get_dmabuf = intel_vgpu_get_dmabuf,
 	.write_protect_handler = intel_vgpu_page_track_handler,
@@ -274,7 +275,6 @@ void intel_gvt_clean_device(struct drm_i915_private *i915)
 		return;
 
 	intel_gvt_destroy_idle_vgpu(gvt->idle_vgpu);
-	intel_gvt_cleanup_vgpu_type_groups(gvt);
 	intel_gvt_clean_vgpu_types(gvt);
 
 	intel_gvt_debugfs_clean(gvt);
@@ -363,12 +363,15 @@ int intel_gvt_init_device(struct drm_i915_private *i915)
 	if (ret)
 		goto out_clean_thread;
 
+<<<<<<< HEAD
 	ret = intel_gvt_init_vgpu_type_groups(gvt);
 	if (ret) {
 		gvt_err("failed to init vgpu type groups: %d\n", ret);
 		goto out_clean_types;
 	}
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	vgpu = intel_gvt_create_idle_vgpu(gvt);
 	if (IS_ERR(vgpu)) {
 		ret = PTR_ERR(vgpu);
@@ -454,7 +457,8 @@ EXPORT_SYMBOL_GPL(intel_gvt_register_hypervisor);
 void
 intel_gvt_unregister_hypervisor(void)
 {
-	intel_gvt_hypervisor_host_exit(intel_gvt_host.dev);
+	void *gvt = (void *)kdev_to_i915(intel_gvt_host.dev)->gvt;
+	intel_gvt_hypervisor_host_exit(intel_gvt_host.dev, gvt);
 	module_put(THIS_MODULE);
 }
 EXPORT_SYMBOL_GPL(intel_gvt_unregister_hypervisor);

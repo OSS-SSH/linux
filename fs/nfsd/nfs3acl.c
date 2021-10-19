@@ -172,7 +172,11 @@ static int nfs3svc_encode_getaclres(struct svc_rqst *rqstp, __be32 *p)
 	struct nfsd3_getaclres *resp = rqstp->rq_resp;
 	struct dentry *dentry = resp->fh.fh_dentry;
 	struct kvec *head = rqstp->rq_res.head;
+<<<<<<< HEAD
 	struct inode *inode = d_inode(dentry);
+=======
+	struct inode *inode;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	unsigned int base;
 	int n;
 	int w;
@@ -181,6 +185,10 @@ static int nfs3svc_encode_getaclres(struct svc_rqst *rqstp, __be32 *p)
 		return 0;
 	switch (resp->status) {
 	case nfs_ok:
+<<<<<<< HEAD
+=======
+		inode = d_inode(dentry);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		if (!svcxdr_encode_post_op_attr(rqstp, xdr, &resp->fh))
 			return 0;
 		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)

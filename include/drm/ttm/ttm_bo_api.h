@@ -86,6 +86,7 @@ struct ttm_tt;
  * @base: drm_gem_object superclass data.
  * @bdev: Pointer to the buffer object device structure.
  * @type: The bo type.
+ * @page_alignment: Page alignment.
  * @destroy: Destruction function. If NULL, kfree is used.
  * @num_pages: Actual number of pages.
  * @kref: Reference count of this buffer object. When this refcount reaches
@@ -123,6 +124,7 @@ struct ttm_buffer_object {
 
 	struct ttm_device *bdev;
 	enum ttm_bo_type type;
+	uint32_t page_alignment;
 	void (*destroy) (struct ttm_buffer_object *);
 
 	/**
@@ -134,7 +136,7 @@ struct ttm_buffer_object {
 	 * Members protected by the bo::resv::reserved lock.
 	 */
 
-	struct ttm_resource mem;
+	struct ttm_resource *resource;
 	struct ttm_tt *ttm;
 	bool deleted;
 
@@ -523,6 +525,7 @@ void ttm_bo_vunmap(struct ttm_buffer_object *bo, struct dma_buf_map *map);
 int ttm_bo_mmap_obj(struct vm_area_struct *vma, struct ttm_buffer_object *bo);
 
 /**
+<<<<<<< HEAD
  * ttm_bo_mmap - mmap out of the ttm device address space.
  *
  * @filp:      filp as input from the mmap method.
@@ -536,6 +539,8 @@ int ttm_bo_mmap(struct file *filp, struct vm_area_struct *vma,
 		struct ttm_device *bdev);
 
 /**
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * ttm_bo_io
  *
  * @bdev:      Pointer to the struct ttm_device.
@@ -561,6 +566,7 @@ ssize_t ttm_bo_io(struct ttm_device *bdev, struct file *filp,
 
 int ttm_bo_swapout(struct ttm_buffer_object *bo, struct ttm_operation_ctx *ctx,
 		   gfp_t gfp_flags);
+<<<<<<< HEAD
 
 /**
  * ttm_bo_uses_embedded_gem_object - check if the given bo uses the
@@ -580,6 +586,8 @@ static inline bool ttm_bo_uses_embedded_gem_object(struct ttm_buffer_object *bo)
 {
 	return bo->base.dev != NULL;
 }
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /**
  * ttm_bo_pin - Pin the buffer object.
@@ -636,5 +644,10 @@ void ttm_bo_vm_close(struct vm_area_struct *vma);
 int ttm_bo_vm_access(struct vm_area_struct *vma, unsigned long addr,
 		     void *buf, int len, int write);
 bool ttm_bo_delayed_delete(struct ttm_device *bdev, bool remove_all);
+<<<<<<< HEAD
+=======
+
+vm_fault_t ttm_bo_vm_dummy_page(struct vm_fault *vmf, pgprot_t prot);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #endif

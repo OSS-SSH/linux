@@ -66,7 +66,11 @@ static void tipc_sub_send_event(struct tipc_subscription *sub,
 /**
  * tipc_sub_check_overlap - test for subscription overlap with the given values
  * @subscribed: the service range subscribed for
+<<<<<<< HEAD
  * @found: the service range we are checning for match
+=======
+ * @found: the service range we are checking for match
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  *
  * Returns true if there is overlap, otherwise false.
  */

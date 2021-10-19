@@ -74,6 +74,10 @@ int athub_v2_1_set_clockgating(struct amdgpu_device *adev,
 	case CHIP_SIENNA_CICHLID:
 	case CHIP_NAVY_FLOUNDER:
 	case CHIP_DIMGREY_CAVEFISH:
+<<<<<<< HEAD
+=======
+	case CHIP_BEIGE_GOBY:
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		athub_v2_1_update_medium_grain_clock_gating(adev, state == AMD_CG_STATE_GATE);
 		athub_v2_1_update_medium_grain_light_sleep(adev, state == AMD_CG_STATE_GATE);
 		break;

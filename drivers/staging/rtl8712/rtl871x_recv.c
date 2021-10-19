@@ -374,7 +374,11 @@ static sint ap2sta_data_frame(struct _adapter *adapter,
 	if (check_fwstate(pmlmepriv, WIFI_STATION_STATE) &&
 	    check_fwstate(pmlmepriv, _FW_LINKED)) {
 		/* if NULL-frame, drop packet */
+<<<<<<< HEAD
 		if ((GetFrameSubType(ptr)) == IEEE80211_STYPE_NULLFUNC)
+=======
+		if ((GetFrameSubType(ptr)) == (IEEE80211_FTYPE_DATA | IEEE80211_STYPE_NULLFUNC))
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			return _FAIL;
 		/* drop QoS-SubType Data, including QoS NULL,
 		 * excluding QoS-Data

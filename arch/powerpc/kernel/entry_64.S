@@ -32,7 +32,6 @@
 #include <asm/irqflags.h>
 #include <asm/hw_irq.h>
 #include <asm/context_tracking.h>
-#include <asm/tm.h>
 #include <asm/ppc-opcode.h>
 #include <asm/barrier.h>
 #include <asm/export.h>
@@ -48,20 +47,8 @@
 /*
  * System calls.
  */
-	.section	".toc","aw"
-SYS_CALL_TABLE:
-	.tc sys_call_table[TC],sys_call_table
-
-#ifdef CONFIG_COMPAT
-COMPAT_SYS_CALL_TABLE:
-	.tc compat_sys_call_table[TC],compat_sys_call_table
-#endif
-
-/* This value is used to mark exception frames on the stack. */
-exception_marker:
-	.tc	ID_EXC_MARKER[TC],STACK_FRAME_REGS_MARKER
-
 	.section	".text"
+<<<<<<< HEAD
 	.align 7
 
 #ifdef CONFIG_PPC_BOOK3S
@@ -414,6 +401,8 @@ _GLOBAL(ret_from_kernel_thread)
 	bctrl
 	li	r3,0
 	b	.Lsyscall_exit
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #ifdef CONFIG_PPC_BOOK3S_64
 
@@ -630,6 +619,7 @@ END_FTR_SECTION_IFCLR(CPU_FTR_ARCH_207S)
 	addi	r1,r1,SWITCH_FRAME_SIZE
 	blr
 
+<<<<<<< HEAD
 	/*
 	 * If MSR EE/RI was never enabled, IRQs not reconciled, NVGPRs not
 	 * touched, no exit work created, then this can be used.
@@ -780,6 +770,8 @@ ALT_FTR_SECTION_END_IFCLR(CPU_FTR_STCX_CHECKS_ADDRESS)
 	RFI_TO_KERNEL
 	b	.	/* prevent speculative execution */
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #ifdef CONFIG_PPC_RTAS
 /*
  * On CHRP, the Run-Time Abstraction Services (RTAS) have to be

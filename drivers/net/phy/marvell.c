@@ -367,39 +367,24 @@ static irqreturn_t marvell_handle_interrupt(struct phy_device *phydev)
 
 static int marvell_set_polarity(struct phy_device *phydev, int polarity)
 {
-	int reg;
-	int err;
-	int val;
+	u16 val;
 
-	/* get the current settings */
-	reg = phy_read(phydev, MII_M1011_PHY_SCR);
-	if (reg < 0)
-		return reg;
-
-	val = reg;
-	val &= ~MII_M1011_PHY_SCR_AUTO_CROSS;
 	switch (polarity) {
 	case ETH_TP_MDI:
-		val |= MII_M1011_PHY_SCR_MDI;
+		val = MII_M1011_PHY_SCR_MDI;
 		break;
 	case ETH_TP_MDI_X:
-		val |= MII_M1011_PHY_SCR_MDI_X;
+		val = MII_M1011_PHY_SCR_MDI_X;
 		break;
 	case ETH_TP_MDI_AUTO:
 	case ETH_TP_MDI_INVALID:
 	default:
-		val |= MII_M1011_PHY_SCR_AUTO_CROSS;
+		val = MII_M1011_PHY_SCR_AUTO_CROSS;
 		break;
 	}
 
-	if (val != reg) {
-		/* Set the new polarity value in the register */
-		err = phy_write(phydev, MII_M1011_PHY_SCR, val);
-		if (err)
-			return err;
-	}
-
-	return val != reg;
+	return phy_modify_changed(phydev, MII_M1011_PHY_SCR,
+				  MII_M1011_PHY_SCR_AUTO_CROSS, val);
 }
 
 static int marvell_config_aneg(struct phy_device *phydev)
@@ -824,14 +809,19 @@ static int m88e1111_config_init_rgmii_delays(struct phy_device *phydev)
 {
 	int delay;
 
-	if (phydev->interface == PHY_INTERFACE_MODE_RGMII_ID) {
+	switch (phydev->interface) {
+	case PHY_INTERFACE_MODE_RGMII_ID:
 		delay = MII_M1111_RGMII_RX_DELAY | MII_M1111_RGMII_TX_DELAY;
-	} else if (phydev->interface == PHY_INTERFACE_MODE_RGMII_RXID) {
+		break;
+	case PHY_INTERFACE_MODE_RGMII_RXID:
 		delay = MII_M1111_RGMII_RX_DELAY;
-	} else if (phydev->interface == PHY_INTERFACE_MODE_RGMII_TXID) {
+		break;
+	case PHY_INTERFACE_MODE_RGMII_TXID:
 		delay = MII_M1111_RGMII_TX_DELAY;
-	} else {
+		break;
+	default:
 		delay = 0;
+		break;
 	}
 
 	return phy_modify(phydev, MII_M1111_PHY_EXT_CR,
@@ -2454,6 +2444,7 @@ error:
 }
 
 static int m88e6393_get_temp(struct phy_device *phydev, long *temp)
+<<<<<<< HEAD
 {
 	int err;
 
@@ -2498,6 +2489,52 @@ static int m88e6393_hwmon_config(struct phy_device *phydev)
 {
 	int err;
 
+=======
+{
+	int err;
+
+	err = m88e1510_get_temp(phydev, temp);
+
+	/* 88E1510 measures T + 25, while the PHY on 88E6393X switch
+	 * T + 75, so we have to subtract another 50
+	 */
+	*temp -= 50000;
+
+	return err;
+}
+
+static int m88e6393_get_temp_critical(struct phy_device *phydev, long *temp)
+{
+	int ret;
+
+	*temp = 0;
+
+	ret = phy_read_paged(phydev, MII_MARVELL_MISC_TEST_PAGE,
+			     MII_88E6390_TEMP_SENSOR);
+	if (ret < 0)
+		return ret;
+
+	*temp = (((ret & MII_88E6393_TEMP_SENSOR_THRESHOLD_MASK) >>
+		  MII_88E6393_TEMP_SENSOR_THRESHOLD_SHIFT) - 75) * 1000;
+
+	return 0;
+}
+
+static int m88e6393_set_temp_critical(struct phy_device *phydev, long temp)
+{
+	temp = (temp / 1000) + 75;
+
+	return phy_modify_paged(phydev, MII_MARVELL_MISC_TEST_PAGE,
+				MII_88E6390_TEMP_SENSOR,
+				MII_88E6393_TEMP_SENSOR_THRESHOLD_MASK,
+				temp << MII_88E6393_TEMP_SENSOR_THRESHOLD_SHIFT);
+}
+
+static int m88e6393_hwmon_config(struct phy_device *phydev)
+{
+	int err;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	err = m88e6393_set_temp_critical(phydev, 100000);
 	if (err)
 		return err;
@@ -2579,6 +2616,7 @@ static umode_t marvell_hwmon_is_visible(const void *data,
 
 static u32 marvell_hwmon_chip_config[] = {
 	HWMON_C_REGISTER_TZ,
+<<<<<<< HEAD
 	0
 };
 
@@ -2596,6 +2634,25 @@ static u32 marvell_hwmon_temp_config[] = {
 	0
 };
 
+=======
+	0
+};
+
+static const struct hwmon_channel_info marvell_hwmon_chip = {
+	.type = hwmon_chip,
+	.config = marvell_hwmon_chip_config,
+};
+
+/* we can define HWMON_T_CRIT and HWMON_T_MAX_ALARM even though these are not
+ * defined for all PHYs, because the hwmon code checks whether the attributes
+ * exists via the .is_visible method
+ */
+static u32 marvell_hwmon_temp_config[] = {
+	HWMON_T_INPUT | HWMON_T_CRIT | HWMON_T_MAX_ALARM,
+	0
+};
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static const struct hwmon_channel_info marvell_hwmon_temp = {
 	.type = hwmon_temp,
 	.config = marvell_hwmon_temp_config,
@@ -3039,6 +3096,8 @@ static struct phy_driver marvell_drivers[] = {
 		.flags = PHY_POLL_CABLE_TEST,
 		.probe = marvell_probe,
 		.config_init = marvell_1011gbe_config_init,
+<<<<<<< HEAD
+=======
 		.config_aneg = m88e6390_config_aneg,
 		.read_status = marvell_read_status,
 		.config_intr = marvell_config_intr,
@@ -3065,6 +3124,7 @@ static struct phy_driver marvell_drivers[] = {
 		.flags = PHY_POLL_CABLE_TEST,
 		.probe = marvell_probe,
 		.config_init = marvell_1011gbe_config_init,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.config_aneg = m88e6390_config_aneg,
 		.read_status = marvell_read_status,
 		.config_intr = marvell_config_intr,
@@ -3083,6 +3143,35 @@ static struct phy_driver marvell_drivers[] = {
 		.cable_test_get_status = marvell_vct7_cable_test_get_status,
 	},
 	{
+<<<<<<< HEAD
+		.phy_id = MARVELL_PHY_ID_88E6390_FAMILY,
+		.phy_id_mask = MARVELL_PHY_ID_MASK,
+		.name = "Marvell 88E6390 Family",
+		.driver_data = DEF_MARVELL_HWMON_OPS(m88e6390_hwmon_ops),
+		/* PHY_GBIT_FEATURES */
+		.flags = PHY_POLL_CABLE_TEST,
+		.probe = marvell_probe,
+		.config_init = marvell_1011gbe_config_init,
+		.config_aneg = m88e6390_config_aneg,
+		.read_status = marvell_read_status,
+		.config_intr = marvell_config_intr,
+		.handle_interrupt = marvell_handle_interrupt,
+		.resume = genphy_resume,
+		.suspend = genphy_suspend,
+		.read_page = marvell_read_page,
+		.write_page = marvell_write_page,
+		.get_sset_count = marvell_get_sset_count,
+		.get_strings = marvell_get_strings,
+		.get_stats = marvell_get_stats,
+		.get_tunable = m88e1540_get_tunable,
+		.set_tunable = m88e1540_set_tunable,
+		.cable_test_start = marvell_vct7_cable_test_start,
+		.cable_test_tdr_start = marvell_vct5_cable_test_tdr_start,
+		.cable_test_get_status = marvell_vct7_cable_test_get_status,
+	},
+	{
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		.phy_id = MARVELL_PHY_ID_88E6393_FAMILY,
 		.phy_id_mask = MARVELL_PHY_ID_MASK,
 		.name = "Marvell 88E6393 Family",

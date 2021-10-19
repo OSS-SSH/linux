@@ -108,8 +108,14 @@ int br_switchdev_set_port_flag(struct net_bridge_port *p,
 }
 
 void
-br_switchdev_fdb_notify(const struct net_bridge_fdb_entry *fdb, int type)
+br_switchdev_fdb_notify(struct net_bridge *br,
+			const struct net_bridge_fdb_entry *fdb, int type)
 {
+<<<<<<< HEAD
+=======
+	const struct net_bridge_port *dst = READ_ONCE(fdb->dst);
+	struct net_device *dev = dst ? dst->dev : br->dev;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct switchdev_notifier_fdb_info info = {
 		.addr = fdb->key.addr.addr,
 		.vid = fdb->key.vlan_id,
@@ -117,18 +123,29 @@ br_switchdev_fdb_notify(const struct net_bridge_fdb_entry *fdb, int type)
 		.is_local = test_bit(BR_FDB_LOCAL, &fdb->flags),
 		.offloaded = test_bit(BR_FDB_OFFLOADED, &fdb->flags),
 	};
+<<<<<<< HEAD
 
 	if (!fdb->dst)
 		return;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	switch (type) {
 	case RTM_DELNEIGH:
 		call_switchdev_notifiers(SWITCHDEV_FDB_DEL_TO_DEVICE,
+<<<<<<< HEAD
 					 fdb->dst->dev, &info.info, NULL);
 		break;
 	case RTM_NEWNEIGH:
 		call_switchdev_notifiers(SWITCHDEV_FDB_ADD_TO_DEVICE,
 					 fdb->dst->dev, &info.info, NULL);
+=======
+					 dev, &info.info, NULL);
+		break;
+	case RTM_NEWNEIGH:
+		call_switchdev_notifiers(SWITCHDEV_FDB_ADD_TO_DEVICE,
+					 dev, &info.info, NULL);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		break;
 	}
 }

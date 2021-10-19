@@ -31,11 +31,50 @@
  */
 #include <linux/module.h>
 #include <linux/device.h>
+#include <linux/pgtable.h>
 #include <linux/sched.h>
 #include <linux/debugfs.h>
 #include <drm/drm_sysfs.h>
+#include <drm/ttm/ttm_caching.h>
 
 #include "ttm_module.h"
+
+<<<<<<< HEAD
+struct dentry *ttm_debugfs_root;
+=======
+/**
+ * ttm_prot_from_caching - Modify the page protection according to the
+ * ttm cacing mode
+ * @caching: The ttm caching mode
+ * @tmp: The original page protection
+ *
+ * Return: The modified page protection
+ */
+pgprot_t ttm_prot_from_caching(enum ttm_caching caching, pgprot_t tmp)
+{
+	/* Cached mappings need no adjustment */
+	if (caching == ttm_cached)
+		return tmp;
+
+#if defined(__i386__) || defined(__x86_64__)
+	if (caching == ttm_write_combined)
+		tmp = pgprot_writecombine(tmp);
+	else if (boot_cpu_data.x86 > 3)
+		tmp = pgprot_noncached(tmp);
+#endif
+#if defined(__ia64__) || defined(__arm__) || defined(__aarch64__) || \
+	defined(__powerpc__) || defined(__mips__)
+	if (caching == ttm_write_combined)
+		tmp = pgprot_writecombine(tmp);
+	else
+		tmp = pgprot_noncached(tmp);
+#endif
+#if defined(__sparc__)
+	tmp = pgprot_noncached(tmp);
+#endif
+	return tmp;
+}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 struct dentry *ttm_debugfs_root;
 

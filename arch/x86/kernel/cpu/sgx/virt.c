@@ -212,6 +212,10 @@ static int sgx_vepc_release(struct inode *inode, struct file *file)
 		list_splice_tail(&secs_pages, &zombie_secs_pages);
 	mutex_unlock(&zombie_secs_pages_lock);
 
+<<<<<<< HEAD
+=======
+	xa_destroy(&vepc->page_array);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	kfree(vepc);
 
 	return 0;

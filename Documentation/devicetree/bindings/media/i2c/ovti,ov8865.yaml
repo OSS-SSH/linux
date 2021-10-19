@@ -45,7 +45,11 @@ properties:
 
   port:
     description: MIPI CSI-2 transmitter port
+<<<<<<< HEAD
     $ref: /schemas/graph.yaml#/properties/port
+=======
+    $ref: /schemas/graph.yaml#/$defs/port-base
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     additionalProperties: false
 
     properties:

@@ -75,6 +75,7 @@ do {									\
 	}								\
 } while (0)
 
+<<<<<<< HEAD
 const unsigned char x86nops[] =
 {
 	BYTES_NOP1,
@@ -89,6 +90,22 @@ const unsigned char x86nops[] =
 
 const unsigned char * const x86_nops[ASM_NOP_MAX+1] =
 {
+=======
+static const unsigned char x86nops[] =
+{
+	BYTES_NOP1,
+	BYTES_NOP2,
+	BYTES_NOP3,
+	BYTES_NOP4,
+	BYTES_NOP5,
+	BYTES_NOP6,
+	BYTES_NOP7,
+	BYTES_NOP8,
+};
+
+const unsigned char * const x86_nops[ASM_NOP_MAX+1] =
+{
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	NULL,
 	x86nops,
 	x86nops + 1,
@@ -183,12 +200,18 @@ done:
 }
 
 /*
- * "noinline" to cause control flow change and thus invalidate I$ and
- * cause refetch after modification.
+ * optimize_nops_range() - Optimize a sequence of single byte NOPs (0x90)
+ *
+ * @instr: instruction byte stream
+ * @instrlen: length of the above
+ * @off: offset within @instr where the first NOP has been detected
+ *
+ * Return: number of NOPs found (and replaced).
  */
-static void __init_or_module noinline optimize_nops(struct alt_instr *a, u8 *instr)
+static __always_inline int optimize_nops_range(u8 *instr, u8 instrlen, int off)
 {
 	unsigned long flags;
+<<<<<<< HEAD
 	struct insn insn;
 	int nop, i = 0;
 
@@ -210,14 +233,68 @@ static void __init_or_module noinline optimize_nops(struct alt_instr *a, u8 *ins
 	for (nop = i; i < a->instrlen; i++) {
 		if (WARN_ONCE(instr[i] != 0x90, "Not a NOP at 0x%px\n", &instr[i]))
 			return;
+=======
+	int i = off, nnops;
+
+	while (i < instrlen) {
+		if (instr[i] != 0x90)
+			break;
+
+		i++;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
+	nnops = i - off;
+
+	if (nnops <= 1)
+		return nnops;
+
 	local_irq_save(flags);
+<<<<<<< HEAD
 	add_nops(instr + nop, i - nop);
 	local_irq_restore(flags);
 
 	DUMP_BYTES(instr, a->instrlen, "%px: [%d:%d) optimized NOPs: ",
 		   instr, nop, a->instrlen);
+=======
+	add_nops(instr + off, nnops);
+	local_irq_restore(flags);
+
+	DUMP_BYTES(instr, instrlen, "%px: [%d:%d) optimized NOPs: ", instr, off, i);
+
+	return nnops;
+}
+
+/*
+ * "noinline" to cause control flow change and thus invalidate I$ and
+ * cause refetch after modification.
+ */
+static void __init_or_module noinline optimize_nops(struct alt_instr *a, u8 *instr)
+{
+	struct insn insn;
+	int i = 0;
+
+	/*
+	 * Jump over the non-NOP insns and optimize single-byte NOPs into bigger
+	 * ones.
+	 */
+	for (;;) {
+		if (insn_decode_kernel(&insn, &instr[i]))
+			return;
+
+		/*
+		 * See if this and any potentially following NOPs can be
+		 * optimized.
+		 */
+		if (insn.length == 1 && insn.opcode.bytes[0] == 0x90)
+			i += optimize_nops_range(instr, a->instrlen, i);
+		else
+			i += insn.length;
+
+		if (i >= a->instrlen)
+			return;
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 /*
@@ -273,8 +350,8 @@ void __init_or_module noinline apply_alternatives(struct alt_instr *start,
 			instr, instr, a->instrlen,
 			replacement, a->replacementlen);
 
-		DUMP_BYTES(instr, a->instrlen, "%px: old_insn: ", instr);
-		DUMP_BYTES(replacement, a->replacementlen, "%px: rpl_insn: ", replacement);
+		DUMP_BYTES(instr, a->instrlen, "%px:   old_insn: ", instr);
+		DUMP_BYTES(replacement, a->replacementlen, "%px:   rpl_insn: ", replacement);
 
 		memcpy(insn_buff, replacement, a->replacementlen);
 		insn_buff_sz = a->replacementlen;

@@ -720,6 +720,14 @@ static int stmmac_ethtool_op_set_eee(struct net_device *dev,
 		netdev_warn(priv->dev,
 			    "Setting EEE tx-lpi is not supported\n");
 
+	if (priv->hw->xpcs) {
+		ret = xpcs_config_eee(priv->hw->xpcs,
+				      priv->plat->mult_fact_100ns,
+				      edata->eee_enabled);
+		if (ret)
+			return ret;
+	}
+
 	if (!edata->eee_enabled)
 		stmmac_disable_eee_mode(priv);
 
@@ -770,6 +778,7 @@ static int __stmmac_get_coalesce(struct net_device *dev,
 	u32 max_cnt;
 	u32 rx_cnt;
 	u32 tx_cnt;
+<<<<<<< HEAD
 
 	rx_cnt = priv->plat->rx_queues_to_use;
 	tx_cnt = priv->plat->tx_queues_to_use;
@@ -788,6 +797,26 @@ static int __stmmac_get_coalesce(struct net_device *dev,
 		ec->tx_max_coalesced_frames = 0;
 	}
 
+=======
+
+	rx_cnt = priv->plat->rx_queues_to_use;
+	tx_cnt = priv->plat->tx_queues_to_use;
+	max_cnt = max(rx_cnt, tx_cnt);
+
+	if (queue < 0)
+		queue = 0;
+	else if (queue >= max_cnt)
+		return -EINVAL;
+
+	if (queue < tx_cnt) {
+		ec->tx_coalesce_usecs = priv->tx_coal_timer[queue];
+		ec->tx_max_coalesced_frames = priv->tx_coal_frames[queue];
+	} else {
+		ec->tx_coalesce_usecs = 0;
+		ec->tx_max_coalesced_frames = 0;
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (priv->use_riwt && queue < rx_cnt) {
 		ec->rx_max_coalesced_frames = priv->rx_coal_frames[queue];
 		ec->rx_coalesce_usecs = stmmac_riwt2usec(priv->rx_riwt[queue],

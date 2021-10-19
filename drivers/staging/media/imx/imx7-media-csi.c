@@ -376,11 +376,19 @@ static int imx7_csi_dma_setup(struct imx7_csi *csi)
 		v4l2_warn(&csi->sd, "consider increasing the CMA area\n");
 		return ret;
 	}
+<<<<<<< HEAD
 
 	csi->frame_sequence = 0;
 	csi->last_eof = false;
 	init_completion(&csi->last_eof_completion);
 
+=======
+
+	csi->frame_sequence = 0;
+	csi->last_eof = false;
+	init_completion(&csi->last_eof_completion);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	imx7_csi_setup_vb2_buf(csi);
 
 	return 0;
@@ -450,6 +458,7 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 		    | BIT_MCLKDIV(1) | BIT_MCLKEN;
 
 		cr18 |= BIT_DATA_FROM_MIPI;
+<<<<<<< HEAD
 
 		switch (csi->format_mbus[IMX7_CSI_PAD_SINK].code) {
 		case MEDIA_BUS_FMT_Y8_1X8:
@@ -508,6 +517,66 @@ static void imx7_csi_configure(struct imx7_csi *csi)
 		}
 	}
 
+=======
+
+		switch (csi->format_mbus[IMX7_CSI_PAD_SINK].code) {
+		case MEDIA_BUS_FMT_Y8_1X8:
+		case MEDIA_BUS_FMT_SBGGR8_1X8:
+		case MEDIA_BUS_FMT_SGBRG8_1X8:
+		case MEDIA_BUS_FMT_SGRBG8_1X8:
+		case MEDIA_BUS_FMT_SRGGB8_1X8:
+			cr18 |= BIT_MIPI_DATA_FORMAT_RAW8;
+			break;
+		case MEDIA_BUS_FMT_Y10_1X10:
+		case MEDIA_BUS_FMT_SBGGR10_1X10:
+		case MEDIA_BUS_FMT_SGBRG10_1X10:
+		case MEDIA_BUS_FMT_SGRBG10_1X10:
+		case MEDIA_BUS_FMT_SRGGB10_1X10:
+			cr18 |= BIT_MIPI_DATA_FORMAT_RAW10;
+			break;
+		case MEDIA_BUS_FMT_Y12_1X12:
+		case MEDIA_BUS_FMT_SBGGR12_1X12:
+		case MEDIA_BUS_FMT_SGBRG12_1X12:
+		case MEDIA_BUS_FMT_SGRBG12_1X12:
+		case MEDIA_BUS_FMT_SRGGB12_1X12:
+			cr18 |= BIT_MIPI_DATA_FORMAT_RAW12;
+			break;
+		case MEDIA_BUS_FMT_Y14_1X14:
+		case MEDIA_BUS_FMT_SBGGR14_1X14:
+		case MEDIA_BUS_FMT_SGBRG14_1X14:
+		case MEDIA_BUS_FMT_SGRBG14_1X14:
+		case MEDIA_BUS_FMT_SRGGB14_1X14:
+			cr18 |= BIT_MIPI_DATA_FORMAT_RAW14;
+			break;
+		/*
+		 * CSI-2 sources are supposed to use the 1X16 formats, but not
+		 * all of them comply. Support both variants.
+		 */
+		case MEDIA_BUS_FMT_UYVY8_2X8:
+		case MEDIA_BUS_FMT_UYVY8_1X16:
+		case MEDIA_BUS_FMT_YUYV8_2X8:
+		case MEDIA_BUS_FMT_YUYV8_1X16:
+			cr18 |= BIT_MIPI_DATA_FORMAT_YUV422_8B;
+			break;
+		}
+
+		switch (out_pix->pixelformat) {
+		case V4L2_PIX_FMT_Y10:
+		case V4L2_PIX_FMT_Y12:
+		case V4L2_PIX_FMT_SBGGR8:
+		case V4L2_PIX_FMT_SGBRG8:
+		case V4L2_PIX_FMT_SGRBG8:
+		case V4L2_PIX_FMT_SRGGB8:
+		case V4L2_PIX_FMT_SBGGR16:
+		case V4L2_PIX_FMT_SGBRG16:
+		case V4L2_PIX_FMT_SGRBG16:
+		case V4L2_PIX_FMT_SRGGB16:
+			cr1 |= BIT_PIXEL_BIT;
+			break;
+		}
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	imx7_csi_reg_write(csi, cr1, CSI_CSICR1);
 	imx7_csi_reg_write(csi, BIT_DMA_BURST_TYPE_RFF_INCR16, CSI_CSICR2);
 	imx7_csi_reg_write(csi, BIT_FRMCNT_RST, CSI_CSICR3);
@@ -724,7 +793,11 @@ out_unlock:
 }
 
 static int imx7_csi_init_cfg(struct v4l2_subdev *sd,
+<<<<<<< HEAD
 			     struct v4l2_subdev_pad_config *cfg)
+=======
+			     struct v4l2_subdev_state *sd_state)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	struct imx7_csi *csi = v4l2_get_subdevdata(sd);
 	struct v4l2_mbus_framefmt *mf;
@@ -732,7 +805,11 @@ static int imx7_csi_init_cfg(struct v4l2_subdev *sd,
 	int i;
 
 	for (i = 0; i < IMX7_CSI_PADS_NUM; i++) {
+<<<<<<< HEAD
 		mf = v4l2_subdev_get_try_format(sd, cfg, i);
+=======
+		mf = v4l2_subdev_get_try_format(sd, sd_state, i);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 		ret = imx_media_init_mbus_fmt(mf, 800, 600, 0, V4L2_FIELD_NONE,
 					      &csi->cc[i]);
@@ -745,18 +822,18 @@ static int imx7_csi_init_cfg(struct v4l2_subdev *sd,
 
 static struct v4l2_mbus_framefmt *
 imx7_csi_get_format(struct imx7_csi *csi,
-		    struct v4l2_subdev_pad_config *cfg,
+		    struct v4l2_subdev_state *sd_state,
 		    unsigned int pad,
 		    enum v4l2_subdev_format_whence which)
 {
 	if (which == V4L2_SUBDEV_FORMAT_TRY)
-		return v4l2_subdev_get_try_format(&csi->sd, cfg, pad);
+		return v4l2_subdev_get_try_format(&csi->sd, sd_state, pad);
 
 	return &csi->format_mbus[pad];
 }
 
 static int imx7_csi_enum_mbus_code(struct v4l2_subdev *sd,
-				   struct v4l2_subdev_pad_config *cfg,
+				   struct v4l2_subdev_state *sd_state,
 				   struct v4l2_subdev_mbus_code_enum *code)
 {
 	struct imx7_csi *csi = v4l2_get_subdevdata(sd);
@@ -765,7 +842,8 @@ static int imx7_csi_enum_mbus_code(struct v4l2_subdev *sd,
 
 	mutex_lock(&csi->lock);
 
-	in_fmt = imx7_csi_get_format(csi, cfg, IMX7_CSI_PAD_SINK, code->which);
+	in_fmt = imx7_csi_get_format(csi, sd_state, IMX7_CSI_PAD_SINK,
+				     code->which);
 
 	switch (code->pad) {
 	case IMX7_CSI_PAD_SINK:
@@ -791,7 +869,7 @@ out_unlock:
 }
 
 static int imx7_csi_get_fmt(struct v4l2_subdev *sd,
-			    struct v4l2_subdev_pad_config *cfg,
+			    struct v4l2_subdev_state *sd_state,
 			    struct v4l2_subdev_format *sdformat)
 {
 	struct imx7_csi *csi = v4l2_get_subdevdata(sd);
@@ -800,7 +878,8 @@ static int imx7_csi_get_fmt(struct v4l2_subdev *sd,
 
 	mutex_lock(&csi->lock);
 
-	fmt = imx7_csi_get_format(csi, cfg, sdformat->pad, sdformat->which);
+	fmt = imx7_csi_get_format(csi, sd_state, sdformat->pad,
+				  sdformat->which);
 	if (!fmt) {
 		ret = -EINVAL;
 		goto out_unlock;
@@ -815,7 +894,7 @@ out_unlock:
 }
 
 static int imx7_csi_try_fmt(struct imx7_csi *csi,
-			    struct v4l2_subdev_pad_config *cfg,
+			    struct v4l2_subdev_state *sd_state,
 			    struct v4l2_subdev_format *sdformat,
 			    const struct imx_media_pixfmt **cc)
 {
@@ -823,7 +902,7 @@ static int imx7_csi_try_fmt(struct imx7_csi *csi,
 	struct v4l2_mbus_framefmt *in_fmt;
 	u32 code;
 
-	in_fmt = imx7_csi_get_format(csi, cfg, IMX7_CSI_PAD_SINK,
+	in_fmt = imx7_csi_get_format(csi, sd_state, IMX7_CSI_PAD_SINK,
 				     sdformat->which);
 	if (!in_fmt)
 		return -EINVAL;
@@ -868,7 +947,7 @@ static int imx7_csi_try_fmt(struct imx7_csi *csi,
 }
 
 static int imx7_csi_set_fmt(struct v4l2_subdev *sd,
-			    struct v4l2_subdev_pad_config *cfg,
+			    struct v4l2_subdev_state *sd_state,
 			    struct v4l2_subdev_format *sdformat)
 {
 	struct imx7_csi *csi = v4l2_get_subdevdata(sd);
@@ -889,11 +968,12 @@ static int imx7_csi_set_fmt(struct v4l2_subdev *sd,
 		goto out_unlock;
 	}
 
-	ret = imx7_csi_try_fmt(csi, cfg, sdformat, &cc);
+	ret = imx7_csi_try_fmt(csi, sd_state, sdformat, &cc);
 	if (ret < 0)
 		goto out_unlock;
 
-	fmt = imx7_csi_get_format(csi, cfg, sdformat->pad, sdformat->which);
+	fmt = imx7_csi_get_format(csi, sd_state, sdformat->pad,
+				  sdformat->which);
 	if (!fmt) {
 		ret = -EINVAL;
 		goto out_unlock;
@@ -906,11 +986,11 @@ static int imx7_csi_set_fmt(struct v4l2_subdev *sd,
 		format.pad = IMX7_CSI_PAD_SRC;
 		format.which = sdformat->which;
 		format.format = sdformat->format;
-		if (imx7_csi_try_fmt(csi, cfg, &format, &outcc)) {
+		if (imx7_csi_try_fmt(csi, sd_state, &format, &outcc)) {
 			ret = -EINVAL;
 			goto out_unlock;
 		}
-		outfmt = imx7_csi_get_format(csi, cfg, IMX7_CSI_PAD_SRC,
+		outfmt = imx7_csi_get_format(csi, sd_state, IMX7_CSI_PAD_SRC,
 					     sdformat->which);
 		*outfmt = format.format;
 

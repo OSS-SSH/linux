@@ -81,12 +81,21 @@ struct powerpc64_jit_data {
 };
 
 bool bpf_jit_needs_zext(void)
+<<<<<<< HEAD
 {
 	return true;
 }
 
 struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
 {
+=======
+{
+	return true;
+}
+
+struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
+{
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	u32 proglen;
 	u32 alloclen;
 	u8 *image = NULL;
@@ -113,6 +122,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
 		bpf_blinded = true;
 		fp = tmp_fp;
 	}
+<<<<<<< HEAD
 
 	jit_data = fp->aux->jit_data;
 	if (!jit_data) {
@@ -124,6 +134,19 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *fp)
 		fp->aux->jit_data = jit_data;
 	}
 
+=======
+
+	jit_data = fp->aux->jit_data;
+	if (!jit_data) {
+		jit_data = kzalloc(sizeof(*jit_data), GFP_KERNEL);
+		if (!jit_data) {
+			fp = org_fp;
+			goto out;
+		}
+		fp->aux->jit_data = jit_data;
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	flen = fp->len;
 	addrs = jit_data->addrs;
 	if (addrs) {
@@ -237,6 +260,10 @@ skip_codegen_passes:
 	fp->jited_len = alloclen;
 
 	bpf_flush_icache(bpf_hdr, (u8 *)bpf_hdr + (bpf_hdr->pages * PAGE_SIZE));
+<<<<<<< HEAD
+=======
+	bpf_jit_binary_lock_ro(bpf_hdr);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (!fp->is_func || extra_pass) {
 		bpf_prog_fill_jited_linfo(fp, addrs);
 out_addrs:
@@ -254,6 +281,7 @@ out_addrs:
 out:
 	if (bpf_blinded)
 		bpf_jit_prog_release_other(fp, fp == org_fp ? tmp_fp : org_fp);
+<<<<<<< HEAD
 
 	return fp;
 }
@@ -266,6 +294,8 @@ void bpf_jit_free(struct bpf_prog *fp)
 
 	if (fp->jited)
 		bpf_jit_binary_free(bpf_hdr);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
-	bpf_prog_unlock_free(fp);
+	return fp;
 }

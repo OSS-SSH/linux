@@ -525,7 +525,10 @@ scmi_alloc_iiodev(struct scmi_device *sdev,
 		return ERR_PTR(-ENOMEM);
 
 	iiodev->modes = INDIO_DIRECT_MODE;
+<<<<<<< HEAD
 	iiodev->dev.parent = dev;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	sensor = iio_priv(iiodev);
 	sensor->sensor_ops = ops;
 	sensor->ph = ph;

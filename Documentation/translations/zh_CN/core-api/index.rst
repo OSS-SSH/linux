@@ -19,12 +19,22 @@
 来的大量 kerneldoc 信息；有朝一日，若有人有动力的话，应当把它们拆分
 出来。
 
+<<<<<<< HEAD
 Todolist:
 
    kernel-api
    workqueue
    printk-basics
    printk-formats
+=======
+.. toctree::
+   :maxdepth: 1
+
+   kernel-api
+   printk-basics
+   printk-formats
+   workqueue
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
    symbol-namespaces
 
 数据结构和低级实用程序
@@ -32,9 +42,19 @@ Todolist:
 
 在整个内核中使用的函数库。
 
+<<<<<<< HEAD
 Todolist:
 
    kobject
+=======
+.. toctree::
+   :maxdepth: 1
+
+   kobject
+
+Todolist:
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
    kref
    assoc_array
    xarray
@@ -58,12 +78,21 @@ Linux如何让一切同时发生。 详情请参阅
    :maxdepth: 1
 
    irq/index
+<<<<<<< HEAD
 
 Todolist:
 
    refcount-vs-atomic
    local_ops
    padata
+=======
+   refcount-vs-atomic
+   local_ops
+   padata
+
+Todolist:
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
    ../RCU/index
 
 低级硬件管理
@@ -71,9 +100,20 @@ Todolist:
 
 缓存管理，CPU热插拔管理等。
 
+<<<<<<< HEAD
 Todolist:
 
    cachetlb
+=======
+.. toctree::
+   :maxdepth: 1
+
+   cachetlb
+
+Todolist:
+
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
    cpu_hotplug
    memory-hotplug
    genericirq

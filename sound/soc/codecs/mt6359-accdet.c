@@ -414,7 +414,11 @@ static void mt6359_accdet_work(struct work_struct *work)
 
 static void mt6359_accdet_jd_work(struct work_struct *work)
 {
+<<<<<<< HEAD
 	int ret = 0;
+=======
+	int ret;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	unsigned int value = 0;
 
 	struct mt6359_accdet *priv =

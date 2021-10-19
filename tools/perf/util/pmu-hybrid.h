@@ -19,4 +19,18 @@ struct perf_pmu *perf_pmu__find_hybrid_pmu(const char *name);
 bool perf_pmu__is_hybrid(const char *name);
 char *perf_pmu__hybrid_type_to_pmu(const char *type);
 
+<<<<<<< HEAD
+=======
+static inline int perf_pmu__hybrid_pmu_num(void)
+{
+	struct perf_pmu *pmu;
+	int num = 0;
+
+	perf_pmu__for_each_hybrid_pmu(pmu)
+		num++;
+
+	return num;
+}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #endif /* __PMU_HYBRID_H */

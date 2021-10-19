@@ -256,6 +256,7 @@ static int init_pgtable(struct kimage *image, unsigned long start_pgtable)
 	return init_transition_pgtable(image, level4p);
 }
 
+<<<<<<< HEAD
 static void set_idt(void *newidt, u16 limit)
 {
 	struct desc_ptr curidt;
@@ -285,6 +286,8 @@ static void set_gdt(void *newgdt, u16 limit)
 		);
 };
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static void load_segments(void)
 {
 	__asm__ __volatile__ (
@@ -379,8 +382,8 @@ void machine_kexec(struct kimage *image)
 	 * The gdt & idt are now invalid.
 	 * If you want to load them you must set up your own idt & gdt.
 	 */
-	set_gdt(phys_to_virt(0), 0);
-	set_idt(phys_to_virt(0), 0);
+	native_idt_invalidate();
+	native_gdt_invalidate();
 
 	/* now call it */
 	image->start = relocate_kernel((unsigned long)image->head,

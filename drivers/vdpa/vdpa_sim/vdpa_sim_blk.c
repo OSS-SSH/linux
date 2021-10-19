@@ -15,7 +15,10 @@
 #include <linux/blkdev.h>
 #include <linux/vringh.h>
 #include <linux/vdpa.h>
+<<<<<<< HEAD
 #include <linux/blkdev.h>
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <uapi/linux/virtio_blk.h>
 
 #include "vdpa_sim.h"

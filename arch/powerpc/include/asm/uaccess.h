@@ -157,7 +157,11 @@ do {								\
 		"2:	lwz%X1 %L0, %L1\n"			\
 		EX_TABLE(1b, %l2)				\
 		EX_TABLE(2b, %l2)				\
+<<<<<<< HEAD
 		: "=r" (x)					\
+=======
+		: "=&r" (x)					\
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		: "m" (*addr)					\
 		:						\
 		: label)

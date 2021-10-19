@@ -27,6 +27,7 @@
 #include "dmub/inc/dmub_cmd.h"
 
 /**
+<<<<<<< HEAD
  *****************************************************************************
  *  Function: dmub_enable_outbox_notification
  *
@@ -40,6 +41,12 @@
  *  @return
  *     None
  *****************************************************************************
+=======
+ *  dmub_enable_outbox_notification - Sends inbox cmd to dmub to enable outbox1
+ *                                    messages with interrupt. Dmub sends outbox1
+ *                                    message and triggers outbox1 interrupt.
+ * @dc: dc structure
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  */
 void dmub_enable_outbox_notification(struct dc *dc)
 {

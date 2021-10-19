@@ -1,11 +1,19 @@
 [
   {
+<<<<<<< HEAD
     "EventCode": "1E058",
+=======
+    "EventCode": "0x1E058",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     "EventName": "PM_STCX_FAIL_FIN",
     "BriefDescription": "Conditional store instruction (STCX) failed. LARX and STCX are instructions used to acquire a lock."
   },
   {
+<<<<<<< HEAD
     "EventCode": "4E050",
+=======
+    "EventCode": "0x4E050",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     "EventName": "PM_STCX_PASS_FIN",
     "BriefDescription": "Conditional store instruction (STCX) passed. LARX and STCX are instructions used to acquire a lock."
   }

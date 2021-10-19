@@ -289,8 +289,7 @@ int dlpar_acquire_drc(u32 drc_index)
 {
 	int dr_status, rc;
 
-	rc = rtas_call(rtas_token("get-sensor-state"), 2, 2, &dr_status,
-		       DR_ENTITY_SENSE, drc_index);
+	rc = rtas_get_sensor(DR_ENTITY_SENSE, drc_index, &dr_status);
 	if (rc || dr_status != DR_ENTITY_UNUSABLE)
 		return -1;
 
@@ -311,8 +310,7 @@ int dlpar_release_drc(u32 drc_index)
 {
 	int dr_status, rc;
 
-	rc = rtas_call(rtas_token("get-sensor-state"), 2, 2, &dr_status,
-		       DR_ENTITY_SENSE, drc_index);
+	rc = rtas_get_sensor(DR_ENTITY_SENSE, drc_index, &dr_status);
 	if (rc || dr_status != DR_ENTITY_PRESENT)
 		return -1;
 
@@ -333,8 +331,12 @@ int dlpar_unisolate_drc(u32 drc_index)
 {
 	int dr_status, rc;
 
+<<<<<<< HEAD
 	rc = rtas_call(rtas_token("get-sensor-state"), 2, 2, &dr_status,
 				DR_ENTITY_SENSE, drc_index);
+=======
+	rc = rtas_get_sensor(DR_ENTITY_SENSE, drc_index, &dr_status);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (rc || dr_status != DR_ENTITY_PRESENT)
 		return -1;
 

@@ -30,6 +30,10 @@ rm -f "$log"
 
 # We would expect any functional stack randomization to be at least 5 bits.
 if [ "$bits" -lt 5 ]; then
+<<<<<<< HEAD
+=======
+	echo "Stack entropy is low! Booted without 'randomize_kstack_offset=y'?"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	exit 1
 else
 	exit 0

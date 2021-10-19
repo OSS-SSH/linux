@@ -419,7 +419,11 @@ static void resume_hv_clock_tsc(struct clocksource *arg)
 	hv_set_register(HV_REGISTER_REFERENCE_TSC, tsc_msr);
 }
 
+<<<<<<< HEAD
 #ifdef VDSO_CLOCKMODE_HVCLOCK
+=======
+#ifdef HAVE_VDSO_CLOCKMODE_HVCLOCK
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int hv_cs_enable(struct clocksource *cs)
 {
 	vclocks_set_used(VDSO_CLOCKMODE_HVCLOCK);
@@ -435,7 +439,11 @@ static struct clocksource hyperv_cs_tsc = {
 	.flags	= CLOCK_SOURCE_IS_CONTINUOUS,
 	.suspend= suspend_hv_clock_tsc,
 	.resume	= resume_hv_clock_tsc,
+<<<<<<< HEAD
 #ifdef VDSO_CLOCKMODE_HVCLOCK
+=======
+#ifdef HAVE_VDSO_CLOCKMODE_HVCLOCK
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.enable = hv_cs_enable,
 	.vdso_clock_mode = VDSO_CLOCKMODE_HVCLOCK,
 #else

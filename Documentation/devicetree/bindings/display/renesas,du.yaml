@@ -55,7 +55,11 @@ properties:
     maxItems: 1
 
   ports:
+<<<<<<< HEAD
     $ref: /schemas/graph.yaml#/properties/port
+=======
+    $ref: /schemas/graph.yaml#/properties/ports
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     description: |
       The connections to the DU output video ports are modeled using the OF
       graph bindings specified in Documentation/devicetree/bindings/graph.txt.

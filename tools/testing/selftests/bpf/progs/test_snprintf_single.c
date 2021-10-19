@@ -5,7 +5,11 @@
 #include <bpf/bpf_helpers.h>
 
 /* The format string is filled from the userspace such that loading fails */
+<<<<<<< HEAD
 static const char fmt[10];
+=======
+const char fmt[10];
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 SEC("raw_tp/sys_enter")
 int handler(const void *ctx)

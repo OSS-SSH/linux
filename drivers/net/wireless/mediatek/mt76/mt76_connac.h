@@ -7,12 +7,13 @@
 #include "mt76.h"
 
 #define MT76_CONNAC_SCAN_IE_LEN			600
-#define MT76_CONNAC_MAX_SCHED_SCAN_INTERVAL	10
+#define MT76_CONNAC_MAX_NUM_SCHED_SCAN_INTERVAL	 10
+#define MT76_CONNAC_MAX_TIME_SCHED_SCAN_INTERVAL U16_MAX
 #define MT76_CONNAC_MAX_SCHED_SCAN_SSID		10
 #define MT76_CONNAC_MAX_SCAN_MATCH		16
 
 #define MT76_CONNAC_COREDUMP_TIMEOUT		(HZ / 20)
-#define MT76_CONNAC_COREDUMP_SZ			(128 * 1024)
+#define MT76_CONNAC_COREDUMP_SZ			(1300 * 1024)
 
 enum {
 	CMD_CBW_20MHZ = IEEE80211_STA_RX_BW_20,
@@ -45,6 +46,8 @@ enum {
 
 struct mt76_connac_pm {
 	bool enable;
+	bool ds_enable;
+	bool suspended;
 
 	spinlock_t txq_lock;
 	struct {
@@ -116,19 +119,40 @@ out:
 }
 
 static inline void
+<<<<<<< HEAD
 mt76_connac_pm_unref(struct mt76_connac_pm *pm)
 {
 	spin_lock_bh(&pm->wake.lock);
 	pm->wake.count--;
 	pm->last_activity = jiffies;
+=======
+mt76_connac_pm_unref(struct mt76_phy *phy, struct mt76_connac_pm *pm)
+{
+	spin_lock_bh(&pm->wake.lock);
+
+	pm->last_activity = jiffies;
+	if (--pm->wake.count == 0 &&
+	    test_bit(MT76_STATE_MCU_RUNNING, &phy->state))
+		mt76_connac_power_save_sched(phy, pm);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	spin_unlock_bh(&pm->wake.lock);
 }
 
 static inline bool
 mt76_connac_skip_fw_pmctrl(struct mt76_phy *phy, struct mt76_connac_pm *pm)
 {
+<<<<<<< HEAD
 	bool ret;
 
+=======
+	struct mt76_dev *dev = phy->dev;
+	bool ret;
+
+	if (dev->token_count)
+		return true;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	spin_lock_bh(&pm->wake.lock);
 	ret = pm->wake.count || test_and_set_bit(MT76_STATE_PM, &phy->state);
 	spin_unlock_bh(&pm->wake.lock);

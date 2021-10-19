@@ -1,13 +1,17 @@
 // SPDX-License-Identifier: GPL-2.0
 /* Copyright (c) 2019 Facebook */
 #include <test_progs.h>
-#include "fexit_test.skel.h"
+#include "fexit_test.lskel.h"
 
 static int fexit_test(struct fexit_test *fexit_skel)
 {
 	int err, prog_fd, i;
 	__u32 duration = 0, retval;
+<<<<<<< HEAD
 	struct bpf_link *link;
+=======
+	int link_fd;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	__u64 *result;
 
 	err = fexit_test__attach(fexit_skel);
@@ -15,11 +19,16 @@ static int fexit_test(struct fexit_test *fexit_skel)
 		return err;
 
 	/* Check that already linked program can't be attached again. */
+<<<<<<< HEAD
 	link = bpf_program__attach(fexit_skel->progs.test1);
 	if (!ASSERT_ERR_PTR(link, "fexit_attach_link"))
+=======
+	link_fd = fexit_test__test1__attach(fexit_skel);
+	if (!ASSERT_LT(link_fd, 0, "fexit_attach_link"))
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		return -1;
 
-	prog_fd = bpf_program__fd(fexit_skel->progs.test1);
+	prog_fd = fexit_skel->progs.test1.prog_fd;
 	err = bpf_prog_test_run(prog_fd, 1, NULL, 0,
 				NULL, NULL, &retval, &duration);
 	ASSERT_OK(err, "test_run");

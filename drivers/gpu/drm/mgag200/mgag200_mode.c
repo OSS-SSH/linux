@@ -1553,9 +1553,15 @@ mgag200_handle_damage(struct mga_device *mdev, struct drm_framebuffer *fb,
 		      struct drm_rect *clip, const struct dma_buf_map *map)
 {
 	void *vmap = map->vaddr; /* TODO: Use mapping abstraction properly */
+<<<<<<< HEAD
 
 	drm_fb_memcpy_dstclip(mdev->vram, vmap, fb, clip);
 
+=======
+
+	drm_fb_memcpy_dstclip(mdev->vram, fb->pitches[0], vmap, fb, clip);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* Always scanout image at VRAM offset 0 */
 	mgag200_set_startadd(mdev, (u32)0);
 	mgag200_set_offset(mdev, fb);

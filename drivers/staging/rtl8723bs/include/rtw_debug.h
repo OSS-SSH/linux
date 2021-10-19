@@ -7,6 +7,7 @@
 #ifndef __RTW_DEBUG_H__
 #define __RTW_DEBUG_H__
 
+<<<<<<< HEAD
 #include <linux/trace_seq.h>
 
 #define _drv_always_		1
@@ -174,5 +175,10 @@ void sd_f0_reg_dump(void *sel, struct adapter *adapter);
 void mac_reg_dump(void *sel, struct adapter *adapter);
 void bb_reg_dump(void *sel, struct adapter *adapter);
 void rf_reg_dump(void *sel, struct adapter *adapter);
+=======
+void mac_reg_dump(struct adapter *adapter);
+void bb_reg_dump(struct adapter *adapter);
+void rf_reg_dump(struct adapter *adapter);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #endif	/* __RTW_DEBUG_H__ */

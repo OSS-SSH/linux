@@ -7,12 +7,14 @@
 #include <unistd.h>
 #include <sys/file.h>
 #include <sys/time.h>
-#include <sys/resource.h>
 #include <linux/err.h>
 #include <linux/zalloc.h>
+<<<<<<< HEAD
 #include <bpf/bpf.h>
 #include <bpf/btf.h>
 #include <bpf/libbpf.h>
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <api/fs/fs.h>
 #include <perf/bpf_perf.h>
 
@@ -22,6 +24,10 @@
 #include "evsel.h"
 #include "evlist.h"
 #include "target.h"
+<<<<<<< HEAD
+=======
+#include "cgroup.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "cpumap.h"
 #include "thread_map.h"
 
@@ -35,13 +41,6 @@
 static inline void *u64_to_ptr(__u64 ptr)
 {
 	return (void *)(unsigned long)ptr;
-}
-
-static void set_max_rlimit(void)
-{
-	struct rlimit rinf = { RLIM_INFINITY, RLIM_INFINITY };
-
-	setrlimit(RLIMIT_MEMLOCK, &rinf);
 }
 
 static struct bpf_counter *bpf_counter_alloc(void)
@@ -297,6 +296,7 @@ struct bpf_counter_ops bpf_program_profiler_ops = {
 	.install_pe = bpf_program_profiler__install_pe,
 };
 
+<<<<<<< HEAD
 static __u32 bpf_link_get_id(int fd)
 {
 	struct bpf_link_info link_info = {0};
@@ -324,6 +324,8 @@ static __u32 bpf_map_get_id(int fd)
 	return map_info.id;
 }
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static bool bperf_attr_map_compatible(int attr_map_fd)
 {
 	struct bpf_map_info map_info = {0};
@@ -385,6 +387,7 @@ static int bperf_lock_attr_map(struct target *target)
 	return map_fd;
 }
 
+<<<<<<< HEAD
 /* trigger the leader program on a cpu */
 static int bperf_trigger_reading(int prog_fd, int cpu)
 {
@@ -399,12 +402,18 @@ static int bperf_trigger_reading(int prog_fd, int cpu)
 	return bpf_prog_test_run_opts(prog_fd, &opts);
 }
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int bperf_check_target(struct evsel *evsel,
 			      struct target *target,
 			      enum bperf_filter_type *filter_type,
 			      __u32 *filter_entry_cnt)
 {
+<<<<<<< HEAD
 	if (evsel->leader->core.nr_members > 1) {
+=======
+	if (evsel->core.leader->nr_members > 1) {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		pr_err("bpf managed perf events do not yet support groups.\n");
 		return -1;
 	}
@@ -451,10 +460,17 @@ static int bperf_reload_leader_program(struct evsel *evsel, int attr_map_fd,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	err = -1;
 	link = bpf_program__attach(skel->progs.on_switch);
 	if (!link) {
 		pr_err("Failed to attach leader program\n");
+=======
+	link = bpf_program__attach(skel->progs.on_switch);
+	if (IS_ERR(link)) {
+		pr_err("Failed to attach leader program\n");
+		err = PTR_ERR(link);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		goto out;
 	}
 
@@ -521,9 +537,16 @@ static int bperf__load(struct evsel *evsel, struct target *target)
 
 	evsel->bperf_leader_link_fd = bpf_link_get_fd_by_id(entry.link_id);
 	if (evsel->bperf_leader_link_fd < 0 &&
+<<<<<<< HEAD
 	    bperf_reload_leader_program(evsel, attr_map_fd, &entry))
 		goto out;
 
+=======
+	    bperf_reload_leader_program(evsel, attr_map_fd, &entry)) {
+		err = -1;
+		goto out;
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/*
 	 * The bpf_link holds reference to the leader program, and the
 	 * leader program holds reference to the maps. Therefore, if
@@ -550,6 +573,10 @@ static int bperf__load(struct evsel *evsel, struct target *target)
 	/* Step 2: load the follower skeleton */
 	evsel->follower_skel = bperf_follower_bpf__open();
 	if (!evsel->follower_skel) {
+<<<<<<< HEAD
+=======
+		err = -1;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		pr_err("Failed to open follower skeleton\n");
 		goto out;
 	}
@@ -792,6 +819,11 @@ struct bpf_counter_ops bperf_ops = {
 	.destroy    = bperf__destroy,
 };
 
+<<<<<<< HEAD
+=======
+extern struct bpf_counter_ops bperf_cgrp_ops;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static inline bool bpf_counter_skip(struct evsel *evsel)
 {
 	return list_empty(&evsel->bpf_counter_list) &&
@@ -809,6 +841,11 @@ int bpf_counter__load(struct evsel *evsel, struct target *target)
 {
 	if (target->bpf_str)
 		evsel->bpf_counter_ops = &bpf_program_profiler_ops;
+<<<<<<< HEAD
+=======
+	else if (cgrp_event_expanded && target->use_bpf)
+		evsel->bpf_counter_ops = &bperf_cgrp_ops;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	else if (target->use_bpf || evsel->bpf_counter ||
 		 evsel__match_bpf_counter_events(evsel->name))
 		evsel->bpf_counter_ops = &bperf_ops;

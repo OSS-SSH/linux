@@ -44,6 +44,10 @@ description:
 properties:
   compatible:
     enum:
+<<<<<<< HEAD
+=======
+      - qcom,msm8998-ipa
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
       - qcom,sc7180-ipa
       - qcom,sc7280-ipa
       - qcom,sdm845-ipa
@@ -105,7 +109,6 @@ properties:
       - description: Whether the IPA clock is enabled (if valid)
 
   qcom,smem-state-names:
-    $ref: /schemas/types.yaml#/definitions/string-array
     description: The names of the state bits used for SMP2P output
     items:
       - const: ipa-clock-enabled-valid

@@ -32,7 +32,10 @@ static struct i915_vma *hwsp_alloc(struct intel_gt *gt)
 	return vma;
 }
 
+<<<<<<< HEAD
 __i915_active_call
+static void __timeline_retire(struct i915_active *active)
+=======
 static void __timeline_retire(struct i915_active *active)
 {
 	struct intel_timeline *tl =
@@ -43,10 +46,23 @@ static void __timeline_retire(struct i915_active *active)
 }
 
 static int __timeline_active(struct i915_active *active)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	struct intel_timeline *tl =
 		container_of(active, typeof(*tl), active);
 
+<<<<<<< HEAD
+	i915_vma_unpin(tl->hwsp_ggtt);
+	intel_timeline_put(tl);
+}
+
+static int __timeline_active(struct i915_active *active)
+{
+	struct intel_timeline *tl =
+		container_of(active, typeof(*tl), active);
+
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	__i915_vma_pin(tl->hwsp_ggtt);
 	intel_timeline_get(tl);
 	return 0;
@@ -104,7 +120,12 @@ static int intel_timeline_init(struct intel_timeline *timeline,
 	INIT_LIST_HEAD(&timeline->requests);
 
 	i915_syncmap_init(&timeline->sync);
+<<<<<<< HEAD
 	i915_active_init(&timeline->active, __timeline_active, __timeline_retire);
+=======
+	i915_active_init(&timeline->active, __timeline_active,
+			 __timeline_retire, 0);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	return 0;
 }

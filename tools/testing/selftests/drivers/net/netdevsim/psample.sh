@@ -14,13 +14,23 @@ ALL_TESTS="
 NETDEVSIM_PATH=/sys/bus/netdevsim/
 DEV_ADDR=1337
 DEV=netdevsim${DEV_ADDR}
+<<<<<<< HEAD
 DEVLINK_DEV=netdevsim/${DEV}
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 SYSFS_NET_DIR=/sys/bus/netdevsim/devices/$DEV/net/
 PSAMPLE_DIR=/sys/kernel/debug/netdevsim/$DEV/psample/
 CAPTURE_FILE=$(mktemp)
 NUM_NETIFS=0
 source $lib_dir/lib.sh
+<<<<<<< HEAD
 source $lib_dir/devlink_lib.sh
+=======
+
+DEVLINK_DEV=
+source $lib_dir/devlink_lib.sh
+DEVLINK_DEV=netdevsim/${DEV}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 # Available at https://github.com/Mellanox/libpsample
 require_command psample

@@ -77,6 +77,7 @@ enum {
 	BTC_CHIP_RTL8723B	= 5,
 	BTC_CHIP_MAX
 };
+<<<<<<< HEAD
 
 enum {
 	BTC_MSG_INTERFACE	= 0x0,
@@ -100,6 +101,8 @@ extern u32 		GLBtcDbgType[];
 #define ALGO_TRACE_SW					BIT7
 #define ALGO_TRACE_SW_DETAIL			BIT8
 #define ALGO_TRACE_SW_EXEC				BIT9
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /*  following is for wifi link status */
 #define WIFI_STA_CONNECTED				BIT0
@@ -112,6 +115,7 @@ extern u32 		GLBtcDbgType[];
 #define CL_SPRINTF	snprintf
 #define CL_PRINTF	DCMD_Printf
 
+<<<<<<< HEAD
 /*  The following is for dbgview print */
 #if DBG
 #define BTC_PRINT(dbgtype, dbgflag, printstr)\
@@ -156,6 +160,8 @@ extern u32 		GLBtcDbgType[];
 			no_printk("%s %p %zu", _TitleString, _HexData, _HexDataLen)
 #endif
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 struct btc_board_info {
 	/*  The following is some board information */
 	u8 btChipType;
@@ -209,7 +215,6 @@ enum {
 	BTC_GET_BL_WIFI_LINK,
 	BTC_GET_BL_WIFI_ROAM,
 	BTC_GET_BL_WIFI_4_WAY_PROGRESS,
-	BTC_GET_BL_WIFI_UNDER_5G,
 	BTC_GET_BL_WIFI_AP_MODE_ENABLE,
 	BTC_GET_BL_WIFI_ENABLE_ENCRYPTION,
 	BTC_GET_BL_WIFI_UNDER_B_MODE,

@@ -16,7 +16,10 @@
 #include <errno.h>
 #include <linux/bitmap.h>
 #include <linux/bitops.h>
+<<<<<<< HEAD
 #include <asm/barrier.h>
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include <linux/atomic.h>
 
 #include "kvm_util.h"
@@ -681,7 +684,7 @@ static struct kvm_vm *create_vm(enum vm_guest_mode mode, uint32_t vcpuid,
 	pr_info("Testing guest mode: %s\n", vm_guest_mode_string(mode));
 
 	vm = vm_create(mode, DEFAULT_GUEST_PHY_PAGES + extra_pg_pages, O_RDWR);
-	kvm_vm_elf_load(vm, program_invocation_name, 0, 0);
+	kvm_vm_elf_load(vm, program_invocation_name);
 #ifdef __x86_64__
 	vm_create_irqchip(vm);
 #endif
@@ -761,7 +764,7 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 				    KVM_MEM_LOG_DIRTY_PAGES);
 
 	/* Do mapping for the dirty track memory slot */
-	virt_map(vm, guest_test_virt_mem, guest_test_phys_mem, guest_num_pages, 0);
+	virt_map(vm, guest_test_virt_mem, guest_test_phys_mem, guest_num_pages);
 
 	/* Cache the HVA pointer of the region */
 	host_test_mem = addr_gpa2hva(vm, (vm_paddr_t)guest_test_phys_mem);

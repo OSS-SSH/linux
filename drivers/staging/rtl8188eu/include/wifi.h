@@ -25,6 +25,7 @@ enum WIFI_FRAME_TYPE {
 	WIFI_QOS_DATA_TYPE	= (BIT(7) | BIT(3)),	/*  QoS Data */
 };
 
+<<<<<<< HEAD
 enum WIFI_FRAME_SUBTYPE {
 	/*  below is for mgt frame */
 	WIFI_ASSOCREQ       = (0 | WIFI_MGT_TYPE),
@@ -61,6 +62,8 @@ enum WIFI_FRAME_SUBTYPE {
 	WIFI_QOS_DATA_NULL	= (BIT(6) | WIFI_QOS_DATA_TYPE),
 };
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #define SetToDs(pbuf)	\
 	*(__le16 *)(pbuf) |= cpu_to_le16(IEEE80211_FCTL_TODS)
 

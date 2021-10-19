@@ -40,6 +40,10 @@
 #include <drm/ttm/ttm_device.h>
 
 #include "ttm_bo_api.h"
+<<<<<<< HEAD
+=======
+#include "ttm_kmap_iter.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "ttm_placement.h"
 #include "ttm_tt.h"
 #include "ttm_pool.h"
@@ -96,7 +100,7 @@ struct ttm_lru_bulk_move {
  */
 int ttm_bo_mem_space(struct ttm_buffer_object *bo,
 		     struct ttm_placement *placement,
-		     struct ttm_resource *mem,
+		     struct ttm_resource **mem,
 		     struct ttm_operation_ctx *ctx);
 
 /**
@@ -181,15 +185,19 @@ static inline void
 ttm_bo_move_to_lru_tail_unlocked(struct ttm_buffer_object *bo)
 {
 	spin_lock(&bo->bdev->lru_lock);
+<<<<<<< HEAD
 	ttm_bo_move_to_lru_tail(bo, &bo->mem, NULL);
+=======
+	ttm_bo_move_to_lru_tail(bo, bo->resource, NULL);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	spin_unlock(&bo->bdev->lru_lock);
 }
 
 static inline void ttm_bo_assign_mem(struct ttm_buffer_object *bo,
 				     struct ttm_resource *new_mem)
 {
-	bo->mem = *new_mem;
-	new_mem->mm_node = NULL;
+	WARN_ON(bo->resource);
+	bo->resource = new_mem;
 }
 
 /**
@@ -202,9 +210,7 @@ static inline void ttm_bo_assign_mem(struct ttm_buffer_object *bo,
 static inline void ttm_bo_move_null(struct ttm_buffer_object *bo,
 				    struct ttm_resource *new_mem)
 {
-	struct ttm_resource *old_mem = &bo->mem;
-
-	WARN_ON(old_mem->mm_node != NULL);
+	ttm_resource_free(bo, &bo->resource);
 	ttm_bo_assign_mem(bo, new_mem);
 }
 
@@ -273,6 +279,23 @@ int ttm_bo_move_accel_cleanup(struct ttm_buffer_object *bo,
 			      struct ttm_resource *new_mem);
 
 /**
+ * ttm_bo_move_accel_cleanup.
+ *
+ * @bo: A pointer to a struct ttm_buffer_object.
+ * @new_mem: struct ttm_resource indicating where to move.
+ *
+ * Special case of ttm_bo_move_accel_cleanup where the bo is guaranteed
+ * by the caller to be idle. Typically used after memcpy buffer moves.
+ */
+static inline void ttm_bo_move_sync_cleanup(struct ttm_buffer_object *bo,
+					    struct ttm_resource *new_mem)
+{
+	int ret = ttm_bo_move_accel_cleanup(bo, NULL, true, false, new_mem);
+
+	WARN_ON(ret);
+}
+
+/**
  * ttm_bo_pipeline_gutting.
  *
  * @bo: A pointer to a struct ttm_buffer_object.
@@ -306,6 +329,7 @@ int ttm_bo_tt_bind(struct ttm_buffer_object *bo, struct ttm_resource *mem);
  */
 void ttm_bo_tt_destroy(struct ttm_buffer_object *bo);
 
+<<<<<<< HEAD
 /**
  * ttm_range_man_init
  *
@@ -331,5 +355,16 @@ int ttm_range_man_init(struct ttm_device *bdev,
  */
 int ttm_range_man_fini(struct ttm_device *bdev,
 		       unsigned type);
+=======
+void ttm_move_memcpy(struct ttm_buffer_object *bo,
+		     u32 num_pages,
+		     struct ttm_kmap_iter *dst_iter,
+		     struct ttm_kmap_iter *src_iter);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
+struct ttm_kmap_iter *
+ttm_kmap_iter_iomap_init(struct ttm_kmap_iter_iomap *iter_io,
+			 struct io_mapping *iomap,
+			 struct sg_table *st,
+			 resource_size_t start);
 #endif

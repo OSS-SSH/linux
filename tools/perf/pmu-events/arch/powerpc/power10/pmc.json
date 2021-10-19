@@ -1,21 +1,37 @@
 [
   {
+<<<<<<< HEAD
     "EventCode": "301E8",
+=======
+    "EventCode": "0x301E8",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     "EventName": "PM_THRESH_EXC_64",
     "BriefDescription": "Threshold counter exceeded a value of 64."
   },
   {
+<<<<<<< HEAD
     "EventCode": "45050",
+=======
+    "EventCode": "0x45050",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     "EventName": "PM_1FLOP_CMPL",
     "BriefDescription": "One floating point instruction completed (fadd, fmul, fsub, fcmp, fsel, fabs, fnabs, fres, fsqrte, fneg)."
   },
   {
+<<<<<<< HEAD
     "EventCode": "45052",
+=======
+    "EventCode": "0x45052",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     "EventName": "PM_4FLOP_CMPL",
     "BriefDescription": "Four floating point instructions completed (fadd, fmul, fsub, fcmp, fsel, fabs, fnabs, fres, fsqrte, fneg)."
   },
   {
+<<<<<<< HEAD
     "EventCode": "4D054",
+=======
+    "EventCode": "0x4D054",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
     "EventName": "PM_8FLOP_CMPL",
     "BriefDescription": "Four Double Precision vector instructions completed."
   }

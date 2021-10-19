@@ -65,6 +65,10 @@ Todolist:
 
    clearing-warn-once
    cpu-load
+<<<<<<< HEAD
+=======
+   lockup-watchdogs
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
    unicode
 
 Todolist:
@@ -100,7 +104,6 @@ Todolist:
    laptops/index
    lcd-panel-cgram
    ldm
-   lockup-watchdogs
    LSM/index
    md
    media/index

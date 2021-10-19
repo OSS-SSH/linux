@@ -5,6 +5,10 @@
 #include "intel_atomic.h"
 #include "intel_ddi.h"
 #include "intel_ddi_buf_trans.h"
+<<<<<<< HEAD
+=======
+#include "intel_de.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "intel_display_types.h"
 #include "intel_fdi.h"
 

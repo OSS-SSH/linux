@@ -34,6 +34,12 @@ static int virtbt_add_inbuf(struct virtio_bluetooth *vbt)
 	int err;
 
 	skb = alloc_skb(1000, GFP_KERNEL);
+<<<<<<< HEAD
+=======
+	if (!skb)
+		return -ENOMEM;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	sg_init_one(sg, skb->data, 1000);
 
 	err = virtqueue_add_inbuf(vq, sg, 1, skb, GFP_KERNEL);

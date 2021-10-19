@@ -48,6 +48,9 @@ obj-$(CONFIG_IR_IMG) += img-ir/
 obj-$(CONFIG_IR_SERIAL) += serial_ir.o
 obj-$(CONFIG_IR_SIR) += sir_ir.o
 obj-$(CONFIG_IR_MTK) += mtk-cir.o
+<<<<<<< HEAD
 obj-$(CONFIG_IR_TANGO) += tango-ir.o
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 obj-$(CONFIG_RC_XBOX_DVD) += xbox_remote.o
 obj-$(CONFIG_IR_TOY) += ir_toy.o

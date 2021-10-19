@@ -73,11 +73,15 @@ ATTRIBUTE_GROUPS(pvpanic_pci_dev);
 static int pvpanic_pci_probe(struct pci_dev *pdev,
 			     const struct pci_device_id *ent)
 {
+<<<<<<< HEAD
 	struct device *dev = &pdev->dev;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct pvpanic_instance *pi;
 	void __iomem *base;
 	int ret;
 
+<<<<<<< HEAD
 	ret = pci_enable_device(pdev);
 	if (ret < 0)
 		return ret;
@@ -87,6 +91,17 @@ static int pvpanic_pci_probe(struct pci_dev *pdev,
 		return -ENOMEM;
 
 	pi = kmalloc(sizeof(*pi), GFP_ATOMIC);
+=======
+	ret = pcim_enable_device(pdev);
+	if (ret < 0)
+		return ret;
+
+	base = pcim_iomap(pdev, 0, 0);
+	if (!base)
+		return -ENOMEM;
+
+	pi = devm_kmalloc(&pdev->dev, sizeof(*pi), GFP_KERNEL);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (!pi)
 		return -ENOMEM;
 
@@ -97,6 +112,7 @@ static int pvpanic_pci_probe(struct pci_dev *pdev,
 	pi->capability &= ioread8(base);
 	pi->events = pi->capability;
 
+<<<<<<< HEAD
 	dev_set_drvdata(dev, pi);
 
 	return pvpanic_probe(pi);
@@ -110,13 +126,19 @@ static void pvpanic_pci_remove(struct pci_dev *pdev)
 	iounmap(pi->base);
 	kfree(pi);
 	pci_disable_device(pdev);
+=======
+	return devm_pvpanic_probe(&pdev->dev, pi);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 static struct pci_driver pvpanic_pci_driver = {
 	.name =         "pvpanic-pci",
 	.id_table =     pvpanic_pci_id_tbl,
 	.probe =        pvpanic_pci_probe,
+<<<<<<< HEAD
 	.remove =       pvpanic_pci_remove,
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.driver = {
 		.dev_groups = pvpanic_pci_dev_groups,
 	},

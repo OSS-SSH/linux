@@ -98,7 +98,10 @@ static void pool_free_work(struct work_struct *wrk)
 				      round_jiffies_up_relative(HZ));
 }
 
+<<<<<<< HEAD
 __i915_active_call
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static void pool_retire(struct i915_active *ref)
 {
 	struct intel_gt_buffer_pool_node *node =
@@ -154,7 +157,11 @@ node_create(struct intel_gt_buffer_pool *pool, size_t sz,
 	node->age = 0;
 	node->pool = pool;
 	node->pinned = false;
+<<<<<<< HEAD
 	i915_active_init(&node->active, NULL, pool_retire);
+=======
+	i915_active_init(&node->active, NULL, pool_retire, 0);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	obj = i915_gem_object_create_internal(gt->i915, sz);
 	if (IS_ERR(obj)) {

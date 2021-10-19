@@ -28,8 +28,13 @@ struct {
 	__type(value, unsigned int);
 } verdict_map SEC(".maps");
 
+<<<<<<< HEAD
 static volatile bool test_sockmap; /* toggled by user-space */
 static volatile bool test_ingress; /* toggled by user-space */
+=======
+bool test_sockmap = false; /* toggled by user-space */
+bool test_ingress = false; /* toggled by user-space */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 SEC("sk_skb/stream_parser")
 int prog_stream_parser(struct __sk_buff *skb)

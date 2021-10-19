@@ -119,6 +119,10 @@ config SND_SOC_FSL_RPMSG
 	tristate "NXP Audio Base On RPMSG support"
 	depends on COMMON_CLK
 	depends on RPMSG
+<<<<<<< HEAD
+=======
+	depends on SND_IMX_SOC || SND_IMX_SOC = n
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	select SND_SOC_IMX_RPMSG if SND_IMX_SOC != n
 	help
 	  Say Y if you want to add rpmsg audio support for the Freescale CPUs.
@@ -350,6 +354,22 @@ config SND_SOC_IMX_RPMSG
 	  Say Y if you want to add support for SoC audio on an i.MX board with
 	  a rpmsg devices.
 
+<<<<<<< HEAD
+=======
+config SND_SOC_IMX_CARD
+	tristate "SoC Audio Graph Sound Card support for i.MX boards"
+	depends on OF && I2C
+	select SND_SOC_AK4458
+	select SND_SOC_AK5558
+	select SND_SOC_IMX_PCM_DMA
+	select SND_SOC_FSL_SAI
+	select SND_SIMPLE_CARD_UTILS
+	help
+	  This option enables audio sound card support for i.MX boards
+	  with OF-graph DT bindings.
+	  It also support DPCM of single CPU multi Codec ststem.
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 endif # SND_IMX_SOC
 
 endmenu

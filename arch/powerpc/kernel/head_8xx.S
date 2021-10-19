@@ -786,6 +786,7 @@ _GLOBAL(mmu_pin_tlb)
 	mtspr	SPRN_SRR1, r10
 	mtspr	SPRN_SRR0, r11
 	rfi
+<<<<<<< HEAD
 
 /*
  * We put a few things here that have to be page-aligned.
@@ -811,3 +812,5 @@ swapper_pg_dir:
 	.globl	abatron_pteptrs
 abatron_pteptrs:
 	.space	8
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

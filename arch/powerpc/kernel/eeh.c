@@ -346,6 +346,7 @@ void eeh_slot_error_detail(struct eeh_pe *pe, int severity)
  */
 static inline unsigned long eeh_token_to_phys(unsigned long token)
 {
+<<<<<<< HEAD
 	pte_t *ptep;
 	unsigned long pa;
 	int hugepage_shift;
@@ -368,6 +369,9 @@ static inline unsigned long eeh_token_to_phys(unsigned long token)
 	pa <<= PAGE_SHIFT;
 	pa |= token & ((1ul << hugepage_shift) - 1);
 	return pa;
+=======
+	return ppc_find_vmap_phys(token);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 /*

@@ -17,28 +17,27 @@
 
 #include "mdev_private.h"
 
+<<<<<<< HEAD
 #define DRIVER_VERSION  "0.1"
 #define DRIVER_AUTHOR   "NVIDIA Corporation"
 #define DRIVER_DESC     "VFIO based driver for Mediated device"
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int vfio_mdev_open(struct vfio_device *core_vdev)
 {
 	struct mdev_device *mdev = to_mdev_device(core_vdev->dev);
 	struct mdev_parent *parent = mdev->type->parent;
+<<<<<<< HEAD
 
 	int ret;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	if (unlikely(!parent->ops->open))
 		return -EINVAL;
 
-	if (!try_module_get(THIS_MODULE))
-		return -ENODEV;
-
-	ret = parent->ops->open(mdev);
-	if (ret)
-		module_put(THIS_MODULE);
-
-	return ret;
+	return parent->ops->open(mdev);
 }
 
 static void vfio_mdev_release(struct vfio_device *core_vdev)
@@ -48,8 +47,6 @@ static void vfio_mdev_release(struct vfio_device *core_vdev)
 
 	if (likely(parent->ops->release))
 		parent->ops->release(mdev);
-
-	module_put(THIS_MODULE);
 }
 
 static long vfio_mdev_unlocked_ioctl(struct vfio_device *core_vdev,
@@ -151,7 +148,11 @@ static void vfio_mdev_remove(struct mdev_device *mdev)
 	kfree(vdev);
 }
 
+<<<<<<< HEAD
 static struct mdev_driver vfio_mdev_driver = {
+=======
+struct mdev_driver vfio_mdev_driver = {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.driver = {
 		.name = "vfio_mdev",
 		.owner = THIS_MODULE,
@@ -160,6 +161,7 @@ static struct mdev_driver vfio_mdev_driver = {
 	.probe	= vfio_mdev_probe,
 	.remove	= vfio_mdev_remove,
 };
+<<<<<<< HEAD
 
 static int __init vfio_mdev_init(void)
 {
@@ -178,3 +180,5 @@ MODULE_VERSION(DRIVER_VERSION);
 MODULE_LICENSE("GPL v2");
 MODULE_AUTHOR(DRIVER_AUTHOR);
 MODULE_DESCRIPTION(DRIVER_DESC);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

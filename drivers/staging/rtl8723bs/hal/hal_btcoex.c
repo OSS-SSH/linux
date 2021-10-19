@@ -17,7 +17,6 @@ struct btc_coexist GLBtCoexist;
 static u8 GLBtcWiFiInScanState;
 static u8 GLBtcWiFiInIQKState;
 
-u32 GLBtcDbgType[BTC_MSG_MAX];
 static u8 GLBtcDbgBuf[BT_TMP_BUF_SIZE];
 
 struct btcdbginfo { /* _btcoexdbginfo */
@@ -75,6 +74,7 @@ static u8 halbtcoutsrc_IsBtCoexistAvailable(struct btc_coexist *pBtCoexist)
 	return true;
 }
 
+<<<<<<< HEAD
 static void halbtcoutsrc_DbgInit(void)
 {
 	u8 i;
@@ -101,6 +101,8 @@ static void halbtcoutsrc_DbgInit(void)
 			0;
 }
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static void halbtcoutsrc_LeaveLps(struct btc_coexist *pBtCoexist)
 {
 	struct adapter *padapter;
@@ -130,9 +132,6 @@ static void halbtcoutsrc_EnterLps(struct btc_coexist *pBtCoexist)
 static void halbtcoutsrc_NormalLps(struct btc_coexist *pBtCoexist)
 {
 	struct adapter *padapter;
-
-
-	BTC_PRINT(BTC_MSG_ALGORITHM, ALGO_TRACE, ("[BTCoex], Normal LPS behavior!!!\n"));
 
 	padapter = pBtCoexist->Adapter;
 
@@ -396,10 +395,6 @@ static u8 halbtcoutsrc_Get(void *pBtcContext, u8 getType, void *pOutBuf)
 
 	case BTC_GET_BL_WIFI_4_WAY_PROGRESS:
 		*pu8 = false;
-		break;
-
-	case BTC_GET_BL_WIFI_UNDER_5G:
-		*pu8 = pHalData->CurrentBandType == 1;
 		break;
 
 	case BTC_GET_BL_WIFI_AP_MODE_ENABLE:
@@ -921,8 +916,6 @@ void hal_btcoex_Initialize(void *padapter)
 	pBtCoexist = &GLBtCoexist;
 
 	/* pBtCoexist->statistics.cntBind++; */
-
-	halbtcoutsrc_DbgInit();
 
 	pBtCoexist->chipInterface = BTC_INTF_SDIO;
 
@@ -1481,10 +1474,13 @@ u32 hal_btcoex_GetRaMask(struct adapter *padapter)
 
 void hal_btcoex_RecordPwrMode(struct adapter *padapter, u8 *pCmdBuf, u8 cmdLen)
 {
+<<<<<<< HEAD
 	BTC_PRINT(BTC_MSG_ALGORITHM, ALGO_TRACE_FW_EXEC, ("[BTCoex], FW write pwrModeCmd = 0x%04x%08x\n",
 		pCmdBuf[0] << 8 | pCmdBuf[1],
 		pCmdBuf[2] << 24 | pCmdBuf[3] << 16 | pCmdBuf[4] << 8 | pCmdBuf[5]));
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	memcpy(GLBtCoexist.pwrModeVal, pCmdBuf, cmdLen);
 }
 
@@ -1499,6 +1495,7 @@ void hal_btcoex_DisplayBtCoexInfo(struct adapter *padapter, u8 *pbuf, u32 bufsiz
 	DBG_BT_INFO_INIT(pinfo, NULL, 0);
 }
 
+<<<<<<< HEAD
 void hal_btcoex_SetDBG(struct adapter *padapter, u32 *pDbgModule)
 {
 	u32 i;
@@ -1634,3 +1631,5 @@ exit:
 
 	return count;
 }
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

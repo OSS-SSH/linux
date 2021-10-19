@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 
 #include <asm/kup.h>
+<<<<<<< HEAD
 #include <asm/reg.h>
 #include <asm/task_size_32.h>
 #include <asm/mmu.h>
@@ -37,4 +38,22 @@ void kuep_lock(void)
 void kuep_unlock(void)
 {
 	kuep_update(mfsr(0) & ~SR_NX);
+=======
+#include <asm/smp.h>
+
+struct static_key_false disable_kuep_key;
+
+void setup_kuep(bool disabled)
+{
+	if (!disabled)
+		kuep_lock();
+
+	if (smp_processor_id() != boot_cpuid)
+		return;
+
+	if (disabled)
+		static_branch_enable(&disable_kuep_key);
+	else
+		pr_info("Activating Kernel Userspace Execution Prevention\n");
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }

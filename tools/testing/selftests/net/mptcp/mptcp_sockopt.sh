@@ -178,7 +178,11 @@ do_transfer()
 
 	timeout ${timeout_test} \
 		ip netns exec ${listener_ns} \
+<<<<<<< HEAD
 			$mptcp_connect -t ${timeout_poll} -l -M 1 -p $port -s ${srv_proto} \
+=======
+			$mptcp_connect -t ${timeout_poll} -l -M 1 -p $port -s ${srv_proto} -c TIMESTAMPNS \
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				${local_addr} < "$sin" > "$sout" &
 	spid=$!
 
@@ -186,7 +190,11 @@ do_transfer()
 
 	timeout ${timeout_test} \
 		ip netns exec ${connector_ns} \
+<<<<<<< HEAD
 			$mptcp_connect -t ${timeout_poll} -M 2 -p $port -s ${cl_proto} \
+=======
+			$mptcp_connect -t ${timeout_poll} -M 2 -p $port -s ${cl_proto} -c TIMESTAMPNS \
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				$connect_addr < "$cin" > "$cout" &
 
 	cpid=$!

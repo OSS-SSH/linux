@@ -113,6 +113,10 @@ static const struct reg_default rt715_mbq_reg_defaults_sdca[] = {
 	{ 0x2000036, 0x0000 },
 	{ 0x2000037, 0x0000 },
 	{ 0x2000039, 0xaa81 },
+<<<<<<< HEAD
+=======
+	{ 0x2000044, 0x0202 },
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	{ 0x6100000, 0x0100 },
 	{ SDW_SDCA_CTL(FUN_MIC_ARRAY, RT715_SDCA_FU_ADC8_9_VOL,
 		RT715_SDCA_FU_VOL_CTRL, CH_01), 0x00 },

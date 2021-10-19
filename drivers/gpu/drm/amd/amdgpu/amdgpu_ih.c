@@ -115,9 +115,11 @@ int amdgpu_ih_ring_init(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih,
  */
 void amdgpu_ih_ring_fini(struct amdgpu_device *adev, struct amdgpu_ih_ring *ih)
 {
+
+	if (!ih->ring)
+		return;
+
 	if (ih->use_bus_addr) {
-		if (!ih->ring)
-			return;
 
 		/* add 8 bytes for the rptr/wptr shadows and
 		 * add them to the end of the ring allocation.
@@ -175,7 +177,13 @@ static bool amdgpu_ih_has_checkpoint_processed(struct amdgpu_device *adev,
 		cur_rptr += ih->ptr_mask + 1;
 	*prev_rptr = cur_rptr;
 
+<<<<<<< HEAD
 	return cur_rptr >= checkpoint_wptr;
+=======
+	/* check ring is empty to workaround missing wptr overflow flag */
+	return cur_rptr >= checkpoint_wptr ||
+	       (cur_rptr & ih->ptr_mask) == amdgpu_ih_get_wptr(adev, ih);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 /**

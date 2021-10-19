@@ -58,7 +58,11 @@ void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
 
 	hlist_del_rcu(&exp->hnode);
 
+<<<<<<< HEAD
 	cnet = net_generic(net, nf_conntrack_net_id);
+=======
+	cnet = nf_ct_pernet(net);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	cnet->expect_count--;
 
 	hlist_del_rcu(&exp->lnode);
@@ -123,7 +127,11 @@ __nf_ct_expect_find(struct net *net,
 		    const struct nf_conntrack_zone *zone,
 		    const struct nf_conntrack_tuple *tuple)
 {
+<<<<<<< HEAD
 	struct nf_conntrack_net *cnet = net_generic(net, nf_conntrack_net_id);
+=======
+	struct nf_conntrack_net *cnet = nf_ct_pernet(net);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct nf_conntrack_expect *i;
 	unsigned int h;
 
@@ -164,7 +172,11 @@ nf_ct_find_expectation(struct net *net,
 		       const struct nf_conntrack_zone *zone,
 		       const struct nf_conntrack_tuple *tuple)
 {
+<<<<<<< HEAD
 	struct nf_conntrack_net *cnet = net_generic(net, nf_conntrack_net_id);
+=======
+	struct nf_conntrack_net *cnet = nf_ct_pernet(net);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct nf_conntrack_expect *i, *exp = NULL;
 	unsigned int h;
 
@@ -397,7 +409,11 @@ static void nf_ct_expect_insert(struct nf_conntrack_expect *exp)
 	master_help->expecting[exp->class]++;
 
 	hlist_add_head_rcu(&exp->hnode, &nf_ct_expect_hash[h]);
+<<<<<<< HEAD
 	cnet = net_generic(net, nf_conntrack_net_id);
+=======
+	cnet = nf_ct_pernet(net);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	cnet->expect_count++;
 
 	NF_CT_STAT_INC(net, expect_create);
@@ -468,7 +484,11 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
 		}
 	}
 
+<<<<<<< HEAD
 	cnet = net_generic(net, nf_conntrack_net_id);
+=======
+	cnet = nf_ct_pernet(net);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (cnet->expect_count >= nf_ct_expect_max) {
 		net_warn_ratelimited("nf_conntrack: expectation table full\n");
 		ret = -EMFILE;

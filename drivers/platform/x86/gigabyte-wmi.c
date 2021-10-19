@@ -133,6 +133,7 @@ static u8 gigabyte_wmi_detect_sensor_usability(struct wmi_device *wdev)
 	return r;
 }
 
+<<<<<<< HEAD
 static const struct dmi_system_id gigabyte_wmi_known_working_platforms[] = {
 	{ .matches = {
 		DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Gigabyte Technology Co., Ltd."),
@@ -158,6 +159,23 @@ static const struct dmi_system_id gigabyte_wmi_known_working_platforms[] = {
 		DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Gigabyte Technology Co., Ltd."),
 		DMI_EXACT_MATCH(DMI_BOARD_NAME, "X570 I AORUS PRO WIFI"),
 	}},
+=======
+#define DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME(name) \
+	{ .matches = { \
+		DMI_EXACT_MATCH(DMI_BOARD_VENDOR, "Gigabyte Technology Co., Ltd."), \
+		DMI_EXACT_MATCH(DMI_BOARD_NAME, name), \
+	}}
+
+static const struct dmi_system_id gigabyte_wmi_known_working_platforms[] = {
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B550 AORUS ELITE"),
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B550 GAMING X V2"),
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B550M AORUS PRO-P"),
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("B550M DS3H"),
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("Z390 I AORUS PRO WIFI-CF"),
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("X570 AORUS ELITE"),
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("X570 I AORUS PRO WIFI"),
+	DMI_EXACT_MATCH_GIGABYTE_BOARD_NAME("X570 UD"),
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	{ }
 };
 

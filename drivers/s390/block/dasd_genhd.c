@@ -109,9 +109,9 @@ int dasd_scan_partitions(struct dasd_block *block)
 		return -ENODEV;
 	}
 
-	mutex_lock(&bdev->bd_mutex);
-	rc = bdev_disk_changed(bdev, false);
-	mutex_unlock(&bdev->bd_mutex);
+	mutex_lock(&block->gdp->open_mutex);
+	rc = bdev_disk_changed(block->gdp, false);
+	mutex_unlock(&block->gdp->open_mutex);
 	if (rc)
 		DBF_DEV_EVENT(DBF_ERR, block->base,
 				"scan partitions error, rc %d", rc);
@@ -145,9 +145,15 @@ void dasd_destroy_partitions(struct dasd_block *block)
 	bdev = block->bdev;
 	block->bdev = NULL;
 
+<<<<<<< HEAD
 	mutex_lock(&bdev->bd_mutex);
 	bdev_disk_changed(bdev, true);
 	mutex_unlock(&bdev->bd_mutex);
+=======
+	mutex_lock(&bdev->bd_disk->open_mutex);
+	bdev_disk_changed(bdev->bd_disk, true);
+	mutex_unlock(&bdev->bd_disk->open_mutex);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* Matching blkdev_put to the blkdev_get in dasd_scan_partitions. */
 	blkdev_put(bdev, FMODE_READ);

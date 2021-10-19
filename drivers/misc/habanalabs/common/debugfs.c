@@ -459,6 +459,7 @@ out:
 
 static bool hl_is_device_internal_memory_va(struct hl_device *hdev, u64 addr,
 						u32 size)
+<<<<<<< HEAD
 {
 	struct asic_fixed_properties *prop = &hdev->asic_prop;
 	u64 dram_start_addr, dram_end_addr;
@@ -488,6 +489,37 @@ static bool hl_is_device_internal_memory_va(struct hl_device *hdev, u64 addr,
 static int device_va_to_pa(struct hl_device *hdev, u64 virt_addr, u32 size,
 			u64 *phys_addr)
 {
+=======
+{
+	struct asic_fixed_properties *prop = &hdev->asic_prop;
+	u64 dram_start_addr, dram_end_addr;
+
+	if (!hdev->mmu_enable)
+		return false;
+
+	if (prop->dram_supports_virtual_memory) {
+		dram_start_addr = prop->dmmu.start_addr;
+		dram_end_addr = prop->dmmu.end_addr;
+	} else {
+		dram_start_addr = prop->dram_base_address;
+		dram_end_addr = prop->dram_end_address;
+	}
+
+	if (hl_mem_area_inside_range(addr, size, dram_start_addr,
+					dram_end_addr))
+		return true;
+
+	if (hl_mem_area_inside_range(addr, size, prop->sram_base_address,
+					prop->sram_end_address))
+		return true;
+
+	return false;
+}
+
+static int device_va_to_pa(struct hl_device *hdev, u64 virt_addr, u32 size,
+			u64 *phys_addr)
+{
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct hl_vm_phys_pg_pack *phys_pg_pack;
 	struct hl_ctx *ctx = hdev->compute_ctx;
 	struct hl_vm_hash_node *hnode;
@@ -1278,6 +1310,14 @@ void hl_debugfs_add_device(struct hl_device *hdev)
 				dev_entry->root,
 				&dev_entry->blob_desc);
 
+<<<<<<< HEAD
+=======
+	debugfs_create_x8("skip_reset_on_timeout",
+				0644,
+				dev_entry->root,
+				&hdev->skip_reset_on_timeout);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	for (i = 0, entry = dev_entry->entry_arr ; i < count ; i++, entry++) {
 		debugfs_create_file(hl_debugfs_list[i].name,
 					0444,

@@ -174,9 +174,6 @@ static int bcm4908_dma_alloc_buf_descs(struct bcm4908_enet *enet,
 	if (!ring->slots)
 		goto err_free_buf_descs;
 
-	ring->read_idx = 0;
-	ring->write_idx = 0;
-
 	return 0;
 
 err_free_buf_descs:
@@ -304,6 +301,9 @@ static void bcm4908_enet_dma_ring_init(struct bcm4908_enet *enet,
 
 	enet_write(enet, ring->st_ram_block + ENET_DMA_CH_STATE_RAM_BASE_DESC_PTR,
 		   (uint32_t)ring->dma_addr);
+
+	ring->read_idx = 0;
+	ring->write_idx = 0;
 }
 
 static void bcm4908_enet_dma_uninit(struct bcm4908_enet *enet)
@@ -424,12 +424,21 @@ static irqreturn_t bcm4908_enet_irq_handler(int irq, void *dev_id)
 {
 	struct bcm4908_enet *enet = dev_id;
 	struct bcm4908_enet_dma_ring *ring;
+<<<<<<< HEAD
 
 	ring = (irq == enet->irq_tx) ? &enet->tx_ring : &enet->rx_ring;
 
 	bcm4908_enet_dma_ring_intrs_off(enet, ring);
 	bcm4908_enet_dma_ring_intrs_ack(enet, ring);
 
+=======
+
+	ring = (irq == enet->irq_tx) ? &enet->tx_ring : &enet->rx_ring;
+
+	bcm4908_enet_dma_ring_intrs_off(enet, ring);
+	bcm4908_enet_dma_ring_intrs_ack(enet, ring);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	napi_schedule(&ring->napi);
 
 	return IRQ_HANDLED;
@@ -620,6 +629,7 @@ static int bcm4908_enet_poll_rx(struct napi_struct *napi, int weight)
 	if (handled < weight) {
 		napi_complete_done(napi, handled);
 		bcm4908_enet_dma_ring_intrs_on(enet, rx_ring);
+<<<<<<< HEAD
 	}
 
 	/* Hardware could disable ring if it run out of descriptors */
@@ -658,6 +668,46 @@ static int bcm4908_enet_poll_tx(struct napi_struct *napi, int weight)
 		bcm4908_enet_dma_ring_intrs_on(enet, tx_ring);
 	}
 
+=======
+	}
+
+	/* Hardware could disable ring if it run out of descriptors */
+	bcm4908_enet_dma_rx_ring_enable(enet, &enet->rx_ring);
+
+	return handled;
+}
+
+static int bcm4908_enet_poll_tx(struct napi_struct *napi, int weight)
+{
+	struct bcm4908_enet_dma_ring *tx_ring = container_of(napi, struct bcm4908_enet_dma_ring, napi);
+	struct bcm4908_enet *enet = container_of(tx_ring, struct bcm4908_enet, tx_ring);
+	struct bcm4908_enet_dma_ring_bd *buf_desc;
+	struct bcm4908_enet_dma_ring_slot *slot;
+	struct device *dev = enet->dev;
+	unsigned int bytes = 0;
+	int handled = 0;
+
+	while (handled < weight && tx_ring->read_idx != tx_ring->write_idx) {
+		buf_desc = &tx_ring->buf_desc[tx_ring->read_idx];
+		if (le32_to_cpu(buf_desc->ctl) & DMA_CTL_STATUS_OWN)
+			break;
+		slot = &tx_ring->slots[tx_ring->read_idx];
+
+		dma_unmap_single(dev, slot->dma_addr, slot->len, DMA_TO_DEVICE);
+		dev_kfree_skb(slot->skb);
+		bytes += slot->len;
+		if (++tx_ring->read_idx == tx_ring->length)
+			tx_ring->read_idx = 0;
+
+		handled++;
+	}
+
+	if (handled < weight) {
+		napi_complete_done(napi, handled);
+		bcm4908_enet_dma_ring_intrs_on(enet, tx_ring);
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (netif_queue_stopped(enet->netdev))
 		netif_wake_queue(enet->netdev);
 

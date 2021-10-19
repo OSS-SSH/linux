@@ -119,8 +119,18 @@ static const struct software_node ssam_node_hid_base_iid6 = {
 	.parent = &ssam_node_hub_base,
 };
 
+<<<<<<< HEAD
 /* Devices for Surface Book 2. */
 static const struct software_node *ssam_node_group_sb2[] = {
+=======
+/*
+ * Devices for 5th- and 6th-generations models:
+ * - Surface Book 2,
+ * - Surface Laptop 1 and 2,
+ * - Surface Pro 5 and 6.
+ */
+static const struct software_node *ssam_node_group_gen5[] = {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	&ssam_node_root,
 	&ssam_node_tmp_pprof,
 	NULL,
@@ -142,6 +152,7 @@ static const struct software_node *ssam_node_group_sb3[] = {
 	NULL,
 };
 
+<<<<<<< HEAD
 /* Devices for Surface Laptop 1. */
 static const struct software_node *ssam_node_group_sl1[] = {
 	&ssam_node_root,
@@ -157,6 +168,9 @@ static const struct software_node *ssam_node_group_sl2[] = {
 };
 
 /* Devices for Surface Laptop 3. */
+=======
+/* Devices for Surface Laptop 3 and 4. */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static const struct software_node *ssam_node_group_sl3[] = {
 	&ssam_node_root,
 	&ssam_node_bat_ac,
@@ -177,6 +191,7 @@ static const struct software_node *ssam_node_group_slg1[] = {
 	NULL,
 };
 
+<<<<<<< HEAD
 /* Devices for Surface Pro 5. */
 static const struct software_node *ssam_node_group_sp5[] = {
 	&ssam_node_root,
@@ -191,6 +206,8 @@ static const struct software_node *ssam_node_group_sp6[] = {
 	NULL,
 };
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 /* Devices for Surface Pro 7 and Surface Pro 7+. */
 static const struct software_node *ssam_node_group_sp7[] = {
 	&ssam_node_root,
@@ -495,10 +512,17 @@ static struct ssam_device_driver ssam_base_hub_driver = {
 
 static const struct acpi_device_id ssam_platform_hub_match[] = {
 	/* Surface Pro 4, 5, and 6 (OMBR < 0x10) */
+<<<<<<< HEAD
 	{ "MSHW0081", (unsigned long)ssam_node_group_sp5 },
 
 	/* Surface Pro 6 (OMBR >= 0x10) */
 	{ "MSHW0111", (unsigned long)ssam_node_group_sp6 },
+=======
+	{ "MSHW0081", (unsigned long)ssam_node_group_gen5 },
+
+	/* Surface Pro 6 (OMBR >= 0x10) */
+	{ "MSHW0111", (unsigned long)ssam_node_group_gen5 },
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* Surface Pro 7 */
 	{ "MSHW0116", (unsigned long)ssam_node_group_sp7 },
@@ -507,23 +531,43 @@ static const struct acpi_device_id ssam_platform_hub_match[] = {
 	{ "MSHW0119", (unsigned long)ssam_node_group_sp7 },
 
 	/* Surface Book 2 */
+<<<<<<< HEAD
 	{ "MSHW0107", (unsigned long)ssam_node_group_sb2 },
+=======
+	{ "MSHW0107", (unsigned long)ssam_node_group_gen5 },
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* Surface Book 3 */
 	{ "MSHW0117", (unsigned long)ssam_node_group_sb3 },
 
 	/* Surface Laptop 1 */
+<<<<<<< HEAD
 	{ "MSHW0086", (unsigned long)ssam_node_group_sl1 },
 
 	/* Surface Laptop 2 */
 	{ "MSHW0112", (unsigned long)ssam_node_group_sl2 },
+=======
+	{ "MSHW0086", (unsigned long)ssam_node_group_gen5 },
+
+	/* Surface Laptop 2 */
+	{ "MSHW0112", (unsigned long)ssam_node_group_gen5 },
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* Surface Laptop 3 (13", Intel) */
 	{ "MSHW0114", (unsigned long)ssam_node_group_sl3 },
 
+<<<<<<< HEAD
 	/* Surface Laptop 3 (15", AMD) */
 	{ "MSHW0110", (unsigned long)ssam_node_group_sl3 },
 
+=======
+	/* Surface Laptop 3 (15", AMD) and 4 (15", AMD) */
+	{ "MSHW0110", (unsigned long)ssam_node_group_sl3 },
+
+	/* Surface Laptop 4 (13", Intel) */
+	{ "MSHW0250", (unsigned long)ssam_node_group_sl3 },
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* Surface Laptop Go 1 */
 	{ "MSHW0118", (unsigned long)ssam_node_group_slg1 },
 

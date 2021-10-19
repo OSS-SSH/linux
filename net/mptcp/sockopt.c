@@ -140,6 +140,46 @@ static void mptcp_so_incoming_cpu(struct mptcp_sock *msk, int val)
 	mptcp_sol_socket_sync_intval(msk, SO_INCOMING_CPU, val);
 }
 
+<<<<<<< HEAD
+=======
+static int mptcp_setsockopt_sol_socket_tstamp(struct mptcp_sock *msk, int optname, int val)
+{
+	sockptr_t optval = KERNEL_SOCKPTR(&val);
+	struct mptcp_subflow_context *subflow;
+	struct sock *sk = (struct sock *)msk;
+	int ret;
+
+	ret = sock_setsockopt(sk->sk_socket, SOL_SOCKET, optname,
+			      optval, sizeof(val));
+	if (ret)
+		return ret;
+
+	lock_sock(sk);
+	mptcp_for_each_subflow(msk, subflow) {
+		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+		bool slow = lock_sock_fast(ssk);
+
+		switch (optname) {
+		case SO_TIMESTAMP_OLD:
+		case SO_TIMESTAMP_NEW:
+		case SO_TIMESTAMPNS_OLD:
+		case SO_TIMESTAMPNS_NEW:
+			sock_set_timestamp(sk, optname, !!val);
+			break;
+		case SO_TIMESTAMPING_NEW:
+		case SO_TIMESTAMPING_OLD:
+			sock_set_timestamping(sk, optname, val);
+			break;
+		}
+
+		unlock_sock_fast(ssk, slow);
+	}
+
+	release_sock(sk);
+	return 0;
+}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
 					   sockptr_t optval, unsigned int optlen)
 {
@@ -164,6 +204,16 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
 	case SO_INCOMING_CPU:
 		mptcp_so_incoming_cpu(msk, val);
 		return 0;
+<<<<<<< HEAD
+=======
+	case SO_TIMESTAMP_OLD:
+	case SO_TIMESTAMP_NEW:
+	case SO_TIMESTAMPNS_OLD:
+	case SO_TIMESTAMPNS_NEW:
+	case SO_TIMESTAMPING_OLD:
+	case SO_TIMESTAMPING_NEW:
+		return mptcp_setsockopt_sol_socket_tstamp(msk, optname, val);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	return -ENOPROTOOPT;
@@ -251,9 +301,29 @@ static int mptcp_setsockopt_sol_socket(struct mptcp_sock *msk, int optname,
 	case SO_MARK:
 	case SO_INCOMING_CPU:
 	case SO_DEBUG:
+<<<<<<< HEAD
 		return mptcp_setsockopt_sol_socket_int(msk, optname, optval, optlen);
 	case SO_LINGER:
 		return mptcp_setsockopt_sol_socket_linger(msk, optval, optlen);
+=======
+	case SO_TIMESTAMP_OLD:
+	case SO_TIMESTAMP_NEW:
+	case SO_TIMESTAMPNS_OLD:
+	case SO_TIMESTAMPNS_NEW:
+	case SO_TIMESTAMPING_OLD:
+	case SO_TIMESTAMPING_NEW:
+		return mptcp_setsockopt_sol_socket_int(msk, optname, optval, optlen);
+	case SO_LINGER:
+		return mptcp_setsockopt_sol_socket_linger(msk, optval, optlen);
+	case SO_RCVLOWAT:
+	case SO_RCVTIMEO_OLD:
+	case SO_RCVTIMEO_NEW:
+	case SO_BUSY_POLL:
+	case SO_PREFER_BUSY_POLL:
+	case SO_BUSY_POLL_BUDGET:
+		/* No need to copy: only relevant for msk */
+		return sock_setsockopt(sk->sk_socket, SOL_SOCKET, optname, optval, optlen);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	case SO_NO_CHECK:
 	case SO_DONTROUTE:
 	case SO_BROADCAST:
@@ -267,7 +337,28 @@ static int mptcp_setsockopt_sol_socket(struct mptcp_sock *msk, int optname,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	return sock_setsockopt(sk->sk_socket, SOL_SOCKET, optname, optval, optlen);
+=======
+	/* SO_OOBINLINE is not supported, let's avoid the related mess
+	 * SO_ATTACH_FILTER, SO_ATTACH_BPF, SO_ATTACH_REUSEPORT_CBPF,
+	 * SO_DETACH_REUSEPORT_BPF, SO_DETACH_FILTER, SO_LOCK_FILTER,
+	 * we must be careful with subflows
+	 *
+	 * SO_ATTACH_REUSEPORT_EBPF is not supported, at it checks
+	 * explicitly the sk_protocol field
+	 *
+	 * SO_PEEK_OFF is unsupported, as it is for plain TCP
+	 * SO_MAX_PACING_RATE is unsupported, we must be careful with subflows
+	 * SO_CNX_ADVICE is currently unsupported, could possibly be relevant,
+	 * but likely needs careful design
+	 *
+	 * SO_ZEROCOPY is currently unsupported, TODO in sndmsg
+	 * SO_TXTIME is currently unsupported
+	 */
+
+	return -EOPNOTSUPP;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 static int mptcp_setsockopt_v6(struct mptcp_sock *msk, int optname,
@@ -299,6 +390,7 @@ static int mptcp_setsockopt_v6(struct mptcp_sock *msk, int optname,
 
 static bool mptcp_supported_sockopt(int level, int optname)
 {
+<<<<<<< HEAD
 	if (level == SOL_SOCKET) {
 		switch (optname) {
 		case SO_DEBUG:
@@ -365,6 +457,8 @@ static bool mptcp_supported_sockopt(int level, int optname)
 		/* SO_TXTIME is currently unsupported */
 		return false;
 	}
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (level == SOL_IP) {
 		switch (optname) {
 		/* should work fine */
@@ -547,7 +641,11 @@ static int mptcp_setsockopt_sol_tcp_congestion(struct mptcp_sock *msk, sockptr_t
 	}
 
 	if (ret == 0)
+<<<<<<< HEAD
 		tcp_set_congestion_control(sk, name, false, cap_net_admin);
+=======
+		strcpy(msk->ca_name, name);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	release_sock(sk);
 	return ret;
@@ -574,12 +672,21 @@ int mptcp_setsockopt(struct sock *sk, int level, int optname,
 
 	pr_debug("msk=%p", msk);
 
+<<<<<<< HEAD
 	if (!mptcp_supported_sockopt(level, optname))
 		return -ENOPROTOOPT;
 
 	if (level == SOL_SOCKET)
 		return mptcp_setsockopt_sol_socket(msk, optname, optval, optlen);
 
+=======
+	if (level == SOL_SOCKET)
+		return mptcp_setsockopt_sol_socket(msk, optname, optval, optlen);
+
+	if (!mptcp_supported_sockopt(level, optname))
+		return -ENOPROTOOPT;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* @@ the meaning of setsockopt() when the socket is connected and
 	 * there are multiple subflows is not yet defined. It is up to the
 	 * MPTCP-level socket to configure the subflows until the subflow
@@ -705,7 +812,11 @@ static void sync_socket_options(struct mptcp_sock *msk, struct sock *ssk)
 	sock_valbool_flag(ssk, SOCK_DBG, sock_flag(sk, SOCK_DBG));
 
 	if (inet_csk(sk)->icsk_ca_ops != inet_csk(ssk)->icsk_ca_ops)
+<<<<<<< HEAD
 		tcp_set_congestion_control(ssk, inet_csk(sk)->icsk_ca_ops->name, false, true);
+=======
+		tcp_set_congestion_control(ssk, msk->ca_name, false, true);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 static void __mptcp_sockopt_sync(struct mptcp_sock *msk, struct sock *ssk)

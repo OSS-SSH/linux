@@ -36,7 +36,11 @@ static int init_protocol(struct ceph_auth_client *ac, int proto)
 	}
 }
 
+<<<<<<< HEAD
 static void set_global_id(struct ceph_auth_client *ac, u64 global_id)
+=======
+void ceph_auth_set_global_id(struct ceph_auth_client *ac, u64 global_id)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	dout("%s global_id %llu\n", __func__, global_id);
 
@@ -58,12 +62,10 @@ struct ceph_auth_client *ceph_auth_init(const char *name,
 					const int *con_modes)
 {
 	struct ceph_auth_client *ac;
-	int ret;
 
-	ret = -ENOMEM;
 	ac = kzalloc(sizeof(*ac), GFP_NOFS);
 	if (!ac)
-		goto out;
+		return ERR_PTR(-ENOMEM);
 
 	mutex_init(&ac->mutex);
 	ac->negotiating = true;
@@ -78,9 +80,6 @@ struct ceph_auth_client *ceph_auth_init(const char *name,
 	dout("%s name '%s' preferred_mode %d fallback_mode %d\n", __func__,
 	     ac->name, ac->preferred_mode, ac->fallback_mode);
 	return ac;
-
-out:
-	return ERR_PTR(ret);
 }
 
 void ceph_auth_destroy(struct ceph_auth_client *ac)
@@ -260,6 +259,7 @@ int ceph_handle_auth_reply(struct ceph_auth_client *ac,
 		ac->negotiating = false;
 	}
 
+<<<<<<< HEAD
 	ret = ac->ops->handle_reply(ac, result, payload, payload_end,
 				    NULL, NULL, NULL, NULL);
 	if (ret == -EAGAIN) {
@@ -272,6 +272,23 @@ int ceph_handle_auth_reply(struct ceph_auth_client *ac,
 	}
 
 	set_global_id(ac, global_id);
+=======
+	if (result) {
+		pr_err("auth protocol '%s' mauth authentication failed: %d\n",
+		       ceph_auth_proto_name(ac->protocol), result);
+		ret = result;
+		goto out;
+	}
+
+	ret = ac->ops->handle_reply(ac, global_id, payload, payload_end,
+				    NULL, NULL, NULL, NULL);
+	if (ret == -EAGAIN) {
+		ret = build_request(ac, true, reply_buf, reply_len);
+		goto out;
+	} else if (ret) {
+		goto out;
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 out:
 	mutex_unlock(&ac->mutex);
@@ -498,11 +515,18 @@ int ceph_auth_handle_reply_done(struct ceph_auth_client *ac,
 	int ret;
 
 	mutex_lock(&ac->mutex);
+<<<<<<< HEAD
 	ret = ac->ops->handle_reply(ac, 0, reply, reply + reply_len,
 				    session_key, session_key_len,
 				    con_secret, con_secret_len);
 	if (!ret)
 		set_global_id(ac, global_id);
+=======
+	ret = ac->ops->handle_reply(ac, global_id, reply, reply + reply_len,
+				    session_key, session_key_len,
+				    con_secret, con_secret_len);
+	WARN_ON(ret == -EAGAIN || ret > 0);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	mutex_unlock(&ac->mutex);
 	return ret;
 }

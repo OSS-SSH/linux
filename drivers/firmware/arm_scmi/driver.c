@@ -241,7 +241,6 @@ static struct scmi_xfer *scmi_xfer_get(const struct scmi_handle *handle,
 
 	xfer = &minfo->xfer_block[xfer_id];
 	xfer->hdr.seq = xfer_id;
-	reinit_completion(&xfer->done);
 	xfer->transfer_id = atomic_inc_return(&transfer_last_id);
 
 	return xfer;
@@ -334,6 +333,10 @@ static void scmi_handle_response(struct scmi_chan_info *cinfo,
 		__scmi_xfer_put(minfo, xfer);
 		return;
 	}
+
+	/* rx.len could be shrunk in the sync do_xfer, so reset to maxsz */
+	if (msg_type == MSG_TYPE_DELAYED_RESP)
+		xfer->rx.len = info->desc->max_msg_size;
 
 	scmi_dump_header_dbg(dev, &xfer->hdr);
 
@@ -429,11 +432,20 @@ static int do_xfer(const struct scmi_protocol_handle *ph,
 	struct scmi_chan_info *cinfo;
 
 	/*
+<<<<<<< HEAD
 	 * Re-instate protocol id here from protocol handle so that cannot be
 	 * overridden by mistake (or malice) by the protocol code mangling with
 	 * the scmi_xfer structure.
 	 */
 	xfer->hdr.protocol_id = pi->proto->id;
+=======
+	 * Initialise protocol id now from protocol handle to avoid it being
+	 * overridden by mistake (or malice) by the protocol code mangling with
+	 * the scmi_xfer structure prior to this.
+	 */
+	xfer->hdr.protocol_id = pi->proto->id;
+	reinit_completion(&xfer->done);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	cinfo = idr_find(&info->tx_idr, xfer->hdr.protocol_id);
 	if (unlikely(!cinfo))
@@ -513,8 +525,17 @@ static int do_xfer_with_response(const struct scmi_protocol_handle *ph,
 	xfer->async_done = &async_response;
 
 	ret = do_xfer(ph, xfer);
+<<<<<<< HEAD
 	if (!ret && !wait_for_completion_timeout(xfer->async_done, timeout))
 		ret = -ETIMEDOUT;
+=======
+	if (!ret) {
+		if (!wait_for_completion_timeout(xfer->async_done, timeout))
+			ret = -ETIMEDOUT;
+		else if (xfer->hdr.status)
+			ret = scmi_to_linux_errno(xfer->hdr.status);
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	xfer->async_done = NULL;
 	return ret;
@@ -561,7 +582,10 @@ static int xfer_get_init(const struct scmi_protocol_handle *ph,
 	xfer->tx.len = tx_size;
 	xfer->rx.len = rx_size ? : info->desc->max_msg_size;
 	xfer->hdr.id = msg_id;
+<<<<<<< HEAD
 	xfer->hdr.protocol_id = pi->proto->id;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	xfer->hdr.poll_completion = false;
 
 	*p = xfer;
@@ -609,6 +633,7 @@ static int version_get(const struct scmi_protocol_handle *ph, u32 *version)
  */
 static int scmi_set_protocol_priv(const struct scmi_protocol_handle *ph,
 				  void *priv)
+<<<<<<< HEAD
 {
 	struct scmi_protocol_instance *pi = ph_to_pi(ph);
 
@@ -756,6 +781,155 @@ out:
 static struct scmi_protocol_instance * __must_check
 scmi_get_protocol_instance(const struct scmi_handle *handle, u8 protocol_id)
 {
+=======
+{
+	struct scmi_protocol_instance *pi = ph_to_pi(ph);
+
+	pi->priv = priv;
+
+	return 0;
+}
+
+/**
+ * scmi_get_protocol_priv  - Set protocol specific data at init time
+ *
+ * @ph: A reference to the protocol handle.
+ *
+ * Return: Protocol private data if any was set.
+ */
+static void *scmi_get_protocol_priv(const struct scmi_protocol_handle *ph)
+{
+	const struct scmi_protocol_instance *pi = ph_to_pi(ph);
+
+	return pi->priv;
+}
+
+static const struct scmi_xfer_ops xfer_ops = {
+	.version_get = version_get,
+	.xfer_get_init = xfer_get_init,
+	.reset_rx_to_maxsz = reset_rx_to_maxsz,
+	.do_xfer = do_xfer,
+	.do_xfer_with_response = do_xfer_with_response,
+	.xfer_put = xfer_put,
+};
+
+/**
+ * scmi_revision_area_get  - Retrieve version memory area.
+ *
+ * @ph: A reference to the protocol handle.
+ *
+ * A helper to grab the version memory area reference during SCMI Base protocol
+ * initialization.
+ *
+ * Return: A reference to the version memory area associated to the SCMI
+ *	   instance underlying this protocol handle.
+ */
+struct scmi_revision_info *
+scmi_revision_area_get(const struct scmi_protocol_handle *ph)
+{
+	const struct scmi_protocol_instance *pi = ph_to_pi(ph);
+
+	return pi->handle->version;
+}
+
+/**
+ * scmi_alloc_init_protocol_instance  - Allocate and initialize a protocol
+ * instance descriptor.
+ * @info: The reference to the related SCMI instance.
+ * @proto: The protocol descriptor.
+ *
+ * Allocate a new protocol instance descriptor, using the provided @proto
+ * description, against the specified SCMI instance @info, and initialize it;
+ * all resources management is handled via a dedicated per-protocol devres
+ * group.
+ *
+ * Context: Assumes to be called with @protocols_mtx already acquired.
+ * Return: A reference to a freshly allocated and initialized protocol instance
+ *	   or ERR_PTR on failure. On failure the @proto reference is at first
+ *	   put using @scmi_protocol_put() before releasing all the devres group.
+ */
+static struct scmi_protocol_instance *
+scmi_alloc_init_protocol_instance(struct scmi_info *info,
+				  const struct scmi_protocol *proto)
+{
+	int ret = -ENOMEM;
+	void *gid;
+	struct scmi_protocol_instance *pi;
+	const struct scmi_handle *handle = &info->handle;
+
+	/* Protocol specific devres group */
+	gid = devres_open_group(handle->dev, NULL, GFP_KERNEL);
+	if (!gid) {
+		scmi_protocol_put(proto->id);
+		goto out;
+	}
+
+	pi = devm_kzalloc(handle->dev, sizeof(*pi), GFP_KERNEL);
+	if (!pi)
+		goto clean;
+
+	pi->gid = gid;
+	pi->proto = proto;
+	pi->handle = handle;
+	pi->ph.dev = handle->dev;
+	pi->ph.xops = &xfer_ops;
+	pi->ph.set_priv = scmi_set_protocol_priv;
+	pi->ph.get_priv = scmi_get_protocol_priv;
+	refcount_set(&pi->users, 1);
+	/* proto->init is assured NON NULL by scmi_protocol_register */
+	ret = pi->proto->instance_init(&pi->ph);
+	if (ret)
+		goto clean;
+
+	ret = idr_alloc(&info->protocols, pi, proto->id, proto->id + 1,
+			GFP_KERNEL);
+	if (ret != proto->id)
+		goto clean;
+
+	/*
+	 * Warn but ignore events registration errors since we do not want
+	 * to skip whole protocols if their notifications are messed up.
+	 */
+	if (pi->proto->events) {
+		ret = scmi_register_protocol_events(handle, pi->proto->id,
+						    &pi->ph,
+						    pi->proto->events);
+		if (ret)
+			dev_warn(handle->dev,
+				 "Protocol:%X - Events Registration Failed - err:%d\n",
+				 pi->proto->id, ret);
+	}
+
+	devres_close_group(handle->dev, pi->gid);
+	dev_dbg(handle->dev, "Initialized protocol: 0x%X\n", pi->proto->id);
+
+	return pi;
+
+clean:
+	/* Take care to put the protocol module's owner before releasing all */
+	scmi_protocol_put(proto->id);
+	devres_release_group(handle->dev, gid);
+out:
+	return ERR_PTR(ret);
+}
+
+/**
+ * scmi_get_protocol_instance  - Protocol initialization helper.
+ * @handle: A reference to the SCMI platform instance.
+ * @protocol_id: The protocol being requested.
+ *
+ * In case the required protocol has never been requested before for this
+ * instance, allocate and initialize all the needed structures while handling
+ * resource allocation with a dedicated per-protocol devres subgroup.
+ *
+ * Return: A reference to an initialized protocol instance or error on failure:
+ *	   in particular returns -EPROBE_DEFER when the desired protocol could
+ *	   NOT be found.
+ */
+static struct scmi_protocol_instance * __must_check
+scmi_get_protocol_instance(const struct scmi_handle *handle, u8 protocol_id)
+{
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct scmi_protocol_instance *pi;
 	struct scmi_info *info = handle_to_scmi_info(handle);
 
@@ -1238,6 +1412,7 @@ int scmi_protocol_device_request(const struct scmi_device_id *id_table)
 
 	pr_debug("Requesting SCMI device (%s) for protocol %x\n",
 		 id_table->name, id_table->protocol_id);
+<<<<<<< HEAD
 
 	/*
 	 * Search for the matching protocol rdev list and then search
@@ -1265,6 +1440,35 @@ int scmi_protocol_device_request(const struct scmi_device_id *id_table)
 	}
 
 	/*
+=======
+
+	/*
+	 * Search for the matching protocol rdev list and then search
+	 * of any existent equally named device...fails if any duplicate found.
+	 */
+	mutex_lock(&scmi_requested_devices_mtx);
+	idr_for_each_entry(&scmi_requested_devices, head, id) {
+		if (!phead) {
+			/* A list found registered in the IDR is never empty */
+			rdev = list_first_entry(head, struct scmi_requested_dev,
+						node);
+			if (rdev->id_table->protocol_id ==
+			    id_table->protocol_id)
+				phead = head;
+		}
+		list_for_each_entry(rdev, head, node) {
+			if (!strcmp(rdev->id_table->name, id_table->name)) {
+				pr_err("Ignoring duplicate request [%d] %s\n",
+				       rdev->id_table->protocol_id,
+				       rdev->id_table->name);
+				ret = -EINVAL;
+				goto out;
+			}
+		}
+	}
+
+	/*
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	 * No duplicate found for requested id_table, so let's create a new
 	 * requested device entry for this new valid request.
 	 */
@@ -1286,6 +1490,7 @@ int scmi_protocol_device_request(const struct scmi_device_id *id_table)
 			kfree(rdev);
 			ret = -ENOMEM;
 			goto out;
+<<<<<<< HEAD
 		}
 		INIT_LIST_HEAD(phead);
 
@@ -1299,6 +1504,21 @@ int scmi_protocol_device_request(const struct scmi_device_id *id_table)
 			ret = -EINVAL;
 			goto out;
 		}
+=======
+		}
+		INIT_LIST_HEAD(phead);
+
+		ret = idr_alloc(&scmi_requested_devices, (void *)phead,
+				id_table->protocol_id,
+				id_table->protocol_id + 1, GFP_KERNEL);
+		if (ret != id_table->protocol_id) {
+			pr_err("Failed to save SCMI device - ret:%d\n", ret);
+			kfree(rdev);
+			kfree(phead);
+			ret = -EINVAL;
+			goto out;
+		}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		ret = 0;
 	}
 	list_add(&rdev->node, phead);
@@ -1567,7 +1787,9 @@ ATTRIBUTE_GROUPS(versions);
 
 /* Each compatible listed below must have descriptor associated with it */
 static const struct of_device_id scmi_of_match[] = {
+#ifdef CONFIG_MAILBOX
 	{ .compatible = "arm,scmi", .data = &scmi_mailbox_desc },
+#endif
 #ifdef CONFIG_HAVE_ARM_SMCCC_DISCOVERY
 	{ .compatible = "arm,scmi-smc", .data = &scmi_smc_desc},
 #endif

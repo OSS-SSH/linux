@@ -8,7 +8,11 @@
 #include <linux/iio/iio.h>
 
 #define IIO_TEST_FORMAT_EXPECT_EQ(_test, _buf, _ret, _val) do { \
+<<<<<<< HEAD
 		KUNIT_EXPECT_EQ(_test, (int)strlen(_buf), _ret); \
+=======
+		KUNIT_EXPECT_EQ(_test, strlen(_buf), _ret); \
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		KUNIT_EXPECT_STREQ(_test, (_buf), (_val)); \
 	} while (0)
 

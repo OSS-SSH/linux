@@ -366,6 +366,7 @@ static int vfio_ap_mdev_remove(struct mdev_device *mdev)
 	struct ap_matrix_mdev *matrix_mdev = mdev_get_drvdata(mdev);
 
 	mutex_lock(&matrix_dev->lock);
+<<<<<<< HEAD
 
 	/*
 	 * If the KVM pointer is in flux or the guest is running, disallow
@@ -376,6 +377,8 @@ static int vfio_ap_mdev_remove(struct mdev_device *mdev)
 		return -EBUSY;
 	}
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	vfio_ap_mdev_reset_queues(mdev);
 	list_del(&matrix_mdev->node);
 	kfree(matrix_mdev);

@@ -69,6 +69,7 @@ static_assert(SPTE_TDP_AD_ENABLED_MASK == 0);
 /* Bits 9 and 10 are ignored by all non-EPT PTEs. */
 #define DEFAULT_SPTE_HOST_WRITEABLE	BIT_ULL(9)
 #define DEFAULT_SPTE_MMU_WRITEABLE	BIT_ULL(10)
+<<<<<<< HEAD
 
 /*
  * The mask/shift to use for saving the original R/X bits when marking the PTE
@@ -101,6 +102,40 @@ static_assert(!(EPT_SPTE_MMU_WRITABLE & SHADOW_ACC_TRACK_SAVED_MASK));
 #undef SHADOW_ACC_TRACK_SAVED_MASK
 
 /*
+=======
+
+/*
+ * The mask/shift to use for saving the original R/X bits when marking the PTE
+ * as not-present for access tracking purposes. We do not save the W bit as the
+ * PTEs being access tracked also need to be dirty tracked, so the W bit will be
+ * restored only when a write is attempted to the page.  This mask obviously
+ * must not overlap the A/D type mask.
+ */
+#define SHADOW_ACC_TRACK_SAVED_BITS_MASK (PT64_EPT_READABLE_MASK | \
+					  PT64_EPT_EXECUTABLE_MASK)
+#define SHADOW_ACC_TRACK_SAVED_BITS_SHIFT 54
+#define SHADOW_ACC_TRACK_SAVED_MASK	(SHADOW_ACC_TRACK_SAVED_BITS_MASK << \
+					 SHADOW_ACC_TRACK_SAVED_BITS_SHIFT)
+static_assert(!(SPTE_TDP_AD_MASK & SHADOW_ACC_TRACK_SAVED_MASK));
+
+/*
+ * Low ignored bits are at a premium for EPT, use high ignored bits, taking care
+ * to not overlap the A/D type mask or the saved access bits of access-tracked
+ * SPTEs when A/D bits are disabled.
+ */
+#define EPT_SPTE_HOST_WRITABLE		BIT_ULL(57)
+#define EPT_SPTE_MMU_WRITABLE		BIT_ULL(58)
+
+static_assert(!(EPT_SPTE_HOST_WRITABLE & SPTE_TDP_AD_MASK));
+static_assert(!(EPT_SPTE_MMU_WRITABLE & SPTE_TDP_AD_MASK));
+static_assert(!(EPT_SPTE_HOST_WRITABLE & SHADOW_ACC_TRACK_SAVED_MASK));
+static_assert(!(EPT_SPTE_MMU_WRITABLE & SHADOW_ACC_TRACK_SAVED_MASK));
+
+/* Defined only to keep the above static asserts readable. */
+#undef SHADOW_ACC_TRACK_SAVED_MASK
+
+/*
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  * Due to limited space in PTEs, the MMIO generation is a 19 bit subset of
  * the memslots generation and is derived as follows:
  *
@@ -291,6 +326,38 @@ static inline bool is_dirty_spte(u64 spte)
 	u64 dirty_mask = spte_shadow_dirty_mask(spte);
 
 	return dirty_mask ? spte & dirty_mask : spte & PT_WRITABLE_MASK;
+}
+
+static inline u64 get_rsvd_bits(struct rsvd_bits_validate *rsvd_check, u64 pte,
+				int level)
+{
+	int bit7 = (pte >> 7) & 1;
+
+	return rsvd_check->rsvd_bits_mask[bit7][level-1];
+}
+
+static inline bool __is_rsvd_bits_set(struct rsvd_bits_validate *rsvd_check,
+				      u64 pte, int level)
+{
+	return pte & get_rsvd_bits(rsvd_check, pte, level);
+}
+
+static inline bool __is_bad_mt_xwr(struct rsvd_bits_validate *rsvd_check,
+				   u64 pte)
+{
+	return rsvd_check->bad_mt_xwr & BIT_ULL(pte & 0x3f);
+}
+
+static __always_inline bool is_rsvd_spte(struct rsvd_bits_validate *rsvd_check,
+					 u64 spte, int level)
+{
+	/*
+	 * Use a bitwise-OR instead of a logical-OR to aggregate the reserved
+	 * bits and EPT's invalid memtype/XWR checks to avoid an extra Jcc
+	 * (this is extremely unlikely to be short-circuited as true).
+	 */
+	return __is_bad_mt_xwr(rsvd_check, spte) |
+	       __is_rsvd_bits_set(rsvd_check, spte, level);
 }
 
 static inline bool spte_can_locklessly_be_made_writable(u64 spte)

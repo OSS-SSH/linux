@@ -354,6 +354,10 @@ int ath11k_mhi_register(struct ath11k_pci *ab_pci)
 		ath11k_mhi_config = &ath11k_mhi_config_qcn9074;
 		break;
 	case ATH11K_HW_QCA6390_HW20:
+<<<<<<< HEAD
+=======
+	case ATH11K_HW_WCN6855_HW20:
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		ath11k_mhi_config = &ath11k_mhi_config_qca6390;
 		break;
 	default:

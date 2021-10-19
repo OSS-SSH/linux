@@ -7,12 +7,18 @@
 
 #include <linux/types.h>
 
+<<<<<<< HEAD
 struct hyp_pool;
 struct hyp_page {
 	unsigned int refcount;
 	unsigned int order;
 	struct hyp_pool *pool;
 	struct list_head node;
+=======
+struct hyp_page {
+	unsigned short refcount;
+	unsigned short order;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
 
 extern u64 __hyp_vmemmap;

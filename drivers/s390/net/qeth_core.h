@@ -417,13 +417,17 @@ enum qeth_qdio_out_buffer_state {
 	QETH_QDIO_BUF_EMPTY,
 	/* Filled by driver; owned by hardware in order to be sent. */
 	QETH_QDIO_BUF_PRIMED,
-	/* Discovered by the TX completion code: */
-	QETH_QDIO_BUF_PENDING,
-	/* Finished by the TX completion code: */
-	QETH_QDIO_BUF_NEED_QAOB,
-	/* Received QAOB notification on CQ: */
-	QETH_QDIO_BUF_QAOB_OK,
-	QETH_QDIO_BUF_QAOB_ERROR,
+};
+
+enum qeth_qaob_state {
+	QETH_QAOB_ISSUED,
+	QETH_QAOB_PENDING,
+	QETH_QAOB_DONE,
+};
+
+struct qeth_qaob_priv1 {
+	unsigned int state;
+	u8 queue_no;
 };
 
 struct qeth_qdio_out_buffer {
@@ -433,9 +437,12 @@ struct qeth_qdio_out_buffer {
 	unsigned int frames;
 	unsigned int bytes;
 	struct sk_buff_head skb_list;
-	int is_header[QDIO_MAX_ELEMENTS_PER_BUFFER];
+	DECLARE_BITMAP(from_kmem_cache, QDIO_MAX_ELEMENTS_PER_BUFFER);
 
+<<<<<<< HEAD
 	struct qeth_qdio_out_q *q;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct list_head list_entry;
 	struct qaob *aob;
 };
@@ -483,6 +490,7 @@ struct qeth_out_q_stats {
 	u64 stopped;
 	u64 doorbell;
 	u64 coal_frames;
+	u64 completion_irq;
 	u64 completion_yield;
 	u64 completion_timer;
 
@@ -526,6 +534,7 @@ struct qeth_qdio_out_q {
 
 	unsigned int coalesce_usecs;
 	unsigned int max_coalesced_frames;
+	unsigned int rescan_usecs;
 };
 
 #define qeth_for_each_output_queue(card, q, i)		\
@@ -612,7 +621,6 @@ struct qeth_channel {
 	struct ccw_device *ccwdev;
 	struct qeth_cmd_buffer *active_cmd;
 	enum qeth_channel_states state;
-	atomic_t irq_pending;
 };
 
 struct qeth_reply {
@@ -660,11 +668,6 @@ static inline struct qeth_ipa_cmd *__ipa_cmd(struct qeth_cmd_buffer *iob)
 static inline struct ccw1 *__ccw_from_cmd(struct qeth_cmd_buffer *iob)
 {
 	return (struct ccw1 *)(iob->data + ALIGN(iob->length, 8));
-}
-
-static inline bool qeth_trylock_channel(struct qeth_channel *channel)
-{
-	return atomic_cmpxchg(&channel->irq_pending, 0, 1) == 0;
 }
 
 /**
@@ -886,11 +889,22 @@ static inline bool qeth_card_hw_is_reachable(struct qeth_card *card)
 	return card->state == CARD_STATE_SOFTSETUP;
 }
 
+static inline bool qeth_use_tx_irqs(struct qeth_card *card)
+{
+	return !IS_IQD(card);
+}
+
 static inline void qeth_unlock_channel(struct qeth_card *card,
 				       struct qeth_channel *channel)
 {
-	atomic_set(&channel->irq_pending, 0);
+	xchg(&channel->active_cmd, NULL);
 	wake_up(&card->wait_q);
+}
+
+static inline bool qeth_trylock_channel(struct qeth_channel *channel,
+					struct qeth_cmd_buffer *cmd)
+{
+	return cmpxchg(&channel->active_cmd, NULL, cmd) == NULL;
 }
 
 struct qeth_trap_id {

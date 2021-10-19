@@ -1248,7 +1248,11 @@ paragraph makes the severeness obvious.
 
 In case you performed a successful bisection, use the title of the change that
 introduced the regression as the second part of your subject. Make the report
+<<<<<<< HEAD
 also mention the commit id of the culprit. In case of an unsuccessful bisection,
+=======
+also mention the commit id of the culprit. In case of an unsuccessful bisection,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 make your report mention the latest tested version that's working fine (say 5.7)
 and the oldest where the issue occurs (say 5.8-rc1).
 

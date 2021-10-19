@@ -1363,8 +1363,13 @@ in an implementation specific way.
 ``ETHTOOL_A_FEC_AUTO`` requests the driver to choose FEC mode based on SFP
 module parameters. This does not mean autonegotiation.
 
+<<<<<<< HEAD
 MODULE_EEPROM
 =============
+=======
+MODULE_EEPROM_GET
+=================
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 Fetch module EEPROM data dump.
 This interface is designed to allow dumps of at most 1/2 page at once. This
@@ -1383,12 +1388,21 @@ Request contents:
   ``ETHTOOL_A_MODULE_EEPROM_I2C_ADDRESS``  u8      page I2C address
   =======================================  ======  ==========================
 
+<<<<<<< HEAD
+=======
+If ``ETHTOOL_A_MODULE_EEPROM_BANK`` is not specified, bank 0 is assumed.
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 Kernel response contents:
 
  +---------------------------------------------+--------+---------------------+
  | ``ETHTOOL_A_MODULE_EEPROM_HEADER``          | nested | reply header        |
  +---------------------------------------------+--------+---------------------+
+<<<<<<< HEAD
  | ``ETHTOOL_A_MODULE_EEPROM_DATA``            | nested | array of bytes from |
+=======
+ | ``ETHTOOL_A_MODULE_EEPROM_DATA``            | binary | array of bytes from |
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  |                                             |        | module EEPROM       |
  +---------------------------------------------+--------+---------------------+
 

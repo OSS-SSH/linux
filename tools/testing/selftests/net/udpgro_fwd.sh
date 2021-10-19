@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 #!/bin/sh
+=======
+#!/bin/bash
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 # SPDX-License-Identifier: GPL-2.0
 
 readonly BASE="ns-$(mktemp -u XXXXXX)"

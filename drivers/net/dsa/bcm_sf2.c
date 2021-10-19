@@ -821,11 +821,17 @@ static void bcm_sf2_sw_mac_link_up(struct dsa_switch *ds, int port,
 	bcm_sf2_sw_mac_link_set(ds, port, interface, true);
 
 	if (port != core_readl(priv, CORE_IMP0_PRT_ID)) {
+<<<<<<< HEAD
 		u32 reg_rgmii_ctrl;
 		u32 reg, offset;
 
 		reg_rgmii_ctrl = bcm_sf2_reg_rgmii_cntrl(priv, port);
 
+=======
+		u32 reg_rgmii_ctrl = 0;
+		u32 reg, offset;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		if (priv->type == BCM4908_DEVICE_ID ||
 		    priv->type == BCM7445_DEVICE_ID)
 			offset = CORE_STS_OVERRIDE_GMIIP_PORT(port);
@@ -836,6 +842,10 @@ static void bcm_sf2_sw_mac_link_up(struct dsa_switch *ds, int port,
 		    interface == PHY_INTERFACE_MODE_RGMII_TXID ||
 		    interface == PHY_INTERFACE_MODE_MII ||
 		    interface == PHY_INTERFACE_MODE_REVMII) {
+<<<<<<< HEAD
+=======
+			reg_rgmii_ctrl = bcm_sf2_reg_rgmii_cntrl(priv, port);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			reg = reg_readl(priv, reg_rgmii_ctrl);
 			reg &= ~(RX_PAUSE_EN | TX_PAUSE_EN);
 

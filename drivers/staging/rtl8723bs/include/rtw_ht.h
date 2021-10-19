@@ -42,10 +42,13 @@ enum {
 	HT_AGG_SIZE_16K = 1,
 	HT_AGG_SIZE_32K = 2,
 	HT_AGG_SIZE_64K = 3,
+<<<<<<< HEAD
 	VHT_AGG_SIZE_128K = 4,
 	VHT_AGG_SIZE_256K = 5,
 	VHT_AGG_SIZE_512K = 6,
 	VHT_AGG_SIZE_1024K = 7,
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
 
 enum {

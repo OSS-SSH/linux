@@ -1,6 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0+
 
 TEST_GEN_PROGS := rfi_flush entry_flush uaccess_flush spectre_v2
+<<<<<<< HEAD
+=======
+TEST_PROGS := mitigation-patching.sh
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 top_srcdir = ../../../../..
 
 CFLAGS += -I../../../../../usr/include

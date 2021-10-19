@@ -125,7 +125,12 @@ Here's a slightly in-depth example of how one could implement "mocking":
 
 
 Note: here we're able to get away with using ``test->priv``, but if you wanted
+<<<<<<< HEAD
 something more flexible you could use a named ``kunit_resource``, see :doc:`api/test`.
+=======
+something more flexible you could use a named ``kunit_resource``, see
+Documentation/dev-tools/kunit/api/test.rst.
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 Failing the current test
 ------------------------
@@ -185,5 +190,5 @@ Alternatively, one can take full control over the error message by using ``KUNIT
 
 Next Steps
 ==========
-*   Optional: see the :doc:`usage` page for a more
+*   Optional: see the Documentation/dev-tools/kunit/usage.rst page for a more
     in-depth explanation of KUnit.

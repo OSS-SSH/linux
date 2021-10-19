@@ -7,7 +7,11 @@
 #include <nvhe/memory.h>
 #include <nvhe/spinlock.h>
 
+<<<<<<< HEAD
 #define HYP_NO_ORDER	UINT_MAX
+=======
+#define HYP_NO_ORDER	USHRT_MAX
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 struct hyp_pool {
 	/*
@@ -19,6 +23,7 @@ struct hyp_pool {
 	struct list_head free_area[MAX_ORDER];
 	phys_addr_t range_start;
 	phys_addr_t range_end;
+<<<<<<< HEAD
 	unsigned int max_order;
 };
 
@@ -61,6 +66,15 @@ static inline void hyp_set_page_refcounted(struct hyp_page *p)
 void *hyp_alloc_pages(struct hyp_pool *pool, unsigned int order);
 void hyp_get_page(void *addr);
 void hyp_put_page(void *addr);
+=======
+	unsigned short max_order;
+};
+
+/* Allocation */
+void *hyp_alloc_pages(struct hyp_pool *pool, unsigned short order);
+void hyp_get_page(struct hyp_pool *pool, void *addr);
+void hyp_put_page(struct hyp_pool *pool, void *addr);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /* Used pages cannot be freed */
 int hyp_pool_init(struct hyp_pool *pool, u64 pfn, unsigned int nr_pages,

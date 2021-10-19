@@ -268,7 +268,11 @@ static struct kvm_vm *pre_init_before_test(enum vm_guest_mode mode, void *arg)
 
 	/* Create a VM with enough guest pages */
 	guest_num_pages = test_mem_size / guest_page_size;
+<<<<<<< HEAD
 	vm = vm_create_with_vcpus(mode, nr_vcpus,
+=======
+	vm = vm_create_with_vcpus(mode, nr_vcpus, DEFAULT_GUEST_PHY_PAGES,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				  guest_num_pages, 0, guest_code, NULL);
 
 	/* Align down GPA of the testing memslot */
@@ -303,7 +307,11 @@ static struct kvm_vm *pre_init_before_test(enum vm_guest_mode mode, void *arg)
 				    TEST_MEM_SLOT_INDEX, guest_num_pages, 0);
 
 	/* Do mapping(GVA->GPA) for the testing memory slot */
+<<<<<<< HEAD
 	virt_map(vm, guest_test_virt_mem, guest_test_phys_mem, guest_num_pages, 0);
+=======
+	virt_map(vm, guest_test_virt_mem, guest_test_phys_mem, guest_num_pages);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* Cache the HVA pointer of the region */
 	host_test_mem = addr_gpa2hva(vm, (vm_paddr_t)guest_test_phys_mem);

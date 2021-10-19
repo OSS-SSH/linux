@@ -1417,7 +1417,11 @@ void __user *insn_get_addr_ref(struct insn *insn, struct pt_regs *regs)
 	}
 }
 
+<<<<<<< HEAD
 static unsigned long insn_get_effective_ip(struct pt_regs *regs)
+=======
+static int insn_get_effective_ip(struct pt_regs *regs, unsigned long *ip)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	unsigned long seg_base = 0;
 
@@ -1430,10 +1434,19 @@ static unsigned long insn_get_effective_ip(struct pt_regs *regs)
 	if (!user_64bit_mode(regs)) {
 		seg_base = insn_get_seg_base(regs, INAT_SEG_REG_CS);
 		if (seg_base == -1L)
+<<<<<<< HEAD
 			return 0;
 	}
 
 	return seg_base + regs->ip;
+=======
+			return -EINVAL;
+	}
+
+	*ip = seg_base + regs->ip;
+
+	return 0;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
 /**
@@ -1446,15 +1459,16 @@ static unsigned long insn_get_effective_ip(struct pt_regs *regs)
  *
  * Returns:
  *
- * Number of instruction bytes copied.
- *
- * 0 if nothing was copied.
+ * - number of instruction bytes copied.
+ * - 0 if nothing was copied.
+ * - -EINVAL if the linear address of the instruction could not be calculated
  */
 int insn_fetch_from_user(struct pt_regs *regs, unsigned char buf[MAX_INSN_SIZE])
 {
 	unsigned long ip;
 	int not_copied;
 
+<<<<<<< HEAD
 	ip = insn_get_effective_ip(regs);
 	if (!ip)
 		return 0;
@@ -1487,6 +1501,38 @@ int insn_fetch_from_user_inatomic(struct pt_regs *regs, unsigned char buf[MAX_IN
 	ip = insn_get_effective_ip(regs);
 	if (!ip)
 		return 0;
+=======
+	if (insn_get_effective_ip(regs, &ip))
+		return -EINVAL;
+
+	not_copied = copy_from_user(buf, (void __user *)ip, MAX_INSN_SIZE);
+
+	return MAX_INSN_SIZE - not_copied;
+}
+
+/**
+ * insn_fetch_from_user_inatomic() - Copy instruction bytes from user-space memory
+ *                                   while in atomic code
+ * @regs:	Structure with register values as seen when entering kernel mode
+ * @buf:	Array to store the fetched instruction
+ *
+ * Gets the linear address of the instruction and copies the instruction bytes
+ * to the buf. This function must be used in atomic context.
+ *
+ * Returns:
+ *
+ *  - number of instruction bytes copied.
+ *  - 0 if nothing was copied.
+ *  - -EINVAL if the linear address of the instruction could not be calculated.
+ */
+int insn_fetch_from_user_inatomic(struct pt_regs *regs, unsigned char buf[MAX_INSN_SIZE])
+{
+	unsigned long ip;
+	int not_copied;
+
+	if (insn_get_effective_ip(regs, &ip))
+		return -EINVAL;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	not_copied = __copy_from_user_inatomic(buf, (void __user *)ip, MAX_INSN_SIZE);
 

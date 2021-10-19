@@ -6,6 +6,8 @@
 #ifndef _INTEL_DPLL_H_
 #define _INTEL_DPLL_H_
 
+#include <linux/types.h>
+
 struct dpll;
 struct drm_i915_private;
 struct intel_crtc;
@@ -37,5 +39,11 @@ void vlv_prepare_pll(struct intel_crtc *crtc,
 		     const struct intel_crtc_state *pipe_config);
 void chv_prepare_pll(struct intel_crtc *crtc,
 		     const struct intel_crtc_state *pipe_config);
+<<<<<<< HEAD
+=======
+bool bxt_find_best_dpll(struct intel_crtc_state *crtc_state,
+			struct dpll *best_clock);
+int chv_calc_dpll_params(int refclk, struct dpll *pll_clock);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #endif

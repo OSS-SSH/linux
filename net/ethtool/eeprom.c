@@ -95,7 +95,11 @@ static int get_module_eeprom_by_page(struct net_device *dev,
 	if (dev->sfp_bus)
 		return sfp_get_module_eeprom_by_page(dev->sfp_bus, page_data, extack);
 
+<<<<<<< HEAD
 	if (ops->get_module_info)
+=======
+	if (ops->get_module_eeprom_by_page)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		return ops->get_module_eeprom_by_page(dev, page_data, extack);
 
 	return -EOPNOTSUPP;
@@ -159,9 +163,12 @@ static int eeprom_parse_request(struct ethnl_req_info *req_info, struct nlattr *
 	request->offset = nla_get_u32(tb[ETHTOOL_A_MODULE_EEPROM_OFFSET]);
 	request->length = nla_get_u32(tb[ETHTOOL_A_MODULE_EEPROM_LENGTH]);
 
+<<<<<<< HEAD
 	if (!request->length)
 		return -EINVAL;
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* The following set of conditions limit the API to only dump 1/2
 	 * EEPROM page without crossing low page boundary located at offset 128.
 	 * This means user may only request dumps of length limited to 128 from
@@ -180,10 +187,13 @@ static int eeprom_parse_request(struct ethnl_req_info *req_info, struct nlattr *
 		NL_SET_ERR_MSG_ATTR(extack, tb[ETHTOOL_A_MODULE_EEPROM_LENGTH],
 				    "reading cross half page boundary is illegal");
 		return -EINVAL;
+<<<<<<< HEAD
 	} else if (request->offset >= ETH_MODULE_EEPROM_PAGE_LEN * 2) {
 		NL_SET_ERR_MSG_ATTR(extack, tb[ETHTOOL_A_MODULE_EEPROM_OFFSET],
 				    "offset is out of bounds");
 		return -EINVAL;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	} else if (request->offset + request->length > ETH_MODULE_EEPROM_PAGE_LEN * 2) {
 		NL_SET_ERR_MSG_ATTR(extack, tb[ETHTOOL_A_MODULE_EEPROM_LENGTH],
 				    "reading cross page boundary is illegal");
@@ -236,8 +246,15 @@ const struct ethnl_request_ops ethnl_module_eeprom_request_ops = {
 
 const struct nla_policy ethnl_module_eeprom_get_policy[] = {
 	[ETHTOOL_A_MODULE_EEPROM_HEADER]	= NLA_POLICY_NESTED(ethnl_header_policy),
+<<<<<<< HEAD
 	[ETHTOOL_A_MODULE_EEPROM_OFFSET]	= { .type = NLA_U32 },
 	[ETHTOOL_A_MODULE_EEPROM_LENGTH]	= { .type = NLA_U32 },
+=======
+	[ETHTOOL_A_MODULE_EEPROM_OFFSET]	=
+		NLA_POLICY_MAX(NLA_U32, ETH_MODULE_EEPROM_PAGE_LEN * 2 - 1),
+	[ETHTOOL_A_MODULE_EEPROM_LENGTH]	=
+		NLA_POLICY_RANGE(NLA_U32, 1, ETH_MODULE_EEPROM_PAGE_LEN),
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	[ETHTOOL_A_MODULE_EEPROM_PAGE]		= { .type = NLA_U8 },
 	[ETHTOOL_A_MODULE_EEPROM_BANK]		= { .type = NLA_U8 },
 	[ETHTOOL_A_MODULE_EEPROM_I2C_ADDRESS]	=

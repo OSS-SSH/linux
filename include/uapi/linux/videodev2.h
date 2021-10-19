@@ -1747,6 +1747,12 @@ struct v4l2_ext_control {
 		struct v4l2_ctrl_h264_decode_params __user *p_h264_decode_params;
 		struct v4l2_ctrl_fwht_params __user *p_fwht_params;
 		struct v4l2_ctrl_vp8_frame __user *p_vp8_frame;
+<<<<<<< HEAD
+=======
+		struct v4l2_ctrl_mpeg2_sequence __user *p_mpeg2_sequence;
+		struct v4l2_ctrl_mpeg2_picture __user *p_mpeg2_picture;
+		struct v4l2_ctrl_mpeg2_quantisation __user *p_mpeg2_quantisation;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		void __user *ptr;
 	};
 } __attribute__ ((packed));
@@ -1807,6 +1813,13 @@ enum v4l2_ctrl_type {
 	V4L2_CTRL_TYPE_FWHT_PARAMS	    = 0x0220,
 
 	V4L2_CTRL_TYPE_VP8_FRAME            = 0x0240,
+<<<<<<< HEAD
+=======
+
+	V4L2_CTRL_TYPE_MPEG2_QUANTISATION   = 0x0250,
+	V4L2_CTRL_TYPE_MPEG2_SEQUENCE       = 0x0251,
+	V4L2_CTRL_TYPE_MPEG2_PICTURE        = 0x0252,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
 
 /*  Used in the VIDIOC_QUERYCTRL ioctl for querying controls */

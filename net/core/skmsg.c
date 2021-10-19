@@ -399,6 +399,7 @@ out:
 }
 EXPORT_SYMBOL_GPL(sk_msg_memcopy_from_iter);
 
+<<<<<<< HEAD
 int sk_msg_wait_data(struct sock *sk, struct sk_psock *psock, int flags,
 		     long timeo, int *err)
 {
@@ -422,6 +423,8 @@ int sk_msg_wait_data(struct sock *sk, struct sk_psock *psock, int flags,
 }
 EXPORT_SYMBOL_GPL(sk_msg_wait_data);
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 /* Receive sk_msg from psock->ingress_msg to @msg. */
 int sk_msg_recvmsg(struct sock *sk, struct sk_psock *psock, struct msghdr *msg,
 		   int len, int flags)
@@ -601,6 +604,12 @@ static int sk_psock_handle_skb(struct sk_psock *psock, struct sk_buff *skb,
 	return sk_psock_skb_ingress(psock, skb);
 }
 
+static void sock_drop(struct sock *sk, struct sk_buff *skb)
+{
+	sk_drops_add(sk, skb);
+	kfree_skb(skb);
+}
+
 static void sk_psock_backlog(struct work_struct *work)
 {
 	struct sk_psock *psock = container_of(work, struct sk_psock, work);
@@ -640,7 +649,7 @@ start:
 				/* Hard errors break pipe and stop xmit. */
 				sk_psock_report_error(psock, ret ? -ret : EPIPE);
 				sk_psock_clear_state(psock, SK_PSOCK_TX_ENABLED);
-				kfree_skb(skb);
+				sock_drop(psock->sk, skb);
 				goto end;
 			}
 			off += ret;
@@ -731,7 +740,11 @@ static void __sk_psock_zap_ingress(struct sk_psock *psock)
 
 	while ((skb = skb_dequeue(&psock->ingress_skb)) != NULL) {
 		skb_bpf_redirect_clear(skb);
+<<<<<<< HEAD
 		kfree_skb(skb);
+=======
+		sock_drop(psock->sk, skb);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 	__sk_psock_purge_ingress_msg(psock);
 }
@@ -757,9 +770,15 @@ void sk_psock_stop(struct sk_psock *psock, bool wait)
 	if (wait)
 		cancel_work_sync(&psock->work);
 }
+<<<<<<< HEAD
 
 static void sk_psock_done_strp(struct sk_psock *psock);
 
+=======
+
+static void sk_psock_done_strp(struct sk_psock *psock);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 static void sk_psock_destroy(struct work_struct *work)
 {
 	struct sk_psock *psock = container_of(to_rcu_work(work),
@@ -847,7 +866,11 @@ out:
 }
 EXPORT_SYMBOL_GPL(sk_psock_msg_verdict);
 
+<<<<<<< HEAD
 static void sk_psock_skb_redirect(struct sk_buff *skb)
+=======
+static int sk_psock_skb_redirect(struct sk_psock *from, struct sk_buff *skb)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	struct sk_psock *psock_other;
 	struct sock *sk_other;
@@ -857,8 +880,8 @@ static void sk_psock_skb_redirect(struct sk_buff *skb)
 	 * return code, but then didn't set a redirect interface.
 	 */
 	if (unlikely(!sk_other)) {
-		kfree_skb(skb);
-		return;
+		sock_drop(from->sk, skb);
+		return -EIO;
 	}
 	psock_other = sk_psock(sk_other);
 	/* This error indicates the socket is being torn down or had another
@@ -866,26 +889,47 @@ static void sk_psock_skb_redirect(struct sk_buff *skb)
 	 * a socket that is in this state so we drop the skb.
 	 */
 	if (!psock_other || sock_flag(sk_other, SOCK_DEAD)) {
+<<<<<<< HEAD
 		kfree_skb(skb);
 		return;
+=======
+		skb_bpf_redirect_clear(skb);
+		sock_drop(from->sk, skb);
+		return -EIO;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 	spin_lock_bh(&psock_other->ingress_lock);
 	if (!sk_psock_test_state(psock_other, SK_PSOCK_TX_ENABLED)) {
 		spin_unlock_bh(&psock_other->ingress_lock);
+<<<<<<< HEAD
 		kfree_skb(skb);
 		return;
+=======
+		skb_bpf_redirect_clear(skb);
+		sock_drop(from->sk, skb);
+		return -EIO;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 
 	skb_queue_tail(&psock_other->ingress_skb, skb);
 	schedule_work(&psock_other->work);
 	spin_unlock_bh(&psock_other->ingress_lock);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 }
 
-static void sk_psock_tls_verdict_apply(struct sk_buff *skb, struct sock *sk, int verdict)
+static void sk_psock_tls_verdict_apply(struct sk_buff *skb,
+				       struct sk_psock *from, int verdict)
 {
 	switch (verdict) {
 	case __SK_REDIRECT:
+<<<<<<< HEAD
 		sk_psock_skb_redirect(skb);
+=======
+		sk_psock_skb_redirect(from, skb);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		break;
 	case __SK_PASS:
 	case __SK_DROP:
@@ -909,20 +953,21 @@ int sk_psock_tls_strp_read(struct sk_psock *psock, struct sk_buff *skb)
 		ret = sk_psock_map_verd(ret, skb_bpf_redirect_fetch(skb));
 		skb->sk = NULL;
 	}
-	sk_psock_tls_verdict_apply(skb, psock->sk, ret);
+	sk_psock_tls_verdict_apply(skb, psock, ret);
 	rcu_read_unlock();
 	return ret;
 }
 EXPORT_SYMBOL_GPL(sk_psock_tls_strp_read);
 
-static void sk_psock_verdict_apply(struct sk_psock *psock,
-				   struct sk_buff *skb, int verdict)
+static int sk_psock_verdict_apply(struct sk_psock *psock, struct sk_buff *skb,
+				  int verdict)
 {
 	struct sock *sk_other;
-	int err = -EIO;
+	int err = 0;
 
 	switch (verdict) {
 	case __SK_PASS:
+		err = -EIO;
 		sk_other = psock->sk;
 		if (sock_flag(sk_other, SOCK_DEAD) ||
 		    !sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED)) {
@@ -945,18 +990,30 @@ static void sk_psock_verdict_apply(struct sk_psock *psock,
 			if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED)) {
 				skb_queue_tail(&psock->ingress_skb, skb);
 				schedule_work(&psock->work);
+<<<<<<< HEAD
 			}
 			spin_unlock_bh(&psock->ingress_lock);
+=======
+				err = 0;
+			}
+			spin_unlock_bh(&psock->ingress_lock);
+			if (err < 0) {
+				skb_bpf_redirect_clear(skb);
+				goto out_free;
+			}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		}
 		break;
 	case __SK_REDIRECT:
-		sk_psock_skb_redirect(skb);
+		err = sk_psock_skb_redirect(psock, skb);
 		break;
 	case __SK_DROP:
 	default:
 out_free:
-		kfree_skb(skb);
+		sock_drop(psock->sk, skb);
 	}
+
+	return err;
 }
 
 static void sk_psock_write_space(struct sock *sk)
@@ -976,6 +1033,26 @@ static void sk_psock_write_space(struct sock *sk)
 		write_space(sk);
 }
 
+<<<<<<< HEAD
+static void sk_psock_write_space(struct sock *sk)
+{
+	struct sk_psock *psock;
+	void (*write_space)(struct sock *sk) = NULL;
+
+	rcu_read_lock();
+	psock = sk_psock(sk);
+	if (likely(psock)) {
+		if (sk_psock_test_state(psock, SK_PSOCK_TX_ENABLED))
+			schedule_work(&psock->work);
+		write_space = psock->saved_write_space;
+	}
+	rcu_read_unlock();
+	if (write_space)
+		write_space(sk);
+}
+
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #if IS_ENABLED(CONFIG_BPF_STREAM_PARSER)
 static void sk_psock_strp_read(struct strparser *strp, struct sk_buff *skb)
 {
@@ -988,7 +1065,7 @@ static void sk_psock_strp_read(struct strparser *strp, struct sk_buff *skb)
 	sk = strp->sk;
 	psock = sk_psock(sk);
 	if (unlikely(!psock)) {
-		kfree_skb(skb);
+		sock_drop(sk, skb);
 		goto out;
 	}
 	prog = READ_ONCE(psock->progs.stream_verdict);
@@ -1109,7 +1186,7 @@ static int sk_psock_verdict_recv(read_descriptor_t *desc, struct sk_buff *skb,
 	psock = sk_psock(sk);
 	if (unlikely(!psock)) {
 		len = 0;
-		kfree_skb(skb);
+		sock_drop(sk, skb);
 		goto out;
 	}
 	prog = READ_ONCE(psock->progs.stream_verdict);
@@ -1123,7 +1200,8 @@ static int sk_psock_verdict_recv(read_descriptor_t *desc, struct sk_buff *skb,
 		ret = sk_psock_map_verd(ret, skb_bpf_redirect_fetch(skb));
 		skb->sk = NULL;
 	}
-	sk_psock_verdict_apply(psock, skb, ret);
+	if (sk_psock_verdict_apply(psock, skb, ret) < 0)
+		len = 0;
 out:
 	rcu_read_unlock();
 	return len;

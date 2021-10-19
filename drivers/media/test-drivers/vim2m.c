@@ -624,11 +624,6 @@ static void device_work(struct work_struct *w)
 
 	curr_ctx = container_of(w, struct vim2m_ctx, work_run.work);
 
-	if (!curr_ctx) {
-		pr_err("Instance released before the end of transaction\n");
-		return;
-	}
-
 	vim2m_dev = curr_ctx->dev;
 
 	src_vb = v4l2_m2m_src_buf_remove(curr_ctx->fh.m2m_ctx);
@@ -1348,6 +1343,7 @@ static int vim2m_probe(struct platform_device *pdev)
 	dev->mdev.ops = &m2m_media_ops;
 	dev->v4l2_dev.mdev = &dev->mdev;
 #endif
+<<<<<<< HEAD
 
 	ret = video_register_device(vfd, VFL_TYPE_VIDEO, 0);
 	if (ret) {
@@ -1355,6 +1351,15 @@ static int vim2m_probe(struct platform_device *pdev)
 		goto error_m2m;
 	}
 
+=======
+
+	ret = video_register_device(vfd, VFL_TYPE_VIDEO, 0);
+	if (ret) {
+		v4l2_err(&dev->v4l2_dev, "Failed to register video device\n");
+		goto error_m2m;
+	}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #ifdef CONFIG_MEDIA_CONTROLLER
 	ret = v4l2_m2m_register_media_controller(dev->m2m_dev, vfd,
 						 MEDIA_ENT_F_PROC_VIDEO_SCALER);

@@ -111,6 +111,12 @@ static void mmhub_v1_7_init_system_aperture_regs(struct amdgpu_device *adev)
 	WREG32_SOC15(MMHUB, 0, regMC_VM_AGP_BOT, adev->gmc.agp_start >> 24);
 	WREG32_SOC15(MMHUB, 0, regMC_VM_AGP_TOP, adev->gmc.agp_end >> 24);
 
+<<<<<<< HEAD
+=======
+	if (amdgpu_sriov_vf(adev))
+		return;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* Program the system aperture low logical page number. */
 	WREG32_SOC15(MMHUB, 0, regMC_VM_SYSTEM_APERTURE_LOW_ADDR,
 		     min(adev->gmc.fb_start, adev->gmc.agp_start) >> 18);
@@ -129,8 +135,11 @@ static void mmhub_v1_7_init_system_aperture_regs(struct amdgpu_device *adev)
 		WREG32_SOC15(MMHUB, 0, regMC_VM_SYSTEM_APERTURE_LOW_ADDR, 0x3FFFFFFF);
 		WREG32_SOC15(MMHUB, 0, regMC_VM_SYSTEM_APERTURE_HIGH_ADDR, 0);
 	}
+<<<<<<< HEAD
 	if (amdgpu_sriov_vf(adev))
 		return;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* Set default page address. */
 	value = amdgpu_gmc_vram_mc2pa(adev, adev->vram_scratch.gpu_addr);
@@ -296,10 +305,19 @@ static void mmhub_v1_7_setup_vmid_config(struct amdgpu_device *adev)
 		tmp = REG_SET_FIELD(tmp, VM_CONTEXT1_CNTL,
 				    PAGE_TABLE_BLOCK_SIZE,
 				    block_size);
+<<<<<<< HEAD
 		/* Send no-retry XNACK on fault to suppress VM fault storm. */
 		tmp = REG_SET_FIELD(tmp, VM_CONTEXT1_CNTL,
 				    RETRY_PERMISSION_OR_INVALID_PAGE_FAULT,
 				    !adev->gmc.noretry);
+=======
+		/* On Aldebaran, XNACK can be enabled in the SQ per-process.
+		 * Retry faults need to be enabled for that to work.
+		 */
+		tmp = REG_SET_FIELD(tmp, VM_CONTEXT1_CNTL,
+				    RETRY_PERMISSION_OR_INVALID_PAGE_FAULT,
+				    1);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		WREG32_SOC15_OFFSET(MMHUB, 0, regVM_CONTEXT1_CNTL,
 				    i * hub->ctx_distance, tmp);
 		WREG32_SOC15_OFFSET(MMHUB, 0, regVM_CONTEXT1_PAGE_TABLE_START_ADDR_LO32,
@@ -330,6 +348,7 @@ static void mmhub_v1_7_program_invalidation(struct amdgpu_device *adev)
 
 static int mmhub_v1_7_gart_enable(struct amdgpu_device *adev)
 {
+<<<<<<< HEAD
 	if (amdgpu_sriov_vf(adev)) {
 		/*
 		 * MC_VM_FB_LOCATION_BASE/TOP is NULL for VF, becuase they are
@@ -342,6 +361,8 @@ static int mmhub_v1_7_gart_enable(struct amdgpu_device *adev)
 			     adev->gmc.vram_end >> 24);
 	}
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	/* GART Enable. */
 	mmhub_v1_7_init_gart_aperture_regs(adev);
 	mmhub_v1_7_init_system_aperture_regs(adev);
@@ -1313,12 +1334,37 @@ static void mmhub_v1_7_query_ras_error_status(struct amdgpu_device *adev)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void mmhub_v1_7_reset_ras_error_status(struct amdgpu_device *adev)
+{
+	int i;
+	uint32_t reg_value;
+
+	if (!amdgpu_ras_is_supported(adev, AMDGPU_RAS_BLOCK__MMHUB))
+		return;
+
+	for (i = 0; i < ARRAY_SIZE(mmhub_v1_7_ea_err_status_regs); i++) {
+		reg_value = RREG32(SOC15_REG_ENTRY_OFFSET(
+			mmhub_v1_7_ea_err_status_regs[i]));
+		reg_value = REG_SET_FIELD(reg_value, MMEA0_ERR_STATUS,
+					  CLEAR_ERROR_STATUS, 0x01);
+		WREG32(SOC15_REG_ENTRY_OFFSET(mmhub_v1_7_ea_err_status_regs[i]),
+		       reg_value);
+	}
+}
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 const struct amdgpu_mmhub_ras_funcs mmhub_v1_7_ras_funcs = {
 	.ras_late_init = amdgpu_mmhub_ras_late_init,
 	.ras_fini = amdgpu_mmhub_ras_fini,
 	.query_ras_error_count = mmhub_v1_7_query_ras_error_count,
 	.reset_ras_error_count = mmhub_v1_7_reset_ras_error_count,
 	.query_ras_error_status = mmhub_v1_7_query_ras_error_status,
+<<<<<<< HEAD
+=======
+	.reset_ras_error_status = mmhub_v1_7_reset_ras_error_status,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
 
 const struct amdgpu_mmhub_funcs mmhub_v1_7_funcs = {

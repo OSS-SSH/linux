@@ -186,7 +186,7 @@ retry:
 		if (err)
 			goto err_ppgtt_cleanup;
 
-		err = i915_vm_pin_pt_stash(&ppgtt->vm, &stash);
+		err = i915_vm_map_pt_stash(&ppgtt->vm, &stash);
 		if (err) {
 			i915_vm_free_pt_stash(&ppgtt->vm, &stash);
 			goto err_ppgtt_cleanup;
@@ -208,7 +208,7 @@ retry:
 		if (err)
 			goto err_ppgtt_cleanup;
 
-		err = i915_vm_pin_pt_stash(&ppgtt->vm, &stash);
+		err = i915_vm_map_pt_stash(&ppgtt->vm, &stash);
 		if (err) {
 			i915_vm_free_pt_stash(&ppgtt->vm, &stash);
 			goto err_ppgtt_cleanup;
@@ -324,6 +324,7 @@ retry:
 				if (i915_vm_alloc_pt_stash(vm, &stash,
 							   BIT_ULL(size)))
 					goto alloc_vm_end;
+<<<<<<< HEAD
 
 				err = i915_vm_pin_pt_stash(vm, &stash);
 				if (!err)
@@ -339,6 +340,22 @@ alloc_vm_end:
 				}
 				i915_gem_ww_ctx_fini(&ww);
 
+=======
+
+				err = i915_vm_map_pt_stash(vm, &stash);
+				if (!err)
+					vm->allocate_va_range(vm, &stash,
+							      addr, BIT_ULL(size));
+				i915_vm_free_pt_stash(vm, &stash);
+alloc_vm_end:
+				if (err == -EDEADLK) {
+					err = i915_gem_ww_ctx_backoff(&ww);
+					if (!err)
+						goto retry;
+				}
+				i915_gem_ww_ctx_fini(&ww);
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 				if (err)
 					break;
 			}
@@ -1885,9 +1902,9 @@ static int igt_cs_tlb(void *arg)
 		u32 *cs = batch + i * 64 / sizeof(*cs);
 		u64 addr = (vm->total - PAGE_SIZE) + i * sizeof(u32);
 
-		GEM_BUG_ON(INTEL_GEN(i915) < 6);
+		GEM_BUG_ON(GRAPHICS_VER(i915) < 6);
 		cs[0] = MI_STORE_DWORD_IMM_GEN4;
-		if (INTEL_GEN(i915) >= 8) {
+		if (GRAPHICS_VER(i915) >= 8) {
 			cs[1] = lower_32_bits(addr);
 			cs[2] = upper_32_bits(addr);
 			cs[3] = i;
@@ -1961,6 +1978,7 @@ static int igt_cs_tlb(void *arg)
 			i915_gem_ww_ctx_init(&ww, false);
 retry:
 			err = i915_vm_lock_objects(vm, &ww);
+<<<<<<< HEAD
 			if (err)
 				goto end_ww;
 
@@ -1971,7 +1989,18 @@ retry:
 			err = i915_vm_pin_pt_stash(vm, &stash);
 			if (!err)
 				vm->allocate_va_range(vm, &stash, offset, chunk_size);
+=======
+			if (err)
+				goto end_ww;
 
+			err = i915_vm_alloc_pt_stash(vm, &stash, chunk_size);
+			if (err)
+				goto end_ww;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+
+			err = i915_vm_map_pt_stash(vm, &stash);
+			if (!err)
+				vm->allocate_va_range(vm, &stash, offset, chunk_size);
 			i915_vm_free_pt_stash(vm, &stash);
 end_ww:
 			if (err == -EDEADLK) {

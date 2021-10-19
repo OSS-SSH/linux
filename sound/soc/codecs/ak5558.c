@@ -307,7 +307,11 @@ static struct snd_soc_dai_driver ak5558_dai = {
 };
 
 static struct snd_soc_dai_driver ak5552_dai = {
+<<<<<<< HEAD
 	.name = "ak5558-aif",
+=======
+	.name = "ak5552-aif",
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	.capture = {
 		.stream_name = "Capture",
 		.channels_min = 1,

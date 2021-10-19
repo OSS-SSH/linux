@@ -204,7 +204,12 @@ static int acpi_als_add(struct acpi_device *device)
 	indio_dev->channels = acpi_als_channels;
 	indio_dev->num_channels = ARRAY_SIZE(acpi_als_channels);
 
+<<<<<<< HEAD
 	als->trig = devm_iio_trigger_alloc(dev, "%s-dev%d", indio_dev->name, indio_dev->id);
+=======
+	als->trig = devm_iio_trigger_alloc(dev, "%s-dev%d", indio_dev->name,
+					   iio_device_id(indio_dev));
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (!als->trig)
 		return -ENOMEM;
 

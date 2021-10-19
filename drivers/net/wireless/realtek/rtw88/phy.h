@@ -61,6 +61,10 @@ void rtw_phy_config_swing_table(struct rtw_dev *rtwdev,
 				struct rtw_swing_table *swing_table);
 void rtw_phy_parsing_cfo(struct rtw_dev *rtwdev,
 			 struct rtw_rx_pkt_stat *pkt_stat);
+<<<<<<< HEAD
+=======
+void rtw_phy_tx_path_diversity(struct rtw_dev *rtwdev);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 struct rtw_txpwr_lmt_cfg_pair {
 	u8 regd;

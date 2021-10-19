@@ -143,7 +143,11 @@ static int ssam_hid_get_raw_report(struct surface_hid_device *shid, u8 rprt_id, 
 	rqst.target_id = shid->uid.target;
 	rqst.instance_id = shid->uid.instance;
 	rqst.command_id = SURFACE_HID_CID_GET_FEATURE_REPORT;
+<<<<<<< HEAD
 	rqst.flags = 0;
+=======
+	rqst.flags = SSAM_REQUEST_HAS_RESPONSE;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	rqst.length = sizeof(rprt_id);
 	rqst.payload = &rprt_id;
 

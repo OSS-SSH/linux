@@ -201,7 +201,11 @@ struct ft260_i2c_write_request_report {
 	u8 address;		/* 7-bit I2C address */
 	u8 flag;		/* I2C transaction condition */
 	u8 length;		/* data payload length */
+<<<<<<< HEAD
 	u8 data[60];		/* data payload */
+=======
+	u8 data[FT260_WR_DATA_MAX]; /* data payload */
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 } __packed;
 
 struct ft260_i2c_read_request_report {
@@ -249,7 +253,14 @@ static int ft260_hid_feature_report_get(struct hid_device *hdev,
 
 	ret = hid_hw_raw_request(hdev, report_id, buf, len, HID_FEATURE_REPORT,
 				 HID_REQ_GET_REPORT);
+<<<<<<< HEAD
 	memcpy(data, buf, len);
+=======
+	if (likely(ret == len))
+		memcpy(data, buf, len);
+	else if (ret >= 0)
+		ret = -EIO;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	kfree(buf);
 	return ret;
 }
@@ -298,7 +309,11 @@ static int ft260_xfer_status(struct ft260_device *dev)
 
 	ret = ft260_hid_feature_report_get(hdev, FT260_I2C_STATUS,
 					   (u8 *)&report, sizeof(report));
+<<<<<<< HEAD
 	if (ret < 0) {
+=======
+	if (unlikely(ret < 0)) {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		hid_err(hdev, "failed to retrieve status: %d\n", ret);
 		return ret;
 	}
@@ -429,6 +444,12 @@ static int ft260_smbus_write(struct ft260_device *dev, u8 addr, u8 cmd,
 	struct ft260_i2c_write_request_report *rep =
 		(struct ft260_i2c_write_request_report *)dev->write_buf;
 
+<<<<<<< HEAD
+=======
+	if (data_len >= sizeof(rep->data))
+		return -EINVAL;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	rep->address = addr;
 	rep->data[0] = cmd;
 	rep->length = data_len + 1;
@@ -721,10 +742,16 @@ static int ft260_get_system_config(struct hid_device *hdev,
 
 	ret = ft260_hid_feature_report_get(hdev, FT260_SYSTEM_SETTINGS,
 					   (u8 *)cfg, len);
+<<<<<<< HEAD
 	if (ret != len) {
 		hid_err(hdev, "failed to retrieve system status\n");
 		if (ret >= 0)
 			return -EIO;
+=======
+	if (ret < 0) {
+		hid_err(hdev, "failed to retrieve system status\n");
+		return ret;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	}
 	return 0;
 }
@@ -777,8 +804,13 @@ static int ft260_byte_show(struct hid_device *hdev, int id, u8 *cfg, int len,
 	int ret;
 
 	ret = ft260_hid_feature_report_get(hdev, id, cfg, len);
+<<<<<<< HEAD
 	if (ret != len && ret >= 0)
 		return -EIO;
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	return scnprintf(buf, PAGE_SIZE, "%hi\n", *field);
 }
@@ -789,8 +821,13 @@ static int ft260_word_show(struct hid_device *hdev, int id, u8 *cfg, int len,
 	int ret;
 
 	ret = ft260_hid_feature_report_get(hdev, id, cfg, len);
+<<<<<<< HEAD
 	if (ret != len && ret >= 0)
 		return -EIO;
+=======
+	if (ret < 0)
+		return ret;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	return scnprintf(buf, PAGE_SIZE, "%hi\n", le16_to_cpu(*field));
 }
@@ -941,10 +978,15 @@ static int ft260_probe(struct hid_device *hdev, const struct hid_device_id *id)
 
 	ret = ft260_hid_feature_report_get(hdev, FT260_CHIP_VERSION,
 					   (u8 *)&version, sizeof(version));
+<<<<<<< HEAD
 	if (ret != sizeof(version)) {
 		hid_err(hdev, "failed to retrieve chip version\n");
 		if (ret >= 0)
 			ret = -EIO;
+=======
+	if (ret < 0) {
+		hid_err(hdev, "failed to retrieve chip version\n");
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		goto err_hid_close;
 	}
 

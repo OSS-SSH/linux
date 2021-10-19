@@ -150,9 +150,21 @@ int xen_swiotlb_detect(void)
 static int __init xen_mm_init(void)
 {
 	struct gnttab_cache_flush cflush;
+<<<<<<< HEAD
 	if (!xen_swiotlb_detect())
 		return 0;
 	xen_swiotlb_init();
+=======
+	int rc;
+
+	if (!xen_swiotlb_detect())
+		return 0;
+
+	rc = xen_swiotlb_init();
+	/* we can work with the default swiotlb */
+	if (rc < 0 && rc != -EEXIST)
+		return rc;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	cflush.op = 0;
 	cflush.a.dev_bus_addr = 0;

@@ -647,7 +647,11 @@ config I2C_HIGHLANDER
 
 config I2C_HISI
 	tristate "HiSilicon I2C controller"
+<<<<<<< HEAD
 	depends on ARM64 || COMPILE_TEST
+=======
+	depends on (ARM64 && ACPI) || COMPILE_TEST
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	help
 	  Say Y here if you want to have Hisilicon I2C controller support
 	  available on the Kunpeng Server.

@@ -75,7 +75,11 @@ int BPF_PROG(handler_exit1)
 	val = bpf_map_lookup_elem(&map_weak, &key);
 	if (val)
 		output_weak1 = *val;
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	return 0;
 }
 

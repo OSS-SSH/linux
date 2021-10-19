@@ -19,73 +19,32 @@
 #include <sound/soc-acpi-intel-match.h>
 #include <sound/intel-dsp-config.h>
 #include "../ops.h"
+#include "atom.h"
 #include "shim.h"
 #include "../sof-acpi-dev.h"
 #include "../sof-audio.h"
 #include "../../intel/common/soc-intel-quirks.h"
 
-/* DSP memories */
-#define IRAM_OFFSET		0x0C0000
-#define IRAM_SIZE		(80 * 1024)
-#define DRAM_OFFSET		0x100000
-#define DRAM_SIZE		(160 * 1024)
-#define SHIM_OFFSET		0x140000
-#define SHIM_SIZE_BYT		0x100
-#define SHIM_SIZE_CHT		0x118
-#define MBOX_OFFSET		0x144000
-#define MBOX_SIZE		0x1000
-#define EXCEPT_OFFSET		0x800
-#define EXCEPT_MAX_HDR_SIZE	0x400
-
-/* DSP peripherals */
-#define DMAC0_OFFSET		0x098000
-#define DMAC1_OFFSET		0x09c000
-#define DMAC2_OFFSET		0x094000
-#define DMAC_SIZE		0x420
-#define SSP0_OFFSET		0x0a0000
-#define SSP1_OFFSET		0x0a1000
-#define SSP2_OFFSET		0x0a2000
-#define SSP3_OFFSET		0x0a4000
-#define SSP4_OFFSET		0x0a5000
-#define SSP5_OFFSET		0x0a6000
-#define SSP_SIZE		0x100
-
-#define BYT_STACK_DUMP_SIZE	32
-
-#define BYT_PCI_BAR_SIZE	0x200000
-
-#define BYT_PANIC_OFFSET(x)	(((x) & GENMASK_ULL(47, 32)) >> 32)
-
-/*
- * Debug
- */
-
-#define MBOX_DUMP_SIZE	0x30
-
-/* BARs */
-#define BYT_DSP_BAR		0
-#define BYT_PCI_BAR		1
-#define BYT_IMR_BAR		2
-
 static const struct snd_sof_debugfs_map byt_debugfs[] = {
-	{"dmac0", BYT_DSP_BAR, DMAC0_OFFSET, DMAC_SIZE,
+	{"dmac0", DSP_BAR, DMAC0_OFFSET, DMAC_SIZE,
 	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"dmac1", BYT_DSP_BAR,  DMAC1_OFFSET, DMAC_SIZE,
+	{"dmac1", DSP_BAR, DMAC1_OFFSET, DMAC_SIZE,
 	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp0",  BYT_DSP_BAR, SSP0_OFFSET, SSP_SIZE,
+	{"ssp0", DSP_BAR, SSP0_OFFSET, SSP_SIZE,
 	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp1", BYT_DSP_BAR, SSP1_OFFSET, SSP_SIZE,
+	{"ssp1", DSP_BAR, SSP1_OFFSET, SSP_SIZE,
 	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp2", BYT_DSP_BAR, SSP2_OFFSET, SSP_SIZE,
+	{"ssp2", DSP_BAR, SSP2_OFFSET, SSP_SIZE,
 	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"iram", BYT_DSP_BAR, IRAM_OFFSET, IRAM_SIZE,
+	{"iram", DSP_BAR, IRAM_OFFSET, IRAM_SIZE,
 	 SOF_DEBUGFS_ACCESS_D0_ONLY},
-	{"dram", BYT_DSP_BAR, DRAM_OFFSET, DRAM_SIZE,
+	{"dram", DSP_BAR, DRAM_OFFSET, DRAM_SIZE,
 	 SOF_DEBUGFS_ACCESS_D0_ONLY},
-	{"shim", BYT_DSP_BAR, SHIM_OFFSET, SHIM_SIZE_BYT,
+	{"shim", DSP_BAR, SHIM_OFFSET, SHIM_SIZE_BYT,
 	 SOF_DEBUGFS_ACCESS_ALWAYS},
 };
 
+<<<<<<< HEAD
 static void byt_host_done(struct snd_sof_dev *sdev);
 static void byt_dsp_done(struct snd_sof_dev *sdev);
 static void byt_get_reply(struct snd_sof_dev *sdev);
@@ -660,21 +619,43 @@ EXPORT_SYMBOL_NS(sof_tng_ops, SND_SOC_SOF_MERRIFIELD);
 const struct sof_intel_dsp_desc tng_chip_info = {
 	.cores_num = 1,
 	.host_managed_cores_mask = 1,
+=======
+static const struct snd_sof_debugfs_map cht_debugfs[] = {
+	{"dmac0", DSP_BAR, DMAC0_OFFSET, DMAC_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"dmac1", DSP_BAR, DMAC1_OFFSET, DMAC_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"dmac2", DSP_BAR, DMAC2_OFFSET, DMAC_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"ssp0", DSP_BAR, SSP0_OFFSET, SSP_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"ssp1", DSP_BAR, SSP1_OFFSET, SSP_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"ssp2", DSP_BAR, SSP2_OFFSET, SSP_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"ssp3", DSP_BAR, SSP3_OFFSET, SSP_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"ssp4", DSP_BAR, SSP4_OFFSET, SSP_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"ssp5", DSP_BAR, SSP5_OFFSET, SSP_SIZE,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+	{"iram", DSP_BAR, IRAM_OFFSET, IRAM_SIZE,
+	 SOF_DEBUGFS_ACCESS_D0_ONLY},
+	{"dram", DSP_BAR, DRAM_OFFSET, DRAM_SIZE,
+	 SOF_DEBUGFS_ACCESS_D0_ONLY},
+	{"shim", DSP_BAR, SHIM_OFFSET, SHIM_SIZE_CHT,
+	 SOF_DEBUGFS_ACCESS_ALWAYS},
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 };
-EXPORT_SYMBOL_NS(tng_chip_info, SND_SOC_SOF_MERRIFIELD);
-
-#endif /* CONFIG_SND_SOC_SOF_MERRIFIELD */
-
-#if IS_ENABLED(CONFIG_SND_SOC_SOF_BAYTRAIL)
 
 static void byt_reset_dsp_disable_int(struct snd_sof_dev *sdev)
 {
 	/* Disable Interrupt from both sides */
-	snd_sof_dsp_update_bits64(sdev, BYT_DSP_BAR, SHIM_IMRX, 0x3, 0x3);
-	snd_sof_dsp_update_bits64(sdev, BYT_DSP_BAR, SHIM_IMRD, 0x3, 0x3);
+	snd_sof_dsp_update_bits64(sdev, DSP_BAR, SHIM_IMRX, 0x3, 0x3);
+	snd_sof_dsp_update_bits64(sdev, DSP_BAR, SHIM_IMRD, 0x3, 0x3);
 
 	/* Put DSP into reset, set reset vector */
-	snd_sof_dsp_update_bits64(sdev, BYT_DSP_BAR, SHIM_CSR,
+	snd_sof_dsp_update_bits64(sdev, DSP_BAR, SHIM_CSR,
 				  SHIM_BYT_CSR_RST | SHIM_BYT_CSR_VECTOR_SEL,
 				  SHIM_BYT_CSR_RST | SHIM_BYT_CSR_VECTOR_SEL);
 }
@@ -689,7 +670,7 @@ static int byt_suspend(struct snd_sof_dev *sdev, u32 target_state)
 static int byt_resume(struct snd_sof_dev *sdev)
 {
 	/* enable BUSY and disable DONE Interrupt by default */
-	snd_sof_dsp_update_bits64(sdev, BYT_DSP_BAR, SHIM_IMRX,
+	snd_sof_dsp_update_bits64(sdev, DSP_BAR, SHIM_IMRX,
 				  SHIM_IMRX_BUSY | SHIM_IMRX_DONE,
 				  SHIM_IMRX_DONE);
 
@@ -702,33 +683,6 @@ static int byt_remove(struct snd_sof_dev *sdev)
 
 	return 0;
 }
-
-static const struct snd_sof_debugfs_map cht_debugfs[] = {
-	{"dmac0", BYT_DSP_BAR, DMAC0_OFFSET, DMAC_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"dmac1", BYT_DSP_BAR,  DMAC1_OFFSET, DMAC_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"dmac2", BYT_DSP_BAR,  DMAC2_OFFSET, DMAC_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp0",  BYT_DSP_BAR, SSP0_OFFSET, SSP_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp1", BYT_DSP_BAR, SSP1_OFFSET, SSP_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp2", BYT_DSP_BAR, SSP2_OFFSET, SSP_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp3", BYT_DSP_BAR, SSP3_OFFSET, SSP_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp4", BYT_DSP_BAR, SSP4_OFFSET, SSP_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"ssp5", BYT_DSP_BAR, SSP5_OFFSET, SSP_SIZE,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-	{"iram", BYT_DSP_BAR, IRAM_OFFSET, IRAM_SIZE,
-	 SOF_DEBUGFS_ACCESS_D0_ONLY},
-	{"dram", BYT_DSP_BAR, DRAM_OFFSET, DRAM_SIZE,
-	 SOF_DEBUGFS_ACCESS_D0_ONLY},
-	{"shim", BYT_DSP_BAR, SHIM_OFFSET, SHIM_SIZE_CHT,
-	 SOF_DEBUGFS_ACCESS_ALWAYS},
-};
 
 static int byt_acpi_probe(struct snd_sof_dev *sdev)
 {
@@ -760,17 +714,17 @@ static int byt_acpi_probe(struct snd_sof_dev *sdev)
 	}
 
 	dev_dbg(sdev->dev, "LPE PHY base at 0x%x size 0x%x", base, size);
-	sdev->bar[BYT_DSP_BAR] = devm_ioremap(sdev->dev, base, size);
-	if (!sdev->bar[BYT_DSP_BAR]) {
+	sdev->bar[DSP_BAR] = devm_ioremap(sdev->dev, base, size);
+	if (!sdev->bar[DSP_BAR]) {
 		dev_err(sdev->dev, "error: failed to ioremap LPE base 0x%x size 0x%x\n",
 			base, size);
 		return -ENODEV;
 	}
-	dev_dbg(sdev->dev, "LPE VADDR %p\n", sdev->bar[BYT_DSP_BAR]);
+	dev_dbg(sdev->dev, "LPE VADDR %p\n", sdev->bar[DSP_BAR]);
 
 	/* TODO: add offsets */
-	sdev->mmio_bar = BYT_DSP_BAR;
-	sdev->mailbox_bar = BYT_DSP_BAR;
+	sdev->mmio_bar = DSP_BAR;
+	sdev->mailbox_bar = DSP_BAR;
 
 	/* IMR base - optional */
 	if (desc->resindex_imr_base == -1)
@@ -794,13 +748,13 @@ static int byt_acpi_probe(struct snd_sof_dev *sdev)
 	}
 
 	dev_dbg(sdev->dev, "IMR base at 0x%x size 0x%x", base, size);
-	sdev->bar[BYT_IMR_BAR] = devm_ioremap(sdev->dev, base, size);
-	if (!sdev->bar[BYT_IMR_BAR]) {
+	sdev->bar[IMR_BAR] = devm_ioremap(sdev->dev, base, size);
+	if (!sdev->bar[IMR_BAR]) {
 		dev_err(sdev->dev, "error: failed to ioremap IMR base 0x%x size 0x%x\n",
 			base, size);
 		return -ENODEV;
 	}
-	dev_dbg(sdev->dev, "IMR VADDR %p\n", sdev->bar[BYT_IMR_BAR]);
+	dev_dbg(sdev->dev, "IMR VADDR %p\n", sdev->bar[IMR_BAR]);
 
 irq:
 	/* register our IRQ */
@@ -810,7 +764,7 @@ irq:
 
 	dev_dbg(sdev->dev, "using IRQ %d\n", sdev->ipc_irq);
 	ret = devm_request_threaded_irq(sdev->dev, sdev->ipc_irq,
-					byt_irq_handler, byt_irq_thread,
+					atom_irq_handler, atom_irq_thread,
 					IRQF_SHARED, "AudioDSP", sdev);
 	if (ret < 0) {
 		dev_err(sdev->dev, "error: failed to register IRQ %d\n",
@@ -819,7 +773,7 @@ irq:
 	}
 
 	/* enable BUSY and disable DONE Interrupt by default */
-	snd_sof_dsp_update_bits64(sdev, BYT_DSP_BAR, SHIM_IMRX,
+	snd_sof_dsp_update_bits64(sdev, DSP_BAR, SHIM_IMRX,
 				  SHIM_IMRX_BUSY | SHIM_IMRX_DONE,
 				  SHIM_IMRX_DONE);
 
@@ -836,8 +790,8 @@ static const struct snd_sof_dsp_ops sof_byt_ops = {
 	.remove		= byt_remove,
 
 	/* DSP core boot / reset */
-	.run		= byt_run,
-	.reset		= byt_reset,
+	.run		= atom_run,
+	.reset		= atom_reset,
 
 	/* Register IO */
 	.write		= sof_io_write,
@@ -850,28 +804,28 @@ static const struct snd_sof_dsp_ops sof_byt_ops = {
 	.block_write	= sof_block_write,
 
 	/* doorbell */
-	.irq_handler	= byt_irq_handler,
-	.irq_thread	= byt_irq_thread,
+	.irq_handler	= atom_irq_handler,
+	.irq_thread	= atom_irq_thread,
 
 	/* ipc */
-	.send_msg	= byt_send_msg,
+	.send_msg	= atom_send_msg,
 	.fw_ready	= sof_fw_ready,
-	.get_mailbox_offset = byt_get_mailbox_offset,
-	.get_window_offset = byt_get_window_offset,
+	.get_mailbox_offset = atom_get_mailbox_offset,
+	.get_window_offset = atom_get_window_offset,
 
 	.ipc_msg_data	= intel_ipc_msg_data,
 	.ipc_pcm_params	= intel_ipc_pcm_params,
 
 	/* machine driver */
-	.machine_select = byt_machine_select,
+	.machine_select = atom_machine_select,
 	.machine_register = sof_machine_register,
 	.machine_unregister = sof_machine_unregister,
-	.set_mach_params = byt_set_mach_params,
+	.set_mach_params = atom_set_mach_params,
 
 	/* debug */
 	.debug_map	= byt_debugfs,
 	.debug_map_count	= ARRAY_SIZE(byt_debugfs),
-	.dbg_dump	= byt_dump,
+	.dbg_dump	= atom_dump,
 
 	/* stream callbacks */
 	.pcm_open	= intel_pcm_open,
@@ -888,7 +842,7 @@ static const struct snd_sof_dsp_ops sof_byt_ops = {
 	.resume = byt_resume,
 
 	/* DAI drivers */
-	.drv = byt_dai,
+	.drv = atom_dai,
 	.num_drv = 3, /* we have only 3 SSPs on byt*/
 
 	/* ALSA HW info flags */
@@ -913,8 +867,8 @@ static const struct snd_sof_dsp_ops sof_cht_ops = {
 	.remove		= byt_remove,
 
 	/* DSP core boot / reset */
-	.run		= byt_run,
-	.reset		= byt_reset,
+	.run		= atom_run,
+	.reset		= atom_reset,
 
 	/* Register IO */
 	.write		= sof_io_write,
@@ -927,28 +881,28 @@ static const struct snd_sof_dsp_ops sof_cht_ops = {
 	.block_write	= sof_block_write,
 
 	/* doorbell */
-	.irq_handler	= byt_irq_handler,
-	.irq_thread	= byt_irq_thread,
+	.irq_handler	= atom_irq_handler,
+	.irq_thread	= atom_irq_thread,
 
 	/* ipc */
-	.send_msg	= byt_send_msg,
+	.send_msg	= atom_send_msg,
 	.fw_ready	= sof_fw_ready,
-	.get_mailbox_offset = byt_get_mailbox_offset,
-	.get_window_offset = byt_get_window_offset,
+	.get_mailbox_offset = atom_get_mailbox_offset,
+	.get_window_offset = atom_get_window_offset,
 
 	.ipc_msg_data	= intel_ipc_msg_data,
 	.ipc_pcm_params	= intel_ipc_pcm_params,
 
 	/* machine driver */
-	.machine_select = byt_machine_select,
+	.machine_select = atom_machine_select,
 	.machine_register = sof_machine_register,
 	.machine_unregister = sof_machine_unregister,
-	.set_mach_params = byt_set_mach_params,
+	.set_mach_params = atom_set_mach_params,
 
 	/* debug */
 	.debug_map	= cht_debugfs,
 	.debug_map_count	= ARRAY_SIZE(cht_debugfs),
-	.dbg_dump	= byt_dump,
+	.dbg_dump	= atom_dump,
 
 	/* stream callbacks */
 	.pcm_open	= intel_pcm_open,
@@ -965,9 +919,9 @@ static const struct snd_sof_dsp_ops sof_cht_ops = {
 	.resume = byt_resume,
 
 	/* DAI drivers */
-	.drv = byt_dai,
+	.drv = atom_dai,
 	/* all 6 SSPs may be available for cherrytrail */
-	.num_drv = ARRAY_SIZE(byt_dai),
+	.num_drv = 6,
 
 	/* ALSA HW info flags */
 	.hw_info =	SNDRV_PCM_INFO_MMAP |
@@ -983,6 +937,98 @@ static const struct sof_intel_dsp_desc cht_chip_info = {
 	.cores_num = 1,
 	.host_managed_cores_mask = 1,
 };
+<<<<<<< HEAD
+
+/* BYTCR uses different IRQ index */
+static const struct sof_dev_desc sof_acpi_baytrailcr_desc = {
+	.machines = snd_soc_acpi_intel_baytrail_machines,
+	.resindex_lpe_base = 0,
+	.resindex_pcicfg_base = 1,
+	.resindex_imr_base = 2,
+	.irqindex_host_ipc = 0,
+	.chip_info = &byt_chip_info,
+	.default_fw_path = "intel/sof",
+	.default_tplg_path = "intel/sof-tplg",
+	.default_fw_filename = "sof-byt.ri",
+	.nocodec_tplg_filename = "sof-byt-nocodec.tplg",
+	.ops = &sof_byt_ops,
+};
+
+static const struct sof_dev_desc sof_acpi_baytrail_desc = {
+	.machines = snd_soc_acpi_intel_baytrail_machines,
+	.resindex_lpe_base = 0,
+	.resindex_pcicfg_base = 1,
+	.resindex_imr_base = 2,
+	.irqindex_host_ipc = 5,
+	.chip_info = &byt_chip_info,
+	.default_fw_path = "intel/sof",
+	.default_tplg_path = "intel/sof-tplg",
+	.default_fw_filename = "sof-byt.ri",
+	.nocodec_tplg_filename = "sof-byt-nocodec.tplg",
+	.ops = &sof_byt_ops,
+};
+
+static const struct sof_dev_desc sof_acpi_cherrytrail_desc = {
+	.machines = snd_soc_acpi_intel_cherrytrail_machines,
+	.resindex_lpe_base = 0,
+	.resindex_pcicfg_base = 1,
+	.resindex_imr_base = 2,
+	.irqindex_host_ipc = 5,
+	.chip_info = &cht_chip_info,
+	.default_fw_path = "intel/sof",
+	.default_tplg_path = "intel/sof-tplg",
+	.default_fw_filename = "sof-cht.ri",
+	.nocodec_tplg_filename = "sof-cht-nocodec.tplg",
+	.ops = &sof_cht_ops,
+};
+
+static const struct acpi_device_id sof_baytrail_match[] = {
+	{ "80860F28", (unsigned long)&sof_acpi_baytrail_desc },
+	{ "808622A8", (unsigned long)&sof_acpi_cherrytrail_desc },
+	{ }
+};
+MODULE_DEVICE_TABLE(acpi, sof_baytrail_match);
+
+static int sof_baytrail_probe(struct platform_device *pdev)
+{
+	struct device *dev = &pdev->dev;
+	const struct sof_dev_desc *desc;
+	const struct acpi_device_id *id;
+	int ret;
+
+	id = acpi_match_device(dev->driver->acpi_match_table, dev);
+	if (!id)
+		return -ENODEV;
+
+	ret = snd_intel_acpi_dsp_driver_probe(dev, id->id);
+	if (ret != SND_INTEL_DSP_DRIVER_ANY && ret != SND_INTEL_DSP_DRIVER_SOF) {
+		dev_dbg(dev, "SOF ACPI driver not selected, aborting probe\n");
+		return -ENODEV;
+	}
+
+	desc = device_get_match_data(&pdev->dev);
+	if (!desc)
+		return -ENODEV;
+
+	if (desc == &sof_acpi_baytrail_desc && soc_intel_is_byt_cr(pdev))
+		desc = &sof_acpi_baytrailcr_desc;
+
+	return sof_acpi_probe(pdev, desc);
+}
+
+/* acpi_driver definition */
+static struct platform_driver snd_sof_acpi_intel_byt_driver = {
+	.probe = sof_baytrail_probe,
+	.remove = sof_acpi_remove,
+	.driver = {
+		.name = "sof-audio-acpi-intel-byt",
+		.pm = &sof_acpi_pm,
+		.acpi_match_table = sof_baytrail_match,
+	},
+};
+module_platform_driver(snd_sof_acpi_intel_byt_driver);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /* BYTCR uses different IRQ index */
 static const struct sof_dev_desc sof_acpi_baytrailcr_desc = {
@@ -1073,9 +1119,11 @@ static struct platform_driver snd_sof_acpi_intel_byt_driver = {
 };
 module_platform_driver(snd_sof_acpi_intel_byt_driver);
 
-#endif /* CONFIG_SND_SOC_SOF_BAYTRAIL */
-
 MODULE_LICENSE("Dual BSD/GPL");
 MODULE_IMPORT_NS(SND_SOC_SOF_INTEL_HIFI_EP_IPC);
 MODULE_IMPORT_NS(SND_SOC_SOF_XTENSA);
 MODULE_IMPORT_NS(SND_SOC_SOF_ACPI_DEV);
+<<<<<<< HEAD
+=======
+MODULE_IMPORT_NS(SND_SOC_SOF_INTEL_ATOM_HIFI_EP);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a

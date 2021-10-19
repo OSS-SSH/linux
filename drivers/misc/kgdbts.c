@@ -101,8 +101,14 @@
 		printk(KERN_INFO a);	\
 } while (0)
 #define v2printk(a...) do {		\
+<<<<<<< HEAD
 	if (verbose > 1)		\
 		printk(KERN_INFO a);	\
+=======
+	if (verbose > 1) {		\
+		printk(KERN_INFO a);	\
+	}				\
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	touch_nmi_watchdog();		\
 } while (0)
 #define eprintk(a...) do {		\

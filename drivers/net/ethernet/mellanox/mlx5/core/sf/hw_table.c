@@ -6,7 +6,10 @@
 #include "sf.h"
 #include "mlx5_ifc_vhca_event.h"
 #include "ecpf.h"
+<<<<<<< HEAD
 #include "vhca_event.h"
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "mlx5_core.h"
 #include "eswitch.h"
 
@@ -37,6 +40,7 @@ struct mlx5_sf_hw_table {
 
 static struct mlx5_sf_hwc_table *
 mlx5_sf_controller_to_hwc(struct mlx5_core_dev *dev, u32 controller)
+<<<<<<< HEAD
 {
 	int idx = !!controller;
 
@@ -121,6 +125,95 @@ int mlx5_sf_hw_table_sf_alloc(struct mlx5_core_dev *dev, u32 controller, u32 usr
 		err = sw_id;
 		goto exist_err;
 	}
+=======
+{
+	int idx = !!controller;
+
+	return &dev->priv.sf_hw_table->hwc[idx];
+}
+
+u16 mlx5_sf_sw_to_hw_id(struct mlx5_core_dev *dev, u32 controller, u16 sw_id)
+{
+	struct mlx5_sf_hwc_table *hwc;
+
+	hwc = mlx5_sf_controller_to_hwc(dev, controller);
+	return hwc->start_fn_id + sw_id;
+}
+
+static u16 mlx5_sf_hw_to_sw_id(struct mlx5_sf_hwc_table *hwc, u16 hw_id)
+{
+	return hw_id - hwc->start_fn_id;
+}
+
+static struct mlx5_sf_hwc_table *
+mlx5_sf_table_fn_to_hwc(struct mlx5_sf_hw_table *table, u16 fn_id)
+{
+	int i;
+
+	for (i = 0; i < ARRAY_SIZE(table->hwc); i++) {
+		if (table->hwc[i].max_fn &&
+		    fn_id >= table->hwc[i].start_fn_id &&
+		    fn_id < (table->hwc[i].start_fn_id + table->hwc[i].max_fn))
+			return &table->hwc[i];
+	}
+	return NULL;
+}
+
+static int mlx5_sf_hw_table_id_alloc(struct mlx5_sf_hw_table *table, u32 controller,
+				     u32 usr_sfnum)
+{
+	struct mlx5_sf_hwc_table *hwc;
+	int free_idx = -1;
+	int i;
+
+	hwc = mlx5_sf_controller_to_hwc(table->dev, controller);
+	if (!hwc->sfs)
+		return -ENOSPC;
+
+	for (i = 0; i < hwc->max_fn; i++) {
+		if (!hwc->sfs[i].allocated && free_idx == -1) {
+			free_idx = i;
+			continue;
+		}
+
+		if (hwc->sfs[i].allocated && hwc->sfs[i].usr_sfnum == usr_sfnum)
+			return -EEXIST;
+	}
+
+	if (free_idx == -1)
+		return -ENOSPC;
+
+	hwc->sfs[free_idx].usr_sfnum = usr_sfnum;
+	hwc->sfs[free_idx].allocated = true;
+	return free_idx;
+}
+
+static void mlx5_sf_hw_table_id_free(struct mlx5_sf_hw_table *table, u32 controller, int id)
+{
+	struct mlx5_sf_hwc_table *hwc;
+
+	hwc = mlx5_sf_controller_to_hwc(table->dev, controller);
+	hwc->sfs[id].allocated = false;
+	hwc->sfs[id].pending_delete = false;
+}
+
+int mlx5_sf_hw_table_sf_alloc(struct mlx5_core_dev *dev, u32 controller, u32 usr_sfnum)
+{
+	struct mlx5_sf_hw_table *table = dev->priv.sf_hw_table;
+	u16 hw_fn_id;
+	int sw_id;
+	int err;
+
+	if (!table)
+		return -EOPNOTSUPP;
+
+	mutex_lock(&table->table_lock);
+	sw_id = mlx5_sf_hw_table_id_alloc(table, controller, usr_sfnum);
+	if (sw_id < 0) {
+		err = sw_id;
+		goto exist_err;
+	}
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	hw_fn_id = mlx5_sf_sw_to_hw_id(dev, controller, sw_id);
 	err = mlx5_cmd_alloc_sf(dev, hw_fn_id);

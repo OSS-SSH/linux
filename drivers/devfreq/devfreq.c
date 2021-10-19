@@ -823,6 +823,10 @@ struct devfreq *devfreq_add_device(struct device *dev,
 	if (devfreq->profile->timer < 0
 		|| devfreq->profile->timer >= DEVFREQ_TIMER_NUM) {
 		mutex_unlock(&devfreq->lock);
+<<<<<<< HEAD
+=======
+		err = -EINVAL;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		goto err_dev;
 	}
 

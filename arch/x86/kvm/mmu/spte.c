@@ -101,6 +101,7 @@ int make_spte(struct kvm_vcpu *vcpu, unsigned int pte_access, int level,
 		spte |= SPTE_TDP_AD_DISABLED_MASK;
 	else if (kvm_vcpu_ad_need_write_protect(vcpu))
 		spte |= SPTE_TDP_AD_WRPROT_ONLY_MASK;
+<<<<<<< HEAD
 
 	/*
 	 * Bits 62:52 of PAE SPTEs are reserved.  WARN if said bits are set
@@ -108,6 +109,8 @@ int make_spte(struct kvm_vcpu *vcpu, unsigned int pte_access, int level,
 	 */
 	WARN_ON_ONCE((!tdp_enabled || !IS_ENABLED(CONFIG_X86_64)) &&
 		     (spte & SPTE_TDP_AD_MASK));
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/*
 	 * For the EPT case, shadow_present_mask is 0 if hardware
@@ -154,13 +157,19 @@ int make_spte(struct kvm_vcpu *vcpu, unsigned int pte_access, int level,
 		/*
 		 * Optimization: for pte sync, if spte was writable the hash
 		 * lookup is unnecessary (and expensive). Write protection
-		 * is responsibility of mmu_get_page / kvm_sync_page.
+		 * is responsibility of kvm_mmu_get_page / kvm_mmu_sync_roots.
 		 * Same reasoning can be applied to dirty page accounting.
 		 */
 		if (!can_unsync && is_writable_pte(old_spte))
 			goto out;
 
-		if (mmu_need_write_protect(vcpu, gfn, can_unsync)) {
+		/*
+		 * Unsync shadow pages that are reachable by the new, writable
+		 * SPTE.  Write-protect the SPTE if the page can't be unsync'd,
+		 * e.g. it's write-tracked (upper-level SPs) or has one or more
+		 * shadow pages and unsync'ing pages is not allowed.
+		 */
+		if (mmu_try_to_unsync_pages(vcpu, gfn, can_unsync)) {
 			pgprintk("%s: found shadow page for %llx, marking ro\n",
 				 __func__, gfn);
 			ret |= SET_SPTE_WRITE_PROTECTED_PT;
@@ -176,7 +185,14 @@ int make_spte(struct kvm_vcpu *vcpu, unsigned int pte_access, int level,
 		spte = mark_spte_for_access_track(spte);
 
 out:
+<<<<<<< HEAD
 	WARN_ON(is_mmio_spte(spte));
+=======
+	WARN_ONCE(is_rsvd_spte(&vcpu->arch.mmu->shadow_zero_check, spte, level),
+		  "spte = 0x%llx, level = %d, rsvd bits = 0x%llx", spte, level,
+		  get_rsvd_bits(&vcpu->arch.mmu->shadow_zero_check, spte, level));
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	*new_spte = spte;
 	return ret;
 }

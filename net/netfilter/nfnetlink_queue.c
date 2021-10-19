@@ -1051,8 +1051,12 @@ static int nfqnl_recv_verdict_batch(struct sk_buff *skb,
 				    const struct nlattr * const nfqa[])
 {
 	struct nfnl_queue_net *q = nfnl_queue_pernet(info->net);
+<<<<<<< HEAD
 	struct nfgenmsg *nfmsg = nlmsg_data(info->nlh);
 	u16 queue_num = ntohs(nfmsg->res_id);
+=======
+	u16 queue_num = ntohs(info->nfmsg->res_id);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct nf_queue_entry *entry, *tmp;
 	struct nfqnl_msg_verdict_hdr *vhdr;
 	struct nfqnl_instance *queue;
@@ -1160,8 +1164,12 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
 			      const struct nlattr * const nfqa[])
 {
 	struct nfnl_queue_net *q = nfnl_queue_pernet(info->net);
+<<<<<<< HEAD
 	struct nfgenmsg *nfmsg = nlmsg_data(info->nlh);
 	u_int16_t queue_num = ntohs(nfmsg->res_id);
+=======
+	u_int16_t queue_num = ntohs(info->nfmsg->res_id);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct nfqnl_msg_verdict_hdr *vhdr;
 	enum ip_conntrack_info ctinfo;
 	struct nfqnl_instance *queue;
@@ -1243,8 +1251,12 @@ static int nfqnl_recv_config(struct sk_buff *skb, const struct nfnl_info *info,
 			     const struct nlattr * const nfqa[])
 {
 	struct nfnl_queue_net *q = nfnl_queue_pernet(info->net);
+<<<<<<< HEAD
 	struct nfgenmsg *nfmsg = nlmsg_data(info->nlh);
 	u_int16_t queue_num = ntohs(nfmsg->res_id);
+=======
+	u_int16_t queue_num = ntohs(info->nfmsg->res_id);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	struct nfqnl_msg_config_cmd *cmd = NULL;
 	struct nfqnl_instance *queue;
 	__u32 flags = 0, mask = 0;

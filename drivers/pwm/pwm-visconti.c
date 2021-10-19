@@ -82,6 +82,7 @@ static int visconti_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 		return -ERANGE;
 
 	/*
+<<<<<<< HEAD
 	 * PWMC controls a divider that divides the input clk by a
 	 * power of two between 1 and 8. As a smaller divider yields
 	 * higher precision, pick the smallest possible one.
@@ -93,6 +94,16 @@ static int visconti_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 	} else {
 		pwmc0 = 0;
 	}
+=======
+	 * PWMC controls a divider that divides the input clk by a power of two
+	 * between 1 and 8. As a smaller divider yields higher precision, pick
+	 * the smallest possible one. As period is at most 0xffff << 3, pwmc0 is
+	 * in the intended range [0..3].
+	 */
+	pwmc0 = fls(period >> 16);
+	if (WARN_ON(pwmc0 > 3))
+		return -EINVAL;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	period >>= pwmc0;
 	duty_cycle >>= pwmc0;

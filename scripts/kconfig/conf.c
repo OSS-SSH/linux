@@ -678,7 +678,11 @@ static void check_conf(struct menu *menu)
 		check_conf(child);
 }
 
+<<<<<<< HEAD
 static struct option long_opts[] = {
+=======
+static const struct option long_opts[] = {
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	{"help",          no_argument,       NULL,            'h'},
 	{"silent",        no_argument,       NULL,            's'},
 	{"oldaskconfig",  no_argument,       &input_mode_opt, oldaskconfig},

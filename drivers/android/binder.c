@@ -4918,7 +4918,11 @@ static long binder_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
 		uint32_t enable;
 
 		if (copy_from_user(&enable, ubuf, sizeof(enable))) {
+<<<<<<< HEAD
 			ret = -EINVAL;
+=======
+			ret = -EFAULT;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			goto err;
 		}
 		binder_inner_proc_lock(proc);

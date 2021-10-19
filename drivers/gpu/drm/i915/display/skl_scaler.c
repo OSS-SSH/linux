@@ -2,6 +2,10 @@
 /*
  * Copyright © 2020 Intel Corporation
  */
+<<<<<<< HEAD
+=======
+#include "intel_de.h"
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 #include "intel_display_types.h"
 #include "skl_scaler.h"
 #include "skl_universal_plane.h"

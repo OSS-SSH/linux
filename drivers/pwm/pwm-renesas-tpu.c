@@ -408,8 +408,11 @@ static int tpu_probe(struct platform_device *pdev)
 
 	tpu->chip.dev = &pdev->dev;
 	tpu->chip.ops = &tpu_pwm_ops;
+<<<<<<< HEAD
 	tpu->chip.of_xlate = of_pwm_xlate_with_flags;
 	tpu->chip.of_pwm_n_cells = 3;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	tpu->chip.npwm = TPU_CHANNEL_MAX;
 
 	pm_runtime_enable(&pdev->dev);

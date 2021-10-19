@@ -246,11 +246,17 @@ int tpm2_seal_trusted(struct tpm_chip *chip,
 		return -EINVAL;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	if (!options->keyhandle)
 		return -EINVAL;
 
 >>>>>>> b2405b1efeaf1ef087ead4848ded33d38d55fd1c
+=======
+	if (!options->keyhandle)
+		return -EINVAL;
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	rc = tpm_try_get_ops(chip);
 	if (rc)
 		return rc;
@@ -339,9 +345,15 @@ out:
 			rc = -EPERM;
 	}
 	if (blob_len < 0)
+<<<<<<< HEAD
 		return blob_len;
 
 	payload->blob_len = blob_len;
+=======
+		rc = blob_len;
+	else
+		payload->blob_len = blob_len;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	tpm_put_ops(chip);
 	return rc;

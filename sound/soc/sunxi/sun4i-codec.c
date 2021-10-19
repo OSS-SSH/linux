@@ -1709,8 +1709,12 @@ static int sun4i_codec_probe(struct platform_device *pdev)
 
 	scodec->dev = &pdev->dev;
 
+<<<<<<< HEAD
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	base = devm_ioremap_resource(&pdev->dev, res);
+=======
+	base = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (IS_ERR(base))
 		return PTR_ERR(base);
 

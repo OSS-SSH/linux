@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
 /*
  * Copyright (C) 2015-2017 Intel Deutschland GmbH
- * Copyright (C) 2018-2020 Intel Corporation
+ * Copyright (C) 2018-2021 Intel Corporation
  */
 #include <linux/etherdevice.h>
 #include <linux/math64.h>
@@ -430,6 +430,10 @@ iwl_mvm_ftm_put_target_common(struct iwl_mvm *mvm,
 		FTM_PUT_FLAG(TB);
 	else if (peer->ftm.non_trigger_based)
 		FTM_PUT_FLAG(NON_TB);
+
+	if ((peer->ftm.trigger_based || peer->ftm.non_trigger_based) &&
+	    peer->ftm.lmr_feedback)
+		FTM_PUT_FLAG(LMR_FEEDBACK);
 }
 
 static int
@@ -727,6 +731,7 @@ static int iwl_mvm_ftm_start_v11(struct iwl_mvm *mvm,
 		struct iwl_tof_range_req_ap_entry_v7 *target = &cmd.ap[i];
 
 		err = iwl_mvm_ftm_put_target_v7(mvm, vif, peer, target);
+<<<<<<< HEAD
 		if (err)
 			return err;
 	}
@@ -772,9 +777,59 @@ static int iwl_mvm_ftm_start_v12(struct iwl_mvm *mvm,
 		u32 flags;
 
 		err = iwl_mvm_ftm_put_target_v7(mvm, vif, peer, (void *)target);
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+		if (err)
+			return err;
+	}
+
+	return iwl_mvm_ftm_send_cmd(mvm, &hcmd);
+}
+
+static void
+iwl_mvm_ftm_set_ndp_params(struct iwl_mvm *mvm,
+			   struct iwl_tof_range_req_ap_entry_v8 *target)
+{
+	/* Only 2 STS are supported on Tx */
+	u32 i2r_max_sts = IWL_MVM_FTM_I2R_MAX_STS > 1 ? 1 :
+		IWL_MVM_FTM_I2R_MAX_STS;
+
+	target->r2i_ndp_params = IWL_MVM_FTM_R2I_MAX_REP |
+		(IWL_MVM_FTM_R2I_MAX_STS << IWL_LOCATION_MAX_STS_POS);
+	target->i2r_ndp_params = IWL_MVM_FTM_I2R_MAX_REP |
+		(i2r_max_sts << IWL_LOCATION_MAX_STS_POS);
+	target->r2i_max_total_ltf = IWL_MVM_FTM_R2I_MAX_TOTAL_LTF;
+	target->i2r_max_total_ltf = IWL_MVM_FTM_I2R_MAX_TOTAL_LTF;
+}
+
+<<<<<<< HEAD
+=======
+static int iwl_mvm_ftm_start_v12(struct iwl_mvm *mvm,
+				 struct ieee80211_vif *vif,
+				 struct cfg80211_pmsr_request *req)
+{
+	struct iwl_tof_range_req_cmd_v12 cmd;
+	struct iwl_host_cmd hcmd = {
+		.id = iwl_cmd_id(TOF_RANGE_REQ_CMD, LOCATION_GROUP, 0),
+		.dataflags[0] = IWL_HCMD_DFL_DUP,
+		.data[0] = &cmd,
+		.len[0] = sizeof(cmd),
+	};
+	u8 i;
+	int err;
+
+	iwl_mvm_ftm_cmd_common(mvm, vif, (void *)&cmd, req);
+
+	for (i = 0; i < cmd.num_of_ap; i++) {
+		struct cfg80211_pmsr_request_peer *peer = &req->peers[i];
+		struct iwl_tof_range_req_ap_entry_v8 *target = &cmd.ap[i];
+		u32 flags;
+
+		err = iwl_mvm_ftm_put_target_v7(mvm, vif, peer, (void *)target);
 		if (err)
 			return err;
 
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		iwl_mvm_ftm_set_ndp_params(mvm, target);
 
 		/*
@@ -879,7 +934,8 @@ static u64 iwl_mvm_ftm_get_host_time(struct iwl_mvm *mvm, __le32 fw_gp2_ts)
 	u32 curr_gp2, diff;
 	u64 now_from_boot_ns;
 
-	iwl_mvm_get_sync_time(mvm, &curr_gp2, &now_from_boot_ns);
+	iwl_mvm_get_sync_time(mvm, CLOCK_BOOTTIME, &curr_gp2,
+			      &now_from_boot_ns, NULL);
 
 	if (curr_gp2 >= gp2_ts)
 		diff = curr_gp2 - gp2_ts;

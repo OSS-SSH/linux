@@ -58,11 +58,21 @@ SYM_FUNC_START_NOALIGN(__x86_indirect_alt_call_\reg)
 2:	.skip	5-(2b-1b), 0x90
 SYM_FUNC_END(__x86_indirect_alt_call_\reg)
 
+<<<<<<< HEAD
+=======
+STACK_FRAME_NON_STANDARD(__x86_indirect_alt_call_\reg)
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 SYM_FUNC_START_NOALIGN(__x86_indirect_alt_jmp_\reg)
 	ANNOTATE_RETPOLINE_SAFE
 1:	jmp	*%\reg
 2:	.skip	5-(2b-1b), 0x90
 SYM_FUNC_END(__x86_indirect_alt_jmp_\reg)
+<<<<<<< HEAD
+=======
+
+STACK_FRAME_NON_STANDARD(__x86_indirect_alt_jmp_\reg)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 .endm
 

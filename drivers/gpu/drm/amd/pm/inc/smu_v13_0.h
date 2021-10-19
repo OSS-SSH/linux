@@ -26,7 +26,11 @@
 #include "amdgpu_smu.h"
 
 #define SMU13_DRIVER_IF_VERSION_INV 0xFFFFFFFF
+<<<<<<< HEAD
 #define SMU13_DRIVER_IF_VERSION_ALDE 0x6
+=======
+#define SMU13_DRIVER_IF_VERSION_ALDE 0x07
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 /* MP Apertures */
 #define MP0_Public			0x03800000
@@ -51,12 +55,15 @@
 #define CTF_OFFSET_HOTSPOT		5
 #define CTF_OFFSET_MEM			5
 
+<<<<<<< HEAD
 static const struct smu_temperature_range smu13_thermal_policy[] =
 {
 	{-273150,  99000, 99000, -273150, 99000, 99000, -273150, 99000, 99000},
 	{ 120000, 120000, 120000, 120000, 120000, 120000, 120000, 120000, 120000},
 };
 
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 struct smu_13_0_max_sustainable_clocks {
 	uint32_t display_clock;
 	uint32_t phy_clock;

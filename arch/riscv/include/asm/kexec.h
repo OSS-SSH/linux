@@ -42,8 +42,13 @@ struct kimage_arch {
 	unsigned long fdt_addr;
 };
 
+<<<<<<< HEAD
 const extern unsigned char riscv_kexec_relocate[];
 const extern unsigned int riscv_kexec_relocate_size;
+=======
+extern const unsigned char riscv_kexec_relocate[];
+extern const unsigned int riscv_kexec_relocate_size;
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 typedef void (*riscv_kexec_method)(unsigned long first_ind_entry,
 				   unsigned long jump_addr,

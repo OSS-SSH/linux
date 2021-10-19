@@ -68,6 +68,14 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&gpu {
+	mali-supply = <&mt6358_vgpu_reg>;
+	sram-supply = <&mt6358_vsram_gpu_reg>;
+};
+
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 &i2c0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c_pins_0>;

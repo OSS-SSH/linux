@@ -63,7 +63,11 @@ void test_ringbuf_multi(void)
 		goto cleanup;
 
 	proto_fd = bpf_create_map(BPF_MAP_TYPE_RINGBUF, 0, 0, page_size, 0);
+<<<<<<< HEAD
 	if (CHECK(proto_fd == -1, "bpf_create_map", "bpf_create_map failed\n"))
+=======
+	if (CHECK(proto_fd < 0, "bpf_create_map", "bpf_create_map failed\n"))
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 		goto cleanup;
 
 	err = bpf_map__set_inner_map_fd(skel->maps.ringbuf_hash, proto_fd);

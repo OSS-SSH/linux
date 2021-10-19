@@ -162,6 +162,7 @@ struct ttm_device_funcs {
 		    struct ttm_place *hop);
 
 	/**
+<<<<<<< HEAD
 	 * struct ttm_bo_driver_member verify_access
 	 *
 	 * @bo: Pointer to a buffer object.
@@ -177,6 +178,8 @@ struct ttm_device_funcs {
 			     struct file *filp);
 
 	/**
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	 * Hook to notify driver about a resource delete.
 	 */
 	void (*delete_mem_notify)(struct ttm_buffer_object *bo);

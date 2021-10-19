@@ -133,5 +133,9 @@ void perf_pmu__warn_invalid_config(struct perf_pmu *pmu, __u64 config,
 				   char *name);
 
 bool perf_pmu__has_hybrid(void);
+<<<<<<< HEAD
+=======
+int perf_pmu__match(char *pattern, char *name, char *tok);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #endif /* __PMU_H */
