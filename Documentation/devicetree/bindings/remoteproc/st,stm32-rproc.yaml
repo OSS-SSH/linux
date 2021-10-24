@@ -65,16 +65,29 @@ properties:
           Unidirectional channel:
             - from local to remote, where ACK from the remote means that it is
               ready for shutdown
+      - description: |
+          A channel (d) used by the local proc to notify the remote proc that it
+          has to stop interprocessor communnication.
+          Unidirectional channel:
+            - from local to remote, where ACK from the remote means that communnication
+              as been stopped on the remote side.
     minItems: 1
-    maxItems: 3
+<<<<<<< HEAD
+    maxItems: 4
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
   mbox-names:
     items:
       - const: vq0
       - const: vq1
       - const: shutdown
+      - const: detach
     minItems: 1
-    maxItems: 3
+<<<<<<< HEAD
+    maxItems: 4
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
   memory-region:
     description:

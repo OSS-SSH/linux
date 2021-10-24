@@ -9,6 +9,7 @@
 #include <linux/highmem.h>
 #include <linux/sched/mm.h>
 #include <crypto/hash.h>
+#include "misc.h"
 #include "ctree.h"
 #include "disk-io.h"
 #include "transaction.h"
@@ -617,7 +618,7 @@ fail:
  * @file_start:  offset in file this bio begins to describe
  * @contig:	 Boolean. If true/1 means all bio vecs in this bio are
  *		 contiguous and they begin at @file_start in the file. False/0
- *		 means this bio can contains potentially discontigous bio vecs
+ *		 means this bio can contain potentially discontiguous bio vecs
  *		 so the logical offset of each should be calculated separately.
  */
 blk_status_t btrfs_csum_one_bio(struct btrfs_inode *inode, struct bio *bio,

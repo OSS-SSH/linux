@@ -363,9 +363,11 @@ static int pwm_imx_tpm_probe(struct platform_device *pdev)
 
 	tpm->chip.dev = &pdev->dev;
 	tpm->chip.ops = &imx_tpm_pwm_ops;
-	tpm->chip.base = -1;
+<<<<<<< HEAD
 	tpm->chip.of_xlate = of_pwm_xlate_with_flags;
 	tpm->chip.of_pwm_n_cells = 3;
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 	/* get number of channels */
 	val = readl(tpm->base + PWM_IMX_TPM_PARAM);
@@ -411,9 +413,7 @@ static int __maybe_unused pwm_imx_tpm_resume(struct device *dev)
 
 	ret = clk_prepare_enable(tpm->clk);
 	if (ret)
-		dev_err(dev,
-			"failed to prepare or enable clock: %d\n",
-			ret);
+		dev_err(dev, "failed to prepare or enable clock: %d\n", ret);
 
 	return ret;
 }

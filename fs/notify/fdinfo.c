@@ -144,7 +144,12 @@ void fanotify_show_fdinfo(struct seq_file *m, struct file *f)
 	struct fsnotify_group *group = f->private_data;
 
 	seq_printf(m, "fanotify flags:%x event-flags:%x\n",
-		   group->fanotify_data.flags, group->fanotify_data.f_flags);
+<<<<<<< HEAD
+		   group->fanotify_data.flags,
+=======
+		   group->fanotify_data.flags & FANOTIFY_INIT_FLAGS,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+		   group->fanotify_data.f_flags);
 
 	show_fdinfo(m, f, fanotify_fdinfo);
 }

@@ -89,6 +89,12 @@ static int blkdev_reread_part(struct block_device *bdev, fmode_t mode)
 		return -EINVAL;
 	if (!capable(CAP_SYS_ADMIN))
 		return -EACCES;
+<<<<<<< HEAD
+	if (bdev->bd_part_count)
+=======
+	if (bdev->bd_disk->open_partitions)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+		return -EBUSY;
 
 	/*
 	 * Reopen the device to revalidate the driver state and force a

@@ -2281,6 +2281,11 @@ static int gpi_probe(struct platform_device *pdev)
 
 static const struct of_device_id gpi_of_match[] = {
 	{ .compatible = "qcom,sdm845-gpi-dma" },
+	{ .compatible = "qcom,sm8150-gpi-dma" },
+<<<<<<< HEAD
+=======
+	{ .compatible = "qcom,sm8250-gpi-dma" },
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	{ },
 };
 MODULE_DEVICE_TABLE(of, gpi_of_match);

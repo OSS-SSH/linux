@@ -109,15 +109,32 @@ well as to make sure they aren't relying on some HCD-specific behavior.
 USB-Standard Types
 ==================
 
-In ``<linux/usb/ch9.h>`` you will find the USB data types defined in
-chapter 9 of the USB specification. These data types are used throughout
+<<<<<<< HEAD
+In ``drivers/usb/common/common.c`` and ``drivers/usb/common/debug.c`` you
+will find the USB data types defined in chapter 9 of the USB specification.
+These data types are used throughout USB, and in APIs including this host
+side API, gadget APIs, usb character devices and debugfs interfaces.
+
+.. kernel-doc:: drivers/usb/common/common.c
+   :export:
+=======
+In ``include/uapi/linux/usb/ch9.h`` you will find the USB data types defined
+in chapter 9 of the USB specification. These data types are used throughout
 USB, and in APIs including this host side API, gadget APIs, usb character
-devices and debugfs interfaces.
+devices and debugfs interfaces. That file is itself included by
+``include/linux/usb/ch9.h``, which also contains declarations of a few
+utility routines for manipulating these data types; the implementations
+are in ``drivers/usb/common/common.c``.
 
-.. kernel-doc:: include/linux/usb/ch9.h
-   :internal:
+.. kernel-doc:: drivers/usb/common/common.c
+   :export:
 
-.. _usb_header:
+In addition, some functions useful for creating debugging output are
+defined in ``drivers/usb/common/debug.c``.
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+
+.. kernel-doc:: drivers/usb/common/debug.c
+   :export:
 
 Host-Side Data Types and Macros
 ===============================

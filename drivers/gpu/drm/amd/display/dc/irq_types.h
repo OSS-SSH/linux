@@ -150,7 +150,12 @@ enum dc_irq_source {
 	DC_IRQ_SOURCE_DC4_VLINE1,
 	DC_IRQ_SOURCE_DC5_VLINE1,
 	DC_IRQ_SOURCE_DC6_VLINE1,
-
+<<<<<<< HEAD
+	DC_IRQ_DMCUB_OUTBOX1,
+=======
+	DC_IRQ_SOURCE_DMCUB_OUTBOX,
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
+	DC_IRQ_SOURCE_DMCUB_OUTBOX0,
 
 	DAL_IRQ_SOURCES_NUMBER
 };
@@ -164,7 +169,7 @@ enum irq_type
 };
 
 #define DAL_VALID_IRQ_SRC_NUM(src) \
-	((src) <= DAL_IRQ_SOURCES_NUMBER && (src) > DC_IRQ_SOURCE_INVALID)
+	((src) < DAL_IRQ_SOURCES_NUMBER && (src) > DC_IRQ_SOURCE_INVALID)
 
 /* Number of Page Flip IRQ Sources. */
 #define DAL_PFLIP_IRQ_SRC_NUM \

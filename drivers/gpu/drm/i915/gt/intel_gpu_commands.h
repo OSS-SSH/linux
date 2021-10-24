@@ -1,7 +1,10 @@
+/* SPDX-License-Identifier: MIT*/
 /*
- * SPDX-License-Identifier: MIT
- *
+<<<<<<< HEAD
  * Copyright � 2003-2018 Intel Corporation
+=======
+ * Copyright © 2003-2018 Intel Corporation
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
  */
 
 #ifndef _INTEL_GPU_COMMANDS_H_

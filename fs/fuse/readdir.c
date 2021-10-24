@@ -200,9 +200,17 @@ retry:
 	if (!d_in_lookup(dentry)) {
 		struct fuse_inode *fi;
 		inode = d_inode(dentry);
+		if (inode && get_node_id(inode) != o->nodeid)
+			inode = NULL;
 		if (!inode ||
+<<<<<<< HEAD
 		    get_node_id(inode) != o->nodeid ||
-		    ((o->attr.mode ^ inode->i_mode) & S_IFMT)) {
+		    inode_wrong_type(inode, o->attr.mode)) {
+=======
+		    fuse_stale_inode(inode, o->generation, &o->attr)) {
+			if (inode)
+				fuse_make_bad(inode);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 			d_invalidate(dentry);
 			dput(dentry);
 			goto retry;

@@ -1,4 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
+/*
+ * KCSAN debugfs interface.
+ *
+ * Copyright (C) 2019, Google LLC.
+ */
 
 #define pr_fmt(fmt) "kcsan: " fmt
 
@@ -261,7 +266,14 @@ static const struct file_operations debugfs_ops =
 	.release = single_release
 };
 
-void __init kcsan_debugfs_init(void)
+<<<<<<< HEAD
+static void __init kcsan_debugfs_init(void)
+=======
+static int __init kcsan_debugfs_init(void)
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 {
 	debugfs_create_file("kcsan", 0644, NULL, NULL, &debugfs_ops);
+	return 0;
 }
+
+late_initcall(kcsan_debugfs_init);

@@ -31,10 +31,18 @@
 #ifndef _TTM_MODULE_H_
 #define _TTM_MODULE_H_
 
-#include <linux/kernel.h>
-struct kobject;
-
 #define TTM_PFX "[TTM] "
-extern struct kobject *ttm_get_kobj(void);
+
+struct dentry;
+<<<<<<< HEAD
+
+extern struct dentry *ttm_debugfs_root;
+=======
+struct ttm_device;
+
+extern struct dentry *ttm_debugfs_root;
+
+void ttm_sys_man_init(struct ttm_device *bdev);
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 #endif /* _TTM_MODULE_H_ */

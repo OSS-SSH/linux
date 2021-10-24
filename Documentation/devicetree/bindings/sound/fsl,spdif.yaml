@@ -21,6 +21,14 @@ properties:
       - fsl,vf610-spdif
       - fsl,imx6sx-spdif
       - fsl,imx8qm-spdif
+      - fsl,imx8qxp-spdif
+      - fsl,imx8mq-spdif
+      - fsl,imx8mm-spdif
+      - fsl,imx8mn-spdif
+<<<<<<< HEAD
+=======
+      - fsl,imx8ulp-spdif
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
   reg:
     maxItems: 1

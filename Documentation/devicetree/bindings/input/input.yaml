@@ -32,6 +32,15 @@ properties:
       Duration in seconds which the key should be kept pressed for device to
       power off automatically. Device with key pressed shutdown feature can
       specify this property.
+
+  reset-time-sec:
+    description:
+      Duration in seconds which the key should be kept pressed for device to
+      reset automatically. Device with key pressed reset feature can specify
+      this property.
+<<<<<<< HEAD
     $ref: /schemas/types.yaml#/definitions/uint32
+=======
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 
 additionalProperties: true

@@ -71,8 +71,8 @@ struct lmp91000_data {
 
 	struct completion completion;
 	u8 chan_select;
-
-	u32 buffer[4]; /* 64-bit data + 64-bit timestamp */
+	/* 64-bit data + 64-bit naturally aligned timestamp */
+	u32 buffer[4] __aligned(8);
 };
 
 static const struct iio_chan_spec lmp91000_channels[] = {
@@ -322,15 +322,19 @@ static int lmp91000_probe(struct i2c_client *client,
 		return PTR_ERR(data->regmap);
 	}
 
-	data->trig = devm_iio_trigger_alloc(data->dev, "%s-mux%d",
+	data->trig = devm_iio_trigger_alloc(dev, "%s-mux%d",
+<<<<<<< HEAD
 					    indio_dev->name, indio_dev->id);
+=======
+					    indio_dev->name,
+					    iio_device_id(indio_dev));
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
 	if (!data->trig) {
 		dev_err(dev, "cannot allocate iio trigger.\n");
 		return -ENOMEM;
 	}
 
 	data->trig->ops = &lmp91000_trigger_ops;
-	data->trig->dev.parent = dev;
 	init_completion(&data->completion);
 
 	ret = lmp91000_read_config(data);

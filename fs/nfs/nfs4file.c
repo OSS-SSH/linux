@@ -420,9 +420,7 @@ static const struct nfs4_ssc_client_ops nfs4_ssc_clnt_ops_tbl = {
  */
 void nfs42_ssc_register_ops(void)
 {
-#ifdef CONFIG_NFSD_V4
 	nfs42_ssc_register(&nfs4_ssc_clnt_ops_tbl);
-#endif
 }
 
 /**
@@ -433,11 +431,15 @@ void nfs42_ssc_register_ops(void)
  */
 void nfs42_ssc_unregister_ops(void)
 {
-#ifdef CONFIG_NFSD_V4
 	nfs42_ssc_unregister(&nfs4_ssc_clnt_ops_tbl);
-#endif
 }
 #endif /* CONFIG_NFS_V4_2 */
+
+static int nfs4_setlease(struct file *file, long arg, struct file_lock **lease,
+			 void **priv)
+{
+	return nfs4_proc_setlease(file, arg, lease, priv);
+}
 
 const struct file_operations nfs4_file_operations = {
 	.read_iter	= nfs_file_read,
@@ -452,7 +454,7 @@ const struct file_operations nfs4_file_operations = {
 	.splice_read	= generic_file_splice_read,
 	.splice_write	= iter_file_splice_write,
 	.check_flags	= nfs_check_flags,
-	.setlease	= simple_nosetlease,
+	.setlease	= nfs4_setlease,
 #ifdef CONFIG_NFS_V4_2
 	.copy_file_range = nfs4_copy_file_range,
 	.llseek		= nfs4_file_llseek,

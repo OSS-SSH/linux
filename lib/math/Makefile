@@ -4,3 +4,9 @@ obj-y += div64.o gcd.o lcm.o int_pow.o int_sqrt.o reciprocal_div.o
 obj-$(CONFIG_CORDIC)		+= cordic.o
 obj-$(CONFIG_PRIME_NUMBERS)	+= prime_numbers.o
 obj-$(CONFIG_RATIONAL)		+= rational.o
+
+obj-$(CONFIG_TEST_DIV64)	+= test_div64.o
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_RATIONAL_KUNIT_TEST) += rational-test.o
+>>>>>>> 337c5b93cca6f9be4b12580ce75a06eae468236a
