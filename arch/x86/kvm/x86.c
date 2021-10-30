@@ -7034,11 +7034,6 @@ static void init_emulate_ctxt(struct kvm_vcpu *vcpu)
 	BUILD_BUG_ON(HF_SMM_MASK != X86EMUL_SMM_MASK);
 	BUILD_BUG_ON(HF_SMM_INSIDE_NMI_MASK != X86EMUL_SMM_INSIDE_NMI_MASK);
 
-	ctxt->interruptibility = 0;
-	ctxt->have_exception = false;
-	ctxt->exception.vector = -1;
-	ctxt->perm_ok = false;
-
 	init_decode_cache(ctxt);
 	vcpu->arch.emulate_regs_need_sync_from_vcpu = false;
 }
@@ -7373,6 +7368,11 @@ int x86_decode_emulated_instruction(struct kvm_vcpu *vcpu, int emulation_type,
 	if (!(emulation_type & EMULTYPE_SKIP) &&
 	    kvm_vcpu_check_breakpoint(vcpu, &r))
 		return r;
+
+	ctxt->interruptibility = 0;
+	ctxt->have_exception = false;
+	ctxt->exception.vector = -1;
+	ctxt->perm_ok = false;
 
 	ctxt->ud = emulation_type & EMULTYPE_TRAP_UD;
 
@@ -9860,7 +9860,8 @@ int kvm_arch_vcpu_ioctl_set_guest_debug(struct kvm_vcpu *vcpu,
 	kvm_update_dr7(vcpu);
 
 	if (vcpu->guest_debug & KVM_GUESTDBG_SINGLESTEP)
-		vcpu->arch.singlestep_rip = kvm_get_linear_rip(vcpu);
+		vcpu->arch.singlestep_rip = kvm_rip_read(vcpu) +
+			get_segment_base(vcpu, VCPU_SREG_CS);
 
 	/*
 	 * Trigger an rflags update that will inject or remove the trace
