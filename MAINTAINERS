@@ -6880,7 +6880,7 @@ M:	Dan Williams <dan.j.williams@intel.com>
 R:	Matthew Wilcox <willy@infradead.org>
 R:	Jan Kara <jack@suse.cz>
 L:	linux-fsdevel@vger.kernel.org
-L:	nvdimm@lists.linux.dev
+L:	linux-nvdimm@lists.01.org
 S:	Supported
 F:	fs/dax.c
 F:	include/linux/dax.h
@@ -10139,7 +10139,7 @@ LIBNVDIMM BLK: MMIO-APERTURE DRIVER
 M:	Dan Williams <dan.j.williams@intel.com>
 M:	Vishal Verma <vishal.l.verma@intel.com>
 M:	Dave Jiang <dave.jiang@intel.com>
-L:	nvdimm@lists.linux.dev
+L:      linux-nvdimm@lists.01.org
 S:	Supported
 Q:	https://patchwork.kernel.org/project/linux-nvdimm/list/
 P:	Documentation/nvdimm/maintainer-entry-profile.rst
