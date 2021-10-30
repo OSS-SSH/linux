@@ -468,7 +468,7 @@ static struct cgroup_subsys_state *cgroup_css(struct cgroup *cgrp,
  * @cgrp: the cgroup of interest
  * @ss: the subsystem of interest
  *
- * Find and get @cgrp's css associated with @ss.  If the css doesn't exist
+ * Find and get @cgrp's css assocaited with @ss.  If the css doesn't exist
  * or is offline, %NULL is returned.
  */
 static struct cgroup_subsys_state *cgroup_tryget_css(struct cgroup *cgrp,
@@ -1632,7 +1632,7 @@ static void cgroup_rm_file(struct cgroup *cgrp, const struct cftype *cft)
 
 /**
  * css_clear_dir - remove subsys files in a cgroup directory
- * @css: target css
+ * @css: taget css
  */
 static void css_clear_dir(struct cgroup_subsys_state *css)
 {
@@ -5342,7 +5342,7 @@ out_unlock:
 /*
  * This is called when the refcnt of a css is confirmed to be killed.
  * css_tryget_online() is now guaranteed to fail.  Tell the subsystem to
- * initiate destruction and put the css ref from kill_css().
+ * initate destruction and put the css ref from kill_css().
  */
 static void css_killed_work_fn(struct work_struct *work)
 {
@@ -5626,6 +5626,8 @@ int __init cgroup_init_early(void)
 	return 0;
 }
 
+static u16 cgroup_disable_mask __initdata;
+
 /**
  * cgroup_init - cgroup initialization
  *
@@ -5684,8 +5686,12 @@ int __init cgroup_init(void)
 		 * disabled flag and cftype registration needs kmalloc,
 		 * both of which aren't available during early_init.
 		 */
-		if (!cgroup_ssid_enabled(ssid))
+		if (cgroup_disable_mask & (1 << ssid)) {
+			static_branch_disable(cgroup_subsys_enabled_key[ssid]);
+			printk(KERN_INFO "Disabling %s control group subsystem\n",
+			       ss->name);
 			continue;
+		}
 
 		if (cgroup1_ssid_disabled(ssid))
 			printk(KERN_INFO "Disabling %s control group subsystem in v1 mounts\n",
@@ -6044,7 +6050,7 @@ out_revert:
  * @kargs: the arguments passed to create the child process
  *
  * This calls the cancel_fork() callbacks if a fork failed *after*
- * cgroup_can_fork() succeeded and cleans up references we took to
+ * cgroup_can_fork() succeded and cleans up references we took to
  * prepare a new css_set for the child process in cgroup_can_fork().
  */
 void cgroup_cancel_fork(struct task_struct *child,
@@ -6200,10 +6206,7 @@ static int __init cgroup_disable(char *str)
 			if (strcmp(token, ss->name) &&
 			    strcmp(token, ss->legacy_name))
 				continue;
-
-			static_branch_disable(cgroup_subsys_enabled_key[i]);
-			pr_info("Disabling %s control group subsystem\n",
-				ss->name);
+			cgroup_disable_mask |= 1 << i;
 		}
 	}
 	return 1;
