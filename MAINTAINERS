@@ -5137,7 +5137,7 @@ DEVICE DIRECT ACCESS (DAX)
 M:	Dan Williams <dan.j.williams@intel.com>
 M:	Vishal Verma <vishal.l.verma@intel.com>
 M:	Dave Jiang <dave.jiang@intel.com>
-L:	nvdimm@lists.linux.dev
+L:	linux-nvdimm@lists.01.org
 S:	Supported
 F:	drivers/dax/
 
