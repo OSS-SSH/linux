@@ -10168,7 +10168,7 @@ F:	drivers/nvdimm/pmem*
 
 LIBNVDIMM: DEVICETREE BINDINGS
 M:	Oliver O'Halloran <oohall@gmail.com>
-L:	nvdimm@lists.linux.dev
+L:	linux-nvdimm@lists.01.org
 S:	Supported
 Q:	https://patchwork.kernel.org/project/linux-nvdimm/list/
 F:	Documentation/devicetree/bindings/pmem/pmem-region.txt
@@ -10179,7 +10179,7 @@ M:	Dan Williams <dan.j.williams@intel.com>
 M:	Vishal Verma <vishal.l.verma@intel.com>
 M:	Dave Jiang <dave.jiang@intel.com>
 M:	Ira Weiny <ira.weiny@intel.com>
-L:	nvdimm@lists.linux.dev
+L:	linux-nvdimm@lists.01.org
 S:	Supported
 Q:	https://patchwork.kernel.org/project/linux-nvdimm/list/
 P:	Documentation/nvdimm/maintainer-entry-profile.rst
@@ -14000,13 +14000,11 @@ PER-CPU MEMORY ALLOCATOR
 M:	Dennis Zhou <dennis@kernel.org>
 M:	Tejun Heo <tj@kernel.org>
 M:	Christoph Lameter <cl@linux.com>
-L:	linux-mm@kvack.org
 S:	Maintained
 T:	git git://git.kernel.org/pub/scm/linux/kernel/git/dennis/percpu.git
 F:	arch/*/include/asm/percpu.h
 F:	include/linux/percpu*.h
 F:	lib/percpu*.c
-F:	mm/percpu*.c
 
 PER-TASK DELAY ACCOUNTING
 M:	Balbir Singh <bsingharora@gmail.com>
