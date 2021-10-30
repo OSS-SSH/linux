@@ -14004,7 +14004,7 @@ S:	Maintained
 T:	git git://git.kernel.org/pub/scm/linux/kernel/git/dennis/percpu.git
 F:	arch/*/include/asm/percpu.h
 F:	include/linux/percpu*.h
-F:	lib/percpu*.c
+F:	mm/percpu*.c
 
 PER-TASK DELAY ACCOUNTING
 M:	Balbir Singh <bsingharora@gmail.com>
@@ -16945,12 +16945,6 @@ M:	Pierre-Yves MORDRET <pierre-yves.mordret@st.com>
 L:	linux-i2c@vger.kernel.org
 S:	Maintained
 F:	drivers/i2c/busses/i2c-stm32*
-
-ST STM32 SPI DRIVER
-M:	Alain Volmat <alain.volmat@foss.st.com>
-L:	linux-spi@vger.kernel.org
-S:	Maintained
-F:	drivers/spi/spi-stm32.c
 
 ST VL53L0X ToF RANGER(I2C) IIO DRIVER
 M:	Song Qiang <songqiang1304521@gmail.com>
