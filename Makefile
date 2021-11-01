@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 VERSION = 5
-PATCHLEVEL = 12
+PATCHLEVEL = 15
 SUBLEVEL = 0
-EXTRAVERSION = -rc1
-NAME = Frozen Wasteland
+EXTRAVERSION = -rc6
+NAME = Opossums on Parade
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
