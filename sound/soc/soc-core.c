@@ -1718,7 +1718,11 @@ static void append_dmi_string(struct snd_soc_card *card, const char *str)
  */
 int snd_soc_set_dmi_name(struct snd_soc_card *card, const char *flavour)
 {
+<<<<<<< HEAD
 	const char *vendor, *product, *board;
+=======
+	const char *vendor, *product, *product_version, *board;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (card->long_name)
 		return 0; /* long name already set by driver or from DMI */
@@ -1738,14 +1742,21 @@ int snd_soc_set_dmi_name(struct snd_soc_card *card, const char *flavour)
 
 	product = dmi_get_system_info(DMI_PRODUCT_NAME);
 	if (product && is_dmi_valid(product)) {
+<<<<<<< HEAD
 		const char *product_version = dmi_get_system_info(DMI_PRODUCT_VERSION);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		append_dmi_string(card, product);
 
 		/*
 		 * some vendors like Lenovo may only put a self-explanatory
 		 * name in the product version field
 		 */
+<<<<<<< HEAD
+=======
+		product_version = dmi_get_system_info(DMI_PRODUCT_VERSION);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (product_version && is_dmi_valid(product_version))
 			append_dmi_string(card, product_version);
 	}
@@ -2237,12 +2248,22 @@ static int snd_soc_add_controls(struct snd_card *card, struct device *dev,
 	const struct snd_kcontrol_new *controls, int num_controls,
 	const char *prefix, void *data)
 {
+<<<<<<< HEAD
 	int i;
 
 	for (i = 0; i < num_controls; i++) {
 		const struct snd_kcontrol_new *control = &controls[i];
 		int err = snd_ctl_add(card, snd_soc_cnew(control, data,
 							 control->name, prefix));
+=======
+	int err, i;
+
+	for (i = 0; i < num_controls; i++) {
+		const struct snd_kcontrol_new *control = &controls[i];
+
+		err = snd_ctl_add(card, snd_soc_cnew(control, data,
+						     control->name, prefix));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err < 0) {
 			dev_err(dev, "ASoC: Failed to add %s: %d\n",
 				control->name, err);
@@ -2716,10 +2737,18 @@ EXPORT_SYMBOL_GPL(snd_soc_unregister_component_by_driver);
  */
 void snd_soc_unregister_component(struct device *dev)
 {
+<<<<<<< HEAD
 	mutex_lock(&client_mutex);
 	while (1) {
 		struct snd_soc_component *component = snd_soc_lookup_component_nolocked(dev, NULL);
 
+=======
+	struct snd_soc_component *component;
+
+	mutex_lock(&client_mutex);
+	while (1) {
+		component = snd_soc_lookup_component_nolocked(dev, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!component)
 			break;
 
@@ -2773,7 +2802,11 @@ int snd_soc_of_parse_audio_simple_widgets(struct snd_soc_card *card,
 	struct device_node *np = card->dev->of_node;
 	struct snd_soc_dapm_widget *widgets;
 	const char *template, *wname;
+<<<<<<< HEAD
 	int i, j, num_widgets;
+=======
+	int i, j, num_widgets, ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	num_widgets = of_property_count_strings(np, propname);
 	if (num_widgets < 0) {
@@ -2803,8 +2836,13 @@ int snd_soc_of_parse_audio_simple_widgets(struct snd_soc_card *card,
 	}
 
 	for (i = 0; i < num_widgets; i++) {
+<<<<<<< HEAD
 		int ret = of_property_read_string_index(np, propname,
 							2 * i, &template);
+=======
+		ret = of_property_read_string_index(np, propname,
+			2 * i, &template);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret) {
 			dev_err(card->dev,
 				"ASoC: Property '%s' index %d read error:%d\n",
@@ -2927,7 +2965,11 @@ int snd_soc_of_parse_audio_routing(struct snd_soc_card *card,
 	struct device_node *np = card->dev->of_node;
 	int num_routes;
 	struct snd_soc_dapm_route *routes;
+<<<<<<< HEAD
 	int i;
+=======
+	int i, ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	num_routes = of_property_count_strings(np, propname);
 	if (num_routes < 0 || num_routes & 1) {
@@ -2947,8 +2989,13 @@ int snd_soc_of_parse_audio_routing(struct snd_soc_card *card,
 	}
 
 	for (i = 0; i < num_routes; i++) {
+<<<<<<< HEAD
 		int ret = of_property_read_string_index(np, propname,
 							2 * i, &routes[i].sink);
+=======
+		ret = of_property_read_string_index(np, propname,
+			2 * i, &routes[i].sink);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret) {
 			dev_err(card->dev,
 				"ASoC: Property '%s' index %d could not be read: %d\n",
@@ -3052,7 +3099,11 @@ EXPORT_SYMBOL_GPL(snd_soc_daifmt_clock_provider_from_bitmap);
 unsigned int snd_soc_daifmt_parse_format(struct device_node *np,
 					 const char *prefix)
 {
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	char prop[128];
 	unsigned int format = 0;
 	int bit, frame;
@@ -3086,8 +3137,11 @@ unsigned int snd_soc_daifmt_parse_format(struct device_node *np,
 		ret = of_property_read_string(np, prop, &str);
 	}
 	if (ret == 0) {
+<<<<<<< HEAD
 		int i;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (i = 0; i < ARRAY_SIZE(of_fmt_table); i++) {
 			if (strcmp(str, of_fmt_table[i].name) == 0) {
 				format |= of_fmt_table[i].val;
@@ -3201,11 +3255,19 @@ int snd_soc_get_dai_name(const struct of_phandle_args *args,
 				const char **dai_name)
 {
 	struct snd_soc_component *pos;
+<<<<<<< HEAD
+=======
+	struct device_node *component_of_node;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret = -EPROBE_DEFER;
 
 	mutex_lock(&client_mutex);
 	for_each_component(pos) {
+<<<<<<< HEAD
 		struct device_node *component_of_node = soc_component_to_node(pos);
+=======
+		component_of_node = soc_component_to_node(pos);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (component_of_node != args->np)
 			continue;

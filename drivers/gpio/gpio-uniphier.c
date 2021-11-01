@@ -184,7 +184,11 @@ static void uniphier_gpio_irq_mask(struct irq_data *data)
 
 	uniphier_gpio_reg_update(priv, UNIPHIER_GPIO_IRQ_EN, mask, 0);
 
+<<<<<<< HEAD
 	irq_chip_mask_parent(data);
+=======
+	return irq_chip_mask_parent(data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void uniphier_gpio_irq_unmask(struct irq_data *data)
@@ -194,7 +198,11 @@ static void uniphier_gpio_irq_unmask(struct irq_data *data)
 
 	uniphier_gpio_reg_update(priv, UNIPHIER_GPIO_IRQ_EN, mask, mask);
 
+<<<<<<< HEAD
 	irq_chip_unmask_parent(data);
+=======
+	return irq_chip_unmask_parent(data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int uniphier_gpio_irq_set_type(struct irq_data *data, unsigned int type)

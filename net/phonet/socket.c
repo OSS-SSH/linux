@@ -379,7 +379,12 @@ static int pn_socket_ioctl(struct socket *sock, unsigned int cmd,
 			saddr = PN_NO_ADDR;
 		release_sock(sk);
 
+<<<<<<< HEAD
 		dev_put(dev);
+=======
+		if (dev)
+			dev_put(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (saddr == PN_NO_ADDR)
 			return -EHOSTUNREACH;
 

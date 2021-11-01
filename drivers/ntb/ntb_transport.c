@@ -304,7 +304,11 @@ static int ntb_transport_bus_probe(struct device *dev)
 	return rc;
 }
 
+<<<<<<< HEAD
 static void ntb_transport_bus_remove(struct device *dev)
+=======
+static int ntb_transport_bus_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct ntb_transport_client *client;
 
@@ -312,6 +316,11 @@ static void ntb_transport_bus_remove(struct device *dev)
 	client->remove(dev);
 
 	put_device(dev);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct bus_type ntb_transport_bus = {

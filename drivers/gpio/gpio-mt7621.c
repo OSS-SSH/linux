@@ -95,7 +95,13 @@ mediatek_gpio_irq_handler(int irq, void *data)
 	pending = mtk_gpio_r32(rg, GPIO_REG_STAT);
 
 	for_each_set_bit(bit, &pending, MTK_BANK_WIDTH) {
+<<<<<<< HEAD
 		generic_handle_domain_irq(gc->irq.domain, bit);
+=======
+		u32 map = irq_find_mapping(gc->irq.domain, bit);
+
+		generic_handle_irq(map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mtk_gpio_w32(rg, GPIO_REG_STAT, BIT(bit));
 		ret |= IRQ_HANDLED;
 	}
@@ -239,7 +245,10 @@ mediatek_gpio_bank_probe(struct device *dev,
 	if (!rg->chip.label)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	rg->chip.offset = bank * MTK_BANK_WIDTH;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rg->irq_chip.name = dev_name(dev);
 	rg->irq_chip.parent_device = dev;
 	rg->irq_chip.irq_unmask = mediatek_gpio_irq_unmask;

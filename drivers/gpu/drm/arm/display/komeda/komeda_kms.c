@@ -13,6 +13,10 @@
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_gem_cma_helper.h>
 #include <drm/drm_gem_framebuffer_helper.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_managed.h>
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_vblank.h>
@@ -300,6 +304,11 @@ struct komeda_kms_dev *komeda_kms_attach(struct komeda_dev *mdev)
 	if (err)
 		goto free_component_binding;
 
+<<<<<<< HEAD
+=======
+	drm->irq_enabled = true;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_kms_helper_poll_init(drm);
 
 	err = drm_dev_register(drm, 0);
@@ -310,6 +319,10 @@ struct komeda_kms_dev *komeda_kms_attach(struct komeda_dev *mdev)
 
 free_interrupts:
 	drm_kms_helper_poll_fini(drm);
+<<<<<<< HEAD
+=======
+	drm->irq_enabled = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 free_component_binding:
 	component_unbind_all(mdev->dev, drm);
 cleanup_mode_config:
@@ -327,6 +340,10 @@ void komeda_kms_detach(struct komeda_kms_dev *kms)
 	drm_dev_unregister(drm);
 	drm_kms_helper_poll_fini(drm);
 	drm_atomic_helper_shutdown(drm);
+<<<<<<< HEAD
+=======
+	drm->irq_enabled = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	component_unbind_all(mdev->dev, drm);
 	drm_mode_config_cleanup(drm);
 	komeda_kms_cleanup_private_objs(kms);

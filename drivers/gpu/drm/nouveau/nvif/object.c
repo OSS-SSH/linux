@@ -44,7 +44,12 @@ nvif_object_ioctl(struct nvif_object *object, void *data, u32 size, void **hack)
 	} else
 		return -ENOSYS;
 
+<<<<<<< HEAD
 	return client->driver->ioctl(client->object.priv, data, size, hack);
+=======
+	return client->driver->ioctl(client->object.priv, client->super,
+				     data, size, hack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void

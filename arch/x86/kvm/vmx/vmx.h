@@ -14,6 +14,11 @@
 #include "vmx_ops.h"
 #include "cpuid.h"
 
+<<<<<<< HEAD
+=======
+extern const u32 vmx_msr_index[];
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MSR_TYPE_R	1
 #define MSR_TYPE_W	2
 #define MSR_TYPE_RW	3
@@ -227,7 +232,11 @@ struct nested_vmx {
 struct vcpu_vmx {
 	struct kvm_vcpu       vcpu;
 	u8                    fail;
+<<<<<<< HEAD
 	u8		      x2apic_msr_bitmap_mode;
+=======
+	u8		      msr_bitmap_mode;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * If true, host state has been stored in vmx->loaded_vmcs for
@@ -248,8 +257,17 @@ struct vcpu_vmx {
 	 * only loaded into hardware when necessary, e.g. SYSCALL #UDs outside
 	 * of 64-bit mode or if EFER.SCE=1, thus the SYSCALL MSRs don't need to
 	 * be loaded into hardware if those conditions aren't met.
+<<<<<<< HEAD
 	 */
 	struct vmx_uret_msr   guest_uret_msrs[MAX_NR_USER_RETURN_MSRS];
+=======
+	 * nr_active_uret_msrs tracks the number of MSRs that need to be loaded
+	 * into hardware when running the guest.  guest_uret_msrs[] is resorted
+	 * whenever the number of "active" uret MSRs is modified.
+	 */
+	struct vmx_uret_msr   guest_uret_msrs[MAX_NR_USER_RETURN_MSRS];
+	int                   nr_active_uret_msrs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool                  guest_uret_msrs_loaded;
 #ifdef CONFIG_X86_64
 	u64		      msr_host_kernel_gs_base;
@@ -259,6 +277,11 @@ struct vcpu_vmx {
 	u64		      spec_ctrl;
 	u32		      msr_ia32_umwait_control;
 
+<<<<<<< HEAD
+=======
+	u32 secondary_exec_control;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * loaded_vmcs points to the VMCS currently used in this vcpu. For a
 	 * non-nested (L1) guest, it always points to vmcs01. For a nested
@@ -355,7 +378,10 @@ void vmx_prepare_switch_to_guest(struct kvm_vcpu *vcpu);
 void vmx_set_host_fs_gs(struct vmcs_host_state *host, u16 fs_sel, u16 gs_sel,
 			unsigned long fs_base, unsigned long gs_base);
 int vmx_get_cpl(struct kvm_vcpu *vcpu);
+<<<<<<< HEAD
 bool vmx_emulation_required(struct kvm_vcpu *vcpu);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 unsigned long vmx_get_rflags(struct kvm_vcpu *vcpu);
 void vmx_set_rflags(struct kvm_vcpu *vcpu, unsigned long rflags);
 u32 vmx_get_interrupt_shadow(struct kvm_vcpu *vcpu);
@@ -366,11 +392,19 @@ void vmx_set_cr4(struct kvm_vcpu *vcpu, unsigned long cr4);
 void set_cr4_guest_host_mask(struct vcpu_vmx *vmx);
 void ept_save_pdptrs(struct kvm_vcpu *vcpu);
 void vmx_get_segment(struct kvm_vcpu *vcpu, struct kvm_segment *var, int seg);
+<<<<<<< HEAD
 void __vmx_set_segment(struct kvm_vcpu *vcpu, struct kvm_segment *var, int seg);
+=======
+void vmx_set_segment(struct kvm_vcpu *vcpu, struct kvm_segment *var, int seg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 u64 construct_eptp(struct kvm_vcpu *vcpu, hpa_t root_hpa, int root_level);
 
 bool vmx_guest_inject_ac(struct kvm_vcpu *vcpu);
 void vmx_update_exception_bitmap(struct kvm_vcpu *vcpu);
+<<<<<<< HEAD
+=======
+void vmx_update_msr_bitmap(struct kvm_vcpu *vcpu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bool vmx_nmi_blocked(struct kvm_vcpu *vcpu);
 bool vmx_interrupt_blocked(struct kvm_vcpu *vcpu);
 bool vmx_get_nmi_mask(struct kvm_vcpu *vcpu);
@@ -413,6 +447,7 @@ static inline void lname##_controls_set(struct vcpu_vmx *vmx, u32 val)	    \
 		vmx->loaded_vmcs->controls_shadow.lname = val;		    \
 	}								    \
 }									    \
+<<<<<<< HEAD
 static inline u32 __##lname##_controls_get(struct loaded_vmcs *vmcs)	    \
 {									    \
 	return vmcs->controls_shadow.lname;				    \
@@ -420,6 +455,11 @@ static inline u32 __##lname##_controls_get(struct loaded_vmcs *vmcs)	    \
 static inline u32 lname##_controls_get(struct vcpu_vmx *vmx)		    \
 {									    \
 	return __##lname##_controls_get(vmx->loaded_vmcs);		    \
+=======
+static inline u32 lname##_controls_get(struct vcpu_vmx *vmx)		    \
+{									    \
+	return vmx->loaded_vmcs->controls_shadow.lname;			    \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }									    \
 static inline void lname##_controls_setbit(struct vcpu_vmx *vmx, u32 val)   \
 {									    \
@@ -449,6 +489,34 @@ static inline void vmx_register_cache_reset(struct kvm_vcpu *vcpu)
 	vcpu->arch.regs_dirty = 0;
 }
 
+<<<<<<< HEAD
+=======
+static inline u32 vmx_vmentry_ctrl(void)
+{
+	u32 vmentry_ctrl = vmcs_config.vmentry_ctrl;
+	if (vmx_pt_mode_is_system())
+		vmentry_ctrl &= ~(VM_ENTRY_PT_CONCEAL_PIP |
+				  VM_ENTRY_LOAD_IA32_RTIT_CTL);
+	/* Loading of EFER and PERF_GLOBAL_CTRL are toggled dynamically */
+	return vmentry_ctrl &
+		~(VM_ENTRY_LOAD_IA32_PERF_GLOBAL_CTRL | VM_ENTRY_LOAD_IA32_EFER);
+}
+
+static inline u32 vmx_vmexit_ctrl(void)
+{
+	u32 vmexit_ctrl = vmcs_config.vmexit_ctrl;
+	if (vmx_pt_mode_is_system())
+		vmexit_ctrl &= ~(VM_EXIT_PT_CONCEAL_PIP |
+				 VM_EXIT_CLEAR_IA32_RTIT_CTL);
+	/* Loading of EFER and PERF_GLOBAL_CTRL are toggled dynamically */
+	return vmexit_ctrl &
+		~(VM_EXIT_LOAD_IA32_PERF_GLOBAL_CTRL | VM_EXIT_LOAD_IA32_EFER);
+}
+
+u32 vmx_exec_control(struct vcpu_vmx *vmx);
+u32 vmx_pin_based_exec_ctrl(struct vcpu_vmx *vmx);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct kvm_vmx *to_kvm_vmx(struct kvm *kvm)
 {
 	return container_of(kvm, struct kvm_vmx, kvm);
@@ -495,7 +563,11 @@ static inline struct vmcs *alloc_vmcs(bool shadow)
 
 static inline bool vmx_has_waitpkg(struct vcpu_vmx *vmx)
 {
+<<<<<<< HEAD
 	return secondary_exec_controls_get(vmx) &
+=======
+	return vmx->secondary_exec_control &
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		SECONDARY_EXEC_ENABLE_USR_WAIT_PAUSE;
 }
 

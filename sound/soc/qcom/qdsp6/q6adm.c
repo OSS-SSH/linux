@@ -465,7 +465,11 @@ int q6adm_matrix_map(struct device *dev, int path,
 	struct apr_pkt *pkt;
 	uint16_t *copps_list;
 	int pkt_size, ret, i, copp_idx;
+<<<<<<< HEAD
 	void *matrix_map;
+=======
+	void *matrix_map = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct q6copp *copp;
 
 	/* Assumes port_ids have already been validated during adm_open */

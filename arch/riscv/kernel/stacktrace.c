@@ -27,7 +27,11 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
 		fp = frame_pointer(regs);
 		sp = user_stack_pointer(regs);
 		pc = instruction_pointer(regs);
+<<<<<<< HEAD
 	} else if (task == NULL || task == current) {
+=======
+	} else if (task == current) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fp = (unsigned long)__builtin_frame_address(1);
 		sp = (unsigned long)__builtin_frame_address(0);
 		pc = (unsigned long)__builtin_return_address(0);
@@ -132,12 +136,17 @@ unsigned long get_wchan(struct task_struct *task)
 {
 	unsigned long pc = 0;
 
+<<<<<<< HEAD
 	if (likely(task && task != current && !task_is_running(task))) {
 		if (!try_get_task_stack(task))
 			return 0;
 		walk_stackframe(task, NULL, save_wchan, &pc);
 		put_task_stack(task);
 	}
+=======
+	if (likely(task && task != current && !task_is_running(task)))
+		walk_stackframe(task, NULL, save_wchan, &pc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return pc;
 }
 

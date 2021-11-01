@@ -1372,7 +1372,11 @@ static const struct net_device_ops dm9000_netdev_ops = {
 	.ndo_start_xmit		= dm9000_start_xmit,
 	.ndo_tx_timeout		= dm9000_timeout,
 	.ndo_set_rx_mode	= dm9000_hash_table,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= dm9000_ioctl,
+=======
+	.ndo_do_ioctl		= dm9000_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_features	= dm9000_set_features,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= eth_mac_addr,

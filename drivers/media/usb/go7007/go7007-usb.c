@@ -1134,7 +1134,11 @@ static int go7007_usb_probe(struct usb_interface *intf,
 
 	ep = usb->usbdev->ep_in[4];
 	if (!ep)
+<<<<<<< HEAD
 		goto allocfail;
+=======
+		return -ENODEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Allocate the URB and buffer for receiving incoming interrupts */
 	usb->intr_urb = usb_alloc_urb(0, GFP_KERNEL);

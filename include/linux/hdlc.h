@@ -22,7 +22,11 @@ struct hdlc_proto {
 	void (*start)(struct net_device *dev); /* if open & DCD */
 	void (*stop)(struct net_device *dev); /* if open & !DCD */
 	void (*detach)(struct net_device *dev);
+<<<<<<< HEAD
 	int (*ioctl)(struct net_device *dev, struct if_settings *ifs);
+=======
+	int (*ioctl)(struct net_device *dev, struct ifreq *ifr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__be16 (*type_trans)(struct sk_buff *skb, struct net_device *dev);
 	int (*netif_rx)(struct sk_buff *skb);
 	netdev_tx_t (*xmit)(struct sk_buff *skb, struct net_device *dev);
@@ -54,7 +58,11 @@ typedef struct hdlc_device {
 /* Exported from hdlc module */
 
 /* Called by hardware driver when a user requests HDLC service */
+<<<<<<< HEAD
 int hdlc_ioctl(struct net_device *dev, struct if_settings *ifs);
+=======
+int hdlc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Must be used by hardware driver on module startup/exit */
 #define register_hdlc_device(dev)	register_netdev(dev)

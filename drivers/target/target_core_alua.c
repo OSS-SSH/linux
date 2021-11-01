@@ -428,6 +428,25 @@ out:
 	return rc;
 }
 
+<<<<<<< HEAD
+=======
+static inline void set_ascq(struct se_cmd *cmd, u8 alua_ascq)
+{
+	/*
+	 * Set SCSI additional sense code (ASC) to 'LUN Not Accessible';
+	 * The ALUA additional sense code qualifier (ASCQ) is determined
+	 * by the ALUA primary or secondary access state..
+	 */
+	pr_debug("[%s]: ALUA TG Port not available, "
+		"SenseKey: NOT_READY, ASC/ASCQ: "
+		"0x04/0x%02x\n",
+		cmd->se_tfo->fabric_name, alua_ascq);
+
+	cmd->scsi_asc = 0x04;
+	cmd->scsi_ascq = alua_ascq;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void core_alua_state_nonoptimized(
 	struct se_cmd *cmd,
 	unsigned char *cdb,
@@ -442,9 +461,15 @@ static inline void core_alua_state_nonoptimized(
 	cmd->alua_nonop_delay = nonop_delay_msecs;
 }
 
+<<<<<<< HEAD
 static inline sense_reason_t core_alua_state_lba_dependent(
 	struct se_cmd *cmd,
 	u16 tg_pt_gp_id)
+=======
+static inline int core_alua_state_lba_dependent(
+	struct se_cmd *cmd,
+	struct t10_alua_tg_pt_gp *tg_pt_gp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct se_device *dev = cmd->se_dev;
 	u64 segment_size, segment_mult, sectors, lba;
@@ -490,19 +515,38 @@ static inline sense_reason_t core_alua_state_lba_dependent(
 		}
 		if (!cur_map) {
 			spin_unlock(&dev->t10_alua.lba_map_lock);
+<<<<<<< HEAD
 			return TCM_ALUA_TG_PT_UNAVAILABLE;
 		}
 		list_for_each_entry(map_mem, &cur_map->lba_map_mem_list,
 				    lba_map_mem_list) {
 			if (map_mem->lba_map_mem_alua_pg_id != tg_pt_gp_id)
+=======
+			set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_UNAVAILABLE);
+			return 1;
+		}
+		list_for_each_entry(map_mem, &cur_map->lba_map_mem_list,
+				    lba_map_mem_list) {
+			if (map_mem->lba_map_mem_alua_pg_id !=
+			    tg_pt_gp->tg_pt_gp_id)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				continue;
 			switch(map_mem->lba_map_mem_alua_state) {
 			case ALUA_ACCESS_STATE_STANDBY:
 				spin_unlock(&dev->t10_alua.lba_map_lock);
+<<<<<<< HEAD
 				return TCM_ALUA_TG_PT_STANDBY;
 			case ALUA_ACCESS_STATE_UNAVAILABLE:
 				spin_unlock(&dev->t10_alua.lba_map_lock);
 				return TCM_ALUA_TG_PT_UNAVAILABLE;
+=======
+				set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_STANDBY);
+				return 1;
+			case ALUA_ACCESS_STATE_UNAVAILABLE:
+				spin_unlock(&dev->t10_alua.lba_map_lock);
+				set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_UNAVAILABLE);
+				return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			default:
 				break;
 			}
@@ -512,7 +556,11 @@ static inline sense_reason_t core_alua_state_lba_dependent(
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline sense_reason_t core_alua_state_standby(
+=======
+static inline int core_alua_state_standby(
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct se_cmd *cmd,
 	unsigned char *cdb)
 {
@@ -536,21 +584,36 @@ static inline sense_reason_t core_alua_state_standby(
 		case SAI_READ_CAPACITY_16:
 			return 0;
 		default:
+<<<<<<< HEAD
 			return TCM_ALUA_TG_PT_STANDBY;
+=======
+			set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_STANDBY);
+			return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	case MAINTENANCE_IN:
 		switch (cdb[1] & 0x1f) {
 		case MI_REPORT_TARGET_PGS:
 			return 0;
 		default:
+<<<<<<< HEAD
 			return TCM_ALUA_TG_PT_STANDBY;
+=======
+			set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_STANDBY);
+			return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	case MAINTENANCE_OUT:
 		switch (cdb[1]) {
 		case MO_SET_TARGET_PGS:
 			return 0;
 		default:
+<<<<<<< HEAD
 			return TCM_ALUA_TG_PT_STANDBY;
+=======
+			set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_STANDBY);
+			return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	case REQUEST_SENSE:
 	case PERSISTENT_RESERVE_IN:
@@ -559,13 +622,22 @@ static inline sense_reason_t core_alua_state_standby(
 	case WRITE_BUFFER:
 		return 0;
 	default:
+<<<<<<< HEAD
 		return TCM_ALUA_TG_PT_STANDBY;
+=======
+		set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_STANDBY);
+		return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline sense_reason_t core_alua_state_unavailable(
+=======
+static inline int core_alua_state_unavailable(
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct se_cmd *cmd,
 	unsigned char *cdb)
 {
@@ -582,27 +654,46 @@ static inline sense_reason_t core_alua_state_unavailable(
 		case MI_REPORT_TARGET_PGS:
 			return 0;
 		default:
+<<<<<<< HEAD
 			return TCM_ALUA_TG_PT_UNAVAILABLE;
+=======
+			set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_UNAVAILABLE);
+			return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	case MAINTENANCE_OUT:
 		switch (cdb[1]) {
 		case MO_SET_TARGET_PGS:
 			return 0;
 		default:
+<<<<<<< HEAD
 			return TCM_ALUA_TG_PT_UNAVAILABLE;
+=======
+			set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_UNAVAILABLE);
+			return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	case REQUEST_SENSE:
 	case READ_BUFFER:
 	case WRITE_BUFFER:
 		return 0;
 	default:
+<<<<<<< HEAD
 		return TCM_ALUA_TG_PT_UNAVAILABLE;
+=======
+		set_ascq(cmd, ASCQ_04H_ALUA_TG_PT_UNAVAILABLE);
+		return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline sense_reason_t core_alua_state_transition(
+=======
+static inline int core_alua_state_transition(
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct se_cmd *cmd,
 	unsigned char *cdb)
 {
@@ -619,14 +710,24 @@ static inline sense_reason_t core_alua_state_transition(
 		case MI_REPORT_TARGET_PGS:
 			return 0;
 		default:
+<<<<<<< HEAD
 			return TCM_ALUA_STATE_TRANSITION;
+=======
+			set_ascq(cmd, ASCQ_04H_ALUA_STATE_TRANSITION);
+			return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	case REQUEST_SENSE:
 	case READ_BUFFER:
 	case WRITE_BUFFER:
 		return 0;
 	default:
+<<<<<<< HEAD
 		return TCM_ALUA_STATE_TRANSITION;
+=======
+		set_ascq(cmd, ASCQ_04H_ALUA_STATE_TRANSITION);
+		return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
@@ -645,8 +746,11 @@ target_alua_state_check(struct se_cmd *cmd)
 	struct se_lun *lun = cmd->se_lun;
 	struct t10_alua_tg_pt_gp *tg_pt_gp;
 	int out_alua_state, nonop_delay_msecs;
+<<<<<<< HEAD
 	u16 tg_pt_gp_id;
 	sense_reason_t rc = TCM_NO_SENSE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (dev->se_hba->hba_flags & HBA_FLAGS_INTERNAL_USE)
 		return 0;
@@ -660,7 +764,12 @@ target_alua_state_check(struct se_cmd *cmd)
 	if (atomic_read(&lun->lun_tg_pt_secondary_offline)) {
 		pr_debug("ALUA: Got secondary offline status for local"
 				" target port\n");
+<<<<<<< HEAD
 		return TCM_ALUA_OFFLINE;
+=======
+		set_ascq(cmd, ASCQ_04H_ALUA_OFFLINE);
+		return TCM_CHECK_CONDITION_NOT_READY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (!lun->lun_tg_pt_gp)
@@ -670,8 +779,13 @@ target_alua_state_check(struct se_cmd *cmd)
 	tg_pt_gp = lun->lun_tg_pt_gp;
 	out_alua_state = tg_pt_gp->tg_pt_gp_alua_access_state;
 	nonop_delay_msecs = tg_pt_gp->tg_pt_gp_nonop_delay_msecs;
+<<<<<<< HEAD
 	tg_pt_gp_id = tg_pt_gp->tg_pt_gp_id;
 
+=======
+
+	// XXX: keeps using tg_pt_gp witout reference after unlock
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_unlock(&lun->lun_tg_pt_gp_lock);
 	/*
 	 * Process ALUA_ACCESS_STATE_ACTIVE_OPTIMIZED in a separate conditional
@@ -687,6 +801,7 @@ target_alua_state_check(struct se_cmd *cmd)
 		core_alua_state_nonoptimized(cmd, cdb, nonop_delay_msecs);
 		break;
 	case ALUA_ACCESS_STATE_STANDBY:
+<<<<<<< HEAD
 		rc = core_alua_state_standby(cmd, cdb);
 		break;
 	case ALUA_ACCESS_STATE_UNAVAILABLE:
@@ -697,6 +812,22 @@ target_alua_state_check(struct se_cmd *cmd)
 		break;
 	case ALUA_ACCESS_STATE_LBA_DEPENDENT:
 		rc = core_alua_state_lba_dependent(cmd, tg_pt_gp_id);
+=======
+		if (core_alua_state_standby(cmd, cdb))
+			return TCM_CHECK_CONDITION_NOT_READY;
+		break;
+	case ALUA_ACCESS_STATE_UNAVAILABLE:
+		if (core_alua_state_unavailable(cmd, cdb))
+			return TCM_CHECK_CONDITION_NOT_READY;
+		break;
+	case ALUA_ACCESS_STATE_TRANSITION:
+		if (core_alua_state_transition(cmd, cdb))
+			return TCM_CHECK_CONDITION_NOT_READY;
+		break;
+	case ALUA_ACCESS_STATE_LBA_DEPENDENT:
+		if (core_alua_state_lba_dependent(cmd, tg_pt_gp))
+			return TCM_CHECK_CONDITION_NOT_READY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	/*
 	 * OFFLINE is a secondary ALUA target port group access state, that is
@@ -706,6 +837,7 @@ target_alua_state_check(struct se_cmd *cmd)
 	default:
 		pr_err("Unknown ALUA access state: 0x%02x\n",
 				out_alua_state);
+<<<<<<< HEAD
 		rc = TCM_INVALID_CDB_FIELD;
 	}
 
@@ -716,6 +848,12 @@ target_alua_state_check(struct se_cmd *cmd)
 	}
 
 	return rc;
+=======
+		return TCM_INVALID_CDB_FIELD;
+	}
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

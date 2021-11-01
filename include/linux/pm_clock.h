@@ -47,7 +47,10 @@ extern void pm_clk_remove(struct device *dev, const char *con_id);
 extern void pm_clk_remove_clk(struct device *dev, struct clk *clk);
 extern int pm_clk_suspend(struct device *dev);
 extern int pm_clk_resume(struct device *dev);
+<<<<<<< HEAD
 extern int devm_pm_clk_create(struct device *dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 static inline bool pm_clk_no_clocks(struct device *dev)
 {
@@ -84,10 +87,13 @@ static inline void pm_clk_remove(struct device *dev, const char *con_id)
 static inline void pm_clk_remove_clk(struct device *dev, struct clk *clk)
 {
 }
+<<<<<<< HEAD
 static inline int devm_pm_clk_create(struct device *dev)
 {
 	return -EINVAL;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifdef CONFIG_HAVE_CLK

@@ -1,7 +1,13 @@
 cat <<EOF
 static __always_inline ${ret}
+<<<<<<< HEAD
 arch_${atomic}_${pfx}inc${sfx}${order}(${atomic}_t *v)
 {
 	${retstmt}arch_${atomic}_${pfx}add${sfx}${order}(1, v);
+=======
+${arch}${atomic}_${pfx}inc${sfx}${order}(${atomic}_t *v)
+{
+	${retstmt}${arch}${atomic}_${pfx}add${sfx}${order}(1, v);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EOF

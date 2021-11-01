@@ -2014,7 +2014,11 @@ static int __vsock_seqpacket_recvmsg(struct sock *sk, struct msghdr *msg,
 {
 	const struct vsock_transport *transport;
 	struct vsock_sock *vsk;
+<<<<<<< HEAD
 	ssize_t msg_len;
+=======
+	ssize_t record_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	long timeout;
 	int err = 0;
 	DEFINE_WAIT(wait);
@@ -2028,9 +2032,15 @@ static int __vsock_seqpacket_recvmsg(struct sock *sk, struct msghdr *msg,
 	if (err <= 0)
 		goto out;
 
+<<<<<<< HEAD
 	msg_len = transport->seqpacket_dequeue(vsk, msg, flags);
 
 	if (msg_len < 0) {
+=======
+	record_len = transport->seqpacket_dequeue(vsk, msg, flags);
+
+	if (record_len < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = -ENOMEM;
 		goto out;
 	}
@@ -2044,14 +2054,22 @@ static int __vsock_seqpacket_recvmsg(struct sock *sk, struct msghdr *msg,
 		 * packet.
 		 */
 		if (flags & MSG_TRUNC)
+<<<<<<< HEAD
 			err = msg_len;
+=======
+			err = record_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			err = len - msg_data_left(msg);
 
 		/* Always set MSG_TRUNC if real length of packet is
 		 * bigger than user's buffer.
 		 */
+<<<<<<< HEAD
 		if (msg_len > len)
+=======
+		if (record_len > len)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			msg->msg_flags |= MSG_TRUNC;
 	}
 

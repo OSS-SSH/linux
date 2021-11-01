@@ -600,12 +600,15 @@ static int rockchip_spi_transfer_one(
 	int ret;
 	bool use_dma;
 
+<<<<<<< HEAD
 	/* Zero length transfers won't trigger an interrupt on completion */
 	if (!xfer->len) {
 		spi_finalize_current_transfer(ctlr);
 		return 1;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WARN_ON(readl_relaxed(rs->regs + ROCKCHIP_SPI_SSIENR) &&
 		(readl_relaxed(rs->regs + ROCKCHIP_SPI_SR) & SR_BUSY));
 

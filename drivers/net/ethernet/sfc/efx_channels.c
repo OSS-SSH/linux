@@ -152,7 +152,10 @@ static int efx_allocate_msix_channels(struct efx_nic *efx,
 	 * maximum size.
 	 */
 	tx_per_ev = EFX_MAX_EVQ_SIZE / EFX_TXQ_MAX_ENT(efx);
+<<<<<<< HEAD
 	tx_per_ev = min(tx_per_ev, EFX_MAX_TXQ_PER_CHANNEL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	n_xdp_tx = num_possible_cpus();
 	n_xdp_ev = DIV_ROUND_UP(n_xdp_tx, tx_per_ev);
 
@@ -166,6 +169,7 @@ static int efx_allocate_msix_channels(struct efx_nic *efx,
 	 * We need a channel per event queue, plus a VI per tx queue.
 	 * This may be more pessimistic than it needs to be.
 	 */
+<<<<<<< HEAD
 	if (n_channels >= max_channels) {
 		efx->xdp_txq_queues_mode = EFX_XDP_TX_QUEUES_BORROWED;
 		netif_warn(efx, drv, efx->net_dev,
@@ -197,15 +201,38 @@ static int efx_allocate_msix_channels(struct efx_nic *efx,
 	if (efx->xdp_txq_queues_mode != EFX_XDP_TX_QUEUES_BORROWED) {
 		efx->n_xdp_channels = n_xdp_ev;
 		efx->xdp_tx_per_channel = tx_per_ev;
+=======
+	if (n_channels + n_xdp_ev > max_channels) {
+		netif_err(efx, drv, efx->net_dev,
+			  "Insufficient resources for %d XDP event queues (%d other channels, max %d)\n",
+			  n_xdp_ev, n_channels, max_channels);
+		efx->n_xdp_channels = 0;
+		efx->xdp_tx_per_channel = 0;
+		efx->xdp_tx_queue_count = 0;
+	} else if (n_channels + n_xdp_tx > efx->max_vis) {
+		netif_err(efx, drv, efx->net_dev,
+			  "Insufficient resources for %d XDP TX queues (%d other channels, max VIs %d)\n",
+			  n_xdp_tx, n_channels, efx->max_vis);
+		efx->n_xdp_channels = 0;
+		efx->xdp_tx_per_channel = 0;
+		efx->xdp_tx_queue_count = 0;
+	} else {
+		efx->n_xdp_channels = n_xdp_ev;
+		efx->xdp_tx_per_channel = EFX_MAX_TXQ_PER_CHANNEL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		efx->xdp_tx_queue_count = n_xdp_tx;
 		n_channels += n_xdp_ev;
 		netif_dbg(efx, drv, efx->net_dev,
 			  "Allocating %d TX and %d event queues for XDP\n",
+<<<<<<< HEAD
 			  n_xdp_ev * tx_per_ev, n_xdp_ev);
 	} else {
 		efx->n_xdp_channels = 0;
 		efx->xdp_tx_per_channel = 0;
 		efx->xdp_tx_queue_count = n_xdp_tx;
+=======
+			  n_xdp_tx, n_xdp_ev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (vec_count < n_channels) {
@@ -872,6 +899,7 @@ rollback:
 	goto out;
 }
 
+<<<<<<< HEAD
 static inline int
 efx_set_xdp_tx_queue(struct efx_nic *efx, int xdp_queue_number,
 		     struct efx_tx_queue *tx_queue)
@@ -886,6 +914,8 @@ efx_set_xdp_tx_queue(struct efx_nic *efx, int xdp_queue_number,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int efx_set_channels(struct efx_nic *efx)
 {
 	struct efx_tx_queue *tx_queue;
@@ -924,9 +954,24 @@ int efx_set_channels(struct efx_nic *efx)
 			if (efx_channel_is_xdp_tx(channel)) {
 				efx_for_each_channel_tx_queue(tx_queue, channel) {
 					tx_queue->queue = next_queue++;
+<<<<<<< HEAD
 					rc = efx_set_xdp_tx_queue(efx, xdp_queue_number, tx_queue);
 					if (rc == 0)
 						xdp_queue_number++;
+=======
+					netif_dbg(efx, drv, efx->net_dev, "Channel %u TXQ %u is XDP %u, HW %u\n",
+						  channel->channel, tx_queue->label,
+						  xdp_queue_number, tx_queue->queue);
+					/* We may have a few left-over XDP TX
+					 * queues owing to xdp_tx_queue_count
+					 * not dividing evenly by EFX_MAX_TXQ_PER_CHANNEL.
+					 * We still allocate and probe those
+					 * TXQs, but never use them.
+					 */
+					if (xdp_queue_number < efx->xdp_tx_queue_count)
+						efx->xdp_tx_queues[xdp_queue_number] = tx_queue;
+					xdp_queue_number++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				}
 			} else {
 				efx_for_each_channel_tx_queue(tx_queue, channel) {
@@ -935,6 +980,7 @@ int efx_set_channels(struct efx_nic *efx)
 						  channel->channel, tx_queue->label,
 						  tx_queue->queue);
 				}
+<<<<<<< HEAD
 
 				/* If XDP is borrowing queues from net stack, it must use the queue
 				 * with no csum offload, which is the first one of the channel
@@ -964,6 +1010,13 @@ int efx_set_channels(struct efx_nic *efx)
 		if (rc == 0)
 			xdp_queue_number++;
 	}
+=======
+			}
+		}
+	}
+	if (xdp_queue_number)
+		efx->xdp_tx_queue_count = xdp_queue_number;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rc = netif_set_real_num_tx_queues(efx->net_dev, efx->n_tx_channels);
 	if (rc)

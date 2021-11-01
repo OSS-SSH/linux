@@ -698,7 +698,10 @@ static struct inode *afs_alloc_inode(struct super_block *sb)
 	vnode->lock_state	= AFS_VNODE_LOCK_NONE;
 
 	init_rwsem(&vnode->rmdir_lock);
+<<<<<<< HEAD
 	INIT_WORK(&vnode->cb_work, afs_invalidate_mmap_work);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	_leave(" = %p", &vnode->vfs_inode);
 	return &vnode->vfs_inode;

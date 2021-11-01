@@ -11,7 +11,10 @@
 #include <linux/slab.h>
 
 #include <drm/drm_bridge.h>
+<<<<<<< HEAD
 #include <drm/drm_bridge_connector.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_crtc.h>
 #include <drm/drm_managed.h>
 #include <drm/drm_modeset_helper_vtables.h>
@@ -54,9 +57,13 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 			 struct device_node *enc_node)
 {
 	struct rcar_du_encoder *renc;
+<<<<<<< HEAD
 	struct drm_connector *connector;
 	struct drm_bridge *bridge;
 	int ret;
+=======
+	struct drm_bridge *bridge;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Locate the DRM bridge from the DT node. For the DPAD outputs, if the
@@ -86,6 +93,7 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 	}
 
 	/*
+<<<<<<< HEAD
 	 * Create and initialize the encoder. On Gen3, skip the LVDS1 output if
 	 * the LVDS1 encoder is used as a companion for LVDS0 in dual-link
 	 * mode, or any LVDS output if it isn't connected. The latter may happen
@@ -100,6 +108,14 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 		if ((output == RCAR_DU_OUTPUT_LVDS0 ||
 		     output == RCAR_DU_OUTPUT_LVDS1) &&
 		    !rcar_lvds_is_connected(bridge))
+=======
+	 * Create and initialize the encoder. On Gen3 skip the LVDS1 output if
+	 * the LVDS1 encoder is used as a companion for LVDS0 in dual-link
+	 * mode.
+	 */
+	if (rcdu->info->gen >= 3 && output == RCAR_DU_OUTPUT_LVDS1) {
+		if (rcar_lvds_dual_link(bridge))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENOLINK;
 	}
 
@@ -114,6 +130,7 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 
 	renc->output = output;
 
+<<<<<<< HEAD
 	/* Attach the bridge to the encoder. */
 	ret = drm_bridge_attach(&renc->base, bridge, NULL,
 				DRM_BRIDGE_ATTACH_NO_CONNECTOR);
@@ -132,4 +149,11 @@ int rcar_du_encoder_init(struct rcar_du_device *rcdu,
 	}
 
 	return drm_connector_attach_encoder(connector, &renc->base);
+=======
+	/*
+	 * Attach the bridge to the encoder. The bridge will create the
+	 * connector.
+	 */
+	return drm_bridge_attach(&renc->base, bridge, NULL, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

@@ -3,6 +3,11 @@
  * Copyright (c) 1996, 2003 VIA Networking Technologies, Inc.
  * All rights reserved.
  *
+<<<<<<< HEAD
+=======
+ * File: device_main.c
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Purpose: driver entry for initial, open, close, tx and rx.
  *
  * Author: Lyndon Chen

@@ -4,10 +4,16 @@
  *
  * Copyright (C) 2001 Ming Lei <ming.lei@canonical.com>
  */
+<<<<<<< HEAD
 #ifndef __LINUX_BVEC_H
 #define __LINUX_BVEC_H
 
 #include <linux/highmem.h>
+=======
+#ifndef __LINUX_BVEC_ITER_H
+#define __LINUX_BVEC_ITER_H
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/bug.h>
 #include <linux/errno.h>
 #include <linux/limits.h>
@@ -184,6 +190,7 @@ static inline void bvec_advance(const struct bio_vec *bvec,
 	}
 }
 
+<<<<<<< HEAD
 /**
  * bvec_kmap_local - map a bvec into the kernel virtual address space
  * @bvec: bvec to map
@@ -242,3 +249,6 @@ static inline void *bvec_virt(struct bio_vec *bvec)
 }
 
 #endif /* __LINUX_BVEC_H */
+=======
+#endif /* __LINUX_BVEC_ITER_H */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

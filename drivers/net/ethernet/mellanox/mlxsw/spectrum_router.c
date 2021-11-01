@@ -9079,7 +9079,11 @@ mlxsw_sp_rif_fid_fid_get(struct mlxsw_sp_rif *rif,
 
 static void mlxsw_sp_rif_fid_fdb_del(struct mlxsw_sp_rif *rif, const char *mac)
 {
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info info = {};
+=======
+	struct switchdev_notifier_fdb_info info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct net_device *dev;
 
 	dev = br_fdb_find_port(rif->dev, mac, 0);
@@ -9127,8 +9131,13 @@ mlxsw_sp_rif_vlan_fid_get(struct mlxsw_sp_rif *rif,
 
 static void mlxsw_sp_rif_vlan_fdb_del(struct mlxsw_sp_rif *rif, const char *mac)
 {
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info info = {};
 	u16 vid = mlxsw_sp_fid_8021q_vid(rif->fid);
+=======
+	u16 vid = mlxsw_sp_fid_8021q_vid(rif->fid);
+	struct switchdev_notifier_fdb_info info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct net_device *br_dev;
 	struct net_device *dev;
 
@@ -9484,7 +9493,10 @@ struct mlxsw_sp_mp_hash_config {
 	DECLARE_BITMAP(fields, __MLXSW_REG_RECR2_FIELD_CNT);
 	DECLARE_BITMAP(inner_headers, __MLXSW_REG_RECR2_HEADER_CNT);
 	DECLARE_BITMAP(inner_fields, __MLXSW_REG_RECR2_INNER_FIELD_CNT);
+<<<<<<< HEAD
 	bool inc_parsing_depth;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define MLXSW_SP_MP_HASH_HEADER_SET(_headers, _header) \
@@ -9655,7 +9667,10 @@ static void mlxsw_sp_mp6_hash_init(struct mlxsw_sp *mlxsw_sp,
 		MLXSW_SP_MP_HASH_FIELD_SET(fields, IPV6_FLOW_LABEL);
 		/* Inner */
 		mlxsw_sp_mp_hash_inner_l3(config);
+<<<<<<< HEAD
 		config->inc_parsing_depth = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case 3:
 		/* Outer */
@@ -9680,12 +9695,16 @@ static void mlxsw_sp_mp6_hash_init(struct mlxsw_sp *mlxsw_sp,
 			MLXSW_SP_MP_HASH_FIELD_SET(fields, TCP_UDP_DPORT);
 		/* Inner */
 		mlxsw_sp_mp_hash_inner_custom(config, hash_fields);
+<<<<<<< HEAD
 		if (hash_fields & FIB_MULTIPATH_HASH_FIELD_INNER_MASK)
 			config->inc_parsing_depth = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	}
 }
 
+<<<<<<< HEAD
 static int mlxsw_sp_mp_hash_parsing_depth_adjust(struct mlxsw_sp *mlxsw_sp,
 						 bool old_inc_parsing_depth,
 						 bool new_inc_parsing_depth)
@@ -9708,17 +9727,25 @@ static int mlxsw_sp_mp_hash_parsing_depth_adjust(struct mlxsw_sp *mlxsw_sp,
 static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
 {
 	bool old_inc_parsing_depth, new_inc_parsing_depth;
+=======
+static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mlxsw_sp_mp_hash_config config = {};
 	char recr2_pl[MLXSW_REG_RECR2_LEN];
 	unsigned long bit;
 	u32 seed;
+<<<<<<< HEAD
 	int err;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	seed = jhash(mlxsw_sp->base_mac, sizeof(mlxsw_sp->base_mac), 0);
 	mlxsw_reg_recr2_pack(recr2_pl, seed);
 	mlxsw_sp_mp4_hash_init(mlxsw_sp, &config);
 	mlxsw_sp_mp6_hash_init(mlxsw_sp, &config);
 
+<<<<<<< HEAD
 	old_inc_parsing_depth = mlxsw_sp->router->inc_parsing_depth;
 	new_inc_parsing_depth = config.inc_parsing_depth;
 	err = mlxsw_sp_mp_hash_parsing_depth_adjust(mlxsw_sp,
@@ -9727,6 +9754,8 @@ static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
 	if (err)
 		return err;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for_each_set_bit(bit, config.headers, __MLXSW_REG_RECR2_HEADER_CNT)
 		mlxsw_reg_recr2_outer_header_enables_set(recr2_pl, bit, 1);
 	for_each_set_bit(bit, config.fields, __MLXSW_REG_RECR2_FIELD_CNT)
@@ -9736,6 +9765,7 @@ static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)
 	for_each_set_bit(bit, config.inner_fields, __MLXSW_REG_RECR2_INNER_FIELD_CNT)
 		mlxsw_reg_recr2_inner_header_fields_enable_set(recr2_pl, bit, 1);
 
+<<<<<<< HEAD
 	err = mlxsw_reg_write(mlxsw_sp->core, MLXSW_REG(recr2), recr2_pl);
 	if (err)
 		goto err_reg_write;
@@ -9746,6 +9776,9 @@ err_reg_write:
 	mlxsw_sp_mp_hash_parsing_depth_adjust(mlxsw_sp, new_inc_parsing_depth,
 					      old_inc_parsing_depth);
 	return err;
+=======
+	return mlxsw_reg_write(mlxsw_sp->core, MLXSW_REG(recr2), recr2_pl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #else
 static int mlxsw_sp_mp_hash_init(struct mlxsw_sp *mlxsw_sp)

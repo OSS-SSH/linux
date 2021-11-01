@@ -40,7 +40,11 @@ properties:
     maxItems: 1
 
 patternProperties:
+<<<<<<< HEAD
   "@[0-9a-f]+(,[0-7])?$":
+=======
+  "^.*@[0-9a-f]+$":
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     type: object
 
     properties:

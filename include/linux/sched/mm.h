@@ -174,6 +174,7 @@ static inline gfp_t current_gfp_context(gfp_t flags)
 }
 
 #ifdef CONFIG_LOCKDEP
+<<<<<<< HEAD
 extern void __fs_reclaim_acquire(unsigned long ip);
 extern void __fs_reclaim_release(unsigned long ip);
 extern void fs_reclaim_acquire(gfp_t gfp_mask);
@@ -181,6 +182,15 @@ extern void fs_reclaim_release(gfp_t gfp_mask);
 #else
 static inline void __fs_reclaim_acquire(unsigned long ip) { }
 static inline void __fs_reclaim_release(unsigned long ip) { }
+=======
+extern void __fs_reclaim_acquire(void);
+extern void __fs_reclaim_release(void);
+extern void fs_reclaim_acquire(gfp_t gfp_mask);
+extern void fs_reclaim_release(gfp_t gfp_mask);
+#else
+static inline void __fs_reclaim_acquire(void) { }
+static inline void __fs_reclaim_release(void) { }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void fs_reclaim_acquire(gfp_t gfp_mask) { }
 static inline void fs_reclaim_release(gfp_t gfp_mask) { }
 #endif
@@ -306,7 +316,11 @@ set_active_memcg(struct mem_cgroup *memcg)
 {
 	struct mem_cgroup *old;
 
+<<<<<<< HEAD
 	if (!in_task()) {
+=======
+	if (in_interrupt()) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		old = this_cpu_read(int_active_memcg);
 		this_cpu_write(int_active_memcg, memcg);
 	} else {

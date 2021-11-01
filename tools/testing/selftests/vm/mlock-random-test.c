@@ -70,7 +70,11 @@ int get_proc_locked_vm_size(void)
 		}
 	}
 
+<<<<<<< HEAD
 	perror("cannot parse VmLck in /proc/self/status\n");
+=======
+	perror("cann't parse VmLck in /proc/self/status\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fclose(f);
 	return -1;
 }

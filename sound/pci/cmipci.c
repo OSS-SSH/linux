@@ -2852,15 +2852,23 @@ static int snd_cmipci_create_gameport(struct cmipci *cm, int dev)
 	if (joystick_port[dev] == 1) { /* auto-detect */
 		for (i = 0; ports[i]; i++) {
 			io_port = ports[i];
+<<<<<<< HEAD
 			r = devm_request_region(&cm->pci->dev, io_port, 1,
 						"CMIPCI gameport");
+=======
+			r = request_region(io_port, 1, "CMIPCI gameport");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (r)
 				break;
 		}
 	} else {
 		io_port = joystick_port[dev];
+<<<<<<< HEAD
 		r = devm_request_region(&cm->pci->dev, io_port, 1,
 					"CMIPCI gameport");
+=======
+		r = request_region(io_port, 1, "CMIPCI gameport");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (!r) {
@@ -2871,12 +2879,20 @@ static int snd_cmipci_create_gameport(struct cmipci *cm, int dev)
 	cm->gameport = gp = gameport_allocate_port();
 	if (!gp) {
 		dev_err(cm->card->dev, "cannot allocate memory for gameport\n");
+<<<<<<< HEAD
+=======
+		release_and_free_resource(r);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 	}
 	gameport_set_name(gp, "C-Media Gameport");
 	gameport_set_phys(gp, "pci%s/gameport0", pci_name(cm->pci));
 	gameport_set_dev_parent(gp, &cm->pci->dev);
 	gp->io = io_port;
+<<<<<<< HEAD
+=======
+	gameport_set_port_data(gp, r);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	snd_cmipci_set_bit(cm, CM_REG_FUNCTRL1, CM_JYSTK_EN);
 
@@ -2888,10 +2904,19 @@ static int snd_cmipci_create_gameport(struct cmipci *cm, int dev)
 static void snd_cmipci_free_gameport(struct cmipci *cm)
 {
 	if (cm->gameport) {
+<<<<<<< HEAD
+=======
+		struct resource *r = gameport_get_port_data(cm->gameport);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		gameport_unregister_port(cm->gameport);
 		cm->gameport = NULL;
 
 		snd_cmipci_clear_bit(cm, CM_REG_FUNCTRL1, CM_JYSTK_EN);
+<<<<<<< HEAD
+=======
+		release_and_free_resource(r);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 #else
@@ -2899,6 +2924,7 @@ static inline int snd_cmipci_create_gameport(struct cmipci *cm, int dev) { retur
 static inline void snd_cmipci_free_gameport(struct cmipci *cm) { }
 #endif
 
+<<<<<<< HEAD
 static void snd_cmipci_free(struct snd_card *card)
 {
 	struct cmipci *cm = card->private_data;
@@ -2915,6 +2941,36 @@ static void snd_cmipci_free(struct snd_card *card)
 	snd_cmipci_mixer_write(cm, 0, 0);
 
 	snd_cmipci_free_gameport(cm);
+=======
+static int snd_cmipci_free(struct cmipci *cm)
+{
+	if (cm->irq >= 0) {
+		snd_cmipci_clear_bit(cm, CM_REG_MISC_CTRL, CM_FM_EN);
+		snd_cmipci_clear_bit(cm, CM_REG_LEGACY_CTRL, CM_ENSPDOUT);
+		snd_cmipci_write(cm, CM_REG_INT_HLDCLR, 0);  /* disable ints */
+		snd_cmipci_ch_reset(cm, CM_CH_PLAY);
+		snd_cmipci_ch_reset(cm, CM_CH_CAPT);
+		snd_cmipci_write(cm, CM_REG_FUNCTRL0, 0); /* disable channels */
+		snd_cmipci_write(cm, CM_REG_FUNCTRL1, 0);
+
+		/* reset mixer */
+		snd_cmipci_mixer_write(cm, 0, 0);
+
+		free_irq(cm->irq, cm);
+	}
+
+	snd_cmipci_free_gameport(cm);
+	pci_release_regions(cm->pci);
+	pci_disable_device(cm->pci);
+	kfree(cm);
+	return 0;
+}
+
+static int snd_cmipci_dev_free(struct snd_device *device)
+{
+	struct cmipci *cm = device->device_data;
+	return snd_cmipci_free(cm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int snd_cmipci_create_fm(struct cmipci *cm, long fm_port)
@@ -2973,10 +3029,20 @@ static int snd_cmipci_create_fm(struct cmipci *cm, long fm_port)
 }
 
 static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
+<<<<<<< HEAD
 			     int dev)
 {
 	struct cmipci *cm = card->private_data;
 	int err;
+=======
+			     int dev, struct cmipci **rcmipci)
+{
+	struct cmipci *cm;
+	int err;
+	static const struct snd_device_ops ops = {
+		.dev_free =	snd_cmipci_dev_free,
+	};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int val;
 	long iomidi = 0;
 	int integrated_midi = 0;
@@ -2987,10 +3053,25 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 		{ },
 	};
 
+<<<<<<< HEAD
 	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
 
+=======
+	*rcmipci = NULL;
+
+	err = pci_enable_device(pci);
+	if (err < 0)
+		return err;
+
+	cm = kzalloc(sizeof(*cm), GFP_KERNEL);
+	if (cm == NULL) {
+		pci_disable_device(pci);
+		return -ENOMEM;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_init(&cm->reg_lock);
 	mutex_init(&cm->open_mutex);
 	cm->device = pci->device;
@@ -3002,6 +3083,7 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 	cm->channel[0].is_dac = cm->channel[1].is_dac = 1; /* dual DAC mode */
 
 	err = pci_request_regions(pci, card->driver);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 	cm->iobase = pci_resource_start(pci, 0);
@@ -3009,11 +3091,27 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 	if (devm_request_irq(&pci->dev, pci->irq, snd_cmipci_interrupt,
 			     IRQF_SHARED, KBUILD_MODNAME, cm)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+=======
+	if (err < 0) {
+		kfree(cm);
+		pci_disable_device(pci);
+		return err;
+	}
+	cm->iobase = pci_resource_start(pci, 0);
+
+	if (request_irq(pci->irq, snd_cmipci_interrupt,
+			IRQF_SHARED, KBUILD_MODNAME, cm)) {
+		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+		snd_cmipci_free(cm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 	cm->irq = pci->irq;
 	card->sync_irq = cm->irq;
+<<<<<<< HEAD
 	card->private_free = snd_cmipci_free;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pci_set_master(cm->pci);
 
@@ -3113,6 +3211,15 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 	sprintf(card->longname, "%s%s at %#lx, irq %i",
 		card->shortname, modelstr, cm->iobase, cm->irq);
 
+<<<<<<< HEAD
+=======
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, cm, &ops);
+	if (err < 0) {
+		snd_cmipci_free(cm);
+		return err;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (cm->chip_version >= 39) {
 		val = snd_cmipci_read_b(cm, CM_REG_MPU_PCI + 1);
 		if (val != 0x00 && val != 0xff) {
@@ -3205,6 +3312,10 @@ static int snd_cmipci_create(struct snd_card *card, struct pci_dev *pci,
 	if (snd_cmipci_create_gameport(cm, dev) < 0)
 		snd_cmipci_clear_bit(cm, CM_REG_FUNCTRL1, CM_JYSTK_EN);
 
+<<<<<<< HEAD
+=======
+	*rcmipci = cm;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -3228,11 +3339,18 @@ static int snd_cmipci_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*cm), &card);
 	if (err < 0)
 		return err;
 	cm = card->private_data;
+=======
+	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+			   0, &card);
+	if (err < 0)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	
 	switch (pci->device) {
 	case PCI_DEVICE_ID_CMEDIA_CM8738:
@@ -3248,6 +3366,7 @@ static int snd_cmipci_probe(struct pci_dev *pci,
 		break;
 	}
 
+<<<<<<< HEAD
 	err = snd_cmipci_create(card, pci, dev);
 	if (err < 0)
 		return err;
@@ -3255,12 +3374,38 @@ static int snd_cmipci_probe(struct pci_dev *pci,
 	err = snd_card_register(card);
 	if (err < 0)
 		return err;
+=======
+	err = snd_cmipci_create(card, pci, dev, &cm);
+	if (err < 0)
+		goto free_card;
+
+	card->private_data = cm;
+
+	err = snd_card_register(card);
+	if (err < 0)
+		goto free_card;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
+<<<<<<< HEAD
 }
 
+=======
+
+free_card:
+	snd_card_free(card);
+	return err;
+}
+
+static void snd_cmipci_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+}
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_PM_SLEEP
 /*
  * power management
@@ -3335,6 +3480,10 @@ static struct pci_driver cmipci_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_cmipci_ids,
 	.probe = snd_cmipci_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_cmipci_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver = {
 		.pm = SND_CMIPCI_PM_OPS,
 	},

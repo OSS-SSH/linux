@@ -172,9 +172,12 @@ static void __init imx6q_init_machine(void)
 				imx_get_soc_revision());
 
 	imx6q_enet_phy_init();
+<<<<<<< HEAD
 
 	of_platform_default_populate(NULL, NULL, NULL);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	imx_anatop_init();
 	cpu_is_imx6q() ?  imx6q_pm_init() : imx6dl_pm_init();
 	imx6q_1588_init();

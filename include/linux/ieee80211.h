@@ -1088,6 +1088,7 @@ struct ieee80211_ext {
 	} u;
 } __packed __aligned(2);
 
+<<<<<<< HEAD
 #define IEEE80211_TWT_CONTROL_NDP			BIT(0)
 #define IEEE80211_TWT_CONTROL_RESP_MODE			BIT(1)
 #define IEEE80211_TWT_CONTROL_NEG_TYPE_BROADCAST	BIT(3)
@@ -1130,6 +1131,8 @@ struct ieee80211_twt_setup {
 	u8 params[];
 } __packed;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct ieee80211_mgmt {
 	__le16 frame_control;
 	__le16 duration;
@@ -1294,10 +1297,13 @@ struct ieee80211_mgmt {
 					__le16 toa_error;
 					u8 variable[0];
 				} __packed ftm;
+<<<<<<< HEAD
 				struct {
 					u8 action_code;
 					u8 variable[];
 				} __packed s1g;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			} u;
 		} __packed action;
 	} u;
@@ -2312,9 +2318,12 @@ ieee80211_he_ppe_size(u8 ppe_thres_hdr, const u8 *phy_cap_info)
 #define IEEE80211_HE_OPERATION_PARTIAL_BSS_COLOR		0x40000000
 #define IEEE80211_HE_OPERATION_BSS_COLOR_DISABLED		0x80000000
 
+<<<<<<< HEAD
 #define IEEE80211_6GHZ_CTRL_REG_LPI_AP	0
 #define IEEE80211_6GHZ_CTRL_REG_SP_AP	1
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * ieee80211_he_6ghz_oper - HE 6 GHz operation Information field
  * @primary: primary channel
@@ -2331,7 +2340,10 @@ struct ieee80211_he_6ghz_oper {
 #define		IEEE80211_HE_6GHZ_OPER_CTRL_CHANWIDTH_80MHZ	2
 #define		IEEE80211_HE_6GHZ_OPER_CTRL_CHANWIDTH_160MHZ	3
 #define IEEE80211_HE_6GHZ_OPER_CTRL_DUP_BEACON	0x4
+<<<<<<< HEAD
 #define IEEE80211_HE_6GHZ_OPER_CTRL_REG_INFO	0x38
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 control;
 	u8 ccfs0;
 	u8 ccfs1;
@@ -2339,6 +2351,7 @@ struct ieee80211_he_6ghz_oper {
 } __packed;
 
 /*
+<<<<<<< HEAD
  * In "9.4.2.161 Transmit Power Envelope element" of "IEEE Std 802.11ax-2021",
  * it show four types in "Table 9-275a-Maximum Transmit Power Interpretation
  * subfield encoding", and two category for each type in "Table E-12-Regulatory
@@ -2377,6 +2390,8 @@ struct ieee80211_tx_pwr_env {
 #define IEEE80211_TX_PWR_ENV_INFO_CATEGORY 0xC0
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * ieee80211_he_oper_size - calculate 802.11ax HE Operations IE size
  * @he_oper_ie: byte data of the He Operations IE, stating from the byte
  *	after the ext ID byte. It is assumed that he_oper_ie has at least
@@ -2957,7 +2972,11 @@ enum ieee80211_eid {
 	WLAN_EID_VHT_OPERATION = 192,
 	WLAN_EID_EXTENDED_BSS_LOAD = 193,
 	WLAN_EID_WIDE_BW_CHANNEL_SWITCH = 194,
+<<<<<<< HEAD
 	WLAN_EID_TX_POWER_ENVELOPE = 195,
+=======
+	WLAN_EID_VHT_TX_POWER_ENVELOPE = 195,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WLAN_EID_CHANNEL_SWITCH_WRAPPER = 196,
 	WLAN_EID_AID = 197,
 	WLAN_EID_QUIET_CHANNEL = 198,
@@ -2969,7 +2988,10 @@ enum ieee80211_eid {
 	WLAN_EID_AID_RESPONSE = 211,
 	WLAN_EID_S1G_BCN_COMPAT = 213,
 	WLAN_EID_S1G_SHORT_BCN_INTERVAL = 214,
+<<<<<<< HEAD
 	WLAN_EID_S1G_TWT = 216,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WLAN_EID_S1G_CAPABILITIES = 217,
 	WLAN_EID_VENDOR_SPECIFIC = 221,
 	WLAN_EID_QOS_PARAMETER = 222,
@@ -3039,7 +3061,10 @@ enum ieee80211_category {
 	WLAN_CATEGORY_FST = 18,
 	WLAN_CATEGORY_UNPROT_DMG = 20,
 	WLAN_CATEGORY_VHT = 21,
+<<<<<<< HEAD
 	WLAN_CATEGORY_S1G = 22,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WLAN_CATEGORY_VENDOR_SPECIFIC_PROTECTED = 126,
 	WLAN_CATEGORY_VENDOR_SPECIFIC = 127,
 };
@@ -3113,6 +3138,7 @@ enum ieee80211_key_len {
 	WLAN_KEY_LEN_BIP_GMAC_256 = 32,
 };
 
+<<<<<<< HEAD
 enum ieee80211_s1g_actioncode {
 	WLAN_S1G_AID_SWITCH_REQUEST,
 	WLAN_S1G_AID_SWITCH_RESPONSE,
@@ -3127,6 +3153,8 @@ enum ieee80211_s1g_actioncode {
 	WLAN_S1G_TWT_INFORMATION = 11,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define IEEE80211_WEP_IV_LEN		4
 #define IEEE80211_WEP_ICV_LEN		4
 #define IEEE80211_CCMP_HDR_LEN		8

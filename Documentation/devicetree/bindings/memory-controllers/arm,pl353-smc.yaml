@@ -57,6 +57,10 @@ properties:
 
   ranges:
     minItems: 1
+<<<<<<< HEAD
+=======
+    maxItems: 3
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     description: |
       Memory bus areas for interacting with the devices. Reflects
       the memory layout with four integer values following:

@@ -348,7 +348,11 @@ struct echoaudio {
 	struct pci_dev *pci;
 	unsigned long dsp_registers_phys;
 	struct resource *iores;
+<<<<<<< HEAD
 	struct snd_dma_buffer *commpage_dma_buf;
+=======
+	struct snd_dma_buffer commpage_dma_buf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int irq;
 #ifdef ECHOCARD_HAS_MIDI
 	struct snd_rawmidi *rmidi;

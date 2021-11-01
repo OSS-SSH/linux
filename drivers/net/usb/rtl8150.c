@@ -822,8 +822,12 @@ static const struct ethtool_ops ops = {
 	.get_link_ksettings = rtl8150_get_link_ksettings,
 };
 
+<<<<<<< HEAD
 static int rtl8150_siocdevprivate(struct net_device *netdev, struct ifreq *rq,
 				  void __user *udata, int cmd)
+=======
+static int rtl8150_ioctl(struct net_device *netdev, struct ifreq *rq, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	rtl8150_t *dev = netdev_priv(netdev);
 	u16 *data = (u16 *) & rq->ifr_ifru;
@@ -851,7 +855,11 @@ static int rtl8150_siocdevprivate(struct net_device *netdev, struct ifreq *rq,
 static const struct net_device_ops rtl8150_netdev_ops = {
 	.ndo_open		= rtl8150_open,
 	.ndo_stop		= rtl8150_close,
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= rtl8150_siocdevprivate,
+=======
+	.ndo_do_ioctl		= rtl8150_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_start_xmit		= rtl8150_start_xmit,
 	.ndo_tx_timeout		= rtl8150_tx_timeout,
 	.ndo_set_rx_mode	= rtl8150_set_multicast,

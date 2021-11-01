@@ -940,7 +940,11 @@ struct clk *rockchip_clk_register_pll(struct rockchip_clk_provider *ctx,
 	switch (pll_type) {
 	case pll_rk3036:
 	case pll_rk3328:
+<<<<<<< HEAD
 		if (!pll->rate_table)
+=======
+		if (!pll->rate_table || IS_ERR(ctx->grf))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			init.ops = &rockchip_rk3036_pll_clk_norate_ops;
 		else
 			init.ops = &rockchip_rk3036_pll_clk_ops;

@@ -336,8 +336,13 @@ static irqreturn_t dio48e_irq_handler(int irq, void *dev_id)
 	unsigned long gpio;
 
 	for_each_set_bit(gpio, &irq_mask, 2)
+<<<<<<< HEAD
 		generic_handle_domain_irq(chip->irq.domain,
 					  19 + gpio*24);
+=======
+		generic_handle_irq(irq_find_mapping(chip->irq.domain,
+			19 + gpio*24));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	raw_spin_lock(&dio48egpio->lock);
 

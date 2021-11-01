@@ -114,12 +114,15 @@ struct lpfc_sli2_slim;
 #define LPFC_MBX_NO_WAIT	0
 #define LPFC_MBX_WAIT		1
 
+<<<<<<< HEAD
 #define LPFC_CFG_PARAM_MAGIC_NUM 0xFEAA0005
 #define LPFC_PORT_CFG_NAME "/cfg/port.cfg"
 
 #define lpfc_rangecheck(val, min, max) \
 	((uint)(val) >= (uint)(min) && (val) <= (max))
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum lpfc_polling_flags {
 	ENABLE_FCP_RING_POLLING = 0x1,
 	DISABLE_FCP_RING_INT    = 0x2
@@ -409,6 +412,7 @@ struct lpfc_trunk_link  {
 				     link3;
 };
 
+<<<<<<< HEAD
 /* Format of congestion module parameters */
 struct lpfc_cgn_param {
 	uint32_t cgn_param_magic;
@@ -563,6 +567,8 @@ struct lpfc_cgn_acqe_stat {
 	atomic64_t warn;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct lpfc_vport {
 	struct lpfc_hba *phba;
 	struct list_head listentry;
@@ -1029,10 +1035,14 @@ struct lpfc_hba {
 					 * capability
 					 */
 #define HBA_FLOGI_ISSUED	0x100000 /* FLOGI was issued */
+<<<<<<< HEAD
 #define HBA_CGN_RSVD1		0x200000 /* Reserved CGN flag */
 #define HBA_CGN_DAY_WRAP	0x400000 /* HBA Congestion info day wraps */
 #define HBA_DEFER_FLOGI		0x800000 /* Defer FLOGI till read_sparm cmpl */
 #define HBA_SETUP		0x1000000 /* Signifies HBA setup is completed */
+=======
+#define HBA_DEFER_FLOGI		0x800000 /* Defer FLOGI till read_sparm cmpl */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define HBA_NEEDS_CFG_PORT	0x2000000 /* SLI3 - needs a CONFIG_PORT mbox */
 #define HBA_HBEAT_INP		0x4000000 /* mbox HBEAT is in progress */
 #define HBA_HBEAT_TMO		0x8000000 /* HBEAT initiated after timeout */
@@ -1085,6 +1095,10 @@ struct lpfc_hba {
 	uint8_t  wwpn[8];
 	uint32_t RandomData[7];
 	uint8_t  fcp_embed_io;
+<<<<<<< HEAD
+=======
+	uint8_t  nvme_support;	/* Firmware supports NVME */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint8_t  nvmet_support;	/* driver supports NVMET */
 #define LPFC_NVMET_MAX_PORTS	32
 	uint8_t  mds_diags_support;
@@ -1283,7 +1297,10 @@ struct lpfc_hba {
 	uint32_t total_iocbq_bufs;
 	struct list_head active_rrq_list;
 	spinlock_t hbalock;
+<<<<<<< HEAD
 	struct work_struct  unblock_request_work; /* SCSI layer unblock IOs */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* dma_mem_pools */
 	struct dma_pool *lpfc_sg_dma_buf_pool;
@@ -1357,8 +1374,11 @@ struct lpfc_hba {
 #ifdef LPFC_HDWQ_LOCK_STAT
 	struct dentry *debug_lockstat;
 #endif
+<<<<<<< HEAD
 	struct dentry *debug_cgn_buffer;
 	struct dentry *debug_rx_monitor;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct dentry *debug_ras_log;
 	atomic_t nvmeio_trc_cnt;
 	uint32_t nvmeio_trc_size;
@@ -1509,6 +1529,7 @@ struct lpfc_hba {
 	uint64_t ktime_seg10_min;
 	uint64_t ktime_seg10_max;
 #endif
+<<<<<<< HEAD
 	/* CMF objects */
 	struct lpfc_cgn_stat __percpu *cmf_stat;
 	uint32_t cmf_interval_rate;  /* timer interval limit in ms */
@@ -1579,6 +1600,8 @@ struct lpfc_hba {
 #define LPFC_MIN_HOUR		60
 #define LPFC_HOUR_DAY		24
 #define LPFC_MIN_DAY		(LPFC_MIN_HOUR * LPFC_HOUR_DAY)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct hlist_node cpuhp;	/* used for cpuhp per hba callback */
 	struct timer_list cpuhp_poll_timer;
@@ -1599,6 +1622,7 @@ struct lpfc_hba {
 	struct dbg_log_ent dbg_log[DBG_LOG_SZ];
 };
 
+<<<<<<< HEAD
 #define LPFC_MAX_RXMONITOR_ENTRY	800
 #define LPFC_MAX_RXMONITOR_DUMP		32
 struct rxtable_entry {
@@ -1615,6 +1639,8 @@ struct rxtable_entry {
 	uint32_t timer_interval;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct Scsi_Host *
 lpfc_shost_from_vport(struct lpfc_vport *vport)
 {

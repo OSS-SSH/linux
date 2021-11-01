@@ -610,7 +610,10 @@ static int handle_io_inst(struct kvm_vcpu *vcpu)
 static int handle_pqap(struct kvm_vcpu *vcpu)
 {
 	struct ap_queue_status status = {};
+<<<<<<< HEAD
 	crypto_hook pqap_hook;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long reg0;
 	int ret;
 	uint8_t fc;
@@ -655,6 +658,7 @@ static int handle_pqap(struct kvm_vcpu *vcpu)
 		return kvm_s390_inject_program_int(vcpu, PGM_SPECIFICATION);
 
 	/*
+<<<<<<< HEAD
 	 * If the hook callback is registered, there will be a pointer to the
 	 * hook function pointer in the kvm_s390_crypto structure. Lock the
 	 * owner, retrieve the hook function pointer and call the hook.
@@ -669,6 +673,20 @@ static int handle_pqap(struct kvm_vcpu *vcpu)
 		return ret;
 	}
 	up_read(&vcpu->kvm->arch.crypto.pqap_hook_rwsem);
+=======
+	 * Verify that the hook callback is registered, lock the owner
+	 * and call the hook.
+	 */
+	if (vcpu->kvm->arch.crypto.pqap_hook) {
+		if (!try_module_get(vcpu->kvm->arch.crypto.pqap_hook->owner))
+			return -EOPNOTSUPP;
+		ret = vcpu->kvm->arch.crypto.pqap_hook->hook(vcpu);
+		module_put(vcpu->kvm->arch.crypto.pqap_hook->owner);
+		if (!ret && vcpu->run->s.regs.gprs[1] & 0x00ff0000)
+			kvm_s390_set_psw_cc(vcpu, 3);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * A vfio_driver must register a hook.
 	 * No hook means no driver to enable the SIE CRYCB and no queues.

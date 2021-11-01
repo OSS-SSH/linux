@@ -819,7 +819,11 @@ static u16 rtw_get_rsvd_page_probe_req_size(struct rtw_dev *rtwdev,
 			continue;
 		if ((!ssid && !rsvd_pkt->ssid) ||
 		    rtw_ssid_equal(rsvd_pkt->ssid, ssid))
+<<<<<<< HEAD
 			size = rsvd_pkt->probe_req_size;
+=======
+			size = rsvd_pkt->skb->len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return size;
@@ -1047,8 +1051,11 @@ static struct sk_buff *rtw_get_rsvd_page_skb(struct ieee80211_hw *hw,
 							 ssid->ssid_len, 0);
 		else
 			skb_new = ieee80211_probereq_get(hw, vif->addr, NULL, 0, 0);
+<<<<<<< HEAD
 		if (skb_new)
 			rsvd_pkt->probe_req_size = (u16)skb_new->len;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case RSVD_NLO_INFO:
 		skb_new = rtw_nlo_info_get(hw);
@@ -1645,7 +1652,10 @@ int rtw_fw_dump_fifo(struct rtw_dev *rtwdev, u8 fifo_sel, u32 addr, u32 size,
 static void __rtw_fw_update_pkt(struct rtw_dev *rtwdev, u8 pkt_id, u16 size,
 				u8 location)
 {
+<<<<<<< HEAD
 	struct rtw_chip_info *chip = rtwdev->chip;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 h2c_pkt[H2C_PKT_SIZE] = {0};
 	u16 total_size = H2C_PKT_HDR_SIZE + H2C_PKT_UPDATE_PKT_LEN;
 
@@ -1656,7 +1666,10 @@ static void __rtw_fw_update_pkt(struct rtw_dev *rtwdev, u8 pkt_id, u16 size,
 	UPDATE_PKT_SET_LOCATION(h2c_pkt, location);
 
 	/* include txdesc size */
+<<<<<<< HEAD
 	size += chip->tx_pkt_desc_sz;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	UPDATE_PKT_SET_SIZE(h2c_pkt, size);
 
 	rtw_fw_send_h2c_packet(rtwdev, h2c_pkt);
@@ -1666,7 +1679,11 @@ void rtw_fw_update_pkt_probe_req(struct rtw_dev *rtwdev,
 				 struct cfg80211_ssid *ssid)
 {
 	u8 loc;
+<<<<<<< HEAD
 	u16 size;
+=======
+	u32 size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	loc = rtw_get_rsvd_page_probe_req_location(rtwdev, ssid);
 	if (!loc) {

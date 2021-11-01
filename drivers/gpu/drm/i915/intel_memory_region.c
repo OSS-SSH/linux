@@ -5,7 +5,10 @@
 
 #include "intel_memory_region.h"
 #include "i915_drv.h"
+<<<<<<< HEAD
 #include "i915_ttm_buddy_manager.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct {
 	u16 class;
@@ -29,6 +32,14 @@ static const struct {
 	},
 };
 
+<<<<<<< HEAD
+=======
+struct intel_region_reserve {
+	struct list_head link;
+	struct ttm_resource *res;
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct intel_memory_region *
 intel_memory_region_lookup(struct drm_i915_private *i915,
 			   u16 class, u16 instance)
@@ -60,6 +71,30 @@ intel_memory_region_by_type(struct drm_i915_private *i915,
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * intel_memory_region_unreserve - Unreserve all previously reserved
+ * ranges
+ * @mem: The region containing the reserved ranges.
+ */
+void intel_memory_region_unreserve(struct intel_memory_region *mem)
+{
+	struct intel_region_reserve *reserve, *next;
+
+	if (!mem->priv_ops || !mem->priv_ops->free)
+		return;
+
+	mutex_lock(&mem->mm_lock);
+	list_for_each_entry_safe(reserve, next, &mem->reserved, link) {
+		list_del(&reserve->link);
+		mem->priv_ops->free(mem, reserve->res);
+		kfree(reserve);
+	}
+	mutex_unlock(&mem->mm_lock);
+}
+
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * intel_memory_region_reserve - Reserve a memory range
  * @mem: The region for which we want to reserve a range.
  * @offset: Start of the range to reserve.
@@ -71,11 +106,36 @@ int intel_memory_region_reserve(struct intel_memory_region *mem,
 				resource_size_t offset,
 				resource_size_t size)
 {
+<<<<<<< HEAD
 	struct ttm_resource_manager *man = mem->region_private;
 
 	GEM_BUG_ON(mem->is_range_manager);
 
 	return i915_ttm_buddy_man_reserve(man, offset, size);
+=======
+	int ret;
+	struct intel_region_reserve *reserve;
+
+	if (!mem->priv_ops || !mem->priv_ops->reserve)
+		return -EINVAL;
+
+	reserve = kzalloc(sizeof(*reserve), GFP_KERNEL);
+	if (!reserve)
+		return -ENOMEM;
+
+	reserve->res = mem->priv_ops->reserve(mem, offset, size);
+	if (IS_ERR(reserve->res)) {
+		ret = PTR_ERR(reserve->res);
+		kfree(reserve);
+		return ret;
+	}
+
+	mutex_lock(&mem->mm_lock);
+	list_add_tail(&reserve->link, &mem->reserved);
+	mutex_unlock(&mem->mm_lock);
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct intel_memory_region *
@@ -107,6 +167,13 @@ intel_memory_region_create(struct drm_i915_private *i915,
 
 	mutex_init(&mem->objects.lock);
 	INIT_LIST_HEAD(&mem->objects.list);
+<<<<<<< HEAD
+=======
+	INIT_LIST_HEAD(&mem->objects.purgeable);
+	INIT_LIST_HEAD(&mem->reserved);
+
+	mutex_init(&mem->mm_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (ops->init) {
 		err = ops->init(mem);
@@ -137,9 +204,17 @@ static void __intel_memory_region_destroy(struct kref *kref)
 	struct intel_memory_region *mem =
 		container_of(kref, typeof(*mem), kref);
 
+<<<<<<< HEAD
 	if (mem->ops->release)
 		mem->ops->release(mem);
 
+=======
+	intel_memory_region_unreserve(mem);
+	if (mem->ops->release)
+		mem->ops->release(mem);
+
+	mutex_destroy(&mem->mm_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_destroy(&mem->objects.lock);
 	kfree(mem);
 }
@@ -173,12 +248,16 @@ int intel_memory_regions_hw_probe(struct drm_i915_private *i915)
 		instance = intel_region_map[i].instance;
 		switch (type) {
 		case INTEL_MEMORY_SYSTEM:
+<<<<<<< HEAD
 			if (IS_DGFX(i915))
 				mem = i915_gem_ttm_system_setup(i915, type,
 								instance);
 			else
 				mem = i915_gem_shmem_setup(i915, type,
 							   instance);
+=======
+			mem = i915_gem_shmem_setup(i915, type, instance);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		case INTEL_MEMORY_STOLEN_LOCAL:
 			mem = i915_gem_stolen_lmem_setup(i915, type, instance);

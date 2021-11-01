@@ -240,6 +240,7 @@ static inline bool kvm_memslots_have_rmaps(struct kvm *kvm)
 	return smp_load_acquire(&kvm->arch.memslots_have_rmaps);
 }
 
+<<<<<<< HEAD
 static inline gfn_t gfn_to_index(gfn_t gfn, gfn_t base_gfn, int level)
 {
 	/* KVM_HPAGE_GFN_SHIFT(PG_LEVEL_4K) must be 0. */
@@ -265,4 +266,6 @@ static inline void kvm_update_page_stats(struct kvm *kvm, int level, int count)
 {
 	atomic64_add(count, &kvm->stat.pages[level - 1]);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

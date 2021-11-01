@@ -101,6 +101,9 @@ struct sof_dev_desc {
 };
 
 int sof_dai_get_mclk(struct snd_soc_pcm_runtime *rtd);
+<<<<<<< HEAD
 int sof_dai_get_bclk(struct snd_soc_pcm_runtime *rtd);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

@@ -18,6 +18,7 @@ static bool is_any_launchtime(struct igc_adapter *adapter)
 	return false;
 }
 
+<<<<<<< HEAD
 static bool is_cbs_enabled(struct igc_adapter *adapter)
 {
 	int i;
@@ -50,6 +51,10 @@ static unsigned int igc_tsn_new_flags(struct igc_adapter *adapter)
 
 /* Returns the TSN specific registers to their default values after
  * the adapter is reset.
+=======
+/* Returns the TSN specific registers to their default values after
+ * TSN offloading is disabled.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static int igc_tsn_disable_offload(struct igc_adapter *adapter)
 {
@@ -57,6 +62,14 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
 	u32 tqavctrl;
 	int i;
 
+<<<<<<< HEAD
+=======
+	if (!(adapter->flags & IGC_FLAG_TSN_QBV_ENABLED))
+		return 0;
+
+	adapter->cycle_time = 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	wr32(IGC_TXPBS, I225_TXPBSIZE_DEFAULT);
 	wr32(IGC_DTXMXPKTSZ, IGC_DTXMXPKTSZ_DEFAULT);
 
@@ -66,12 +79,25 @@ static int igc_tsn_disable_offload(struct igc_adapter *adapter)
 	wr32(IGC_TQAVCTRL, tqavctrl);
 
 	for (i = 0; i < adapter->num_tx_queues; i++) {
+<<<<<<< HEAD
+=======
+		struct igc_ring *ring = adapter->tx_ring[i];
+
+		ring->start_time = 0;
+		ring->end_time = 0;
+		ring->launchtime_enable = false;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		wr32(IGC_TXQCTL(i), 0);
 		wr32(IGC_STQT(i), 0);
 		wr32(IGC_ENDQT(i), NSEC_PER_SEC);
 	}
 
+<<<<<<< HEAD
 	wr32(IGC_QBVCYCLET_S, 0);
+=======
+	wr32(IGC_QBVCYCLET_S, NSEC_PER_SEC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	wr32(IGC_QBVCYCLET, NSEC_PER_SEC);
 
 	adapter->flags &= ~IGC_FLAG_TSN_QBV_ENABLED;
@@ -87,6 +113,12 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
 	ktime_t base_time, systim;
 	int i;
 
+<<<<<<< HEAD
+=======
+	if (adapter->flags & IGC_FLAG_TSN_QBV_ENABLED)
+		return 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cycle = adapter->cycle_time;
 	base_time = adapter->base_time;
 
@@ -104,8 +136,11 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
 	for (i = 0; i < adapter->num_tx_queues; i++) {
 		struct igc_ring *ring = adapter->tx_ring[i];
 		u32 txqctl = 0;
+<<<<<<< HEAD
 		u16 cbs_value;
 		u32 tqavcc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		wr32(IGC_STQT(i), ring->start_time);
 		wr32(IGC_ENDQT(i), ring->end_time);
@@ -123,6 +158,7 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
 		if (ring->launchtime_enable)
 			txqctl |= IGC_TXQCTL_QUEUE_MODE_LAUNCHT;
 
+<<<<<<< HEAD
 		/* Skip configuring CBS for Q2 and Q3 */
 		if (i > 1)
 			goto skip_cbs;
@@ -207,6 +243,8 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
 			wr32(IGC_TQAVHC(i), 0);
 		}
 skip_cbs:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		wr32(IGC_TXQCTL(i), txqctl);
 	}
 
@@ -227,6 +265,7 @@ skip_cbs:
 	wr32(IGC_BASET_H, baset_h);
 	wr32(IGC_BASET_L, baset_l);
 
+<<<<<<< HEAD
 	return 0;
 }
 
@@ -264,4 +303,35 @@ int igc_tsn_offload_apply(struct igc_adapter *adapter)
 
 	adapter->flags = igc_tsn_new_flags(adapter);
 	return 0;
+=======
+	adapter->flags |= IGC_FLAG_TSN_QBV_ENABLED;
+
+	return 0;
+}
+
+int igc_tsn_offload_apply(struct igc_adapter *adapter)
+{
+	bool is_any_enabled = adapter->base_time || is_any_launchtime(adapter);
+
+	if (!(adapter->flags & IGC_FLAG_TSN_QBV_ENABLED) && !is_any_enabled)
+		return 0;
+
+	if (!is_any_enabled) {
+		int err = igc_tsn_disable_offload(adapter);
+
+		if (err < 0)
+			return err;
+
+		/* The BASET registers aren't cleared when writing
+		 * into them, force a reset if the interface is
+		 * running.
+		 */
+		if (netif_running(adapter->netdev))
+			schedule_work(&adapter->reset_task);
+
+		return 0;
+	}
+
+	return igc_tsn_enable_offload(adapter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

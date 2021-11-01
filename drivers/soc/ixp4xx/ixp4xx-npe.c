@@ -21,6 +21,10 @@
 #include <linux/of_platform.h>
 #include <linux/platform_device.h>
 #include <linux/soc/ixp4xx/npe.h>
+<<<<<<< HEAD
+=======
+#include <mach/hardware.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/soc/ixp4xx/cpu.h>
 
 #define DEBUG_MSG			0
@@ -693,8 +697,13 @@ static int ixp4xx_npe_probe(struct platform_device *pdev)
 
 		if (!(ixp4xx_read_feature_bits() &
 		      (IXP4XX_FEATURE_RESET_NPEA << i))) {
+<<<<<<< HEAD
 			dev_info(dev, "NPE%d at %pR not available\n",
 				 i, res);
+=======
+			dev_info(dev, "NPE%d at 0x%08x-0x%08x not available\n",
+				 i, res->start, res->end);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			continue; /* NPE already disabled or not present */
 		}
 		npe->regs = devm_ioremap_resource(dev, res);
@@ -702,12 +711,22 @@ static int ixp4xx_npe_probe(struct platform_device *pdev)
 			return PTR_ERR(npe->regs);
 
 		if (npe_reset(npe)) {
+<<<<<<< HEAD
 			dev_info(dev, "NPE%d at %pR does not reset\n",
 				 i, res);
 			continue;
 		}
 		npe->valid = 1;
 		dev_info(dev, "NPE%d at %pR registered\n", i, res);
+=======
+			dev_info(dev, "NPE%d at 0x%08x-0x%08x does not reset\n",
+				 i, res->start, res->end);
+			continue;
+		}
+		npe->valid = 1;
+		dev_info(dev, "NPE%d at 0x%08x-0x%08x registered\n",
+			 i, res->start, res->end);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		found++;
 	}
 

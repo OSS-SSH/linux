@@ -44,8 +44,11 @@ static unsigned ttm_glob_use_count;
 struct ttm_global ttm_glob;
 EXPORT_SYMBOL(ttm_glob);
 
+<<<<<<< HEAD
 struct dentry *ttm_debugfs_root;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void ttm_global_release(void)
 {
 	struct ttm_global *glob = &ttm_glob;
@@ -55,7 +58,10 @@ static void ttm_global_release(void)
 		goto out;
 
 	ttm_pool_mgr_fini();
+<<<<<<< HEAD
 	debugfs_remove(ttm_debugfs_root);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	__free_page(glob->dummy_read_page);
 	memset(glob, 0, sizeof(*glob));
@@ -76,11 +82,14 @@ static int ttm_global_init(void)
 
 	si_meminfo(&si);
 
+<<<<<<< HEAD
 	ttm_debugfs_root = debugfs_create_dir("ttm", NULL);
 	if (IS_ERR(ttm_debugfs_root)) {
 		ttm_debugfs_root = NULL;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Limit the number of pages in the pool to about 50% of the total
 	 * system memory.
 	 */
@@ -108,10 +117,13 @@ static int ttm_global_init(void)
 	debugfs_create_atomic_t("buffer_objects", 0444, ttm_debugfs_root,
 				&glob->bo_count);
 out:
+<<<<<<< HEAD
 	if (ret && ttm_debugfs_root)
 		debugfs_remove(ttm_debugfs_root);
 	if (ret)
 		--ttm_glob_use_count;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&ttm_global_mutex);
 	return ret;
 }

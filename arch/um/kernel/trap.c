@@ -311,3 +311,10 @@ void winch(int sig, struct siginfo *unused_si, struct uml_pt_regs *regs)
 {
 	do_IRQ(WINCH_IRQ, regs);
 }
+<<<<<<< HEAD
+=======
+
+void trap_init(void)
+{
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

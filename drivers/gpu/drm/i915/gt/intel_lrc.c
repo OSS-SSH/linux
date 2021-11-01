@@ -70,7 +70,11 @@ static void set_offsets(u32 *regs,
 	if (close) {
 		/* Close the batch; used mainly by live_lrc_layout() */
 		*regs = MI_BATCH_BUFFER_END;
+<<<<<<< HEAD
 		if (GRAPHICS_VER(engine->i915) >= 11)
+=======
+		if (GRAPHICS_VER(engine->i915) >= 10)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			*regs |= BIT(0);
 	}
 }
@@ -484,6 +488,7 @@ static const u8 gen12_rcs_offsets[] = {
 	END
 };
 
+<<<<<<< HEAD
 static const u8 xehp_rcs_offsets[] = {
 	NOP(1),
 	LRI(13, POSTED),
@@ -525,6 +530,8 @@ static const u8 xehp_rcs_offsets[] = {
 	END
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #undef END
 #undef REG16
 #undef REG
@@ -543,9 +550,13 @@ static const u8 *reg_offsets(const struct intel_engine_cs *engine)
 		   !intel_engine_has_relative_mmio(engine));
 
 	if (engine->class == RENDER_CLASS) {
+<<<<<<< HEAD
 		if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
 			return xehp_rcs_offsets;
 		else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
+		if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return gen12_rcs_offsets;
 		else if (GRAPHICS_VER(engine->i915) >= 11)
 			return gen11_rcs_offsets;
@@ -565,9 +576,13 @@ static const u8 *reg_offsets(const struct intel_engine_cs *engine)
 
 static int lrc_ring_mi_mode(const struct intel_engine_cs *engine)
 {
+<<<<<<< HEAD
 	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
 		return 0x70;
 	else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
+	if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0x60;
 	else if (GRAPHICS_VER(engine->i915) >= 9)
 		return 0x54;
@@ -579,9 +594,13 @@ static int lrc_ring_mi_mode(const struct intel_engine_cs *engine)
 
 static int lrc_ring_gpr0(const struct intel_engine_cs *engine)
 {
+<<<<<<< HEAD
 	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
 		return 0x84;
 	else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
+	if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0x74;
 	else if (GRAPHICS_VER(engine->i915) >= 9)
 		return 0x68;
@@ -625,6 +644,7 @@ static int lrc_ring_indirect_offset(const struct intel_engine_cs *engine)
 
 static int lrc_ring_cmd_buf_cctl(const struct intel_engine_cs *engine)
 {
+<<<<<<< HEAD
 
 	if (GRAPHICS_VER_FULL(engine->i915) >= IP_VER(12, 50))
 		/*
@@ -635,6 +655,12 @@ static int lrc_ring_cmd_buf_cctl(const struct intel_engine_cs *engine)
 	else if (engine->class != RENDER_CLASS)
 		return -1;
 	else if (GRAPHICS_VER(engine->i915) >= 12)
+=======
+	if (engine->class != RENDER_CLASS)
+		return -1;
+
+	if (GRAPHICS_VER(engine->i915) >= 12)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0xb6;
 	else if (GRAPHICS_VER(engine->i915) >= 11)
 		return 0xaa;
@@ -653,6 +679,11 @@ lrc_ring_indirect_offset_default(const struct intel_engine_cs *engine)
 		return GEN12_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
 	case 11:
 		return GEN11_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
+<<<<<<< HEAD
+=======
+	case 10:
+		return GEN10_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 9:
 		return GEN9_CTX_RCS_INDIRECT_CTX_OFFSET_DEFAULT;
 	case 8:
@@ -896,7 +927,11 @@ int lrc_alloc(struct intel_context *ce, struct intel_engine_cs *engine)
 	if (IS_ERR(vma))
 		return PTR_ERR(vma);
 
+<<<<<<< HEAD
 	ring = intel_engine_create_ring(engine, ce->ring_size);
+=======
+	ring = intel_engine_create_ring(engine, (unsigned long)ce->ring);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(ring)) {
 		err = PTR_ERR(ring);
 		goto err_vma;
@@ -1152,6 +1187,7 @@ setup_indirect_ctx_bb(const struct intel_context *ce,
  *      bits 55-60:    SW counter
  *      bits 61-63:    engine class
  *
+<<<<<<< HEAD
  * On Xe_HP, the upper dword of the descriptor has a new format:
  *
  *      bits 32-37:    virtual function number
@@ -1160,6 +1196,8 @@ setup_indirect_ctx_bb(const struct intel_context *ce,
  *      bits 55-57:    reserved
  *      bits 58-63:    SW counter
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * engine info, SW context ID and SW counter need to form a unique number
  * (Context ID) per lrc.
  */
@@ -1446,6 +1484,43 @@ static u32 *gen9_init_indirectctx_bb(struct intel_engine_cs *engine, u32 *batch)
 	return batch;
 }
 
+<<<<<<< HEAD
+=======
+static u32 *
+gen10_init_indirectctx_bb(struct intel_engine_cs *engine, u32 *batch)
+{
+	int i;
+
+	/*
+	 * WaPipeControlBefore3DStateSamplePattern: cnl
+	 *
+	 * Ensure the engine is idle prior to programming a
+	 * 3DSTATE_SAMPLE_PATTERN during a context restore.
+	 */
+	batch = gen8_emit_pipe_control(batch,
+				       PIPE_CONTROL_CS_STALL,
+				       0);
+	/*
+	 * WaPipeControlBefore3DStateSamplePattern says we need 4 dwords for
+	 * the PIPE_CONTROL followed by 12 dwords of 0x0, so 16 dwords in
+	 * total. However, a PIPE_CONTROL is 6 dwords long, not 4, which is
+	 * confusing. Since gen8_emit_pipe_control() already advances the
+	 * batch by 6 dwords, we advance the other 10 here, completing a
+	 * cacheline. It's not clear if the workaround requires this padding
+	 * before other commands, or if it's just the regular padding we would
+	 * already have for the workaround bb, so leave it here for now.
+	 */
+	for (i = 0; i < 10; i++)
+		*batch++ = MI_NOOP;
+
+	/* Pad to end of cacheline */
+	while ((unsigned long)batch % CACHELINE_BYTES)
+		*batch++ = MI_NOOP;
+
+	return batch;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CTX_WA_BB_SIZE (PAGE_SIZE)
 
 static int lrc_create_wa_ctx(struct intel_engine_cs *engine)
@@ -1498,6 +1573,13 @@ void lrc_init_wa_ctx(struct intel_engine_cs *engine)
 	case 12:
 	case 11:
 		return;
+<<<<<<< HEAD
+=======
+	case 10:
+		wa_bb_fn[0] = gen10_init_indirectctx_bb;
+		wa_bb_fn[1] = NULL;
+		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 9:
 		wa_bb_fn[0] = gen9_init_indirectctx_bb;
 		wa_bb_fn[1] = NULL;

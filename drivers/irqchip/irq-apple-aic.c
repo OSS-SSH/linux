@@ -226,7 +226,11 @@ static void aic_irq_eoi(struct irq_data *d)
 	 * Reading the interrupt reason automatically acknowledges and masks
 	 * the IRQ, so we just unmask it here if needed.
 	 */
+<<<<<<< HEAD
 	if (!irqd_irq_masked(d))
+=======
+	if (!irqd_irq_disabled(d) && !irqd_irq_masked(d))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		aic_irq_unmask(d);
 }
 

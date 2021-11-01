@@ -475,7 +475,18 @@ struct hfa384x_tx_frame {
 	u16 tx_control;
 
 	/*-- 802.11 Header Information --*/
+<<<<<<< HEAD
 	struct p80211_hdr hdr;
+=======
+
+	u16 frame_control;
+	u16 duration_id;
+	u8 address1[6];
+	u8 address2[6];
+	u8 address3[6];
+	u16 sequence_control;
+	u8 address4[6];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__le16 data_len;		/* little endian format */
 
 	/*-- 802.3 Header Information --*/
@@ -534,7 +545,17 @@ struct hfa384x_rx_frame {
 	u16 reserved2;
 
 	/*-- 802.11 Header Information (802.11 byte order) --*/
+<<<<<<< HEAD
 	struct p80211_hdr hdr;
+=======
+	__le16 frame_control;
+	u16 duration_id;
+	u8 address1[6];
+	u8 address2[6];
+	u8 address3[6];
+	u16 sequence_control;
+	u8 address4[6];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__le16 data_len;		/* hfa384x (little endian) format */
 
 	/*-- 802.3 Header Information --*/
@@ -1410,7 +1431,11 @@ int hfa384x_drvr_start(struct hfa384x *hw);
 int hfa384x_drvr_stop(struct hfa384x *hw);
 int
 hfa384x_drvr_txframe(struct hfa384x *hw, struct sk_buff *skb,
+<<<<<<< HEAD
 		     struct p80211_hdr *p80211_hdr,
+=======
+		     union p80211_hdr *p80211_hdr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		     struct p80211_metawep *p80211_wep);
 void hfa384x_tx_timeout(struct wlandevice *wlandev);
 

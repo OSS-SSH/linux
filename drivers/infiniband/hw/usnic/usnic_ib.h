@@ -90,7 +90,11 @@ struct usnic_ib_dev {
 
 struct usnic_ib_vf {
 	struct usnic_ib_dev		*pf;
+<<<<<<< HEAD
 	struct mutex			lock;
+=======
+	spinlock_t			lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct usnic_vnic		*vnic;
 	unsigned int			qp_grp_ref_cnt;
 	struct usnic_ib_pd		*pd;

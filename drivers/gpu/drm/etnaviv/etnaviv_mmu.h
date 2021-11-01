@@ -105,11 +105,17 @@ void etnaviv_iommu_dump(struct etnaviv_iommu_context *ctx, void *buf);
 struct etnaviv_iommu_context *
 etnaviv_iommu_context_init(struct etnaviv_iommu_global *global,
 			   struct etnaviv_cmdbuf_suballoc *suballoc);
+<<<<<<< HEAD
 static inline struct etnaviv_iommu_context *
 etnaviv_iommu_context_get(struct etnaviv_iommu_context *ctx)
 {
 	kref_get(&ctx->refcount);
 	return ctx;
+=======
+static inline void etnaviv_iommu_context_get(struct etnaviv_iommu_context *ctx)
+{
+	kref_get(&ctx->refcount);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 void etnaviv_iommu_context_put(struct etnaviv_iommu_context *ctx);
 void etnaviv_iommu_restore(struct etnaviv_gpu *gpu,

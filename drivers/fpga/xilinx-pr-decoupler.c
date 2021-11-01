@@ -81,7 +81,10 @@ static const struct fpga_bridge_ops xlnx_pr_decoupler_br_ops = {
 	.enable_show = xlnx_pr_decoupler_enable_show,
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_OF
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct xlnx_config_data decoupler_config = {
 	.name = "Xilinx PR Decoupler",
 };
@@ -100,7 +103,10 @@ static const struct of_device_id xlnx_pr_decoupler_of_match[] = {
 	{},
 };
 MODULE_DEVICE_TABLE(of, xlnx_pr_decoupler_of_match);
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int xlnx_pr_decoupler_probe(struct platform_device *pdev)
 {

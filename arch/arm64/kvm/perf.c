@@ -50,6 +50,12 @@ static struct perf_guest_info_callbacks kvm_guest_cbs = {
 
 int kvm_perf_init(void)
 {
+<<<<<<< HEAD
+=======
+	if (kvm_pmu_probe_pmuver() != 0xf && !is_protected_kvm_enabled())
+		static_branch_enable(&kvm_arm_pmu_available);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return perf_register_guest_info_callbacks(&kvm_guest_cbs);
 }
 

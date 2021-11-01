@@ -109,7 +109,11 @@ struct smsm_entry {
 	DECLARE_BITMAP(irq_enabled, 32);
 	DECLARE_BITMAP(irq_rising, 32);
 	DECLARE_BITMAP(irq_falling, 32);
+<<<<<<< HEAD
 	unsigned long last_value;
+=======
+	u32 last_value;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	u32 *remote_state;
 	u32 *subscription;
@@ -204,7 +208,12 @@ static irqreturn_t smsm_intr(int irq, void *data)
 	u32 val;
 
 	val = readl(entry->remote_state);
+<<<<<<< HEAD
 	changed = val ^ xchg(&entry->last_value, val);
+=======
+	changed = val ^ entry->last_value;
+	entry->last_value = val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for_each_set_bit(i, entry->irq_enabled, 32) {
 		if (!(changed & BIT(i)))
@@ -263,12 +272,15 @@ static void smsm_unmask_irq(struct irq_data *irqd)
 	struct qcom_smsm *smsm = entry->smsm;
 	u32 val;
 
+<<<<<<< HEAD
 	/* Make sure our last cached state is up-to-date */
 	if (readl(entry->remote_state) & BIT(irq))
 		set_bit(irq, &entry->last_value);
 	else
 		clear_bit(irq, &entry->last_value);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	set_bit(irq, entry->irq_enabled);
 
 	if (entry->subscription) {
@@ -304,6 +316,7 @@ static int smsm_set_irq_type(struct irq_data *irqd, unsigned int type)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int smsm_get_irqchip_state(struct irq_data *irqd,
 				  enum irqchip_irq_state which, bool *state)
 {
@@ -320,12 +333,17 @@ static int smsm_get_irqchip_state(struct irq_data *irqd,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct irq_chip smsm_irq_chip = {
 	.name           = "smsm",
 	.irq_mask       = smsm_mask_irq,
 	.irq_unmask     = smsm_unmask_irq,
 	.irq_set_type	= smsm_set_irq_type,
+<<<<<<< HEAD
 	.irq_get_irqchip_state = smsm_get_irqchip_state,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**

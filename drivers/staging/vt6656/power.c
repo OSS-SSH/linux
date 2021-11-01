@@ -3,6 +3,11 @@
  * Copyright (c) 1996, 2003 VIA Networking Technologies, Inc.
  * All rights reserved.
  *
+<<<<<<< HEAD
+=======
+ * File: power.c
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Purpose: Handles 802.11 power management functions
  *
  * Author: Lyndon Chen

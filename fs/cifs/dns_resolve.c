@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
+=======
+ *  fs/cifs/dns_resolve.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   Copyright (c) 2007 Igor Mammedov
  *   Author(s): Igor Mammedov (niallain@gmail.com)
@@ -23,7 +27,10 @@
  * dns_resolve_server_name_to_ip - Resolve UNC server name to ip address.
  * @unc: UNC path specifying the server (with '/' as delimiter)
  * @ip_addr: Where to return the IP address.
+<<<<<<< HEAD
  * @expiry: Where to return the expiry time for the dns record.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * The IP address will be returned in string form, and the caller is
  * responsible for freeing it.
@@ -31,7 +38,11 @@
  * Returns length of result on success, -ve on error.
  */
 int
+<<<<<<< HEAD
 dns_resolve_server_name_to_ip(const char *unc, char **ip_addr, time64_t *expiry)
+=======
+dns_resolve_server_name_to_ip(const char *unc, char **ip_addr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sockaddr_storage ss;
 	const char *hostname, *sep;
@@ -66,14 +77,23 @@ dns_resolve_server_name_to_ip(const char *unc, char **ip_addr, time64_t *expiry)
 
 	/* Perform the upcall */
 	rc = dns_query(current->nsproxy->net_ns, NULL, hostname, len,
+<<<<<<< HEAD
 		       NULL, ip_addr, expiry, false);
+=======
+		       NULL, ip_addr, NULL, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc < 0)
 		cifs_dbg(FYI, "%s: unable to resolve: %*.*s\n",
 			 __func__, len, len, hostname);
 	else
+<<<<<<< HEAD
 		cifs_dbg(FYI, "%s: resolved: %*.*s to %s expiry %llu\n",
 			 __func__, len, len, hostname, *ip_addr,
 			 expiry ? (*expiry) : 0);
+=======
+		cifs_dbg(FYI, "%s: resolved: %*.*s to %s\n",
+			 __func__, len, len, hostname, *ip_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 
 name_is_IP_address:

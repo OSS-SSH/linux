@@ -88,10 +88,13 @@ static bool synic_has_vector_auto_eoi(struct kvm_vcpu_hv_synic *synic,
 static void synic_update_vector(struct kvm_vcpu_hv_synic *synic,
 				int vector)
 {
+<<<<<<< HEAD
 	struct kvm_vcpu *vcpu = hv_synic_to_vcpu(synic);
 	struct kvm_hv *hv = to_kvm_hv(vcpu->kvm);
 	int auto_eoi_old, auto_eoi_new;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (vector < HV_SYNIC_FIRST_VALID_VECTOR)
 		return;
 
@@ -100,12 +103,16 @@ static void synic_update_vector(struct kvm_vcpu_hv_synic *synic,
 	else
 		__clear_bit(vector, synic->vec_bitmap);
 
+<<<<<<< HEAD
 	auto_eoi_old = bitmap_weight(synic->auto_eoi_bitmap, 256);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (synic_has_vector_auto_eoi(synic, vector))
 		__set_bit(vector, synic->auto_eoi_bitmap);
 	else
 		__clear_bit(vector, synic->auto_eoi_bitmap);
+<<<<<<< HEAD
 
 	auto_eoi_new = bitmap_weight(synic->auto_eoi_bitmap, 256);
 
@@ -124,6 +131,8 @@ static void synic_update_vector(struct kvm_vcpu_hv_synic *synic,
 				   APICV_INHIBIT_REASON_HYPERV);
 
 	mutex_unlock(&vcpu->kvm->arch.apicv_update_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int synic_set_sint(struct kvm_vcpu_hv_synic *synic, int sint,
@@ -939,7 +948,11 @@ static int kvm_hv_vcpu_init(struct kvm_vcpu *vcpu)
 	for (i = 0; i < ARRAY_SIZE(hv_vcpu->stimer); i++)
 		stimer_init(&hv_vcpu->stimer[i], i);
 
+<<<<<<< HEAD
 	hv_vcpu->vp_index = vcpu->vcpu_idx;
+=======
+	hv_vcpu->vp_index = kvm_vcpu_get_idx(vcpu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -957,6 +970,15 @@ int kvm_hv_activate_synic(struct kvm_vcpu *vcpu, bool dont_zero_synic_pages)
 
 	synic = to_hv_synic(vcpu);
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Hyper-V SynIC auto EOI SINT's are
+	 * not compatible with APICV, so request
+	 * to deactivate APICV permanently.
+	 */
+	kvm_request_apicv_update(vcpu->kvm, false, APICV_INHIBIT_REASON_HYPERV);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	synic->active = true;
 	synic->dont_zero_synic_pages = dont_zero_synic_pages;
 	synic->control = HV_SYNIC_CONTROL_ENABLE;
@@ -1444,6 +1466,10 @@ static int kvm_hv_set_msr(struct kvm_vcpu *vcpu, u32 msr, u64 data, bool host)
 	switch (msr) {
 	case HV_X64_MSR_VP_INDEX: {
 		struct kvm_hv *hv = to_kvm_hv(vcpu->kvm);
+<<<<<<< HEAD
+=======
+		int vcpu_idx = kvm_vcpu_get_idx(vcpu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		u32 new_vp_index = (u32)data;
 
 		if (!host || new_vp_index >= KVM_MAX_VCPUS)
@@ -1458,9 +1484,15 @@ static int kvm_hv_set_msr(struct kvm_vcpu *vcpu, u32 msr, u64 data, bool host)
 		 * VP index is changing, adjust num_mismatched_vp_indexes if
 		 * it now matches or no longer matches vcpu_idx.
 		 */
+<<<<<<< HEAD
 		if (hv_vcpu->vp_index == vcpu->vcpu_idx)
 			atomic_inc(&hv->num_mismatched_vp_indexes);
 		else if (new_vp_index == vcpu->vcpu_idx)
+=======
+		if (hv_vcpu->vp_index == vcpu_idx)
+			atomic_inc(&hv->num_mismatched_vp_indexes);
+		else if (new_vp_index == vcpu_idx)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			atomic_dec(&hv->num_mismatched_vp_indexes);
 
 		hv_vcpu->vp_index = new_vp_index;
@@ -1950,7 +1982,11 @@ ret_success:
 void kvm_hv_set_cpuid(struct kvm_vcpu *vcpu)
 {
 	struct kvm_cpuid_entry2 *entry;
+<<<<<<< HEAD
 	struct kvm_vcpu_hv *hv_vcpu;
+=======
+	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(vcpu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	entry = kvm_find_cpuid_entry(vcpu, HYPERV_CPUID_INTERFACE, 0);
 	if (entry && entry->eax == HYPERV_CPUID_SIGNATURE_EAX) {
@@ -2033,7 +2069,10 @@ static void kvm_hv_hypercall_set_result(struct kvm_vcpu *vcpu, u64 result)
 
 static int kvm_hv_hypercall_complete(struct kvm_vcpu *vcpu, u64 result)
 {
+<<<<<<< HEAD
 	trace_kvm_hv_hypercall_done(result);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kvm_hv_hypercall_set_result(vcpu, result);
 	++vcpu->stat.hypercalls;
 	return kvm_skip_emulated_instruction(vcpu);
@@ -2157,7 +2196,10 @@ static bool hv_check_hypercall_access(struct kvm_vcpu_hv *hv_vcpu, u16 code)
 
 int kvm_hv_hypercall(struct kvm_vcpu *vcpu)
 {
+<<<<<<< HEAD
 	struct kvm_vcpu_hv *hv_vcpu = to_hv_vcpu(vcpu);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct kvm_hv_hcall hc;
 	u64 ret = HV_STATUS_SUCCESS;
 
@@ -2192,14 +2234,25 @@ int kvm_hv_hypercall(struct kvm_vcpu *vcpu)
 	hc.rep_idx = (hc.param >> HV_HYPERCALL_REP_START_OFFSET) & 0xfff;
 	hc.rep = !!(hc.rep_cnt || hc.rep_idx);
 
+<<<<<<< HEAD
 	trace_kvm_hv_hypercall(hc.code, hc.fast, hc.rep_cnt, hc.rep_idx,
 			       hc.ingpa, hc.outgpa);
 
 	if (unlikely(!hv_check_hypercall_access(hv_vcpu, hc.code))) {
+=======
+	if (hc.fast && is_xmm_fast_hypercall(&hc))
+		kvm_hv_hypercall_read_xmm(&hc);
+
+	trace_kvm_hv_hypercall(hc.code, hc.fast, hc.rep_cnt, hc.rep_idx,
+			       hc.ingpa, hc.outgpa);
+
+	if (unlikely(!hv_check_hypercall_access(to_hv_vcpu(vcpu), hc.code))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = HV_STATUS_ACCESS_DENIED;
 		goto hypercall_complete;
 	}
 
+<<<<<<< HEAD
 	if (hc.fast && is_xmm_fast_hypercall(&hc)) {
 		if (unlikely(hv_vcpu->enforce_cpuid &&
 			     !(hv_vcpu->cpuid_cache.features_edx &
@@ -2211,6 +2264,8 @@ int kvm_hv_hypercall(struct kvm_vcpu *vcpu)
 		kvm_hv_hypercall_read_xmm(&hc);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (hc.code) {
 	case HVCALL_NOTIFY_LONG_SPIN_WAIT:
 		if (unlikely(hc.rep)) {
@@ -2493,8 +2548,11 @@ int kvm_get_hv_cpuid(struct kvm_vcpu *vcpu, struct kvm_cpuid2 *cpuid,
 				ent->eax |= HV_X64_ENLIGHTENED_VMCS_RECOMMENDED;
 			if (!cpu_smt_possible())
 				ent->eax |= HV_X64_NO_NONARCH_CORESHARING;
+<<<<<<< HEAD
 
 			ent->eax |= HV_DEPRECATING_AEOI_RECOMMENDED;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/*
 			 * Default number of spinlock retry attempts, matches
 			 * HyperV 2016.

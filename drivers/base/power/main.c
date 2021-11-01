@@ -1642,7 +1642,11 @@ static int __device_suspend(struct device *dev, pm_message_t state, bool async)
 	}
 
 	dev->power.may_skip_resume = true;
+<<<<<<< HEAD
 	dev->power.must_resume = !dev_pm_test_driver_flags(dev, DPM_FLAG_MAY_SKIP_RESUME);
+=======
+	dev->power.must_resume = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dpm_watchdog_set(&wd, dev);
 	device_lock(dev);

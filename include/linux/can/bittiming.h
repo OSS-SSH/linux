@@ -37,7 +37,11 @@
  *	quanta, from when the bit is sent on the TX pin to when it is
  *	received on the RX pin of the transmitter. Possible options:
  *
+<<<<<<< HEAD
  *	  0: automatic mode. The controller dynamically measures @tdcv
+=======
+ *	  O: automatic mode. The controller dynamically measure @tdcv
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *	  for each transmitted CAN FD frame.
  *
  *	  Other values: manual mode. Use the fixed provided value.
@@ -45,7 +49,11 @@
  * @tdco: Transmitter Delay Compensation Offset. Offset value, in time
  *	quanta, defining the distance between the start of the bit
  *	reception on the RX pin of the transceiver and the SSP
+<<<<<<< HEAD
  *	position such that SSP = @tdcv + @tdco.
+=======
+ *	position such as SSP = @tdcv + @tdco.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *	If @tdco is zero, then TDC is disabled and both @tdcv and
  *	@tdcf should be ignored.

@@ -3735,7 +3735,11 @@ ips_send_cmd(ips_ha_t * ha, ips_scb_t * scb)
 		scb->cmd.dcdb.segment_4G = 0;
 		scb->cmd.dcdb.enhanced_sg = 0;
 
+<<<<<<< HEAD
 		TimeOut = scsi_cmd_to_rq(scb->scsi_cmd)->timeout;
+=======
+		TimeOut = scb->scsi_cmd->request->timeout;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (ha->subsys->param[4] & 0x00100000) {	/* If NEW Tape DCDB is Supported */
 			if (!scb->sg_len) {

@@ -20,6 +20,14 @@
 #include <asm/unaligned.h>
 #include <asm/kprobes.h>
 
+<<<<<<< HEAD
+=======
+void __init trap_init(void)
+{
+	return;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void die(const char *str, struct pt_regs *regs, unsigned long address)
 {
 	show_kernel_fault_diag(str, regs, address);

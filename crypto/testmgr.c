@@ -4451,12 +4451,15 @@ static const struct alg_test_desc alg_test_descs[] = {
 			.hash = __VECS(aes_cbcmac_tv_template)
 		}
 	}, {
+<<<<<<< HEAD
 		.alg = "cbcmac(sm4)",
 		.test = alg_test_hash,
 		.suite = {
 			.hash = __VECS(sm4_cbcmac_tv_template)
 		}
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.alg = "ccm(aes)",
 		.generic_driver = "ccm_base(ctr(aes-generic),cbcmac(aes-generic))",
 		.test = alg_test_aead,
@@ -4468,6 +4471,7 @@ static const struct alg_test_desc alg_test_descs[] = {
 			}
 		}
 	}, {
+<<<<<<< HEAD
 		.alg = "ccm(sm4)",
 		.generic_driver = "ccm_base(ctr(sm4-generic),cbcmac(sm4-generic))",
 		.test = alg_test_aead,
@@ -4478,6 +4482,8 @@ static const struct alg_test_desc alg_test_descs[] = {
 			}
 		}
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.alg = "cfb(aes)",
 		.test = alg_test_skcipher,
 		.fips_allowed = 1,
@@ -4511,12 +4517,15 @@ static const struct alg_test_desc alg_test_descs[] = {
 			.hash = __VECS(des3_ede_cmac64_tv_template)
 		}
 	}, {
+<<<<<<< HEAD
 		.alg = "cmac(sm4)",
 		.test = alg_test_hash,
 		.suite = {
 			.hash = __VECS(sm4_cmac128_tv_template)
 		}
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.alg = "compress_null",
 		.test = alg_test_null,
 	}, {
@@ -4990,6 +4999,7 @@ static const struct alg_test_desc alg_test_descs[] = {
 			.aead = __VECS(aes_gcm_tv_template)
 		}
 	}, {
+<<<<<<< HEAD
 		.alg = "gcm(sm4)",
 		.generic_driver = "gcm_base(ctr(sm4-generic),ghash-generic)",
 		.test = alg_test_aead,
@@ -4997,6 +5007,8 @@ static const struct alg_test_desc alg_test_descs[] = {
 			.aead = __VECS(sm4_gcm_tv_template)
 		}
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.alg = "ghash",
 		.test = alg_test_hash,
 		.fips_allowed = 1,

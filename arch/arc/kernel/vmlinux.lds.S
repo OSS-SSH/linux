@@ -88,8 +88,11 @@ SECTIONS
 		CPUIDLE_TEXT
 		LOCK_TEXT
 		KPROBES_TEXT
+<<<<<<< HEAD
 		IRQENTRY_TEXT
 		SOFTIRQENTRY_TEXT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		*(.fixup)
 		*(.gnu.warning)
 	}

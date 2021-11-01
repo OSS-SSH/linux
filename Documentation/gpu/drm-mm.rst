@@ -37,7 +37,11 @@ TTM initialization
     This section is outdated.
 
 Drivers wishing to support TTM must pass a filled :c:type:`ttm_bo_driver
+<<<<<<< HEAD
 <ttm_bo_driver>` structure to ttm_device_init, together with an
+=======
+<ttm_bo_driver>` structure to ttm_bo_device_init, together with an
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 initialized global reference to the memory manager.  The ttm_bo_driver
 structure contains several fields with function pointers for
 initializing the TTM, allocating and freeing memory, waiting for command

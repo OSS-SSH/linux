@@ -16,16 +16,23 @@
 #include "btrfs_inode.h"
 #include "xattr.h"
 
+<<<<<<< HEAD
 struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu)
+=======
+struct posix_acl *btrfs_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int size;
 	const char *name;
 	char *value = NULL;
 	struct posix_acl *acl;
 
+<<<<<<< HEAD
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (type) {
 	case ACL_TYPE_ACCESS:
 		name = XATTR_NAME_POSIX_ACL_ACCESS;
@@ -56,8 +63,12 @@ struct posix_acl *btrfs_get_acl(struct inode *inode, int type, bool rcu)
 }
 
 static int __btrfs_set_acl(struct btrfs_trans_handle *trans,
+<<<<<<< HEAD
 			   struct user_namespace *mnt_userns,
 			   struct inode *inode, struct posix_acl *acl, int type)
+=======
+			 struct inode *inode, struct posix_acl *acl, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int ret, size = 0;
 	const char *name;
@@ -118,12 +129,20 @@ int btrfs_set_acl(struct user_namespace *mnt_userns, struct inode *inode,
 	umode_t old_mode = inode->i_mode;
 
 	if (type == ACL_TYPE_ACCESS && acl) {
+<<<<<<< HEAD
 		ret = posix_acl_update_mode(mnt_userns, inode,
+=======
+		ret = posix_acl_update_mode(&init_user_ns, inode,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    &inode->i_mode, &acl);
 		if (ret)
 			return ret;
 	}
+<<<<<<< HEAD
 	ret = __btrfs_set_acl(NULL, mnt_userns, inode, acl, type);
+=======
+	ret = __btrfs_set_acl(NULL, inode, acl, type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		inode->i_mode = old_mode;
 	return ret;
@@ -144,14 +163,22 @@ int btrfs_init_acl(struct btrfs_trans_handle *trans,
 		return ret;
 
 	if (default_acl) {
+<<<<<<< HEAD
 		ret = __btrfs_set_acl(trans, &init_user_ns, inode, default_acl,
+=======
+		ret = __btrfs_set_acl(trans, inode, default_acl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				      ACL_TYPE_DEFAULT);
 		posix_acl_release(default_acl);
 	}
 
 	if (acl) {
 		if (!ret)
+<<<<<<< HEAD
 			ret = __btrfs_set_acl(trans, &init_user_ns, inode, acl,
+=======
+			ret = __btrfs_set_acl(trans, inode, acl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					      ACL_TYPE_ACCESS);
 		posix_acl_release(acl);
 	}

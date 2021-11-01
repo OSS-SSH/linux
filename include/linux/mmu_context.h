@@ -14,6 +14,7 @@
 static inline void leave_mm(int cpu) { }
 #endif
 
+<<<<<<< HEAD
 /*
  * CPUs that are capable of running user task @p. Must contain at least one
  * active CPU. It is assumed that the kernel can run on all CPUs, so calling
@@ -28,4 +29,6 @@ static inline void leave_mm(int cpu) { }
 # define task_cpu_possible(cpu, p)	cpumask_test_cpu((cpu), task_cpu_possible_mask(p))
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

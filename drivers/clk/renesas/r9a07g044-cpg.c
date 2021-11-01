@@ -12,11 +12,19 @@
 
 #include <dt-bindings/clock/r9a07g044-cpg.h>
 
+<<<<<<< HEAD
 #include "rzg2l-cpg.h"
 
 enum clk_ids {
 	/* Core Clock Outputs exported to DT */
 	LAST_DT_CORE_CLK = R9A07G044_CLK_P0_DIV2,
+=======
+#include "renesas-rzg2l-cpg.h"
+
+enum clk_ids {
+	/* Core Clock Outputs exported to DT */
+	LAST_DT_CORE_CLK = R9A07G044_OSCCLK,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* External Input Clocks */
 	CLK_EXTAL,
@@ -30,27 +38,42 @@ enum clk_ids {
 	CLK_PLL2_DIV20,
 	CLK_PLL3,
 	CLK_PLL3_DIV2,
+<<<<<<< HEAD
 	CLK_PLL3_DIV2_4,
 	CLK_PLL3_DIV2_4_2,
 	CLK_PLL3_DIV4,
+=======
+	CLK_PLL3_DIV4,
+	CLK_PLL3_DIV8,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	CLK_PLL4,
 	CLK_PLL5,
 	CLK_PLL5_DIV2,
 	CLK_PLL6,
+<<<<<<< HEAD
 	CLK_P1_DIV2,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Module Clocks */
 	MOD_CLK_BASE,
 };
 
 /* Divider tables */
+<<<<<<< HEAD
 static const struct clk_div_table dtable_1_32[] = {
+=======
+static const struct clk_div_table dtable_3b[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{0, 1},
 	{1, 2},
 	{2, 4},
 	{3, 8},
 	{4, 32},
+<<<<<<< HEAD
 	{0, 0},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct cpg_core_clk r9a07g044_core_clks[] __initconst = {
@@ -69,13 +92,19 @@ static const struct cpg_core_clk r9a07g044_core_clks[] __initconst = {
 	DEF_FIXED(".pll2_div20", CLK_PLL2_DIV20, CLK_PLL2, 1, 20),
 
 	DEF_FIXED(".pll3_div2", CLK_PLL3_DIV2, CLK_PLL3, 1, 2),
+<<<<<<< HEAD
 	DEF_FIXED(".pll3_div2_4", CLK_PLL3_DIV2_4, CLK_PLL3_DIV2, 1, 4),
 	DEF_FIXED(".pll3_div2_4_2", CLK_PLL3_DIV2_4_2, CLK_PLL3_DIV2_4, 1, 2),
 	DEF_FIXED(".pll3_div4", CLK_PLL3_DIV4, CLK_PLL3, 1, 4),
+=======
+	DEF_FIXED(".pll3_div4", CLK_PLL3_DIV4, CLK_PLL3, 1, 4),
+	DEF_FIXED(".pll3_div8", CLK_PLL3_DIV8, CLK_PLL3, 1, 8),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Core output clk */
 	DEF_FIXED("I", R9A07G044_CLK_I, CLK_PLL1, 1, 1),
 	DEF_DIV("P0", R9A07G044_CLK_P0, CLK_PLL2_DIV16, DIVPL2A,
+<<<<<<< HEAD
 		dtable_1_32, CLK_DIVIDER_HIWORD_MASK),
 	DEF_FIXED("P0_DIV2", R9A07G044_CLK_P0_DIV2, R9A07G044_CLK_P0, 1, 2),
 	DEF_FIXED("TSU", R9A07G044_CLK_TSU, CLK_PLL2_DIV20, 1, 1),
@@ -188,6 +217,43 @@ static const unsigned int r9a07g044_crit_mod_clks[] __initconst = {
 	MOD_CLK_BASE + R9A07G044_GIC600_GICCLK,
 	MOD_CLK_BASE + R9A07G044_IA55_CLK,
 	MOD_CLK_BASE + R9A07G044_DMAC_ACLK,
+=======
+		dtable_3b, CLK_DIVIDER_HIWORD_MASK),
+	DEF_FIXED("TSU", R9A07G044_CLK_TSU, CLK_PLL2_DIV20, 1, 1),
+	DEF_DIV("P1", R9A07G044_CLK_P1, CLK_PLL3_DIV8,
+		DIVPL3B, dtable_3b, CLK_DIVIDER_HIWORD_MASK),
+};
+
+static struct rzg2l_mod_clk r9a07g044_mod_clks[] = {
+	DEF_MOD("gic",		R9A07G044_CLK_GIC600,
+				R9A07G044_CLK_P1,
+				0x514, BIT(0), (BIT(0) | BIT(1))),
+	DEF_MOD("ia55",		R9A07G044_CLK_IA55,
+				R9A07G044_CLK_P1,
+				0x518, (BIT(0) | BIT(1)), BIT(0)),
+	DEF_MOD("scif0",	R9A07G044_CLK_SCIF0,
+				R9A07G044_CLK_P0,
+				0x584, BIT(0), BIT(0)),
+	DEF_MOD("scif1",	R9A07G044_CLK_SCIF1,
+				R9A07G044_CLK_P0,
+				0x584, BIT(1), BIT(1)),
+	DEF_MOD("scif2",	R9A07G044_CLK_SCIF2,
+				R9A07G044_CLK_P0,
+				0x584, BIT(2), BIT(2)),
+	DEF_MOD("scif3",	R9A07G044_CLK_SCIF3,
+				R9A07G044_CLK_P0,
+				0x584, BIT(3), BIT(3)),
+	DEF_MOD("scif4",	R9A07G044_CLK_SCIF4,
+				R9A07G044_CLK_P0,
+				0x584, BIT(4), BIT(4)),
+	DEF_MOD("sci0",		R9A07G044_CLK_SCI0,
+				R9A07G044_CLK_P0,
+				0x588, BIT(0), BIT(0)),
+};
+
+static const unsigned int r9a07g044_crit_mod_clks[] __initconst = {
+	MOD_CLK_BASE + R9A07G044_CLK_GIC600,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 const struct rzg2l_cpg_info r9a07g044_cpg_info = {
@@ -204,9 +270,13 @@ const struct rzg2l_cpg_info r9a07g044_cpg_info = {
 	/* Module Clocks */
 	.mod_clks = r9a07g044_mod_clks,
 	.num_mod_clks = ARRAY_SIZE(r9a07g044_mod_clks),
+<<<<<<< HEAD
 	.num_hw_mod_clks = R9A07G044_TSU_PCLK + 1,
 
 	/* Resets */
 	.resets = r9a07g044_resets,
 	.num_resets = ARRAY_SIZE(r9a07g044_resets),
+=======
+	.num_hw_mod_clks = R9A07G044_CLK_MIPI_DSI_PIN + 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

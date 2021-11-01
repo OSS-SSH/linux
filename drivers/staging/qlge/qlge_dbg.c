@@ -733,7 +733,11 @@ int qlge_core_dump(struct qlge_adapter *qdev, struct qlge_mpi_coredump *mpi_core
 	}
 
 	/* Insert the global header */
+<<<<<<< HEAD
 	memset(&mpi_coredump->mpi_global_header, 0,
+=======
+	memset(&(mpi_coredump->mpi_global_header), 0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	       sizeof(struct mpi_coredump_global_header));
 	mpi_coredump->mpi_global_header.cookie = MPI_COREDUMP_COOKIE;
 	mpi_coredump->mpi_global_header.header_size =
@@ -1221,7 +1225,11 @@ static void qlge_gen_reg_dump(struct qlge_adapter *qdev,
 {
 	int i, status;
 
+<<<<<<< HEAD
 	memset(&mpi_coredump->mpi_global_header, 0,
+=======
+	memset(&(mpi_coredump->mpi_global_header), 0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	       sizeof(struct mpi_coredump_global_header));
 	mpi_coredump->mpi_global_header.cookie = MPI_COREDUMP_COOKIE;
 	mpi_coredump->mpi_global_header.header_size =

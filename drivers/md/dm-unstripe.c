@@ -156,10 +156,13 @@ static void unstripe_status(struct dm_target *ti, status_type_t type,
 		       uc->stripes, (unsigned long long)uc->chunk_size, uc->unstripe,
 		       uc->dev->name, (unsigned long long)uc->physical_start);
 		break;
+<<<<<<< HEAD
 
 	case STATUSTYPE_IMA:
 		*result = '\0';
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

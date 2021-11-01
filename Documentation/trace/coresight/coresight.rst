@@ -620,6 +620,7 @@ channels on the CTM (Cross Trigger Matrix).
 A separate documentation file is provided to explain the use of these devices.
 (Documentation/trace/coresight/coresight-ect.rst) [#fourth]_.
 
+<<<<<<< HEAD
 CoreSight System Configuration
 ------------------------------
 
@@ -633,6 +634,8 @@ configurations to be selected and used easily from perf and sysfs.
 See the separate document for further information.
 (Documentation/trace/coresight/coresight-config.rst) [#fifth]_.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 .. [#first] Documentation/ABI/testing/sysfs-bus-coresight-devices-stm
 
@@ -641,5 +644,8 @@ See the separate document for further information.
 .. [#third] https://github.com/Linaro/perf-opencsd
 
 .. [#fourth] Documentation/trace/coresight/coresight-ect.rst
+<<<<<<< HEAD
 
 .. [#fifth] Documentation/trace/coresight/coresight-config.rst
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -9,6 +9,10 @@
 #define __ASM_M68K_PROCESSOR_H
 
 #include <linux/thread_info.h>
+<<<<<<< HEAD
+=======
+#include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/fpu.h>
 #include <asm/ptrace.h>
 
@@ -74,6 +78,7 @@ static inline void wrusp(unsigned long usp)
 #define TASK_UNMAPPED_BASE	0
 #endif
 
+<<<<<<< HEAD
 /* Address spaces (or Function Codes in Motorola lingo) */
 #define USER_DATA     1
 #define USER_PROGRAM  2
@@ -100,11 +105,17 @@ static inline void set_fc(unsigned long val)
 }
 #endif /* CONFIG_CPU_HAS_ADDRESS_SPACES */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct thread_struct {
 	unsigned long  ksp;		/* kernel stack pointer */
 	unsigned long  usp;		/* user stack pointer */
 	unsigned short sr;		/* saved status register */
+<<<<<<< HEAD
 	unsigned short fc;		/* saved fc (sfc, dfc) */
+=======
+	unsigned short fs;		/* saved fs (sfc, dfc) */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long  crp[2];		/* cpu root pointer */
 	unsigned long  esp0;		/* points to SR of stack frame */
 	unsigned long  faddr;		/* info about last fault */
@@ -117,7 +128,11 @@ struct thread_struct {
 #define INIT_THREAD  {							\
 	.ksp	= sizeof(init_stack) + (unsigned long) init_stack,	\
 	.sr	= PS_S,							\
+<<<<<<< HEAD
 	.fc	= USER_DATA,						\
+=======
+	.fs	= __KERNEL_DS,						\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

@@ -456,7 +456,11 @@ struct child_device_config {
 	u16 dp_gpio_pin_num;					/* 195 */
 	u8 dp_iboost_level:4;					/* 196 */
 	u8 hdmi_iboost_level:4;					/* 196 */
+<<<<<<< HEAD
 	u8 dp_max_link_rate:3;					/* 216/230 GLK+ */
+=======
+	u8 dp_max_link_rate:3;					/* 216/230 CNL+ */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 dp_max_link_rate_reserved:5;				/* 216/230 */
 } __packed;
 
@@ -814,11 +818,14 @@ struct lfp_brightness_level {
 	u16 reserved;
 } __packed;
 
+<<<<<<< HEAD
 #define EXP_BDB_LFP_BL_DATA_SIZE_REV_191 \
 	offsetof(struct bdb_lfp_backlight_data, brightness_level)
 #define EXP_BDB_LFP_BL_DATA_SIZE_REV_234 \
 	offsetof(struct bdb_lfp_backlight_data, brightness_precision_bits)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct bdb_lfp_backlight_data {
 	u8 entry_size;
 	struct lfp_backlight_data_entry data[16];

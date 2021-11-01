@@ -176,6 +176,7 @@ static void irdma_set_flush_fields(struct irdma_sc_qp *qp,
 	case IRDMA_AE_LLP_RECEIVED_MPA_CRC_ERROR:
 		qp->flush_code = FLUSH_GENERAL_ERR;
 		break;
+<<<<<<< HEAD
 	case IRDMA_AE_LLP_TOO_MANY_RETRIES:
 		qp->flush_code = FLUSH_RETRY_EXC_ERR;
 		break;
@@ -184,6 +185,8 @@ static void irdma_set_flush_fields(struct irdma_sc_qp *qp,
 	case IRDMA_AE_AMP_MWBIND_INVALID_BOUNDS:
 		qp->flush_code = FLUSH_MW_BIND_ERR;
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		qp->flush_code = FLUSH_FATAL_ERR;
 		break;
@@ -1497,7 +1500,11 @@ void irdma_reinitialize_ieq(struct irdma_sc_vsi *vsi)
 
 	irdma_puda_dele_rsrc(vsi, IRDMA_PUDA_RSRC_TYPE_IEQ, false);
 	if (irdma_initialize_ieq(iwdev)) {
+<<<<<<< HEAD
 		iwdev->rf->reset = true;
+=======
+		iwdev->reset = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rf->gen_ops.request_reset(rf);
 	}
 }
@@ -1640,13 +1647,21 @@ void irdma_rt_deinit_hw(struct irdma_device *iwdev)
 	case IEQ_CREATED:
 		if (!iwdev->roce_mode)
 			irdma_puda_dele_rsrc(&iwdev->vsi, IRDMA_PUDA_RSRC_TYPE_IEQ,
+<<<<<<< HEAD
 					     iwdev->rf->reset);
+=======
+					     iwdev->reset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fallthrough;
 	case ILQ_CREATED:
 		if (!iwdev->roce_mode)
 			irdma_puda_dele_rsrc(&iwdev->vsi,
 					     IRDMA_PUDA_RSRC_TYPE_ILQ,
+<<<<<<< HEAD
 					     iwdev->rf->reset);
+=======
+					     iwdev->reset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	default:
 		ibdev_warn(&iwdev->ibdev, "bad init_state = %d\n", iwdev->init_state);
@@ -1928,7 +1943,11 @@ enum irdma_status_code irdma_ctrl_init_hw(struct irdma_pci_f *rf)
  * irdma_set_hw_rsrc - set hw memory resources.
  * @rf: RDMA PCI function
  */
+<<<<<<< HEAD
 static void irdma_set_hw_rsrc(struct irdma_pci_f *rf)
+=======
+static u32 irdma_set_hw_rsrc(struct irdma_pci_f *rf)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	rf->allocated_qps = (void *)(rf->mem_rsrc +
 		   (sizeof(struct irdma_arp_entry) * rf->arp_table_size));
@@ -1945,6 +1964,11 @@ static void irdma_set_hw_rsrc(struct irdma_pci_f *rf)
 	spin_lock_init(&rf->arp_lock);
 	spin_lock_init(&rf->qptable_lock);
 	spin_lock_init(&rf->qh_list_lock);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -2006,7 +2030,13 @@ u32 irdma_initialize_hw_rsrc(struct irdma_pci_f *rf)
 
 	rf->arp_table = (struct irdma_arp_entry *)rf->mem_rsrc;
 
+<<<<<<< HEAD
 	irdma_set_hw_rsrc(rf);
+=======
+	ret = irdma_set_hw_rsrc(rf);
+	if (ret)
+		goto set_hw_rsrc_fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	set_bit(0, rf->allocated_mrs);
 	set_bit(0, rf->allocated_qps);
@@ -2029,6 +2059,12 @@ u32 irdma_initialize_hw_rsrc(struct irdma_pci_f *rf)
 
 	return 0;
 
+<<<<<<< HEAD
+=======
+set_hw_rsrc_fail:
+	kfree(rf->mem_rsrc);
+	rf->mem_rsrc = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 mem_rsrc_kzalloc_fail:
 	kfree(rf->allocated_ws_nodes);
 	rf->allocated_ws_nodes = NULL;

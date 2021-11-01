@@ -159,7 +159,10 @@ void vmw_cmdbuf_res_commit(struct list_head *list)
 void vmw_cmdbuf_res_revert(struct list_head *list)
 {
 	struct vmw_cmdbuf_res *entry, *next;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	list_for_each_entry_safe(entry, next, list, head) {
 		switch (entry->state) {
@@ -167,9 +170,15 @@ void vmw_cmdbuf_res_revert(struct list_head *list)
 			vmw_cmdbuf_res_free(entry->man, entry);
 			break;
 		case VMW_CMDBUF_RES_DEL:
+<<<<<<< HEAD
 			ret = drm_ht_insert_item(&entry->man->resources, &entry->hash);
 			BUG_ON(ret);
 			list_move_tail(&entry->head, &entry->man->list);
+=======
+			drm_ht_insert_item(&entry->man->resources, &entry->hash);
+			list_del(&entry->head);
+			list_add_tail(&entry->head, &entry->man->list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			entry->state = VMW_CMDBUF_RES_COMMITTED;
 			break;
 		default:

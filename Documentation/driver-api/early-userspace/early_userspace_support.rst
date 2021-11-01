@@ -69,17 +69,30 @@ early userspace image can be built by an unprivileged user.
 
 As a technical note, when directories and files are specified, the
 entire CONFIG_INITRAMFS_SOURCE is passed to
+<<<<<<< HEAD
 usr/gen_initramfs.sh.  This means that CONFIG_INITRAMFS_SOURCE
 can really be interpreted as any legal argument to
 gen_initramfs.sh.  If a directory is specified as an argument then
 the contents are scanned, uid/gid translation is performed, and
 usr/gen_init_cpio file directives are output.  If a directory is
 specified as an argument to usr/gen_initramfs.sh then the
+=======
+usr/gen_initramfs_list.sh.  This means that CONFIG_INITRAMFS_SOURCE
+can really be interpreted as any legal argument to
+gen_initramfs_list.sh.  If a directory is specified as an argument then
+the contents are scanned, uid/gid translation is performed, and
+usr/gen_init_cpio file directives are output.  If a directory is
+specified as an argument to usr/gen_initramfs_list.sh then the
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 contents of the file are simply copied to the output.  All of the output
 directives from directory scanning and file contents copying are
 processed by usr/gen_init_cpio.
 
+<<<<<<< HEAD
 See also 'usr/gen_initramfs.sh -h'.
+=======
+See also 'usr/gen_initramfs_list.sh -h'.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Where's this all leading?
 =========================

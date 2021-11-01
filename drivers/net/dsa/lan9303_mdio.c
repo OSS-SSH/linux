@@ -138,6 +138,7 @@ static void lan9303_mdio_remove(struct mdio_device *mdiodev)
 		return;
 
 	lan9303_remove(&sw_dev->chip);
+<<<<<<< HEAD
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
 }
@@ -152,6 +153,8 @@ static void lan9303_mdio_shutdown(struct mdio_device *mdiodev)
 	lan9303_shutdown(&sw_dev->chip);
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*-------------------------------------------------------------------------*/
@@ -169,7 +172,10 @@ static struct mdio_driver lan9303_mdio_driver = {
 	},
 	.probe  = lan9303_mdio_probe,
 	.remove = lan9303_mdio_remove,
+<<<<<<< HEAD
 	.shutdown = lan9303_mdio_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 mdio_module_driver(lan9303_mdio_driver);
 

@@ -227,12 +227,38 @@ static inline int __get_user_fn(void *x, const void __user *ptr, unsigned long s
 	__get_user(x, ptr);					\
 })
 
+<<<<<<< HEAD
 /*
  * Copy a null terminated string from userspace.
  */
 long __must_check strncpy_from_user(char *dst, const char __user *src, long count);
 
 long __must_check strnlen_user(const char __user *src, long count);
+=======
+unsigned long __must_check
+raw_copy_in_user(void __user *to, const void __user *from, unsigned long n);
+
+/*
+ * Copy a null terminated string from userspace.
+ */
+
+long __strncpy_from_user(char *dst, const char __user *src, long count);
+
+static inline long __must_check
+strncpy_from_user(char *dst, const char __user *src, long count)
+{
+	might_fault();
+	return __strncpy_from_user(dst, src, count);
+}
+
+unsigned long __must_check __strnlen_user(const char __user *src, unsigned long count);
+
+static inline unsigned long strnlen_user(const char __user *src, unsigned long n)
+{
+	might_fault();
+	return __strnlen_user(src, n);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Zero Userspace

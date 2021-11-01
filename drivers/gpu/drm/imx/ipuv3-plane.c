@@ -683,7 +683,11 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
 		break;
 	}
 
+<<<<<<< HEAD
 	ipu_dmfc_config_wait4eot(ipu_plane->dmfc, ALIGN(drm_rect_width(dst), 8));
+=======
+	ipu_dmfc_config_wait4eot(ipu_plane->dmfc, drm_rect_width(dst));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	width = ipu_src_rect_width(new_state);
 	height = drm_rect_height(&new_state->src) >> 16;
@@ -772,6 +776,10 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
 }
 
 static const struct drm_plane_helper_funcs ipu_plane_helper_funcs = {
+<<<<<<< HEAD
+=======
+	.prepare_fb = drm_gem_plane_helper_prepare_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.atomic_check = ipu_plane_atomic_check,
 	.atomic_disable = ipu_plane_atomic_disable,
 	.atomic_update = ipu_plane_atomic_update,

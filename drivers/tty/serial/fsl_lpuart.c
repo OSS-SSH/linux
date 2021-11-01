@@ -7,7 +7,10 @@
 
 #include <linux/clk.h>
 #include <linux/console.h>
+<<<<<<< HEAD
 #include <linux/delay.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/dma-mapping.h>
 #include <linux/dmaengine.h>
 #include <linux/dmapool.h>
@@ -110,11 +113,14 @@
 #define UARTSFIFO_TXOF		0x02
 #define UARTSFIFO_RXUF		0x01
 
+<<<<<<< HEAD
 /* 32-bit global registers only for i.MX7ULP/i.MX8x
  * Used to reset all internal logic and registers, except the Global Register.
  */
 #define UART_GLOBAL		0x8
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* 32-bit register definition */
 #define UARTBAUD		0x00
 #define UARTSTAT		0x04
@@ -225,10 +231,13 @@
 #define UARTWATER_TXWATER_OFF	0
 #define UARTWATER_RXWATER_OFF	16
 
+<<<<<<< HEAD
 #define UART_GLOBAL_RST	0x2
 #define GLOBAL_RST_MIN_US	20
 #define GLOBAL_RST_MAX_US	40
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Rx DMA timeout in ms, which is used to calculate Rx ring buffer size */
 #define DMA_RX_TIMEOUT		(10)
 
@@ -330,11 +339,14 @@ static inline bool is_layerscape_lpuart(struct lpuart_port *sport)
 		sport->devtype == LS1028A_LPUART);
 }
 
+<<<<<<< HEAD
 static inline bool is_imx7ulp_lpuart(struct lpuart_port *sport)
 {
 	return sport->devtype == IMX7ULP_LPUART;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool is_imx8qxp_lpuart(struct lpuart_port *sport)
 {
 	return sport->devtype == IMX8QXP_LPUART;
@@ -398,6 +410,7 @@ static unsigned int lpuart_get_baud_clk_rate(struct lpuart_port *sport)
 #define lpuart_enable_clks(x)	__lpuart_enable_clks(x, true)
 #define lpuart_disable_clks(x)	__lpuart_enable_clks(x, false)
 
+<<<<<<< HEAD
 static int lpuart_global_reset(struct lpuart_port *sport)
 {
 	struct uart_port *port = &sport->port;
@@ -425,6 +438,8 @@ static int lpuart_global_reset(struct lpuart_port *sport)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void lpuart_stop_tx(struct uart_port *port)
 {
 	unsigned char temp;
@@ -521,10 +536,13 @@ static void lpuart_dma_tx_complete(void *arg)
 	unsigned long flags;
 
 	spin_lock_irqsave(&sport->port.lock, flags);
+<<<<<<< HEAD
 	if (!sport->dma_tx_in_progress) {
 		spin_unlock_irqrestore(&sport->port.lock, flags);
 		return;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dma_unmap_sg(chan->device->dev, sgl, sport->dma_tx_nents,
 		     DMA_TO_DEVICE);
@@ -1461,7 +1479,11 @@ static unsigned int lpuart_get_mctrl(struct uart_port *port)
 
 static unsigned int lpuart32_get_mctrl(struct uart_port *port)
 {
+<<<<<<< HEAD
 	unsigned int mctrl = TIOCM_CAR | TIOCM_DSR | TIOCM_CTS;
+=======
+	unsigned int mctrl = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 reg;
 
 	reg = lpuart32_read(port, UARTCTRL);
@@ -2091,12 +2113,19 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
 {
 	struct lpuart_port *sport = container_of(port, struct lpuart_port, port);
 	unsigned long flags;
+<<<<<<< HEAD
 	unsigned long ctrl, old_ctrl, bd, modem;
+=======
+	unsigned long ctrl, old_ctrl, modem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int  baud;
 	unsigned int old_csize = old ? old->c_cflag & CSIZE : CS8;
 
 	ctrl = old_ctrl = lpuart32_read(&sport->port, UARTCTRL);
+<<<<<<< HEAD
 	bd = lpuart32_read(&sport->port, UARTBAUD);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	modem = lpuart32_read(&sport->port, UARTMODIR);
 	/*
 	 * only support CS8 and CS7, and for CS7 must enable PE.
@@ -2140,9 +2169,13 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
 	}
 
 	if (termios->c_cflag & CSTOPB)
+<<<<<<< HEAD
 		bd |= UARTBAUD_SBNS;
 	else
 		bd &= ~UARTBAUD_SBNS;
+=======
+		termios->c_cflag &= ~CSTOPB;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* parity must be enabled when CS7 to match 8-bits format */
 	if ((termios->c_cflag & CSIZE) == CS7)
@@ -2212,7 +2245,10 @@ lpuart32_set_termios(struct uart_port *port, struct ktermios *termios,
 	lpuart32_write(&sport->port, old_ctrl & ~(UARTCTRL_TE | UARTCTRL_RE),
 		       UARTCTRL);
 
+<<<<<<< HEAD
 	lpuart32_write(&sport->port, bd, UARTBAUD);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lpuart32_serial_setbrg(sport, baud);
 	lpuart32_write(&sport->port, modem, UARTMODIR);
 	lpuart32_write(&sport->port, ctrl, UARTCTRL);
@@ -2661,7 +2697,11 @@ static int lpuart_probe(struct platform_device *pdev)
 		return PTR_ERR(sport->port.membase);
 
 	sport->port.membase += sdata->reg_off;
+<<<<<<< HEAD
 	sport->port.mapbase = res->start + sdata->reg_off;
+=======
+	sport->port.mapbase = res->start;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sport->port.dev = &pdev->dev;
 	sport->port.type = PORT_LPUART;
 	sport->devtype = sdata->devtype;
@@ -2741,10 +2781,13 @@ static int lpuart_probe(struct platform_device *pdev)
 	if (ret)
 		goto failed_attach_port;
 
+<<<<<<< HEAD
 	ret = lpuart_global_reset(sport);
 	if (ret)
 		goto failed_reset;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = uart_get_rs485_mode(&sport->port);
 	if (ret)
 		goto failed_get_rs485;
@@ -2761,8 +2804,11 @@ static int lpuart_probe(struct platform_device *pdev)
 	return 0;
 
 failed_get_rs485:
+<<<<<<< HEAD
 failed_reset:
 	uart_remove_one_port(&lpuart_reg, &sport->port);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 failed_attach_port:
 failed_irq_request:
 	lpuart_disable_clks(sport);

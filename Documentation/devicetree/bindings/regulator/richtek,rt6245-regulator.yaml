@@ -77,6 +77,10 @@ examples:
 
       rt6245@34 {
         compatible = "richtek,rt6245";
+<<<<<<< HEAD
+=======
+        status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         reg = <0x34>;
         enable-gpios = <&gpio26 2 0>;
 

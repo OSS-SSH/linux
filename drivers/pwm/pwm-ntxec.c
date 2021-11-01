@@ -150,12 +150,32 @@ static int ntxec_pwm_probe(struct platform_device *pdev)
 	priv->ec = ec;
 	priv->dev = &pdev->dev;
 
+<<<<<<< HEAD
 	chip = &priv->chip;
 	chip->dev = &pdev->dev;
 	chip->ops = &ntxec_pwm_ops;
 	chip->npwm = 1;
 
 	return devm_pwmchip_add(&pdev->dev, chip);
+=======
+	platform_set_drvdata(pdev, priv);
+
+	chip = &priv->chip;
+	chip->dev = &pdev->dev;
+	chip->ops = &ntxec_pwm_ops;
+	chip->base = -1;
+	chip->npwm = 1;
+
+	return pwmchip_add(chip);
+}
+
+static int ntxec_pwm_remove(struct platform_device *pdev)
+{
+	struct ntxec_pwm *priv = platform_get_drvdata(pdev);
+	struct pwm_chip *chip = &priv->chip;
+
+	return pwmchip_remove(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct platform_driver ntxec_pwm_driver = {
@@ -163,6 +183,10 @@ static struct platform_driver ntxec_pwm_driver = {
 		.name = "ntxec-pwm",
 	},
 	.probe = ntxec_pwm_probe,
+<<<<<<< HEAD
+=======
+	.remove = ntxec_pwm_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 module_platform_driver(ntxec_pwm_driver);
 

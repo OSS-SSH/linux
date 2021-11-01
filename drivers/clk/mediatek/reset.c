@@ -98,7 +98,11 @@ static void mtk_register_reset_controller_common(struct device_node *np,
 	int ret;
 	struct regmap *regmap;
 
+<<<<<<< HEAD
 	regmap = device_node_to_regmap(np);
+=======
+	regmap = syscon_node_to_regmap(np);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(regmap)) {
 		pr_err("Cannot find regmap for %pOF: %ld\n", np,
 				PTR_ERR(regmap));

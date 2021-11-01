@@ -378,7 +378,11 @@ struct intel8x0 {
 	spinlock_t reg_lock;
 	
 	u32 bdbars_count;
+<<<<<<< HEAD
 	struct snd_dma_buffer *bdbars;
+=======
+	struct snd_dma_buffer bdbars;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 int_sta_reg;		/* interrupt status register */
 	u32 int_sta_mask;		/* interrupt status mask */
 };
@@ -1427,7 +1431,11 @@ struct ich_pcm_table {
 };
 
 #define intel8x0_dma_type(chip) \
+<<<<<<< HEAD
 	((chip)->fix_nocache ? SNDRV_DMA_TYPE_DEV_WC : SNDRV_DMA_TYPE_DEV)
+=======
+	((chip)->fix_nocache ? SNDRV_DMA_TYPE_DEV_UC : SNDRV_DMA_TYPE_DEV)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int snd_intel8x0_pcm1(struct intel8x0 *chip, int device,
 			     const struct ich_pcm_table *rec)
@@ -2528,9 +2536,14 @@ static int snd_intel8x0_chip_init(struct intel8x0 *chip, int probing)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void snd_intel8x0_free(struct snd_card *card)
 {
 	struct intel8x0 *chip = card->private_data;
+=======
+static int snd_intel8x0_free(struct intel8x0 *chip)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int i;
 
 	if (chip->irq < 0)
@@ -2553,6 +2566,19 @@ static void snd_intel8x0_free(struct snd_card *card)
       __hw_end:
 	if (chip->irq >= 0)
 		free_irq(chip->irq, chip);
+<<<<<<< HEAD
+=======
+	if (chip->bdbars.area)
+		snd_dma_free_pages(&chip->bdbars);
+	if (chip->addr)
+		pci_iounmap(chip->pci, chip->addr);
+	if (chip->bmaddr)
+		pci_iounmap(chip->pci, chip->bmaddr);
+	pci_release_regions(chip->pci);
+	pci_disable_device(chip->pci);
+	kfree(chip);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_PM_SLEEP
@@ -2647,8 +2673,11 @@ static void intel8x0_measure_ac97_clock(struct intel8x0 *chip)
 
 	if (chip->ac97_bus->clock != 48000)
 		return; /* specified in module option */
+<<<<<<< HEAD
 	if (chip->inside_vm && !ac97_clock)
 		return; /* no measurement on VM */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
       __again:
 	subs = chip->pcm[0]->streams[0].substream;
@@ -2822,6 +2851,15 @@ static void snd_intel8x0_proc_init(struct intel8x0 *chip)
 			     snd_intel8x0_proc_read);
 }
 
+<<<<<<< HEAD
+=======
+static int snd_intel8x0_dev_free(struct snd_device *device)
+{
+	struct intel8x0 *chip = device->device_data;
+	return snd_intel8x0_free(chip);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct ich_reg_info {
 	unsigned int int_sta_mask;
 	unsigned int offset;
@@ -2865,15 +2903,30 @@ fini:
 	return result;
 }
 
+<<<<<<< HEAD
 static int snd_intel8x0_init(struct snd_card *card,
 			     struct pci_dev *pci,
 			     unsigned long device_type)
 {
 	struct intel8x0 *chip = card->private_data;
+=======
+static int snd_intel8x0_create(struct snd_card *card,
+			       struct pci_dev *pci,
+			       unsigned long device_type,
+			       struct intel8x0 **r_intel8x0)
+{
+	struct intel8x0 *chip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 	unsigned int i;
 	unsigned int int_sta_masks;
 	struct ichdev *ichdev;
+<<<<<<< HEAD
+=======
+	static const struct snd_device_ops ops = {
+		.dev_free =	snd_intel8x0_dev_free,
+	};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	static const unsigned int bdbars[] = {
 		3, /* DEVICE_INTEL */
@@ -2906,10 +2959,24 @@ static int snd_intel8x0_init(struct snd_card *card,
 	};
 	const struct ich_reg_info *tbl;
 
+<<<<<<< HEAD
 	err = pcim_enable_device(pci);
 	if (err < 0)
 		return err;
 
+=======
+	*r_intel8x0 = NULL;
+
+	err = pci_enable_device(pci);
+	if (err < 0)
+		return err;
+
+	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+	if (chip == NULL) {
+		pci_disable_device(pci);
+		return -ENOMEM;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_init(&chip->reg_lock);
 	chip->device_type = device_type;
 	chip->card = card;
@@ -2935,6 +3002,7 @@ static int snd_intel8x0_init(struct snd_card *card,
 		chip->fix_nocache = 1; /* enable workaround */
 
 	err = pci_request_regions(pci, card->shortname);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 
@@ -2952,6 +3020,40 @@ static int snd_intel8x0_init(struct snd_card *card,
 			chip->bmaddr = pcim_iomap(pci, 1, 0);
 	}
 
+=======
+	if (err < 0) {
+		kfree(chip);
+		pci_disable_device(pci);
+		return err;
+	}
+
+	if (device_type == DEVICE_ALI) {
+		/* ALI5455 has no ac97 region */
+		chip->bmaddr = pci_iomap(pci, 0, 0);
+		goto port_inited;
+	}
+
+	if (pci_resource_flags(pci, 2) & IORESOURCE_MEM) /* ICH4 and Nforce */
+		chip->addr = pci_iomap(pci, 2, 0);
+	else
+		chip->addr = pci_iomap(pci, 0, 0);
+	if (!chip->addr) {
+		dev_err(card->dev, "AC'97 space ioremap problem\n");
+		snd_intel8x0_free(chip);
+		return -EIO;
+	}
+	if (pci_resource_flags(pci, 3) & IORESOURCE_MEM) /* ICH4 */
+		chip->bmaddr = pci_iomap(pci, 3, 0);
+	else
+		chip->bmaddr = pci_iomap(pci, 1, 0);
+
+ port_inited:
+	if (!chip->bmaddr) {
+		dev_err(card->dev, "Controller space ioremap problem\n");
+		snd_intel8x0_free(chip);
+		return -EIO;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	chip->bdbars_count = bdbars[device_type];
 
 	/* initialize offsets */
@@ -2987,20 +3089,36 @@ static int snd_intel8x0_init(struct snd_card *card,
 
 	/* allocate buffer descriptor lists */
 	/* the start of each lists must be aligned to 8 bytes */
+<<<<<<< HEAD
 	chip->bdbars = snd_devm_alloc_pages(&pci->dev, intel8x0_dma_type(chip),
 					    chip->bdbars_count * sizeof(u32) *
 					    ICH_MAX_FRAGS * 2);
 	if (!chip->bdbars)
 		return -ENOMEM;
 
+=======
+	if (snd_dma_alloc_pages(intel8x0_dma_type(chip), &pci->dev,
+				chip->bdbars_count * sizeof(u32) * ICH_MAX_FRAGS * 2,
+				&chip->bdbars) < 0) {
+		snd_intel8x0_free(chip);
+		dev_err(card->dev, "cannot allocate buffer descriptors\n");
+		return -ENOMEM;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* tables must be aligned to 8 bytes here, but the kernel pages
 	   are much bigger, so we don't care (on i386) */
 	int_sta_masks = 0;
 	for (i = 0; i < chip->bdbars_count; i++) {
 		ichdev = &chip->ichd[i];
+<<<<<<< HEAD
 		ichdev->bdbar = ((__le32 *)chip->bdbars->area) +
 			(i * ICH_MAX_FRAGS * 2);
 		ichdev->bdbar_addr = chip->bdbars->addr +
+=======
+		ichdev->bdbar = ((__le32 *)chip->bdbars.area) +
+			(i * ICH_MAX_FRAGS * 2);
+		ichdev->bdbar_addr = chip->bdbars.addr +
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			(i * sizeof(u32) * ICH_MAX_FRAGS * 2);
 		int_sta_masks |= ichdev->int_sta_mask;
 	}
@@ -3034,6 +3152,7 @@ static int snd_intel8x0_init(struct snd_card *card,
 		chip->codec_isr_bits |= chip->codec_bit[i];
 
 	err = snd_intel8x0_chip_init(chip, 1);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 
@@ -3045,13 +3164,35 @@ static int snd_intel8x0_init(struct snd_card *card,
 	if (request_irq(pci->irq, snd_intel8x0_interrupt,
 			IRQF_SHARED, KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+=======
+	if (err < 0) {
+		snd_intel8x0_free(chip);
+		return err;
+	}
+
+	/* request irq after initializaing int_sta_mask, etc */
+	if (request_irq(pci->irq, snd_intel8x0_interrupt,
+			IRQF_SHARED, KBUILD_MODNAME, chip)) {
+		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+		snd_intel8x0_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
 
+<<<<<<< HEAD
 	card->private_free = snd_intel8x0_free;
 
+=======
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+	if (err < 0) {
+		snd_intel8x0_free(chip);
+		return err;
+	}
+
+	*r_intel8x0 = chip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -3117,11 +3258,17 @@ static int snd_intel8x0_probe(struct pci_dev *pci,
 	int err;
 	struct shortname_table *name;
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index, id, THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
 		return err;
 	chip = card->private_data;
+=======
+	err = snd_card_new(&pci->dev, index, id, THIS_MODULE, 0, &card);
+	if (err < 0)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (spdif_aclink < 0)
 		spdif_aclink = check_default_spdif_aclink(pci);
@@ -3155,6 +3302,7 @@ static int snd_intel8x0_probe(struct pci_dev *pci,
 			buggy_irq = 0;
 	}
 
+<<<<<<< HEAD
 	err = snd_intel8x0_init(card, pci, pci_id->driver_data);
 	if (err < 0)
 		return err;
@@ -3165,6 +3313,25 @@ static int snd_intel8x0_probe(struct pci_dev *pci,
 	err = snd_intel8x0_pcm(chip);
 	if (err < 0)
 		return err;
+=======
+	err = snd_intel8x0_create(card, pci, pci_id->driver_data, &chip);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+	card->private_data = chip;
+
+	err = snd_intel8x0_mixer(chip, ac97_clock, ac97_quirk);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+	err = snd_intel8x0_pcm(chip);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	
 	snd_intel8x0_proc_init(chip);
 
@@ -3182,17 +3349,36 @@ static int snd_intel8x0_probe(struct pci_dev *pci,
 	}
 
 	err = snd_card_register(card);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 
+=======
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pci_set_drvdata(pci, card);
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void snd_intel8x0_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct pci_driver intel8x0_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_intel8x0_ids,
 	.probe = snd_intel8x0_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_intel8x0_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver = {
 		.pm = INTEL8X0_PM_OPS,
 	},

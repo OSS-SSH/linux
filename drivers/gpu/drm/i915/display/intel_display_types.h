@@ -48,7 +48,10 @@
 
 struct drm_printer;
 struct __intel_global_objs_state;
+<<<<<<< HEAD
 struct intel_ddi_buf_trans;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Display related stuff
@@ -196,10 +199,13 @@ struct intel_encoder {
 	void (*update_complete)(struct intel_atomic_state *,
 				struct intel_encoder *,
 				struct intel_crtc *);
+<<<<<<< HEAD
 	void (*pre_disable)(struct intel_atomic_state *,
 			    struct intel_encoder *,
 			    const struct intel_crtc_state *,
 			    const struct drm_connector_state *);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*disable)(struct intel_atomic_state *,
 			struct intel_encoder *,
 			const struct intel_crtc_state *,
@@ -268,9 +274,12 @@ struct intel_encoder {
 	 * Returns whether the port clock is enabled or not.
 	 */
 	bool (*is_clock_enabled)(struct intel_encoder *encoder);
+<<<<<<< HEAD
 	const struct intel_ddi_buf_trans *(*get_buf_trans)(struct intel_encoder *encoder,
 							   const struct intel_crtc_state *crtc_state,
 							   int *n_entries);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	enum hpd_pin hpd_pin;
 	enum intel_display_power_domain power_domain;
 	/* for communication with audio component; protected by av_mutex */
@@ -318,7 +327,11 @@ struct intel_panel {
 		/* DPCD backlight */
 		union {
 			struct {
+<<<<<<< HEAD
 				struct drm_edp_backlight_info info;
+=======
+				u8 pwmgen_bit_count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			} vesa;
 			struct {
 				bool sdr_uses_aux;
@@ -888,6 +901,7 @@ enum intel_output_format {
 	INTEL_OUTPUT_FORMAT_YCBCR444,
 };
 
+<<<<<<< HEAD
 struct intel_mpllb_state {
 	u32 clock; /* in KHz */
 	u32 ref_control;
@@ -900,6 +914,8 @@ struct intel_mpllb_state {
 	u32 mpllb_sscstep;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct intel_crtc_state {
 	/*
 	 * uapi (drm) state. This is the software state shown to userspace.
@@ -1034,10 +1050,14 @@ struct intel_crtc_state {
 	struct intel_shared_dpll *shared_dpll;
 
 	/* Actual register state of the dpll, for shared dpll cross-checking. */
+<<<<<<< HEAD
 	union {
 		struct intel_dpll_hw_state dpll_hw_state;
 		struct intel_mpllb_state mpllb_state;
 	};
+=======
+	struct intel_dpll_hw_state dpll_hw_state;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * ICL reserved DPLLs for the CRTC/port. The active PLL is selected by
@@ -1063,9 +1083,13 @@ struct intel_crtc_state {
 	bool has_psr;
 	bool has_psr2;
 	bool enable_psr2_sel_fetch;
+<<<<<<< HEAD
 	bool req_psr2_sdp_prior_scanline;
 	u32 dc3co_exitline;
 	u16 su_y_granularity;
+=======
+	u32 dc3co_exitline;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Frequence the dpll for the port should run at. Differs from the
@@ -1518,14 +1542,21 @@ struct intel_psr {
 	bool colorimetry_support;
 	bool psr2_enabled;
 	bool psr2_sel_fetch_enabled;
+<<<<<<< HEAD
 	bool req_psr2_sdp_prior_scanline;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 sink_sync_latency;
 	ktime_t last_entry_attempt;
 	ktime_t last_exit;
 	bool sink_not_reliable;
 	bool irq_aux_error;
+<<<<<<< HEAD
 	u16 su_w_granularity;
 	u16 su_y_granularity;
+=======
+	u16 su_x_granularity;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 dc3co_exitline;
 	u32 dc3co_exit_delay;
 	struct delayed_work dc3co_work;
@@ -1631,7 +1662,10 @@ struct intel_dp {
 
 	/* Display stream compression testing */
 	bool force_dsc_en;
+<<<<<<< HEAD
 	int force_dsc_bpp;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	bool hobl_failed;
 	bool hobl_active;

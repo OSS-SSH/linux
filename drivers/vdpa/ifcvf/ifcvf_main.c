@@ -63,6 +63,7 @@ static int ifcvf_request_irq(struct ifcvf_adapter *adapter)
 	struct pci_dev *pdev = adapter->pdev;
 	struct ifcvf_hw *vf = &adapter->vf;
 	int vector, i, ret, irq;
+<<<<<<< HEAD
 	u16 max_intr;
 
 	/* all queues and config interrupt  */
@@ -70,6 +71,11 @@ static int ifcvf_request_irq(struct ifcvf_adapter *adapter)
 
 	ret = pci_alloc_irq_vectors(pdev, max_intr,
 				    max_intr, PCI_IRQ_MSIX);
+=======
+
+	ret = pci_alloc_irq_vectors(pdev, IFCVF_MAX_INTR,
+				    IFCVF_MAX_INTR, PCI_IRQ_MSIX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0) {
 		IFCVF_ERR(pdev, "Failed to alloc IRQ vectors\n");
 		return ret;
@@ -87,7 +93,11 @@ static int ifcvf_request_irq(struct ifcvf_adapter *adapter)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	for (i = 0; i < vf->nr_vring; i++) {
+=======
+	for (i = 0; i < IFCVF_MAX_QUEUE_PAIRS * 2; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		snprintf(vf->vring[i].msix_name, 256, "ifcvf[%s]-%d\n",
 			 pci_name(pdev), i);
 		vector = i + IFCVF_MSI_QUEUE_OFF;
@@ -116,6 +126,10 @@ static int ifcvf_start_datapath(void *private)
 	u8 status;
 	int ret;
 
+<<<<<<< HEAD
+=======
+	vf->nr_vring = IFCVF_MAX_QUEUE_PAIRS * 2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = ifcvf_start_hw(vf);
 	if (ret < 0) {
 		status = ifcvf_get_status(vf);
@@ -131,7 +145,11 @@ static int ifcvf_stop_datapath(void *private)
 	struct ifcvf_hw *vf = ifcvf_private_to_vf(private);
 	int i;
 
+<<<<<<< HEAD
 	for (i = 0; i < vf->nr_vring; i++)
+=======
+	for (i = 0; i < IFCVF_MAX_QUEUE_PAIRS * 2; i++)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		vf->vring[i].cb.callback = NULL;
 
 	ifcvf_stop_hw(vf);
@@ -144,7 +162,11 @@ static void ifcvf_reset_vring(struct ifcvf_adapter *adapter)
 	struct ifcvf_hw *vf = ifcvf_private_to_vf(adapter);
 	int i;
 
+<<<<<<< HEAD
 	for (i = 0; i < vf->nr_vring; i++) {
+=======
+	for (i = 0; i < IFCVF_MAX_QUEUE_PAIRS * 2; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		vf->vring[i].last_avail_idx = 0;
 		vf->vring[i].desc = 0;
 		vf->vring[i].avail = 0;
@@ -174,12 +196,26 @@ static u64 ifcvf_vdpa_get_features(struct vdpa_device *vdpa_dev)
 	struct ifcvf_adapter *adapter = vdpa_to_adapter(vdpa_dev);
 	struct ifcvf_hw *vf = vdpa_to_vf(vdpa_dev);
 	struct pci_dev *pdev = adapter->pdev;
+<<<<<<< HEAD
 	u32 type = vf->dev_type;
 	u64 features;
 
 	if (type == VIRTIO_ID_NET || type == VIRTIO_ID_BLOCK)
 		features = ifcvf_get_features(vf);
 	else {
+=======
+
+	u64 features;
+
+	switch (vf->dev_type) {
+	case VIRTIO_ID_NET:
+		features = ifcvf_get_features(vf) & IFCVF_NET_SUPPORTED_FEATURES;
+		break;
+	case VIRTIO_ID_BLOCK:
+		features = ifcvf_get_features(vf);
+		break;
+	default:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		features = 0;
 		IFCVF_ERR(pdev, "VIRTIO ID %u not supported\n", vf->dev_type);
 	}
@@ -216,12 +252,30 @@ static void ifcvf_vdpa_set_status(struct vdpa_device *vdpa_dev, u8 status)
 	int ret;
 
 	vf  = vdpa_to_vf(vdpa_dev);
+<<<<<<< HEAD
 	adapter = vdpa_to_adapter(vdpa_dev);
+=======
+	adapter = dev_get_drvdata(vdpa_dev->dev.parent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	status_old = ifcvf_get_status(vf);
 
 	if (status_old == status)
 		return;
 
+<<<<<<< HEAD
+=======
+	if ((status_old & VIRTIO_CONFIG_S_DRIVER_OK) &&
+	    !(status & VIRTIO_CONFIG_S_DRIVER_OK)) {
+		ifcvf_stop_datapath(adapter);
+		ifcvf_free_irq(adapter, IFCVF_MAX_QUEUE_PAIRS * 2);
+	}
+
+	if (status == 0) {
+		ifcvf_reset_vring(adapter);
+		return;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if ((status & VIRTIO_CONFIG_S_DRIVER_OK) &&
 	    !(status_old & VIRTIO_CONFIG_S_DRIVER_OK)) {
 		ret = ifcvf_request_irq(adapter);
@@ -241,6 +295,7 @@ static void ifcvf_vdpa_set_status(struct vdpa_device *vdpa_dev, u8 status)
 	ifcvf_set_status(vf, status);
 }
 
+<<<<<<< HEAD
 static int ifcvf_vdpa_reset(struct vdpa_device *vdpa_dev)
 {
 	struct ifcvf_adapter *adapter;
@@ -264,6 +319,8 @@ static int ifcvf_vdpa_reset(struct vdpa_device *vdpa_dev)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static u16 ifcvf_vdpa_get_vq_num_max(struct vdpa_device *vdpa_dev)
 {
 	return IFCVF_QUEUE_MAX;
@@ -447,7 +504,10 @@ static const struct vdpa_config_ops ifc_vdpa_ops = {
 	.set_features	= ifcvf_vdpa_set_features,
 	.get_status	= ifcvf_vdpa_get_status,
 	.set_status	= ifcvf_vdpa_set_status,
+<<<<<<< HEAD
 	.reset		= ifcvf_vdpa_reset,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.get_vq_num_max	= ifcvf_vdpa_get_vq_num_max,
 	.get_vq_state	= ifcvf_vdpa_get_vq_state,
 	.set_vq_state	= ifcvf_vdpa_set_vq_state,
@@ -469,6 +529,7 @@ static const struct vdpa_config_ops ifc_vdpa_ops = {
 	.get_vq_notification = ifcvf_get_vq_notification,
 };
 
+<<<<<<< HEAD
 static struct virtio_device_id id_table_net[] = {
 	{VIRTIO_ID_NET, VIRTIO_DEV_ANY_ID},
 	{0},
@@ -605,25 +666,47 @@ static int ifcvf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (ret) {
 		IFCVF_ERR(pdev, "Failed to enable device\n");
 		goto err;
+=======
+static int ifcvf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+{
+	struct device *dev = &pdev->dev;
+	struct ifcvf_adapter *adapter;
+	struct ifcvf_hw *vf;
+	int ret, i;
+
+	ret = pcim_enable_device(pdev);
+	if (ret) {
+		IFCVF_ERR(pdev, "Failed to enable device\n");
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = pcim_iomap_regions(pdev, BIT(0) | BIT(2) | BIT(4),
 				 IFCVF_DRIVER_NAME);
 	if (ret) {
 		IFCVF_ERR(pdev, "Failed to request MMIO region\n");
+<<<<<<< HEAD
 		goto err;
+=======
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64));
 	if (ret) {
 		IFCVF_ERR(pdev, "No usable DMA configuration\n");
+<<<<<<< HEAD
 		goto err;
+=======
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = devm_add_action_or_reset(dev, ifcvf_free_irq_vectors, pdev);
 	if (ret) {
 		IFCVF_ERR(pdev,
 			  "Failed for adding devres for freeing irq vectors\n");
+<<<<<<< HEAD
 		goto err;
 	}
 
@@ -633,23 +716,81 @@ static int ifcvf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (ret) {
 		IFCVF_ERR(pdev,
 			  "Failed to initialize the management interfaces\n");
+=======
+		return ret;
+	}
+
+	adapter = vdpa_alloc_device(struct ifcvf_adapter, vdpa,
+				    dev, &ifc_vdpa_ops, NULL);
+	if (adapter == NULL) {
+		IFCVF_ERR(pdev, "Failed to allocate vDPA structure");
+		return -ENOMEM;
+	}
+
+	pci_set_master(pdev);
+	pci_set_drvdata(pdev, adapter);
+
+	vf = &adapter->vf;
+
+	/* This drirver drives both modern virtio devices and transitional
+	 * devices in modern mode.
+	 * vDPA requires feature bit VIRTIO_F_ACCESS_PLATFORM,
+	 * so legacy devices and transitional devices in legacy
+	 * mode will not work for vDPA, this driver will not
+	 * drive devices with legacy interface.
+	 */
+	if (pdev->device < 0x1040)
+		vf->dev_type =  pdev->subsystem_device;
+	else
+		vf->dev_type =  pdev->device - 0x1040;
+
+	vf->base = pcim_iomap_table(pdev);
+
+	adapter->pdev = pdev;
+	adapter->vdpa.dma_dev = &pdev->dev;
+
+	ret = ifcvf_init_hw(vf, pdev);
+	if (ret) {
+		IFCVF_ERR(pdev, "Failed to init IFCVF hw\n");
+		goto err;
+	}
+
+	for (i = 0; i < IFCVF_MAX_QUEUE_PAIRS * 2; i++)
+		vf->vring[i].irq = -EINVAL;
+
+	vf->hw_features = ifcvf_get_hw_features(vf);
+
+	ret = vdpa_register_device(&adapter->vdpa, IFCVF_MAX_QUEUE_PAIRS * 2);
+	if (ret) {
+		IFCVF_ERR(pdev, "Failed to register ifcvf to vdpa bus");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto err;
 	}
 
 	return 0;
 
 err:
+<<<<<<< HEAD
 	kfree(ifcvf_mgmt_dev);
+=======
+	put_device(&adapter->vdpa.dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
 static void ifcvf_remove(struct pci_dev *pdev)
 {
+<<<<<<< HEAD
 	struct ifcvf_vdpa_mgmt_dev *ifcvf_mgmt_dev;
 
 	ifcvf_mgmt_dev = pci_get_drvdata(pdev);
 	vdpa_mgmtdev_unregister(&ifcvf_mgmt_dev->mdev);
 	kfree(ifcvf_mgmt_dev);
+=======
+	struct ifcvf_adapter *adapter = pci_get_drvdata(pdev);
+
+	vdpa_unregister_device(&adapter->vdpa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct pci_device_id ifcvf_pci_ids[] = {

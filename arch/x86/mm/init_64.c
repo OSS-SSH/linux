@@ -1255,7 +1255,12 @@ kernel_physical_mapping_remove(unsigned long start, unsigned long end)
 	remove_pagetable(start, end, true, NULL);
 }
 
+<<<<<<< HEAD
 void __ref arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
+=======
+void __ref arch_remove_memory(int nid, u64 start, u64 size,
+			      struct vmem_altmap *altmap)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned long start_pfn = start >> PAGE_SHIFT;
 	unsigned long nr_pages = size >> PAGE_SHIFT;
@@ -1432,18 +1437,30 @@ int kern_addr_valid(unsigned long addr)
 		return 0;
 
 	p4d = p4d_offset(pgd, addr);
+<<<<<<< HEAD
 	if (!p4d_present(*p4d))
 		return 0;
 
 	pud = pud_offset(p4d, addr);
 	if (!pud_present(*pud))
+=======
+	if (p4d_none(*p4d))
+		return 0;
+
+	pud = pud_offset(p4d, addr);
+	if (pud_none(*pud))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	if (pud_large(*pud))
 		return pfn_valid(pud_pfn(*pud));
 
 	pmd = pmd_offset(pud, addr);
+<<<<<<< HEAD
 	if (!pmd_present(*pmd))
+=======
+	if (pmd_none(*pmd))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	if (pmd_large(*pmd))

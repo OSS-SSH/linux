@@ -1278,10 +1278,34 @@ static const struct snd_pcm_ops snd_rme32_capture_adat_fd_ops = {
 	.ack =		snd_rme32_capture_fd_ack,
 };
 
+<<<<<<< HEAD
 static void snd_rme32_free(struct rme32 *rme32)
 {
 	if (rme32->irq >= 0)
 		snd_rme32_pcm_stop(rme32, 0);
+=======
+static void snd_rme32_free(void *private_data)
+{
+	struct rme32 *rme32 = (struct rme32 *) private_data;
+
+	if (rme32 == NULL) {
+		return;
+	}
+	if (rme32->irq >= 0) {
+		snd_rme32_pcm_stop(rme32, 0);
+		free_irq(rme32->irq, (void *) rme32);
+		rme32->irq = -1;
+	}
+	if (rme32->iobase) {
+		iounmap(rme32->iobase);
+		rme32->iobase = NULL;
+	}
+	if (rme32->port) {
+		pci_release_regions(rme32->pci);
+		rme32->port = 0;
+	}
+	pci_disable_device(rme32->pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void snd_rme32_free_spdif_pcm(struct snd_pcm *pcm)
@@ -1305,7 +1329,11 @@ static int snd_rme32_create(struct rme32 *rme32)
 	rme32->irq = -1;
 	spin_lock_init(&rme32->lock);
 
+<<<<<<< HEAD
 	err = pcim_enable_device(pci);
+=======
+	err = pci_enable_device(pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -1314,6 +1342,7 @@ static int snd_rme32_create(struct rme32 *rme32)
 		return err;
 	rme32->port = pci_resource_start(rme32->pci, 0);
 
+<<<<<<< HEAD
 	rme32->iobase = devm_ioremap(&pci->dev, rme32->port, RME32_IO_SIZE);
 	if (!rme32->iobase) {
 		dev_err(rme32->card->dev,
@@ -1324,6 +1353,18 @@ static int snd_rme32_create(struct rme32 *rme32)
 
 	if (devm_request_irq(&pci->dev, pci->irq, snd_rme32_interrupt,
 			     IRQF_SHARED, KBUILD_MODNAME, rme32)) {
+=======
+	rme32->iobase = ioremap(rme32->port, RME32_IO_SIZE);
+	if (!rme32->iobase) {
+		dev_err(rme32->card->dev,
+			"unable to remap memory region 0x%lx-0x%lx\n",
+			   rme32->port, rme32->port + RME32_IO_SIZE - 1);
+		return -ENOMEM;
+	}
+
+	if (request_irq(pci->irq, snd_rme32_interrupt, IRQF_SHARED,
+			KBUILD_MODNAME, rme32)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(rme32->card->dev, "unable to grab IRQ %d\n", pci->irq);
 		return -EBUSY;
 	}
@@ -1890,8 +1931,13 @@ snd_rme32_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*rme32), &card);
+=======
+	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+			   sizeof(struct rme32), &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 	card->private_free = snd_rme32_card_free;
@@ -1901,8 +1947,15 @@ snd_rme32_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
         if (fullduplex[dev])
 		rme32->fullduplex_mode = 1;
 	err = snd_rme32_create(rme32);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
+=======
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	strcpy(card->driver, "Digi32");
 	switch (rme32->pci->device) {
@@ -1920,17 +1973,36 @@ snd_rme32_probe(struct pci_dev *pci, const struct pci_device_id *pci_id)
 		card->shortname, rme32->rev, rme32->port, rme32->irq);
 
 	err = snd_card_register(card);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
+=======
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void snd_rme32_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct pci_driver rme32_driver = {
 	.name =		KBUILD_MODNAME,
 	.id_table =	snd_rme32_ids,
 	.probe =	snd_rme32_probe,
+<<<<<<< HEAD
+=======
+	.remove =	snd_rme32_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 module_pci_driver(rme32_driver);

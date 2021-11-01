@@ -722,7 +722,11 @@ static struct mv88e6390_serdes_hw_stat mv88e6390_serdes_hw_stats[] = {
 
 int mv88e6390_serdes_get_sset_count(struct mv88e6xxx_chip *chip, int port)
 {
+<<<<<<< HEAD
 	if (mv88e6xxx_serdes_get_lane(chip, port) < 0)
+=======
+	if (mv88e6390_serdes_get_lane(chip, port) < 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	return ARRAY_SIZE(mv88e6390_serdes_hw_stats);
@@ -734,7 +738,11 @@ int mv88e6390_serdes_get_strings(struct mv88e6xxx_chip *chip,
 	struct mv88e6390_serdes_hw_stat *stat;
 	int i;
 
+<<<<<<< HEAD
 	if (mv88e6xxx_serdes_get_lane(chip, port) < 0)
+=======
+	if (mv88e6390_serdes_get_lane(chip, port) < 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	for (i = 0; i < ARRAY_SIZE(mv88e6390_serdes_hw_stats); i++) {
@@ -770,7 +778,11 @@ int mv88e6390_serdes_get_stats(struct mv88e6xxx_chip *chip, int port,
 	int lane;
 	int i;
 
+<<<<<<< HEAD
 	lane = mv88e6xxx_serdes_get_lane(chip, port);
+=======
+	lane = mv88e6390_serdes_get_lane(chip, port);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (lane < 0)
 		return 0;
 
@@ -1277,16 +1289,27 @@ static int mv88e6393x_serdes_port_errata(struct mv88e6xxx_chip *chip, int lane)
 	int err;
 
 	/* mv88e6393x family errata 4.6:
+<<<<<<< HEAD
 	 * Cannot clear PwrDn bit on SERDES if device is configured CPU_MGD
 	 * mode or P0_mode is configured for [x]MII.
 	 * Workaround: Set SERDES register 4.F002 bit 5=0 and bit 15=1.
+=======
+	 * Cannot clear PwrDn bit on SERDES on port 0 if device is configured
+	 * CPU_MGD mode or P0_mode is configured for [x]MII.
+	 * Workaround: Set Port0 SERDES register 4.F002 bit 5=0 and bit 15=1.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 *
 	 * It seems that after this workaround the SERDES is automatically
 	 * powered up (the bit is cleared), so power it down.
 	 */
+<<<<<<< HEAD
 	if (lane == MV88E6393X_PORT0_LANE || lane == MV88E6393X_PORT9_LANE ||
 	    lane == MV88E6393X_PORT10_LANE) {
 		err = mv88e6390_serdes_read(chip, lane,
+=======
+	if (lane == MV88E6393X_PORT0_LANE) {
+		err = mv88e6390_serdes_read(chip, MV88E6393X_PORT0_LANE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    MDIO_MMD_PHYXS,
 					    MV88E6393X_SERDES_POC, &reg);
 		if (err)

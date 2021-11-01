@@ -72,8 +72,12 @@ image zImage uImage tftpboot.img vmlinux.aout: vmlinux
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
 install:
+<<<<<<< HEAD
 	sh $(srctree)/$(boot)/install.sh $(KERNELRELEASE) $(KBUILD_IMAGE) \
 		System.map "$(INSTALL_PATH)"
+=======
+	$(Q)$(MAKE) $(build)=$(boot) $@
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 archclean:
 	$(Q)$(MAKE) $(clean)=$(boot)

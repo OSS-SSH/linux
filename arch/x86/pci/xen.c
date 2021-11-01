@@ -113,7 +113,11 @@ static int acpi_register_gsi_xen_hvm(struct device *dev, u32 gsi,
 				 false /* no mapping of GSI to PIRQ */);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_XEN_PV_DOM0
+=======
+#ifdef CONFIG_XEN_DOM0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int xen_register_gsi(u32 gsi, int triggering, int polarity)
 {
 	int rc, irq;
@@ -261,7 +265,11 @@ error:
 	return irq;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_XEN_PV_DOM0
+=======
+#ifdef CONFIG_XEN_DOM0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool __read_mostly pci_seg_supported = true;
 
 static int xen_initdom_setup_msi_irqs(struct pci_dev *dev, int nvec, int type)
@@ -375,10 +383,17 @@ static void xen_initdom_restore_msi_irqs(struct pci_dev *dev)
 		WARN(ret && ret != -ENOSYS, "restore_msi -> %d\n", ret);
 	}
 }
+<<<<<<< HEAD
 #else /* CONFIG_XEN_PV_DOM0 */
 #define xen_initdom_setup_msi_irqs	NULL
 #define xen_initdom_restore_msi_irqs	NULL
 #endif /* !CONFIG_XEN_PV_DOM0 */
+=======
+#else /* CONFIG_XEN_DOM0 */
+#define xen_initdom_setup_msi_irqs	NULL
+#define xen_initdom_restore_msi_irqs	NULL
+#endif /* !CONFIG_XEN_DOM0 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void xen_teardown_msi_irqs(struct pci_dev *dev)
 {
@@ -555,7 +570,11 @@ int __init pci_xen_hvm_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_XEN_PV_DOM0
+=======
+#ifdef CONFIG_XEN_DOM0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int __init pci_xen_initial_domain(void)
 {
 	int irq;
@@ -583,9 +602,12 @@ int __init pci_xen_initial_domain(void)
 	}
 	return 0;
 }
+<<<<<<< HEAD
 #endif
 
 #ifdef CONFIG_XEN_DOM0
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct xen_device_domain_owner {
 	domid_t domain;
@@ -659,4 +681,8 @@ int xen_unregister_device_domain_owner(struct pci_dev *dev)
 	return 0;
 }
 EXPORT_SYMBOL_GPL(xen_unregister_device_domain_owner);
+<<<<<<< HEAD
 #endif /* CONFIG_XEN_DOM0 */
+=======
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

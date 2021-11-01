@@ -66,7 +66,11 @@
 		};
 	};
 
+<<<<<<< HEAD
 	sysclk: sysclk {
+=======
+	sysclk: clock-sysclk {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
 		clock-frequency = <100000000>;
@@ -405,9 +409,15 @@
 			interrupts = <GIC_SPI 63 IRQ_TYPE_LEVEL_HIGH>;
 			clock-frequency = <0>; /* fixed up by bootloader */
 			clocks = <&clockgen QORIQ_CLK_HWACCEL 1>;
+<<<<<<< HEAD
 			voltage-ranges = <1800 1800>;
 			sdhci,auto-cmd12;
 			non-removable;
+=======
+			voltage-ranges = <1800 1800 3300 3300>;
+			sdhci,auto-cmd12;
+			broken-cd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			little-endian;
 			bus-width = <4>;
 			status = "disabled";

@@ -38,9 +38,12 @@ extern "C" {
 #define DRM_V3D_GET_BO_OFFSET                     0x05
 #define DRM_V3D_SUBMIT_TFU                        0x06
 #define DRM_V3D_SUBMIT_CSD                        0x07
+<<<<<<< HEAD
 #define DRM_V3D_PERFMON_CREATE                    0x08
 #define DRM_V3D_PERFMON_DESTROY                   0x09
 #define DRM_V3D_PERFMON_GET_VALUES                0x0a
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define DRM_IOCTL_V3D_SUBMIT_CL           DRM_IOWR(DRM_COMMAND_BASE + DRM_V3D_SUBMIT_CL, struct drm_v3d_submit_cl)
 #define DRM_IOCTL_V3D_WAIT_BO             DRM_IOWR(DRM_COMMAND_BASE + DRM_V3D_WAIT_BO, struct drm_v3d_wait_bo)
@@ -50,12 +53,15 @@ extern "C" {
 #define DRM_IOCTL_V3D_GET_BO_OFFSET       DRM_IOWR(DRM_COMMAND_BASE + DRM_V3D_GET_BO_OFFSET, struct drm_v3d_get_bo_offset)
 #define DRM_IOCTL_V3D_SUBMIT_TFU          DRM_IOW(DRM_COMMAND_BASE + DRM_V3D_SUBMIT_TFU, struct drm_v3d_submit_tfu)
 #define DRM_IOCTL_V3D_SUBMIT_CSD          DRM_IOW(DRM_COMMAND_BASE + DRM_V3D_SUBMIT_CSD, struct drm_v3d_submit_csd)
+<<<<<<< HEAD
 #define DRM_IOCTL_V3D_PERFMON_CREATE      DRM_IOWR(DRM_COMMAND_BASE + DRM_V3D_PERFMON_CREATE, \
 						   struct drm_v3d_perfmon_create)
 #define DRM_IOCTL_V3D_PERFMON_DESTROY     DRM_IOWR(DRM_COMMAND_BASE + DRM_V3D_PERFMON_DESTROY, \
 						   struct drm_v3d_perfmon_destroy)
 #define DRM_IOCTL_V3D_PERFMON_GET_VALUES  DRM_IOWR(DRM_COMMAND_BASE + DRM_V3D_PERFMON_GET_VALUES, \
 						   struct drm_v3d_perfmon_get_values)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define DRM_V3D_SUBMIT_CL_FLUSH_CACHE             0x01
 
@@ -136,11 +142,14 @@ struct drm_v3d_submit_cl {
 	__u32 bo_handle_count;
 
 	__u32 flags;
+<<<<<<< HEAD
 
 	/* ID of the perfmon to attach to this job. 0 means no perfmon. */
 	__u32 perfmon_id;
 
 	__u32 pad;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**
@@ -209,7 +218,10 @@ enum drm_v3d_param {
 	DRM_V3D_PARAM_SUPPORTS_TFU,
 	DRM_V3D_PARAM_SUPPORTS_CSD,
 	DRM_V3D_PARAM_SUPPORTS_CACHE_FLUSH,
+<<<<<<< HEAD
 	DRM_V3D_PARAM_SUPPORTS_PERFMON,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct drm_v3d_get_param {
@@ -273,6 +285,7 @@ struct drm_v3d_submit_csd {
 	__u32 in_sync;
 	/* Sync object to signal when the CSD job is done. */
 	__u32 out_sync;
+<<<<<<< HEAD
 
 	/* ID of the perfmon to attach to this job. 0 means no perfmon. */
 	__u32 perfmon_id;
@@ -394,6 +407,8 @@ struct drm_v3d_perfmon_get_values {
 	__u32 id;
 	__u32 pad;
 	__u64 values_ptr;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #if defined(__cplusplus)

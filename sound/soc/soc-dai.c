@@ -492,6 +492,7 @@ bool snd_soc_dai_stream_valid(struct snd_soc_dai *dai, int dir)
  */
 void snd_soc_dai_link_set_capabilities(struct snd_soc_dai_link *dai_link)
 {
+<<<<<<< HEAD
 	bool supported[SNDRV_PCM_STREAM_LAST + 1];
 	int direction;
 
@@ -502,6 +503,20 @@ void snd_soc_dai_link_set_capabilities(struct snd_soc_dai_link *dai_link)
 		bool supported_cpu = false;
 		bool supported_codec = false;
 		int i;
+=======
+	struct snd_soc_dai_link_component *cpu;
+	struct snd_soc_dai_link_component *codec;
+	struct snd_soc_dai *dai;
+	bool supported[SNDRV_PCM_STREAM_LAST + 1];
+	bool supported_cpu;
+	bool supported_codec;
+	int direction;
+	int i;
+
+	for_each_pcm_streams(direction) {
+		supported_cpu = false;
+		supported_codec = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		for_each_link_cpus(dai_link, i, cpu) {
 			dai = snd_soc_find_dai_with_mutex(cpu);
@@ -595,11 +610,19 @@ int snd_soc_pcm_dai_remove(struct snd_soc_pcm_runtime *rtd, int order)
 int snd_soc_pcm_dai_new(struct snd_soc_pcm_runtime *rtd)
 {
 	struct snd_soc_dai *dai;
+<<<<<<< HEAD
 	int i;
 
 	for_each_rtd_dais(rtd, i, dai) {
 		if (dai->driver->pcm_new) {
 			int ret = dai->driver->pcm_new(rtd, dai);
+=======
+	int i, ret = 0;
+
+	for_each_rtd_dais(rtd, i, dai) {
+		if (dai->driver->pcm_new) {
+			ret = dai->driver->pcm_new(rtd, dai);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (ret < 0)
 				return soc_dai_ret(dai, ret);
 		}

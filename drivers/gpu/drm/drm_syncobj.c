@@ -725,7 +725,11 @@ err_put_fd:
 	return ret;
 }
 /**
+<<<<<<< HEAD
  * drm_syncobj_open - initializes syncobj file-private structures at devnode open time
+=======
+ * drm_syncobj_open - initalizes syncobj file-private structures at devnode open time
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @file_private: drm file-private structure to set up
  *
  * Called at device open time, sets up the structure for handling refcounting
@@ -861,7 +865,11 @@ static int drm_syncobj_transfer_to_timeline(struct drm_file *file_private,
 				     &fence);
 	if (ret)
 		goto err;
+<<<<<<< HEAD
 	chain = dma_fence_chain_alloc();
+=======
+	chain = kzalloc(sizeof(struct dma_fence_chain), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!chain) {
 		ret = -ENOMEM;
 		goto err1;
@@ -1402,10 +1410,17 @@ drm_syncobj_timeline_signal_ioctl(struct drm_device *dev, void *data,
 		goto err_points;
 	}
 	for (i = 0; i < args->count_handles; i++) {
+<<<<<<< HEAD
 		chains[i] = dma_fence_chain_alloc();
 		if (!chains[i]) {
 			for (j = 0; j < i; j++)
 				dma_fence_chain_free(chains[j]);
+=======
+		chains[i] = kzalloc(sizeof(struct dma_fence_chain), GFP_KERNEL);
+		if (!chains[i]) {
+			for (j = 0; j < i; j++)
+				kfree(chains[j]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ret = -ENOMEM;
 			goto err_chains;
 		}

@@ -386,7 +386,10 @@ static int is31fl32xx_parse_dt(struct device *dev,
 			dev_err(dev,
 				"Node %pOF 'reg' conflicts with another LED\n",
 				child);
+<<<<<<< HEAD
 			ret = -EINVAL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto err;
 		}
 

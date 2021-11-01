@@ -476,7 +476,11 @@ static struct msi_domain_info brcm_msi_domain_info = {
 static void brcm_pcie_msi_isr(struct irq_desc *desc)
 {
 	struct irq_chip *chip = irq_desc_get_chip(desc);
+<<<<<<< HEAD
 	unsigned long status;
+=======
+	unsigned long status, virq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct brcm_msi *msi;
 	struct device *dev;
 	u32 bit;
@@ -489,9 +493,16 @@ static void brcm_pcie_msi_isr(struct irq_desc *desc)
 	status >>= msi->legacy_shift;
 
 	for_each_set_bit(bit, &status, msi->nr) {
+<<<<<<< HEAD
 		int ret;
 		ret = generic_handle_domain_irq(msi->inner_domain, bit);
 		if (ret)
+=======
+		virq = irq_find_mapping(msi->inner_domain, bit);
+		if (virq)
+			generic_handle_irq(virq);
+		else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dev_dbg(dev, "unexpected MSI\n");
 	}
 

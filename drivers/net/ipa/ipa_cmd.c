@@ -159,6 +159,7 @@ static void ipa_cmd_validate_build(void)
 	BUILD_BUG_ON(TABLE_SIZE > field_max(IP_FLTRT_FLAGS_NHASH_SIZE_FMASK));
 #undef TABLE_COUNT_MAX
 #undef TABLE_SIZE
+<<<<<<< HEAD
 
 	/* Hashed and non-hashed fields are assumed to be the same size */
 	BUILD_BUG_ON(field_max(IP_FLTRT_FLAGS_HASH_SIZE_FMASK) !=
@@ -192,16 +193,44 @@ bool ipa_cmd_table_valid(struct ipa *ipa, const struct ipa_mem *mem, bool route)
 	if (mem->offset > offset_max ||
 	    ipa->mem_offset > offset_max - mem->offset) {
 		dev_err(dev, "%s table region offset too large\n", table);
+=======
+}
+
+#ifdef IPA_VALIDATE
+
+/* Validate a memory region holding a table */
+bool ipa_cmd_table_valid(struct ipa *ipa, const struct ipa_mem *mem,
+			 bool route, bool ipv6, bool hashed)
+{
+	struct device *dev = &ipa->pdev->dev;
+	u32 offset_max;
+
+	offset_max = hashed ? field_max(IP_FLTRT_FLAGS_HASH_ADDR_FMASK)
+			    : field_max(IP_FLTRT_FLAGS_NHASH_ADDR_FMASK);
+	if (mem->offset > offset_max ||
+	    ipa->mem_offset > offset_max - mem->offset) {
+		dev_err(dev, "IPv%c %s%s table region offset too large\n",
+			ipv6 ? '6' : '4', hashed ? "hashed " : "",
+			route ? "route" : "filter");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(dev, "    (0x%04x + 0x%04x > 0x%04x)\n",
 			ipa->mem_offset, mem->offset, offset_max);
 
 		return false;
 	}
 
+<<<<<<< HEAD
 	/* Entire memory range must fit within IPA-local memory */
 	if (mem->offset > ipa->mem_size ||
 	    mem->size > ipa->mem_size - mem->offset) {
 		dev_err(dev, "%s table region out of range\n", table);
+=======
+	if (mem->offset > ipa->mem_size ||
+	    mem->size > ipa->mem_size - mem->offset) {
+		dev_err(dev, "IPv%c %s%s table region out of range\n",
+			ipv6 ? '6' : '4', hashed ? "hashed " : "",
+			route ? "route" : "filter");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(dev, "    (0x%04x + 0x%04x > 0x%04x)\n",
 			mem->offset, mem->size, ipa->mem_size);
 
@@ -345,6 +374,10 @@ bool ipa_cmd_data_valid(struct ipa *ipa)
 	return true;
 }
 
+<<<<<<< HEAD
+=======
+#endif /* IPA_VALIDATE */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int ipa_cmd_pool_init(struct gsi_channel *channel, u32 tre_max)
 {
@@ -535,6 +568,12 @@ static void ipa_cmd_ip_packet_init_add(struct gsi_trans *trans, u8 endpoint_id)
 	union ipa_cmd_payload *cmd_payload;
 	dma_addr_t payload_addr;
 
+<<<<<<< HEAD
+=======
+	/* assert(endpoint_id <
+		  field_max(IPA_PACKET_INIT_DEST_ENDPOINT_FMASK)); */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cmd_payload = ipa_cmd_payload_alloc(ipa, &payload_addr);
 	payload = &cmd_payload->ip_packet_init;
 
@@ -558,9 +597,14 @@ void ipa_cmd_dma_shared_mem_add(struct gsi_trans *trans, u32 offset, u16 size,
 	u16 flags;
 
 	/* size and offset must fit in 16 bit fields */
+<<<<<<< HEAD
 	WARN_ON(!size);
 	WARN_ON(size > U16_MAX);
 	WARN_ON(offset > U16_MAX || ipa->mem_offset > U16_MAX - offset);
+=======
+	/* assert(size > 0 && size <= U16_MAX); */
+	/* assert(offset <= U16_MAX && ipa->mem_offset <= U16_MAX - offset); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	offset += ipa->mem_offset;
 
@@ -599,6 +643,11 @@ static void ipa_cmd_ip_tag_status_add(struct gsi_trans *trans)
 	union ipa_cmd_payload *cmd_payload;
 	dma_addr_t payload_addr;
 
+<<<<<<< HEAD
+=======
+	/* assert(tag <= field_max(IP_PACKET_TAG_STATUS_TAG_FMASK)); */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cmd_payload = ipa_cmd_payload_alloc(ipa, &payload_addr);
 	payload = &cmd_payload->ip_packet_tag_status;
 

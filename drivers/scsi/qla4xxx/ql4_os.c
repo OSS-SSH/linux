@@ -702,7 +702,11 @@ static int qla4xxx_get_chap_by_index(struct scsi_qla_host *ha,
 
 	*chap_entry = (struct ql4_chap_table *)ha->chap_list + chap_index;
 	if ((*chap_entry)->cookie !=
+<<<<<<< HEAD
 	     cpu_to_le16(CHAP_VALID_COOKIE)) {
+=======
+	     __constant_cpu_to_le16(CHAP_VALID_COOKIE)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		*chap_entry = NULL;
 	} else {
 		rval = QLA_SUCCESS;
@@ -745,7 +749,11 @@ static int qla4xxx_find_free_chap_index(struct scsi_qla_host *ha,
 		chap_table = (struct ql4_chap_table *)ha->chap_list + i;
 
 		if ((chap_table->cookie !=
+<<<<<<< HEAD
 		    cpu_to_le16(CHAP_VALID_COOKIE)) &&
+=======
+		    __constant_cpu_to_le16(CHAP_VALID_COOKIE)) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   (i > MAX_RESRV_CHAP_IDX)) {
 				free_index = i;
 				break;
@@ -794,7 +802,11 @@ static int qla4xxx_get_chap_list(struct Scsi_Host *shost, uint16_t chap_tbl_idx,
 	for (i = chap_tbl_idx; i < max_chap_entries; i++) {
 		chap_table = (struct ql4_chap_table *)ha->chap_list + i;
 		if (chap_table->cookie !=
+<<<<<<< HEAD
 		    cpu_to_le16(CHAP_VALID_COOKIE))
+=======
+		    __constant_cpu_to_le16(CHAP_VALID_COOKIE))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			continue;
 
 		chap_rec->chap_tbl_idx = i;
@@ -923,7 +935,11 @@ static int qla4xxx_delete_chap(struct Scsi_Host *shost, uint16_t chap_tbl_idx)
 		goto exit_delete_chap;
 	}
 
+<<<<<<< HEAD
 	chap_table->cookie = cpu_to_le16(0xFFFF);
+=======
+	chap_table->cookie = __constant_cpu_to_le16(0xFFFF);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	offset = FLASH_CHAP_OFFSET |
 			(chap_tbl_idx * sizeof(struct ql4_chap_table));
@@ -6043,7 +6059,11 @@ static int qla4xxx_get_bidi_chap(struct scsi_qla_host *ha, char *username,
 	for (i = 0; i < max_chap_entries; i++) {
 		chap_table = (struct ql4_chap_table *)ha->chap_list + i;
 		if (chap_table->cookie !=
+<<<<<<< HEAD
 		    cpu_to_le16(CHAP_VALID_COOKIE)) {
+=======
+		    __constant_cpu_to_le16(CHAP_VALID_COOKIE)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			continue;
 		}
 
@@ -9282,7 +9302,11 @@ static int qla4xxx_eh_device_reset(struct scsi_cmnd *cmd)
 	DEBUG2(printk(KERN_INFO
 		      "scsi%ld: DEVICE_RESET cmd=%p jiffies = 0x%lx, to=%x,"
 		      "dpc_flags=%lx, status=%x allowed=%d\n", ha->host_no,
+<<<<<<< HEAD
 		      cmd, jiffies, scsi_cmd_to_rq(cmd)->timeout / HZ,
+=======
+		      cmd, jiffies, cmd->request->timeout / HZ,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		      ha->dpc_flags, cmd->result, cmd->allowed));
 
 	rval = qla4xxx_isp_check_reg(ha);
@@ -9349,7 +9373,11 @@ static int qla4xxx_eh_target_reset(struct scsi_cmnd *cmd)
 	DEBUG2(printk(KERN_INFO
 		      "scsi%ld: TARGET_DEVICE_RESET cmd=%p jiffies = 0x%lx, "
 		      "to=%x,dpc_flags=%lx, status=%x allowed=%d\n",
+<<<<<<< HEAD
 		      ha->host_no, cmd, jiffies, scsi_cmd_to_rq(cmd)->timeout / HZ,
+=======
+		      ha->host_no, cmd, jiffies, cmd->request->timeout / HZ,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		      ha->dpc_flags, cmd->result, cmd->allowed));
 
 	rval = qla4xxx_isp_check_reg(ha);

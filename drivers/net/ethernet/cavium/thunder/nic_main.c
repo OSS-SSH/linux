@@ -1322,12 +1322,25 @@ static int nic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 		goto err_disable_device;
 	}
 
+<<<<<<< HEAD
 	err = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(48));
+=======
+	err = pci_set_dma_mask(pdev, DMA_BIT_MASK(48));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err) {
 		dev_err(dev, "Unable to get usable DMA configuration\n");
 		goto err_release_regions;
 	}
 
+<<<<<<< HEAD
+=======
+	err = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(48));
+	if (err) {
+		dev_err(dev, "Unable to get 48-bit DMA for consistent allocations\n");
+		goto err_release_regions;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* MAP PF's configuration registers */
 	nic->reg_base = pcim_iomap(pdev, PCI_CFG_REG_BAR_NUM, 0);
 	if (!nic->reg_base) {

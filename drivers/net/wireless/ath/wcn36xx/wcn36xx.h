@@ -199,7 +199,10 @@ struct wcn36xx {
 	struct device		*dev;
 	struct list_head	vif_list;
 
+<<<<<<< HEAD
 	const char		*nv_file;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const struct firmware	*nv;
 
 	u8			fw_revision;
@@ -247,7 +250,10 @@ struct wcn36xx {
 	struct cfg80211_scan_request *scan_req;
 	bool			sw_scan;
 	u8			sw_scan_opchannel;
+<<<<<<< HEAD
 	u8			sw_scan_channel;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ieee80211_vif	*sw_scan_vif;
 	struct mutex		scan_lock;
 	bool			scan_aborted;

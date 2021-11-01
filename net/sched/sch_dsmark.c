@@ -242,7 +242,11 @@ static int dsmark_enqueue(struct sk_buff *skb, struct Qdisc *sch,
 	else {
 		struct tcf_result res;
 		struct tcf_proto *fl = rcu_dereference_bh(p->filter_list);
+<<<<<<< HEAD
 		int result = tcf_classify(skb, NULL, fl, &res, false);
+=======
+		int result = tcf_classify(skb, fl, &res, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pr_debug("result %d class 0x%04x\n", result, res.classid);
 

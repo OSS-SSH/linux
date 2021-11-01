@@ -54,7 +54,10 @@ struct bnxt_qplib_chip_ctx {
 	u16	chip_num;
 	u8	chip_rev;
 	u8	chip_metal;
+<<<<<<< HEAD
 	u16	hw_stats_size;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct bnxt_qplib_drv_modes modes;
 };
 

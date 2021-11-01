@@ -1229,8 +1229,15 @@ static int sc27xx_fgu_probe(struct platform_device *pdev)
 	}
 
 	irq = platform_get_irq(pdev, 0);
+<<<<<<< HEAD
 	if (irq < 0)
 		return irq;
+=======
+	if (irq < 0) {
+		dev_err(dev, "no irq resource specified\n");
+		return irq;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = devm_request_threaded_irq(data->dev, irq, NULL,
 					sc27xx_fgu_interrupt,

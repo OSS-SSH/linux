@@ -43,7 +43,11 @@ void perf_evsel__delete(struct perf_evsel *evsel)
 	free(evsel);
 }
 
+<<<<<<< HEAD
 #define FD(e, x, y) ((int *) xyarray__entry(e->fd, x, y))
+=======
+#define FD(e, x, y) (*(int *) xyarray__entry(e->fd, x, y))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MMAP(e, x, y) (e->mmap ? ((struct perf_mmap *) xyarray__entry(e->mmap, x, y)) : NULL)
 
 int perf_evsel__alloc_fd(struct perf_evsel *evsel, int ncpus, int nthreads)
@@ -54,10 +58,14 @@ int perf_evsel__alloc_fd(struct perf_evsel *evsel, int ncpus, int nthreads)
 		int cpu, thread;
 		for (cpu = 0; cpu < ncpus; cpu++) {
 			for (thread = 0; thread < nthreads; thread++) {
+<<<<<<< HEAD
 				int *fd = FD(evsel, cpu, thread);
 
 				if (fd)
 					*fd = -1;
+=======
+				FD(evsel, cpu, thread) = -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 	}
@@ -83,7 +91,11 @@ sys_perf_event_open(struct perf_event_attr *attr,
 static int get_group_fd(struct perf_evsel *evsel, int cpu, int thread, int *group_fd)
 {
 	struct perf_evsel *leader = evsel->leader;
+<<<<<<< HEAD
 	int *fd;
+=======
+	int fd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (evsel == leader) {
 		*group_fd = -1;
@@ -98,10 +110,17 @@ static int get_group_fd(struct perf_evsel *evsel, int cpu, int thread, int *grou
 		return -ENOTCONN;
 
 	fd = FD(leader, cpu, thread);
+<<<<<<< HEAD
 	if (fd == NULL || *fd == -1)
 		return -EBADF;
 
 	*group_fd = *fd;
+=======
+	if (fd == -1)
+		return -EBADF;
+
+	*group_fd = fd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -141,11 +160,15 @@ int perf_evsel__open(struct perf_evsel *evsel, struct perf_cpu_map *cpus,
 
 	for (cpu = 0; cpu < cpus->nr; cpu++) {
 		for (thread = 0; thread < threads->nr; thread++) {
+<<<<<<< HEAD
 			int fd, group_fd, *evsel_fd;
 
 			evsel_fd = FD(evsel, cpu, thread);
 			if (evsel_fd == NULL)
 				return -EINVAL;
+=======
+			int fd, group_fd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			err = get_group_fd(evsel, cpu, thread, &group_fd);
 			if (err < 0)
@@ -158,7 +181,11 @@ int perf_evsel__open(struct perf_evsel *evsel, struct perf_cpu_map *cpus,
 			if (fd < 0)
 				return -errno;
 
+<<<<<<< HEAD
 			*evsel_fd = fd;
+=======
+			FD(evsel, cpu, thread) = fd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -170,12 +197,18 @@ static void perf_evsel__close_fd_cpu(struct perf_evsel *evsel, int cpu)
 	int thread;
 
 	for (thread = 0; thread < xyarray__max_y(evsel->fd); ++thread) {
+<<<<<<< HEAD
 		int *fd = FD(evsel, cpu, thread);
 
 		if (fd && *fd >= 0) {
 			close(*fd);
 			*fd = -1;
 		}
+=======
+		if (FD(evsel, cpu, thread) >= 0)
+			close(FD(evsel, cpu, thread));
+		FD(evsel, cpu, thread) = -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -219,12 +252,22 @@ void perf_evsel__munmap(struct perf_evsel *evsel)
 
 	for (cpu = 0; cpu < xyarray__max_x(evsel->fd); cpu++) {
 		for (thread = 0; thread < xyarray__max_y(evsel->fd); thread++) {
+<<<<<<< HEAD
 			int *fd = FD(evsel, cpu, thread);
 
 			if (fd == NULL || *fd < 0)
 				continue;
 
 			perf_mmap__munmap(MMAP(evsel, cpu, thread));
+=======
+			int fd = FD(evsel, cpu, thread);
+			struct perf_mmap *map = MMAP(evsel, cpu, thread);
+
+			if (fd < 0)
+				continue;
+
+			perf_mmap__munmap(map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -248,6 +291,7 @@ int perf_evsel__mmap(struct perf_evsel *evsel, int pages)
 
 	for (cpu = 0; cpu < xyarray__max_x(evsel->fd); cpu++) {
 		for (thread = 0; thread < xyarray__max_y(evsel->fd); thread++) {
+<<<<<<< HEAD
 			int *fd = FD(evsel, cpu, thread);
 			struct perf_mmap *map;
 
@@ -258,6 +302,17 @@ int perf_evsel__mmap(struct perf_evsel *evsel, int pages)
 			perf_mmap__init(map, NULL, false, NULL);
 
 			ret = perf_mmap__mmap(map, &mp, *fd, cpu);
+=======
+			int fd = FD(evsel, cpu, thread);
+			struct perf_mmap *map = MMAP(evsel, cpu, thread);
+
+			if (fd < 0)
+				continue;
+
+			perf_mmap__init(map, NULL, false, NULL);
+
+			ret = perf_mmap__mmap(map, &mp, fd, cpu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (ret) {
 				perf_evsel__munmap(evsel);
 				return ret;
@@ -270,9 +325,13 @@ int perf_evsel__mmap(struct perf_evsel *evsel, int pages)
 
 void *perf_evsel__mmap_base(struct perf_evsel *evsel, int cpu, int thread)
 {
+<<<<<<< HEAD
 	int *fd = FD(evsel, cpu, thread);
 
 	if (fd == NULL || *fd < 0 || MMAP(evsel, cpu, thread) == NULL)
+=======
+	if (FD(evsel, cpu, thread) < 0 || MMAP(evsel, cpu, thread) == NULL)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return NULL;
 
 	return MMAP(evsel, cpu, thread)->base;
@@ -307,18 +366,29 @@ int perf_evsel__read(struct perf_evsel *evsel, int cpu, int thread,
 		     struct perf_counts_values *count)
 {
 	size_t size = perf_evsel__read_size(evsel);
+<<<<<<< HEAD
 	int *fd = FD(evsel, cpu, thread);
 
 	memset(count, 0, sizeof(*count));
 
 	if (fd == NULL || *fd < 0)
+=======
+
+	memset(count, 0, sizeof(*count));
+
+	if (FD(evsel, cpu, thread) < 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	if (MMAP(evsel, cpu, thread) &&
 	    !perf_mmap__read_self(MMAP(evsel, cpu, thread), count))
 		return 0;
 
+<<<<<<< HEAD
 	if (readn(*fd, count->values, size) <= 0)
+=======
+	if (readn(FD(evsel, cpu, thread), count->values, size) <= 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -errno;
 
 	return 0;
@@ -331,6 +401,7 @@ static int perf_evsel__run_ioctl(struct perf_evsel *evsel,
 	int thread;
 
 	for (thread = 0; thread < xyarray__max_y(evsel->fd); thread++) {
+<<<<<<< HEAD
 		int err;
 		int *fd = FD(evsel, cpu, thread);
 
@@ -338,6 +409,10 @@ static int perf_evsel__run_ioctl(struct perf_evsel *evsel,
 			return -1;
 
 		err = ioctl(*fd, ioc, arg);
+=======
+		int fd = FD(evsel, cpu, thread),
+		    err = ioctl(fd, ioc, arg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (err)
 			return err;

@@ -31,12 +31,18 @@
 #include <linux/mem_encrypt.h>
 
 #include <asm/hypervisor.h>
+<<<<<<< HEAD
 #include <drm/drm_ioctl.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "vmwgfx_drv.h"
 #include "vmwgfx_msg_x86.h"
 #include "vmwgfx_msg_arm64.h"
+<<<<<<< HEAD
 #include "vmwgfx_mksstat.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define MESSAGE_STATUS_SUCCESS  0x0001
 #define MESSAGE_STATUS_DORECV   0x0002
@@ -58,11 +64,14 @@
 #define VMW_PORT_CMD_RECVSIZE   (MSG_TYPE_RECVSIZE << 16 | VMW_PORT_CMD_MSG)
 #define VMW_PORT_CMD_RECVSTATUS (MSG_TYPE_RECVSTATUS << 16 | VMW_PORT_CMD_MSG)
 
+<<<<<<< HEAD
 #define VMW_PORT_CMD_MKS_GUEST_STATS   85
 #define VMW_PORT_CMD_MKSGS_RESET       (0 << 16 | VMW_PORT_CMD_MKS_GUEST_STATS)
 #define VMW_PORT_CMD_MKSGS_ADD_PPN     (1 << 16 | VMW_PORT_CMD_MKS_GUEST_STATS)
 #define VMW_PORT_CMD_MKSGS_REMOVE_PPN  (2 << 16 | VMW_PORT_CMD_MKS_GUEST_STATS)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define HIGH_WORD(X) ((X & 0xFFFF0000) >> 16)
 
 #define MAX_USER_MSG_LENGTH	PAGE_SIZE
@@ -162,7 +171,10 @@ static unsigned long vmw_port_hb_out(struct rpc_channel *channel,
 	/* HB port can't access encrypted memory. */
 	if (hb && !mem_encrypt_active()) {
 		unsigned long bp = channel->cookie_high;
+<<<<<<< HEAD
 		u32 channel_id = (channel->channel_id << 16);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		si = (uintptr_t) msg;
 		di = channel->cookie_low;
@@ -170,7 +182,11 @@ static unsigned long vmw_port_hb_out(struct rpc_channel *channel,
 		VMW_PORT_HB_OUT(
 			(MESSAGE_STATUS_SUCCESS << 16) | VMW_PORT_CMD_HB_MSG,
 			msg_len, si, di,
+<<<<<<< HEAD
 			VMWARE_HYPERVISOR_HB | channel_id |
+=======
+			VMWARE_HYPERVISOR_HB | (channel->channel_id << 16) |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			VMWARE_HYPERVISOR_OUT,
 			VMW_HYPERVISOR_MAGIC, bp,
 			eax, ebx, ecx, edx, si, di);
@@ -218,7 +234,10 @@ static unsigned long vmw_port_hb_in(struct rpc_channel *channel, char *reply,
 	/* HB port can't access encrypted memory */
 	if (hb && !mem_encrypt_active()) {
 		unsigned long bp = channel->cookie_low;
+<<<<<<< HEAD
 		u32 channel_id = (channel->channel_id << 16);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		si = channel->cookie_high;
 		di = (uintptr_t) reply;
@@ -226,7 +245,11 @@ static unsigned long vmw_port_hb_in(struct rpc_channel *channel, char *reply,
 		VMW_PORT_HB_IN(
 			(MESSAGE_STATUS_SUCCESS << 16) | VMW_PORT_CMD_HB_MSG,
 			reply_len, si, di,
+<<<<<<< HEAD
 			VMWARE_HYPERVISOR_HB | channel_id,
+=======
+			VMWARE_HYPERVISOR_HB | (channel->channel_id << 16),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			VMW_HYPERVISOR_MAGIC, bp,
 			eax, ebx, ecx, edx, si, di);
 
@@ -621,6 +644,7 @@ out_open:
 
 	return -EINVAL;
 }
+<<<<<<< HEAD
 
 /**
  * reset_ppn_array: Resets a PPN64 array to INVALID_PPN64 content
@@ -1187,3 +1211,5 @@ int vmw_mksstat_remove_ioctl(struct drm_device *dev, void *data,
 
 	return -EAGAIN;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

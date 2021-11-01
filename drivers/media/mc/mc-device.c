@@ -556,7 +556,11 @@ static const struct media_file_operations media_device_fops = {
  * sysfs
  */
 
+<<<<<<< HEAD
 static ssize_t model_show(struct device *cd,
+=======
+static ssize_t show_model(struct device *cd,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			  struct device_attribute *attr, char *buf)
 {
 	struct media_devnode *devnode = to_media_devnode(cd);
@@ -565,7 +569,11 @@ static ssize_t model_show(struct device *cd,
 	return sprintf(buf, "%.*s\n", (int)sizeof(mdev->model), mdev->model);
 }
 
+<<<<<<< HEAD
 static DEVICE_ATTR_RO(model);
+=======
+static DEVICE_ATTR(model, S_IRUGO, show_model, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* -----------------------------------------------------------------------------
  * Registration/unregistration

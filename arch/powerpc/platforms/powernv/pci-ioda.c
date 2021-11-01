@@ -20,7 +20,10 @@
 #include <linux/iommu.h>
 #include <linux/rculist.h>
 #include <linux/sizes.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm/sections.h>
 #include <asm/io.h>
@@ -33,10 +36,17 @@
 #include <asm/iommu.h>
 #include <asm/tce.h>
 #include <asm/xics.h>
+<<<<<<< HEAD
 #include <asm/firmware.h>
 #include <asm/pnv-pci.h>
 #include <asm/mmzone.h>
 #include <asm/xive.h>
+=======
+#include <asm/debugfs.h>
+#include <asm/firmware.h>
+#include <asm/pnv-pci.h>
+#include <asm/mmzone.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <misc/cxl-base.h>
 
@@ -1963,6 +1973,7 @@ void pnv_pci_ioda2_setup_dma_pe(struct pnv_phb *phb,
 	pe->dma_setup_done = true;
 }
 
+<<<<<<< HEAD
 /*
  * Called from KVM in real mode to EOI passthru interrupts. The ICP
  * EOI is handled directly in KVM in kvmppc_deliver_irq_passthru().
@@ -1983,20 +1994,40 @@ int64_t pnv_opal_pci_msi_eoi(struct irq_data *d)
 /*
  * The IRQ data is mapped in the XICS domain, with OPAL HW IRQ numbers
  */
+=======
+int64_t pnv_opal_pci_msi_eoi(struct irq_chip *chip, unsigned int hw_irq)
+{
+	struct pnv_phb *phb = container_of(chip, struct pnv_phb,
+					   ioda.irq_chip);
+
+	return opal_pci_msi_eoi(phb->opal_id, hw_irq);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void pnv_ioda2_msi_eoi(struct irq_data *d)
 {
 	int64_t rc;
 	unsigned int hw_irq = (unsigned int)irqd_to_hwirq(d);
+<<<<<<< HEAD
 	struct pci_controller *hose = irq_data_get_irq_chip_data(d);
 	struct pnv_phb *phb = hose->private_data;
 
 	rc = opal_pci_msi_eoi(phb->opal_id, hw_irq);
+=======
+	struct irq_chip *chip = irq_data_get_irq_chip(d);
+
+	rc = pnv_opal_pci_msi_eoi(chip, hw_irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WARN_ON_ONCE(rc);
 
 	icp_native_eoi(d);
 }
 
+<<<<<<< HEAD
 /* P8/CXL only */
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void pnv_set_msi_irq_chip(struct pnv_phb *phb, unsigned int virq)
 {
 	struct irq_data *idata;
@@ -2018,17 +2049,23 @@ void pnv_set_msi_irq_chip(struct pnv_phb *phb, unsigned int virq)
 		phb->ioda.irq_chip.irq_eoi = pnv_ioda2_msi_eoi;
 	}
 	irq_set_chip(virq, &phb->ioda.irq_chip);
+<<<<<<< HEAD
 	irq_set_chip_data(virq, phb->hose);
 }
 
 static struct irq_chip pnv_pci_msi_irq_chip;
 
+=======
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Returns true iff chip is something that we could call
  * pnv_opal_pci_msi_eoi for.
  */
 bool is_pnv_opal_msi(struct irq_chip *chip)
 {
+<<<<<<< HEAD
 	return chip == &pnv_pci_msi_irq_chip;
 }
 EXPORT_SYMBOL_GPL(is_pnv_opal_msi);
@@ -2044,6 +2081,21 @@ static int __pnv_pci_ioda_msi_setup(struct pnv_phb *phb, struct pci_dev *dev,
 	dev_dbg(&dev->dev, "%s: setup %s-bit MSI for vector #%d\n", __func__,
 		is_64 ? "64" : "32", xive_num);
 
+=======
+	return chip->irq_eoi == pnv_ioda2_msi_eoi;
+}
+EXPORT_SYMBOL_GPL(is_pnv_opal_msi);
+
+static int pnv_pci_ioda_msi_setup(struct pnv_phb *phb, struct pci_dev *dev,
+				  unsigned int hwirq, unsigned int virq,
+				  unsigned int is_64, struct msi_msg *msg)
+{
+	struct pnv_ioda_pe *pe = pnv_ioda_get_pe(dev);
+	unsigned int xive_num = hwirq - phb->msi_base;
+	__be32 data;
+	int rc;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* No PE assigned ? bail out ... no MSI for you ! */
 	if (pe == NULL)
 		return -ENXIO;
@@ -2091,6 +2143,7 @@ static int __pnv_pci_ioda_msi_setup(struct pnv_phb *phb, struct pci_dev *dev,
 	}
 	msg->data = be32_to_cpu(data);
 
+<<<<<<< HEAD
 	return 0;
 }
 
@@ -2294,6 +2347,14 @@ static int pnv_msi_allocate_domains(struct pci_controller *hose, unsigned int co
 		irq_domain_remove(hose->dev_domain);
 		return -ENOMEM;
 	}
+=======
+	pnv_set_msi_irq_chip(phb, virq);
+
+	pr_devel("%s: %s-bit MSI on hwirq %x (xive #%d),"
+		 " address=%x_%08x data=%x PE# %x\n",
+		 pci_name(dev), is_64 ? "64" : "32", hwirq, xive_num,
+		 msg->address_hi, msg->address_lo, data, pe->pe_number);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -2318,10 +2379,17 @@ static void pnv_pci_init_ioda_msis(struct pnv_phb *phb)
 		return;
 	}
 
+<<<<<<< HEAD
 	pr_info("  Allocated bitmap for %d MSIs (base IRQ 0x%x)\n",
 		count, phb->msi_base);
 
 	pnv_msi_allocate_domains(phb->hose, count);
+=======
+	phb->msi_setup = pnv_pci_ioda_msi_setup;
+	phb->msi32_support = 1;
+	pr_info("  Allocated bitmap for %d MSIs (base IRQ 0x%x)\n",
+		count, phb->msi_base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void pnv_ioda_setup_pe_res(struct pnv_ioda_pe *pe,
@@ -2475,7 +2543,11 @@ static void pnv_pci_ioda_create_dbgfs(void)
 		phb = hose->private_data;
 
 		sprintf(name, "PCI%04x", hose->global_number);
+<<<<<<< HEAD
 		phb->dbgfs = debugfs_create_dir(name, arch_debugfs_dir);
+=======
+		phb->dbgfs = debugfs_create_dir(name, powerpc_debugfs_root);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		debugfs_create_file_unsafe("dump_diag_regs", 0200, phb->dbgfs,
 					   phb, &pnv_pci_diag_data_fops);
@@ -2925,6 +2997,11 @@ static const struct pci_controller_ops pnv_pci_ioda_controller_ops = {
 	.dma_dev_setup		= pnv_pci_ioda_dma_dev_setup,
 	.dma_bus_setup		= pnv_pci_ioda_dma_bus_setup,
 	.iommu_bypass_supported	= pnv_pci_ioda_iommu_bypass_supported,
+<<<<<<< HEAD
+=======
+	.setup_msi_irqs		= pnv_setup_msi_irqs,
+	.teardown_msi_irqs	= pnv_teardown_msi_irqs,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.enable_device_hook	= pnv_pci_enable_device_hook,
 	.release_device		= pnv_pci_release_device,
 	.window_alignment	= pnv_pci_window_alignment,

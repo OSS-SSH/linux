@@ -34,10 +34,13 @@ struct kstat {
 	 STATX_ATTR_ENCRYPTED |				\
 	 STATX_ATTR_VERITY				\
 	 )/* Attrs corresponding to FS_*_FL flags */
+<<<<<<< HEAD
 #define KSTAT_ATTR_VFS_FLAGS				\
 	(STATX_ATTR_IMMUTABLE |				\
 	 STATX_ATTR_APPEND				\
 	 ) /* Attrs corresponding to S_* flags that are enforced by the VFS */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64		ino;
 	dev_t		dev;
 	dev_t		rdev;

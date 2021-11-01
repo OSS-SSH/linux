@@ -90,18 +90,30 @@ static const struct iio_chan_spec rfd77402_channels[] = {
 	},
 };
 
+<<<<<<< HEAD
 static int rfd77402_set_state(struct i2c_client *client, u8 state, u16 check)
 {
 	int ret;
 
 	ret = i2c_smbus_write_byte_data(client, RFD77402_CMD_R,
+=======
+static int rfd77402_set_state(struct rfd77402_data *data, u8 state, u16 check)
+{
+	int ret;
+
+	ret = i2c_smbus_write_byte_data(data->client, RFD77402_CMD_R,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					state | RFD77402_CMD_VALID);
 	if (ret < 0)
 		return ret;
 
 	usleep_range(10000, 20000);
 
+<<<<<<< HEAD
 	ret = i2c_smbus_read_word_data(client, RFD77402_STATUS_R);
+=======
+	ret = i2c_smbus_read_word_data(data->client, RFD77402_STATUS_R);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		return ret;
 	if ((ret & RFD77402_STATUS_PM_MASK) != check)
@@ -110,24 +122,40 @@ static int rfd77402_set_state(struct i2c_client *client, u8 state, u16 check)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int rfd77402_measure(struct i2c_client *client)
+=======
+static int rfd77402_measure(struct rfd77402_data *data)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int ret;
 	int tries = 10;
 
+<<<<<<< HEAD
 	ret = rfd77402_set_state(client, RFD77402_CMD_MCPU_ON,
+=======
+	ret = rfd77402_set_state(data, RFD77402_CMD_MCPU_ON,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 RFD77402_STATUS_MCPU_ON);
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 	ret = i2c_smbus_write_byte_data(client, RFD77402_CMD_R,
+=======
+	ret = i2c_smbus_write_byte_data(data->client, RFD77402_CMD_R,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					RFD77402_CMD_SINGLE |
 					RFD77402_CMD_VALID);
 	if (ret < 0)
 		goto err;
 
 	while (tries-- > 0) {
+<<<<<<< HEAD
 		ret = i2c_smbus_read_byte_data(client, RFD77402_ICSR);
+=======
+		ret = i2c_smbus_read_byte_data(data->client, RFD77402_ICSR);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret < 0)
 			goto err;
 		if (ret & RFD77402_ICSR_RESULT)
@@ -140,7 +168,11 @@ static int rfd77402_measure(struct i2c_client *client)
 		goto err;
 	}
 
+<<<<<<< HEAD
 	ret = i2c_smbus_read_word_data(client, RFD77402_RESULT_R);
+=======
+	ret = i2c_smbus_read_word_data(data->client, RFD77402_RESULT_R);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		goto err;
 
@@ -153,7 +185,11 @@ static int rfd77402_measure(struct i2c_client *client)
 	return (ret & RFD77402_RESULT_DIST_MASK) >> 2;
 
 err:
+<<<<<<< HEAD
 	rfd77402_set_state(client, RFD77402_CMD_MCPU_OFF,
+=======
+	rfd77402_set_state(data, RFD77402_CMD_MCPU_OFF,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   RFD77402_STATUS_MCPU_OFF);
 	return ret;
 }
@@ -168,7 +204,11 @@ static int rfd77402_read_raw(struct iio_dev *indio_dev,
 	switch (mask) {
 	case IIO_CHAN_INFO_RAW:
 		mutex_lock(&data->lock);
+<<<<<<< HEAD
 		ret = rfd77402_measure(data->client);
+=======
+		ret = rfd77402_measure(data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mutex_unlock(&data->lock);
 		if (ret < 0)
 			return ret;
@@ -188,23 +228,39 @@ static const struct iio_info rfd77402_info = {
 	.read_raw = rfd77402_read_raw,
 };
 
+<<<<<<< HEAD
 static int rfd77402_init(struct i2c_client *client)
 {
 	int ret, i;
 
 	ret = rfd77402_set_state(client, RFD77402_CMD_STANDBY,
+=======
+static int rfd77402_init(struct rfd77402_data *data)
+{
+	int ret, i;
+
+	ret = rfd77402_set_state(data, RFD77402_CMD_STANDBY,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 RFD77402_STATUS_STANDBY);
 	if (ret < 0)
 		return ret;
 
 	/* configure INT pad as push-pull, active low */
+<<<<<<< HEAD
 	ret = i2c_smbus_write_byte_data(client, RFD77402_ICSR,
+=======
+	ret = i2c_smbus_write_byte_data(data->client, RFD77402_ICSR,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					RFD77402_ICSR_INT_MODE);
 	if (ret < 0)
 		return ret;
 
 	/* I2C configuration */
+<<<<<<< HEAD
 	ret = i2c_smbus_write_word_data(client, RFD77402_I2C_INIT_CFG,
+=======
+	ret = i2c_smbus_write_word_data(data->client, RFD77402_I2C_INIT_CFG,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					RFD77402_I2C_ADDR_INCR |
 					RFD77402_I2C_DATA_INCR |
 					RFD77402_I2C_HOST_DEBUG	|
@@ -213,39 +269,64 @@ static int rfd77402_init(struct i2c_client *client)
 		return ret;
 
 	/* set initialization */
+<<<<<<< HEAD
 	ret = i2c_smbus_write_word_data(client, RFD77402_PMU_CFG, 0x0500);
 	if (ret < 0)
 		return ret;
 
 	ret = rfd77402_set_state(client, RFD77402_CMD_MCPU_OFF,
+=======
+	ret = i2c_smbus_write_word_data(data->client, RFD77402_PMU_CFG, 0x0500);
+	if (ret < 0)
+		return ret;
+
+	ret = rfd77402_set_state(data, RFD77402_CMD_MCPU_OFF,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 RFD77402_STATUS_MCPU_OFF);
 	if (ret < 0)
 		return ret;
 
 	/* set initialization */
+<<<<<<< HEAD
 	ret = i2c_smbus_write_word_data(client, RFD77402_PMU_CFG, 0x0600);
 	if (ret < 0)
 		return ret;
 
 	ret = rfd77402_set_state(client, RFD77402_CMD_MCPU_ON,
+=======
+	ret = i2c_smbus_write_word_data(data->client, RFD77402_PMU_CFG, 0x0600);
+	if (ret < 0)
+		return ret;
+
+	ret = rfd77402_set_state(data, RFD77402_CMD_MCPU_ON,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 RFD77402_STATUS_MCPU_ON);
 	if (ret < 0)
 		return ret;
 
 	for (i = 0; i < ARRAY_SIZE(rf77402_tof_config); i++) {
+<<<<<<< HEAD
 		ret = i2c_smbus_write_word_data(client,
+=======
+		ret = i2c_smbus_write_word_data(data->client,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						rf77402_tof_config[i].reg,
 						rf77402_tof_config[i].val);
 		if (ret < 0)
 			return ret;
 	}
 
+<<<<<<< HEAD
 	ret = rfd77402_set_state(client, RFD77402_CMD_STANDBY,
+=======
+	ret = rfd77402_set_state(data, RFD77402_CMD_STANDBY,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 RFD77402_STATUS_STANDBY);
 
 	return ret;
 }
 
+<<<<<<< HEAD
 static int rfd77402_powerdown(struct i2c_client *client)
 {
 	return rfd77402_set_state(client, RFD77402_CMD_STANDBY,
@@ -257,6 +338,14 @@ static void rfd77402_disable(void *client)
 	rfd77402_powerdown(client);
 }
 
+=======
+static int rfd77402_powerdown(struct rfd77402_data *data)
+{
+	return rfd77402_set_state(data, RFD77402_CMD_STANDBY,
+				  RFD77402_STATUS_STANDBY);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int rfd77402_probe(struct i2c_client *client,
 			  const struct i2c_device_id *id)
 {
@@ -275,6 +364,10 @@ static int rfd77402_probe(struct i2c_client *client,
 		return -ENOMEM;
 
 	data = iio_priv(indio_dev);
+<<<<<<< HEAD
+=======
+	i2c_set_clientdata(client, indio_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	data->client = client;
 	mutex_init(&data->lock);
 
@@ -284,6 +377,7 @@ static int rfd77402_probe(struct i2c_client *client,
 	indio_dev->name = RFD77402_DRV_NAME;
 	indio_dev->modes = INDIO_DIRECT_MODE;
 
+<<<<<<< HEAD
 	ret = rfd77402_init(client);
 	if (ret < 0)
 		return ret;
@@ -293,17 +387,56 @@ static int rfd77402_probe(struct i2c_client *client,
 		return ret;
 
 	return devm_iio_device_register(&client->dev, indio_dev);
+=======
+	ret = rfd77402_init(data);
+	if (ret < 0)
+		return ret;
+
+	ret = iio_device_register(indio_dev);
+	if (ret)
+		goto err_powerdown;
+
+	return 0;
+
+err_powerdown:
+	rfd77402_powerdown(data);
+	return ret;
+}
+
+static int rfd77402_remove(struct i2c_client *client)
+{
+	struct iio_dev *indio_dev = i2c_get_clientdata(client);
+
+	iio_device_unregister(indio_dev);
+	rfd77402_powerdown(iio_priv(indio_dev));
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_PM_SLEEP
 static int rfd77402_suspend(struct device *dev)
 {
+<<<<<<< HEAD
 	return rfd77402_powerdown(to_i2c_client(dev));
+=======
+	struct rfd77402_data *data = iio_priv(i2c_get_clientdata(
+				     to_i2c_client(dev)));
+
+	return rfd77402_powerdown(data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int rfd77402_resume(struct device *dev)
 {
+<<<<<<< HEAD
 	return rfd77402_init(to_i2c_client(dev));
+=======
+	struct rfd77402_data *data = iio_priv(i2c_get_clientdata(
+				     to_i2c_client(dev)));
+
+	return rfd77402_init(data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif
 
@@ -321,6 +454,10 @@ static struct i2c_driver rfd77402_driver = {
 		.pm     = &rfd77402_pm_ops,
 	},
 	.probe  = rfd77402_probe,
+<<<<<<< HEAD
+=======
+	.remove = rfd77402_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.id_table = rfd77402_id,
 };
 

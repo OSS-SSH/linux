@@ -41,7 +41,11 @@ endif
 ifeq ($(CONFIG_LD_IS_LLD),y)
 	KBUILD_CFLAGS += -mno-relax
 	KBUILD_AFLAGS += -mno-relax
+<<<<<<< HEAD
 ifndef CONFIG_AS_IS_LLVM
+=======
+ifneq ($(LLVM_IAS),1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	KBUILD_CFLAGS += -Wa,-mno-relax
 	KBUILD_AFLAGS += -Wa,-mno-relax
 endif
@@ -108,12 +112,15 @@ PHONY += vdso_install
 vdso_install:
 	$(Q)$(MAKE) $(build)=arch/riscv/kernel/vdso $@
 
+<<<<<<< HEAD
 ifeq ($(CONFIG_MMU),y)
 prepare: vdso_prepare
 vdso_prepare: prepare0
 	$(Q)$(MAKE) $(build)=arch/riscv/kernel/vdso include/generated/vdso-offsets.h
 endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ifneq ($(CONFIG_XIP_KERNEL),y)
 ifeq ($(CONFIG_RISCV_M_MODE)$(CONFIG_SOC_CANAAN),yy)
 KBUILD_IMAGE := $(boot)/loader.bin
@@ -132,11 +139,16 @@ $(BOOT_TARGETS): vmlinux
 Image.%: Image
 	$(Q)$(MAKE) $(build)=$(boot) $(boot)/$@
 
+<<<<<<< HEAD
 install: install-image = Image
 zinstall: install-image = Image.gz
 install zinstall:
 	$(CONFIG_SHELL) $(srctree)/$(boot)/install.sh $(KERNELRELEASE) \
 	$(boot)/$(install-image) System.map "$(INSTALL_PATH)"
+=======
+zinstall install:
+	$(Q)$(MAKE) $(build)=$(boot) $@
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 archclean:
 	$(Q)$(MAKE) $(clean)=$(boot)

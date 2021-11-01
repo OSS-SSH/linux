@@ -9,4 +9,19 @@
 /* REVISIT: omap1 legacy drivers still rely on this */
 #include <mach/soc.h>
 
+<<<<<<< HEAD
+=======
+/*
+ * Bus address is physical address, except for OMAP-1510 Local Bus.
+ * OMAP-1510 bus address is translated into a Local Bus address if the
+ * OMAP bus type is lbus. We do the address translation based on the
+ * device overriding the defaults used in the dma-mapping API.
+ */
+
+/*
+ * OMAP-1510 Local Bus address offset
+ */
+#define OMAP1510_LB_OFFSET	UL(0x30000000)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

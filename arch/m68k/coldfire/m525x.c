@@ -26,7 +26,11 @@ DEFINE_CLK(pll, "pll.0", MCF_CLK);
 DEFINE_CLK(sys, "sys.0", MCF_BUSCLK);
 
 static struct clk_lookup m525x_clk_lookup[] = {
+<<<<<<< HEAD
 	CLKDEV_INIT(NULL, "pll.0", &clk_pll),
+=======
+	CLKDEV_INIT(NULL, "pll.0", &pll),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	CLKDEV_INIT(NULL, "sys.0", &clk_sys),
 	CLKDEV_INIT("mcftmr.0", NULL, &clk_sys),
 	CLKDEV_INIT("mcftmr.1", NULL, &clk_sys),

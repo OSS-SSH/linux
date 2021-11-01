@@ -20,7 +20,10 @@
 #define PHY_TYPE_XPCS		7
 #define PHY_TYPE_SGMII		8
 #define PHY_TYPE_QSGMII		9
+<<<<<<< HEAD
 #define PHY_TYPE_DPHY		10
 #define PHY_TYPE_CPHY		11
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* _DT_BINDINGS_PHY */

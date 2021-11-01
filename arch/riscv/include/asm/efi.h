@@ -13,7 +13,10 @@
 
 #ifdef CONFIG_EFI
 extern void efi_init(void);
+<<<<<<< HEAD
 extern void efifb_setup_from_dmi(struct screen_info *si, const char *opt);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 #define efi_init()
 #endif
@@ -28,10 +31,17 @@ int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
 
 #define ARCH_EFI_IRQ_FLAGS_MASK (SR_IE | SR_SPIE)
 
+<<<<<<< HEAD
 /* Load initrd anywhere in system RAM */
 static inline unsigned long efi_get_max_initrd_addr(unsigned long image_addr)
 {
 	return ULONG_MAX;
+=======
+/* Load initrd at enough distance from DRAM start */
+static inline unsigned long efi_get_max_initrd_addr(unsigned long image_addr)
+{
+	return image_addr + SZ_256M;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #define alloc_screen_info(x...)		(&screen_info)
@@ -40,6 +50,13 @@ static inline void free_screen_info(struct screen_info *si)
 {
 }
 
+<<<<<<< HEAD
+=======
+static inline void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
+{
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void efi_virtmap_load(void);
 void efi_virtmap_unload(void);
 

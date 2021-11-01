@@ -32,7 +32,10 @@
 #include <drm/ttm/ttm_placement.h>
 #include "vmwgfx_so.h"
 #include "vmwgfx_binding.h"
+<<<<<<< HEAD
 #include "vmwgfx_mksstat.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define VMW_RES_HT_ORDER 12
 
@@ -2365,7 +2368,11 @@ static int vmw_cmd_dx_set_rendertargets(struct vmw_private *dev_priv,
 		sizeof(SVGA3dRenderTargetViewId);
 	int ret;
 
+<<<<<<< HEAD
 	if (num_rt_view > SVGA3D_DX_MAX_RENDER_TARGETS) {
+=======
+	if (num_rt_view > SVGA3D_MAX_SIMULTANEOUS_RENDER_TARGETS) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		VMW_DEBUG_USER("Invalid DX Rendertarget binding.\n");
 		return -EINVAL;
 	}
@@ -2547,8 +2554,11 @@ static int vmw_cmd_dx_so_define(struct vmw_private *dev_priv,
 
 	so_type = vmw_so_cmd_to_type(header->id);
 	res = vmw_context_cotable(ctx_node->ctx, vmw_so_cotables[so_type]);
+<<<<<<< HEAD
 	if (IS_ERR(res))
 		return PTR_ERR(res);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cmd = container_of(header, typeof(*cmd), header);
 	ret = vmw_cotable_notify(res, cmd->defined_id);
 
@@ -4409,9 +4419,12 @@ int vmw_execbuf_ioctl(struct drm_device *dev, void *data,
 	int ret;
 	struct dma_fence *in_fence = NULL;
 
+<<<<<<< HEAD
 	MKS_STAT_TIME_DECL(MKSSTAT_KERN_EXECBUF);
 	MKS_STAT_TIME_PUSH(MKSSTAT_KERN_EXECBUF);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Extend the ioctl argument while maintaining backwards compatibility:
 	 * We take different code paths depending on the value of arg->version.
@@ -4421,8 +4434,12 @@ int vmw_execbuf_ioctl(struct drm_device *dev, void *data,
 	if (unlikely(arg->version > DRM_VMW_EXECBUF_VERSION ||
 		     arg->version == 0)) {
 		VMW_DEBUG_USER("Incorrect execbuf version.\n");
+<<<<<<< HEAD
 		ret = -EINVAL;
 		goto mksstats_out;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	switch (arg->version) {
@@ -4442,8 +4459,12 @@ int vmw_execbuf_ioctl(struct drm_device *dev, void *data,
 
 		if (!in_fence) {
 			VMW_DEBUG_USER("Cannot get imported fence\n");
+<<<<<<< HEAD
 			ret = -EINVAL;
 			goto mksstats_out;
+=======
+			return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		ret = vmw_wait_dma_fence(dev_priv->fman, in_fence);
@@ -4466,8 +4487,11 @@ int vmw_execbuf_ioctl(struct drm_device *dev, void *data,
 out:
 	if (in_fence)
 		dma_fence_put(in_fence);
+<<<<<<< HEAD
 
 mksstats_out:
 	MKS_STAT_TIME_POP(MKSSTAT_KERN_EXECBUF);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }

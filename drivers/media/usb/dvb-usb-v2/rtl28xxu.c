@@ -37,6 +37,7 @@ static int rtl28xxu_ctrl_msg(struct dvb_usb_device *d, struct rtl28xxu_req *req)
 	} else {
 		/* read */
 		requesttype = (USB_TYPE_VENDOR | USB_DIR_IN);
+<<<<<<< HEAD
 
 		/*
 		 * Zero-length transfers must use usb_sndctrlpipe() and
@@ -47,6 +48,9 @@ static int rtl28xxu_ctrl_msg(struct dvb_usb_device *d, struct rtl28xxu_req *req)
 			pipe = usb_rcvctrlpipe(d->udev, 0);
 		else
 			pipe = usb_sndctrlpipe(d->udev, 0);
+=======
+		pipe = usb_rcvctrlpipe(d->udev, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = usb_control_msg(d->udev, pipe, 0, requesttype, req->value,
@@ -621,8 +625,14 @@ static int rtl28xxu_read_config(struct dvb_usb_device *d)
 static int rtl28xxu_identify_state(struct dvb_usb_device *d, const char **name)
 {
 	struct rtl28xxu_dev *dev = d_to_priv(d);
+<<<<<<< HEAD
 	int ret;
 	struct rtl28xxu_req req_demod_i2c = {0x0020, CMD_I2C_DA_RD, 0, NULL};
+=======
+	u8 buf[1];
+	int ret;
+	struct rtl28xxu_req req_demod_i2c = {0x0020, CMD_I2C_DA_RD, 1, buf};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev_dbg(&d->intf->dev, "\n");
 

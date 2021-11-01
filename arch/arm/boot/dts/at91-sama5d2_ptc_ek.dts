@@ -93,12 +93,20 @@
 							reg = <0x40000 0xc0000>;
 						};
 
+<<<<<<< HEAD
 						bootloaderenvred@100000 {
+=======
+						bootloaderenvred@0x100000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 							label = "bootloader env redundant";
 							reg = <0x100000 0x40000>;
 						};
 
+<<<<<<< HEAD
 						bootloaderenv@140000 {
+=======
+						bootloaderenv@0x140000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 							label = "bootloader env";
 							reg = <0x140000 0x40000>;
 						};
@@ -203,7 +211,11 @@
 			};
 
 			shdwc@f8048010 {
+<<<<<<< HEAD
 				debounce-delay-us = <976>;
+=======
+				atmel,shdwc-debouncer = <976>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				input@0 {
 					reg = <0>;

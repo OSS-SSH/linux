@@ -71,7 +71,11 @@ static struct qcom_scm_wb_entry qcom_scm_wb[] = {
 	{ .flag = QCOM_SCM_FLAG_WARMBOOT_CPU3 },
 };
 
+<<<<<<< HEAD
 static const char * const qcom_scm_convention_names[] = {
+=======
+static const char *qcom_scm_convention_names[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	[SMC_CONVENTION_UNKNOWN] = "unknown",
 	[SMC_CONVENTION_ARM_32] = "smc arm 32",
 	[SMC_CONVENTION_ARM_64] = "smc arm 64",
@@ -331,7 +335,11 @@ int qcom_scm_set_cold_boot_addr(void *entry, const cpumask_t *cpus)
 		.owner = ARM_SMCCC_OWNER_SIP,
 	};
 
+<<<<<<< HEAD
 	if (!cpus || cpumask_empty(cpus))
+=======
+	if (!cpus || (cpus && cpumask_empty(cpus)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	for_each_cpu(cpu, cpus) {
@@ -1147,6 +1155,7 @@ int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
 }
 EXPORT_SYMBOL(qcom_scm_qsmmu500_wait_safe_toggle);
 
+<<<<<<< HEAD
 bool qcom_scm_lmh_dcvsh_available(void)
 {
 	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_LMH, QCOM_SCM_LMH_LIMIT_DCVSH);
@@ -1205,6 +1214,8 @@ int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
 }
 EXPORT_SYMBOL(qcom_scm_lmh_dcvsh);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
 {
 	struct device_node *tcsr;
@@ -1357,7 +1368,10 @@ static const struct of_device_id qcom_scm_dt_match[] = {
 	{ .compatible = "qcom,scm" },
 	{}
 };
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct platform_driver qcom_scm_driver = {
 	.driver = {
@@ -1374,6 +1388,9 @@ static int __init qcom_scm_init(void)
 	return platform_driver_register(&qcom_scm_driver);
 }
 subsys_initcall(qcom_scm_init);
+<<<<<<< HEAD
 
 MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
 MODULE_LICENSE("GPL v2");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

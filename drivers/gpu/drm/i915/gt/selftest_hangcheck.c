@@ -17,8 +17,11 @@
 #include "selftests/igt_flush_test.h"
 #include "selftests/igt_reset.h"
 #include "selftests/igt_atomic.h"
+<<<<<<< HEAD
 #include "selftests/igt_spinner.h"
 #include "selftests/intel_scheduler_helpers.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "selftests/mock_drm.h"
 
@@ -44,7 +47,11 @@ static int hang_init(struct hang *h, struct intel_gt *gt)
 	memset(h, 0, sizeof(*h));
 	h->gt = gt;
 
+<<<<<<< HEAD
 	h->ctx = kernel_context(gt->i915, NULL);
+=======
+	h->ctx = kernel_context(gt->i915);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(h->ctx))
 		return PTR_ERR(h->ctx);
 
@@ -380,7 +387,10 @@ static int igt_reset_nop(void *arg)
 			ce = intel_context_create(engine);
 			if (IS_ERR(ce)) {
 				err = PTR_ERR(ce);
+<<<<<<< HEAD
 				pr_err("[%s] Create context failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				break;
 			}
 
@@ -390,8 +400,11 @@ static int igt_reset_nop(void *arg)
 				rq = intel_context_create_request(ce);
 				if (IS_ERR(rq)) {
 					err = PTR_ERR(rq);
+<<<<<<< HEAD
 					pr_err("[%s] Create request failed: %d!\n",
 					       engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					break;
 				}
 
@@ -406,19 +419,27 @@ static int igt_reset_nop(void *arg)
 		igt_global_reset_unlock(gt);
 
 		if (intel_gt_is_wedged(gt)) {
+<<<<<<< HEAD
 			pr_err("[%s] GT is wedged!\n", engine->name);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = -EIO;
 			break;
 		}
 
 		if (i915_reset_count(global) != reset_count + ++count) {
+<<<<<<< HEAD
 			pr_err("[%s] Reset not recorded: %d vs %d + %d!\n",
 			       engine->name, i915_reset_count(global), reset_count, count);
+=======
+			pr_err("Full GPU reset not recorded!\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = -EINVAL;
 			break;
 		}
 
 		err = igt_flush_test(gt->i915);
+<<<<<<< HEAD
 		if (err) {
 			pr_err("[%s] Flush failed: %d!\n", engine->name, err);
 			break;
@@ -431,6 +452,15 @@ static int igt_reset_nop(void *arg)
 		err = -EIO;
 	}
 
+=======
+		if (err)
+			break;
+	} while (time_before(jiffies, end_time));
+	pr_info("%s: %d resets\n", __func__, count);
+
+	if (igt_flush_test(gt->i915))
+		err = -EIO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -452,6 +482,7 @@ static int igt_reset_nop_engine(void *arg)
 		IGT_TIMEOUT(end_time);
 		int err;
 
+<<<<<<< HEAD
 		if (intel_engine_uses_guc(engine)) {
 			/* Engine level resets are triggered by GuC when a hang
 			 * is detected. They can't be triggered by the KMD any
@@ -465,6 +496,11 @@ static int igt_reset_nop_engine(void *arg)
 			pr_err("[%s] Create context failed: %pe!\n", engine->name, ce);
 			return PTR_ERR(ce);
 		}
+=======
+		ce = intel_context_create(engine);
+		if (IS_ERR(ce))
+			return PTR_ERR(ce);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		reset_count = i915_reset_count(global);
 		reset_engine_count = i915_reset_engine_count(global, engine);
@@ -571,6 +607,7 @@ static int igt_reset_fail_engine(void *arg)
 		IGT_TIMEOUT(end_time);
 		int err;
 
+<<<<<<< HEAD
 		/* Can't manually break the reset if i915 doesn't perform it */
 		if (intel_engine_uses_guc(engine))
 			continue;
@@ -580,6 +617,11 @@ static int igt_reset_fail_engine(void *arg)
 			pr_err("[%s] Create context failed: %pe!\n", engine->name, ce);
 			return PTR_ERR(ce);
 		}
+=======
+		ce = intel_context_create(engine);
+		if (IS_ERR(ce))
+			return PTR_ERR(ce);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		st_engine_heartbeat_disable(engine);
 		set_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
@@ -714,12 +756,17 @@ static int __igt_reset_engine(struct intel_gt *gt, bool active)
 	for_each_engine(engine, gt, id) {
 		unsigned int reset_count, reset_engine_count;
 		unsigned long count;
+<<<<<<< HEAD
 		bool using_guc = intel_engine_uses_guc(engine);
 		IGT_TIMEOUT(end_time);
 
 		if (using_guc && !active)
 			continue;
 
+=======
+		IGT_TIMEOUT(end_time);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (active && !intel_engine_can_store_dword(engine))
 			continue;
 
@@ -737,6 +784,7 @@ static int __igt_reset_engine(struct intel_gt *gt, bool active)
 		set_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
 		count = 0;
 		do {
+<<<<<<< HEAD
 			struct i915_request *rq = NULL;
 			struct intel_selftest_saved_policy saved;
 			int err2;
@@ -755,6 +803,15 @@ static int __igt_reset_engine(struct intel_gt *gt, bool active)
 					pr_err("[%s] Create hang request failed: %d!\n",
 					       engine->name, err);
 					goto restore;
+=======
+			if (active) {
+				struct i915_request *rq;
+
+				rq = hang_create_request(&h, engine);
+				if (IS_ERR(rq)) {
+					err = PTR_ERR(rq);
+					break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				}
 
 				i915_request_get(rq);
@@ -770,6 +827,7 @@ static int __igt_reset_engine(struct intel_gt *gt, bool active)
 
 					i915_request_put(rq);
 					err = -EIO;
+<<<<<<< HEAD
 					goto restore;
 				}
 			}
@@ -823,6 +881,36 @@ restore:
 				err = err2;
 			if (err)
 				break;
+=======
+					break;
+				}
+
+				i915_request_put(rq);
+			}
+
+			err = intel_engine_reset(engine, NULL);
+			if (err) {
+				pr_err("intel_engine_reset(%s) failed, err:%d\n",
+				       engine->name, err);
+				break;
+			}
+
+			if (i915_reset_count(global) != reset_count) {
+				pr_err("Full GPU reset recorded! (engine reset expected)\n");
+				err = -EINVAL;
+				break;
+			}
+
+			if (i915_reset_engine_count(global, engine) !=
+			    ++reset_engine_count) {
+				pr_err("%s engine reset not recorded!\n",
+				       engine->name);
+				err = -EINVAL;
+				break;
+			}
+
+			count++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} while (time_before(jiffies, end_time));
 		clear_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
 		st_engine_heartbeat_enable(engine);
@@ -833,6 +921,7 @@ restore:
 			break;
 
 		err = igt_flush_test(gt->i915);
+<<<<<<< HEAD
 		if (err) {
 			pr_err("[%s] Flush failed: %d!\n", engine->name, err);
 			break;
@@ -843,6 +932,14 @@ restore:
 		pr_err("GT is wedged!\n");
 		err = -EIO;
 	}
+=======
+		if (err)
+			break;
+	}
+
+	if (intel_gt_is_wedged(gt))
+		err = -EIO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (active)
 		hang_fini(&h);
@@ -879,7 +976,11 @@ static int active_request_put(struct i915_request *rq)
 	if (!rq)
 		return 0;
 
+<<<<<<< HEAD
 	if (i915_request_wait(rq, 0, 10 * HZ) < 0) {
+=======
+	if (i915_request_wait(rq, 0, 5 * HZ) < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		GEM_TRACE("%s timed out waiting for completion of fence %llx:%lld\n",
 			  rq->engine->name,
 			  rq->fence.context,
@@ -909,7 +1010,10 @@ static int active_engine(void *data)
 		ce[count] = intel_context_create(engine);
 		if (IS_ERR(ce[count])) {
 			err = PTR_ERR(ce[count]);
+<<<<<<< HEAD
 			pr_err("[%s] Create context #%ld failed: %d!\n", engine->name, count, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			while (--count)
 				intel_context_put(ce[count]);
 			return err;
@@ -925,18 +1029,26 @@ static int active_engine(void *data)
 		new = intel_context_create_request(ce[idx]);
 		if (IS_ERR(new)) {
 			err = PTR_ERR(new);
+<<<<<<< HEAD
 			pr_err("[%s] Create request #%d failed: %d!\n", engine->name, idx, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		}
 
 		rq[idx] = i915_request_get(new);
 		i915_request_add(new);
 
+<<<<<<< HEAD
 		if (engine->sched_engine->schedule && arg->flags & TEST_PRIORITY) {
+=======
+		if (engine->schedule && arg->flags & TEST_PRIORITY) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			struct i915_sched_attr attr = {
 				.priority =
 					i915_prandom_u32_max_state(512, &prng),
 			};
+<<<<<<< HEAD
 			engine->sched_engine->schedule(rq[idx], &attr);
 		}
 
@@ -945,6 +1057,14 @@ static int active_engine(void *data)
 			pr_err("[%s] Request put failed: %d!\n", engine->name, err);
 			break;
 		}
+=======
+			engine->schedule(rq[idx], &attr);
+		}
+
+		err = active_request_put(old);
+		if (err)
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		cond_resched();
 	}
@@ -952,9 +1072,12 @@ static int active_engine(void *data)
 	for (count = 0; count < ARRAY_SIZE(rq); count++) {
 		int err__ = active_request_put(rq[count]);
 
+<<<<<<< HEAD
 		if (err)
 			pr_err("[%s] Request put #%ld failed: %d!\n", engine->name, count, err);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Keep the first error */
 		if (!err)
 			err = err__;
@@ -995,6 +1118,7 @@ static int __igt_reset_engines(struct intel_gt *gt,
 		struct active_engine threads[I915_NUM_ENGINES] = {};
 		unsigned long device = i915_reset_count(global);
 		unsigned long count = 0, reported;
+<<<<<<< HEAD
 		bool using_guc = intel_engine_uses_guc(engine);
 		IGT_TIMEOUT(end_time);
 
@@ -1002,6 +1126,12 @@ static int __igt_reset_engines(struct intel_gt *gt,
 			if (!intel_engine_can_store_dword(engine))
 				continue;
 		} else if (using_guc)
+=======
+		IGT_TIMEOUT(end_time);
+
+		if (flags & TEST_ACTIVE &&
+		    !intel_engine_can_store_dword(engine))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			continue;
 
 		if (!wait_for_idle(engine)) {
@@ -1031,7 +1161,10 @@ static int __igt_reset_engines(struct intel_gt *gt,
 					  "igt/%s", other->name);
 			if (IS_ERR(tsk)) {
 				err = PTR_ERR(tsk);
+<<<<<<< HEAD
 				pr_err("[%s] Thread spawn failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				goto unwind;
 			}
 
@@ -1041,6 +1174,7 @@ static int __igt_reset_engines(struct intel_gt *gt,
 
 		yield(); /* start all threads before we begin */
 
+<<<<<<< HEAD
 		st_engine_heartbeat_disable_no_pm(engine);
 		set_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
 		do {
@@ -1054,14 +1188,24 @@ static int __igt_reset_engines(struct intel_gt *gt,
 				pr_err("[%s] Modify policy failed: %d!\n", engine->name, err);
 				break;
 			}
+=======
+		st_engine_heartbeat_disable(engine);
+		set_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
+		do {
+			struct i915_request *rq = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			if (flags & TEST_ACTIVE) {
 				rq = hang_create_request(&h, engine);
 				if (IS_ERR(rq)) {
 					err = PTR_ERR(rq);
+<<<<<<< HEAD
 					pr_err("[%s] Create hang request failed: %d!\n",
 					       engine->name, err);
 					goto restore;
+=======
+					break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				}
 
 				i915_request_get(rq);
@@ -1077,6 +1221,7 @@ static int __igt_reset_engines(struct intel_gt *gt,
 
 					i915_request_put(rq);
 					err = -EIO;
+<<<<<<< HEAD
 					goto restore;
 				}
 			} else {
@@ -1099,22 +1244,45 @@ static int __igt_reset_engines(struct intel_gt *gt,
 					pr_err("[%s] Wait for request %lld:%lld [0x%04X] failed: %d!\n",
 					       engine->name, rq->fence.context,
 					       rq->fence.seqno, rq->context->guc_id, err);
+=======
+					break;
+				}
+			}
+
+			err = intel_engine_reset(engine, NULL);
+			if (err) {
+				pr_err("i915_reset_engine(%s:%s): failed, err=%d\n",
+				       engine->name, test_name, err);
+				break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			count++;
 
 			if (rq) {
 				if (rq->fence.error != -EIO) {
+<<<<<<< HEAD
 					pr_err("i915_reset_engine(%s:%s): failed to reset request %lld:%lld [0x%04X]\n",
 					       engine->name, test_name,
 					       rq->fence.context,
 					       rq->fence.seqno, rq->context->guc_id);
+=======
+					pr_err("i915_reset_engine(%s:%s):"
+					       " failed to reset request %llx:%lld\n",
+					       engine->name, test_name,
+					       rq->fence.context,
+					       rq->fence.seqno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					i915_request_put(rq);
 
 					GEM_TRACE_DUMP();
 					intel_gt_set_wedged(gt);
 					err = -EIO;
+<<<<<<< HEAD
 					goto restore;
+=======
+					break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				}
 
 				if (i915_request_wait(rq, 0, HZ / 5) < 0) {
@@ -1133,15 +1301,22 @@ static int __igt_reset_engines(struct intel_gt *gt,
 					GEM_TRACE_DUMP();
 					intel_gt_set_wedged(gt);
 					err = -EIO;
+<<<<<<< HEAD
 					goto restore;
+=======
+					break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				}
 
 				i915_request_put(rq);
 			}
 
+<<<<<<< HEAD
 			if (!(flags & TEST_ACTIVE))
 				intel_engine_pm_put(engine);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (!(flags & TEST_SELF) && !wait_for_idle(engine)) {
 				struct drm_printer p =
 					drm_info_printer(gt->i915->drm.dev);
@@ -1153,6 +1328,7 @@ static int __igt_reset_engines(struct intel_gt *gt,
 						  "%s\n", engine->name);
 
 				err = -EIO;
+<<<<<<< HEAD
 				goto restore;
 			}
 
@@ -1167,10 +1343,18 @@ restore:
 		} while (time_before(jiffies, end_time));
 		clear_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
 		st_engine_heartbeat_enable_no_pm(engine);
+=======
+				break;
+			}
+		} while (time_before(jiffies, end_time));
+		clear_bit(I915_RESET_ENGINE + id, &gt->reset.flags);
+		st_engine_heartbeat_enable(engine);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pr_info("i915_reset_engine(%s:%s): %lu resets\n",
 			engine->name, test_name, count);
 
+<<<<<<< HEAD
 		/* GuC based resets are not logged per engine */
 		if (!using_guc) {
 			reported = i915_reset_engine_count(global, engine);
@@ -1181,6 +1365,15 @@ restore:
 				if (!err)
 					err = -EINVAL;
 			}
+=======
+		reported = i915_reset_engine_count(global, engine);
+		reported -= threads[engine->id].resets;
+		if (reported != count) {
+			pr_err("i915_reset_engine(%s:%s): reset %lu times, but reported %lu\n",
+			       engine->name, test_name, count, reported);
+			if (!err)
+				err = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 unwind:
@@ -1199,6 +1392,7 @@ unwind:
 			}
 			put_task_struct(threads[tmp].task);
 
+<<<<<<< HEAD
 			/* GuC based resets are not logged per engine */
 			if (!using_guc) {
 				if (other->uabi_class != engine->uabi_class &&
@@ -1211,6 +1405,17 @@ unwind:
 					if (!err)
 						err = -EINVAL;
 				}
+=======
+			if (other->uabi_class != engine->uabi_class &&
+			    threads[tmp].resets !=
+			    i915_reset_engine_count(global, other)) {
+				pr_err("Innocent engine %s was reset (count=%ld)\n",
+				       other->name,
+				       i915_reset_engine_count(global, other) -
+				       threads[tmp].resets);
+				if (!err)
+					err = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 
@@ -1225,10 +1430,15 @@ unwind:
 			break;
 
 		err = igt_flush_test(gt->i915);
+<<<<<<< HEAD
 		if (err) {
 			pr_err("[%s] Flush failed: %d!\n", engine->name, err);
 			break;
 		}
+=======
+		if (err)
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (intel_gt_is_wedged(gt))
@@ -1306,15 +1516,23 @@ static int igt_reset_wait(void *arg)
 	igt_global_reset_lock(gt);
 
 	err = hang_init(&h, gt);
+<<<<<<< HEAD
 	if (err) {
 		pr_err("[%s] Hang init failed: %d!\n", engine->name, err);
 		goto unlock;
 	}
+=======
+	if (err)
+		goto unlock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rq = hang_create_request(&h, engine);
 	if (IS_ERR(rq)) {
 		err = PTR_ERR(rq);
+<<<<<<< HEAD
 		pr_err("[%s] Create hang request failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fini;
 	}
 
@@ -1439,15 +1657,23 @@ static int __igt_reset_evict_vma(struct intel_gt *gt,
 	/* Check that we can recover an unbind stuck on a hanging request */
 
 	err = hang_init(&h, gt);
+<<<<<<< HEAD
 	if (err) {
 		pr_err("[%s] Hang init failed: %d!\n", engine->name, err);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	obj = i915_gem_object_create_internal(gt->i915, SZ_1M);
 	if (IS_ERR(obj)) {
 		err = PTR_ERR(obj);
+<<<<<<< HEAD
 		pr_err("[%s] Create object failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fini;
 	}
 
@@ -1462,14 +1688,20 @@ static int __igt_reset_evict_vma(struct intel_gt *gt,
 	arg.vma = i915_vma_instance(obj, vm, NULL);
 	if (IS_ERR(arg.vma)) {
 		err = PTR_ERR(arg.vma);
+<<<<<<< HEAD
 		pr_err("[%s] VMA instance failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out_obj;
 	}
 
 	rq = hang_create_request(&h, engine);
 	if (IS_ERR(rq)) {
 		err = PTR_ERR(rq);
+<<<<<<< HEAD
 		pr_err("[%s] Create hang request failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out_obj;
 	}
 
@@ -1481,7 +1713,10 @@ static int __igt_reset_evict_vma(struct intel_gt *gt,
 	err = i915_vma_pin(arg.vma, 0, 0, pin_flags);
 	if (err) {
 		i915_request_add(rq);
+<<<<<<< HEAD
 		pr_err("[%s] VMA pin failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out_obj;
 	}
 
@@ -1498,6 +1733,7 @@ static int __igt_reset_evict_vma(struct intel_gt *gt,
 	i915_vma_lock(arg.vma);
 	err = i915_request_await_object(rq, arg.vma->obj,
 					flags & EXEC_OBJECT_WRITE);
+<<<<<<< HEAD
 	if (err == 0) {
 		err = i915_vma_move_to_active(arg.vma, rq, flags);
 		if (err)
@@ -1506,6 +1742,10 @@ static int __igt_reset_evict_vma(struct intel_gt *gt,
 		pr_err("[%s] Request await failed: %d!\n", engine->name, err);
 	}
 
+=======
+	if (err == 0)
+		err = i915_vma_move_to_active(arg.vma, rq, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	i915_vma_unlock(arg.vma);
 
 	if (flags & EXEC_OBJECT_NEEDS_FENCE)
@@ -1533,7 +1773,10 @@ static int __igt_reset_evict_vma(struct intel_gt *gt,
 	tsk = kthread_run(fn, &arg, "igt/evict_vma");
 	if (IS_ERR(tsk)) {
 		err = PTR_ERR(tsk);
+<<<<<<< HEAD
 		pr_err("[%s] Thread spawn failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tsk = NULL;
 		goto out_reset;
 	}
@@ -1650,15 +1893,22 @@ static int igt_reset_queue(void *arg)
 		goto unlock;
 
 	for_each_engine(engine, gt, id) {
+<<<<<<< HEAD
 		struct intel_selftest_saved_policy saved;
 		struct i915_request *prev;
 		IGT_TIMEOUT(end_time);
 		unsigned int count;
 		bool using_guc = intel_engine_uses_guc(engine);
+=======
+		struct i915_request *prev;
+		IGT_TIMEOUT(end_time);
+		unsigned int count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (!intel_engine_can_store_dword(engine))
 			continue;
 
+<<<<<<< HEAD
 		if (using_guc) {
 			err = intel_selftest_modify_policy(engine, &saved,
 							   SELFTEST_SCHEDULER_MODIFY_NO_HANGCHECK);
@@ -1673,6 +1923,12 @@ static int igt_reset_queue(void *arg)
 			err = PTR_ERR(prev);
 			pr_err("[%s] Create 'prev' hang request failed: %d!\n", engine->name, err);
 			goto restore;
+=======
+		prev = hang_create_request(&h, engine);
+		if (IS_ERR(prev)) {
+			err = PTR_ERR(prev);
+			goto fini;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		i915_request_get(prev);
@@ -1686,8 +1942,12 @@ static int igt_reset_queue(void *arg)
 			rq = hang_create_request(&h, engine);
 			if (IS_ERR(rq)) {
 				err = PTR_ERR(rq);
+<<<<<<< HEAD
 				pr_err("[%s] Create hang request failed: %d!\n", engine->name, err);
 				goto restore;
+=======
+				goto fini;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			i915_request_get(rq);
@@ -1712,7 +1972,11 @@ static int igt_reset_queue(void *arg)
 
 				GEM_TRACE_DUMP();
 				intel_gt_set_wedged(gt);
+<<<<<<< HEAD
 				goto restore;
+=======
+				goto fini;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			if (!wait_until_running(&h, prev)) {
@@ -1730,7 +1994,11 @@ static int igt_reset_queue(void *arg)
 				intel_gt_set_wedged(gt);
 
 				err = -EIO;
+<<<<<<< HEAD
 				goto restore;
+=======
+				goto fini;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			reset_count = fake_hangcheck(gt, BIT(id));
@@ -1741,7 +2009,11 @@ static int igt_reset_queue(void *arg)
 				i915_request_put(rq);
 				i915_request_put(prev);
 				err = -EINVAL;
+<<<<<<< HEAD
 				goto restore;
+=======
+				goto fini;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			if (rq->fence.error) {
@@ -1750,7 +2022,11 @@ static int igt_reset_queue(void *arg)
 				i915_request_put(rq);
 				i915_request_put(prev);
 				err = -EINVAL;
+<<<<<<< HEAD
 				goto restore;
+=======
+				goto fini;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			if (i915_reset_count(global) == reset_count) {
@@ -1758,7 +2034,11 @@ static int igt_reset_queue(void *arg)
 				i915_request_put(rq);
 				i915_request_put(prev);
 				err = -EINVAL;
+<<<<<<< HEAD
 				goto restore;
+=======
+				goto fini;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			i915_request_put(prev);
@@ -1773,6 +2053,7 @@ static int igt_reset_queue(void *arg)
 
 		i915_request_put(prev);
 
+<<<<<<< HEAD
 restore:
 		if (using_guc) {
 			int err2 = intel_selftest_restore_policy(engine, &saved);
@@ -1791,6 +2072,11 @@ restore:
 			pr_err("[%s] Flush failed: %d!\n", engine->name, err);
 			break;
 		}
+=======
+		err = igt_flush_test(gt->i915);
+		if (err)
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 fini:
@@ -1823,15 +2109,23 @@ static int igt_handle_error(void *arg)
 		return 0;
 
 	err = hang_init(&h, gt);
+<<<<<<< HEAD
 	if (err) {
 		pr_err("[%s] Hang init failed: %d!\n", engine->name, err);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rq = hang_create_request(&h, engine);
 	if (IS_ERR(rq)) {
 		err = PTR_ERR(rq);
+<<<<<<< HEAD
 		pr_err("[%s] Create hang request failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto err_fini;
 	}
 
@@ -1875,7 +2169,11 @@ static int __igt_atomic_reset_engine(struct intel_engine_cs *engine,
 				     const struct igt_atomic_section *p,
 				     const char *mode)
 {
+<<<<<<< HEAD
 	struct tasklet_struct * const t = &engine->sched_engine->tasklet;
+=======
+	struct tasklet_struct * const t = &engine->execlists.tasklet;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	GEM_TRACE("i915_reset_engine(%s:%s) under %s\n",
@@ -1916,15 +2214,23 @@ static int igt_atomic_reset_engine(struct intel_engine_cs *engine,
 		return err;
 
 	err = hang_init(&h, engine->gt);
+<<<<<<< HEAD
 	if (err) {
 		pr_err("[%s] Hang init failed: %d!\n", engine->name, err);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rq = hang_create_request(&h, engine);
 	if (IS_ERR(rq)) {
 		err = PTR_ERR(rq);
+<<<<<<< HEAD
 		pr_err("[%s] Create hang request failed: %d!\n", engine->name, err);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 	}
 

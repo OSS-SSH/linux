@@ -4948,7 +4948,10 @@ static int setup_resources(struct udma_dev *ud)
 						       ud->tchan_cnt),
 			 ud->rchan_cnt - bitmap_weight(ud->rchan_map,
 						       ud->rchan_cnt));
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}

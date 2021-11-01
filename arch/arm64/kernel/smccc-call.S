@@ -32,23 +32,37 @@ SYM_FUNC_END(__arm_smccc_sve_check)
 EXPORT_SYMBOL(__arm_smccc_sve_check)
 
 	.macro SMCCC instr
+<<<<<<< HEAD
 	stp     x29, x30, [sp, #-16]!
 	mov	x29, sp
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 alternative_if ARM64_SVE
 	bl	__arm_smccc_sve_check
 alternative_else_nop_endif
 	\instr	#0
+<<<<<<< HEAD
 	ldr	x4, [sp, #16]
 	stp	x0, x1, [x4, #ARM_SMCCC_RES_X0_OFFS]
 	stp	x2, x3, [x4, #ARM_SMCCC_RES_X2_OFFS]
 	ldr	x4, [sp, #24]
+=======
+	ldr	x4, [sp]
+	stp	x0, x1, [x4, #ARM_SMCCC_RES_X0_OFFS]
+	stp	x2, x3, [x4, #ARM_SMCCC_RES_X2_OFFS]
+	ldr	x4, [sp, #8]
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cbz	x4, 1f /* no quirk structure */
 	ldr	x9, [x4, #ARM_SMCCC_QUIRK_ID_OFFS]
 	cmp	x9, #ARM_SMCCC_QUIRK_QCOM_A6
 	b.ne	1f
 	str	x6, [x4, ARM_SMCCC_QUIRK_STATE_OFFS]
+<<<<<<< HEAD
 1:	ldp     x29, x30, [sp], #16
 	ret
+=======
+1:	ret
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.endm
 
 /*

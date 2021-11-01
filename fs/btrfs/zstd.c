@@ -399,19 +399,31 @@ int zstd_compress_pages(struct list_head *ws, struct address_space *mapping,
 
 	/* map in the first page of input data */
 	in_page = find_get_page(mapping, start >> PAGE_SHIFT);
+<<<<<<< HEAD
 	workspace->in_buf.src = page_address(in_page);
+=======
+	workspace->in_buf.src = kmap(in_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	workspace->in_buf.pos = 0;
 	workspace->in_buf.size = min_t(size_t, len, PAGE_SIZE);
 
 
 	/* Allocate and map in the output buffer */
+<<<<<<< HEAD
 	out_page = alloc_page(GFP_NOFS);
+=======
+	out_page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (out_page == NULL) {
 		ret = -ENOMEM;
 		goto out;
 	}
 	pages[nr_pages++] = out_page;
+<<<<<<< HEAD
 	workspace->out_buf.dst = page_address(out_page);
+=======
+	workspace->out_buf.dst = kmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	workspace->out_buf.pos = 0;
 	workspace->out_buf.size = min_t(size_t, max_out, PAGE_SIZE);
 
@@ -446,18 +458,30 @@ int zstd_compress_pages(struct list_head *ws, struct address_space *mapping,
 		if (workspace->out_buf.pos == workspace->out_buf.size) {
 			tot_out += PAGE_SIZE;
 			max_out -= PAGE_SIZE;
+<<<<<<< HEAD
+=======
+			kunmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (nr_pages == nr_dest_pages) {
 				out_page = NULL;
 				ret = -E2BIG;
 				goto out;
 			}
+<<<<<<< HEAD
 			out_page = alloc_page(GFP_NOFS);
+=======
+			out_page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (out_page == NULL) {
 				ret = -ENOMEM;
 				goto out;
 			}
 			pages[nr_pages++] = out_page;
+<<<<<<< HEAD
 			workspace->out_buf.dst = page_address(out_page);
+=======
+			workspace->out_buf.dst = kmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			workspace->out_buf.pos = 0;
 			workspace->out_buf.size = min_t(size_t, max_out,
 							PAGE_SIZE);
@@ -472,12 +496,20 @@ int zstd_compress_pages(struct list_head *ws, struct address_space *mapping,
 		/* Check if we need more input */
 		if (workspace->in_buf.pos == workspace->in_buf.size) {
 			tot_in += PAGE_SIZE;
+<<<<<<< HEAD
+=======
+			kunmap(in_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			put_page(in_page);
 
 			start += PAGE_SIZE;
 			len -= PAGE_SIZE;
 			in_page = find_get_page(mapping, start >> PAGE_SHIFT);
+<<<<<<< HEAD
 			workspace->in_buf.src = page_address(in_page);
+=======
+			workspace->in_buf.src = kmap(in_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			workspace->in_buf.pos = 0;
 			workspace->in_buf.size = min_t(size_t, len, PAGE_SIZE);
 		}
@@ -504,18 +536,30 @@ int zstd_compress_pages(struct list_head *ws, struct address_space *mapping,
 
 		tot_out += PAGE_SIZE;
 		max_out -= PAGE_SIZE;
+<<<<<<< HEAD
+=======
+		kunmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (nr_pages == nr_dest_pages) {
 			out_page = NULL;
 			ret = -E2BIG;
 			goto out;
 		}
+<<<<<<< HEAD
 		out_page = alloc_page(GFP_NOFS);
+=======
+		out_page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (out_page == NULL) {
 			ret = -ENOMEM;
 			goto out;
 		}
 		pages[nr_pages++] = out_page;
+<<<<<<< HEAD
 		workspace->out_buf.dst = page_address(out_page);
+=======
+		workspace->out_buf.dst = kmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		workspace->out_buf.pos = 0;
 		workspace->out_buf.size = min_t(size_t, max_out, PAGE_SIZE);
 	}
@@ -531,8 +575,17 @@ int zstd_compress_pages(struct list_head *ws, struct address_space *mapping,
 out:
 	*out_pages = nr_pages;
 	/* Cleanup */
+<<<<<<< HEAD
 	if (in_page)
 		put_page(in_page);
+=======
+	if (in_page) {
+		kunmap(in_page);
+		put_page(in_page);
+	}
+	if (out_page)
+		kunmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -540,6 +593,11 @@ int zstd_decompress_bio(struct list_head *ws, struct compressed_bio *cb)
 {
 	struct workspace *workspace = list_entry(ws, struct workspace, list);
 	struct page **pages_in = cb->compressed_pages;
+<<<<<<< HEAD
+=======
+	u64 disk_start = cb->start;
+	struct bio *orig_bio = cb->orig_bio;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size_t srclen = cb->compressed_len;
 	ZSTD_DStream *stream;
 	int ret = 0;
@@ -556,7 +614,11 @@ int zstd_decompress_bio(struct list_head *ws, struct compressed_bio *cb)
 		goto done;
 	}
 
+<<<<<<< HEAD
 	workspace->in_buf.src = page_address(pages_in[page_in_index]);
+=======
+	workspace->in_buf.src = kmap(pages_in[page_in_index]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	workspace->in_buf.pos = 0;
 	workspace->in_buf.size = min_t(size_t, srclen, PAGE_SIZE);
 
@@ -580,7 +642,11 @@ int zstd_decompress_bio(struct list_head *ws, struct compressed_bio *cb)
 		workspace->out_buf.pos = 0;
 
 		ret = btrfs_decompress_buf2page(workspace->out_buf.dst,
+<<<<<<< HEAD
 				total_out - buf_start, cb, buf_start);
+=======
+				buf_start, total_out, disk_start, orig_bio);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret == 0)
 			break;
 
@@ -592,21 +658,36 @@ int zstd_decompress_bio(struct list_head *ws, struct compressed_bio *cb)
 			break;
 
 		if (workspace->in_buf.pos == workspace->in_buf.size) {
+<<<<<<< HEAD
 			page_in_index++;
+=======
+			kunmap(pages_in[page_in_index++]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (page_in_index >= total_pages_in) {
 				workspace->in_buf.src = NULL;
 				ret = -EIO;
 				goto done;
 			}
 			srclen -= PAGE_SIZE;
+<<<<<<< HEAD
 			workspace->in_buf.src = page_address(pages_in[page_in_index]);
+=======
+			workspace->in_buf.src = kmap(pages_in[page_in_index]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			workspace->in_buf.pos = 0;
 			workspace->in_buf.size = min_t(size_t, srclen, PAGE_SIZE);
 		}
 	}
 	ret = 0;
+<<<<<<< HEAD
 	zero_fill_bio(cb->orig_bio);
 done:
+=======
+	zero_fill_bio(orig_bio);
+done:
+	if (workspace->in_buf.src)
+		kunmap(pages_in[page_in_index]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 

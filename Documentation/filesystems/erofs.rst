@@ -84,9 +84,12 @@ cache_strategy=%s      Select a strategy for cached decompression from now on:
                                    It still does in-place I/O decompression
                                    for the rest compressed physical clusters.
 		       ==========  =============================================
+<<<<<<< HEAD
 dax={always,never}     Use direct access (no page cache).  See
                        Documentation/filesystems/dax.rst.
 dax                    A legacy option which is an alias for ``dax=always``.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ===================    =========================================================
 
 On-disk details
@@ -156,14 +159,22 @@ may not. All metadatas can be now observed in two different spaces (views):
 
     Xattrs, extents, data inline are followed by the corresponding inode with
     proper alignment, and they could be optional for different data mappings.
+<<<<<<< HEAD
     _currently_ total 5 data layouts are supported:
+=======
+    _currently_ total 4 valid data mappings are supported:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
     ==  ====================================================================
      0  flat file data without data inline (no extent);
      1  fixed-sized output data compression (with non-compacted indexes);
      2  flat file data with tail packing data inline (no extent);
+<<<<<<< HEAD
      3  fixed-sized output data compression (with compacted indexes, v5.3+);
      4  chunk-based file (v5.15+).
+=======
+     3  fixed-sized output data compression (with compacted indexes, v5.3+).
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     ==  ====================================================================
 
     The size of the optional xattrs is indicated by i_xattr_count in inode
@@ -214,6 +225,7 @@ Note that apart from the offset of the first filename, nameoff0 also indicates
 the total number of directory entries in this block since it is no need to
 introduce another on-disk field at all.
 
+<<<<<<< HEAD
 Chunk-based file
 ----------------
 In order to support chunk-based data deduplication, a new inode data layout has
@@ -225,6 +237,8 @@ details.)
 
 By the way, chunk-based files are all uncompressed for now.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Data compression
 ----------------
 EROFS implements LZ4 fixed-sized output compression which generates fixed-sized

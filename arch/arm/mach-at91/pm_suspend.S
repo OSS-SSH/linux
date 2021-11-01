@@ -22,6 +22,7 @@ tmp3	.req	r6
 
 /*
  * Wait until master clock is ready (after switching master clock source)
+<<<<<<< HEAD
  *
  * @r_mckid:	register holding master clock identifier
  *
@@ -39,40 +40,69 @@ tmp3	.req	r6
 	and	r8, r7
 	cmp	r8, r7
 	bne	2b
+=======
+ */
+	.macro wait_mckrdy
+1:	ldr	tmp1, [pmc, #AT91_PMC_SR]
+	tst	tmp1, #AT91_PMC_MCKRDY
+	beq	1b
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.endm
 
 /*
  * Wait until master oscillator has stabilized.
+<<<<<<< HEAD
  *
  * Side effects: overwrites r7
  */
 	.macro wait_moscrdy
 1:	ldr	r7, [pmc, #AT91_PMC_SR]
 	tst	r7, #AT91_PMC_MOSCS
+=======
+ */
+	.macro wait_moscrdy
+1:	ldr	tmp1, [pmc, #AT91_PMC_SR]
+	tst	tmp1, #AT91_PMC_MOSCS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	beq	1b
 	.endm
 
 /*
  * Wait for main oscillator selection is done
+<<<<<<< HEAD
  *
  * Side effects: overwrites r7
  */
 	.macro wait_moscsels
 1:	ldr	r7, [pmc, #AT91_PMC_SR]
 	tst	r7, #AT91_PMC_MOSCSELS
+=======
+ */
+	.macro wait_moscsels
+1:	ldr	tmp1, [pmc, #AT91_PMC_SR]
+	tst	tmp1, #AT91_PMC_MOSCSELS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	beq	1b
 	.endm
 
 /*
  * Put the processor to enter the idle state
+<<<<<<< HEAD
  *
  * Side effects: overwrites r7
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 	.macro at91_cpu_idle
 
 #if defined(CONFIG_CPU_V7)
+<<<<<<< HEAD
 	mov	r7, #AT91_PMC_PCK
 	str	r7, [pmc, #AT91_PMC_SCDR]
+=======
+	mov	tmp1, #AT91_PMC_PCK
+	str	tmp1, [pmc, #AT91_PMC_SCDR]
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dsb
 
@@ -83,6 +113,7 @@ tmp3	.req	r6
 
 	.endm
 
+<<<<<<< HEAD
 /**
  * Set state for 2.5V low power regulator
  * @ena: 0 - disable regulator
@@ -112,10 +143,13 @@ lp_done_\ena:
 #endif
 	.endm
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.text
 
 	.arm
 
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_SAMA7
 /**
  * Enable self-refresh
@@ -452,6 +486,100 @@ sdramc_exit_sf:
 sr_dis_exit:
 .endm
 #endif
+=======
+/*
+ * void at91_suspend_sram_fn(struct at91_pm_data*)
+ * @input param:
+ * 	@r0: base address of struct at91_pm_data
+ */
+/* at91_pm_suspend_in_sram must be 8-byte aligned per the requirements of fncpy() */
+	.align 3
+ENTRY(at91_pm_suspend_in_sram)
+	/* Save registers on stack */
+	stmfd	sp!, {r4 - r12, lr}
+
+	/* Drain write buffer */
+	mov	tmp1, #0
+	mcr	p15, 0, tmp1, c7, c10, 4
+
+	ldr	tmp1, [r0, #PM_DATA_PMC]
+	str	tmp1, .pmc_base
+	ldr	tmp1, [r0, #PM_DATA_RAMC0]
+	str	tmp1, .sramc_base
+	ldr	tmp1, [r0, #PM_DATA_RAMC1]
+	str	tmp1, .sramc1_base
+	ldr	tmp1, [r0, #PM_DATA_MEMCTRL]
+	str	tmp1, .memtype
+	ldr	tmp1, [r0, #PM_DATA_MODE]
+	str	tmp1, .pm_mode
+	ldr	tmp1, [r0, #PM_DATA_PMC_MCKR_OFFSET]
+	str	tmp1, .mckr_offset
+	ldr	tmp1, [r0, #PM_DATA_PMC_VERSION]
+	str	tmp1, .pmc_version
+	/* Both ldrne below are here to preload their address in the TLB */
+	ldr	tmp1, [r0, #PM_DATA_SHDWC]
+	str	tmp1, .shdwc
+	cmp	tmp1, #0
+	ldrne	tmp2, [tmp1, #0]
+	ldr	tmp1, [r0, #PM_DATA_SFRBU]
+	str	tmp1, .sfrbu
+	cmp	tmp1, #0
+	ldrne	tmp2, [tmp1, #0x10]
+
+	/* Active the self-refresh mode */
+	mov	r0, #SRAMC_SELF_FRESH_ACTIVE
+	bl	at91_sramc_self_refresh
+
+	ldr	r0, .pm_mode
+	cmp	r0, #AT91_PM_STANDBY
+	beq	standby
+	cmp	r0, #AT91_PM_BACKUP
+	beq	backup_mode
+
+	bl	at91_ulp_mode
+	b	exit_suspend
+
+standby:
+	/* Wait for interrupt */
+	ldr	pmc, .pmc_base
+	at91_cpu_idle
+	b	exit_suspend
+
+backup_mode:
+	bl	at91_backup_mode
+	b	exit_suspend
+
+exit_suspend:
+	/* Exit the self-refresh mode */
+	mov	r0, #SRAMC_SELF_FRESH_EXIT
+	bl	at91_sramc_self_refresh
+
+	/* Restore registers, and return */
+	ldmfd	sp!, {r4 - r12, pc}
+ENDPROC(at91_pm_suspend_in_sram)
+
+ENTRY(at91_backup_mode)
+	/* Switch the master clock source to slow clock. */
+	ldr	pmc, .pmc_base
+	ldr	tmp2, .mckr_offset
+	ldr	tmp1, [pmc, tmp2]
+	bic	tmp1, tmp1, #AT91_PMC_CSS
+	str	tmp1, [pmc, tmp2]
+
+	wait_mckrdy
+
+	/*BUMEN*/
+	ldr	r0, .sfrbu
+	mov	tmp1, #0x1
+	str	tmp1, [r0, #0x10]
+
+	/* Shutdown */
+	ldr	r0, .shdwc
+	mov	tmp1, #0xA5000000
+	add	tmp1, tmp1, #0x1
+	str	tmp1, [r0, #0]
+ENDPROC(at91_backup_mode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 .macro at91_pm_ulp0_mode
 	ldr	pmc, .pmc_base
@@ -467,9 +595,13 @@ sr_dis_exit:
 	bic	tmp1, tmp1, #AT91_PMC_PRES
 	orr	tmp1, tmp1, #AT91_PMC_PRES_64
 	str	tmp1, [pmc, tmp3]
+<<<<<<< HEAD
 
 	mov	tmp3, #0
 	wait_mckrdy tmp3
+=======
+	wait_mckrdy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	b	1f
 
 0:
@@ -505,6 +637,7 @@ sr_dis_exit:
 	bne	5f
 
 	/* Set lowest prescaler for fast resume. */
+<<<<<<< HEAD
 	ldr	tmp3, .mckr_offset
 	ldr	tmp1, [pmc, tmp3]
 	bic	tmp1, tmp1, #AT91_PMC_PRES
@@ -512,6 +645,12 @@ sr_dis_exit:
 
 	mov	tmp3, #0
 	wait_mckrdy tmp3
+=======
+	ldr	tmp1, [pmc, tmp3]
+	bic	tmp1, tmp1, #AT91_PMC_PRES
+	str	tmp1, [pmc, tmp3]
+	wait_mckrdy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	b	6f
 
 5:	/* Restore RC oscillator state */
@@ -548,7 +687,10 @@ sr_dis_exit:
 .macro at91_pm_ulp1_mode
 	ldr	pmc, .pmc_base
 	ldr	tmp2, .mckr_offset
+<<<<<<< HEAD
 	mov	tmp3, #0
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Save RC oscillator state and check if it is enabled. */
 	ldr	tmp1, [pmc, #AT91_PMC_SR]
@@ -590,7 +732,11 @@ sr_dis_exit:
 	orr	tmp1, tmp1, #AT91_PMC_CSS_MAIN
 	str	tmp1, [pmc, tmp2]
 
+<<<<<<< HEAD
 	wait_mckrdy tmp3
+=======
+	wait_mckrdy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Enter the ULP1 mode by set WAITMODE bit in CKGR_MOR */
 	ldr	tmp1, [pmc, #AT91_CKGR_MOR]
@@ -603,7 +749,11 @@ sr_dis_exit:
 	nop
 	nop
 
+<<<<<<< HEAD
 	wait_mckrdy tmp3
+=======
+	wait_mckrdy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Enable the crystal oscillator */
 	ldr	tmp1, [pmc, #AT91_CKGR_MOR]
@@ -619,7 +769,11 @@ sr_dis_exit:
 	bic	tmp1, tmp1, #AT91_PMC_CSS
 	str	tmp1, [pmc, tmp2]
 
+<<<<<<< HEAD
 	wait_mckrdy tmp3
+=======
+	wait_mckrdy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Switch main clock source to crystal oscillator */
 	ldr	tmp1, [pmc, #AT91_CKGR_MOR]
@@ -636,7 +790,11 @@ sr_dis_exit:
 	orr	tmp1, tmp1, #AT91_PMC_CSS_MAIN
 	str	tmp1, [pmc, tmp2]
 
+<<<<<<< HEAD
 	wait_mckrdy tmp3
+=======
+	wait_mckrdy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Restore RC oscillator state */
 	ldr	tmp1, .saved_osc_status
@@ -664,7 +822,11 @@ sr_dis_exit:
 	cmp	tmp1, #AT91_PMC_V1
 	beq	1f
 
+<<<<<<< HEAD
 #ifdef CONFIG_HAVE_AT91_SAM9X60_PLL
+=======
+#ifdef CONFIG_SOC_SAM9X60
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Save PLLA settings. */
 	ldr	tmp2, [pmc, #AT91_PMC_PLL_UPDT]
 	bic	tmp2, tmp2, #AT91_PMC_PLL_UPDT_ID
@@ -731,7 +893,11 @@ sr_dis_exit:
 	cmp	tmp3, #AT91_PMC_V1
 	beq	4f
 
+<<<<<<< HEAD
 #ifdef CONFIG_HAVE_AT91_SAM9X60_PLL
+=======
+#ifdef CONFIG_SOC_SAM9X60
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* step 1. */
 	ldr	tmp1, [pmc, #AT91_PMC_PLL_UPDT]
 	bic	tmp1, tmp1, #AT91_PMC_PLL_UPDT_ID
@@ -794,6 +960,7 @@ sr_dis_exit:
 2:
 .endm
 
+<<<<<<< HEAD
 /**
  * at91_mckx_ps_enable:	save MCK1..4 settings and switch it to main clock
  *
@@ -910,6 +1077,9 @@ r_done:
 .macro at91_ulp_mode
 	at91_mckx_ps_enable
 
+=======
+ENTRY(at91_ulp_mode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ldr	pmc, .pmc_base
 	ldr	tmp2, .mckr_offset
 	ldr	tmp3, .pm_mode
@@ -930,6 +1100,7 @@ r_done:
 save_mck:
 	str	tmp1, [pmc, tmp2]
 
+<<<<<<< HEAD
 	mov	tmp3, #0
 	wait_mckrdy tmp3
 
@@ -939,6 +1110,12 @@ save_mck:
 	at91_2_5V_reg_set_low_power 1
 
 	ldr	tmp3, .pm_mode
+=======
+	wait_mckrdy
+
+	at91_plla_disable
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cmp	tmp3, #AT91_PM_ULP1
 	beq	ulp1_mode
 
@@ -950,9 +1127,12 @@ ulp1_mode:
 	b	ulp_exit
 
 ulp_exit:
+<<<<<<< HEAD
 	/* Disable low power mode for 2.5V regulator. */
 	at91_2_5V_reg_set_low_power 0
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ldr	pmc, .pmc_base
 
 	at91_plla_enable
@@ -964,6 +1144,7 @@ ulp_exit:
 	ldr	tmp2, .saved_mckr
 	str	tmp2, [pmc, tmp1]
 
+<<<<<<< HEAD
 	mov	tmp3, #0
 	wait_mckrdy tmp3
 
@@ -1092,6 +1273,137 @@ exit_suspend:
 	/* Restore registers, and return */
 	ldmfd	sp!, {r4 - r12, pc}
 ENDPROC(at91_pm_suspend_in_sram)
+=======
+	wait_mckrdy
+
+	mov	pc, lr
+ENDPROC(at91_ulp_mode)
+
+/*
+ * void at91_sramc_self_refresh(unsigned int is_active)
+ *
+ * @input param:
+ *	@r0: 1 - active self-refresh mode
+ *	     0 - exit self-refresh mode
+ * register usage:
+ * 	@r1: memory type
+ *	@r2: base address of the sram controller
+ */
+
+ENTRY(at91_sramc_self_refresh)
+	ldr	r1, .memtype
+	ldr	r2, .sramc_base
+
+	cmp	r1, #AT91_MEMCTRL_MC
+	bne	ddrc_sf
+
+	/*
+	 * at91rm9200 Memory controller
+	 */
+
+	 /*
+	  * For exiting the self-refresh mode, do nothing,
+	  * automatically exit the self-refresh mode.
+	  */
+	tst	r0, #SRAMC_SELF_FRESH_ACTIVE
+	beq	exit_sramc_sf
+
+	/* Active SDRAM self-refresh mode */
+	mov	r3, #1
+	str	r3, [r2, #AT91_MC_SDRAMC_SRR]
+	b	exit_sramc_sf
+
+ddrc_sf:
+	cmp	r1, #AT91_MEMCTRL_DDRSDR
+	bne	sdramc_sf
+
+	/*
+	 * DDR Memory controller
+	 */
+	tst	r0, #SRAMC_SELF_FRESH_ACTIVE
+	beq	ddrc_exit_sf
+
+	/* LPDDR1 --> force DDR2 mode during self-refresh */
+	ldr	r3, [r2, #AT91_DDRSDRC_MDR]
+	str	r3, .saved_sam9_mdr
+	bic	r3, r3, #~AT91_DDRSDRC_MD
+	cmp	r3, #AT91_DDRSDRC_MD_LOW_POWER_DDR
+	ldreq	r3, [r2, #AT91_DDRSDRC_MDR]
+	biceq	r3, r3, #AT91_DDRSDRC_MD
+	orreq	r3, r3, #AT91_DDRSDRC_MD_DDR2
+	streq	r3, [r2, #AT91_DDRSDRC_MDR]
+
+	/* Active DDRC self-refresh mode */
+	ldr	r3, [r2, #AT91_DDRSDRC_LPR]
+	str	r3, .saved_sam9_lpr
+	bic	r3, r3, #AT91_DDRSDRC_LPCB
+	orr	r3, r3, #AT91_DDRSDRC_LPCB_SELF_REFRESH
+	str	r3, [r2, #AT91_DDRSDRC_LPR]
+
+	/* If using the 2nd ddr controller */
+	ldr	r2, .sramc1_base
+	cmp	r2, #0
+	beq	no_2nd_ddrc
+
+	ldr	r3, [r2, #AT91_DDRSDRC_MDR]
+	str	r3, .saved_sam9_mdr1
+	bic	r3, r3, #~AT91_DDRSDRC_MD
+	cmp	r3, #AT91_DDRSDRC_MD_LOW_POWER_DDR
+	ldreq	r3, [r2, #AT91_DDRSDRC_MDR]
+	biceq	r3, r3, #AT91_DDRSDRC_MD
+	orreq	r3, r3, #AT91_DDRSDRC_MD_DDR2
+	streq	r3, [r2, #AT91_DDRSDRC_MDR]
+
+	/* Active DDRC self-refresh mode */
+	ldr	r3, [r2, #AT91_DDRSDRC_LPR]
+	str	r3, .saved_sam9_lpr1
+	bic	r3, r3, #AT91_DDRSDRC_LPCB
+	orr	r3, r3, #AT91_DDRSDRC_LPCB_SELF_REFRESH
+	str	r3, [r2, #AT91_DDRSDRC_LPR]
+
+no_2nd_ddrc:
+	b	exit_sramc_sf
+
+ddrc_exit_sf:
+	/* Restore MDR in case of LPDDR1 */
+	ldr	r3, .saved_sam9_mdr
+	str	r3, [r2, #AT91_DDRSDRC_MDR]
+	/* Restore LPR on AT91 with DDRAM */
+	ldr	r3, .saved_sam9_lpr
+	str	r3, [r2, #AT91_DDRSDRC_LPR]
+
+	/* If using the 2nd ddr controller */
+	ldr	r2, .sramc1_base
+	cmp	r2, #0
+	ldrne	r3, .saved_sam9_mdr1
+	strne	r3, [r2, #AT91_DDRSDRC_MDR]
+	ldrne	r3, .saved_sam9_lpr1
+	strne	r3, [r2, #AT91_DDRSDRC_LPR]
+
+	b	exit_sramc_sf
+
+	/*
+	 * SDRAMC Memory controller
+	 */
+sdramc_sf:
+	tst	r0, #SRAMC_SELF_FRESH_ACTIVE
+	beq	sdramc_exit_sf
+
+	/* Active SDRAMC self-refresh mode */
+	ldr	r3, [r2, #AT91_SDRAMC_LPR]
+	str	r3, .saved_sam9_lpr
+	bic	r3, r3, #AT91_SDRAMC_LPCB
+	orr	r3, r3, #AT91_SDRAMC_LPCB_SELF_REFRESH
+	str	r3, [r2, #AT91_SDRAMC_LPR]
+
+sdramc_exit_sf:
+	ldr	r3, .saved_sam9_lpr
+	str	r3, [r2, #AT91_SDRAMC_LPR]
+
+exit_sramc_sf:
+	mov	pc, lr
+ENDPROC(at91_sramc_self_refresh)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 .pmc_base:
 	.word 0
@@ -1099,8 +1411,11 @@ ENDPROC(at91_pm_suspend_in_sram)
 	.word 0
 .sramc1_base:
 	.word 0
+<<<<<<< HEAD
 .sramc_phy_base:
 	.word 0
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 .shdwc:
 	.word 0
 .sfrbu:
@@ -1127,6 +1442,7 @@ ENDPROC(at91_pm_suspend_in_sram)
 	.word 0
 .saved_osc_status:
 	.word 0
+<<<<<<< HEAD
 #ifdef CONFIG_SOC_SAMA7
 .saved_mck1:
 	.word 0
@@ -1137,6 +1453,8 @@ ENDPROC(at91_pm_suspend_in_sram)
 .saved_mck4:
 	.word 0
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ENTRY(at91_pm_suspend_in_sram_sz)
 	.word .-at91_pm_suspend_in_sram

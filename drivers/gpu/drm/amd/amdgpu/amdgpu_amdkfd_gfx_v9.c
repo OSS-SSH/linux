@@ -42,8 +42,12 @@
 enum hqd_dequeue_request_type {
 	NO_ACTION = 0,
 	DRAIN_PIPE,
+<<<<<<< HEAD
 	RESET_WAVES,
 	SAVE_WAVES
+=======
+	RESET_WAVES
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline struct amdgpu_device *get_amdgpu_device(struct kgd_dev *kgd)
@@ -567,9 +571,12 @@ int kgd_gfx_v9_hqd_destroy(struct kgd_dev *kgd, void *mqd,
 	case KFD_PREEMPT_TYPE_WAVEFRONT_RESET:
 		type = RESET_WAVES;
 		break;
+<<<<<<< HEAD
 	case KFD_PREEMPT_TYPE_WAVEFRONT_SAVE:
 		type = SAVE_WAVES;
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		type = DRAIN_PIPE;
 		break;
@@ -882,6 +889,7 @@ void kgd_gfx_v9_get_cu_occupancy(struct kgd_dev *kgd, int pasid,
 				adev->gfx.cu_info.max_waves_per_simd;
 }
 
+<<<<<<< HEAD
 void kgd_gfx_v9_program_trap_handler_settings(struct kgd_dev *kgd,
                         uint32_t vmid, uint64_t tba_addr, uint64_t tma_addr)
 {
@@ -908,6 +916,8 @@ void kgd_gfx_v9_program_trap_handler_settings(struct kgd_dev *kgd,
 	unlock_srbm(kgd);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 const struct kfd2kgd_calls gfx_v9_kfd2kgd = {
 	.program_sh_mem_settings = kgd_gfx_v9_program_sh_mem_settings,
 	.set_pasid_vmid_mapping = kgd_gfx_v9_set_pasid_vmid_mapping,
@@ -929,5 +939,8 @@ const struct kfd2kgd_calls gfx_v9_kfd2kgd = {
 			kgd_gfx_v9_get_atc_vmid_pasid_mapping_info,
 	.set_vm_context_page_table_base = kgd_gfx_v9_set_vm_context_page_table_base,
 	.get_cu_occupancy = kgd_gfx_v9_get_cu_occupancy,
+<<<<<<< HEAD
 	.program_trap_handler_settings = kgd_gfx_v9_program_trap_handler_settings,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

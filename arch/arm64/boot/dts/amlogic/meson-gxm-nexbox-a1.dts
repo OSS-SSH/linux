@@ -10,7 +10,10 @@
 /dts-v1/;
 
 #include "meson-gxm.dtsi"
+<<<<<<< HEAD
 #include <dt-bindings/sound/meson-aiu.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 / {
 	compatible = "nexbox,a1", "amlogic,s912", "amlogic,meson-gxm";
@@ -25,6 +28,7 @@
 		stdout-path = "serial0:115200n8";
 	};
 
+<<<<<<< HEAD
 	spdif_dit: audio-codec-0 {
 		#sound-dai-cells = <0>;
 		compatible = "linux,spdif-dit";
@@ -32,6 +36,8 @@
 		sound-name-prefix = "DIT";
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memory@0 {
 		device_type = "memory";
 		reg = <0x0 0x0 0x0 0x80000000>;
@@ -83,6 +89,7 @@
 			};
 		};
 	};
+<<<<<<< HEAD
 
 	sound {
 		compatible = "amlogic,gx-sound-card";
@@ -136,6 +143,8 @@
 	status = "okay";
 	pinctrl-0 = <&spdif_out_h_pins>;
 	pinctrl-names = "default";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &cec_AO {

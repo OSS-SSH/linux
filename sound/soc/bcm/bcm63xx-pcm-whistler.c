@@ -46,6 +46,13 @@ static int bcm63xx_pcm_hw_params(struct snd_soc_component *component,
 {
 	struct i2s_dma_desc *dma_desc;
 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
+<<<<<<< HEAD
+=======
+	struct snd_pcm_runtime *runtime = substream->runtime;
+
+	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
+	runtime->dma_bytes = params_buffer_bytes(params);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dma_desc = kzalloc(sizeof(*dma_desc), GFP_NOWAIT);
 	if (!dma_desc)
@@ -64,6 +71,10 @@ static int bcm63xx_pcm_hw_free(struct snd_soc_component *component,
 
 	dma_desc = snd_soc_dai_get_dma_data(asoc_rtd_to_cpu(rtd, 0), substream);
 	kfree(dma_desc);
+<<<<<<< HEAD
+=======
+	snd_pcm_set_runtime_buffer(substream, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -185,6 +196,22 @@ bcm63xx_pcm_pointer(struct snd_soc_component *component,
 	return x == substream->runtime->buffer_size ? 0 : x;
 }
 
+<<<<<<< HEAD
+=======
+static int bcm63xx_pcm_mmap(struct snd_soc_component *component,
+				struct snd_pcm_substream *substream,
+				struct vm_area_struct *vma)
+{
+	struct snd_pcm_runtime *runtime = substream->runtime;
+
+	return  dma_mmap_wc(substream->pcm->card->dev, vma,
+			    runtime->dma_area,
+			    runtime->dma_addr,
+			    runtime->dma_bytes);
+
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int bcm63xx_pcm_open(struct snd_soc_component *component,
 			struct snd_pcm_substream *substream)
 {
@@ -344,6 +371,28 @@ static irqreturn_t i2s_dma_isr(int irq, void *bcm_i2s_priv)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
+=======
+static int bcm63xx_pcm_preallocate_dma_buffer(struct snd_pcm *pcm, int stream)
+{
+	struct snd_pcm_substream *substream = pcm->streams[stream].substream;
+	struct snd_dma_buffer *buf = &substream->dma_buffer;
+	size_t size = bcm63xx_pcm_hardware.buffer_bytes_max;
+
+	buf->dev.type = SNDRV_DMA_TYPE_DEV;
+	buf->dev.dev = pcm->card->dev;
+	buf->private_data = NULL;
+
+	buf->area = dma_alloc_wc(pcm->card->dev,
+				 size, &buf->addr,
+				 GFP_KERNEL);
+	if (!buf->area)
+		return -ENOMEM;
+	buf->bytes = size;
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int bcm63xx_soc_pcm_new(struct snd_soc_component *component,
 		struct snd_soc_pcm_runtime *rtd)
 {
@@ -357,6 +406,7 @@ static int bcm63xx_soc_pcm_new(struct snd_soc_component *component,
 
 	ret = dma_coerce_mask_and_coherent(pcm->card->dev, DMA_BIT_MASK(32));
 	if (ret)
+<<<<<<< HEAD
 		return ret;
 
 	if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream)
@@ -369,6 +419,51 @@ static int bcm63xx_soc_pcm_new(struct snd_soc_component *component,
 	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV_WC,
 					    pcm->card->dev,
 					    bcm63xx_pcm_hardware.buffer_bytes_max);
+=======
+		goto out;
+
+	if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream) {
+		ret = bcm63xx_pcm_preallocate_dma_buffer(pcm,
+						 SNDRV_PCM_STREAM_PLAYBACK);
+		if (ret)
+			goto out;
+
+		i2s_priv->play_substream =
+			pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream;
+	}
+
+	if (pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream) {
+		ret = bcm63xx_pcm_preallocate_dma_buffer(pcm,
+					SNDRV_PCM_STREAM_CAPTURE);
+		if (ret)
+			goto out;
+		i2s_priv->capture_substream =
+			pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream;
+	}
+
+out:
+	return ret;
+}
+
+static void bcm63xx_pcm_free_dma_buffers(struct snd_soc_component *component,
+			 struct snd_pcm *pcm)
+{
+	int stream;
+	struct snd_dma_buffer *buf;
+	struct snd_pcm_substream *substream;
+
+	for (stream = 0; stream < 2; stream++) {
+		substream = pcm->streams[stream].substream;
+		if (!substream)
+			continue;
+		buf = &substream->dma_buffer;
+		if (!buf->area)
+			continue;
+		dma_free_wc(pcm->card->dev, buf->bytes,
+					buf->area, buf->addr);
+		buf->area = NULL;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct snd_soc_component_driver bcm63xx_soc_platform = {
@@ -379,7 +474,13 @@ static const struct snd_soc_component_driver bcm63xx_soc_platform = {
 	.prepare = bcm63xx_pcm_prepare,
 	.trigger = bcm63xx_pcm_trigger,
 	.pointer = bcm63xx_pcm_pointer,
+<<<<<<< HEAD
 	.pcm_construct = bcm63xx_soc_pcm_new,
+=======
+	.mmap = bcm63xx_pcm_mmap,
+	.pcm_construct = bcm63xx_soc_pcm_new,
+	.pcm_destruct = bcm63xx_pcm_free_dma_buffers,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 int bcm63xx_soc_platform_probe(struct platform_device *pdev,

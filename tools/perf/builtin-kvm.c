@@ -1093,7 +1093,11 @@ static int read_events(struct perf_kvm_stat *kvm)
 	};
 
 	kvm->tool = eops;
+<<<<<<< HEAD
 	kvm->session = perf_session__new(&file, &kvm->tool);
+=======
+	kvm->session = perf_session__new(&file, false, &kvm->tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(kvm->session)) {
 		pr_err("Initializing perf session failed\n");
 		return PTR_ERR(kvm->session);
@@ -1447,7 +1451,11 @@ static int kvm_events_live(struct perf_kvm_stat *kvm,
 	/*
 	 * perf session
 	 */
+<<<<<<< HEAD
 	kvm->session = perf_session__new(&data, &kvm->tool);
+=======
+	kvm->session = perf_session__new(&data, false, &kvm->tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(kvm->session)) {
 		err = PTR_ERR(kvm->session);
 		goto out;

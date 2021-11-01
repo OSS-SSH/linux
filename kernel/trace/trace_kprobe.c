@@ -80,6 +80,13 @@ static struct trace_kprobe *to_trace_kprobe(struct dyn_event *ev)
 	for_each_dyn_event(dpos)		\
 		if (is_trace_kprobe(dpos) && (pos = to_trace_kprobe(dpos)))
 
+<<<<<<< HEAD
+=======
+#define SIZEOF_TRACE_KPROBE(n)				\
+	(offsetof(struct trace_kprobe, tp.args) +	\
+	(sizeof(struct probe_arg) * (n)))
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static nokprobe_inline bool trace_kprobe_is_return(struct trace_kprobe *tk)
 {
 	return tk->rp.handler != NULL;
@@ -261,7 +268,11 @@ static struct trace_kprobe *alloc_trace_kprobe(const char *group,
 	struct trace_kprobe *tk;
 	int ret = -ENOMEM;
 
+<<<<<<< HEAD
 	tk = kzalloc(struct_size(tk, tp.args, nargs), GFP_KERNEL);
+=======
+	tk = kzalloc(SIZEOF_TRACE_KPROBE(nargs), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!tk)
 		return ERR_PTR(ret);
 
@@ -539,10 +550,13 @@ static int unregister_trace_kprobe(struct trace_kprobe *tk)
 	if (trace_probe_is_enabled(&tk->tp))
 		return -EBUSY;
 
+<<<<<<< HEAD
 	/* If there's a reference to the dynamic event */
 	if (trace_event_dyn_busy(trace_probe_event_call(&tk->tp)))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Will fail if probe is being used by ftrace or perf */
 	if (unregister_kprobe_event(tk))
 		return -EBUSY;
@@ -618,7 +632,11 @@ static int append_trace_kprobe(struct trace_kprobe *tk, struct trace_kprobe *to)
 	if (ret)
 		trace_probe_unlink(&tk->tp);
 	else
+<<<<<<< HEAD
 		dyn_event_add(&tk->devent, trace_probe_event_call(&tk->tp));
+=======
+		dyn_event_add(&tk->devent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -647,11 +665,15 @@ static int register_trace_kprobe(struct trace_kprobe *tk)
 	/* Register new event */
 	ret = register_kprobe_event(tk);
 	if (ret) {
+<<<<<<< HEAD
 		if (ret == -EEXIST) {
 			trace_probe_log_set_index(0);
 			trace_probe_log_err(0, EVENT_EXIST);
 		} else
 			pr_warn("Failed to register probe event(%d)\n", ret);
+=======
+		pr_warn("Failed to register probe event(%d)\n", ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto end;
 	}
 
@@ -665,7 +687,11 @@ static int register_trace_kprobe(struct trace_kprobe *tk)
 	if (ret < 0)
 		unregister_kprobe_event(tk);
 	else
+<<<<<<< HEAD
 		dyn_event_add(&tk->devent, trace_probe_event_call(&tk->tp));
+=======
+		dyn_event_add(&tk->devent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 end:
 	mutex_unlock(&event_mutex);
@@ -707,6 +733,17 @@ static struct notifier_block trace_kprobe_module_nb = {
 	.priority = 1	/* Invoked after kprobe module callback */
 };
 
+<<<<<<< HEAD
+=======
+/* Convert certain expected symbols into '_' when generating event names */
+static inline void sanitize_event_name(char *name)
+{
+	while (*name++ != '\0')
+		if (*name == ':' || *name == '.')
+			*name = '_';
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __trace_kprobe_create(int argc, const char *argv[])
 {
 	/*
@@ -738,7 +775,10 @@ static int __trace_kprobe_create(int argc, const char *argv[])
 	bool is_return = false;
 	char *symbol = NULL, *tmp = NULL;
 	const char *event = NULL, *group = KPROBE_EVENT_SYSTEM;
+<<<<<<< HEAD
 	enum probe_print_type ptype;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int maxactive = 0;
 	long offset = 0;
 	void *addr = NULL;
@@ -866,14 +906,30 @@ static int __trace_kprobe_create(int argc, const char *argv[])
 
 	/* parse arguments */
 	for (i = 0; i < argc && i < MAX_TRACE_ARGS; i++) {
+<<<<<<< HEAD
 		trace_probe_log_set_index(i + 2);
 		ret = traceprobe_parse_probe_arg(&tk->tp, i, argv[i], flags);
+=======
+		tmp = kstrdup(argv[i], GFP_KERNEL);
+		if (!tmp) {
+			ret = -ENOMEM;
+			goto error;
+		}
+
+		trace_probe_log_set_index(i + 2);
+		ret = traceprobe_parse_probe_arg(&tk->tp, i, tmp, flags);
+		kfree(tmp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			goto error;	/* This can be -ENOMEM */
 	}
 
+<<<<<<< HEAD
 	ptype = is_return ? PROBE_PRINT_RETURN : PROBE_PRINT_NORMAL;
 	ret = traceprobe_set_print_fmt(&tk->tp, ptype);
+=======
+	ret = traceprobe_set_print_fmt(&tk->tp, is_return);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		goto error;
 
@@ -1321,10 +1377,16 @@ probe_mem_read(void *dest, void *src, size_t size)
 
 /* Note that we don't verify it, since the code does not come from user space */
 static int
+<<<<<<< HEAD
 process_fetch_insn(struct fetch_insn *code, void *rec, void *dest,
 		   void *base)
 {
 	struct pt_regs *regs = rec;
+=======
+process_fetch_insn(struct fetch_insn *code, struct pt_regs *regs, void *dest,
+		   void *base)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long val;
 
 retry:
@@ -1798,7 +1860,10 @@ struct trace_event_call *
 create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
 			  bool is_return)
 {
+<<<<<<< HEAD
 	enum probe_print_type ptype;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct trace_kprobe *tk;
 	int ret;
 	char *event;
@@ -1822,9 +1887,13 @@ create_local_trace_kprobe(char *func, void *addr, unsigned long offs,
 
 	init_trace_event_call(tk);
 
+<<<<<<< HEAD
 	ptype = trace_kprobe_is_return(tk) ?
 		PROBE_PRINT_RETURN : PROBE_PRINT_NORMAL;
 	if (traceprobe_set_print_fmt(&tk->tp, ptype) < 0) {
+=======
+	if (traceprobe_set_print_fmt(&tk->tp, trace_kprobe_is_return(tk)) < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -ENOMEM;
 		goto error;
 	}

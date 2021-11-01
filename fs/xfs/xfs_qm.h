@@ -140,6 +140,12 @@ struct xfs_dquot_acct {
 
 extern void		xfs_qm_destroy_quotainfo(struct xfs_mount *);
 
+<<<<<<< HEAD
+=======
+/* dquot stuff */
+extern void		xfs_qm_dqpurge_all(struct xfs_mount *, uint);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* quota ops */
 extern int		xfs_qm_scall_trunc_qfiles(struct xfs_mount *, uint);
 extern int		xfs_qm_scall_getquota(struct xfs_mount *mp,

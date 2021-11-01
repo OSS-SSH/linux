@@ -1,13 +1,20 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 #define _GNU_SOURCE
 #define __EXPORTED_HEADERS__
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <errno.h>
+<<<<<<< HEAD
 #include <fcntl.h>
+=======
+#include <linux/fcntl.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <malloc.h>
 
 #include <sys/ioctl.h>

@@ -24,7 +24,11 @@
  */
 static inline __sum16 csum_fold(__wsum s)
 {
+<<<<<<< HEAD
 	unsigned int r = s << 16 | s >> 16;	/* ror */
+=======
+	unsigned r = s << 16 | s >> 16;	/* ror */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	s = ~s;
 	s -= r;
 	return s >> 16;

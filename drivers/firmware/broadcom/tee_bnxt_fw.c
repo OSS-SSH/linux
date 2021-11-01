@@ -212,9 +212,16 @@ static int tee_bnxt_fw_probe(struct device *dev)
 
 	pvt_data.dev = dev;
 
+<<<<<<< HEAD
 	fw_shm_pool = tee_shm_alloc_kernel_buf(pvt_data.ctx, MAX_SHM_MEM_SZ);
 	if (IS_ERR(fw_shm_pool)) {
 		dev_err(pvt_data.dev, "tee_shm_alloc_kernel_buf failed\n");
+=======
+	fw_shm_pool = tee_shm_alloc(pvt_data.ctx, MAX_SHM_MEM_SZ,
+				    TEE_SHM_MAPPED | TEE_SHM_DMA_BUF);
+	if (IS_ERR(fw_shm_pool)) {
+		dev_err(pvt_data.dev, "tee_shm_alloc failed\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = PTR_ERR(fw_shm_pool);
 		goto out_sess;
 	}
@@ -241,6 +248,7 @@ static int tee_bnxt_fw_remove(struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void tee_bnxt_fw_shutdown(struct device *dev)
 {
 	tee_shm_free(pvt_data.fw_shm_pool);
@@ -249,6 +257,8 @@ static void tee_bnxt_fw_shutdown(struct device *dev)
 	pvt_data.ctx = NULL;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct tee_client_device_id tee_bnxt_fw_id_table[] = {
 	{UUID_INIT(0x6272636D, 0x2019, 0x0716,
 		    0x42, 0x43, 0x4D, 0x5F, 0x53, 0x43, 0x48, 0x49)},
@@ -264,7 +274,10 @@ static struct tee_client_driver tee_bnxt_fw_driver = {
 		.bus		= &tee_bus_type,
 		.probe		= tee_bnxt_fw_probe,
 		.remove		= tee_bnxt_fw_remove,
+<<<<<<< HEAD
 		.shutdown	= tee_bnxt_fw_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 };
 

@@ -265,6 +265,21 @@ asmlinkage void __init mmu_init(void)
 	dma_contiguous_reserve(memory_start + lowmem_size - 1);
 }
 
+<<<<<<< HEAD
+=======
+/* This is only called until mem_init is done. */
+void __init *early_get_page(void)
+{
+	/*
+	 * Mem start + kernel_tlb -> here is limit
+	 * because of mem mapping from head.S
+	 */
+	return memblock_alloc_try_nid_raw(PAGE_SIZE, PAGE_SIZE,
+				MEMBLOCK_LOW_LIMIT, memory_start + kernel_tlb,
+				NUMA_NO_NODE);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void * __ref zalloc_maybe_bootmem(size_t size, gfp_t mask)
 {
 	void *p;

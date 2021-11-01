@@ -151,7 +151,11 @@
 		#size-cells = <2>;
 		ranges;
 
+<<<<<<< HEAD
 		rpm_msg_ram: memory@60000 {
+=======
+		rpm_msg_ram: memory@0x60000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			reg = <0x0 0x60000 0x0 0x6000>;
 			no-map;
 		};
@@ -258,9 +262,15 @@
 			reg = <0x0 0x01905000 0x0 0x8000>;
 		};
 
+<<<<<<< HEAD
 		tcsr: syscon@1937000 {
 			compatible = "syscon";
 			reg = <0x0 0x01937000 0x0 0x21000>;
+=======
+		tcsr_q6: syscon@1945000 {
+			compatible = "syscon";
+			reg = <0x0 0x01945000 0x0 0xe000>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		blsp_dma: dma-controller@7884000 {
@@ -384,6 +394,7 @@
 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
 		};
 
+<<<<<<< HEAD
 		pcie_phy: phy@84000 {
 			compatible = "qcom,ipq6018-qmp-pcie-phy";
 			reg = <0x0 0x84000 0x0 0x1bc>; /* Serdes PLL */
@@ -483,6 +494,8 @@
 			status = "disabled";
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		watchdog@b017000 {
 			compatible = "qcom,kpss-wdt";
 			interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>;
@@ -576,7 +589,11 @@
 		};
 
 		q6v5_wcss: remoteproc@cd00000 {
+<<<<<<< HEAD
 			compatible = "qcom,ipq6018-wcss-pil";
+=======
+			compatible = "qcom,ipq8074-wcss-pil";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			reg = <0x0 0x0cd00000 0x0 0x4040>,
 			      <0x0 0x004ab000 0x0 0x20>;
 			reg-names = "qdsp6",
@@ -603,7 +620,11 @@
 			clocks = <&gcc GCC_PRNG_AHB_CLK>;
 			clock-names = "prng";
 
+<<<<<<< HEAD
 			qcom,halt-regs = <&tcsr 0x18000 0x1b000 0xe000>;
+=======
+			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			qcom,smem-states = <&wcss_smp2p_out 0>,
 					   <&wcss_smp2p_out 1>;
@@ -623,6 +644,7 @@
 			};
 		};
 
+<<<<<<< HEAD
 		qusb_phy_1: qusb@59000 {
 			compatible = "qcom,ipq6018-qusb2-phy";
 			reg = <0x0 0x059000 0x0 0x180>;
@@ -671,6 +693,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	wcss: wcss-smp2p {

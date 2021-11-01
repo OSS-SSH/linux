@@ -44,7 +44,10 @@ static inline void wq_list_add_after(struct io_wq_work_node *node,
 static inline void wq_list_add_tail(struct io_wq_work_node *node,
 				    struct io_wq_work_list *list)
 {
+<<<<<<< HEAD
 	node->next = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!list->first) {
 		list->last = node;
 		WRITE_ONCE(list->first, node);
@@ -52,6 +55,10 @@ static inline void wq_list_add_tail(struct io_wq_work_node *node,
 		list->last->next = node;
 		list->last = node;
 	}
+<<<<<<< HEAD
+=======
+	node->next = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void wq_list_cut(struct io_wq_work_list *list,
@@ -128,7 +135,10 @@ void io_wq_enqueue(struct io_wq *wq, struct io_wq_work *work);
 void io_wq_hash_work(struct io_wq_work *work, void *val);
 
 int io_wq_cpu_affinity(struct io_wq *wq, cpumask_var_t mask);
+<<<<<<< HEAD
 int io_wq_max_workers(struct io_wq *wq, int *new_count);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline bool io_wq_is_hashed(struct io_wq_work *work)
 {

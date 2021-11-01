@@ -18,6 +18,10 @@
 #include <linux/memory_hotplug.h>
 #include <linux/numa.h>
 #include <asm/machdep.h>
+<<<<<<< HEAD
+=======
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/cacheflush.h>
 
 /* This enables us to keep track of the memory removed from each node. */
@@ -329,7 +333,11 @@ DEFINE_SIMPLE_ATTRIBUTE(memtrace_init_fops, memtrace_enable_get,
 static int memtrace_init(void)
 {
 	memtrace_debugfs_dir = debugfs_create_dir("memtrace",
+<<<<<<< HEAD
 						  arch_debugfs_dir);
+=======
+						  powerpc_debugfs_root);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	debugfs_create_file("enable", 0600, memtrace_debugfs_dir,
 			    NULL, &memtrace_init_fops);

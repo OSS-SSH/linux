@@ -35,7 +35,10 @@ Required properties:
 
 Optional properties:
 - dma-coherent: present if DMA operations are coherent
+<<<<<<< HEAD
 - clocks: Input clock specifier. Refer to common clock bindings
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Example:
 ++++++++

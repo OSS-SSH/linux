@@ -1331,6 +1331,7 @@ static int hidpp20_battery_get_battery_voltage(struct hidpp_device *hidpp,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int hidpp20_map_battery_capacity(struct hid_device *hid_dev, int voltage)
 {
 	/* NB: This voltage curve doesn't necessarily map perfectly to all
@@ -1368,6 +1369,8 @@ static int hidpp20_map_battery_capacity(struct hid_device *hid_dev, int voltage)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int hidpp20_query_battery_voltage_info(struct hidpp_device *hidpp)
 {
 	u8 feature_type;
@@ -1391,8 +1394,11 @@ static int hidpp20_query_battery_voltage_info(struct hidpp_device *hidpp)
 
 	hidpp->battery.status = status;
 	hidpp->battery.voltage = voltage;
+<<<<<<< HEAD
 	hidpp->battery.capacity = hidpp20_map_battery_capacity(hidpp->hid_dev,
 							       voltage);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hidpp->battery.level = level;
 	hidpp->battery.charge_type = charge_type;
 	hidpp->battery.online = status != POWER_SUPPLY_STATUS_NOT_CHARGING;
@@ -1417,8 +1423,11 @@ static int hidpp20_battery_voltage_event(struct hidpp_device *hidpp,
 
 	if (voltage != hidpp->battery.voltage || status != hidpp->battery.status) {
 		hidpp->battery.voltage = voltage;
+<<<<<<< HEAD
 		hidpp->battery.capacity = hidpp20_map_battery_capacity(hidpp->hid_dev,
 								       voltage);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hidpp->battery.status = status;
 		hidpp->battery.level = level;
 		hidpp->battery.charge_type = charge_type;
@@ -2281,10 +2290,18 @@ static int hidpp_ff_queue_work(struct hidpp_ff_private_data *data, int effect_id
 	wd->size = size;
 	memcpy(wd->params, params, size);
 
+<<<<<<< HEAD
 	s = atomic_inc_return(&data->workqueue_size);
 	queue_work(data->wq, &wd->work);
 
 	/* warn about excessive queue size */
+=======
+	atomic_inc(&data->workqueue_size);
+	queue_work(data->wq, &wd->work);
+
+	/* warn about excessive queue size */
+	s = atomic_read(&data->workqueue_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (s >= 20 && s % 20 == 0)
 		hid_warn(data->hidpp->hid_dev, "Force feedback command queue contains %d commands, causing substantial delays!", s);
 
@@ -3757,8 +3774,12 @@ static int hidpp_initialize_battery(struct hidpp_device *hidpp)
 	num_battery_props = ARRAY_SIZE(hidpp_battery_props) - 3;
 
 	if (hidpp->capabilities & HIDPP_CAPABILITY_BATTERY_MILEAGE ||
+<<<<<<< HEAD
 	    hidpp->capabilities & HIDPP_CAPABILITY_BATTERY_PERCENTAGE ||
 	    hidpp->capabilities & HIDPP_CAPABILITY_BATTERY_VOLTAGE)
+=======
+	    hidpp->capabilities & HIDPP_CAPABILITY_BATTERY_PERCENTAGE)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		battery_props[num_battery_props++] =
 				POWER_SUPPLY_PROP_CAPACITY;
 

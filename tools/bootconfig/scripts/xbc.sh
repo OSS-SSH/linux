@@ -49,8 +49,15 @@ xbc_has_branch() { # prefix-key
 	grep -q "^$1" $XBC_TMPFILE
 }
 
+<<<<<<< HEAD
 xbc_subkeys() { # prefix-key depth [subkey-pattern]
 	__keys=`echo $1 | sed "s/\./ /g"`
 	__s=`nr_args $__keys`
 	grep "^$1$3" $XBC_TMPFILE | cut -d= -f1| cut -d. -f$((__s + 1))-$((__s + $2)) | uniq
+=======
+xbc_subkeys() { # prefix-key depth
+	__keys=`echo $1 | sed "s/\./ /g"`
+	__s=`nr_args $__keys`
+	grep "^$1" $XBC_TMPFILE | cut -d= -f1| cut -d. -f$((__s + 1))-$((__s + $2)) | uniq
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

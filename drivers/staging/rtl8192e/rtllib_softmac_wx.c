@@ -539,6 +539,7 @@ int rtllib_wx_set_rawtx(struct rtllib_device *ieee,
 }
 EXPORT_SYMBOL(rtllib_wx_set_rawtx);
 
+<<<<<<< HEAD
 int rtllib_wx_get_name(struct rtllib_device *ieee, struct iw_request_info *info,
 		       union iwreq_data *wrqu, char *extra)
 {
@@ -547,6 +548,20 @@ int rtllib_wx_get_name(struct rtllib_device *ieee, struct iw_request_info *info,
 	const char *n = ieee->mode & (IEEE_N_24G | IEEE_N_5G) ? "n" : "";
 
 	scnprintf(wrqu->name, sizeof(wrqu->name), "802.11%s%s%s", b, g, n);
+=======
+int rtllib_wx_get_name(struct rtllib_device *ieee,
+			     struct iw_request_info *info,
+			     union iwreq_data *wrqu, char *extra)
+{
+	strcpy(wrqu->name, "802.11");
+
+	if (ieee->modulation & RTLLIB_CCK_MODULATION)
+		strcat(wrqu->name, "b");
+	if (ieee->modulation & RTLLIB_OFDM_MODULATION)
+		strcat(wrqu->name, "g");
+	if (ieee->mode & (IEEE_N_24G | IEEE_N_5G))
+		strcat(wrqu->name, "n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 EXPORT_SYMBOL(rtllib_wx_get_name);

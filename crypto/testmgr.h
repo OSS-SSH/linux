@@ -13328,6 +13328,7 @@ static const struct cipher_testvec sm4_cfb_tv_template[] = {
 	}
 };
 
+<<<<<<< HEAD
 static const struct aead_testvec sm4_gcm_tv_template[] = {
 	{ /* From https://datatracker.ietf.org/doc/html/rfc8998#appendix-A.1 */
 		.key	= "\x01\x23\x45\x67\x89\xAB\xCD\xEF"
@@ -13476,6 +13477,8 @@ static const struct hash_testvec sm4_cmac128_tv_template[] = {
 	}
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Cast6 test vectors from RFC 2612 */
 static const struct cipher_testvec cast6_tv_template[] = {
 	{

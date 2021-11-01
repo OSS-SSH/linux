@@ -153,6 +153,10 @@ int bdc_config_ep(struct bdc *bdc, struct bdc_ep *ep)
 	si = clamp_val(si, 1, 16) - 1;
 
 	mps = usb_endpoint_maxp(desc);
+<<<<<<< HEAD
+=======
+	mps &= 0x7ff;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	param2 |= mps << MP_SHIFT;
 	param2 |= usb_endpoint_type(desc) << EPT_SHIFT;
 

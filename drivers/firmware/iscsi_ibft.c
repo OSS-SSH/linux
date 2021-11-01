@@ -84,7 +84,13 @@ MODULE_DESCRIPTION("sysfs interface to BIOS iBFT information");
 MODULE_LICENSE("GPL");
 MODULE_VERSION(IBFT_ISCSI_VERSION);
 
+<<<<<<< HEAD
 static struct acpi_table_ibft *ibft_addr;
+=======
+#ifndef CONFIG_ISCSI_IBFT_FIND
+struct acpi_table_ibft *ibft_addr;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct ibft_hdr {
 	u8 id;
@@ -847,6 +853,7 @@ static void __init acpi_find_ibft_region(void)
 {
 }
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_ISCSI_IBFT_FIND
 static int __init acpi_find_isa_region(void)
 {
@@ -862,6 +869,9 @@ static int __init acpi_find_isa_region(void)
 	return -ENODEV;
 }
 #endif
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * ibft_init() - creates sysfs tree entries for the iBFT data.
  */
@@ -870,11 +880,19 @@ static int __init ibft_init(void)
 	int rc = 0;
 
 	/*
+<<<<<<< HEAD
 	   As on UEFI systems the setup_arch()/reserve_ibft_region()
 	   is called before ACPI tables are parsed and it only does
 	   legacy finding.
 	*/
 	if (acpi_find_isa_region())
+=======
+	   As on UEFI systems the setup_arch()/find_ibft_region()
+	   is called before ACPI tables are parsed and it only does
+	   legacy finding.
+	*/
+	if (!ibft_addr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		acpi_find_ibft_region();
 
 	if (ibft_addr) {

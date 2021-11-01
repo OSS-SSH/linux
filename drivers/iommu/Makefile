@@ -29,4 +29,7 @@ obj-$(CONFIG_HYPERV_IOMMU) += hyperv-iommu.o
 obj-$(CONFIG_VIRTIO_IOMMU) += virtio-iommu.o
 obj-$(CONFIG_IOMMU_SVA_LIB) += iommu-sva-lib.o io-pgfault.o
 obj-$(CONFIG_SPRD_IOMMU) += sprd-iommu.o
+<<<<<<< HEAD
 obj-$(CONFIG_APPLE_DART) += apple-dart.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

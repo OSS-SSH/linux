@@ -890,12 +890,22 @@ static int dsps_probe(struct platform_device *pdev)
 	if (!glue->usbss_base)
 		return -ENXIO;
 
+<<<<<<< HEAD
+=======
+	if (usb_get_dr_mode(&pdev->dev) == USB_DR_MODE_PERIPHERAL) {
+		ret = dsps_setup_optional_vbus_irq(pdev, glue);
+		if (ret)
+			goto err_iounmap;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	platform_set_drvdata(pdev, glue);
 	pm_runtime_enable(&pdev->dev);
 	ret = dsps_create_musb_pdev(glue, pdev);
 	if (ret)
 		goto err;
 
+<<<<<<< HEAD
 	if (usb_get_dr_mode(&pdev->dev) == USB_DR_MODE_PERIPHERAL) {
 		ret = dsps_setup_optional_vbus_irq(pdev, glue);
 		if (ret)
@@ -908,6 +918,13 @@ unregister_pdev:
 	platform_device_unregister(glue->musb);
 err:
 	pm_runtime_disable(&pdev->dev);
+=======
+	return 0;
+
+err:
+	pm_runtime_disable(&pdev->dev);
+err_iounmap:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iounmap(glue->usbss_base);
 	return ret;
 }

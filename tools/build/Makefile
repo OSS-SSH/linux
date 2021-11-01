@@ -32,7 +32,11 @@ all: $(OUTPUT)fixdep
 
 # Make sure there's anything to clean,
 # feature contains check for existing OUTPUT
+<<<<<<< HEAD
 TMP_O := $(if $(OUTPUT),$(OUTPUT)feature/,./)
+=======
+TMP_O := $(if $(OUTPUT),$(OUTPUT)/feature,./)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 clean:
 	$(call QUIET_CLEAN, fixdep)

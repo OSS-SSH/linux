@@ -502,7 +502,10 @@ config USB_G_WEBCAM
 	tristate "USB Webcam Gadget"
 	depends on VIDEO_V4L2
 	select USB_LIBCOMPOSITE
+<<<<<<< HEAD
 	select VIDEOBUF2_DMA_SG
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select VIDEOBUF2_VMALLOC
 	select USB_F_UVC
 	help

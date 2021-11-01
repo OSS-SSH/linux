@@ -129,8 +129,12 @@ int main(int argc, char **argv)
 		die("mounting tmpfs to /lib/firmware failed\n");
 
 	sys_path = argv[1];
+<<<<<<< HEAD
 	if (asprintf(&fw_path, "/lib/firmware/%s", fw_name) < 0)
 		die("error: failed to build full fw_path\n");
+=======
+	asprintf(&fw_path, "/lib/firmware/%s", fw_name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	setup_fw(fw_path);
 

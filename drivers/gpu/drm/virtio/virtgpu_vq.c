@@ -576,16 +576,23 @@ void virtio_gpu_cmd_set_scanout(struct virtio_gpu_device *vgdev,
 void virtio_gpu_cmd_resource_flush(struct virtio_gpu_device *vgdev,
 				   uint32_t resource_id,
 				   uint32_t x, uint32_t y,
+<<<<<<< HEAD
 				   uint32_t width, uint32_t height,
 				   struct virtio_gpu_object_array *objs,
 				   struct virtio_gpu_fence *fence)
+=======
+				   uint32_t width, uint32_t height)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct virtio_gpu_resource_flush *cmd_p;
 	struct virtio_gpu_vbuffer *vbuf;
 
 	cmd_p = virtio_gpu_alloc_cmd(vgdev, &vbuf, sizeof(*cmd_p));
 	memset(cmd_p, 0, sizeof(*cmd_p));
+<<<<<<< HEAD
 	vbuf->objs = objs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cmd_p->hdr.type = cpu_to_le32(VIRTIO_GPU_CMD_RESOURCE_FLUSH);
 	cmd_p->resource_id = cpu_to_le32(resource_id);
@@ -594,7 +601,11 @@ void virtio_gpu_cmd_resource_flush(struct virtio_gpu_device *vgdev,
 	cmd_p->r.x = cpu_to_le32(x);
 	cmd_p->r.y = cpu_to_le32(y);
 
+<<<<<<< HEAD
 	virtio_gpu_queue_fenced_ctrl_buffer(vgdev, vbuf, fence);
+=======
+	virtio_gpu_queue_ctrl_buffer(vgdev, vbuf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void virtio_gpu_cmd_transfer_to_host_2d(struct virtio_gpu_device *vgdev,

@@ -541,7 +541,11 @@ static struct bio *ps3vram_do_bio(struct ps3_system_bus_device *dev,
 
 	bio_for_each_segment(bvec, bio, iter) {
 		/* PS3 is ppc64, so we don't handle highmem */
+<<<<<<< HEAD
 		char *ptr = bvec_virt(&bvec);
+=======
+		char *ptr = page_address(bvec.bv_page) + bvec.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		size_t len = bvec.bv_len, retlen;
 
 		dev_dbg(&dev->core, "    %s %zu bytes at offset %llu\n", op,

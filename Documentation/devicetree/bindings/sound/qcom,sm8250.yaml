@@ -15,9 +15,15 @@ description:
 
 properties:
   compatible:
+<<<<<<< HEAD
     enum:
       - qcom,sm8250-sndcard
       - qcom,qrb5165-rb5-sndcard
+=======
+    oneOf:
+      - const: qcom,sm8250-sndcard
+      - const: qcom,qrb5165-rb5-sndcard
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   audio-routing:
     $ref: /schemas/types.yaml#/definitions/non-unique-string-array

@@ -307,6 +307,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
+=======
+&tlmm {
+	gpio-reserved-ranges = <0 4>;
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &uart2 {
 	status = "okay";
 };
@@ -333,6 +340,7 @@
 	vdda-pll-max-microamp = <18300>;
 };
 
+<<<<<<< HEAD
 &usb_1 {
 	status = "okay";
 };
@@ -343,6 +351,8 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&usb2phy_ac_en1_default>;
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 &usb_1_hsphy {
 	status = "okay";
@@ -352,6 +362,7 @@
 };
 
 &usb_1_qmpphy {
+<<<<<<< HEAD
 	status = "disabled";
 };
 
@@ -374,11 +385,14 @@
 };
 
 &usb_2_qmpphy {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	status = "okay";
 	vdda-phy-supply = <&vreg_l8c_1p2>;
 	vdda-pll-supply = <&vdda_usb_ss_dp_core_1>;
 };
 
+<<<<<<< HEAD
 &tlmm {
 	gpio-reserved-ranges = <0 4>;
 
@@ -399,4 +413,12 @@
 			drive-strength = <2>;
 		};
 	};
+=======
+&usb_1 {
+	status = "okay";
+};
+
+&usb_1_dwc3 {
+	dr_mode = "peripheral";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

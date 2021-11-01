@@ -451,6 +451,7 @@ parse_lfp_backlight(struct drm_i915_private *i915,
 	}
 
 	i915->vbt.backlight.type = INTEL_BACKLIGHT_DISPLAY_DDI;
+<<<<<<< HEAD
 	if (bdb->version >= 191) {
 		size_t exp_size;
 
@@ -468,6 +469,15 @@ parse_lfp_backlight(struct drm_i915_private *i915,
 			i915->vbt.backlight.type = method->type;
 			i915->vbt.backlight.controller = method->controller;
 		}
+=======
+	if (bdb->version >= 191 &&
+	    get_blocksize(backlight_data) >= sizeof(*backlight_data)) {
+		const struct lfp_backlight_control_method *method;
+
+		method = &backlight_data->backlight_control[panel_type];
+		i915->vbt.backlight.type = method->type;
+		i915->vbt.backlight.controller = method->controller;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	i915->vbt.backlight.pwm_freq_hz = entry->pwm_freq_hz;
@@ -1881,12 +1891,21 @@ intel_bios_encoder_supports_edp(const struct intel_bios_encoder_data *devdata)
 static bool is_port_valid(struct drm_i915_private *i915, enum port port)
 {
 	/*
+<<<<<<< HEAD
 	 * On some ICL SKUs port F is not present, but broken VBTs mark
 	 * the port as present. Only try to initialize port F for the
 	 * SKUs that may actually have it.
 	 */
 	if (port == PORT_F && IS_ICELAKE(i915))
 		return IS_ICL_WITH_PORT_F(i915);
+=======
+	 * On some ICL/CNL SKUs port F is not present, but broken VBTs mark
+	 * the port as present. Only try to initialize port F for the
+	 * SKUs that may actually have it.
+	 */
+	if (port == PORT_F && (IS_ICELAKE(i915) || IS_CANNONLAKE(i915)))
+		return IS_ICL_WITH_PORT_F(i915) || IS_CNL_WITH_PORT_F(i915);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return true;
 }
@@ -2008,7 +2027,11 @@ static void parse_ddi_port(struct drm_i915_private *i915,
 			    "Port %c VBT HDMI boost level: %d\n",
 			    port_name(port), hdmi_boost_level);
 
+<<<<<<< HEAD
 	/* DP max link rate for GLK+ */
+=======
+	/* DP max link rate for CNL+ */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (i915->vbt.version >= 216) {
 		if (i915->vbt.version >= 230)
 			info->dp_max_link_rate = parse_bdb_230_dp_max_link_rate(child->dp_max_link_rate);
@@ -2176,8 +2199,12 @@ static void
 init_vbt_missing_defaults(struct drm_i915_private *i915)
 {
 	enum port port;
+<<<<<<< HEAD
 	int ports = BIT(PORT_A) | BIT(PORT_B) | BIT(PORT_C) |
 		    BIT(PORT_D) | BIT(PORT_E) | BIT(PORT_F);
+=======
+	int ports = PORT_A | PORT_B | PORT_C | PORT_D | PORT_E | PORT_F;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!HAS_DDI(i915) && !IS_CHERRYVIEW(i915))
 		return;

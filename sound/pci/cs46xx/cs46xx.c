@@ -66,6 +66,7 @@ static int snd_card_cs46xx_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
@@ -104,6 +105,63 @@ static int snd_card_cs46xx_probe(struct pci_dev *pci,
 	err = snd_cs46xx_start_dsp(chip);
 	if (err < 0)
 		return err;
+=======
+	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+			   0, &card);
+	if (err < 0)
+		return err;
+	err = snd_cs46xx_create(card, pci,
+				external_amp[dev], thinkpad[dev],
+				&chip);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+	card->private_data = chip;
+	chip->accept_valid = mmap_valid[dev];
+	err = snd_cs46xx_pcm(chip, 0);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+#ifdef CONFIG_SND_CS46XX_NEW_DSP
+	err = snd_cs46xx_pcm_rear(chip, 1);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+	err = snd_cs46xx_pcm_iec958(chip, 2);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+#endif
+	err = snd_cs46xx_mixer(chip, 2);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+#ifdef CONFIG_SND_CS46XX_NEW_DSP
+	if (chip->nr_ac97_codecs ==2) {
+		err = snd_cs46xx_pcm_center_lfe(chip, 3);
+		if (err < 0) {
+			snd_card_free(card);
+			return err;
+		}
+	}
+#endif
+	err = snd_cs46xx_midi(chip, 0);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+	err = snd_cs46xx_start_dsp(chip);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	snd_cs46xx_gameport(chip);
 
@@ -116,18 +174,37 @@ static int snd_card_cs46xx_probe(struct pci_dev *pci,
 		chip->irq);
 
 	err = snd_card_register(card);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
+=======
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void snd_card_cs46xx_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct pci_driver cs46xx_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_cs46xx_ids,
 	.probe = snd_card_cs46xx_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_card_cs46xx_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_PM_SLEEP
 	.driver = {
 		.pm = &snd_cs46xx_pm,

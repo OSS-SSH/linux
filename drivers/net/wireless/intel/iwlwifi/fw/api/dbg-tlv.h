@@ -33,11 +33,19 @@ struct iwl_fw_ini_hcmd {
  *
  * @version: TLV version
  * @domain: domain of the TLV. One of &enum iwl_fw_ini_dbg_domain
+<<<<<<< HEAD
+=======
+ * @data: TLV data
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct iwl_fw_ini_header {
 	__le32 version;
 	__le32 domain;
+<<<<<<< HEAD
 	/* followed by the data */
+=======
+	u8 data[];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } __packed; /* FW_TLV_DEBUG_HEADER_S_VER_1 */
 
 /**
@@ -129,7 +137,10 @@ struct iwl_fw_ini_region_internal_buffer {
  *	&IWL_FW_INI_REGION_PERIPHERY_PHY, &IWL_FW_INI_REGION_PERIPHERY_AUX,
  *	&IWL_FW_INI_REGION_PAGING, &IWL_FW_INI_REGION_CSR,
  *	&IWL_FW_INI_REGION_DRAM_IMR and &IWL_FW_INI_REGION_PCI_IOSF_CONFIG
+<<<<<<< HEAD
  *	&IWL_FW_INI_REGION_DBGI_SRAM, &FW_TLV_DEBUG_REGION_TYPE_DBGI_SRAM,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @fifos: fifos configuration. Used by &IWL_FW_INI_REGION_TXF and
  *	&IWL_FW_INI_REGION_RXF
  * @err_table: error table configuration. Used by
@@ -249,6 +260,10 @@ struct iwl_fw_ini_hcmd_tlv {
  * @IWL_FW_INI_ALLOCATION_ID_DBGC1: allocation meant for DBGC1 configuration
  * @IWL_FW_INI_ALLOCATION_ID_DBGC2: allocation meant for DBGC2 configuration
  * @IWL_FW_INI_ALLOCATION_ID_DBGC3: allocation meant for DBGC3 configuration
+<<<<<<< HEAD
+=======
+ * @IWL_FW_INI_ALLOCATION_ID_INTERNAL: allocation meant for Intreanl SMEM in D3
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @IWL_FW_INI_ALLOCATION_NUM: number of allocation ids
 */
 enum iwl_fw_ini_allocation_id {
@@ -256,6 +271,10 @@ enum iwl_fw_ini_allocation_id {
 	IWL_FW_INI_ALLOCATION_ID_DBGC1,
 	IWL_FW_INI_ALLOCATION_ID_DBGC2,
 	IWL_FW_INI_ALLOCATION_ID_DBGC3,
+<<<<<<< HEAD
+=======
+	IWL_FW_INI_ALLOCATION_ID_INTERNAL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	IWL_FW_INI_ALLOCATION_NUM,
 }; /* FW_DEBUG_TLV_ALLOCATION_ID_E_VER_1 */
 
@@ -296,7 +315,10 @@ enum iwl_fw_ini_buffer_location {
  * @IWL_FW_INI_REGION_DRAM_IMR: IMR memory
  * @IWL_FW_INI_REGION_PCI_IOSF_CONFIG: PCI/IOSF config
  * @IWL_FW_INI_REGION_SPECIAL_DEVICE_MEMORY: special device memory
+<<<<<<< HEAD
  * @IWL_FW_INI_REGION_DBGI_SRAM: periphery registers of DBGI SRAM
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @IWL_FW_INI_REGION_NUM: number of region types
  */
 enum iwl_fw_ini_region_type {
@@ -318,7 +340,10 @@ enum iwl_fw_ini_region_type {
 	IWL_FW_INI_REGION_DRAM_IMR,
 	IWL_FW_INI_REGION_PCI_IOSF_CONFIG,
 	IWL_FW_INI_REGION_SPECIAL_DEVICE_MEMORY,
+<<<<<<< HEAD
 	IWL_FW_INI_REGION_DBGI_SRAM,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	IWL_FW_INI_REGION_NUM
 }; /* FW_TLV_DEBUG_REGION_TYPE_API_E */
 

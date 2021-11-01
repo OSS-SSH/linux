@@ -208,7 +208,11 @@ static int renesas_check_rom_state(struct pci_dev *pdev)
 
 		case RENESAS_ROM_STATUS_NO_RESULT: /* No result yet */
 			dev_dbg(&pdev->dev, "Unknown ROM status ...\n");
+<<<<<<< HEAD
 			return -ENOENT;
+=======
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		case RENESAS_ROM_STATUS_ERROR: /* Error State */
 		default: /* All other states are marked as "Reserved states" */
@@ -226,6 +230,16 @@ static int renesas_fw_check_running(struct pci_dev *pdev)
 	int err;
 
 	/*
+<<<<<<< HEAD
+=======
+	 * Only if device has ROM and loaded FW we can skip loading and
+	 * return success. Otherwise (even unknown state), attempt to load FW.
+	 */
+	if (renesas_check_rom(pdev) && !renesas_check_rom_state(pdev))
+		return 0;
+
+	/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * Test if the device is actually needing the firmware. As most
 	 * BIOSes will initialize the device for us. If the device is
 	 * initialized.
@@ -584,6 +598,7 @@ int renesas_xhci_check_request_fw(struct pci_dev *pdev,
 			(struct xhci_driver_data *)id->driver_data;
 	const char *fw_name = driver_data->firmware;
 	const struct firmware *fw;
+<<<<<<< HEAD
 	bool has_rom;
 	int err;
 
@@ -617,6 +632,23 @@ int renesas_xhci_check_request_fw(struct pci_dev *pdev,
 		}
 		dev_err(&pdev->dev, "failed to load firmware %s: %d\n",
 			fw_name, err);
+=======
+	int err;
+
+	err = renesas_fw_check_running(pdev);
+	/* Continue ahead, if the firmware is already running. */
+	if (err == 0)
+		return 0;
+
+	if (err != 1)
+		return err;
+
+	pci_dev_get(pdev);
+	err = request_firmware(&fw, fw_name, &pdev->dev);
+	pci_dev_put(pdev);
+	if (err) {
+		dev_err(&pdev->dev, "request_firmware failed: %d\n", err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return err;
 	}
 
@@ -631,4 +663,12 @@ exit:
 }
 EXPORT_SYMBOL_GPL(renesas_xhci_check_request_fw);
 
+<<<<<<< HEAD
+=======
+void renesas_xhci_pci_exit(struct pci_dev *dev)
+{
+}
+EXPORT_SYMBOL_GPL(renesas_xhci_pci_exit);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_LICENSE("GPL v2");

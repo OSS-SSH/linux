@@ -10,13 +10,19 @@
 #include <linux/delay.h>
 #include <linux/io.h>
 #include <linux/iopoll.h>
+<<<<<<< HEAD
 #include <linux/mfd/syscon.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/of_address.h>
 #include <linux/of_device.h>
 #include <linux/phy/phy.h>
 #include <linux/platform_device.h>
+<<<<<<< HEAD
 #include <linux/regmap.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* version V1 sub-banks offset base address */
 /* banks shared by multiple phys */
@@ -29,8 +35,12 @@
 #define SSUSB_SIFSLV_V1_U3PHYD		0x000
 #define SSUSB_SIFSLV_V1_U3PHYA		0x200
 
+<<<<<<< HEAD
 /* version V2/V3 sub-banks offset base address */
 /* V3: U2FREQ is not used anymore, but reserved */
+=======
+/* version V2 sub-banks offset base address */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* u2 phy banks */
 #define SSUSB_SIFSLV_V2_MISC		0x000
 #define SSUSB_SIFSLV_V2_U2FREQ		0x100
@@ -43,8 +53,11 @@
 
 #define U3P_USBPHYACR0		0x000
 #define PA0_RG_U2PLL_FORCE_ON		BIT(15)
+<<<<<<< HEAD
 #define PA0_USB20_PLL_PREDIV		GENMASK(7, 6)
 #define PA0_USB20_PLL_PREDIV_VAL(x)	((0x3 & (x)) << 6)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define PA0_RG_USB20_INTR_EN		BIT(5)
 
 #define U3P_USBPHYACR1		0x004
@@ -56,8 +69,11 @@
 #define PA1_RG_TERM_SEL_VAL(x)	((0x7 & (x)) << 8)
 
 #define U3P_USBPHYACR2		0x008
+<<<<<<< HEAD
 #define PA2_RG_U2PLL_BW			GENMASK(21, 19)
 #define PA2_RG_U2PLL_BW_VAL(x)		((0x7 & (x)) << 19)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define PA2_RG_SIF_U2PLL_FORCE_EN	BIT(18)
 
 #define U3P_USBPHYACR5		0x014
@@ -79,6 +95,7 @@
 #define P2C_USB20_GPIO_MODE		BIT(8)
 #define P2C_U2_GPIO_CTR_MSK	(P2C_RG_USB20_GPIO_CTL | P2C_USB20_GPIO_MODE)
 
+<<<<<<< HEAD
 #define U3P_U2PHYA_RESV		0x030
 #define P2R_RG_U2PLL_FBDIV_26M		0x1bb13b
 #define P2R_RG_U2PLL_FBDIV_48M		0x3c0000
@@ -87,6 +104,8 @@
 #define P2R_RG_U2PLL_REFCLK_SEL	BIT(5)
 #define P2R_RG_U2PLL_FRA_EN		BIT(3)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define U3D_U2PHYDCR0		0x060
 #define P2C_RG_SIF_U2PLL_FORCE_ON	BIT(24)
 
@@ -282,6 +301,7 @@
 #define RG_CDR_BIRLTD0_GEN3_MSK		GENMASK(4, 0)
 #define RG_CDR_BIRLTD0_GEN3_VAL(x)	(0x1f & (x))
 
+<<<<<<< HEAD
 /* PHY switch between pcie/usb3/sgmii/sata */
 #define USB_PHY_SWITCH_CTRL	0x0
 #define RG_PHY_SW_TYPE		GENMASK(3, 0)
@@ -296,17 +316,25 @@ enum mtk_phy_version {
 	MTK_PHY_V1 = 1,
 	MTK_PHY_V2,
 	MTK_PHY_V3,
+=======
+enum mtk_phy_version {
+	MTK_PHY_V1 = 1,
+	MTK_PHY_V2,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct mtk_phy_pdata {
 	/* avoid RX sensitivity level degradation only for mt8173 */
 	bool avoid_rx_sen_degradation;
+<<<<<<< HEAD
 	/*
 	 * workaround only for mt8195, HW fix it for others of V3,
 	 * u2phy should use integer mode instead of fractional mode of
 	 * 48M PLL, fix it by switching PLL to 26M from default 48M
 	 */
 	bool sw_pll_48m_to_26m;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	enum mtk_phy_version version;
 };
 
@@ -330,12 +358,19 @@ struct mtk_phy_instance {
 		struct u2phy_banks u2_banks;
 		struct u3phy_banks u3_banks;
 	};
+<<<<<<< HEAD
 	struct clk_bulk_data clks[TPHY_CLKS_CNT];
 	u32 index;
 	u32 type;
 	struct regmap *type_sw;
 	u32 type_sw_reg;
 	u32 type_sw_index;
+=======
+	struct clk *ref_clk;	/* reference clock of (digital) phy */
+	struct clk *da_ref_clk;	/* reference clock of analog phy */
+	u32 index;
+	u8 type;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int eye_src;
 	int eye_vrt;
 	int eye_term;
@@ -364,10 +399,13 @@ static void hs_slew_rate_calibrate(struct mtk_tphy *tphy,
 	int fm_out;
 	u32 tmp;
 
+<<<<<<< HEAD
 	/* HW V3 doesn't support slew rate cal anymore */
 	if (tphy->pdata->version == MTK_PHY_V3)
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* use force value */
 	if (instance->eye_src)
 		return;
@@ -488,6 +526,7 @@ static void u3_phy_instance_init(struct mtk_tphy *tphy,
 	dev_dbg(tphy->dev, "%s(%d)\n", __func__, instance->index);
 }
 
+<<<<<<< HEAD
 static void u2_phy_pll_26m_set(struct mtk_tphy *tphy,
 	struct mtk_phy_instance *instance)
 {
@@ -515,6 +554,8 @@ static void u2_phy_pll_26m_set(struct mtk_tphy *tphy,
 	writel(tmp, com + U3P_U2PHYA_RESV1);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void u2_phy_instance_init(struct mtk_tphy *tphy,
 	struct mtk_phy_instance *instance)
 {
@@ -574,9 +615,12 @@ static void u2_phy_instance_init(struct mtk_tphy *tphy,
 	tmp |= PA6_RG_U2_SQTH_VAL(2);
 	writel(tmp, com + U3P_USBPHYACR6);
 
+<<<<<<< HEAD
 	/* Workaround only for mt8195, HW fix it for others (V3) */
 	u2_phy_pll_26m_set(tphy, instance);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev_dbg(tphy->dev, "%s(%d)\n", __func__, index);
 }
 
@@ -946,7 +990,11 @@ static void u2_phy_props_set(struct mtk_tphy *tphy,
 		writel(tmp, com + U3P_U2PHYBC12C);
 	}
 
+<<<<<<< HEAD
 	if (tphy->pdata->version < MTK_PHY_V3 && instance->eye_src) {
+=======
+	if (instance->eye_src) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tmp = readl(com + U3P_USBPHYACR5);
 		tmp &= ~PA5_RG_U2_HSTX_SRCTRL;
 		tmp |= PA5_RG_U2_HSTX_SRCTRL_VAL(instance->eye_src);
@@ -982,6 +1030,7 @@ static void u2_phy_props_set(struct mtk_tphy *tphy,
 	}
 }
 
+<<<<<<< HEAD
 /* type switch for usb3/pcie/sgmii/sata */
 static int phy_type_syscon_get(struct mtk_phy_instance *instance,
 			       struct device_node *dn)
@@ -1040,15 +1089,32 @@ static int phy_type_set(struct mtk_phy_instance *instance)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mtk_phy_init(struct phy *phy)
 {
 	struct mtk_phy_instance *instance = phy_get_drvdata(phy);
 	struct mtk_tphy *tphy = dev_get_drvdata(phy->dev.parent);
 	int ret;
 
+<<<<<<< HEAD
 	ret = clk_bulk_prepare_enable(TPHY_CLKS_CNT, instance->clks);
 	if (ret)
 		return ret;
+=======
+	ret = clk_prepare_enable(instance->ref_clk);
+	if (ret) {
+		dev_err(tphy->dev, "failed to enable ref_clk\n");
+		return ret;
+	}
+
+	ret = clk_prepare_enable(instance->da_ref_clk);
+	if (ret) {
+		dev_err(tphy->dev, "failed to enable da_ref\n");
+		clk_disable_unprepare(instance->ref_clk);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (instance->type) {
 	case PHY_TYPE_USB2:
@@ -1064,12 +1130,19 @@ static int mtk_phy_init(struct phy *phy)
 	case PHY_TYPE_SATA:
 		sata_phy_instance_init(tphy, instance);
 		break;
+<<<<<<< HEAD
 	case PHY_TYPE_SGMII:
 		/* nothing to do, only used to set type */
 		break;
 	default:
 		dev_err(tphy->dev, "incompatible PHY type\n");
 		clk_bulk_disable_unprepare(TPHY_CLKS_CNT, instance->clks);
+=======
+	default:
+		dev_err(tphy->dev, "incompatible PHY type\n");
+		clk_disable_unprepare(instance->ref_clk);
+		clk_disable_unprepare(instance->da_ref_clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 	}
 
@@ -1112,7 +1185,12 @@ static int mtk_phy_exit(struct phy *phy)
 	if (instance->type == PHY_TYPE_USB2)
 		u2_phy_instance_exit(tphy, instance);
 
+<<<<<<< HEAD
 	clk_bulk_disable_unprepare(TPHY_CLKS_CNT, instance->clks);
+=======
+	clk_disable_unprepare(instance->ref_clk);
+	clk_disable_unprepare(instance->da_ref_clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1155,12 +1233,17 @@ static struct phy *mtk_phy_xlate(struct device *dev,
 	if (!(instance->type == PHY_TYPE_USB2 ||
 	      instance->type == PHY_TYPE_USB3 ||
 	      instance->type == PHY_TYPE_PCIE ||
+<<<<<<< HEAD
 	      instance->type == PHY_TYPE_SATA ||
 	      instance->type == PHY_TYPE_SGMII)) {
+=======
+	      instance->type == PHY_TYPE_SATA)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(dev, "unsupported device type: %d\n", instance->type);
 		return ERR_PTR(-EINVAL);
 	}
 
+<<<<<<< HEAD
 	switch (tphy->pdata->version) {
 	case MTK_PHY_V1:
 		phy_v1_banks_init(tphy, instance);
@@ -1170,12 +1253,22 @@ static struct phy *mtk_phy_xlate(struct device *dev,
 		phy_v2_banks_init(tphy, instance);
 		break;
 	default:
+=======
+	if (tphy->pdata->version == MTK_PHY_V1) {
+		phy_v1_banks_init(tphy, instance);
+	} else if (tphy->pdata->version == MTK_PHY_V2) {
+		phy_v2_banks_init(tphy, instance);
+	} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(dev, "phy version is not supported\n");
 		return ERR_PTR(-EINVAL);
 	}
 
 	phy_parse_property(tphy, instance);
+<<<<<<< HEAD
 	phy_type_set(instance);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return instance->phy;
 }
@@ -1199,28 +1292,39 @@ static const struct mtk_phy_pdata tphy_v2_pdata = {
 	.version = MTK_PHY_V2,
 };
 
+<<<<<<< HEAD
 static const struct mtk_phy_pdata tphy_v3_pdata = {
 	.version = MTK_PHY_V3,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct mtk_phy_pdata mt8173_pdata = {
 	.avoid_rx_sen_degradation = true,
 	.version = MTK_PHY_V1,
 };
 
+<<<<<<< HEAD
 static const struct mtk_phy_pdata mt8195_pdata = {
 	.sw_pll_48m_to_26m = true,
 	.version = MTK_PHY_V3,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct of_device_id mtk_tphy_id_table[] = {
 	{ .compatible = "mediatek,mt2701-u3phy", .data = &tphy_v1_pdata },
 	{ .compatible = "mediatek,mt2712-u3phy", .data = &tphy_v2_pdata },
 	{ .compatible = "mediatek,mt8173-u3phy", .data = &mt8173_pdata },
+<<<<<<< HEAD
 	{ .compatible = "mediatek,mt8195-tphy", .data = &mt8195_pdata },
 	{ .compatible = "mediatek,generic-tphy-v1", .data = &tphy_v1_pdata },
 	{ .compatible = "mediatek,generic-tphy-v2", .data = &tphy_v2_pdata },
 	{ .compatible = "mediatek,generic-tphy-v3", .data = &tphy_v3_pdata },
+=======
+	{ .compatible = "mediatek,generic-tphy-v1", .data = &tphy_v1_pdata },
+	{ .compatible = "mediatek,generic-tphy-v2", .data = &tphy_v2_pdata },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ },
 };
 MODULE_DEVICE_TABLE(of, mtk_tphy_id_table);
@@ -1264,6 +1368,7 @@ static int mtk_tphy_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
 	if (tphy->pdata->version < MTK_PHY_V3) {
 		tphy->src_ref_clk = U3P_REF_CLK;
 		tphy->src_coef = U3P_SLEW_RATE_COEF;
@@ -1273,12 +1378,23 @@ static int mtk_tphy_probe(struct platform_device *pdev)
 		device_property_read_u32(dev, "mediatek,src-coef",
 					 &tphy->src_coef);
 	}
+=======
+	tphy->src_ref_clk = U3P_REF_CLK;
+	tphy->src_coef = U3P_SLEW_RATE_COEF;
+	/* update parameters of slew rate calibrate if exist */
+	device_property_read_u32(dev, "mediatek,src-ref-clk-mhz",
+		&tphy->src_ref_clk);
+	device_property_read_u32(dev, "mediatek,src-coef", &tphy->src_coef);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	port = 0;
 	for_each_child_of_node(np, child_np) {
 		struct mtk_phy_instance *instance;
+<<<<<<< HEAD
 		struct clk_bulk_data *clks;
 		struct device *subdev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct phy *phy;
 
 		instance = devm_kzalloc(dev, sizeof(*instance), GFP_KERNEL);
@@ -1296,16 +1412,28 @@ static int mtk_tphy_probe(struct platform_device *pdev)
 			goto put_child;
 		}
 
+<<<<<<< HEAD
 		subdev = &phy->dev;
 		retval = of_address_to_resource(child_np, 0, &res);
 		if (retval) {
 			dev_err(subdev, "failed to get address resource(id-%d)\n",
+=======
+		retval = of_address_to_resource(child_np, 0, &res);
+		if (retval) {
+			dev_err(dev, "failed to get address resource(id-%d)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				port);
 			goto put_child;
 		}
 
+<<<<<<< HEAD
 		instance->port_base = devm_ioremap_resource(subdev, &res);
 		if (IS_ERR(instance->port_base)) {
+=======
+		instance->port_base = devm_ioremap_resource(&phy->dev, &res);
+		if (IS_ERR(instance->port_base)) {
+			dev_err(dev, "failed to remap phy regs\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			retval = PTR_ERR(instance->port_base);
 			goto put_child;
 		}
@@ -1315,6 +1443,7 @@ static int mtk_tphy_probe(struct platform_device *pdev)
 		phy_set_drvdata(phy, instance);
 		port++;
 
+<<<<<<< HEAD
 		clks = instance->clks;
 		clks[0].id = "ref";     /* digital (& analog) clock */
 		clks[1].id = "da_ref";  /* analog clock */
@@ -1325,6 +1454,22 @@ static int mtk_tphy_probe(struct platform_device *pdev)
 		retval = phy_type_syscon_get(instance, child_np);
 		if (retval)
 			goto put_child;
+=======
+		instance->ref_clk = devm_clk_get_optional(&phy->dev, "ref");
+		if (IS_ERR(instance->ref_clk)) {
+			dev_err(dev, "failed to get ref_clk(id-%d)\n", port);
+			retval = PTR_ERR(instance->ref_clk);
+			goto put_child;
+		}
+
+		instance->da_ref_clk =
+			devm_clk_get_optional(&phy->dev, "da_ref");
+		if (IS_ERR(instance->da_ref_clk)) {
+			dev_err(dev, "failed to get da_ref_clk(id-%d)\n", port);
+			retval = PTR_ERR(instance->da_ref_clk);
+			goto put_child;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	provider = devm_of_phy_provider_register(dev, mtk_phy_xlate);

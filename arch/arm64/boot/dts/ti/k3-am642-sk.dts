@@ -210,12 +210,15 @@
 			AM64X_IOPAD(0x0008, PIN_INPUT, 0) /* (N19) OSPI0_DQS */
 		>;
 	};
+<<<<<<< HEAD
 
 	main_ecap0_pins_default: main-ecap0-pins-default {
 		pinctrl-single,pins = <
 			AM64X_IOPAD(0x0270, PIN_INPUT, 0) /* (D18) ECAP0_IN_APWM_OUT */
 		>;
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &mcu_uart0 {
@@ -459,6 +462,7 @@
 &pcie0_ep {
 	status = "disabled";
 };
+<<<<<<< HEAD
 
 &ecap0 {
 	/* PWM is available on Pin 1 of header J3 */
@@ -517,3 +521,5 @@
 &epwm8 {
 	status = "disabled";
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

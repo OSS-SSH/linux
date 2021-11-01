@@ -4076,6 +4076,7 @@ static int wcd9335_setup_irqs(struct wcd9335_codec *wcd)
 	return ret;
 }
 
+<<<<<<< HEAD
 static void wcd9335_teardown_irqs(struct wcd9335_codec *wcd)
 {
 	int i;
@@ -4086,6 +4087,8 @@ static void wcd9335_teardown_irqs(struct wcd9335_codec *wcd)
 			     0x00);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void wcd9335_cdc_sido_ccl_enable(struct wcd9335_codec *wcd,
 					bool ccl_flag)
 {
@@ -4854,7 +4857,10 @@ static void wcd9335_codec_init(struct snd_soc_component *component)
 static int wcd9335_codec_probe(struct snd_soc_component *component)
 {
 	struct wcd9335_codec *wcd = dev_get_drvdata(component->dev);
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i;
 
 	snd_soc_component_init_regmap(component, wcd->regmap);
@@ -4872,6 +4878,7 @@ static int wcd9335_codec_probe(struct snd_soc_component *component)
 	for (i = 0; i < NUM_CODEC_DAIS; i++)
 		INIT_LIST_HEAD(&wcd->dai[i].slim_ch_list);
 
+<<<<<<< HEAD
 	ret = wcd9335_setup_irqs(wcd);
 	if (ret)
 		goto free_clsh_ctrl;
@@ -4881,6 +4888,9 @@ static int wcd9335_codec_probe(struct snd_soc_component *component)
 free_clsh_ctrl:
 	wcd_clsh_ctrl_free(wcd->clsh_ctrl);
 	return ret;
+=======
+	return wcd9335_setup_irqs(wcd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void wcd9335_codec_remove(struct snd_soc_component *comp)
@@ -4888,7 +4898,11 @@ static void wcd9335_codec_remove(struct snd_soc_component *comp)
 	struct wcd9335_codec *wcd = dev_get_drvdata(comp->dev);
 
 	wcd_clsh_ctrl_free(wcd->clsh_ctrl);
+<<<<<<< HEAD
 	wcd9335_teardown_irqs(wcd);
+=======
+	free_irq(regmap_irq_get_virq(wcd->irq_data, WCD9335_IRQ_SLIMBUS), wcd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int wcd9335_codec_set_sysclk(struct snd_soc_component *comp,

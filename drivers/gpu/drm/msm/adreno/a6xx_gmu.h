@@ -44,9 +44,12 @@ struct a6xx_gmu_bo {
 struct a6xx_gmu {
 	struct device *dev;
 
+<<<<<<< HEAD
 	/* For serializing communication with the GMU: */
 	struct mutex lock;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct msm_gem_address_space *aspace;
 
 	void * __iomem mmio;
@@ -69,7 +72,10 @@ struct a6xx_gmu {
 	int nr_clocks;
 	struct clk_bulk_data *clocks;
 	struct clk *core_clk;
+<<<<<<< HEAD
 	struct clk *hub_clk;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* current performance index set externally */
 	int current_perf_index;

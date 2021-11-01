@@ -854,6 +854,10 @@ static struct pci_driver oxygen_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = oxygen_ids,
 	.probe = generic_oxygen_probe,
+<<<<<<< HEAD
+=======
+	.remove = oxygen_pci_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_PM_SLEEP
 	.driver = {
 		.pm = &oxygen_pci_pm,

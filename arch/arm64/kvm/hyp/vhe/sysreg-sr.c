@@ -101,7 +101,11 @@ void kvm_vcpu_put_sysregs_vhe(struct kvm_vcpu *vcpu)
 	struct kvm_cpu_context *host_ctxt;
 
 	host_ctxt = &this_cpu_ptr(&kvm_host_data)->host_ctxt;
+<<<<<<< HEAD
 	deactivate_traps_vhe_put(vcpu);
+=======
+	deactivate_traps_vhe_put();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	__sysreg_save_el1_state(guest_ctxt);
 	__sysreg_save_user_state(guest_ctxt);

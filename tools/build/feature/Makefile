@@ -9,6 +9,10 @@ FILES=                                          \
          test-dwarf_getlocations.bin            \
          test-eventfd.bin                       \
          test-fortify-source.bin                \
+<<<<<<< HEAD
+=======
+         test-sync-compare-and-swap.bin         \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
          test-get_current_dir_name.bin          \
          test-glibc.bin                         \
          test-gtk2.bin                          \
@@ -259,6 +263,12 @@ $(OUTPUT)test-libdw-dwarf-unwind.bin:
 $(OUTPUT)test-libbabeltrace.bin:
 	$(BUILD) # -lbabeltrace provided by $(FEATURE_CHECK_LDFLAGS-libbabeltrace)
 
+<<<<<<< HEAD
+=======
+$(OUTPUT)test-sync-compare-and-swap.bin:
+	$(BUILD)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 $(OUTPUT)test-compile-32.bin:
 	$(CC) -m32 -o $@ test-compile.c
 

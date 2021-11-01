@@ -18,4 +18,8 @@ libsas-y +=  sas_init.o     \
 libsas-$(CONFIG_SCSI_SAS_ATA) +=	sas_ata.o
 libsas-$(CONFIG_SCSI_SAS_HOST_SMP) +=	sas_host_smp.o
 
+<<<<<<< HEAD
 ccflags-y := -DDEBUG -I$(srctree)/drivers/scsi
+=======
+ccflags-y := -DDEBUG
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

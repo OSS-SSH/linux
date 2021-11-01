@@ -222,7 +222,11 @@ static void xilinx_cpm_pcie_intx_flow(struct irq_desc *desc)
 			pcie_read(port, XILINX_CPM_PCIE_REG_IDRN));
 
 	for_each_set_bit(i, &val, PCI_NUM_INTX)
+<<<<<<< HEAD
 		generic_handle_domain_irq(port->intx_domain, i);
+=======
+		generic_handle_irq(irq_find_mapping(port->intx_domain, i));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	chained_irq_exit(chip, desc);
 }
@@ -282,7 +286,11 @@ static void xilinx_cpm_pcie_event_flow(struct irq_desc *desc)
 	val =  pcie_read(port, XILINX_CPM_PCIE_REG_IDR);
 	val &= pcie_read(port, XILINX_CPM_PCIE_REG_IMR);
 	for_each_set_bit(i, &val, 32)
+<<<<<<< HEAD
 		generic_handle_domain_irq(port->cpm_domain, i);
+=======
+		generic_handle_irq(irq_find_mapping(port->cpm_domain, i));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pcie_write(port, val, XILINX_CPM_PCIE_REG_IDR);
 
 	/*

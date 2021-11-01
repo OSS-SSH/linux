@@ -366,13 +366,21 @@ static int ibmebus_bus_device_probe(struct device *dev)
 	return error;
 }
 
+<<<<<<< HEAD
 static void ibmebus_bus_device_remove(struct device *dev)
+=======
+static int ibmebus_bus_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct platform_device *of_dev = to_platform_device(dev);
 	struct platform_driver *drv = to_platform_driver(dev->driver);
 
 	if (dev->driver && drv->remove)
 		drv->remove(of_dev);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ibmebus_bus_device_shutdown(struct device *dev)

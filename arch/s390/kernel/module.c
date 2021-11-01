@@ -14,7 +14,10 @@
 #include <linux/elf.h>
 #include <linux/vmalloc.h>
 #include <linux/fs.h>
+<<<<<<< HEAD
 #include <linux/ftrace.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/string.h>
 #include <linux/kernel.h>
 #include <linux/kasan.h>
@@ -24,8 +27,11 @@
 #include <asm/alternative.h>
 #include <asm/nospec-branch.h>
 #include <asm/facility.h>
+<<<<<<< HEAD
 #include <asm/ftrace.lds.h>
 #include <asm/set_memory.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #if 0
 #define DEBUGP printk
@@ -51,6 +57,7 @@ void *module_alloc(unsigned long size)
 	return p;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_FUNCTION_TRACER
 void module_arch_cleanup(struct module *mod)
 {
@@ -58,6 +65,8 @@ void module_arch_cleanup(struct module *mod)
 }
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void module_arch_freeing_init(struct module *mod)
 {
 	if (is_livepatch_module(mod) &&
@@ -476,6 +485,7 @@ int apply_relocate_add(Elf_Shdr *sechdrs, const char *strtab,
 				    write);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_FUNCTION_TRACER
 static int module_alloc_ftrace_hotpatch_trampolines(struct module *me,
 						    const Elf_Shdr *s)
@@ -500,6 +510,8 @@ static int module_alloc_ftrace_hotpatch_trampolines(struct module *me,
 }
 #endif /* CONFIG_FUNCTION_TRACER */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int module_finalize(const Elf_Ehdr *hdr,
 		    const Elf_Shdr *sechdrs,
 		    struct module *me)
@@ -507,9 +519,12 @@ int module_finalize(const Elf_Ehdr *hdr,
 	const Elf_Shdr *s;
 	char *secstrings, *secname;
 	void *aseg;
+<<<<<<< HEAD
 #ifdef CONFIG_FUNCTION_TRACER
 	int ret;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (IS_ENABLED(CONFIG_EXPOLINE) &&
 	    !nospec_disable && me->arch.plt_size) {
@@ -544,6 +559,7 @@ int module_finalize(const Elf_Ehdr *hdr,
 		if (IS_ENABLED(CONFIG_EXPOLINE) &&
 		    (str_has_prefix(secname, ".s390_return")))
 			nospec_revert(aseg, aseg + s->sh_size);
+<<<<<<< HEAD
 
 #ifdef CONFIG_FUNCTION_TRACER
 		if (!strcmp(FTRACE_CALLSITE_SECTION, secname)) {
@@ -552,6 +568,8 @@ int module_finalize(const Elf_Ehdr *hdr,
 				return ret;
 		}
 #endif /* CONFIG_FUNCTION_TRACER */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	jump_label_apply_nops(me);

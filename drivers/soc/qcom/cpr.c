@@ -801,6 +801,41 @@ unlock:
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+static int cpr_read_efuse(struct device *dev, const char *cname, u32 *data)
+{
+	struct nvmem_cell *cell;
+	ssize_t len;
+	char *ret;
+	int i;
+
+	*data = 0;
+
+	cell = nvmem_cell_get(dev, cname);
+	if (IS_ERR(cell)) {
+		if (PTR_ERR(cell) != -EPROBE_DEFER)
+			dev_err(dev, "undefined cell %s\n", cname);
+		return PTR_ERR(cell);
+	}
+
+	ret = nvmem_cell_read(cell, &len);
+	nvmem_cell_put(cell);
+	if (IS_ERR(ret)) {
+		dev_err(dev, "can't read cell %s\n", cname);
+		return PTR_ERR(ret);
+	}
+
+	for (i = 0; i < len; i++)
+		*data |= ret[i] << (8 * i);
+
+	kfree(ret);
+	dev_dbg(dev, "efuse read(%s) = %x, bytes %zd\n", cname, *data, len);
+
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 cpr_populate_ring_osc_idx(struct cpr_drv *drv)
 {
@@ -811,7 +846,12 @@ cpr_populate_ring_osc_idx(struct cpr_drv *drv)
 	int ret;
 
 	for (; fuse < end; fuse++, fuses++) {
+<<<<<<< HEAD
 		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->ring_osc, &data);
+=======
+		ret = cpr_read_efuse(drv->dev, fuses->ring_osc,
+				     &data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			return ret;
 		fuse->ring_osc_idx = data;
@@ -830,7 +870,11 @@ static int cpr_read_fuse_uV(const struct cpr_desc *desc,
 	u32 bits = 0;
 	int ret;
 
+<<<<<<< HEAD
 	ret = nvmem_cell_read_variable_le_u32(drv->dev, init_v_efuse, &bits);
+=======
+	ret = cpr_read_efuse(drv->dev, init_v_efuse, &bits);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 
@@ -899,7 +943,11 @@ static int cpr_fuse_corner_init(struct cpr_drv *drv)
 		}
 
 		/* Populate target quotient by scaling */
+<<<<<<< HEAD
 		ret = nvmem_cell_read_variable_le_u32(drv->dev, fuses->quotient, &fuse->quot);
+=======
+		ret = cpr_read_efuse(drv->dev, fuses->quotient, &fuse->quot);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			return ret;
 
@@ -968,7 +1016,11 @@ static int cpr_calculate_scaling(const char *quot_offset,
 	prev_fuse = fuse - 1;
 
 	if (quot_offset) {
+<<<<<<< HEAD
 		ret = nvmem_cell_read_variable_le_u32(drv->dev, quot_offset, &quot_diff);
+=======
+		ret = cpr_read_efuse(drv->dev, quot_offset, &quot_diff);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			return ret;
 
@@ -1668,7 +1720,11 @@ static int cpr_probe(struct platform_device *pdev)
 	 * initialized after attaching to the power domain,
 	 * since it depends on the CPU's OPP table.
 	 */
+<<<<<<< HEAD
 	ret = nvmem_cell_read_variable_le_u32(dev, "cpr_fuse_revision", &cpr_rev);
+=======
+	ret = cpr_read_efuse(dev, "cpr_fuse_revision", &cpr_rev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 

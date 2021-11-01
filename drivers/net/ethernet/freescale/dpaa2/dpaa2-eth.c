@@ -2594,7 +2594,11 @@ static const struct net_device_ops dpaa2_eth_ops = {
 	.ndo_get_stats64 = dpaa2_eth_get_stats,
 	.ndo_set_rx_mode = dpaa2_eth_set_rx_mode,
 	.ndo_set_features = dpaa2_eth_set_features,
+<<<<<<< HEAD
 	.ndo_eth_ioctl = dpaa2_eth_ioctl,
+=======
+	.ndo_do_ioctl = dpaa2_eth_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_change_mtu = dpaa2_eth_change_mtu,
 	.ndo_bpf = dpaa2_eth_xdp,
 	.ndo_xdp_xmit = dpaa2_eth_xdp_xmit,
@@ -4138,7 +4142,11 @@ static int dpaa2_eth_connect_mac(struct dpaa2_eth_priv *priv)
 	int err;
 
 	dpni_dev = to_fsl_mc_device(priv->net_dev->dev.parent);
+<<<<<<< HEAD
 	dpmac_dev = fsl_mc_get_endpoint(dpni_dev, 0);
+=======
+	dpmac_dev = fsl_mc_get_endpoint(dpni_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (PTR_ERR(dpmac_dev) == -EPROBE_DEFER)
 		return PTR_ERR(dpmac_dev);

@@ -25,7 +25,11 @@
 static void syntax(char *argv[])
 {
 	fprintf(stderr, "%s add|get|set|del|flush|dump|accept [<args>]\n", argv[0]);
+<<<<<<< HEAD
 	fprintf(stderr, "\tadd [flags signal|subflow|backup|fullmesh] [id <nr>] [dev <name>] <ip>\n");
+=======
+	fprintf(stderr, "\tadd [flags signal|subflow|backup] [id <nr>] [dev <name>] <ip>\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fprintf(stderr, "\tdel <id> [<ip>]\n");
 	fprintf(stderr, "\tget <id>\n");
 	fprintf(stderr, "\tset <ip> [flags backup|nobackup]\n");
@@ -236,18 +240,24 @@ int add_addr(int fd, int pm_family, int argc, char *argv[])
 					flags |= MPTCP_PM_ADDR_FLAG_SIGNAL;
 				else if (!strcmp(tok, "backup"))
 					flags |= MPTCP_PM_ADDR_FLAG_BACKUP;
+<<<<<<< HEAD
 				else if (!strcmp(tok, "fullmesh"))
 					flags |= MPTCP_PM_ADDR_FLAG_FULLMESH;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				else
 					error(1, errno,
 					      "unknown flag %s", argv[arg]);
 			}
 
+<<<<<<< HEAD
 			if (flags & MPTCP_PM_ADDR_FLAG_SIGNAL &&
 			    flags & MPTCP_PM_ADDR_FLAG_FULLMESH) {
 				error(1, errno, "error flag fullmesh");
 			}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			rta = (void *)(data + off);
 			rta->rta_type = MPTCP_PM_ADDR_ATTR_FLAGS;
 			rta->rta_len = RTA_LENGTH(4);
@@ -429,6 +439,7 @@ static void print_addr(struct rtattr *attrs, int len)
 					printf(",");
 			}
 
+<<<<<<< HEAD
 			if (flags & MPTCP_PM_ADDR_FLAG_FULLMESH) {
 				printf("fullmesh");
 				flags &= ~MPTCP_PM_ADDR_FLAG_FULLMESH;
@@ -436,6 +447,8 @@ static void print_addr(struct rtattr *attrs, int len)
 					printf(",");
 			}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* bump unknown flags, if any */
 			if (flags)
 				printf("0x%x", flags);

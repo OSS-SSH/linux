@@ -35,10 +35,15 @@ const char *security_type_str(u8 value)
 */
 void rtw_wep_encrypt(struct adapter *padapter, u8 *pxmitframe)
 {																	/*  exclude ICV */
+<<<<<<< HEAD
 	union {
 		__le32 f0;
 		unsigned char f1[4];
 	} crc;
+=======
+
+	unsigned char crc[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	signed int	curfragnum, length;
 	u32 keylength;
@@ -71,6 +76,7 @@ void rtw_wep_encrypt(struct adapter *padapter, u8 *pxmitframe)
 
 				length = pattrib->last_txcmdsz-pattrib->hdrlen-pattrib->iv_len-pattrib->icv_len;
 
+<<<<<<< HEAD
 				crc.f0 = cpu_to_le32(~crc32_le(~0, payload, length));
 
 				arc4_setkey(ctx, wepkey, 3 + keylength);
@@ -83,6 +89,20 @@ void rtw_wep_encrypt(struct adapter *padapter, u8 *pxmitframe)
 				arc4_setkey(ctx, wepkey, 3 + keylength);
 				arc4_crypt(ctx, payload, payload, length);
 				arc4_crypt(ctx, payload + length, crc.f1, 4);
+=======
+				*((__le32 *)crc) = ~crc32_le(~0, payload, length);
+
+				arc4_setkey(ctx, wepkey, 3 + keylength);
+				arc4_crypt(ctx, payload, payload, length);
+				arc4_crypt(ctx, payload + length, crc, 4);
+
+			} else {
+				length = pxmitpriv->frag_len-pattrib->hdrlen-pattrib->iv_len-pattrib->icv_len;
+				*((__le32 *)crc) = ~crc32_le(~0, payload, length);
+				arc4_setkey(ctx, wepkey, 3 + keylength);
+				arc4_crypt(ctx, payload, payload, length);
+				arc4_crypt(ctx, payload + length, crc, 4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				pframe += pxmitpriv->frag_len;
 				pframe = (u8 *)round_up((SIZE_PTR)(pframe), 4);
@@ -123,7 +143,11 @@ void rtw_wep_decrypt(struct adapter  *padapter, u8 *precvframe)
 		arc4_crypt(ctx, payload, payload,  length);
 
 		/* calculate icv and compare the icv */
+<<<<<<< HEAD
 		*((u32 *)crc) = ~crc32_le(~0, payload, length - 4);
+=======
+		*((u32 *)crc) = le32_to_cpu(~crc32_le(~0, payload, length - 4));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	}
 }
@@ -268,6 +292,14 @@ void rtw_seccalctkipmic(u8 *key, u8 *header, u8 *data, u32 data_len, u8 *mic_cod
 
 /* fixed algorithm "parameters" */
 #define PHASE1_LOOP_CNT   8    /* this needs to be "big enough"     */
+<<<<<<< HEAD
+=======
+#define TA_SIZE           6    /*  48-bit transmitter address       */
+#define TK_SIZE          16    /* 128-bit temporal key              */
+#define P1K_SIZE         10    /*  80-bit Phase1 key                */
+#define RC4_KEY_SIZE     16    /* 128-bit RC4KEY (104 bits unknown) */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* 2-unsigned char by 2-unsigned char subset of the full AES S-box table */
 static const unsigned short Sbox1[2][256] = {      /* Sbox for hash (can be in ROM)     */
@@ -461,10 +493,14 @@ u32 rtw_tkip_encrypt(struct adapter *padapter, u8 *pxmitframe)
 	u32 pnh;
 	u8 rc4key[16];
 	u8   ttkey[16];
+<<<<<<< HEAD
 	union {
 		__le32 f0;
 		u8 f1[4];
 	} crc;
+=======
+	u8 crc[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8   hw_hdr_offset = 0;
 	signed int			curfragnum, length;
 
@@ -506,6 +542,7 @@ u32 rtw_tkip_encrypt(struct adapter *padapter, u8 *pxmitframe)
 
 				if ((curfragnum+1) == pattrib->nr_frags) {	/* 4 the last fragment */
 					length = pattrib->last_txcmdsz-pattrib->hdrlen-pattrib->iv_len-pattrib->icv_len;
+<<<<<<< HEAD
 					crc.f0 = cpu_to_le32(~crc32_le(~0, payload, length));
 
 					arc4_setkey(ctx, rc4key, 16);
@@ -519,6 +556,21 @@ u32 rtw_tkip_encrypt(struct adapter *padapter, u8 *pxmitframe)
 					arc4_setkey(ctx, rc4key, 16);
 					arc4_crypt(ctx, payload, payload, length);
 					arc4_crypt(ctx, payload + length, crc.f1, 4);
+=======
+					*((__le32 *)crc) = ~crc32_le(~0, payload, length);
+
+					arc4_setkey(ctx, rc4key, 16);
+					arc4_crypt(ctx, payload, payload, length);
+					arc4_crypt(ctx, payload + length, crc, 4);
+
+				} else {
+					length = pxmitpriv->frag_len-pattrib->hdrlen-pattrib->iv_len-pattrib->icv_len;
+					*((__le32 *)crc) = ~crc32_le(~0, payload, length);
+
+					arc4_setkey(ctx, rc4key, 16);
+					arc4_crypt(ctx, payload, payload, length);
+					arc4_crypt(ctx, payload + length, crc, 4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 					pframe += pxmitpriv->frag_len;
 					pframe = (u8 *)round_up((SIZE_PTR)(pframe), 4);
@@ -618,7 +670,11 @@ u32 rtw_tkip_decrypt(struct adapter *padapter, u8 *precvframe)
 			arc4_setkey(ctx, rc4key, 16);
 			arc4_crypt(ctx, payload, payload, length);
 
+<<<<<<< HEAD
 			*((u32 *)crc) = ~crc32_le(~0, payload, length - 4);
+=======
+			*((u32 *)crc) = le32_to_cpu(~crc32_le(~0, payload, length - 4));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			if (crc[3] != payload[length - 1] || crc[2] != payload[length - 2] ||
 			    crc[1] != payload[length - 3] || crc[0] != payload[length - 4])

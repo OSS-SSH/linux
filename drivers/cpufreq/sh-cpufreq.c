@@ -145,6 +145,19 @@ static int sh_cpufreq_cpu_exit(struct cpufreq_policy *policy)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void sh_cpufreq_cpu_ready(struct cpufreq_policy *policy)
+{
+	struct device *dev = get_cpu_device(policy->cpu);
+
+	dev_info(dev, "CPU Frequencies - Minimum %u.%03u MHz, "
+	       "Maximum %u.%03u MHz.\n",
+	       policy->min / 1000, policy->min % 1000,
+	       policy->max / 1000, policy->max % 1000);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct cpufreq_driver sh_cpufreq_driver = {
 	.name		= "sh",
 	.flags		= CPUFREQ_NO_AUTO_DYNAMIC_SWITCHING,
@@ -153,6 +166,10 @@ static struct cpufreq_driver sh_cpufreq_driver = {
 	.verify		= sh_cpufreq_verify,
 	.init		= sh_cpufreq_cpu_init,
 	.exit		= sh_cpufreq_cpu_exit,
+<<<<<<< HEAD
+=======
+	.ready		= sh_cpufreq_cpu_ready,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.attr		= cpufreq_generic_attr,
 };
 

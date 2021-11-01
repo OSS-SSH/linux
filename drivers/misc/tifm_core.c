@@ -87,7 +87,11 @@ static void tifm_dummy_event(struct tifm_dev *sock)
 	return;
 }
 
+<<<<<<< HEAD
 static void tifm_device_remove(struct device *dev)
+=======
+static int tifm_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tifm_dev *sock = container_of(dev, struct tifm_dev, dev);
 	struct tifm_driver *drv = container_of(dev->driver, struct tifm_driver,
@@ -101,6 +105,10 @@ static void tifm_device_remove(struct device *dev)
 	}
 
 	put_device(dev);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_PM

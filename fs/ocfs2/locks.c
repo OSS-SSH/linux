@@ -101,6 +101,11 @@ int ocfs2_flock(struct file *file, int cmd, struct file_lock *fl)
 
 	if (!(fl->fl_flags & FL_FLOCK))
 		return -ENOLCK;
+<<<<<<< HEAD
+=======
+	if (__mandatory_lock(inode))
+		return -ENOLCK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if ((osb->s_mount_opt & OCFS2_MOUNT_LOCALFLOCKS) ||
 	    ocfs2_mount_local(osb))
@@ -119,6 +124,11 @@ int ocfs2_lock(struct file *file, int cmd, struct file_lock *fl)
 
 	if (!(fl->fl_flags & FL_POSIX))
 		return -ENOLCK;
+<<<<<<< HEAD
+=======
+	if (__mandatory_lock(inode) && fl->fl_type != F_UNLCK)
+		return -ENOLCK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ocfs2_plock(osb->cconn, OCFS2_I(inode)->ip_blkno, file, cmd, fl);
 }

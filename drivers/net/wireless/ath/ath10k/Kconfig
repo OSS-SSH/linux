@@ -44,7 +44,10 @@ config ATH10K_SNOC
 	tristate "Qualcomm ath10k SNOC support"
 	depends on ATH10K
 	depends on ARCH_QCOM || COMPILE_TEST
+<<<<<<< HEAD
 	select QCOM_SCM
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select QCOM_QMI_HELPERS
 	help
 	  This module adds support for integrated WCN3990 chip connected

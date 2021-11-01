@@ -1073,7 +1073,10 @@ static int exynos_tmu_probe(struct platform_device *pdev)
 		data->sclk = devm_clk_get(&pdev->dev, "tmu_sclk");
 		if (IS_ERR(data->sclk)) {
 			dev_err(&pdev->dev, "Failed to get sclk\n");
+<<<<<<< HEAD
 			ret = PTR_ERR(data->sclk);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto err_clk;
 		} else {
 			ret = clk_prepare_enable(data->sclk);

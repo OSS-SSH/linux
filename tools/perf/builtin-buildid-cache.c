@@ -443,7 +443,11 @@ int cmd_buildid_cache(int argc, const char **argv)
 		data.path  = missing_filename;
 		data.force = force;
 
+<<<<<<< HEAD
 		session = perf_session__new(&data, NULL);
+=======
+		session = perf_session__new(&data, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (IS_ERR(session))
 			return PTR_ERR(session);
 	}

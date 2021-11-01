@@ -105,15 +105,29 @@ static void ioc3_irq_handler(struct irq_desc *desc)
 	struct ioc3_priv_data *ipd = domain->host_data;
 	struct ioc3 __iomem *regs = ipd->regs;
 	u32 pending, mask;
+<<<<<<< HEAD
+=======
+	unsigned int irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pending = readl(&regs->sio_ir);
 	mask = readl(&regs->sio_ies);
 	pending &= mask; /* Mask off not enabled interrupts */
 
+<<<<<<< HEAD
 	if (pending)
 		generic_handle_domain_irq(domain, __ffs(pending));
 	else
 		spurious_interrupt();
+=======
+	if (pending) {
+		irq = irq_find_mapping(domain, __ffs(pending));
+		if (irq)
+			generic_handle_irq(irq);
+	} else  {
+		spurious_interrupt();
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

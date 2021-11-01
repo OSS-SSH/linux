@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
  * Device Tree Source for the Draak board with R-Car D3
+=======
+ * Device Tree Source for the Draak board
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (C) 2016-2018 Renesas Electronics Corp.
  * Copyright (C) 2017 Glider bvba
@@ -9,7 +13,10 @@
 /dts-v1/;
 #include "r8a77995.dtsi"
 #include <dt-bindings/gpio/gpio.h>
+<<<<<<< HEAD
 #include <dt-bindings/input/input.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 / {
 	model = "Renesas Draak board based on r8a77995";
@@ -20,6 +27,7 @@
 		ethernet0 = &avb;
 	};
 
+<<<<<<< HEAD
 	audio_clkout: audio-clkout {
 		/*
 		 * This is same as <&rcar_sound 0>
@@ -30,6 +38,8 @@
 		clock-frequency = <12288000>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	backlight: backlight {
 		compatible = "pwm-backlight";
 		pwms = <&pwm1 0 50000>;
@@ -78,6 +88,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	keys {
 		compatible = "gpio-keys";
 
@@ -114,6 +125,8 @@
 		};
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lvds-decoder {
 		compatible = "thine,thc63lvd1024";
 		vcc-supply = <&reg_3p3v>;
@@ -171,6 +184,7 @@
 		regulator-always-on;
 	};
 
+<<<<<<< HEAD
 	sound_card: sound {
 		compatible = "audio-graph-card";
 
@@ -179,6 +193,8 @@
 		>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vga {
 		compatible = "vga-connector";
 
@@ -216,6 +232,7 @@
 		#clock-cells = <0>;
 		clock-frequency = <74250000>;
 	};
+<<<<<<< HEAD
 
 	x19_clk: x19 {
 		compatible = "fixed-clock";
@@ -235,6 +252,8 @@
 	 */
 
 	clock-frequency = <22579200>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &avb {
@@ -310,6 +329,7 @@
 	pinctrl-names = "default";
 	status = "okay";
 
+<<<<<<< HEAD
 	ak4613: codec@10 {
 		compatible = "asahi-kasei,ak4613";
 		#sound-dai-cells = <0>;
@@ -332,6 +352,8 @@
 		};
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	composite-in@20 {
 		compatible = "adi,adv7180cp";
 		reg = <0x20>;
@@ -373,6 +395,13 @@
 		interrupt-parent = <&gpio1>;
 		interrupts = <28 IRQ_TYPE_LEVEL_LOW>;
 
+<<<<<<< HEAD
+=======
+		/* Depends on LVDS */
+		max-clock = <135000000>;
+		min-vrefresh = <50>;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		adi,input-depth = <8>;
 		adi,input-colorspace = "rgb";
 		adi,input-clock = "1x";
@@ -434,6 +463,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	cs2000: clk-multiplier@4f {
 		#clock-cells = <0>;
 		compatible = "cirrus,cs2000-cp";
@@ -445,6 +475,8 @@
 		assigned-clock-rates = <24576000>; /* 1/1 divide */
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	eeprom@50 {
 		compatible = "rohm,br24t01", "atmel,24c01";
 		reg = <0x50>;
@@ -525,11 +557,14 @@
 		function = "i2c1";
 	};
 
+<<<<<<< HEAD
 	keys_pins: keys {
 		pins = "GP_4_12", "GP_4_13", "GP_4_14", "GP_4_15";
 		bias-pull-up;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pwm0_pins: pwm0 {
 		groups = "pwm0_c";
 		function = "pwm0";
@@ -557,6 +592,7 @@
 		power-source = <1800>;
 	};
 
+<<<<<<< HEAD
 	sound_pins: sound {
 		groups = "ssi34_ctrl", "ssi3_data", "ssi4_data_a";
 		function = "ssi";
@@ -568,6 +604,8 @@
 		function = "audio_clk";
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	usb0_pins: usb0 {
 		groups = "usb0";
 		function = "usb0";
@@ -593,6 +631,7 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
 &rcar_sound {
 	pinctrl-0 = <&sound_pins>, <&sound_clk_pins>;
 	pinctrl-names = "default";
@@ -629,6 +668,8 @@
 	};
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &rwdt {
 	timeout-sec = <60>;
 	status = "okay";
@@ -657,10 +698,13 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
 &ssi4 {
 	shared-pin;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &usb2_phy0 {
 	pinctrl-0 = <&usb0_pins>;
 	pinctrl-names = "default";

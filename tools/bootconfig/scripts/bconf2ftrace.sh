@@ -94,6 +94,7 @@ compose_synth() { # event_name branch
 	xbc_get_val $2 | while read field; do echo -n "$field; "; done
 }
 
+<<<<<<< HEAD
 print_hist_array() { # prefix key
 	__sep="="
 	if xbc_has_key ${1}.${2}; then
@@ -180,6 +181,8 @@ setup_histograms() { # prefix trigger-file
 	fi
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 setup_event() { # prefix group event [instance]
 	branch=$1.$2.$3
 	if [ "$4" ]; then
@@ -187,12 +190,15 @@ setup_event() { # prefix group event [instance]
 	else
 		eventdir="$TRACEFS/events/$2/$3"
 	fi
+<<<<<<< HEAD
 	# group enable
 	if [ "$3" = "enable" ]; then
 		run_cmd "echo 1 > ${eventdir}"
 		return
 	fi
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case $2 in
 	kprobes)
 		xbc_get_val ${branch}.probes | while read line; do
@@ -207,8 +213,11 @@ setup_event() { # prefix group event [instance]
 	set_value_of ${branch}.filter ${eventdir}/filter
 	set_array_of ${branch}.actions ${eventdir}/trigger
 
+<<<<<<< HEAD
 	setup_histograms ${branch}.hist ${eventdir}/trigger
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if xbc_has_key ${branch}.enable; then
 		run_cmd "echo 1 > ${eventdir}/enable"
 	fi
@@ -221,6 +230,7 @@ setup_events() { # prefix("ftrace" or "ftrace.instance.INSTANCE") [instance]
 			setup_event $prefix ${grpev%.*} ${grpev#*.} $2
 		done
 	fi
+<<<<<<< HEAD
 	if xbc_has_branch ${1}.event.enable; then
 		if [ "$2" ]; then
 			run_cmd "echo 1 > $TRACEFS/instances/$2/events/enable"
@@ -228,6 +238,8 @@ setup_events() { # prefix("ftrace" or "ftrace.instance.INSTANCE") [instance]
 			run_cmd "echo 1 > $TRACEFS/events/enable"
 		fi
 	fi
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 size2kb() { # size[KB|MB]

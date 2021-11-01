@@ -71,9 +71,15 @@ xfs_allocfree_log_count(
 	uint		blocks;
 
 	blocks = num_ops * 2 * (2 * mp->m_ag_maxlevels - 1);
+<<<<<<< HEAD
 	if (xfs_has_rmapbt(mp))
 		blocks += num_ops * (2 * mp->m_rmap_maxlevels - 1);
 	if (xfs_has_reflink(mp))
+=======
+	if (xfs_sb_version_hasrmapbt(&mp->m_sb))
+		blocks += num_ops * (2 * mp->m_rmap_maxlevels - 1);
+	if (xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		blocks += num_ops * (2 * mp->m_refc_maxlevels - 1);
 
 	return blocks;
@@ -155,7 +161,11 @@ STATIC uint
 xfs_calc_finobt_res(
 	struct xfs_mount	*mp)
 {
+<<<<<<< HEAD
 	if (!xfs_has_finobt(mp))
+=======
+	if (!xfs_sb_version_hasfinobt(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	return xfs_calc_inobt_res(mp);
@@ -187,7 +197,11 @@ xfs_calc_inode_chunk_res(
 			       XFS_FSB_TO_B(mp, 1));
 	if (alloc) {
 		/* icreate tx uses ordered buffers */
+<<<<<<< HEAD
 		if (xfs_has_v3inodes(mp))
+=======
+		if (xfs_sb_version_has_v3inode(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return res;
 		size = XFS_FSB_TO_B(mp, 1);
 	}
@@ -268,7 +282,11 @@ xfs_calc_write_reservation(
 	     xfs_calc_buf_res(3, mp->m_sb.sb_sectsize) +
 	     xfs_calc_buf_res(xfs_allocfree_log_count(mp, 2), blksz);
 
+<<<<<<< HEAD
 	if (xfs_has_realtime(mp)) {
+=======
+	if (xfs_sb_version_hasrealtime(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		t2 = xfs_calc_inode_res(mp, 1) +
 		     xfs_calc_buf_res(XFS_BM_MAXLEVELS(mp, XFS_DATA_FORK),
 				     blksz) +
@@ -317,7 +335,11 @@ xfs_calc_itruncate_reservation(
 	t2 = xfs_calc_buf_res(9, mp->m_sb.sb_sectsize) +
 	     xfs_calc_buf_res(xfs_allocfree_log_count(mp, 4), blksz);
 
+<<<<<<< HEAD
 	if (xfs_has_realtime(mp)) {
+=======
+	if (xfs_sb_version_hasrealtime(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		t3 = xfs_calc_buf_res(5, mp->m_sb.sb_sectsize) +
 		     xfs_calc_buf_res(xfs_rtalloc_log_count(mp, 2), blksz) +
 		     xfs_calc_buf_res(xfs_allocfree_log_count(mp, 2), blksz);
@@ -799,6 +821,32 @@ xfs_calc_qm_dqalloc_reservation(
 }
 
 /*
+<<<<<<< HEAD
+=======
+ * Turning off quotas.
+ *    the quota off logitems: sizeof(struct xfs_qoff_logitem) * 2
+ *    the superblock for the quota flags: sector size
+ */
+STATIC uint
+xfs_calc_qm_quotaoff_reservation(
+	struct xfs_mount	*mp)
+{
+	return sizeof(struct xfs_qoff_logitem) * 2 +
+		xfs_calc_buf_res(1, mp->m_sb.sb_sectsize);
+}
+
+/*
+ * End of turning off quotas.
+ *    the quota off logitems: sizeof(struct xfs_qoff_logitem) * 2
+ */
+STATIC uint
+xfs_calc_qm_quotaoff_end_reservation(void)
+{
+	return sizeof(struct xfs_qoff_logitem) * 2;
+}
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Syncing the incore super block changes to disk.
  *     the super block to reflect the changes: sector size
  */
@@ -819,14 +867,22 @@ xfs_trans_resv_calc(
 	 * require a permanent reservation on space.
 	 */
 	resp->tr_write.tr_logres = xfs_calc_write_reservation(mp);
+<<<<<<< HEAD
 	if (xfs_has_reflink(mp))
+=======
+	if (xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		resp->tr_write.tr_logcount = XFS_WRITE_LOG_COUNT_REFLINK;
 	else
 		resp->tr_write.tr_logcount = XFS_WRITE_LOG_COUNT;
 	resp->tr_write.tr_logflags |= XFS_TRANS_PERM_LOG_RES;
 
 	resp->tr_itruncate.tr_logres = xfs_calc_itruncate_reservation(mp);
+<<<<<<< HEAD
 	if (xfs_has_reflink(mp))
+=======
+	if (xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		resp->tr_itruncate.tr_logcount =
 				XFS_ITRUNCATE_LOG_COUNT_REFLINK;
 	else
@@ -887,7 +943,11 @@ xfs_trans_resv_calc(
 	resp->tr_growrtalloc.tr_logflags |= XFS_TRANS_PERM_LOG_RES;
 
 	resp->tr_qm_dqalloc.tr_logres = xfs_calc_qm_dqalloc_reservation(mp);
+<<<<<<< HEAD
 	if (xfs_has_reflink(mp))
+=======
+	if (xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		resp->tr_qm_dqalloc.tr_logcount = XFS_WRITE_LOG_COUNT_REFLINK;
 	else
 		resp->tr_qm_dqalloc.tr_logcount = XFS_WRITE_LOG_COUNT;
@@ -900,6 +960,16 @@ xfs_trans_resv_calc(
 	resp->tr_qm_setqlim.tr_logres = xfs_calc_qm_setqlim_reservation();
 	resp->tr_qm_setqlim.tr_logcount = XFS_DEFAULT_LOG_COUNT;
 
+<<<<<<< HEAD
+=======
+	resp->tr_qm_quotaoff.tr_logres = xfs_calc_qm_quotaoff_reservation(mp);
+	resp->tr_qm_quotaoff.tr_logcount = XFS_DEFAULT_LOG_COUNT;
+
+	resp->tr_qm_equotaoff.tr_logres =
+		xfs_calc_qm_quotaoff_end_reservation();
+	resp->tr_qm_equotaoff.tr_logcount = XFS_DEFAULT_LOG_COUNT;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	resp->tr_sb.tr_logres = xfs_calc_sb_reservation(mp);
 	resp->tr_sb.tr_logcount = XFS_DEFAULT_LOG_COUNT;
 

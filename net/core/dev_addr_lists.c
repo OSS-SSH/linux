@@ -16,9 +16,16 @@
  * General list handling functions
  */
 
+<<<<<<< HEAD
 static struct netdev_hw_addr*
 __hw_addr_create(const unsigned char *addr, int addr_len,
 		 unsigned char addr_type, bool global, bool sync)
+=======
+static int __hw_addr_create_ex(struct netdev_hw_addr_list *list,
+			       const unsigned char *addr, int addr_len,
+			       unsigned char addr_type, bool global,
+			       bool sync)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct netdev_hw_addr *ha;
 	int alloc_size;
@@ -28,28 +35,45 @@ __hw_addr_create(const unsigned char *addr, int addr_len,
 		alloc_size = L1_CACHE_BYTES;
 	ha = kmalloc(alloc_size, GFP_ATOMIC);
 	if (!ha)
+<<<<<<< HEAD
 		return NULL;
+=======
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memcpy(ha->addr, addr, addr_len);
 	ha->type = addr_type;
 	ha->refcount = 1;
 	ha->global_use = global;
 	ha->synced = sync ? 1 : 0;
 	ha->sync_cnt = 0;
+<<<<<<< HEAD
 
 	return ha;
+=======
+	list_add_tail_rcu(&ha->list, &list->list);
+	list->count++;
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __hw_addr_add_ex(struct netdev_hw_addr_list *list,
 			    const unsigned char *addr, int addr_len,
 			    unsigned char addr_type, bool global, bool sync,
+<<<<<<< HEAD
 			    int sync_count, bool exclusive)
 {
 	struct rb_node **ins_point = &list->tree.rb_node, *parent = NULL;
+=======
+			    int sync_count)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct netdev_hw_addr *ha;
 
 	if (addr_len > MAX_ADDR_LEN)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	ha = list_first_entry(&list->list, struct netdev_hw_addr, list);
 	if (ha && !memcmp(addr, ha->addr, addr_len) &&
 	    (!addr_type || addr_type == ha->type))
@@ -72,6 +96,11 @@ static int __hw_addr_add_ex(struct netdev_hw_addr_list *list,
 found_it:
 			if (exclusive)
 				return -EEXIST;
+=======
+	list_for_each_entry(ha, &list->list, list) {
+		if (ha->type == addr_type &&
+		    !memcmp(ha->addr, addr, addr_len)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (global) {
 				/* check if addr is already used as global */
 				if (ha->global_use)
@@ -90,6 +119,7 @@ found_it:
 		}
 	}
 
+<<<<<<< HEAD
 	ha = __hw_addr_create(addr, addr_len, addr_type, global, sync);
 	if (!ha)
 		return -ENOMEM;
@@ -109,6 +139,10 @@ found_it:
 	list->count++;
 
 	return 0;
+=======
+	return __hw_addr_create_ex(list, addr, addr_len, addr_type, global,
+				   sync);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __hw_addr_add(struct netdev_hw_addr_list *list,
@@ -116,7 +150,11 @@ static int __hw_addr_add(struct netdev_hw_addr_list *list,
 			 unsigned char addr_type)
 {
 	return __hw_addr_add_ex(list, addr, addr_len, addr_type, false, false,
+<<<<<<< HEAD
 				0, false);
+=======
+				0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __hw_addr_del_entry(struct netdev_hw_addr_list *list,
@@ -137,16 +175,20 @@ static int __hw_addr_del_entry(struct netdev_hw_addr_list *list,
 
 	if (--ha->refcount)
 		return 0;
+<<<<<<< HEAD
 
 	if (!RB_EMPTY_NODE(&ha->node))
 		rb_erase(&ha->node, &list->tree);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_del_rcu(&ha->list);
 	kfree_rcu(ha, rcu_head);
 	list->count--;
 	return 0;
 }
 
+<<<<<<< HEAD
 static struct netdev_hw_addr *__hw_addr_lookup(struct netdev_hw_addr_list *list,
 					       const unsigned char *addr, int addr_len,
 					       unsigned char addr_type)
@@ -183,15 +225,28 @@ static struct netdev_hw_addr *__hw_addr_lookup(struct netdev_hw_addr_list *list,
 	return NULL;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __hw_addr_del_ex(struct netdev_hw_addr_list *list,
 			    const unsigned char *addr, int addr_len,
 			    unsigned char addr_type, bool global, bool sync)
 {
+<<<<<<< HEAD
 	struct netdev_hw_addr *ha = __hw_addr_lookup(list, addr, addr_len, addr_type);
 
 	if (!ha)
 		return -ENOENT;
 	return __hw_addr_del_entry(list, ha, global, sync);
+=======
+	struct netdev_hw_addr *ha;
+
+	list_for_each_entry(ha, &list->list, list) {
+		if (!memcmp(ha->addr, addr, addr_len) &&
+		    (ha->type == addr_type || !addr_type))
+			return __hw_addr_del_entry(list, ha, global, sync);
+	}
+	return -ENOENT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __hw_addr_del(struct netdev_hw_addr_list *list,
@@ -208,7 +263,11 @@ static int __hw_addr_sync_one(struct netdev_hw_addr_list *to_list,
 	int err;
 
 	err = __hw_addr_add_ex(to_list, ha->addr, addr_len, ha->type,
+<<<<<<< HEAD
 			       false, true, ha->sync_cnt, false);
+=======
+			       false, true, ha->sync_cnt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err && err != -EEXIST)
 		return err;
 
@@ -478,7 +537,10 @@ static void __hw_addr_flush(struct netdev_hw_addr_list *list)
 {
 	struct netdev_hw_addr *ha, *tmp;
 
+<<<<<<< HEAD
 	list->tree = RB_ROOT;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_for_each_entry_safe(ha, tmp, &list->list, list) {
 		list_del_rcu(&ha->list);
 		kfree_rcu(ha, rcu_head);
@@ -490,7 +552,10 @@ void __hw_addr_init(struct netdev_hw_addr_list *list)
 {
 	INIT_LIST_HEAD(&list->list);
 	list->count = 0;
+<<<<<<< HEAD
 	list->tree = RB_ROOT;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(__hw_addr_init);
 
@@ -625,6 +690,7 @@ EXPORT_SYMBOL(dev_addr_del);
  */
 int dev_uc_add_excl(struct net_device *dev, const unsigned char *addr)
 {
+<<<<<<< HEAD
 	int err;
 
 	netif_addr_lock_bh(dev);
@@ -633,6 +699,24 @@ int dev_uc_add_excl(struct net_device *dev, const unsigned char *addr)
 			       0, true);
 	if (!err)
 		__dev_set_rx_mode(dev);
+=======
+	struct netdev_hw_addr *ha;
+	int err;
+
+	netif_addr_lock_bh(dev);
+	list_for_each_entry(ha, &dev->uc.list, list) {
+		if (!memcmp(ha->addr, addr, dev->addr_len) &&
+		    ha->type == NETDEV_HW_ADDR_T_UNICAST) {
+			err = -EEXIST;
+			goto out;
+		}
+	}
+	err = __hw_addr_create_ex(&dev->uc, addr, dev->addr_len,
+				  NETDEV_HW_ADDR_T_UNICAST, true, false);
+	if (!err)
+		__dev_set_rx_mode(dev);
+out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netif_addr_unlock_bh(dev);
 	return err;
 }
@@ -810,6 +894,7 @@ EXPORT_SYMBOL(dev_uc_init);
  */
 int dev_mc_add_excl(struct net_device *dev, const unsigned char *addr)
 {
+<<<<<<< HEAD
 	int err;
 
 	netif_addr_lock_bh(dev);
@@ -818,6 +903,24 @@ int dev_mc_add_excl(struct net_device *dev, const unsigned char *addr)
 			       0, true);
 	if (!err)
 		__dev_set_rx_mode(dev);
+=======
+	struct netdev_hw_addr *ha;
+	int err;
+
+	netif_addr_lock_bh(dev);
+	list_for_each_entry(ha, &dev->mc.list, list) {
+		if (!memcmp(ha->addr, addr, dev->addr_len) &&
+		    ha->type == NETDEV_HW_ADDR_T_MULTICAST) {
+			err = -EEXIST;
+			goto out;
+		}
+	}
+	err = __hw_addr_create_ex(&dev->mc, addr, dev->addr_len,
+				  NETDEV_HW_ADDR_T_MULTICAST, true, false);
+	if (!err)
+		__dev_set_rx_mode(dev);
+out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netif_addr_unlock_bh(dev);
 	return err;
 }
@@ -830,8 +933,12 @@ static int __dev_mc_add(struct net_device *dev, const unsigned char *addr,
 
 	netif_addr_lock_bh(dev);
 	err = __hw_addr_add_ex(&dev->mc, addr, dev->addr_len,
+<<<<<<< HEAD
 			       NETDEV_HW_ADDR_T_MULTICAST, global, false,
 			       0, false);
+=======
+			       NETDEV_HW_ADDR_T_MULTICAST, global, false, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!err)
 		__dev_set_rx_mode(dev);
 	netif_addr_unlock_bh(dev);

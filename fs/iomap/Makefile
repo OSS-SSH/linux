@@ -9,9 +9,16 @@ ccflags-y += -I $(srctree)/$(src)		# needed for trace events
 obj-$(CONFIG_FS_IOMAP)		+= iomap.o
 
 iomap-y				+= trace.o \
+<<<<<<< HEAD
 				   buffered-io.o \
 				   direct-io.o \
 				   fiemap.o \
 				   iter.o \
+=======
+				   apply.o \
+				   buffered-io.o \
+				   direct-io.o \
+				   fiemap.o \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   seek.o
 iomap-$(CONFIG_SWAP)		+= swapfile.o

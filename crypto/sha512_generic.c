@@ -143,6 +143,12 @@ sha512_transform(u64 *state, const u8 *input)
 
 	state[0] += a; state[1] += b; state[2] += c; state[3] += d;
 	state[4] += e; state[5] += f; state[6] += g; state[7] += h;
+<<<<<<< HEAD
+=======
+
+	/* erase our data */
+	a = b = c = d = e = f = g = h = t1 = t2 = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void sha512_generic_block_fn(struct sha512_state *sst, u8 const *src,

@@ -2140,7 +2140,11 @@ static unsigned long *its_lpi_alloc(int nr_irqs, u32 *base, int *nr_ids)
 	if (err)
 		goto out;
 
+<<<<<<< HEAD
 	bitmap = bitmap_zalloc(nr_irqs, GFP_ATOMIC);
+=======
+	bitmap = kcalloc(BITS_TO_LONGS(nr_irqs), sizeof (long), GFP_ATOMIC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!bitmap)
 		goto out;
 
@@ -2156,7 +2160,11 @@ out:
 static void its_lpi_free(unsigned long *bitmap, u32 base, u32 nr_ids)
 {
 	WARN_ON(free_lpi_range(base, nr_ids));
+<<<<<<< HEAD
 	bitmap_free(bitmap);
+=======
+	kfree(bitmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void gic_reset_prop_table(void *va)
@@ -3387,7 +3395,11 @@ static struct its_device *its_create_device(struct its_node *its, u32 dev_id,
 	if (!dev || !itt ||  !col_map || (!lpi_map && alloc_lpis)) {
 		kfree(dev);
 		kfree(itt);
+<<<<<<< HEAD
 		bitmap_free(lpi_map);
+=======
+		kfree(lpi_map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kfree(col_map);
 		return NULL;
 	}
@@ -4501,7 +4513,11 @@ static int its_vpe_irq_domain_alloc(struct irq_domain *domain, unsigned int virq
 
 	if (err) {
 		if (i > 0)
+<<<<<<< HEAD
 			its_vpe_irq_domain_free(domain, virq, i);
+=======
+			its_vpe_irq_domain_free(domain, virq, i - 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		its_lpi_free(bitmap, base, nr_ids);
 		its_free_prop_table(vprop_page);

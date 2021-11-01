@@ -54,6 +54,18 @@ static irqreturn_t snd_sb8_interrupt(int irq, void *dev_id)
 	}
 }
 
+<<<<<<< HEAD
+=======
+static void snd_sb8_free(struct snd_card *card)
+{
+	struct snd_sb8 *acard = card->private_data;
+
+	if (acard == NULL)
+		return;
+	release_and_free_resource(acard->fm_res);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int snd_sb8_match(struct device *pdev, unsigned int dev)
 {
 	if (!enable[dev])
@@ -77,26 +89,43 @@ static int snd_sb8_probe(struct device *pdev, unsigned int dev)
 	struct snd_opl3 *opl3;
 	int err;
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(pdev, index[dev], id[dev], THIS_MODULE,
 				sizeof(struct snd_sb8), &card);
 	if (err < 0)
 		return err;
 	acard = card->private_data;
+=======
+	err = snd_card_new(pdev, index[dev], id[dev], THIS_MODULE,
+			   sizeof(struct snd_sb8), &card);
+	if (err < 0)
+		return err;
+	acard = card->private_data;
+	card->private_free = snd_sb8_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Block the 0x388 port to avoid PnP conflicts.
 	 * No need to check this value after request_region,
 	 * as we never do anything with it.
 	 */
+<<<<<<< HEAD
 	acard->fm_res = devm_request_region(card->dev, 0x388, 4,
 					    "SoundBlaster FM");
+=======
+	acard->fm_res = request_region(0x388, 4, "SoundBlaster FM");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (port[dev] != SNDRV_AUTO_PORT) {
 		err = snd_sbdsp_create(card, port[dev], irq[dev],
 				       snd_sb8_interrupt, dma8[dev],
 				       -1, SB_HW_AUTO, &chip);
 		if (err < 0)
+<<<<<<< HEAD
 			return err;
+=======
+			goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		/* auto-probe legacy ports */
 		static const unsigned long possible_ports[] = {
@@ -116,8 +145,15 @@ static int snd_sb8_probe(struct device *pdev, unsigned int dev)
 				break;
 			}
 		}
+<<<<<<< HEAD
 		if (i >= ARRAY_SIZE(possible_ports))
 			return -EINVAL;
+=======
+		if (i >= ARRAY_SIZE(possible_ports)) {
+			err = -EINVAL;
+			goto _err;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	acard->chip = chip;
 			
@@ -128,16 +164,29 @@ static int snd_sb8_probe(struct device *pdev, unsigned int dev)
 		else
 			snd_printk(KERN_WARNING "SB 16 chip detected at 0x%lx, try snd-sb16 module\n",
 				   port[dev]);
+<<<<<<< HEAD
 		return -ENODEV;
+=======
+		err = -ENODEV;
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	err = snd_sb8dsp_pcm(chip, 0);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	err = snd_sbmixer_new(chip);
 	if (err < 0)
 		return err;
+=======
+		goto _err;
+
+	err = snd_sbmixer_new(chip);
+	if (err < 0)
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (chip->hardware == SB_HW_10 || chip->hardware == SB_HW_20) {
 		err = snd_opl3_create(card, chip->port + 8, 0,
@@ -155,12 +204,20 @@ static int snd_sb8_probe(struct device *pdev, unsigned int dev)
 	if (err >= 0) {
 		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
 		if (err < 0)
+<<<<<<< HEAD
 			return err;
+=======
+			goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	err = snd_sb8dsp_midi(chip, 0);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
+=======
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	strcpy(card->driver, chip->hardware == SB_HW_PRO ? "SB Pro" : "SB8");
 	strcpy(card->shortname, chip->name);
@@ -171,10 +228,26 @@ static int snd_sb8_probe(struct device *pdev, unsigned int dev)
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	dev_set_drvdata(pdev, card);
 	return 0;
+=======
+		goto _err;
+
+	dev_set_drvdata(pdev, card);
+	return 0;
+
+ _err:
+	snd_card_free(card);
+	return err;
+}
+
+static void snd_sb8_remove(struct device *pdev, unsigned int dev)
+{
+	snd_card_free(dev_get_drvdata(pdev));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_PM
@@ -208,6 +281,10 @@ static int snd_sb8_resume(struct device *dev, unsigned int n)
 static struct isa_driver snd_sb8_driver = {
 	.match		= snd_sb8_match,
 	.probe		= snd_sb8_probe,
+<<<<<<< HEAD
+=======
+	.remove		= snd_sb8_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_PM
 	.suspend	= snd_sb8_suspend,
 	.resume		= snd_sb8_resume,

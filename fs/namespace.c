@@ -203,8 +203,12 @@ static struct mount *alloc_vfsmnt(const char *name)
 			goto out_free_cache;
 
 		if (name) {
+<<<<<<< HEAD
 			mnt->mnt_devname = kstrdup_const(name,
 							 GFP_KERNEL_ACCOUNT);
+=======
+			mnt->mnt_devname = kstrdup_const(name, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (!mnt->mnt_devname)
 				goto out_free_id;
 		}
@@ -1716,6 +1720,7 @@ static inline bool may_mount(void)
 	return ns_capable(current->nsproxy->mnt_ns->user_ns, CAP_SYS_ADMIN);
 }
 
+<<<<<<< HEAD
 static void warn_mandlock(void)
 {
 	pr_warn_once("=======================================================\n"
@@ -1724,6 +1729,20 @@ static void warn_mandlock(void)
 		     "         option from the mount to silence this warning.\n"
 		     "=======================================================\n");
 }
+=======
+#ifdef	CONFIG_MANDATORY_FILE_LOCKING
+static inline bool may_mandlock(void)
+{
+	return capable(CAP_SYS_ADMIN);
+}
+#else
+static inline bool may_mandlock(void)
+{
+	pr_warn("VFS: \"mand\" mount option not supported");
+	return false;
+}
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int can_umount(const struct path *path, int flags)
 {
@@ -1935,6 +1954,7 @@ void drop_collected_mounts(struct vfsmount *mnt)
 	namespace_unlock();
 }
 
+<<<<<<< HEAD
 static bool has_locked_children(struct mount *mnt, struct dentry *dentry)
 {
 	struct mount *child;
@@ -1949,6 +1969,8 @@ static bool has_locked_children(struct mount *mnt, struct dentry *dentry)
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * clone_private_mount - create a private clone of a path
  * @path: path to clone
@@ -1964,6 +1986,7 @@ struct vfsmount *clone_private_mount(const struct path *path)
 	struct mount *old_mnt = real_mount(path->mnt);
 	struct mount *new_mnt;
 
+<<<<<<< HEAD
 	down_read(&namespace_sem);
 	if (IS_MNT_UNBINDABLE(old_mnt))
 		goto invalid;
@@ -1977,6 +2000,12 @@ struct vfsmount *clone_private_mount(const struct path *path)
 	new_mnt = clone_mnt(old_mnt, path->dentry, CL_PRIVATE);
 	up_read(&namespace_sem);
 
+=======
+	if (IS_MNT_UNBINDABLE(old_mnt))
+		return ERR_PTR(-EINVAL);
+
+	new_mnt = clone_mnt(old_mnt, path->dentry, CL_PRIVATE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(new_mnt))
 		return ERR_CAST(new_mnt);
 
@@ -1984,10 +2013,13 @@ struct vfsmount *clone_private_mount(const struct path *path)
 	new_mnt->mnt_ns = MNT_NS_INTERNAL;
 
 	return &new_mnt->mnt;
+<<<<<<< HEAD
 
 invalid:
 	up_read(&namespace_sem);
 	return ERR_PTR(-EINVAL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(clone_private_mount);
 
@@ -2339,6 +2371,22 @@ static int do_change_type(struct path *path, int ms_flags)
 	return err;
 }
 
+<<<<<<< HEAD
+=======
+static bool has_locked_children(struct mount *mnt, struct dentry *dentry)
+{
+	struct mount *child;
+	list_for_each_entry(child, &mnt->mnt_mounts, mnt_child) {
+		if (!is_subdir(child->mnt_mountpoint, dentry))
+			continue;
+
+		if (child->mnt.mnt_flags & MNT_LOCKED)
+			return true;
+	}
+	return false;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct mount *__do_loopback(struct path *old_path, int recurse)
 {
 	struct mount *mnt = ERR_PTR(-EINVAL), *old = real_mount(old_path->mnt);
@@ -2695,6 +2743,7 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int do_set_group(struct path *from_path, struct path *to_path)
 {
 	struct mount *from, *to;
@@ -2767,6 +2816,8 @@ out:
 	return err;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int do_move_mount(struct path *old_path, struct path *new_path)
 {
 	struct mnt_namespace *ns;
@@ -3262,8 +3313,13 @@ int path_mount(const char *dev_name, struct path *path,
 		return ret;
 	if (!may_mount())
 		return -EPERM;
+<<<<<<< HEAD
 	if (flags & SB_MANDLOCK)
 		warn_mandlock();
+=======
+	if ((flags & SB_MANDLOCK) && !may_mandlock())
+		return -EPERM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Default to relatime unless overriden */
 	if (!(flags & MS_NOATIME))
@@ -3371,7 +3427,11 @@ static struct mnt_namespace *alloc_mnt_ns(struct user_namespace *user_ns, bool a
 	if (!ucounts)
 		return ERR_PTR(-ENOSPC);
 
+<<<<<<< HEAD
 	new_ns = kzalloc(sizeof(struct mnt_namespace), GFP_KERNEL_ACCOUNT);
+=======
+	new_ns = kzalloc(sizeof(struct mnt_namespace), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!new_ns) {
 		dec_mnt_namespaces(ucounts);
 		return ERR_PTR(-ENOMEM);
@@ -3646,8 +3706,14 @@ SYSCALL_DEFINE3(fsmount, int, fs_fd, unsigned int, flags,
 	if (fc->phase != FS_CONTEXT_AWAITING_MOUNT)
 		goto err_unlock;
 
+<<<<<<< HEAD
 	if (fc->sb_flags & SB_MANDLOCK)
 		warn_mandlock();
+=======
+	ret = -EPERM;
+	if ((fc->sb_flags & SB_MANDLOCK) && !may_mandlock())
+		goto err_unlock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	newmount.mnt = vfs_create_mount(fc);
 	if (IS_ERR(newmount.mnt)) {
@@ -3751,10 +3817,14 @@ SYSCALL_DEFINE5(move_mount,
 	if (ret < 0)
 		goto out_to;
 
+<<<<<<< HEAD
 	if (flags & MOVE_MOUNT_SET_GROUP)
 		ret = do_set_group(&from_path, &to_path);
 	else
 		ret = do_move_mount(&from_path, &to_path);
+=======
+	ret = do_move_mount(&from_path, &to_path);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 out_to:
 	path_put(&to_path);
@@ -4307,7 +4377,11 @@ void __init mnt_init(void)
 	int err;
 
 	mnt_cache = kmem_cache_create("mnt_cache", sizeof(struct mount),
+<<<<<<< HEAD
 			0, SLAB_HWCACHE_ALIGN|SLAB_PANIC|SLAB_ACCOUNT, NULL);
+=======
+			0, SLAB_HWCACHE_ALIGN | SLAB_PANIC, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mount_hashtable = alloc_large_system_hash("Mount-cache",
 				sizeof(struct hlist_head),

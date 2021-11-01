@@ -17,9 +17,17 @@
 };
 
 &fec1 {
+<<<<<<< HEAD
 	compatible = "fsl,imx8qxp-fec", "fsl,imx8qm-fec", "fsl,imx6sx-fec";
 };
 
 &fec2 {
 	compatible = "fsl,imx8qxp-fec", "fsl,imx8qm-fec", "fsl,imx6sx-fec";
+=======
+	compatible = "fsl,imx8qxp-fec", "fsl,imx6sx-fec";
+};
+
+&fec2 {
+	compatible = "fsl,imx8qxp-fec", "fsl,imx6sx-fec";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

@@ -127,7 +127,11 @@ struct auth_ops {
 	char *	name;
 	struct module *owner;
 	int	flavour;
+<<<<<<< HEAD
 	int	(*accept)(struct svc_rqst *rq);
+=======
+	int	(*accept)(struct svc_rqst *rq, __be32 *authp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int	(*release)(struct svc_rqst *rq);
 	void	(*domain_release)(struct auth_domain *);
 	int	(*set_client)(struct svc_rqst *rq);
@@ -149,7 +153,11 @@ struct auth_ops {
 
 struct svc_xprt;
 
+<<<<<<< HEAD
 extern int	svc_authenticate(struct svc_rqst *rqstp);
+=======
+extern int	svc_authenticate(struct svc_rqst *rqstp, __be32 *authp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern int	svc_authorise(struct svc_rqst *rqstp);
 extern int	svc_set_client(struct svc_rqst *rqstp);
 extern int	svc_auth_register(rpc_authflavor_t flavor, struct auth_ops *aops);

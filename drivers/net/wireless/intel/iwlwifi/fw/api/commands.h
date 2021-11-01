@@ -550,8 +550,12 @@ enum iwl_legacy_cmds {
 	WOWLAN_CONFIGURATION = 0xe1,
 
 	/**
+<<<<<<< HEAD
 	 * @WOWLAN_TSC_RSC_PARAM: &struct iwl_wowlan_rsc_tsc_params_cmd_v4,
 	 *	&struct iwl_wowlan_rsc_tsc_params_cmd
+=======
+	 * @WOWLAN_TSC_RSC_PARAM: &struct iwl_wowlan_rsc_tsc_params_cmd
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	WOWLAN_TSC_RSC_PARAM = 0xe2,
 

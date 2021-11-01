@@ -1721,7 +1721,11 @@ static void collapse_file(struct mm_struct *mm,
 				xas_unlock_irq(&xas);
 				/* swap in or instantiate fallocated page */
 				if (shmem_getpage(mapping->host, index, &page,
+<<<<<<< HEAD
 						  SGP_NOALLOC)) {
+=======
+						  SGP_NOHUGE)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					result = SCAN_FAIL;
 					goto xa_unlocked;
 				}

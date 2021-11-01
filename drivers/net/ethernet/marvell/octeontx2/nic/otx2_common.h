@@ -1,8 +1,18 @@
 /* SPDX-License-Identifier: GPL-2.0 */
+<<<<<<< HEAD
 /* Marvell RVU Ethernet driver
  *
  * Copyright (C) 2020 Marvell.
  *
+=======
+/* Marvell OcteonTx2 RVU Ethernet driver
+ *
+ * Copyright (C) 2020 Marvell International Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #ifndef OTX2_COMMON_H
@@ -16,13 +26,19 @@
 #include <linux/timecounter.h>
 #include <linux/soc/marvell/octeontx2/asm.h>
 #include <net/pkt_cls.h>
+<<<<<<< HEAD
 #include <net/devlink.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <mbox.h>
 #include <npc.h>
 #include "otx2_reg.h"
 #include "otx2_txrx.h"
+<<<<<<< HEAD
 #include "otx2_devlink.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <rvu_trace.h>
 
 /* PCI device IDs */
@@ -53,10 +69,13 @@ enum arua_mapped_qtypes {
 /* Send skid of 2000 packets required for CQ size of 4K CQEs. */
 #define SEND_CQ_SKID	2000
 
+<<<<<<< HEAD
 struct otx2_lmt_info {
 	u64 lmt_addr;
 	u16 lmt_id;
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* RSS configuration */
 struct otx2_rss_ctx {
 	u8  ind_tbl[MAX_RSS_INDIR_TBL_SIZE];
@@ -184,7 +203,10 @@ struct otx2_hw {
 	/* NIX */
 	u16		txschq_list[NIX_TXSCH_LVL_CNT][MAX_TXSCHQ_PER_FUNC];
 	u16			matchall_ipolicer;
+<<<<<<< HEAD
 	u32			dwrr_mtu;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* HW settings, coalescing etc */
 	u16			rx_chan_base;
@@ -200,9 +222,12 @@ struct otx2_hw {
 	u8			lso_udpv4_idx;
 	u8			lso_udpv6_idx;
 
+<<<<<<< HEAD
 	/* RSS */
 	u8			flowkey_alg_idx;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* MSI-X */
 	u8			cint_cnt; /* CQ interrupt count */
 	u16			npa_msixoff; /* Offset of NPA vectors */
@@ -219,16 +244,26 @@ struct otx2_hw {
 	u64			cgx_fec_uncorr_blks;
 	u8			cgx_links;  /* No. of CGX links present in HW */
 	u8			lbk_links;  /* No. of LBK links present in HW */
+<<<<<<< HEAD
 	u8			tx_link;    /* Transmit channel link number */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define HW_TSO			0
 #define CN10K_MBOX		1
 #define CN10K_LMTST		2
 	unsigned long		cap_flag;
 
 #define LMT_LINE_SIZE		128
+<<<<<<< HEAD
 #define LMT_BURST_SIZE		32 /* 32 LMTST lines for burst SQE flush */
 	u64			*lmt_base;
 	struct otx2_lmt_info	__percpu *lmt_info;
+=======
+#define NIX_LMTID_BASE		72 /* RX + TX + XDP */
+	void __iomem		*lmt_base;
+	u64			*npa_lmt_base;
+	u64			*nix_lmt_base;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum vfperm {
@@ -274,6 +309,10 @@ struct otx2_mac_table {
 };
 
 struct otx2_flow_config {
+<<<<<<< HEAD
+=======
+	u16			entry[NPC_MAX_NONCONTIG_ENTRIES];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u16			*flow_ent;
 	u16			*def_ent;
 	u16			nr_flows;
@@ -284,16 +323,26 @@ struct otx2_flow_config {
 #define OTX2_MCAM_COUNT		(OTX2_DEFAULT_FLOWCOUNT + \
 				 OTX2_MAX_UNICAST_FLOWS + \
 				 OTX2_MAX_VLAN_FLOWS)
+<<<<<<< HEAD
+=======
+	u16			ntuple_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u16			unicast_offset;
 	u16			rx_vlan_offset;
 	u16			vf_vlan_offset;
 #define OTX2_PER_VF_VLAN_FLOWS	2 /* Rx + Tx per VF */
 #define OTX2_VF_VLAN_RX_INDEX	0
 #define OTX2_VF_VLAN_TX_INDEX	1
+<<<<<<< HEAD
 	u16			max_flows;
 	u8			dmacflt_max_flows;
 	u8			*bmap_to_dmacindex;
 	unsigned long		dmacflt_bmap;
+=======
+	u16			tc_flower_offset;
+	u16                     ntuple_max_flows;
+	u16			tc_max_flows;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head	flow_list;
 };
 
@@ -301,7 +350,12 @@ struct otx2_tc_info {
 	/* hash table to store TC offloaded flows */
 	struct rhashtable		flow_table;
 	struct rhashtable_params	flow_ht_params;
+<<<<<<< HEAD
 	unsigned long			*tc_entries_bitmap;
+=======
+	DECLARE_BITMAP(tc_entries_bitmap, OTX2_MAX_TC_FLOWS);
+	unsigned long			num_entries;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct dev_hw_ops {
@@ -334,7 +388,10 @@ struct otx2_nic {
 #define OTX2_FLAG_TC_FLOWER_SUPPORT		BIT_ULL(11)
 #define OTX2_FLAG_TC_MATCHALL_EGRESS_ENABLED	BIT_ULL(12)
 #define OTX2_FLAG_TC_MATCHALL_INGRESS_ENABLED	BIT_ULL(13)
+<<<<<<< HEAD
 #define OTX2_FLAG_DMACFLTR_SUPPORT		BIT_ULL(14)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64			flags;
 
 	struct otx2_qset	qset;
@@ -354,11 +411,14 @@ struct otx2_nic {
 	struct otx2_vf_config	*vf_configs;
 	struct cgx_link_user_info linfo;
 
+<<<<<<< HEAD
 	/* NPC MCAM */
 	struct otx2_flow_config	*flow_cfg;
 	struct otx2_mac_table	*mac_table;
 	struct otx2_tc_info	tc_info;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64			reset_count;
 	struct work_struct	reset_task;
 	struct workqueue_struct	*flr_wq;
@@ -366,6 +426,10 @@ struct otx2_nic {
 	struct refill_work	*refill_wrk;
 	struct workqueue_struct	*otx2_wq;
 	struct work_struct	rx_mode_work;
+<<<<<<< HEAD
+=======
+	struct otx2_mac_table	*mac_table;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Ethtool stuff */
 	u32			msg_enable;
@@ -373,18 +437,29 @@ struct otx2_nic {
 	/* Block address of NIX either BLKADDR_NIX0 or BLKADDR_NIX1 */
 	int			nix_blkaddr;
 	/* LMTST Lines info */
+<<<<<<< HEAD
 	struct qmem		*dync_lmt;
 	u16			tot_lmt_lines;
 	u16			npa_lmt_lines;
+=======
+	u16			tot_lmt_lines;
+	u16			nix_lmt_lines;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32			nix_lmt_size;
 
 	struct otx2_ptp		*ptp;
 	struct hwtstamp_config	tstamp;
 
+<<<<<<< HEAD
 	unsigned long		rq_bmap;
 
 	/* Devlink */
 	struct otx2_devlink	*dl;
+=======
+	struct otx2_flow_config	*flow_cfg;
+	struct otx2_tc_info	tc_info;
+	unsigned long		rq_bmap;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline bool is_otx2_lbkvf(struct pci_dev *pdev)
@@ -410,18 +485,29 @@ static inline bool is_96xx_B0(struct pci_dev *pdev)
  */
 #define PCI_REVISION_ID_96XX		0x00
 #define PCI_REVISION_ID_95XX		0x10
+<<<<<<< HEAD
 #define PCI_REVISION_ID_95XXN		0x20
 #define PCI_REVISION_ID_98XX		0x30
 #define PCI_REVISION_ID_95XXMM		0x40
 #define PCI_REVISION_ID_95XXO		0xE0
+=======
+#define PCI_REVISION_ID_LOKI		0x20
+#define PCI_REVISION_ID_98XX		0x30
+#define PCI_REVISION_ID_95XXMM		0x40
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline bool is_dev_otx2(struct pci_dev *pdev)
 {
 	u8 midr = pdev->revision & 0xF0;
 
 	return (midr == PCI_REVISION_ID_96XX || midr == PCI_REVISION_ID_95XX ||
+<<<<<<< HEAD
 		midr == PCI_REVISION_ID_95XXN || midr == PCI_REVISION_ID_98XX ||
 		midr == PCI_REVISION_ID_95XXMM || midr == PCI_REVISION_ID_95XXO);
+=======
+		midr == PCI_REVISION_ID_LOKI || midr == PCI_REVISION_ID_98XX ||
+		midr == PCI_REVISION_ID_95XXMM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void otx2_setup_dev_hw_settings(struct otx2_nic *pfvf)
@@ -566,6 +652,7 @@ static inline u64 otx2_atomic64_add(u64 incr, u64 *ptr)
 #endif
 
 static inline void __cn10k_aura_freeptr(struct otx2_nic *pfvf, u64 aura,
+<<<<<<< HEAD
 					u64 *ptrs, u64 num_ptrs)
 {
 	struct otx2_lmt_info *lmt_info;
@@ -576,6 +663,17 @@ static inline void __cn10k_aura_freeptr(struct otx2_nic *pfvf, u64 aura,
 	tar_addr = (__force u64)otx2_get_regaddr(pfvf, NPA_LF_AURA_BATCH_FREE0);
 	/* LMTID is same as AURA Id */
 	val = (lmt_info->lmt_id & 0x7FF) | BIT_ULL(63);
+=======
+					u64 *ptrs, u64 num_ptrs,
+					u64 *lmt_addr)
+{
+	u64 size = 0, count_eot = 0;
+	u64 tar_addr, val = 0;
+
+	tar_addr = (__force u64)otx2_get_regaddr(pfvf, NPA_LF_AURA_BATCH_FREE0);
+	/* LMTID is same as AURA Id */
+	val = (aura & 0x7FF) | BIT_ULL(63);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Set if [127:64] of last 128bit word has a valid pointer */
 	count_eot = (num_ptrs % 2) ? 0ULL : 1ULL;
 	/* Set AURA ID to free pointer */
@@ -591,7 +689,11 @@ static inline void __cn10k_aura_freeptr(struct otx2_nic *pfvf, u64 aura,
 			size++;
 		tar_addr |=  ((size - 1) & 0x7) << 4;
 	}
+<<<<<<< HEAD
 	memcpy((u64 *)lmt_info->lmt_addr, ptrs, sizeof(u64) * num_ptrs);
+=======
+	memcpy(lmt_addr, ptrs, sizeof(u64) * num_ptrs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Perform LMTST flush */
 	cn10k_lmt_flush(val, tar_addr);
 }
@@ -599,11 +701,20 @@ static inline void __cn10k_aura_freeptr(struct otx2_nic *pfvf, u64 aura,
 static inline void cn10k_aura_freeptr(void *dev, int aura, u64 buf)
 {
 	struct otx2_nic *pfvf = dev;
+<<<<<<< HEAD
 	u64 ptrs[2];
 
 	ptrs[1] = buf;
 	/* Free only one buffer at time during init and teardown */
 	__cn10k_aura_freeptr(pfvf, aura, ptrs, 2);
+=======
+	struct otx2_pool *pool;
+	u64 ptrs[2];
+
+	pool = &pfvf->qset.pool[aura];
+	ptrs[1] = buf;
+	__cn10k_aura_freeptr(pfvf, aura, ptrs, 2, pool->lmt_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Alloc pointer from pool/aura */
@@ -717,11 +828,14 @@ MBOX_UP_CGX_MESSAGES
 #define	RVU_PFVF_FUNC_SHIFT	0
 #define	RVU_PFVF_FUNC_MASK	0x3FF
 
+<<<<<<< HEAD
 static inline bool is_otx2_vf(u16 pcifunc)
 {
 	return !!(pcifunc & RVU_PFVF_FUNC_MASK);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int rvu_get_pf(u16 pcifunc)
 {
 	return (pcifunc >> RVU_PFVF_PF_SHIFT) & RVU_PFVF_PF_MASK;
@@ -827,8 +941,12 @@ int otx2_set_real_num_queues(struct net_device *netdev,
 			     int tx_queues, int rx_queues);
 /* MCAM filter related APIs */
 int otx2_mcam_flow_init(struct otx2_nic *pf);
+<<<<<<< HEAD
 int otx2vf_mcam_flow_init(struct otx2_nic *pfvf);
 int otx2_alloc_mcam_entries(struct otx2_nic *pfvf, u16 count);
+=======
+int otx2_alloc_mcam_entries(struct otx2_nic *pfvf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void otx2_mcam_flow_del(struct otx2_nic *pf);
 int otx2_destroy_ntuple_flows(struct otx2_nic *pf);
 int otx2_destroy_mcam_flows(struct otx2_nic *pfvf);
@@ -839,7 +957,12 @@ int otx2_get_all_flows(struct otx2_nic *pfvf,
 int otx2_add_flow(struct otx2_nic *pfvf,
 		  struct ethtool_rxnfc *nfc);
 int otx2_remove_flow(struct otx2_nic *pfvf, u32 location);
+<<<<<<< HEAD
 int otx2_get_maxflows(struct otx2_flow_config *flow_cfg);
+=======
+int otx2_prepare_flow_request(struct ethtool_rx_flow_spec *fsp,
+			      struct npc_install_flow_req *req);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void otx2_rss_ctx_flow_del(struct otx2_nic *pfvf, int ctx_id);
 int otx2_del_macfilter(struct net_device *netdev, const u8 *mac);
 int otx2_add_macfilter(struct net_device *netdev, const u8 *mac);
@@ -851,6 +974,7 @@ int otx2_init_tc(struct otx2_nic *nic);
 void otx2_shutdown_tc(struct otx2_nic *nic);
 int otx2_setup_tc(struct net_device *netdev, enum tc_setup_type type,
 		  void *type_data);
+<<<<<<< HEAD
 int otx2_tc_alloc_ent_bitmap(struct otx2_nic *nic);
 /* CGX/RPM DMAC filters support */
 int otx2_dmacflt_get_max_cnt(struct otx2_nic *pf);
@@ -859,4 +983,6 @@ int otx2_dmacflt_remove(struct otx2_nic *pf, const u8 *mac, u8 bit_pos);
 int otx2_dmacflt_update(struct otx2_nic *pf, u8 *mac, u8 bit_pos);
 void otx2_dmacflt_reinstall_flows(struct otx2_nic *pf);
 void otx2_dmacflt_update_pfmac_flow(struct otx2_nic *pfvf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* OTX2_COMMON_H */

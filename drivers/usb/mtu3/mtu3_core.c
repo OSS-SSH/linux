@@ -141,6 +141,7 @@ static void mtu3_device_disable(struct mtu3 *mtu)
 	mtu3_setbits(ibase, U3D_SSUSB_IP_PW_CTRL2, SSUSB_IP_DEV_PDN);
 }
 
+<<<<<<< HEAD
 static void mtu3_dev_power_on(struct mtu3 *mtu)
 {
 	void __iomem *ibase = mtu->ippc_base;
@@ -163,6 +164,8 @@ static void mtu3_dev_power_down(struct mtu3 *mtu)
 	mtu3_setbits(ibase, U3D_SSUSB_IP_PW_CTRL2, SSUSB_IP_DEV_PDN);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* reset U3D's device module. */
 static void mtu3_device_reset(struct mtu3 *mtu)
 {
@@ -249,13 +252,20 @@ static void mtu3_set_speed(struct mtu3 *mtu, enum usb_device_speed speed)
 		mtu3_setbits(mbase, U3D_POWER_MANAGEMENT, HS_ENABLE);
 		break;
 	case USB_SPEED_SUPER:
+<<<<<<< HEAD
 		mtu3_setbits(mbase, U3D_POWER_MANAGEMENT, HS_ENABLE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mtu3_clrbits(mtu->ippc_base, SSUSB_U3_CTRL(0),
 			     SSUSB_U3_PORT_SSP_SPEED);
 		break;
 	case USB_SPEED_SUPER_PLUS:
+<<<<<<< HEAD
 		mtu3_setbits(mbase, U3D_POWER_MANAGEMENT, HS_ENABLE);
 		mtu3_setbits(mtu->ippc_base, SSUSB_U3_CTRL(0),
+=======
+			mtu3_setbits(mtu->ippc_base, SSUSB_U3_CTRL(0),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     SSUSB_U3_PORT_SSP_SPEED);
 		break;
 	default:
@@ -357,7 +367,16 @@ void mtu3_start(struct mtu3 *mtu)
 	dev_dbg(mtu->dev, "%s devctl 0x%x\n", __func__,
 		mtu3_readl(mbase, U3D_DEVICE_CONTROL));
 
+<<<<<<< HEAD
 	mtu3_dev_power_on(mtu);
+=======
+	mtu3_clrbits(mtu->ippc_base, U3D_SSUSB_IP_PW_CTRL2, SSUSB_IP_DEV_PDN);
+	if (mtu->is_u3_ip)
+		mtu3_clrbits(mtu->ippc_base, SSUSB_U3_CTRL(0), SSUSB_U3_PORT_PDN);
+
+	mtu3_clrbits(mtu->ippc_base, SSUSB_U2_CTRL(0), SSUSB_U2_PORT_PDN);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mtu3_csr_init(mtu);
 	mtu3_set_speed(mtu, mtu->speed);
 
@@ -379,6 +398,7 @@ void mtu3_stop(struct mtu3 *mtu)
 		mtu3_dev_on_off(mtu, 0);
 
 	mtu->is_active = 0;
+<<<<<<< HEAD
 	mtu3_dev_power_down(mtu);
 }
 
@@ -398,6 +418,14 @@ static void mtu3_dev_resume(struct mtu3 *mtu)
 
 	mtu3_dev_power_on(mtu);
 	mtu3_intr_enable(mtu);
+=======
+
+	if (mtu->is_u3_ip)
+		mtu3_setbits(mtu->ippc_base, SSUSB_U3_CTRL(0), SSUSB_U3_PORT_PDN);
+
+	mtu3_setbits(mtu->ippc_base, SSUSB_U2_CTRL(0), SSUSB_U2_PORT_PDN);
+	mtu3_setbits(mtu->ippc_base, U3D_SSUSB_IP_PW_CTRL2, SSUSB_IP_DEV_PDN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* for non-ep0 */
@@ -720,6 +748,7 @@ static irqreturn_t mtu3_link_isr(struct mtu3 *mtu)
 	mtu->g.speed = udev_speed;
 	mtu->g.ep0->maxpacket = maxpkt;
 	mtu->ep0_state = MU3D_EP0_STATE_SETUP;
+<<<<<<< HEAD
 	mtu->connected = !!(udev_speed != USB_SPEED_UNKNOWN);
 
 	if (udev_speed == USB_SPEED_UNKNOWN) {
@@ -729,6 +758,13 @@ static irqreturn_t mtu3_link_isr(struct mtu3 *mtu)
 		pm_runtime_get(mtu->dev);
 		mtu3_ep0_setup(mtu);
 	}
+=======
+
+	if (udev_speed == USB_SPEED_UNKNOWN)
+		mtu3_gadget_disconnect(mtu);
+	else
+		mtu3_ep0_setup(mtu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return IRQ_HANDLED;
 }
@@ -924,6 +960,7 @@ int ssusb_gadget_init(struct ssusb_mtk *ssusb)
 	if (mtu == NULL)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	mtu->irq = platform_get_irq_byname_optional(pdev, "device");
 	if (mtu->irq < 0) {
 		if (mtu->irq == -EPROBE_DEFER)
@@ -934,6 +971,11 @@ int ssusb_gadget_init(struct ssusb_mtk *ssusb)
 		if (mtu->irq < 0)
 			return mtu->irq;
 	}
+=======
+	mtu->irq = platform_get_irq(pdev, 0);
+	if (mtu->irq < 0)
+		return mtu->irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev_info(dev, "irq %d\n", mtu->irq);
 
 	mtu->mac_base = devm_platform_ioremap_resource_byname(pdev, "mac");
@@ -1008,6 +1050,7 @@ void ssusb_gadget_exit(struct ssusb_mtk *ssusb)
 	device_init_wakeup(ssusb->dev, false);
 	mtu3_hw_exit(mtu);
 }
+<<<<<<< HEAD
 
 bool ssusb_gadget_ip_sleep_check(struct ssusb_mtk *ssusb)
 {
@@ -1052,3 +1095,5 @@ int ssusb_gadget_resume(struct ssusb_mtk *ssusb, pm_message_t msg)
 
 	return 0;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

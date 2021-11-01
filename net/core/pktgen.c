@@ -175,9 +175,12 @@
 #define IP_NAME_SZ 32
 #define MAX_MPLS_LABELS 16 /* This is the max label stack depth */
 #define MPLS_STACK_BOTTOM htonl(0x00000100)
+<<<<<<< HEAD
 /* Max number of internet mix entries that can be specified in imix_weights. */
 #define MAX_IMIX_ENTRIES 20
 #define IMIX_PRECISION 100 /* Precision of IMIX distribution */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define func_enter() pr_debug("entering %s\n", __func__);
 
@@ -245,12 +248,15 @@ static char *pkt_flag_names[] = {
 #define VLAN_TAG_SIZE(x) ((x)->vlan_id == 0xffff ? 0 : 4)
 #define SVLAN_TAG_SIZE(x) ((x)->svlan_id == 0xffff ? 0 : 4)
 
+<<<<<<< HEAD
 struct imix_pkt {
 	u64 size;
 	u64 weight;
 	u64 count_so_far;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct flow_state {
 	__be32 cur_daddr;
 	int count;
@@ -352,12 +358,15 @@ struct pktgen_dev {
 	__u8 traffic_class;  /* ditto for the (former) Traffic Class in IPv6
 				(see RFC 3260, sec. 4) */
 
+<<<<<<< HEAD
 	/* IMIX */
 	unsigned int n_imix_entries;
 	struct imix_pkt imix_entries[MAX_IMIX_ENTRIES];
 	/* Maps 0-IMIX_PRECISION range to imix_entry based on probability*/
 	__u8 imix_distribution[IMIX_PRECISION];
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* MPLS */
 	unsigned int nr_labels;	/* Depth of stack, 0 = no MPLS */
 	__be32 labels[MAX_MPLS_LABELS];
@@ -486,7 +495,10 @@ static void pktgen_stop_all_threads(struct pktgen_net *pn);
 
 static void pktgen_stop(struct pktgen_thread *t);
 static void pktgen_clear_counters(struct pktgen_dev *pkt_dev);
+<<<<<<< HEAD
 static void fill_imix_distribution(struct pktgen_dev *pkt_dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Module parameters, defaults. */
 static int pg_count_d __read_mostly = 1000;
@@ -568,6 +580,7 @@ static int pktgen_if_show(struct seq_file *seq, void *v)
 		   (unsigned long long)pkt_dev->count, pkt_dev->min_pkt_size,
 		   pkt_dev->max_pkt_size);
 
+<<<<<<< HEAD
 	if (pkt_dev->n_imix_entries > 0) {
 		seq_puts(seq, "     imix_weights: ");
 		for (i = 0; i < pkt_dev->n_imix_entries; i++) {
@@ -578,6 +591,8 @@ static int pktgen_if_show(struct seq_file *seq, void *v)
 		seq_puts(seq, "\n");
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	seq_printf(seq,
 		   "     frags: %d  delay: %llu  clone_skb: %d  ifname: %s\n",
 		   pkt_dev->nfrags, (unsigned long long) pkt_dev->delay,
@@ -695,6 +710,7 @@ static int pktgen_if_show(struct seq_file *seq, void *v)
 		   (unsigned long long)pkt_dev->sofar,
 		   (unsigned long long)pkt_dev->errors);
 
+<<<<<<< HEAD
 	if (pkt_dev->n_imix_entries > 0) {
 		int i;
 
@@ -707,6 +723,8 @@ static int pktgen_if_show(struct seq_file *seq, void *v)
 		seq_puts(seq, "\n");
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	seq_printf(seq,
 		   "     started: %lluus  stopped: %lluus idle: %lluus\n",
 		   (unsigned long long) ktime_to_us(pkt_dev->started_at),
@@ -830,6 +848,7 @@ done_str:
 	return i;
 }
 
+<<<<<<< HEAD
 /* Parses imix entries from user buffer.
  * The user buffer should consist of imix entries separated by spaces
  * where each entry consists of size and weight delimited by commas.
@@ -886,6 +905,8 @@ static ssize_t get_imix_entries(const char __user *buffer,
 	return i;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static ssize_t get_labels(const char __user *buffer, struct pktgen_dev *pkt_dev)
 {
 	unsigned int n = 0;
@@ -1054,6 +1075,7 @@ static ssize_t pktgen_if_write(struct file *file,
 		return count;
 	}
 
+<<<<<<< HEAD
 	if (!strcmp(name, "imix_weights")) {
 		if (pkt_dev->clone_skb > 0)
 			return -EINVAL;
@@ -1068,6 +1090,8 @@ static ssize_t pktgen_if_write(struct file *file,
 		return count;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!strcmp(name, "debug")) {
 		len = num_arg(&user_buffer[i], 10, &value);
 		if (len < 0)
@@ -1190,16 +1214,22 @@ static ssize_t pktgen_if_write(struct file *file,
 		len = num_arg(&user_buffer[i], 10, &value);
 		if (len < 0)
 			return len;
+<<<<<<< HEAD
 		/* clone_skb is not supported for netif_receive xmit_mode and
 		 * IMIX mode.
 		 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if ((value > 0) &&
 		    ((pkt_dev->xmit_mode == M_NETIF_RECEIVE) ||
 		     !(pkt_dev->odev->priv_flags & IFF_TX_SKB_SHARING)))
 			return -ENOTSUPP;
+<<<<<<< HEAD
 		if (value > 0 && pkt_dev->n_imix_entries > 0)
 			return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		i += len;
 		pkt_dev->clone_skb = value;
 
@@ -1304,6 +1334,14 @@ static ssize_t pktgen_if_write(struct file *file,
 			 * pktgen_xmit() is called
 			 */
 			pkt_dev->last_ok = 1;
+<<<<<<< HEAD
+=======
+
+			/* override clone_skb if user passed default value
+			 * at module loading time
+			 */
+			pkt_dev->clone_skb = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} else if (strcmp(f, "queue_xmit") == 0) {
 			pkt_dev->xmit_mode = M_QUEUE_XMIT;
 			pkt_dev->last_ok = 1;
@@ -2586,6 +2624,7 @@ static void mod_cur_headers(struct pktgen_dev *pkt_dev)
 				t = pkt_dev->min_pkt_size;
 		}
 		pkt_dev->cur_pkt_size = t;
+<<<<<<< HEAD
 	} else if (pkt_dev->n_imix_entries > 0) {
 		struct imix_pkt *entry;
 		__u32 t = prandom_u32() % IMIX_PRECISION;
@@ -2594,6 +2633,8 @@ static void mod_cur_headers(struct pktgen_dev *pkt_dev)
 		entry = &pkt_dev->imix_entries[entry_index];
 		entry->count_so_far++;
 		pkt_dev->cur_pkt_size = entry->size;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	set_cur_queue_map(pkt_dev);
@@ -2601,6 +2642,7 @@ static void mod_cur_headers(struct pktgen_dev *pkt_dev)
 	pkt_dev->flows[flow].count++;
 }
 
+<<<<<<< HEAD
 static void fill_imix_distribution(struct pktgen_dev *pkt_dev)
 {
 	int cumulative_probabilites[MAX_IMIX_ENTRIES];
@@ -2627,6 +2669,8 @@ static void fill_imix_distribution(struct pktgen_dev *pkt_dev)
 		pkt_dev->imix_distribution[i] = j;
 	}
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_XFRM
 static u32 pktgen_dst_metrics[RTAX_MAX + 1] = {
@@ -3288,6 +3332,7 @@ static void show_results(struct pktgen_dev *pkt_dev, int nr_frags)
 	pps = div64_u64(pkt_dev->sofar * NSEC_PER_SEC,
 			ktime_to_ns(elapsed));
 
+<<<<<<< HEAD
 	if (pkt_dev->n_imix_entries > 0) {
 		int i;
 		struct imix_pkt *entry;
@@ -3301,6 +3346,9 @@ static void show_results(struct pktgen_dev *pkt_dev, int nr_frags)
 	} else {
 		bps = pps * 8 * pkt_dev->cur_pkt_size;
 	}
+=======
+	bps = pps * 8 * pkt_dev->cur_pkt_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mbps = bps;
 	do_div(mbps, 1000000);
@@ -3602,6 +3650,10 @@ out:
 
 static int pktgen_thread_worker(void *arg)
 {
+<<<<<<< HEAD
+=======
+	DEFINE_WAIT(wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct pktgen_thread *t = arg;
 	struct pktgen_dev *pkt_dev = NULL;
 	int cpu = t->cpu;

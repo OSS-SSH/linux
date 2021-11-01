@@ -136,6 +136,10 @@ nv50_fifo = {
 	.pause = nv04_fifo_pause,
 	.start = nv04_fifo_start,
 	.chan = {
+<<<<<<< HEAD
+=======
+		&nv50_fifo_dma_oclass,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		&nv50_fifo_gpfifo_oclass,
 		NULL
 	},

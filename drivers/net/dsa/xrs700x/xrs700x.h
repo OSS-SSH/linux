@@ -40,4 +40,7 @@ struct xrs700x {
 struct xrs700x *xrs700x_switch_alloc(struct device *base, void *devpriv);
 int xrs700x_switch_register(struct xrs700x *priv);
 void xrs700x_switch_remove(struct xrs700x *priv);
+<<<<<<< HEAD
 void xrs700x_switch_shutdown(struct xrs700x *priv);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

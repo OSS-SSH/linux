@@ -517,7 +517,11 @@ static int xlp9xx_i2c_probe(struct platform_device *pdev)
 		return PTR_ERR(priv->base);
 
 	priv->irq = platform_get_irq(pdev, 0);
+<<<<<<< HEAD
 	if (priv->irq < 0)
+=======
+	if (priv->irq <= 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return priv->irq;
 	/* SMBAlert irq */
 	priv->alert_data.irq = platform_get_irq(pdev, 1);

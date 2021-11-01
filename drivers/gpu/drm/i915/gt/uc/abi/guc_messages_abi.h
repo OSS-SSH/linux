@@ -6,6 +6,7 @@
 #ifndef _ABI_GUC_MESSAGES_ABI_H
 #define _ABI_GUC_MESSAGES_ABI_H
 
+<<<<<<< HEAD
 /**
  * DOC: HXG Message
  *
@@ -219,6 +220,8 @@
 #define GUC_HXG_RESPONSE_MSG_n_DATAn		GUC_HXG_MSG_n_PAYLOAD
 
 /* deprecated */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define INTEL_GUC_MSG_TYPE_SHIFT	28
 #define INTEL_GUC_MSG_TYPE_MASK		(0xF << INTEL_GUC_MSG_TYPE_SHIFT)
 #define INTEL_GUC_MSG_DATA_SHIFT	16

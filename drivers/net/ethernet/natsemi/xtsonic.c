@@ -215,6 +215,10 @@ int xtsonic_probe(struct platform_device *pdev)
 	lp->device = &pdev->dev;
 	platform_set_drvdata(pdev, dev);
 	SET_NETDEV_DEV(dev, &pdev->dev);
+<<<<<<< HEAD
+=======
+	netdev_boot_setup_check(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev->base_addr = resmem->start;
 	dev->irq = resirq->start;

@@ -240,6 +240,7 @@ void __init setup_kuap(bool disabled)
 	mtspr(SPRN_MD_AP, MD_APG_KUAP);
 }
 #endif
+<<<<<<< HEAD
 
 int pud_clear_huge(pud_t *pud)
 {
@@ -250,3 +251,5 @@ int pmd_clear_huge(pmd_t *pmd)
 {
 	 return 0;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

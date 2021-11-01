@@ -1009,7 +1009,11 @@ static const struct ethtool_ops ethoc_ethtool_ops = {
 static const struct net_device_ops ethoc_netdev_ops = {
 	.ndo_open = ethoc_open,
 	.ndo_stop = ethoc_stop,
+<<<<<<< HEAD
 	.ndo_eth_ioctl = ethoc_ioctl,
+=======
+	.ndo_do_ioctl = ethoc_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_mac_address = ethoc_set_mac_address,
 	.ndo_set_rx_mode = ethoc_set_multicast_list,
 	.ndo_change_mtu = ethoc_change_mtu,

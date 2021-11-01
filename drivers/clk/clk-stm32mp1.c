@@ -1076,10 +1076,21 @@ static int clk_divider_rtc_set_rate(struct clk_hw *hw, unsigned long rate,
 
 static int clk_divider_rtc_determine_rate(struct clk_hw *hw, struct clk_rate_request *req)
 {
+<<<<<<< HEAD
 	if (req->best_parent_hw == clk_hw_get_parent_by_index(hw, HSE_RTC))
 		return clk_divider_ops.determine_rate(hw, req);
 
 	req->rate = req->best_parent_rate;
+=======
+	unsigned long best_parent_rate = req->best_parent_rate;
+
+	if (req->best_parent_hw == clk_hw_get_parent_by_index(hw, HSE_RTC)) {
+		req->rate = clk_divider_ops.round_rate(hw, req->rate, &best_parent_rate);
+		req->best_parent_rate = best_parent_rate;
+	} else {
+		req->rate = best_parent_rate;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

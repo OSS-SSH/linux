@@ -17,6 +17,10 @@
 variant-y := $(patsubst "%",%,$(CONFIG_XTENSA_VARIANT_NAME))
 
 VARIANT = $(variant-y)
+<<<<<<< HEAD
+=======
+export VARIANT
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ifneq ($(VARIANT),)
   ifdef cross_compiling
@@ -32,6 +36,12 @@ platform-$(CONFIG_XTENSA_PLATFORM_XT2000)	:= xt2000
 platform-$(CONFIG_XTENSA_PLATFORM_ISS)		:= iss
 platform-$(CONFIG_XTENSA_PLATFORM_XTFPGA)	:= xtfpga
 
+<<<<<<< HEAD
+=======
+PLATFORM = $(platform-y)
+export PLATFORM
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # temporarily until string.h is fixed
 KBUILD_CFLAGS += -ffreestanding -D__linux__
 KBUILD_CFLAGS += -pipe -mlongcalls -mtext-section-literals
@@ -53,11 +63,25 @@ KBUILD_CPPFLAGS += $(patsubst %,-I$(srctree)/%include,$(vardirs) $(plfdirs))
 
 KBUILD_DEFCONFIG := iss_defconfig
 
+<<<<<<< HEAD
+=======
+# Only build variant and/or platform if it includes a Makefile
+
+buildvar := $(shell test -e $(srctree)/arch/xtensa/variants/$(VARIANT)/Makefile && echo arch/xtensa/variants/$(VARIANT)/)
+buildplf := $(shell test -e $(srctree)/arch/xtensa/platforms/$(PLATFORM)/Makefile && echo arch/xtensa/platforms/$(PLATFORM)/)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # Find libgcc.a
 
 LIBGCC := $(shell $(CC) $(KBUILD_CFLAGS) -print-libgcc-file-name)
 
 head-y		:= arch/xtensa/kernel/head.o
+<<<<<<< HEAD
+=======
+core-y		+= arch/xtensa/kernel/ arch/xtensa/mm/
+core-y		+= $(buildvar) $(buildplf)
+core-y 		+= arch/xtensa/boot/dts/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 libs-y		+= arch/xtensa/lib/ $(LIBGCC)
 

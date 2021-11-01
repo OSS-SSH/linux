@@ -33,6 +33,10 @@
 #include <linux/kallsyms.h>
 #include <linux/kgdb.h>
 #include <linux/kdb.h>
+<<<<<<< HEAD
+=======
+#include <linux/list.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/notifier.h>
 #include <linux/interrupt.h>
 #include <linux/delay.h>
@@ -653,6 +657,7 @@ static void kdb_cmderror(int diag)
  * Returns:
  *	zero for success, a kdb diagnostic if error
  */
+<<<<<<< HEAD
 struct kdb_macro {
 	kdbtab_t cmd;			/* Macro command */
 	struct list_head statements;	/* Associated statement list */
@@ -664,6 +669,18 @@ struct kdb_macro_statement {
 };
 
 static struct kdb_macro *kdb_macro;
+=======
+struct defcmd_set {
+	int count;
+	bool usable;
+	char *name;
+	char *usage;
+	char *help;
+	char **command;
+};
+static struct defcmd_set *defcmd_set;
+static int defcmd_set_count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool defcmd_in_progress;
 
 /* Forward references */
@@ -671,6 +688,7 @@ static int kdb_exec_defcmd(int argc, const char **argv);
 
 static int kdb_defcmd2(const char *cmdstr, const char *argv0)
 {
+<<<<<<< HEAD
 	struct kdb_macro_statement *kms;
 
 	if (!kdb_macro)
@@ -693,19 +711,54 @@ static int kdb_defcmd2(const char *cmdstr, const char *argv0)
 	kms->statement = kdb_strdup(cmdstr, GFP_KDB);
 	list_add_tail(&kms->list_node, &kdb_macro->statements);
 
+=======
+	struct defcmd_set *s = defcmd_set + defcmd_set_count - 1;
+	char **save_command = s->command;
+	if (strcmp(argv0, "endefcmd") == 0) {
+		defcmd_in_progress = false;
+		if (!s->count)
+			s->usable = false;
+		if (s->usable)
+			/* macros are always safe because when executed each
+			 * internal command re-enters kdb_parse() and is
+			 * safety checked individually.
+			 */
+			kdb_register_flags(s->name, kdb_exec_defcmd, s->usage,
+					   s->help, 0,
+					   KDB_ENABLE_ALWAYS_SAFE);
+		return 0;
+	}
+	if (!s->usable)
+		return KDB_NOTIMP;
+	s->command = kcalloc(s->count + 1, sizeof(*(s->command)), GFP_KDB);
+	if (!s->command) {
+		kdb_printf("Could not allocate new kdb_defcmd table for %s\n",
+			   cmdstr);
+		s->usable = false;
+		return KDB_NOTIMP;
+	}
+	memcpy(s->command, save_command, s->count * sizeof(*(s->command)));
+	s->command[s->count++] = kdb_strdup(cmdstr, GFP_KDB);
+	kfree(save_command);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
 static int kdb_defcmd(int argc, const char **argv)
 {
+<<<<<<< HEAD
 	kdbtab_t *mp;
 
+=======
+	struct defcmd_set *save_defcmd_set = defcmd_set, *s;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (defcmd_in_progress) {
 		kdb_printf("kdb: nested defcmd detected, assuming missing "
 			   "endefcmd\n");
 		kdb_defcmd2("endefcmd", "endefcmd");
 	}
 	if (argc == 0) {
+<<<<<<< HEAD
 		kdbtab_t *kp;
 		struct kdb_macro *kmp;
 		struct kdb_macro_statement *kms;
@@ -720,6 +773,15 @@ static int kdb_defcmd(int argc, const char **argv)
 					kdb_printf("%s", kms->statement);
 				kdb_printf("endefcmd\n");
 			}
+=======
+		int i;
+		for (s = defcmd_set; s < defcmd_set + defcmd_set_count; ++s) {
+			kdb_printf("defcmd %s \"%s\" \"%s\"\n", s->name,
+				   s->usage, s->help);
+			for (i = 0; i < s->count; ++i)
+				kdb_printf("%s", s->command[i]);
+			kdb_printf("endefcmd\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		return 0;
 	}
@@ -729,6 +791,7 @@ static int kdb_defcmd(int argc, const char **argv)
 		kdb_printf("Command only available during kdb_init()\n");
 		return KDB_NOTIMP;
 	}
+<<<<<<< HEAD
 	kdb_macro = kzalloc(sizeof(*kdb_macro), GFP_KDB);
 	if (!kdb_macro)
 		goto fail_defcmd;
@@ -766,6 +829,47 @@ fail_name:
 	kfree(kdb_macro);
 fail_defcmd:
 	kdb_printf("Could not allocate new kdb_macro entry for %s\n", argv[1]);
+=======
+	defcmd_set = kmalloc_array(defcmd_set_count + 1, sizeof(*defcmd_set),
+				   GFP_KDB);
+	if (!defcmd_set)
+		goto fail_defcmd;
+	memcpy(defcmd_set, save_defcmd_set,
+	       defcmd_set_count * sizeof(*defcmd_set));
+	s = defcmd_set + defcmd_set_count;
+	memset(s, 0, sizeof(*s));
+	s->usable = true;
+	s->name = kdb_strdup(argv[1], GFP_KDB);
+	if (!s->name)
+		goto fail_name;
+	s->usage = kdb_strdup(argv[2], GFP_KDB);
+	if (!s->usage)
+		goto fail_usage;
+	s->help = kdb_strdup(argv[3], GFP_KDB);
+	if (!s->help)
+		goto fail_help;
+	if (s->usage[0] == '"') {
+		strcpy(s->usage, argv[2]+1);
+		s->usage[strlen(s->usage)-1] = '\0';
+	}
+	if (s->help[0] == '"') {
+		strcpy(s->help, argv[3]+1);
+		s->help[strlen(s->help)-1] = '\0';
+	}
+	++defcmd_set_count;
+	defcmd_in_progress = true;
+	kfree(save_defcmd_set);
+	return 0;
+fail_help:
+	kfree(s->usage);
+fail_usage:
+	kfree(s->name);
+fail_name:
+	kfree(defcmd_set);
+fail_defcmd:
+	kdb_printf("Could not allocate new defcmd_set entry for %s\n", argv[1]);
+	defcmd_set = save_defcmd_set;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return KDB_NOTIMP;
 }
 
@@ -780,6 +884,7 @@ fail_defcmd:
  */
 static int kdb_exec_defcmd(int argc, const char **argv)
 {
+<<<<<<< HEAD
 	int ret;
 	kdbtab_t *kp;
 	struct kdb_macro *kmp;
@@ -793,10 +898,22 @@ static int kdb_exec_defcmd(int argc, const char **argv)
 			break;
 	}
 	if (list_entry_is_head(kp, &kdb_cmds_head, list_node)) {
+=======
+	int i, ret;
+	struct defcmd_set *s;
+	if (argc != 0)
+		return KDB_ARGCOUNT;
+	for (s = defcmd_set, i = 0; i < defcmd_set_count; ++i, ++s) {
+		if (strcmp(s->name, argv[0]) == 0)
+			break;
+	}
+	if (i == defcmd_set_count) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kdb_printf("kdb_exec_defcmd: could not find commands for %s\n",
 			   argv[0]);
 		return KDB_NOTIMP;
 	}
+<<<<<<< HEAD
 	kmp = container_of(kp, struct kdb_macro, cmd);
 	list_for_each_entry(kms, &kmp->statements, list_node) {
 		/*
@@ -805,6 +922,14 @@ static int kdb_exec_defcmd(int argc, const char **argv)
 		argv = NULL;
 		kdb_printf("[%s]kdb> %s\n", kmp->cmd.name, kms->statement);
 		ret = kdb_parse(kms->statement);
+=======
+	for (i = 0; i < s->count; ++i) {
+		/* Recursive use of kdb_parse, do not use argv after
+		 * this point */
+		argv = NULL;
+		kdb_printf("[%s]kdb> %s\n", s->name, s->command[i]);
+		ret = kdb_parse(s->command[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			return ret;
 	}
@@ -1015,11 +1140,19 @@ int kdb_parse(const char *cmdstr)
 		 * If this command is allowed to be abbreviated,
 		 * check to see if this is it.
 		 */
+<<<<<<< HEAD
 		if (tp->minlen && (strlen(argv[0]) <= tp->minlen) &&
 		    (strncmp(argv[0], tp->name, tp->minlen) == 0))
 			break;
 
 		if (strcmp(argv[0], tp->name) == 0)
+=======
+		if (tp->cmd_minlen && (strlen(argv[0]) <= tp->cmd_minlen) &&
+		    (strncmp(argv[0], tp->cmd_name, tp->cmd_minlen) == 0))
+			break;
+
+		if (strcmp(argv[0], tp->cmd_name) == 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 	}
 
@@ -1030,7 +1163,12 @@ int kdb_parse(const char *cmdstr)
 	 */
 	if (list_entry_is_head(tp, &kdb_cmds_head, list_node)) {
 		list_for_each_entry(tp, &kdb_cmds_head, list_node) {
+<<<<<<< HEAD
 			if (strncmp(argv[0], tp->name, strlen(tp->name)) == 0)
+=======
+			if (strncmp(argv[0], tp->cmd_name,
+				    strlen(tp->cmd_name)) == 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				break;
 		}
 	}
@@ -1038,19 +1176,34 @@ int kdb_parse(const char *cmdstr)
 	if (!list_entry_is_head(tp, &kdb_cmds_head, list_node)) {
 		int result;
 
+<<<<<<< HEAD
 		if (!kdb_check_flags(tp->flags, kdb_cmd_enabled, argc <= 1))
 			return KDB_NOPERM;
 
 		KDB_STATE_SET(CMD);
 		result = (*tp->func)(argc-1, (const char **)argv);
+=======
+		if (!kdb_check_flags(tp->cmd_flags, kdb_cmd_enabled, argc <= 1))
+			return KDB_NOPERM;
+
+		KDB_STATE_SET(CMD);
+		result = (*tp->cmd_func)(argc-1, (const char **)argv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (result && ignore_errors && result > KDB_CMD_GO)
 			result = 0;
 		KDB_STATE_CLEAR(CMD);
 
+<<<<<<< HEAD
 		if (tp->flags & KDB_REPEAT_WITH_ARGS)
 			return result;
 
 		argc = tp->flags & KDB_REPEAT_NO_ARGS ? 1 : 0;
+=======
+		if (tp->cmd_flags & KDB_REPEAT_WITH_ARGS)
+			return result;
+
+		argc = tp->cmd_flags & KDB_REPEAT_NO_ARGS ? 1 : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (argv[argc])
 			*(argv[argc]) = '\0';
 		return result;
@@ -2417,12 +2570,21 @@ static int kdb_help(int argc, const char **argv)
 		char *space = "";
 		if (KDB_FLAG(CMD_INTERRUPT))
 			return 0;
+<<<<<<< HEAD
 		if (!kdb_check_flags(kt->flags, kdb_cmd_enabled, true))
 			continue;
 		if (strlen(kt->usage) > 20)
 			space = "\n                                    ";
 		kdb_printf("%-15.15s %-20s%s%s\n", kt->name,
 			   kt->usage, space, kt->help);
+=======
+		if (!kdb_check_flags(kt->cmd_flags, kdb_cmd_enabled, true))
+			continue;
+		if (strlen(kt->cmd_usage) > 20)
+			space = "\n                                    ";
+		kdb_printf("%-15.15s %-20s%s%s\n", kt->cmd_name,
+			   kt->cmd_usage, space, kt->cmd_help);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return 0;
 }
@@ -2618,6 +2780,7 @@ static int kdb_grep_help(int argc, const char **argv)
 	return 0;
 }
 
+<<<<<<< HEAD
 /**
  * kdb_register() - This function is used to register a kernel debugger
  *                  command.
@@ -2627,23 +2790,73 @@ static int kdb_grep_help(int argc, const char **argv)
  * allocated until unregister is called.
  */
 int kdb_register(kdbtab_t *cmd)
+=======
+/*
+ * kdb_register_flags - This function is used to register a kernel
+ * 	debugger command.
+ * Inputs:
+ *	cmd	Command name
+ *	func	Function to execute the command
+ *	usage	A simple usage string showing arguments
+ *	help	A simple help string describing command
+ *	repeat	Does the command auto repeat on enter?
+ * Returns:
+ *	zero for success, one if a duplicate command.
+ */
+int kdb_register_flags(char *cmd,
+		       kdb_func_t func,
+		       char *usage,
+		       char *help,
+		       short minlen,
+		       kdb_cmdflags_t flags)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	kdbtab_t *kp;
 
 	list_for_each_entry(kp, &kdb_cmds_head, list_node) {
+<<<<<<< HEAD
 		if (strcmp(kp->name, cmd->name) == 0) {
 			kdb_printf("Duplicate kdb cmd: %s, func %p help %s\n",
 				   cmd->name, cmd->func, cmd->help);
+=======
+		if (strcmp(kp->cmd_name, cmd) == 0) {
+			kdb_printf("Duplicate kdb command registered: "
+				"%s, func %px help %s\n", cmd, func, help);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return 1;
 		}
 	}
 
+<<<<<<< HEAD
 	list_add_tail(&cmd->list_node, &kdb_cmds_head);
 	return 0;
 }
 EXPORT_SYMBOL_GPL(kdb_register);
 
 /**
+=======
+	kp = kmalloc(sizeof(*kp), GFP_KDB);
+	if (!kp) {
+		kdb_printf("Could not allocate new kdb_command table\n");
+		return 1;
+	}
+
+	kp->cmd_name   = cmd;
+	kp->cmd_func   = func;
+	kp->cmd_usage  = usage;
+	kp->cmd_help   = help;
+	kp->cmd_minlen = minlen;
+	kp->cmd_flags  = flags;
+	kp->is_dynamic = true;
+
+	list_add_tail(&kp->list_node, &kdb_cmds_head);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(kdb_register_flags);
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * kdb_register_table() - This function is used to register a kdb command
  *                        table.
  * @kp: pointer to kdb command table
@@ -2657,6 +2870,7 @@ void kdb_register_table(kdbtab_t *kp, size_t len)
 	}
 }
 
+<<<<<<< HEAD
 /**
  * kdb_unregister() - This function is used to unregister a kernel debugger
  *                    command. It is generally called when a module which
@@ -2666,10 +2880,62 @@ void kdb_register_table(kdbtab_t *kp, size_t len)
 void kdb_unregister(kdbtab_t *cmd)
 {
 	list_del(&cmd->list_node);
+=======
+/*
+ * kdb_register - Compatibility register function for commands that do
+ *	not need to specify a repeat state.  Equivalent to
+ *	kdb_register_flags with flags set to 0.
+ * Inputs:
+ *	cmd	Command name
+ *	func	Function to execute the command
+ *	usage	A simple usage string showing arguments
+ *	help	A simple help string describing command
+ * Returns:
+ *	zero for success, one if a duplicate command.
+ */
+int kdb_register(char *cmd,
+	     kdb_func_t func,
+	     char *usage,
+	     char *help,
+	     short minlen)
+{
+	return kdb_register_flags(cmd, func, usage, help, minlen, 0);
+}
+EXPORT_SYMBOL_GPL(kdb_register);
+
+/*
+ * kdb_unregister - This function is used to unregister a kernel
+ *	debugger command.  It is generally called when a module which
+ *	implements kdb commands is unloaded.
+ * Inputs:
+ *	cmd	Command name
+ * Returns:
+ *	zero for success, one command not registered.
+ */
+int kdb_unregister(char *cmd)
+{
+	kdbtab_t *kp;
+
+	/*
+	 *  find the command.
+	 */
+	list_for_each_entry(kp, &kdb_cmds_head, list_node) {
+		if (strcmp(kp->cmd_name, cmd) == 0) {
+			list_del(&kp->list_node);
+			if (kp->is_dynamic)
+				kfree(kp);
+			return 0;
+		}
+	}
+
+	/* Couldn't find it.  */
+	return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(kdb_unregister);
 
 static kdbtab_t maintab[] = {
+<<<<<<< HEAD
 	{	.name = "md",
 		.func = kdb_md,
 		.usage = "<vaddr>",
@@ -2873,15 +3139,223 @@ static kdbtab_t maintab[] = {
 		.usage = "",
 		.help = "Display help on | grep",
 		.flags = KDB_ENABLE_ALWAYS_SAFE,
+=======
+	{	.cmd_name = "md",
+		.cmd_func = kdb_md,
+		.cmd_usage = "<vaddr>",
+		.cmd_help = "Display Memory Contents, also mdWcN, e.g. md8c1",
+		.cmd_minlen = 1,
+		.cmd_flags = KDB_ENABLE_MEM_READ | KDB_REPEAT_NO_ARGS,
+	},
+	{	.cmd_name = "mdr",
+		.cmd_func = kdb_md,
+		.cmd_usage = "<vaddr> <bytes>",
+		.cmd_help = "Display Raw Memory",
+		.cmd_flags = KDB_ENABLE_MEM_READ | KDB_REPEAT_NO_ARGS,
+	},
+	{	.cmd_name = "mdp",
+		.cmd_func = kdb_md,
+		.cmd_usage = "<paddr> <bytes>",
+		.cmd_help = "Display Physical Memory",
+		.cmd_flags = KDB_ENABLE_MEM_READ | KDB_REPEAT_NO_ARGS,
+	},
+	{	.cmd_name = "mds",
+		.cmd_func = kdb_md,
+		.cmd_usage = "<vaddr>",
+		.cmd_help = "Display Memory Symbolically",
+		.cmd_flags = KDB_ENABLE_MEM_READ | KDB_REPEAT_NO_ARGS,
+	},
+	{	.cmd_name = "mm",
+		.cmd_func = kdb_mm,
+		.cmd_usage = "<vaddr> <contents>",
+		.cmd_help = "Modify Memory Contents",
+		.cmd_flags = KDB_ENABLE_MEM_WRITE | KDB_REPEAT_NO_ARGS,
+	},
+	{	.cmd_name = "go",
+		.cmd_func = kdb_go,
+		.cmd_usage = "[<vaddr>]",
+		.cmd_help = "Continue Execution",
+		.cmd_minlen = 1,
+		.cmd_flags = KDB_ENABLE_REG_WRITE |
+			     KDB_ENABLE_ALWAYS_SAFE_NO_ARGS,
+	},
+	{	.cmd_name = "rd",
+		.cmd_func = kdb_rd,
+		.cmd_usage = "",
+		.cmd_help = "Display Registers",
+		.cmd_flags = KDB_ENABLE_REG_READ,
+	},
+	{	.cmd_name = "rm",
+		.cmd_func = kdb_rm,
+		.cmd_usage = "<reg> <contents>",
+		.cmd_help = "Modify Registers",
+		.cmd_flags = KDB_ENABLE_REG_WRITE,
+	},
+	{	.cmd_name = "ef",
+		.cmd_func = kdb_ef,
+		.cmd_usage = "<vaddr>",
+		.cmd_help = "Display exception frame",
+		.cmd_flags = KDB_ENABLE_MEM_READ,
+	},
+	{	.cmd_name = "bt",
+		.cmd_func = kdb_bt,
+		.cmd_usage = "[<vaddr>]",
+		.cmd_help = "Stack traceback",
+		.cmd_minlen = 1,
+		.cmd_flags = KDB_ENABLE_MEM_READ | KDB_ENABLE_INSPECT_NO_ARGS,
+	},
+	{	.cmd_name = "btp",
+		.cmd_func = kdb_bt,
+		.cmd_usage = "<pid>",
+		.cmd_help = "Display stack for process <pid>",
+		.cmd_flags = KDB_ENABLE_INSPECT,
+	},
+	{	.cmd_name = "bta",
+		.cmd_func = kdb_bt,
+		.cmd_usage = "[D|R|S|T|C|Z|E|U|I|M|A]",
+		.cmd_help = "Backtrace all processes matching state flag",
+		.cmd_flags = KDB_ENABLE_INSPECT,
+	},
+	{	.cmd_name = "btc",
+		.cmd_func = kdb_bt,
+		.cmd_usage = "",
+		.cmd_help = "Backtrace current process on each cpu",
+		.cmd_flags = KDB_ENABLE_INSPECT,
+	},
+	{	.cmd_name = "btt",
+		.cmd_func = kdb_bt,
+		.cmd_usage = "<vaddr>",
+		.cmd_help = "Backtrace process given its struct task address",
+		.cmd_flags = KDB_ENABLE_MEM_READ | KDB_ENABLE_INSPECT_NO_ARGS,
+	},
+	{	.cmd_name = "env",
+		.cmd_func = kdb_env,
+		.cmd_usage = "",
+		.cmd_help = "Show environment variables",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+	{	.cmd_name = "set",
+		.cmd_func = kdb_set,
+		.cmd_usage = "",
+		.cmd_help = "Set environment variables",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+	{	.cmd_name = "help",
+		.cmd_func = kdb_help,
+		.cmd_usage = "",
+		.cmd_help = "Display Help Message",
+		.cmd_minlen = 1,
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+	{	.cmd_name = "?",
+		.cmd_func = kdb_help,
+		.cmd_usage = "",
+		.cmd_help = "Display Help Message",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+	{	.cmd_name = "cpu",
+		.cmd_func = kdb_cpu,
+		.cmd_usage = "<cpunum>",
+		.cmd_help = "Switch to new cpu",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE_NO_ARGS,
+	},
+	{	.cmd_name = "kgdb",
+		.cmd_func = kdb_kgdb,
+		.cmd_usage = "",
+		.cmd_help = "Enter kgdb mode",
+		.cmd_flags = 0,
+	},
+	{	.cmd_name = "ps",
+		.cmd_func = kdb_ps,
+		.cmd_usage = "[<flags>|A]",
+		.cmd_help = "Display active task list",
+		.cmd_flags = KDB_ENABLE_INSPECT,
+	},
+	{	.cmd_name = "pid",
+		.cmd_func = kdb_pid,
+		.cmd_usage = "<pidnum>",
+		.cmd_help = "Switch to another task",
+		.cmd_flags = KDB_ENABLE_INSPECT,
+	},
+	{	.cmd_name = "reboot",
+		.cmd_func = kdb_reboot,
+		.cmd_usage = "",
+		.cmd_help = "Reboot the machine immediately",
+		.cmd_flags = KDB_ENABLE_REBOOT,
+	},
+#if defined(CONFIG_MODULES)
+	{	.cmd_name = "lsmod",
+		.cmd_func = kdb_lsmod,
+		.cmd_usage = "",
+		.cmd_help = "List loaded kernel modules",
+		.cmd_flags = KDB_ENABLE_INSPECT,
+	},
+#endif
+#if defined(CONFIG_MAGIC_SYSRQ)
+	{	.cmd_name = "sr",
+		.cmd_func = kdb_sr,
+		.cmd_usage = "<key>",
+		.cmd_help = "Magic SysRq key",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+#endif
+#if defined(CONFIG_PRINTK)
+	{	.cmd_name = "dmesg",
+		.cmd_func = kdb_dmesg,
+		.cmd_usage = "[lines]",
+		.cmd_help = "Display syslog buffer",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+#endif
+	{	.cmd_name = "defcmd",
+		.cmd_func = kdb_defcmd,
+		.cmd_usage = "name \"usage\" \"help\"",
+		.cmd_help = "Define a set of commands, down to endefcmd",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+	{	.cmd_name = "kill",
+		.cmd_func = kdb_kill,
+		.cmd_usage = "<-signal> <pid>",
+		.cmd_help = "Send a signal to a process",
+		.cmd_flags = KDB_ENABLE_SIGNAL,
+	},
+	{	.cmd_name = "summary",
+		.cmd_func = kdb_summary,
+		.cmd_usage = "",
+		.cmd_help = "Summarize the system",
+		.cmd_minlen = 4,
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+	},
+	{	.cmd_name = "per_cpu",
+		.cmd_func = kdb_per_cpu,
+		.cmd_usage = "<sym> [<bytes>] [<cpu>]",
+		.cmd_help = "Display per_cpu variables",
+		.cmd_minlen = 3,
+		.cmd_flags = KDB_ENABLE_MEM_READ,
+	},
+	{	.cmd_name = "grephelp",
+		.cmd_func = kdb_grep_help,
+		.cmd_usage = "",
+		.cmd_help = "Display help on | grep",
+		.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 };
 
 static kdbtab_t nmicmd = {
+<<<<<<< HEAD
 	.name = "disable_nmi",
 	.func = kdb_disable_nmi,
 	.usage = "",
 	.help = "Disable NMI entry to KDB",
 	.flags = KDB_ENABLE_ALWAYS_SAFE,
+=======
+	.cmd_name = "disable_nmi",
+	.cmd_func = kdb_disable_nmi,
+	.cmd_usage = "",
+	.cmd_help = "Disable NMI entry to KDB",
+	.cmd_flags = KDB_ENABLE_ALWAYS_SAFE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Initialize the kdb command table. */

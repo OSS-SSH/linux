@@ -2,6 +2,11 @@
 #ifndef _ASM_X86_PKEYS_H
 #define _ASM_X86_PKEYS_H
 
+<<<<<<< HEAD
+=======
+#define ARCH_DEFAULT_PKEY	0
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * If more than 16 keys are ever supported, a thorough audit
  * will be necessary to ensure that the types that store key

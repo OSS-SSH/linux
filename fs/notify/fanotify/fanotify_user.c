@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <linux/fanotify.h>
 #include <linux/fcntl.h>
+<<<<<<< HEAD
 #include <linux/fdtable.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/file.h>
 #include <linux/fs.h>
 #include <linux/anon_inodes.h>
@@ -55,27 +58,44 @@ static int fanotify_max_queued_events __read_mostly;
 
 #include <linux/sysctl.h>
 
+<<<<<<< HEAD
 static long ft_zero = 0;
 static long ft_int_max = INT_MAX;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct ctl_table fanotify_table[] = {
 	{
 		.procname	= "max_user_groups",
 		.data	= &init_user_ns.ucount_max[UCOUNT_FANOTIFY_GROUPS],
+<<<<<<< HEAD
 		.maxlen		= sizeof(long),
 		.mode		= 0644,
 		.proc_handler	= proc_doulongvec_minmax,
 		.extra1		= &ft_zero,
 		.extra2		= &ft_int_max,
+=======
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= SYSCTL_ZERO,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{
 		.procname	= "max_user_marks",
 		.data	= &init_user_ns.ucount_max[UCOUNT_FANOTIFY_MARKS],
+<<<<<<< HEAD
 		.maxlen		= sizeof(long),
 		.mode		= 0644,
 		.proc_handler	= proc_doulongvec_minmax,
 		.extra1		= &ft_zero,
 		.extra2		= &ft_int_max,
+=======
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= SYSCTL_ZERO,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{
 		.procname	= "max_queued_events",
@@ -110,10 +130,15 @@ struct kmem_cache *fanotify_path_event_cachep __read_mostly;
 struct kmem_cache *fanotify_perm_event_cachep __read_mostly;
 
 #define FANOTIFY_EVENT_ALIGN 4
+<<<<<<< HEAD
 #define FANOTIFY_FID_INFO_HDR_LEN \
 	(sizeof(struct fanotify_event_info_fid) + sizeof(struct file_handle))
 #define FANOTIFY_PIDFD_INFO_HDR_LEN \
 	sizeof(struct fanotify_event_info_pidfd)
+=======
+#define FANOTIFY_INFO_HDR_LEN \
+	(sizeof(struct fanotify_event_info_fid) + sizeof(struct file_handle))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int fanotify_fid_info_len(int fh_len, int name_len)
 {
@@ -122,11 +147,18 @@ static int fanotify_fid_info_len(int fh_len, int name_len)
 	if (name_len)
 		info_len += name_len + 1;
 
+<<<<<<< HEAD
 	return roundup(FANOTIFY_FID_INFO_HDR_LEN + info_len,
 		       FANOTIFY_EVENT_ALIGN);
 }
 
 static int fanotify_event_info_len(unsigned int info_mode,
+=======
+	return roundup(FANOTIFY_INFO_HDR_LEN + info_len, FANOTIFY_EVENT_ALIGN);
+}
+
+static int fanotify_event_info_len(unsigned int fid_mode,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   struct fanotify_event *event)
 {
 	struct fanotify_info *info = fanotify_event_info(event);
@@ -137,8 +169,12 @@ static int fanotify_event_info_len(unsigned int info_mode,
 
 	if (dir_fh_len) {
 		info_len += fanotify_fid_info_len(dir_fh_len, info->name_len);
+<<<<<<< HEAD
 	} else if ((info_mode & FAN_REPORT_NAME) &&
 		   (event->mask & FAN_ONDIR)) {
+=======
+	} else if ((fid_mode & FAN_REPORT_NAME) && (event->mask & FAN_ONDIR)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/*
 		 * With group flag FAN_REPORT_NAME, if name was not recorded in
 		 * event on a directory, we will report the name ".".
@@ -146,9 +182,12 @@ static int fanotify_event_info_len(unsigned int info_mode,
 		dot_len = 1;
 	}
 
+<<<<<<< HEAD
 	if (info_mode & FAN_REPORT_PIDFD)
 		info_len += FANOTIFY_PIDFD_INFO_HDR_LEN;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (fh_len)
 		info_len += fanotify_fid_info_len(fh_len, dot_len);
 
@@ -184,7 +223,11 @@ static struct fanotify_event *get_one_event(struct fsnotify_group *group,
 	size_t event_size = FAN_EVENT_METADATA_LEN;
 	struct fanotify_event *event = NULL;
 	struct fsnotify_event *fsn_event;
+<<<<<<< HEAD
 	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
+=======
+	unsigned int fid_mode = FAN_GROUP_FLAG(group, FANOTIFY_FID_BITS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pr_debug("%s: group=%p count=%zd\n", __func__, group, count);
 
@@ -194,8 +237,13 @@ static struct fanotify_event *get_one_event(struct fsnotify_group *group,
 		goto out;
 
 	event = FANOTIFY_E(fsn_event);
+<<<<<<< HEAD
 	if (info_mode)
 		event_size += fanotify_event_info_len(info_mode, event);
+=======
+	if (fid_mode)
+		event_size += fanotify_event_info_len(fid_mode, event);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (event_size > count) {
 		event = ERR_PTR(-EINVAL);
@@ -316,10 +364,16 @@ static int process_access_response(struct fsnotify_group *group,
 	return -ENOENT;
 }
 
+<<<<<<< HEAD
 static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
 				 int info_type, const char *name,
 				 size_t name_len,
 				 char __user *buf, size_t count)
+=======
+static int copy_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
+			     int info_type, const char *name, size_t name_len,
+			     char __user *buf, size_t count)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fanotify_event_info_fid info = { };
 	struct file_handle handle = { };
@@ -412,6 +466,7 @@ static int copy_fid_info_to_user(__kernel_fsid_t *fsid, struct fanotify_fh *fh,
 	return info_len;
 }
 
+<<<<<<< HEAD
 static int copy_pidfd_info_to_user(int pidfd,
 				   char __user *buf,
 				   size_t count)
@@ -523,6 +578,8 @@ static int copy_info_records_to_user(struct fanotify_event *event,
 	return total_bytes;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static ssize_t copy_event_to_user(struct fsnotify_group *group,
 				  struct fanotify_event *event,
 				  char __user *buf, size_t count)
@@ -530,15 +587,26 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 	struct fanotify_event_metadata metadata;
 	struct path *path = fanotify_event_path(event);
 	struct fanotify_info *info = fanotify_event_info(event);
+<<<<<<< HEAD
 	unsigned int info_mode = FAN_GROUP_FLAG(group, FANOTIFY_INFO_MODES);
 	unsigned int pidfd_mode = info_mode & FAN_REPORT_PIDFD;
 	struct file *f = NULL;
 	int ret, pidfd = FAN_NOPIDFD, fd = FAN_NOFD;
+=======
+	unsigned int fid_mode = FAN_GROUP_FLAG(group, FANOTIFY_FID_BITS);
+	struct file *f = NULL;
+	int ret, fd = FAN_NOFD;
+	int info_type = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pr_debug("%s: group=%p event=%p\n", __func__, group, event);
 
 	metadata.event_len = FAN_EVENT_METADATA_LEN +
+<<<<<<< HEAD
 				fanotify_event_info_len(info_mode, event);
+=======
+				fanotify_event_info_len(fid_mode, event);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	metadata.metadata_len = FAN_EVENT_METADATA_LEN;
 	metadata.vers = FANOTIFY_METADATA_VERSION;
 	metadata.reserved = 0;
@@ -567,6 +635,7 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 	}
 	metadata.fd = fd;
 
+<<<<<<< HEAD
 	if (pidfd_mode) {
 		/*
 		 * Complain if the FAN_REPORT_PIDFD and FAN_REPORT_TID mutual
@@ -594,6 +663,8 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = -EFAULT;
 	/*
 	 * Sanity check copy size in case get_one_event() and
@@ -614,11 +685,75 @@ static ssize_t copy_event_to_user(struct fsnotify_group *group,
 	if (f)
 		fd_install(fd, f);
 
+<<<<<<< HEAD
 	if (info_mode) {
 		ret = copy_info_records_to_user(event, info, info_mode, pidfd,
 						buf, count);
 		if (ret < 0)
 			goto out_close_fd;
+=======
+	/* Event info records order is: dir fid + name, child fid */
+	if (fanotify_event_dir_fh_len(event)) {
+		info_type = info->name_len ? FAN_EVENT_INFO_TYPE_DFID_NAME :
+					     FAN_EVENT_INFO_TYPE_DFID;
+		ret = copy_info_to_user(fanotify_event_fsid(event),
+					fanotify_info_dir_fh(info),
+					info_type, fanotify_info_name(info),
+					info->name_len, buf, count);
+		if (ret < 0)
+			goto out_close_fd;
+
+		buf += ret;
+		count -= ret;
+	}
+
+	if (fanotify_event_object_fh_len(event)) {
+		const char *dot = NULL;
+		int dot_len = 0;
+
+		if (fid_mode == FAN_REPORT_FID || info_type) {
+			/*
+			 * With only group flag FAN_REPORT_FID only type FID is
+			 * reported. Second info record type is always FID.
+			 */
+			info_type = FAN_EVENT_INFO_TYPE_FID;
+		} else if ((fid_mode & FAN_REPORT_NAME) &&
+			   (event->mask & FAN_ONDIR)) {
+			/*
+			 * With group flag FAN_REPORT_NAME, if name was not
+			 * recorded in an event on a directory, report the
+			 * name "." with info type DFID_NAME.
+			 */
+			info_type = FAN_EVENT_INFO_TYPE_DFID_NAME;
+			dot = ".";
+			dot_len = 1;
+		} else if ((event->mask & ALL_FSNOTIFY_DIRENT_EVENTS) ||
+			   (event->mask & FAN_ONDIR)) {
+			/*
+			 * With group flag FAN_REPORT_DIR_FID, a single info
+			 * record has type DFID for directory entry modification
+			 * event and for event on a directory.
+			 */
+			info_type = FAN_EVENT_INFO_TYPE_DFID;
+		} else {
+			/*
+			 * With group flags FAN_REPORT_DIR_FID|FAN_REPORT_FID,
+			 * a single info record has type FID for event on a
+			 * non-directory, when there is no directory to report.
+			 * For example, on FAN_DELETE_SELF event.
+			 */
+			info_type = FAN_EVENT_INFO_TYPE_FID;
+		}
+
+		ret = copy_info_to_user(fanotify_event_fsid(event),
+					fanotify_event_object_fh(event),
+					info_type, dot, dot_len, buf, count);
+		if (ret < 0)
+			goto out_close_fd;
+
+		buf += ret;
+		count -= ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return metadata.event_len;
@@ -628,10 +763,13 @@ out_close_fd:
 		put_unused_fd(fd);
 		fput(f);
 	}
+<<<<<<< HEAD
 
 	if (pidfd >= 0)
 		close_fd(pidfd);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -1177,6 +1315,7 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
 #endif
 		return -EINVAL;
 
+<<<<<<< HEAD
 	/*
 	 * A pidfd can only be returned for a thread-group leader; thus
 	 * FAN_REPORT_PIDFD and FAN_REPORT_TID need to remain mutually
@@ -1185,6 +1324,8 @@ SYSCALL_DEFINE2(fanotify_init, unsigned int, flags, unsigned int, event_f_flags)
 	if ((flags & FAN_REPORT_PIDFD) && (flags & FAN_REPORT_TID))
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (event_f_flags & ~FANOTIFY_INIT_ALL_EVENT_F_BITS)
 		return -EINVAL;
 
@@ -1586,7 +1727,11 @@ static int __init fanotify_user_setup(void)
 				     FANOTIFY_DEFAULT_MAX_USER_MARKS);
 
 	BUILD_BUG_ON(FANOTIFY_INIT_FLAGS & FANOTIFY_INTERNAL_GROUP_FLAGS);
+<<<<<<< HEAD
 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 11);
+=======
+	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_INIT_FLAGS) != 10);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUILD_BUG_ON(HWEIGHT32(FANOTIFY_MARK_FLAGS) != 9);
 
 	fanotify_mark_cache = KMEM_CACHE(fsnotify_mark,

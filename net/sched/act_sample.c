@@ -34,12 +34,20 @@ static const struct nla_policy sample_policy[TCA_SAMPLE_MAX + 1] = {
 };
 
 static int tcf_sample_init(struct net *net, struct nlattr *nla,
+<<<<<<< HEAD
 			   struct nlattr *est, struct tc_action **a,
 			   struct tcf_proto *tp,
 			   u32 flags, struct netlink_ext_ack *extack)
 {
 	struct tc_action_net *tn = net_generic(net, sample_net_id);
 	bool bind = flags & TCA_ACT_FLAGS_BIND;
+=======
+			   struct nlattr *est, struct tc_action **a, int ovr,
+			   int bind, bool rtnl_held, struct tcf_proto *tp,
+			   u32 flags, struct netlink_ext_ack *extack)
+{
+	struct tc_action_net *tn = net_generic(net, sample_net_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nlattr *tb[TCA_SAMPLE_MAX + 1];
 	struct psample_group *psample_group;
 	u32 psample_group_num, rate, index;
@@ -76,7 +84,11 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
 			return ret;
 		}
 		ret = ACT_P_CREATED;
+<<<<<<< HEAD
 	} else if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
+=======
+	} else if (!ovr) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tcf_idr_release(*a, bind);
 		return -EEXIST;
 	}

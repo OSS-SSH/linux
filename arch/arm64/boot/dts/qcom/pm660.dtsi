@@ -3,6 +3,7 @@
  * Copyright (c) 2020, Konrad Dybcio
  */
 
+<<<<<<< HEAD
 #include <dt-bindings/iio/qcom,spmi-vadc.h>
 #include <dt-bindings/input/linux-event-codes.h>
 #include <dt-bindings/interrupt-controller/irq.h>
@@ -32,6 +33,11 @@
 		};
 	};
 };
+=======
+#include <dt-bindings/input/linux-event-codes.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/spmi/spmi.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 &spmi_bus {
 
@@ -63,6 +69,7 @@
 
 		};
 
+<<<<<<< HEAD
 		pm660_temp: temp-alarm@2400 {
 			compatible = "qcom,spmi-temp-alarm";
 			reg = <0x2400>;
@@ -159,6 +166,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pm660_gpios: gpios@c000 {
 			compatible = "qcom,pm660-gpio";
 			reg = <0xc000>;
@@ -169,6 +178,7 @@
 			#interrupt-cells = <2>;
 		};
 	};
+<<<<<<< HEAD
 
 	pmic@1 {
 		compatible = "qcom,pm660", "qcom,spmi-pmic";
@@ -180,4 +190,6 @@
 			compatible = "qcom,pm660-regulators";
 		};
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

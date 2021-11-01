@@ -35,6 +35,10 @@
 
 #include <drm/drm_device.h>
 #include <drm/drm_drv.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_print.h>
 
 #include "drm_internal.h"
@@ -77,7 +81,11 @@ int drm_legacy_setup(struct drm_device * dev)
 void drm_legacy_dev_reinit(struct drm_device *dev)
 {
 	if (dev->irq_enabled)
+<<<<<<< HEAD
 		drm_legacy_irq_uninstall(dev);
+=======
+		drm_irq_uninstall(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_lock(&dev->struct_mutex);
 

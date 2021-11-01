@@ -111,6 +111,11 @@ static int zynqmp_dpsub_drm_init(struct zynqmp_dpsub *dpsub)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
+=======
+	drm->irq_enabled = 1;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_kms_helper_poll_init(drm);
 
 	/*

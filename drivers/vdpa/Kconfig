@@ -33,6 +33,7 @@ config VDPA_SIM_BLOCK
 	  vDPA block device simulator which terminates IO request in a
 	  memory buffer.
 
+<<<<<<< HEAD
 config VDPA_USER
 	tristate "VDUSE (vDPA Device in Userspace) support"
 	depends on EVENTFD && MMU && HAS_DMA
@@ -43,6 +44,8 @@ config VDPA_USER
 	  With VDUSE it is possible to emulate a vDPA Device
 	  in a userspace program.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config IFCVF
 	tristate "Intel IFC VF vDPA driver"
 	depends on PCI_MSI
@@ -63,7 +66,10 @@ config MLX5_VDPA
 config MLX5_VDPA_NET
 	tristate "vDPA driver for ConnectX devices"
 	select MLX5_VDPA
+<<<<<<< HEAD
 	select VHOST_RING
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	depends on MLX5_CORE
 	help
 	  VDPA network driver for ConnectX6 and newer. Provides offloading

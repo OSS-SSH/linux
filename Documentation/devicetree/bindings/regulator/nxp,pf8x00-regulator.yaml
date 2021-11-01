@@ -83,8 +83,12 @@ properties:
 
         unevaluatedProperties: false
 
+<<<<<<< HEAD
     properties:
       vsnvs:
+=======
+      "^vsnvs$":
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         type: object
         $ref: regulator.yaml#
         description:

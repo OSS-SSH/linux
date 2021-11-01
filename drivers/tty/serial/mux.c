@@ -496,7 +496,11 @@ static int __init mux_probe(struct parisc_device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void __exit mux_remove(struct parisc_device *dev)
+=======
+static int __exit mux_remove(struct parisc_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i, j;
 	int port_count = (long)dev_get_drvdata(&dev->dev);
@@ -518,6 +522,10 @@ static void __exit mux_remove(struct parisc_device *dev)
 	}
 
 	release_mem_region(dev->hpa.start + MUX_OFFSET, port_count * MUX_LINE_OFFSET);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Hack.  This idea was taken from the 8250_gsc.c on how to properly order

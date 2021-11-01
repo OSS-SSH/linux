@@ -145,7 +145,11 @@ static int ixp4xx_pci_check_master_abort(struct ixp4xx_pci *p)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int ixp4xx_pci_read_indirect(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 *data)
+=======
+static int ixp4xx_pci_read(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 *data)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	ixp4xx_writel(p, IXP4XX_PCI_NP_AD, addr);
 
@@ -170,7 +174,11 @@ static int ixp4xx_pci_read_indirect(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32
 	return ixp4xx_pci_check_master_abort(p);
 }
 
+<<<<<<< HEAD
 static int ixp4xx_pci_write_indirect(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 data)
+=======
+static int ixp4xx_pci_write(struct ixp4xx_pci *p, u32 addr, u32 cmd, u32 data)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	ixp4xx_writel(p, IXP4XX_PCI_NP_AD, addr);
 
@@ -308,7 +316,11 @@ static int ixp4xx_pci_read_config(struct pci_bus *bus, unsigned int devfn,
 	dev_dbg(p->dev, "read_config from %d size %d dev %d:%d:%d address: %08x cmd: %08x\n",
 		where, size, bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn), addr, cmd);
 
+<<<<<<< HEAD
 	ret = ixp4xx_pci_read_indirect(p, addr, cmd, &val);
+=======
+	ret = ixp4xx_pci_read(p, addr, cmd, &val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return PCIBIOS_DEVICE_NOT_FOUND;
 
@@ -356,7 +368,11 @@ static int ixp4xx_pci_write_config(struct pci_bus *bus,  unsigned int devfn,
 	dev_dbg(p->dev, "write_config_byte %#x to %d size %d dev %d:%d:%d addr: %08x cmd %08x\n",
 		value, where, size, bus_num, PCI_SLOT(devfn), PCI_FUNC(devfn), addr, cmd);
 
+<<<<<<< HEAD
 	ret = ixp4xx_pci_write_indirect(p, addr, cmd, val);
+=======
+	ret = ixp4xx_pci_write(p, addr, cmd, val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return PCIBIOS_DEVICE_NOT_FOUND;
 

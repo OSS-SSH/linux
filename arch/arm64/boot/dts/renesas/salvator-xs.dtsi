@@ -27,6 +27,7 @@
 		clock-names = "xin";
 	};
 };
+<<<<<<< HEAD
 
 #ifdef SOC_HAS_SATA
 &pca9654 {
@@ -83,3 +84,5 @@
 	status = "okay";
 };
 #endif /* SOC_HAS_USB2_CH3 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -285,7 +285,11 @@ split:
 	 * iopoll in direct IO routine. Given performance gain of iopoll for
 	 * big IO can be trival, disable iopoll when split needed.
 	 */
+<<<<<<< HEAD
 	bio_clear_hipri(bio);
+=======
+	bio->bi_opf &= ~REQ_HIPRI;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return bio_split(bio, sectors, GFP_NOIO, bs);
 }
@@ -348,8 +352,11 @@ void __blk_queue_split(struct bio **bio, unsigned int *nr_segs)
 		trace_block_split(split, (*bio)->bi_iter.bi_sector);
 		submit_bio_noacct(*bio);
 		*bio = split;
+<<<<<<< HEAD
 
 		blk_throtl_charge_bio_split(*bio);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -707,6 +714,25 @@ static void blk_account_io_merge_request(struct request *req)
 	}
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * Two cases of handling DISCARD merge:
+ * If max_discard_segments > 1, the driver takes every bio
+ * as a range and send them to controller together. The ranges
+ * needn't to be contiguous.
+ * Otherwise, the bios/requests will be handled as same as
+ * others which should be contiguous.
+ */
+static inline bool blk_discard_mergable(struct request *req)
+{
+	if (req_op(req) == REQ_OP_DISCARD &&
+	    queue_max_discard_segments(req->q) > 1)
+		return true;
+	return false;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static enum elv_merge blk_try_req_merge(struct request *req,
 					struct request *next)
 {

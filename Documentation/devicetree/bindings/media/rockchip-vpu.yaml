@@ -22,7 +22,10 @@ properties:
           - rockchip,rk3288-vpu
           - rockchip,rk3328-vpu
           - rockchip,rk3399-vpu
+<<<<<<< HEAD
           - rockchip,px30-vpu
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - items:
           - const: rockchip,rk3188-vpu
           - const: rockchip,rk3066-vpu

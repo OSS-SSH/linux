@@ -211,6 +211,7 @@ static void deallocate_doorbell(struct qcm_process_device *qpd,
 	WARN_ON(!old);
 }
 
+<<<<<<< HEAD
 static void program_trap_handler_settings(struct device_queue_manager *dqm,
 				struct qcm_process_device *qpd)
 {
@@ -220,6 +221,8 @@ static void program_trap_handler_settings(struct device_queue_manager *dqm,
 						qpd->tba_addr, qpd->tma_addr);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int allocate_vmid(struct device_queue_manager *dqm,
 			struct qcm_process_device *qpd,
 			struct queue *q)
@@ -250,10 +253,13 @@ static int allocate_vmid(struct device_queue_manager *dqm,
 
 	program_sh_mem_settings(dqm, qpd);
 
+<<<<<<< HEAD
 	if (dqm->dev->device_info->asic_family >= CHIP_VEGA10 &&
 	    dqm->dev->cwsr_enabled)
 		program_trap_handler_settings(dqm, qpd);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* qpd->page_table_base is set earlier when register_process()
 	 * is called, i.e. when the first queue is created.
 	 */
@@ -273,7 +279,11 @@ static int allocate_vmid(struct device_queue_manager *dqm,
 static int flush_texture_cache_nocpsch(struct kfd_dev *kdev,
 				struct qcm_process_device *qpd)
 {
+<<<<<<< HEAD
 	const struct packet_manager_funcs *pmf = qpd->dqm->packet_mgr.pmf;
+=======
+	const struct packet_manager_funcs *pmf = qpd->dqm->packets.pmf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	if (!qpd->ib_kaddr)
@@ -595,9 +605,13 @@ static int update_queue(struct device_queue_manager *dqm, struct queue *q)
 		}
 
 		retval = mqd_mgr->destroy_mqd(mqd_mgr, q->mqd,
+<<<<<<< HEAD
 				(dqm->dev->cwsr_enabled?
 				 KFD_PREEMPT_TYPE_WAVEFRONT_SAVE:
 				KFD_PREEMPT_TYPE_WAVEFRONT_DRAIN),
+=======
+				KFD_PREEMPT_TYPE_WAVEFRONT_DRAIN,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				KFD_UNMAP_LATENCY_MS, q->pipe, q->queue);
 		if (retval) {
 			pr_err("destroy mqd failed\n");
@@ -690,9 +704,13 @@ static int evict_process_queues_nocpsch(struct device_queue_manager *dqm,
 			continue;
 
 		retval = mqd_mgr->destroy_mqd(mqd_mgr, q->mqd,
+<<<<<<< HEAD
 				(dqm->dev->cwsr_enabled?
 				 KFD_PREEMPT_TYPE_WAVEFRONT_SAVE:
 				KFD_PREEMPT_TYPE_WAVEFRONT_DRAIN),
+=======
+				KFD_PREEMPT_TYPE_WAVEFRONT_DRAIN,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				KFD_UNMAP_LATENCY_MS, q->pipe, q->queue);
 		if (retval && !ret)
 			/* Return the first error, but keep going to
@@ -1017,7 +1035,11 @@ static int start_nocpsch(struct device_queue_manager *dqm)
 	init_interrupts(dqm);
 	
 	if (dqm->dev->device_info->asic_family == CHIP_HAWAII)
+<<<<<<< HEAD
 		return pm_init(&dqm->packet_mgr, dqm);
+=======
+		return pm_init(&dqm->packets, dqm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dqm->sched_running = true;
 
 	return 0;
@@ -1026,7 +1048,11 @@ static int start_nocpsch(struct device_queue_manager *dqm)
 static int stop_nocpsch(struct device_queue_manager *dqm)
 {
 	if (dqm->dev->device_info->asic_family == CHIP_HAWAII)
+<<<<<<< HEAD
 		pm_uninit(&dqm->packet_mgr, false);
+=======
+		pm_uninit(&dqm->packets, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dqm->sched_running = false;
 
 	return 0;
@@ -1141,7 +1167,11 @@ static int set_sched_resources(struct device_queue_manager *dqm)
 			"queue mask: 0x%8llX\n",
 			res.vmid_mask, res.queue_mask);
 
+<<<<<<< HEAD
 	return pm_send_set_resources(&dqm->packet_mgr, &res);
+=======
+	return pm_send_set_resources(&dqm->packets, &res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int initialize_cpsch(struct device_queue_manager *dqm)
@@ -1181,8 +1211,12 @@ static int start_cpsch(struct device_queue_manager *dqm)
 
 	retval = 0;
 
+<<<<<<< HEAD
 	dqm_lock(dqm);
 	retval = pm_init(&dqm->packet_mgr, dqm);
+=======
+	retval = pm_init(&dqm->packets, dqm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (retval)
 		goto fail_packet_manager_init;
 
@@ -1204,6 +1238,10 @@ static int start_cpsch(struct device_queue_manager *dqm)
 
 	init_interrupts(dqm);
 
+<<<<<<< HEAD
+=======
+	dqm_lock(dqm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* clear hang status when driver try to start the hw scheduler */
 	dqm->is_hws_hang = false;
 	dqm->is_resetting = false;
@@ -1214,9 +1252,14 @@ static int start_cpsch(struct device_queue_manager *dqm)
 	return 0;
 fail_allocate_vidmem:
 fail_set_sched_resources:
+<<<<<<< HEAD
 	pm_uninit(&dqm->packet_mgr, false);
 fail_packet_manager_init:
 	dqm_unlock(dqm);
+=======
+	pm_uninit(&dqm->packets, false);
+fail_packet_manager_init:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return retval;
 }
 
@@ -1229,12 +1272,21 @@ static int stop_cpsch(struct device_queue_manager *dqm)
 		unmap_queues_cpsch(dqm, KFD_UNMAP_QUEUES_FILTER_ALL_QUEUES, 0);
 	hanging = dqm->is_hws_hang || dqm->is_resetting;
 	dqm->sched_running = false;
+<<<<<<< HEAD
 
 	pm_release_ib(&dqm->packet_mgr);
 
 	kfd_gtt_sa_free(dqm->dev, dqm->fence_mem);
 	pm_uninit(&dqm->packet_mgr, hanging);
 	dqm_unlock(dqm);
+=======
+	dqm_unlock(dqm);
+
+	pm_release_ib(&dqm->packets);
+
+	kfd_gtt_sa_free(dqm->dev, dqm->fence_mem);
+	pm_uninit(&dqm->packets, hanging);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -1408,7 +1460,11 @@ static int map_queues_cpsch(struct device_queue_manager *dqm)
 	if (dqm->active_runlist)
 		return 0;
 
+<<<<<<< HEAD
 	retval = pm_send_runlist(&dqm->packet_mgr, &dqm->queues);
+=======
+	retval = pm_send_runlist(&dqm->packets, &dqm->queues);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_debug("%s sent runlist\n", __func__);
 	if (retval) {
 		pr_err("failed to execute runlist\n");
@@ -1434,13 +1490,21 @@ static int unmap_queues_cpsch(struct device_queue_manager *dqm,
 	if (!dqm->active_runlist)
 		return retval;
 
+<<<<<<< HEAD
 	retval = pm_send_unmap_queue(&dqm->packet_mgr, KFD_QUEUE_TYPE_COMPUTE,
+=======
+	retval = pm_send_unmap_queue(&dqm->packets, KFD_QUEUE_TYPE_COMPUTE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			filter, filter_param, false, 0);
 	if (retval)
 		return retval;
 
 	*dqm->fence_addr = KFD_FENCE_INIT;
+<<<<<<< HEAD
 	pm_send_query_status(&dqm->packet_mgr, dqm->fence_gpu_addr,
+=======
+	pm_send_query_status(&dqm->packets, dqm->fence_gpu_addr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				KFD_FENCE_COMPLETED);
 	/* should be timed out */
 	retval = amdkfd_fence_wait_timeout(dqm->fence_addr, KFD_FENCE_COMPLETED,
@@ -1466,14 +1530,22 @@ static int unmap_queues_cpsch(struct device_queue_manager *dqm,
 	 * check those fields
 	 */
 	mqd_mgr = dqm->mqd_mgrs[KFD_MQD_TYPE_HIQ];
+<<<<<<< HEAD
 	if (mqd_mgr->read_doorbell_id(dqm->packet_mgr.priv_queue->queue->mqd)) {
+=======
+	if (mqd_mgr->read_doorbell_id(dqm->packets.priv_queue->queue->mqd)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pr_err("HIQ MQD's queue_doorbell_id0 is not 0, Queue preemption time out\n");
 		while (halt_if_hws_hang)
 			schedule();
 		return -ETIME;
 	}
 
+<<<<<<< HEAD
 	pm_release_ib(&dqm->packet_mgr);
+=======
+	pm_release_ib(&dqm->packets);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dqm->active_runlist = false;
 
 	return retval;
@@ -1964,7 +2036,10 @@ struct device_queue_manager *device_queue_manager_init(struct kfd_dev *dev)
 	case CHIP_DIMGREY_CAVEFISH:
 	case CHIP_BEIGE_GOBY:
 	case CHIP_YELLOW_CARP:
+<<<<<<< HEAD
 	case CHIP_CYAN_SKILLFISH:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		device_queue_manager_init_v10_navi10(&dqm->asic_ops);
 		break;
 	default:
@@ -2118,16 +2193,23 @@ int dqm_debugfs_hqds(struct seq_file *m, void *data)
 	return r;
 }
 
+<<<<<<< HEAD
 int dqm_debugfs_hang_hws(struct device_queue_manager *dqm)
+=======
+int dqm_debugfs_execute_queues(struct device_queue_manager *dqm)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int r = 0;
 
 	dqm_lock(dqm);
+<<<<<<< HEAD
 	r = pm_debugfs_hang_hws(&dqm->packet_mgr);
 	if (r) {
 		dqm_unlock(dqm);
 		return r;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dqm->active_runlist = true;
 	r = execute_queues_cpsch(dqm, KFD_UNMAP_QUEUES_FILTER_ALL_QUEUES, 0);
 	dqm_unlock(dqm);

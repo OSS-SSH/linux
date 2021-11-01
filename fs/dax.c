@@ -722,7 +722,11 @@ static int copy_cow_page_dax(struct block_device *bdev, struct dax_device *dax_d
 		return rc;
 
 	id = dax_read_lock();
+<<<<<<< HEAD
 	rc = dax_direct_access(dax_dev, pgoff, 1, &kaddr, NULL);
+=======
+	rc = dax_direct_access(dax_dev, pgoff, PHYS_PFN(PAGE_SIZE), &kaddr, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc < 0) {
 		dax_read_unlock(id);
 		return rc;
@@ -1005,12 +1009,20 @@ int dax_writeback_mapping_range(struct address_space *mapping,
 }
 EXPORT_SYMBOL_GPL(dax_writeback_mapping_range);
 
+<<<<<<< HEAD
 static sector_t dax_iomap_sector(const struct iomap *iomap, loff_t pos)
+=======
+static sector_t dax_iomap_sector(struct iomap *iomap, loff_t pos)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return (iomap->addr + (pos & PAGE_MASK) - iomap->offset) >> 9;
 }
 
+<<<<<<< HEAD
 static int dax_iomap_pfn(const struct iomap *iomap, loff_t pos, size_t size,
+=======
+static int dax_iomap_pfn(struct iomap *iomap, loff_t pos, size_t size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			 pfn_t *pfnp)
 {
 	const sector_t sector = dax_iomap_sector(iomap, pos);
@@ -1066,6 +1078,7 @@ static vm_fault_t dax_load_hole(struct xa_state *xas,
 	return ret;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_FS_DAX_PMD
 static vm_fault_t dax_pmd_load_hole(struct xa_state *xas, struct vm_fault *vmf,
 		const struct iomap *iomap, void **entry)
@@ -1126,6 +1139,8 @@ static vm_fault_t dax_pmd_load_hole(struct xa_state *xas, struct vm_fault *vmf,
 }
 #endif /* CONFIG_FS_DAX_PMD */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 s64 dax_iomap_zero(loff_t pos, u64 length, struct iomap *iomap)
 {
 	sector_t sector = iomap_sector(iomap, pos & PAGE_MASK);
@@ -1163,6 +1178,7 @@ s64 dax_iomap_zero(loff_t pos, u64 length, struct iomap *iomap)
 	return size;
 }
 
+<<<<<<< HEAD
 static loff_t dax_iomap_iter(const struct iomap_iter *iomi,
 		struct iov_iter *iter)
 {
@@ -1171,13 +1187,26 @@ static loff_t dax_iomap_iter(const struct iomap_iter *iomi,
 	loff_t pos = iomi->pos;
 	struct block_device *bdev = iomap->bdev;
 	struct dax_device *dax_dev = iomap->dax_dev;
+=======
+static loff_t
+dax_iomap_actor(struct inode *inode, loff_t pos, loff_t length, void *data,
+		struct iomap *iomap, struct iomap *srcmap)
+{
+	struct block_device *bdev = iomap->bdev;
+	struct dax_device *dax_dev = iomap->dax_dev;
+	struct iov_iter *iter = data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	loff_t end = pos + length, done = 0;
 	ssize_t ret = 0;
 	size_t xfer;
 	int id;
 
 	if (iov_iter_rw(iter) == READ) {
+<<<<<<< HEAD
 		end = min(end, i_size_read(iomi->inode));
+=======
+		end = min(end, i_size_read(inode));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (pos >= end)
 			return 0;
 
@@ -1194,7 +1223,11 @@ static loff_t dax_iomap_iter(const struct iomap_iter *iomi,
 	 * written by write(2) is visible in mmap.
 	 */
 	if (iomap->flags & IOMAP_F_NEW) {
+<<<<<<< HEAD
 		invalidate_inode_pages2_range(iomi->inode->i_mapping,
+=======
+		invalidate_inode_pages2_range(inode->i_mapping,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					      pos >> PAGE_SHIFT,
 					      (end - 1) >> PAGE_SHIFT);
 	}
@@ -1270,6 +1303,7 @@ ssize_t
 dax_iomap_rw(struct kiocb *iocb, struct iov_iter *iter,
 		const struct iomap_ops *ops)
 {
+<<<<<<< HEAD
 	struct iomap_iter iomi = {
 		.inode		= iocb->ki_filp->f_mapping->host,
 		.pos		= iocb->ki_pos,
@@ -1293,6 +1327,33 @@ dax_iomap_rw(struct kiocb *iocb, struct iov_iter *iter,
 
 	done = iomi.pos - iocb->ki_pos;
 	iocb->ki_pos = iomi.pos;
+=======
+	struct address_space *mapping = iocb->ki_filp->f_mapping;
+	struct inode *inode = mapping->host;
+	loff_t pos = iocb->ki_pos, ret = 0, done = 0;
+	unsigned flags = 0;
+
+	if (iov_iter_rw(iter) == WRITE) {
+		lockdep_assert_held_write(&inode->i_rwsem);
+		flags |= IOMAP_WRITE;
+	} else {
+		lockdep_assert_held(&inode->i_rwsem);
+	}
+
+	if (iocb->ki_flags & IOCB_NOWAIT)
+		flags |= IOMAP_NOWAIT;
+
+	while (iov_iter_count(iter)) {
+		ret = iomap_apply(inode, pos, iov_iter_count(iter), flags, ops,
+				iter, dax_iomap_actor);
+		if (ret <= 0)
+			break;
+		pos += ret;
+		done += ret;
+	}
+
+	iocb->ki_pos += done;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return done ? done : ret;
 }
 EXPORT_SYMBOL_GPL(dax_iomap_rw);
@@ -1309,12 +1370,17 @@ static vm_fault_t dax_fault_return(int error)
  * flushed on write-faults (non-cow), but not read-faults.
  */
 static bool dax_fault_is_synchronous(unsigned long flags,
+<<<<<<< HEAD
 		struct vm_area_struct *vma, const struct iomap *iomap)
+=======
+		struct vm_area_struct *vma, struct iomap *iomap)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return (flags & IOMAP_WRITE) && (vma->vm_flags & VM_SYNC)
 		&& (iomap->flags & IOMAP_F_DIRTY);
 }
 
+<<<<<<< HEAD
 /*
  * When handling a synchronous page fault and the inode need a fsync, we can
  * insert the PTE/PMD into page tables only after that fsync happened. Skip
@@ -1437,18 +1503,49 @@ static vm_fault_t dax_iomap_pte_fault(struct vm_fault *vmf, pfn_t *pfnp,
 	int error;
 
 	trace_dax_pte_fault(iter.inode, vmf, ret);
+=======
+static vm_fault_t dax_iomap_pte_fault(struct vm_fault *vmf, pfn_t *pfnp,
+			       int *iomap_errp, const struct iomap_ops *ops)
+{
+	struct vm_area_struct *vma = vmf->vma;
+	struct address_space *mapping = vma->vm_file->f_mapping;
+	XA_STATE(xas, &mapping->i_pages, vmf->pgoff);
+	struct inode *inode = mapping->host;
+	unsigned long vaddr = vmf->address;
+	loff_t pos = (loff_t)vmf->pgoff << PAGE_SHIFT;
+	struct iomap iomap = { .type = IOMAP_HOLE };
+	struct iomap srcmap = { .type = IOMAP_HOLE };
+	unsigned flags = IOMAP_FAULT;
+	int error, major = 0;
+	bool write = vmf->flags & FAULT_FLAG_WRITE;
+	bool sync;
+	vm_fault_t ret = 0;
+	void *entry;
+	pfn_t pfn;
+
+	trace_dax_pte_fault(inode, vmf, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Check whether offset isn't beyond end of file now. Caller is supposed
 	 * to hold locks serializing us with truncate / punch hole so this is
 	 * a reliable test.
 	 */
+<<<<<<< HEAD
 	if (iter.pos >= i_size_read(iter.inode)) {
+=======
+	if (pos >= i_size_read(inode)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = VM_FAULT_SIGBUS;
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if ((vmf->flags & FAULT_FLAG_WRITE) && !vmf->cow_page)
 		iter.flags |= IOMAP_WRITE;
+=======
+	if (write && !vmf->cow_page)
+		flags |= IOMAP_WRITE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	entry = grab_mapping_entry(&xas, mapping, 0);
 	if (xa_is_internal(entry)) {
@@ -1467,6 +1564,7 @@ static vm_fault_t dax_iomap_pte_fault(struct vm_fault *vmf, pfn_t *pfnp,
 		goto unlock_entry;
 	}
 
+<<<<<<< HEAD
 	while ((error = iomap_iter(&iter, ops)) > 0) {
 		if (WARN_ON_ONCE(iomap_length(&iter) < PAGE_SIZE)) {
 			iter.processed = -EIO;	/* fs corruption? */
@@ -1529,11 +1627,184 @@ static bool dax_fault_check_fallback(struct vm_fault *vmf, struct xa_state *xas,
 		return true;
 
 	return false;
+=======
+	/*
+	 * Note that we don't bother to use iomap_apply here: DAX required
+	 * the file system block size to be equal the page size, which means
+	 * that we never have to deal with more than a single extent here.
+	 */
+	error = ops->iomap_begin(inode, pos, PAGE_SIZE, flags, &iomap, &srcmap);
+	if (iomap_errp)
+		*iomap_errp = error;
+	if (error) {
+		ret = dax_fault_return(error);
+		goto unlock_entry;
+	}
+	if (WARN_ON_ONCE(iomap.offset + iomap.length < pos + PAGE_SIZE)) {
+		error = -EIO;	/* fs corruption? */
+		goto error_finish_iomap;
+	}
+
+	if (vmf->cow_page) {
+		sector_t sector = dax_iomap_sector(&iomap, pos);
+
+		switch (iomap.type) {
+		case IOMAP_HOLE:
+		case IOMAP_UNWRITTEN:
+			clear_user_highpage(vmf->cow_page, vaddr);
+			break;
+		case IOMAP_MAPPED:
+			error = copy_cow_page_dax(iomap.bdev, iomap.dax_dev,
+						  sector, vmf->cow_page, vaddr);
+			break;
+		default:
+			WARN_ON_ONCE(1);
+			error = -EIO;
+			break;
+		}
+
+		if (error)
+			goto error_finish_iomap;
+
+		__SetPageUptodate(vmf->cow_page);
+		ret = finish_fault(vmf);
+		if (!ret)
+			ret = VM_FAULT_DONE_COW;
+		goto finish_iomap;
+	}
+
+	sync = dax_fault_is_synchronous(flags, vma, &iomap);
+
+	switch (iomap.type) {
+	case IOMAP_MAPPED:
+		if (iomap.flags & IOMAP_F_NEW) {
+			count_vm_event(PGMAJFAULT);
+			count_memcg_event_mm(vma->vm_mm, PGMAJFAULT);
+			major = VM_FAULT_MAJOR;
+		}
+		error = dax_iomap_pfn(&iomap, pos, PAGE_SIZE, &pfn);
+		if (error < 0)
+			goto error_finish_iomap;
+
+		entry = dax_insert_entry(&xas, mapping, vmf, entry, pfn,
+						 0, write && !sync);
+
+		/*
+		 * If we are doing synchronous page fault and inode needs fsync,
+		 * we can insert PTE into page tables only after that happens.
+		 * Skip insertion for now and return the pfn so that caller can
+		 * insert it after fsync is done.
+		 */
+		if (sync) {
+			if (WARN_ON_ONCE(!pfnp)) {
+				error = -EIO;
+				goto error_finish_iomap;
+			}
+			*pfnp = pfn;
+			ret = VM_FAULT_NEEDDSYNC | major;
+			goto finish_iomap;
+		}
+		trace_dax_insert_mapping(inode, vmf, entry);
+		if (write)
+			ret = vmf_insert_mixed_mkwrite(vma, vaddr, pfn);
+		else
+			ret = vmf_insert_mixed(vma, vaddr, pfn);
+
+		goto finish_iomap;
+	case IOMAP_UNWRITTEN:
+	case IOMAP_HOLE:
+		if (!write) {
+			ret = dax_load_hole(&xas, mapping, &entry, vmf);
+			goto finish_iomap;
+		}
+		fallthrough;
+	default:
+		WARN_ON_ONCE(1);
+		error = -EIO;
+		break;
+	}
+
+ error_finish_iomap:
+	ret = dax_fault_return(error);
+ finish_iomap:
+	if (ops->iomap_end) {
+		int copied = PAGE_SIZE;
+
+		if (ret & VM_FAULT_ERROR)
+			copied = 0;
+		/*
+		 * The fault is done by now and there's no way back (other
+		 * thread may be already happily using PTE we have installed).
+		 * Just ignore error from ->iomap_end since we cannot do much
+		 * with it.
+		 */
+		ops->iomap_end(inode, pos, PAGE_SIZE, copied, flags, &iomap);
+	}
+ unlock_entry:
+	dax_unlock_entry(&xas, entry);
+ out:
+	trace_dax_pte_fault_done(inode, vmf, ret);
+	return ret | major;
+}
+
+#ifdef CONFIG_FS_DAX_PMD
+static vm_fault_t dax_pmd_load_hole(struct xa_state *xas, struct vm_fault *vmf,
+		struct iomap *iomap, void **entry)
+{
+	struct address_space *mapping = vmf->vma->vm_file->f_mapping;
+	unsigned long pmd_addr = vmf->address & PMD_MASK;
+	struct vm_area_struct *vma = vmf->vma;
+	struct inode *inode = mapping->host;
+	pgtable_t pgtable = NULL;
+	struct page *zero_page;
+	spinlock_t *ptl;
+	pmd_t pmd_entry;
+	pfn_t pfn;
+
+	zero_page = mm_get_huge_zero_page(vmf->vma->vm_mm);
+
+	if (unlikely(!zero_page))
+		goto fallback;
+
+	pfn = page_to_pfn_t(zero_page);
+	*entry = dax_insert_entry(xas, mapping, vmf, *entry, pfn,
+			DAX_PMD | DAX_ZERO_PAGE, false);
+
+	if (arch_needs_pgtable_deposit()) {
+		pgtable = pte_alloc_one(vma->vm_mm);
+		if (!pgtable)
+			return VM_FAULT_OOM;
+	}
+
+	ptl = pmd_lock(vmf->vma->vm_mm, vmf->pmd);
+	if (!pmd_none(*(vmf->pmd))) {
+		spin_unlock(ptl);
+		goto fallback;
+	}
+
+	if (pgtable) {
+		pgtable_trans_huge_deposit(vma->vm_mm, vmf->pmd, pgtable);
+		mm_inc_nr_ptes(vma->vm_mm);
+	}
+	pmd_entry = mk_pmd(zero_page, vmf->vma->vm_page_prot);
+	pmd_entry = pmd_mkhuge(pmd_entry);
+	set_pmd_at(vmf->vma->vm_mm, pmd_addr, vmf->pmd, pmd_entry);
+	spin_unlock(ptl);
+	trace_dax_pmd_load_hole(inode, vmf, zero_page, *entry);
+	return VM_FAULT_NOPAGE;
+
+fallback:
+	if (pgtable)
+		pte_free(vma->vm_mm, pgtable);
+	trace_dax_pmd_load_hole_fallback(inode, vmf, zero_page, *entry);
+	return VM_FAULT_FALLBACK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static vm_fault_t dax_iomap_pmd_fault(struct vm_fault *vmf, pfn_t *pfnp,
 			       const struct iomap_ops *ops)
 {
+<<<<<<< HEAD
 	struct address_space *mapping = vmf->vma->vm_file->f_mapping;
 	XA_STATE_ORDER(xas, &mapping->i_pages, vmf->pgoff, PMD_ORDER);
 	struct iomap_iter iter = {
@@ -1548,12 +1819,31 @@ static vm_fault_t dax_iomap_pmd_fault(struct vm_fault *vmf, pfn_t *pfnp,
 
 	if (vmf->flags & FAULT_FLAG_WRITE)
 		iter.flags |= IOMAP_WRITE;
+=======
+	struct vm_area_struct *vma = vmf->vma;
+	struct address_space *mapping = vma->vm_file->f_mapping;
+	XA_STATE_ORDER(xas, &mapping->i_pages, vmf->pgoff, PMD_ORDER);
+	unsigned long pmd_addr = vmf->address & PMD_MASK;
+	bool write = vmf->flags & FAULT_FLAG_WRITE;
+	bool sync;
+	unsigned int iomap_flags = (write ? IOMAP_WRITE : 0) | IOMAP_FAULT;
+	struct inode *inode = mapping->host;
+	vm_fault_t result = VM_FAULT_FALLBACK;
+	struct iomap iomap = { .type = IOMAP_HOLE };
+	struct iomap srcmap = { .type = IOMAP_HOLE };
+	pgoff_t max_pgoff;
+	void *entry;
+	loff_t pos;
+	int error;
+	pfn_t pfn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Check whether offset isn't beyond end of file now. Caller is
 	 * supposed to hold locks serializing us with truncate / punch hole so
 	 * this is a reliable test.
 	 */
+<<<<<<< HEAD
 	max_pgoff = DIV_ROUND_UP(i_size_read(iter.inode), PAGE_SIZE);
 
 	trace_dax_pmd_fault(iter.inode, vmf, max_pgoff, 0);
@@ -1564,6 +1854,39 @@ static vm_fault_t dax_iomap_pmd_fault(struct vm_fault *vmf, pfn_t *pfnp,
 	}
 
 	if (dax_fault_check_fallback(vmf, &xas, max_pgoff))
+=======
+	max_pgoff = DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE);
+
+	trace_dax_pmd_fault(inode, vmf, max_pgoff, 0);
+
+	/*
+	 * Make sure that the faulting address's PMD offset (color) matches
+	 * the PMD offset from the start of the file.  This is necessary so
+	 * that a PMD range in the page table overlaps exactly with a PMD
+	 * range in the page cache.
+	 */
+	if ((vmf->pgoff & PG_PMD_COLOUR) !=
+	    ((vmf->address >> PAGE_SHIFT) & PG_PMD_COLOUR))
+		goto fallback;
+
+	/* Fall back to PTEs if we're going to COW */
+	if (write && !(vma->vm_flags & VM_SHARED))
+		goto fallback;
+
+	/* If the PMD would extend outside the VMA */
+	if (pmd_addr < vma->vm_start)
+		goto fallback;
+	if ((pmd_addr + PMD_SIZE) > vma->vm_end)
+		goto fallback;
+
+	if (xas.xa_index >= max_pgoff) {
+		result = VM_FAULT_SIGBUS;
+		goto out;
+	}
+
+	/* If the PMD would extend beyond the file size */
+	if ((xas.xa_index | PG_PMD_COLOUR) >= max_pgoff)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fallback;
 
 	/*
@@ -1574,7 +1897,11 @@ static vm_fault_t dax_iomap_pmd_fault(struct vm_fault *vmf, pfn_t *pfnp,
 	 */
 	entry = grab_mapping_entry(&xas, mapping, PMD_ORDER);
 	if (xa_is_internal(entry)) {
+<<<<<<< HEAD
 		ret = xa_to_internal(entry);
+=======
+		result = xa_to_internal(entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fallback;
 	}
 
@@ -1586,6 +1913,7 @@ static vm_fault_t dax_iomap_pmd_fault(struct vm_fault *vmf, pfn_t *pfnp,
 	 */
 	if (!pmd_none(*vmf->pmd) && !pmd_trans_huge(*vmf->pmd) &&
 			!pmd_devmap(*vmf->pmd)) {
+<<<<<<< HEAD
 		ret = 0;
 		goto unlock_entry;
 	}
@@ -1610,6 +1938,90 @@ fallback:
 out:
 	trace_dax_pmd_fault_done(iter.inode, vmf, max_pgoff, ret);
 	return ret;
+=======
+		result = 0;
+		goto unlock_entry;
+	}
+
+	/*
+	 * Note that we don't use iomap_apply here.  We aren't doing I/O, only
+	 * setting up a mapping, so really we're using iomap_begin() as a way
+	 * to look up our filesystem block.
+	 */
+	pos = (loff_t)xas.xa_index << PAGE_SHIFT;
+	error = ops->iomap_begin(inode, pos, PMD_SIZE, iomap_flags, &iomap,
+			&srcmap);
+	if (error)
+		goto unlock_entry;
+
+	if (iomap.offset + iomap.length < pos + PMD_SIZE)
+		goto finish_iomap;
+
+	sync = dax_fault_is_synchronous(iomap_flags, vma, &iomap);
+
+	switch (iomap.type) {
+	case IOMAP_MAPPED:
+		error = dax_iomap_pfn(&iomap, pos, PMD_SIZE, &pfn);
+		if (error < 0)
+			goto finish_iomap;
+
+		entry = dax_insert_entry(&xas, mapping, vmf, entry, pfn,
+						DAX_PMD, write && !sync);
+
+		/*
+		 * If we are doing synchronous page fault and inode needs fsync,
+		 * we can insert PMD into page tables only after that happens.
+		 * Skip insertion for now and return the pfn so that caller can
+		 * insert it after fsync is done.
+		 */
+		if (sync) {
+			if (WARN_ON_ONCE(!pfnp))
+				goto finish_iomap;
+			*pfnp = pfn;
+			result = VM_FAULT_NEEDDSYNC;
+			goto finish_iomap;
+		}
+
+		trace_dax_pmd_insert_mapping(inode, vmf, PMD_SIZE, pfn, entry);
+		result = vmf_insert_pfn_pmd(vmf, pfn, write);
+		break;
+	case IOMAP_UNWRITTEN:
+	case IOMAP_HOLE:
+		if (WARN_ON_ONCE(write))
+			break;
+		result = dax_pmd_load_hole(&xas, vmf, &iomap, &entry);
+		break;
+	default:
+		WARN_ON_ONCE(1);
+		break;
+	}
+
+ finish_iomap:
+	if (ops->iomap_end) {
+		int copied = PMD_SIZE;
+
+		if (result == VM_FAULT_FALLBACK)
+			copied = 0;
+		/*
+		 * The fault is done by now and there's no way back (other
+		 * thread may be already happily using PMD we have installed).
+		 * Just ignore error from ->iomap_end since we cannot do much
+		 * with it.
+		 */
+		ops->iomap_end(inode, pos, PMD_SIZE, copied, iomap_flags,
+				&iomap);
+	}
+ unlock_entry:
+	dax_unlock_entry(&xas, entry);
+ fallback:
+	if (result == VM_FAULT_FALLBACK) {
+		split_huge_pmd(vma, vmf->pmd, vmf->address);
+		count_vm_event(THP_FAULT_FALLBACK);
+	}
+out:
+	trace_dax_pmd_fault_done(inode, vmf, max_pgoff, result);
+	return result;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #else
 static vm_fault_t dax_iomap_pmd_fault(struct vm_fault *vmf, pfn_t *pfnp,

@@ -102,7 +102,11 @@ config SND_ALOOP
 	  configured number of substreams (see the pcm_substreams module
 	  parameter).
 
+<<<<<<< HEAD
 	  The loopback device allows time synchronization with an external
+=======
+	  The loopback device allows time sychronization with an external
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	  timing source using the time shift universal control (+-20%
 	  of system time).
 

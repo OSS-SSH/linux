@@ -10,7 +10,10 @@
 #include <linux/err.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 #include "../clk-fractional-divider.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "clk.h"
 
 #define PCG_PCS_SHIFT	24

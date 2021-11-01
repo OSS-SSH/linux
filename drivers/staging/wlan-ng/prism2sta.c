@@ -103,7 +103,11 @@ static int prism2sta_open(struct wlandevice *wlandev);
 static int prism2sta_close(struct wlandevice *wlandev);
 static void prism2sta_reset(struct wlandevice *wlandev);
 static int prism2sta_txframe(struct wlandevice *wlandev, struct sk_buff *skb,
+<<<<<<< HEAD
 			     struct p80211_hdr *p80211_hdr,
+=======
+			     union p80211_hdr *p80211_hdr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     struct p80211_metawep *p80211_wep);
 static int prism2sta_mlmerequest(struct wlandevice *wlandev,
 				 struct p80211msg *msg);
@@ -242,7 +246,11 @@ static void prism2sta_reset(struct wlandevice *wlandev)
  *	process thread
  */
 static int prism2sta_txframe(struct wlandevice *wlandev, struct sk_buff *skb,
+<<<<<<< HEAD
 			     struct p80211_hdr *p80211_hdr,
+=======
+			     union p80211_hdr *p80211_hdr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     struct p80211_metawep *p80211_wep)
 {
 	struct hfa384x *hw = wlandev->priv;
@@ -250,7 +258,11 @@ static int prism2sta_txframe(struct wlandevice *wlandev, struct sk_buff *skb,
 	/* If necessary, set the 802.11 WEP bit */
 	if ((wlandev->hostwep & (HOSTWEP_PRIVACYINVOKED | HOSTWEP_ENCRYPT)) ==
 	    HOSTWEP_PRIVACYINVOKED) {
+<<<<<<< HEAD
 		p80211_hdr->frame_control |= cpu_to_le16(WLAN_SET_FC_ISWEP(1));
+=======
+		p80211_hdr->a3.fc |= cpu_to_le16(WLAN_SET_FC_ISWEP(1));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return hfa384x_drvr_txframe(hw, skb, p80211_hdr, p80211_wep);

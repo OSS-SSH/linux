@@ -25,11 +25,14 @@ config UNIX_SCM
 	depends on UNIX
 	default y
 
+<<<<<<< HEAD
 config	AF_UNIX_OOB
 	bool
 	depends on UNIX
 	default y
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config UNIX_DIAG
 	tristate "UNIX: socket monitoring interface"
 	depends on UNIX

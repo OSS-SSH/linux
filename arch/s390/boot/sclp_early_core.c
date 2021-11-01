@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 #include "boot.h"
 #include "../../../drivers/s390/char/sclp_early_core.c"
 
@@ -9,3 +10,6 @@ void sclp_early_setup_buffer(void)
 {
 	sclp_early_set_buffer(&__sclp_early_sccb);
 }
+=======
+#include "../../../drivers/s390/char/sclp_early_core.c"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

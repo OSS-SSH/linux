@@ -21,12 +21,16 @@
 #include <linux/platform_device.h>
 #include <asm/types.h>
 #include <asm/irq.h>
+<<<<<<< HEAD
 #include <asm/debug.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "sclp.h"
 
 #define SCLP_HEADER		"sclp: "
 
+<<<<<<< HEAD
 struct sclp_trace_entry {
 	char id[4] __nonstring;
 	u32 a;
@@ -45,6 +49,8 @@ DEFINE_STATIC_DEBUG_INFO(sclp_debug, "sclp", 8, 1, SCLP_TRACE_ENTRY_SIZE,
 DEFINE_STATIC_DEBUG_INFO(sclp_debug_err, "sclp_err", 4, 1,
 			 SCLP_TRACE_ENTRY_SIZE, &debug_hex_ascii_view);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Lock to protect internal data consistency. */
 static DEFINE_SPINLOCK(sclp_lock);
 
@@ -73,6 +79,7 @@ int sclp_console_drop = 1;
 /* Number of times the console dropped buffer pages */
 unsigned long sclp_console_full;
 
+<<<<<<< HEAD
 /* The currently active SCLP command word. */
 static sclp_cmdw_t active_cmd;
 
@@ -181,6 +188,8 @@ static inline void sclp_trace_register(int prio, char *id, u32 a, u64 b,
 	sclp_trace_bin(prio, &d, sizeof(d), 0);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __init sclp_setup_console_pages(char *str)
 {
 	int pages, rc;
@@ -289,9 +298,12 @@ static void sclp_request_timeout(bool force_restart)
 {
 	unsigned long flags;
 
+<<<<<<< HEAD
 	/* TMO: A timeout occurred (a=force_restart) */
 	sclp_trace(2, "TMO", force_restart, 0, true);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_irqsave(&sclp_lock, flags);
 	if (force_restart) {
 		if (sclp_running_state == sclp_running_state_running) {
@@ -367,12 +379,15 @@ static void sclp_req_queue_timeout(struct timer_list *unused)
 
 	do {
 		req = __sclp_req_queue_remove_expired_req();
+<<<<<<< HEAD
 
 		if (req) {
 			/* RQTM: Request timed out (a=sccb, b=summary) */
 			sclp_trace_req(2, "RQTM", req, true);
 		}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (req && req->callback)
 			req->callback(req, req->callback_data);
 	} while (req);
@@ -384,6 +399,7 @@ static void sclp_req_queue_timeout(struct timer_list *unused)
 	spin_unlock_irqrestore(&sclp_lock, flags);
 }
 
+<<<<<<< HEAD
 static int sclp_service_call_trace(sclp_cmdw_t command, void *sccb)
 {
 	static u64 srvc_count;
@@ -403,6 +419,8 @@ static int sclp_service_call_trace(sclp_cmdw_t command, void *sccb)
 	return rc;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Try to start a request. Return zero if the request was successfully
  * started or if it will be started at a later time. Return non-zero otherwise.
  * Called while sclp_lock is locked. */
@@ -414,7 +432,11 @@ __sclp_start_request(struct sclp_req *req)
 	if (sclp_running_state != sclp_running_state_idle)
 		return 0;
 	del_timer(&sclp_request_timer);
+<<<<<<< HEAD
 	rc = sclp_service_call_trace(req->command, req->sccb);
+=======
+	rc = sclp_service_call(req->command, req->sccb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	req->start_count++;
 
 	if (rc == 0) {
@@ -464,10 +486,13 @@ sclp_process_queue(void)
 		}
 		/* Post-processing for aborted request */
 		list_del(&req->list);
+<<<<<<< HEAD
 
 		/* RQAB: Request aborted (a=sccb, b=summary) */
 		sclp_trace_req(2, "RQAB", req, true);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (req->callback) {
 			spin_unlock_irqrestore(&sclp_lock, flags);
 			req->callback(req, req->callback_data);
@@ -500,10 +525,13 @@ sclp_add_request(struct sclp_req *req)
 		spin_unlock_irqrestore(&sclp_lock, flags);
 		return -EIO;
 	}
+<<<<<<< HEAD
 
 	/* RQAD: Request was added (a=sccb, b=caller) */
 	sclp_trace(2, "RQAD", (u32)(addr_t)req->sccb, _RET_IP_, false);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	req->status = SCLP_REQ_QUEUED;
 	req->start_count = 0;
 	list_add_tail(&req->list, &sclp_req_queue);
@@ -557,11 +585,14 @@ sclp_dispatch_evbufs(struct sccb_header *sccb)
 			else
 				reg = NULL;
 		}
+<<<<<<< HEAD
 
 		/* EVNT: Event callback (b=receiver) */
 		sclp_trace_evbuf(2, "EVNT", 0, reg ? (u64)reg->receiver_fn : 0,
 				 evbuf, !reg);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (reg && reg->receiver_fn) {
 			spin_unlock_irqrestore(&sclp_lock, flags);
 			reg->receiver_fn(evbuf);
@@ -623,6 +654,7 @@ __sclp_find_req(u32 sccb)
 	return NULL;
 }
 
+<<<<<<< HEAD
 static bool ok_response(u32 sccb_int, sclp_cmdw_t cmd)
 {
 	struct sccb_header *sccb = (struct sccb_header *)(addr_t)sccb_int;
@@ -647,6 +679,8 @@ static bool ok_response(u32 sccb_int, sclp_cmdw_t cmd)
 	return true;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Handler for external interruption. Perform request post-processing.
  * Prepare read event data request if necessary. Start processing of next
  * request on queue. */
@@ -661,12 +695,15 @@ static void sclp_interrupt_handler(struct ext_code ext_code,
 	spin_lock(&sclp_lock);
 	finished_sccb = param32 & 0xfffffff8;
 	evbuf_pending = param32 & 0x3;
+<<<<<<< HEAD
 
 	/* INT: Interrupt received (a=intparm, b=cmd) */
 	sclp_trace_sccb(0, "INT", param32, active_cmd, active_cmd,
 			(struct sccb_header *)(addr_t)finished_sccb,
 			!ok_response(finished_sccb, active_cmd));
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (finished_sccb) {
 		del_timer(&sclp_request_timer);
 		sclp_running_state = sclp_running_state_reset_pending;
@@ -675,21 +712,29 @@ static void sclp_interrupt_handler(struct ext_code ext_code,
 			/* Request post-processing */
 			list_del(&req->list);
 			req->status = SCLP_REQ_DONE;
+<<<<<<< HEAD
 
 			/* RQOK: Request success (a=sccb, b=summary) */
 			sclp_trace_req(2, "RQOK", req, false);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (req->callback) {
 				spin_unlock(&sclp_lock);
 				req->callback(req, req->callback_data);
 				spin_lock(&sclp_lock);
 			}
+<<<<<<< HEAD
 		} else {
 			/* UNEX: Unexpected SCCB completion (a=sccb address) */
 			sclp_trace(0, "UNEX", finished_sccb, 0, true);
 		}
 		sclp_running_state = sclp_running_state_idle;
 		active_cmd = 0;
+=======
+		}
+		sclp_running_state = sclp_running_state_idle;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	if (evbuf_pending &&
 	    sclp_activation_state == sclp_activation_state_active)
@@ -713,6 +758,7 @@ sclp_sync_wait(void)
 	unsigned long long old_tick;
 	unsigned long flags;
 	unsigned long cr0, cr0_sync;
+<<<<<<< HEAD
 	static u64 sync_count;
 	u64 timeout;
 	int irq_context;
@@ -720,6 +766,11 @@ sclp_sync_wait(void)
 	/* SYN1: Synchronous wait start (a=runstate, b=sync count) */
 	sclp_trace(4, "SYN1", sclp_running_state, ++sync_count, false);
 
+=======
+	u64 timeout;
+	int irq_context;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* We'll be disabling timer interrupts, so we need a custom timeout
 	 * mechanism */
 	timeout = 0;
@@ -757,9 +808,12 @@ sclp_sync_wait(void)
 		_local_bh_enable();
 	local_tick_enable(old_tick);
 	local_irq_restore(flags);
+<<<<<<< HEAD
 
 	/* SYN2: Synchronous wait end (a=runstate, b=sync_count) */
 	sclp_trace(4, "SYN2", sclp_running_state, sync_count, false);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(sclp_sync_wait);
 
@@ -789,6 +843,7 @@ sclp_dispatch_state_change(void)
 				reg = NULL;
 		}
 		spin_unlock_irqrestore(&sclp_lock, flags);
+<<<<<<< HEAD
 		if (reg && reg->state_change_fn) {
 			/* STCG: State-change callback (b=callback) */
 			sclp_trace(2, "STCG", 0, (u64)reg->state_change_fn,
@@ -796,6 +851,10 @@ sclp_dispatch_state_change(void)
 
 			reg->state_change_fn(reg);
 		}
+=======
+		if (reg && reg->state_change_fn)
+			reg->state_change_fn(reg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} while (reg);
 }
 
@@ -869,9 +928,12 @@ sclp_register(struct sclp_register *reg)
 	sccb_mask_t send_mask;
 	int rc;
 
+<<<<<<< HEAD
 	/* REG: Event listener registered (b=caller) */
 	sclp_trace_register(2, "REG", 0, _RET_IP_, reg);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rc = sclp_init();
 	if (rc)
 		return rc;
@@ -904,9 +966,12 @@ sclp_unregister(struct sclp_register *reg)
 {
 	unsigned long flags;
 
+<<<<<<< HEAD
 	/* UREG: Event listener unregistered (b=caller) */
 	sclp_trace_register(2, "UREG", 0, _RET_IP_, reg);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_irqsave(&sclp_lock, flags);
 	list_del(&reg->list);
 	spin_unlock_irqrestore(&sclp_lock, flags);
@@ -1156,7 +1221,11 @@ sclp_check_interface(void)
 	for (retry = 0; retry <= SCLP_INIT_RETRY; retry++) {
 		__sclp_make_init_req(0, 0);
 		sccb = (struct init_sccb *) sclp_init_req.sccb;
+<<<<<<< HEAD
 		rc = sclp_service_call_trace(sclp_init_req.command, sccb);
+=======
+		rc = sclp_service_call(sclp_init_req.command, sccb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rc == -EIO)
 			break;
 		sclp_init_req.status = SCLP_REQ_RUNNING;

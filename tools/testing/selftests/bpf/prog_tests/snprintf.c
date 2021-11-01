@@ -19,7 +19,11 @@
 #define EXP_ADDR_OUT "0000000000000000 ffff00000add4e55 "
 #define EXP_ADDR_RET sizeof(EXP_ADDR_OUT "unknownhashedptr")
 
+<<<<<<< HEAD
 #define EXP_STR_OUT  "str1         a  b c      d e longstr"
+=======
+#define EXP_STR_OUT  "str1 longstr"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define EXP_STR_RET  sizeof(EXP_STR_OUT)
 
 #define EXP_OVER_OUT "%over"
@@ -114,8 +118,11 @@ void test_snprintf_negative(void)
 	ASSERT_ERR(load_single_snprintf("%"), "invalid specifier 3");
 	ASSERT_ERR(load_single_snprintf("%12345678"), "invalid specifier 4");
 	ASSERT_ERR(load_single_snprintf("%--------"), "invalid specifier 5");
+<<<<<<< HEAD
 	ASSERT_ERR(load_single_snprintf("%lc"), "invalid specifier 6");
 	ASSERT_ERR(load_single_snprintf("%llc"), "invalid specifier 7");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ASSERT_ERR(load_single_snprintf("\x80"), "non ascii character");
 	ASSERT_ERR(load_single_snprintf("\x1"), "non printable character");
 }

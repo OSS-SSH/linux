@@ -6,7 +6,11 @@
 #include <linux/ndctl.h>
 #include <linux/async.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include "cxlmem.h"
+=======
+#include "mem.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "cxl.h"
 
 /*

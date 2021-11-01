@@ -4,6 +4,10 @@
 #include <linux/kernel.h>
 #include <linux/module.h>
 #include <linux/pci.h>
+<<<<<<< HEAD
+=======
+#include <linux/kernel.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/list.h>
 #include <linux/mm.h>
 #include <linux/types.h>

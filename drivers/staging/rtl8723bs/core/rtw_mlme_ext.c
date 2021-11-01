@@ -343,7 +343,11 @@ static u8 init_channel_set(struct adapter *padapter, u8 ChannelPlan, struct rt_c
 	if (ChannelPlan >= RT_CHANNEL_DOMAIN_MAX && ChannelPlan != RT_CHANNEL_DOMAIN_REALTEK_DEFINE)
 		return chanset_size;
 
+<<<<<<< HEAD
 	if (is_supported_24g(padapter->registrypriv.wireless_mode)) {
+=======
+	if (IsSupported24G(padapter->registrypriv.wireless_mode)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		b2_4GBand = true;
 		if (RT_CHANNEL_DOMAIN_REALTEK_DEFINE == ChannelPlan)
 			Index2G = RTW_CHANNEL_PLAN_MAP_REALTEK_DEFINE.Index2G;
@@ -538,7 +542,11 @@ unsigned int OnProbeReq(struct adapter *padapter, union recv_frame *precv_frame)
 		if (is_valid_p2p_probereq)
 			goto _issue_probersp;
 
+<<<<<<< HEAD
 		if ((ielen != 0 && false == !memcmp((void *)(p+2), (void *)cur->ssid.ssid, cur->ssid.ssid_length))
+=======
+		if ((ielen != 0 && false == !memcmp((void *)(p+2), (void *)cur->Ssid.Ssid, cur->Ssid.SsidLength))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			|| (ielen == 0 && pmlmeinfo->hidden_ssid_mode)
 		)
 			return _SUCCESS;
@@ -634,7 +642,11 @@ unsigned int OnBeacon(struct adapter *padapter, union recv_frame *precv_frame)
 					netdev_dbg(padapter->pnetdev,
 						   "ap has changed, disconnect now\n ");
 					receive_disconnect(padapter,
+<<<<<<< HEAD
 							   pmlmeinfo->network.mac_address, 0);
+=======
+							   pmlmeinfo->network.MacAddress, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					return _SUCCESS;
 				}
 				/* update WMM, ERP in the beacon */
@@ -1022,10 +1034,17 @@ unsigned int OnAssocReq(struct adapter *padapter, union recv_frame *precv_frame)
 		goto OnAssocReqFail;
 	} else {
 		/*  check if ssid match */
+<<<<<<< HEAD
 		if (memcmp((void *)(p+2), cur->ssid.ssid, cur->ssid.ssid_length))
 			status = WLAN_STATUS_CHALLENGE_FAIL;
 
 		if (ie_len != cur->ssid.ssid_length)
+=======
+		if (memcmp((void *)(p+2), cur->Ssid.Ssid, cur->Ssid.SsidLength))
+			status = WLAN_STATUS_CHALLENGE_FAIL;
+
+		if (ie_len != cur->Ssid.SsidLength)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			status = WLAN_STATUS_CHALLENGE_FAIL;
 	}
 
@@ -1428,7 +1447,11 @@ unsigned int OnAssocRsp(struct adapter *padapter, union recv_frame *precv_frame)
 	for (i = (6 + WLAN_HDR_A3_LEN); i < pkt_len;) {
 		pIE = (struct ndis_80211_var_ie *)(pframe + i);
 
+<<<<<<< HEAD
 		switch (pIE->element_id) {
+=======
+		switch (pIE->ElementID) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		case WLAN_EID_VENDOR_SPECIFIC:
 			if (!memcmp(pIE->data, WMM_PARA_OUI, 6))	/* WMM */
 				WMM_param_handler(padapter, pIE);
@@ -1450,14 +1473,22 @@ unsigned int OnAssocRsp(struct adapter *padapter, union recv_frame *precv_frame)
 			break;
 		}
 
+<<<<<<< HEAD
 		i += (pIE->length + 2);
+=======
+		i += (pIE->Length + 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	pmlmeinfo->state &= (~WIFI_FW_ASSOC_STATE);
 	pmlmeinfo->state |= WIFI_FW_ASSOC_SUCCESS;
 
 	/* Update Basic Rate Table for spec, 2010-12-28 , by thomas */
+<<<<<<< HEAD
 	UpdateBrateTbl(padapter, pmlmeinfo->network.supported_rates);
+=======
+	UpdateBrateTbl(padapter, pmlmeinfo->network.SupportedRates);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 report_assoc_result:
 	if (res > 0) {
@@ -2181,12 +2212,21 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
 		{
 			int len_diff;
 
+<<<<<<< HEAD
 			memcpy(pframe, cur_network->ies, cur_network->ie_length);
 			len_diff = update_hidden_ssid(pframe+_BEACON_IE_OFFSET_,
 						      cur_network->ie_length-_BEACON_IE_OFFSET_,
 						      pmlmeinfo->hidden_ssid_mode);
 			pframe += (cur_network->ie_length+len_diff);
 			pattrib->pktlen += (cur_network->ie_length+len_diff);
+=======
+			memcpy(pframe, cur_network->IEs, cur_network->IELength);
+			len_diff = update_hidden_ssid(pframe+_BEACON_IE_OFFSET_,
+						      cur_network->IELength-_BEACON_IE_OFFSET_,
+						      pmlmeinfo->hidden_ssid_mode);
+			pframe += (cur_network->IELength+len_diff);
+			pattrib->pktlen += (cur_network->IELength+len_diff);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		{
@@ -2217,19 +2257,28 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
 
 	/*  beacon interval: 2 bytes */
 
+<<<<<<< HEAD
 	memcpy(pframe, (unsigned char *)(rtw_get_beacon_interval_from_ie(cur_network->ies)), 2);
+=======
+	memcpy(pframe, (unsigned char *)(rtw_get_beacon_interval_from_ie(cur_network->IEs)), 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pframe += 2;
 	pattrib->pktlen += 2;
 
 	/*  capability info: 2 bytes */
 
+<<<<<<< HEAD
 	memcpy(pframe, (unsigned char *)(rtw_get_capability_from_ie(cur_network->ies)), 2);
+=======
+	memcpy(pframe, (unsigned char *)(rtw_get_capability_from_ie(cur_network->IEs)), 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pframe += 2;
 	pattrib->pktlen += 2;
 
 	/*  SSID */
+<<<<<<< HEAD
 	pframe = rtw_set_ie(pframe, WLAN_EID_SSID, cur_network->ssid.ssid_length, cur_network->ssid.ssid, &pattrib->pktlen);
 
 	/*  supported rates... */
@@ -2238,13 +2287,27 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
 
 	/*  DS parameter set */
 	pframe = rtw_set_ie(pframe, WLAN_EID_DS_PARAMS, 1, (unsigned char *)&(cur_network->configuration.ds_config), &pattrib->pktlen);
+=======
+	pframe = rtw_set_ie(pframe, WLAN_EID_SSID, cur_network->Ssid.SsidLength, cur_network->Ssid.Ssid, &pattrib->pktlen);
+
+	/*  supported rates... */
+	rate_len = rtw_get_rateset_len(cur_network->SupportedRates);
+	pframe = rtw_set_ie(pframe, WLAN_EID_SUPP_RATES, ((rate_len > 8) ? 8 : rate_len), cur_network->SupportedRates, &pattrib->pktlen);
+
+	/*  DS parameter set */
+	pframe = rtw_set_ie(pframe, WLAN_EID_DS_PARAMS, 1, (unsigned char *)&(cur_network->Configuration.DSConfig), &pattrib->pktlen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* if ((pmlmeinfo->state&0x03) == WIFI_FW_ADHOC_STATE) */
 	{
 		u8 erpinfo = 0;
 		u32 ATIMWindow;
 		/*  IBSS Parameter Set... */
+<<<<<<< HEAD
 		/* ATIMWindow = cur->configuration.ATIMWindow; */
+=======
+		/* ATIMWindow = cur->Configuration.ATIMWindow; */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ATIMWindow = 0;
 		pframe = rtw_set_ie(pframe, WLAN_EID_IBSS_PARAMS, 2, (unsigned char *)(&ATIMWindow), &pattrib->pktlen);
 
@@ -2255,7 +2318,11 @@ void issue_beacon(struct adapter *padapter, int timeout_ms)
 
 	/*  EXTERNDED SUPPORTED RATE */
 	if (rate_len > 8) {
+<<<<<<< HEAD
 		pframe = rtw_set_ie(pframe, WLAN_EID_EXT_SUPP_RATES, (rate_len - 8), (cur_network->supported_rates + 8), &pattrib->pktlen);
+=======
+		pframe = rtw_set_ie(pframe, WLAN_EID_EXT_SUPP_RATES, (rate_len - 8), (cur_network->SupportedRates + 8), &pattrib->pktlen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 
@@ -2314,7 +2381,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 	pwlanhdr = (struct ieee80211_hdr *)pframe;
 
 	mac = myid(&(padapter->eeprompriv));
+<<<<<<< HEAD
 	bssid = cur_network->mac_address;
+=======
+	bssid = cur_network->MacAddress;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	fctrl = &(pwlanhdr->frame_control);
 	*(fctrl) = 0;
@@ -2331,17 +2402,26 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 	pframe += pattrib->hdrlen;
 
 
+<<<<<<< HEAD
 	if (cur_network->ie_length > MAX_IE_SZ)
 		return;
 
 	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
 		pwps_ie = rtw_get_wps_ie(cur_network->ies+_FIXED_IE_LENGTH_, cur_network->ie_length-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
+=======
+	if (cur_network->IELength > MAX_IE_SZ)
+		return;
+
+	if ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE) {
+		pwps_ie = rtw_get_wps_ie(cur_network->IEs+_FIXED_IE_LENGTH_, cur_network->IELength-_FIXED_IE_LENGTH_, NULL, &wps_ielen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* inerset & update wps_probe_resp_ie */
 		if (pmlmepriv->wps_probe_resp_ie && pwps_ie && wps_ielen > 0) {
 			uint wps_offset, remainder_ielen;
 			u8 *premainder_ie;
 
+<<<<<<< HEAD
 			wps_offset = (uint)(pwps_ie - cur_network->ies);
 
 			premainder_ie = pwps_ie + wps_ielen;
@@ -2349,6 +2429,15 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 			remainder_ielen = cur_network->ie_length - wps_offset - wps_ielen;
 
 			memcpy(pframe, cur_network->ies, wps_offset);
+=======
+			wps_offset = (uint)(pwps_ie - cur_network->IEs);
+
+			premainder_ie = pwps_ie + wps_ielen;
+
+			remainder_ielen = cur_network->IELength - wps_offset - wps_ielen;
+
+			memcpy(pframe, cur_network->IEs, wps_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pframe += wps_offset;
 			pattrib->pktlen += wps_offset;
 
@@ -2365,12 +2454,21 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 				pattrib->pktlen += remainder_ielen;
 			}
 		} else {
+<<<<<<< HEAD
 			memcpy(pframe, cur_network->ies, cur_network->ie_length);
 			pframe += cur_network->ie_length;
 			pattrib->pktlen += cur_network->ie_length;
 		}
 
 		/* retrieve SSID IE from cur_network->ssid */
+=======
+			memcpy(pframe, cur_network->IEs, cur_network->IELength);
+			pframe += cur_network->IELength;
+			pattrib->pktlen += cur_network->IELength;
+		}
+
+		/* retrieve SSID IE from cur_network->Ssid */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{
 			u8 *ssid_ie;
 			signed int ssid_ielen;
@@ -2385,9 +2483,15 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 			ssid_ie = rtw_get_ie(ies+_FIXED_IE_LENGTH_, WLAN_EID_SSID, &ssid_ielen,
 				(pframe-ies)-_FIXED_IE_LENGTH_);
 
+<<<<<<< HEAD
 			ssid_ielen_diff = cur_network->ssid.ssid_length - ssid_ielen;
 
 			if (ssid_ie &&  cur_network->ssid.ssid_length) {
+=======
+			ssid_ielen_diff = cur_network->Ssid.SsidLength - ssid_ielen;
+
+			if (ssid_ie &&  cur_network->Ssid.SsidLength) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				uint remainder_ielen;
 				u8 *remainder_ie;
 
@@ -2403,8 +2507,13 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 
 				memcpy(buf, remainder_ie, remainder_ielen);
 				memcpy(remainder_ie+ssid_ielen_diff, buf, remainder_ielen);
+<<<<<<< HEAD
 				*(ssid_ie+1) = cur_network->ssid.ssid_length;
 				memcpy(ssid_ie+2, cur_network->ssid.ssid, cur_network->ssid.ssid_length);
+=======
+				*(ssid_ie+1) = cur_network->Ssid.SsidLength;
+				memcpy(ssid_ie+2, cur_network->Ssid.Ssid, cur_network->Ssid.SsidLength);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				pframe += ssid_ielen_diff;
 				pattrib->pktlen += ssid_ielen_diff;
@@ -2418,14 +2527,22 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 
 		/*  beacon interval: 2 bytes */
 
+<<<<<<< HEAD
 		memcpy(pframe, (unsigned char *)(rtw_get_beacon_interval_from_ie(cur_network->ies)), 2);
+=======
+		memcpy(pframe, (unsigned char *)(rtw_get_beacon_interval_from_ie(cur_network->IEs)), 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pframe += 2;
 		pattrib->pktlen += 2;
 
 		/*  capability info: 2 bytes */
 
+<<<<<<< HEAD
 		memcpy(pframe, (unsigned char *)(rtw_get_capability_from_ie(cur_network->ies)), 2);
+=======
+		memcpy(pframe, (unsigned char *)(rtw_get_capability_from_ie(cur_network->IEs)), 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pframe += 2;
 		pattrib->pktlen += 2;
@@ -2433,6 +2550,7 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 		/* below for ad-hoc mode */
 
 		/*  SSID */
+<<<<<<< HEAD
 		pframe = rtw_set_ie(pframe, WLAN_EID_SSID, cur_network->ssid.ssid_length, cur_network->ssid.ssid, &pattrib->pktlen);
 
 		/*  supported rates... */
@@ -2441,12 +2559,26 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 
 		/*  DS parameter set */
 		pframe = rtw_set_ie(pframe, WLAN_EID_DS_PARAMS, 1, (unsigned char *)&(cur_network->configuration.ds_config), &pattrib->pktlen);
+=======
+		pframe = rtw_set_ie(pframe, WLAN_EID_SSID, cur_network->Ssid.SsidLength, cur_network->Ssid.Ssid, &pattrib->pktlen);
+
+		/*  supported rates... */
+		rate_len = rtw_get_rateset_len(cur_network->SupportedRates);
+		pframe = rtw_set_ie(pframe, WLAN_EID_SUPP_RATES, ((rate_len > 8) ? 8 : rate_len), cur_network->SupportedRates, &pattrib->pktlen);
+
+		/*  DS parameter set */
+		pframe = rtw_set_ie(pframe, WLAN_EID_DS_PARAMS, 1, (unsigned char *)&(cur_network->Configuration.DSConfig), &pattrib->pktlen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if ((pmlmeinfo->state&0x03) == WIFI_FW_ADHOC_STATE) {
 			u8 erpinfo = 0;
 			u32 ATIMWindow;
 			/*  IBSS Parameter Set... */
+<<<<<<< HEAD
 			/* ATIMWindow = cur->configuration.ATIMWindow; */
+=======
+			/* ATIMWindow = cur->Configuration.ATIMWindow; */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ATIMWindow = 0;
 			pframe = rtw_set_ie(pframe, WLAN_EID_IBSS_PARAMS, 2, (unsigned char *)(&ATIMWindow), &pattrib->pktlen);
 
@@ -2457,7 +2589,11 @@ void issue_probersp(struct adapter *padapter, unsigned char *da, u8 is_valid_p2p
 
 		/*  EXTERNDED SUPPORTED RATE */
 		if (rate_len > 8) {
+<<<<<<< HEAD
 			pframe = rtw_set_ie(pframe, WLAN_EID_EXT_SUPP_RATES, (rate_len - 8), (cur_network->supported_rates + 8), &pattrib->pktlen);
+=======
+			pframe = rtw_set_ie(pframe, WLAN_EID_EXT_SUPP_RATES, (rate_len - 8), (cur_network->SupportedRates + 8), &pattrib->pktlen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 
@@ -2530,7 +2666,11 @@ static int _issue_probereq(struct adapter *padapter,
 	pattrib->pktlen = sizeof(struct ieee80211_hdr_3addr);
 
 	if (pssid)
+<<<<<<< HEAD
 		pframe = rtw_set_ie(pframe, WLAN_EID_SSID, pssid->ssid_length, pssid->ssid, &(pattrib->pktlen));
+=======
+		pframe = rtw_set_ie(pframe, WLAN_EID_SSID, pssid->SsidLength, pssid->Ssid, &(pattrib->pktlen));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else
 		pframe = rtw_set_ie(pframe, WLAN_EID_SSID, 0, NULL, &(pattrib->pktlen));
 
@@ -2748,7 +2888,11 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
 	struct mlme_ext_priv *pmlmeext = &padapter->mlmeextpriv;
 	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
 	struct wlan_bssid_ex *pnetwork = &(pmlmeinfo->network);
+<<<<<<< HEAD
 	u8 *ie = pnetwork->ies;
+=======
+	u8 *ie = pnetwork->IEs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__le16 lestatus, le_tmp;
 
 	pmgntframe = alloc_mgtxmitframe(pxmitpriv);
@@ -2807,7 +2951,11 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
 
 		/* FILL HT CAP INFO IE */
 		/* p = hostapd_eid_ht_capabilities_info(hapd, p); */
+<<<<<<< HEAD
 		pbuf = rtw_get_ie(ie + _BEACON_IE_OFFSET_, WLAN_EID_HT_CAPABILITY, &ie_len, (pnetwork->ie_length - _BEACON_IE_OFFSET_));
+=======
+		pbuf = rtw_get_ie(ie + _BEACON_IE_OFFSET_, WLAN_EID_HT_CAPABILITY, &ie_len, (pnetwork->IELength - _BEACON_IE_OFFSET_));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (pbuf && ie_len > 0) {
 			memcpy(pframe, pbuf, ie_len+2);
 			pframe += (ie_len+2);
@@ -2816,7 +2964,11 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
 
 		/* FILL HT ADD INFO IE */
 		/* p = hostapd_eid_ht_operation(hapd, p); */
+<<<<<<< HEAD
 		pbuf = rtw_get_ie(ie + _BEACON_IE_OFFSET_, WLAN_EID_HT_OPERATION, &ie_len, (pnetwork->ie_length - _BEACON_IE_OFFSET_));
+=======
+		pbuf = rtw_get_ie(ie + _BEACON_IE_OFFSET_, WLAN_EID_HT_OPERATION, &ie_len, (pnetwork->IELength - _BEACON_IE_OFFSET_));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (pbuf && ie_len > 0) {
 			memcpy(pframe, pbuf, ie_len+2);
 			pframe += (ie_len+2);
@@ -2831,7 +2983,11 @@ void issue_asocrsp(struct adapter *padapter, unsigned short status, struct sta_i
 		unsigned char WMM_PARA_IE[] = {0x00, 0x50, 0xf2, 0x02, 0x01, 0x01};
 
 		for (pbuf = ie + _BEACON_IE_OFFSET_; ; pbuf += (ie_len + 2)) {
+<<<<<<< HEAD
 			pbuf = rtw_get_ie(pbuf, WLAN_EID_VENDOR_SPECIFIC, &ie_len, (pnetwork->ie_length - _BEACON_IE_OFFSET_ - (ie_len + 2)));
+=======
+			pbuf = rtw_get_ie(pbuf, WLAN_EID_VENDOR_SPECIFIC, &ie_len, (pnetwork->IELength - _BEACON_IE_OFFSET_ - (ie_len + 2)));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (pbuf && !memcmp(pbuf+2, WMM_PARA_IE, 6)) {
 				memcpy(pframe, pbuf, ie_len+2);
 				pframe += (ie_len+2);
@@ -2910,7 +3066,11 @@ void issue_assocreq(struct adapter *padapter)
 	pattrib->pktlen = sizeof(struct ieee80211_hdr_3addr);
 
 	/* caps */
+<<<<<<< HEAD
 	memcpy(pframe, rtw_get_capability_from_ie(pmlmeinfo->network.ies), 2);
+=======
+	memcpy(pframe, rtw_get_capability_from_ie(pmlmeinfo->network.IEs), 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pframe += 2;
 	pattrib->pktlen += 2;
@@ -2923,7 +3083,11 @@ void issue_assocreq(struct adapter *padapter)
 	pattrib->pktlen += 2;
 
 	/* SSID */
+<<<<<<< HEAD
 	pframe = rtw_set_ie(pframe, WLAN_EID_SSID,  pmlmeinfo->network.ssid.ssid_length, pmlmeinfo->network.ssid.ssid, &(pattrib->pktlen));
+=======
+	pframe = rtw_set_ie(pframe, WLAN_EID_SSID,  pmlmeinfo->network.Ssid.SsidLength, pmlmeinfo->network.Ssid.Ssid, &(pattrib->pktlen));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* supported rate & extended supported rate */
 
@@ -2938,27 +3102,43 @@ void issue_assocreq(struct adapter *padapter)
 	/*  */
 
 	for (i = 0; i < NDIS_802_11_LENGTH_RATES_EX; i++) {
+<<<<<<< HEAD
 		if (pmlmeinfo->network.supported_rates[i] == 0)
+=======
+		if (pmlmeinfo->network.SupportedRates[i] == 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 	}
 
 
 	for (i = 0; i < NDIS_802_11_LENGTH_RATES_EX; i++) {
+<<<<<<< HEAD
 		if (pmlmeinfo->network.supported_rates[i] == 0)
+=======
+		if (pmlmeinfo->network.SupportedRates[i] == 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 
 
 		/*  Check if the AP's supported rates are also supported by STA. */
 		for (j = 0; j < sta_bssrate_len; j++) {
 			 /*  Avoid the proprietary data rate (22Mbps) of Handlink WSG-4000 AP */
+<<<<<<< HEAD
 			if ((pmlmeinfo->network.supported_rates[i] | IEEE80211_BASIC_RATE_MASK)
+=======
+			if ((pmlmeinfo->network.SupportedRates[i] | IEEE80211_BASIC_RATE_MASK)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					== (sta_bssrate[j] | IEEE80211_BASIC_RATE_MASK))
 				break;
 		}
 
 		if (j != sta_bssrate_len)
 			/*  the rate is supported by STA */
+<<<<<<< HEAD
 			bssrate[index++] = pmlmeinfo->network.supported_rates[i];
+=======
+			bssrate[index++] = pmlmeinfo->network.SupportedRates[i];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	bssrate_len = index;
@@ -2977,15 +3157,26 @@ void issue_assocreq(struct adapter *padapter)
 		pframe = rtw_set_ie(pframe, WLAN_EID_SUPP_RATES, bssrate_len, bssrate, &(pattrib->pktlen));
 
 	/* vendor specific IE, such as WPA, WMM, WPS */
+<<<<<<< HEAD
 	for (i = sizeof(struct ndis_802_11_fix_ie); i < pmlmeinfo->network.ie_length;) {
 		pIE = (struct ndis_80211_var_ie *)(pmlmeinfo->network.ies + i);
 
 		switch (pIE->element_id) {
+=======
+	for (i = sizeof(struct ndis_802_11_fix_ie); i < pmlmeinfo->network.IELength;) {
+		pIE = (struct ndis_80211_var_ie *)(pmlmeinfo->network.IEs + i);
+
+		switch (pIE->ElementID) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		case WLAN_EID_VENDOR_SPECIFIC:
 			if ((!memcmp(pIE->data, RTW_WPA_OUI, 4)) ||
 					(!memcmp(pIE->data, WMM_OUI, 4)) ||
 					(!memcmp(pIE->data, WPS_OUI, 4))) {
+<<<<<<< HEAD
 				vs_ie_length = pIE->length;
+=======
+				vs_ie_length = pIE->Length;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if ((!padapter->registrypriv.wifi_spec) && (!memcmp(pIE->data, WPS_OUI, 4))) {
 					/* Commented by Kurt 20110629
 					 * In some older APs, WPS handshake
@@ -3001,26 +3192,42 @@ void issue_assocreq(struct adapter *padapter)
 			break;
 
 		case WLAN_EID_RSN:
+<<<<<<< HEAD
 			pframe = rtw_set_ie(pframe, WLAN_EID_RSN, pIE->length, pIE->data, &(pattrib->pktlen));
+=======
+			pframe = rtw_set_ie(pframe, WLAN_EID_RSN, pIE->Length, pIE->data, &(pattrib->pktlen));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		case WLAN_EID_HT_CAPABILITY:
 			if (padapter->mlmepriv.htpriv.ht_option) {
 				if (!(is_ap_in_tkip(padapter))) {
 					memcpy(&(pmlmeinfo->HT_caps), pIE->data, sizeof(struct HT_caps_element));
+<<<<<<< HEAD
 					pframe = rtw_set_ie(pframe, WLAN_EID_HT_CAPABILITY, pIE->length, (u8 *)(&(pmlmeinfo->HT_caps)), &(pattrib->pktlen));
+=======
+					pframe = rtw_set_ie(pframe, WLAN_EID_HT_CAPABILITY, pIE->Length, (u8 *)(&(pmlmeinfo->HT_caps)), &(pattrib->pktlen));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				}
 			}
 			break;
 
 		case WLAN_EID_EXT_CAPABILITY:
 			if (padapter->mlmepriv.htpriv.ht_option)
+<<<<<<< HEAD
 				pframe = rtw_set_ie(pframe, WLAN_EID_EXT_CAPABILITY, pIE->length, pIE->data, &(pattrib->pktlen));
+=======
+				pframe = rtw_set_ie(pframe, WLAN_EID_EXT_CAPABILITY, pIE->Length, pIE->data, &(pattrib->pktlen));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		default:
 			break;
 		}
 
+<<<<<<< HEAD
 		i += (pIE->length + 2);
+=======
+		i += (pIE->Length + 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (pmlmeinfo->assoc_AP_vendor == HT_IOT_PEER_REALTEK)
@@ -3540,7 +3747,11 @@ void issue_action_BA(struct adapter *padapter, unsigned char *raddr, unsigned ch
 			le_tmp = cpu_to_le16(BA_timeout_value);
 			pframe = rtw_set_fixed_ie(pframe, 2, (unsigned char *)(&(le_tmp)), &(pattrib->pktlen));
 
+<<<<<<< HEAD
 			/* if ((psta = rtw_get_stainfo(pstapriv, pmlmeinfo->network.mac_address)) != NULL) */
+=======
+			/* if ((psta = rtw_get_stainfo(pstapriv, pmlmeinfo->network.MacAddress)) != NULL) */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			psta = rtw_get_stainfo(pstapriv, raddr);
 			if (psta) {
 				start_seq = (psta->sta_xmitpriv.txseq_tid[status & 0x07]&0xfff) + 1;
@@ -3705,6 +3916,7 @@ static void issue_action_BSSCoexistPacket(struct adapter *padapter)
 
 			pbss_network = (struct wlan_bssid_ex *)&pnetwork->network;
 
+<<<<<<< HEAD
 			p = rtw_get_ie(pbss_network->ies + _FIXED_IE_LENGTH_, WLAN_EID_HT_CAPABILITY, &len, pbss_network->ie_length - _FIXED_IE_LENGTH_);
 			if ((p == NULL) || (len == 0)) {/* non-HT */
 
@@ -3712,6 +3924,15 @@ static void issue_action_BSSCoexistPacket(struct adapter *padapter)
 					continue;
 
 				ICS[0][pbss_network->configuration.ds_config] = 1;
+=======
+			p = rtw_get_ie(pbss_network->IEs + _FIXED_IE_LENGTH_, WLAN_EID_HT_CAPABILITY, &len, pbss_network->IELength - _FIXED_IE_LENGTH_);
+			if ((p == NULL) || (len == 0)) {/* non-HT */
+
+				if ((pbss_network->Configuration.DSConfig <= 0) || (pbss_network->Configuration.DSConfig > 14))
+					continue;
+
+				ICS[0][pbss_network->Configuration.DSConfig] = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				if (ICS[0][0] == 0)
 					ICS[0][0] = 1;
@@ -3876,7 +4097,11 @@ void site_survey(struct adapter *padapter)
 				int i;
 
 				for (i = 0; i < RTW_SSID_SCAN_AMOUNT; i++) {
+<<<<<<< HEAD
 					if (pmlmeext->sitesurvey_res.ssid[i].ssid_length) {
+=======
+					if (pmlmeext->sitesurvey_res.ssid[i].SsidLength) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						/* IOT issue, When wifi_spec is not set, send one probe req without WPS IE. */
 						if (padapter->registrypriv.wifi_spec)
 							issue_probereq(padapter, &(pmlmeext->sitesurvey_res.ssid[i]), NULL);
@@ -3971,22 +4196,36 @@ u8 collect_bss_info(struct adapter *padapter, union recv_frame *precv_frame, str
 	subtype = GetFrameSubType(pframe);
 
 	if (subtype == WIFI_BEACON) {
+<<<<<<< HEAD
 		bssid->reserved[0] = 1;
+=======
+		bssid->Reserved[0] = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ie_offset = _BEACON_IE_OFFSET_;
 	} else {
 		/*  FIXME : more type */
 		if (subtype == WIFI_PROBERSP) {
 			ie_offset = _PROBERSP_IE_OFFSET_;
+<<<<<<< HEAD
 			bssid->reserved[0] = 3;
 		} else if (subtype == WIFI_PROBEREQ) {
 			ie_offset = _PROBEREQ_IE_OFFSET_;
 			bssid->reserved[0] = 2;
 		} else {
 			bssid->reserved[0] = 0;
+=======
+			bssid->Reserved[0] = 3;
+		} else if (subtype == WIFI_PROBEREQ) {
+			ie_offset = _PROBEREQ_IE_OFFSET_;
+			bssid->Reserved[0] = 2;
+		} else {
+			bssid->Reserved[0] = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ie_offset = _FIXED_IE_LENGTH_;
 		}
 	}
 
+<<<<<<< HEAD
 	bssid->length = sizeof(struct wlan_bssid_ex) - MAX_IE_SZ + len;
 
 	/* below is to copy the information element */
@@ -4000,6 +4239,21 @@ u8 collect_bss_info(struct adapter *padapter, union recv_frame *precv_frame, str
 
 	/*  checking SSID */
 	p = rtw_get_ie(bssid->ies + ie_offset, WLAN_EID_SSID, &len, bssid->ie_length - ie_offset);
+=======
+	bssid->Length = sizeof(struct wlan_bssid_ex) - MAX_IE_SZ + len;
+
+	/* below is to copy the information element */
+	bssid->IELength = len;
+	memcpy(bssid->IEs, (pframe + sizeof(struct ieee80211_hdr_3addr)), bssid->IELength);
+
+	/* get the signal strength */
+	bssid->Rssi = precv_frame->u.hdr.attrib.phy_info.RecvSignalPower; /*  in dBM.raw data */
+	bssid->PhyInfo.SignalQuality = precv_frame->u.hdr.attrib.phy_info.SignalQuality;/* in percentage */
+	bssid->PhyInfo.SignalStrength = precv_frame->u.hdr.attrib.phy_info.SignalStrength;/* in percentage */
+
+	/*  checking SSID */
+	p = rtw_get_ie(bssid->IEs + ie_offset, WLAN_EID_SSID, &len, bssid->IELength - ie_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!p)
 		return _FAIL;
 
@@ -4007,6 +4261,7 @@ u8 collect_bss_info(struct adapter *padapter, union recv_frame *precv_frame, str
 		if (len > NDIS_802_11_LENGTH_SSID)
 			return _FAIL;
 
+<<<<<<< HEAD
 		memcpy(bssid->ssid.ssid, (p + 2), *(p + 1));
 		bssid->ssid.ssid_length = *(p + 1);
 	} else
@@ -4017,19 +4272,40 @@ u8 collect_bss_info(struct adapter *padapter, union recv_frame *precv_frame, str
 	/* checking rate info... */
 	i = 0;
 	p = rtw_get_ie(bssid->ies + ie_offset, WLAN_EID_SUPP_RATES, &len, bssid->ie_length - ie_offset);
+=======
+		memcpy(bssid->Ssid.Ssid, (p + 2), *(p + 1));
+		bssid->Ssid.SsidLength = *(p + 1);
+	} else
+		bssid->Ssid.SsidLength = 0;
+
+	memset(bssid->SupportedRates, 0, NDIS_802_11_LENGTH_RATES_EX);
+
+	/* checking rate info... */
+	i = 0;
+	p = rtw_get_ie(bssid->IEs + ie_offset, WLAN_EID_SUPP_RATES, &len, bssid->IELength - ie_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (p) {
 		if (len > NDIS_802_11_LENGTH_RATES_EX)
 			return _FAIL;
 
+<<<<<<< HEAD
 		memcpy(bssid->supported_rates, (p + 2), len);
 		i = len;
 	}
 
 	p = rtw_get_ie(bssid->ies + ie_offset, WLAN_EID_EXT_SUPP_RATES, &len, bssid->ie_length - ie_offset);
+=======
+		memcpy(bssid->SupportedRates, (p + 2), len);
+		i = len;
+	}
+
+	p = rtw_get_ie(bssid->IEs + ie_offset, WLAN_EID_EXT_SUPP_RATES, &len, bssid->IELength - ie_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (p) {
 		if (len > (NDIS_802_11_LENGTH_RATES_EX-i))
 			return _FAIL;
 
+<<<<<<< HEAD
 		memcpy(bssid->supported_rates + i, (p + 2), len);
 	}
 
@@ -4061,10 +4337,44 @@ u8 collect_bss_info(struct adapter *padapter, union recv_frame *precv_frame, str
 
 	memcpy(&le32_tmp, rtw_get_beacon_interval_from_ie(bssid->ies), 2);
 	bssid->configuration.beacon_period = le32_to_cpu(le32_tmp);
+=======
+		memcpy(bssid->SupportedRates + i, (p + 2), len);
+	}
+
+	bssid->NetworkTypeInUse = Ndis802_11OFDM24;
+
+	if (bssid->IELength < 12)
+		return _FAIL;
+
+	/*  Checking for DSConfig */
+	p = rtw_get_ie(bssid->IEs + ie_offset, WLAN_EID_DS_PARAMS, &len, bssid->IELength - ie_offset);
+
+	bssid->Configuration.DSConfig = 0;
+	bssid->Configuration.Length = 0;
+
+	if (p) {
+		bssid->Configuration.DSConfig = *(p + 2);
+	} else {
+		/*  In 5G, some ap do not have DSSET IE */
+		/*  checking HT info for channel */
+		p = rtw_get_ie(bssid->IEs + ie_offset, WLAN_EID_HT_OPERATION, &len, bssid->IELength - ie_offset);
+		if (p) {
+			struct HT_info_element *HT_info = (struct HT_info_element *)(p + 2);
+
+			bssid->Configuration.DSConfig = HT_info->primary_channel;
+		} else { /*  use current channel */
+			bssid->Configuration.DSConfig = rtw_get_oper_ch(padapter);
+		}
+	}
+
+	memcpy(&le32_tmp, rtw_get_beacon_interval_from_ie(bssid->IEs), 2);
+	bssid->Configuration.BeaconPeriod = le32_to_cpu(le32_tmp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	val16 = rtw_get_capability((struct wlan_bssid_ex *)bssid);
 
 	if (val16 & BIT(0)) {
+<<<<<<< HEAD
 		bssid->infrastructure_mode = Ndis802_11Infrastructure;
 		memcpy(bssid->mac_address, GetAddr2Ptr(pframe), ETH_ALEN);
 	} else {
@@ -4078,12 +4388,31 @@ u8 collect_bss_info(struct adapter *padapter, union recv_frame *precv_frame, str
 		bssid->privacy = 0;
 
 	bssid->configuration.atim_window = 0;
+=======
+		bssid->InfrastructureMode = Ndis802_11Infrastructure;
+		memcpy(bssid->MacAddress, GetAddr2Ptr(pframe), ETH_ALEN);
+	} else {
+		bssid->InfrastructureMode = Ndis802_11IBSS;
+		memcpy(bssid->MacAddress, GetAddr3Ptr(pframe), ETH_ALEN);
+	}
+
+	if (val16 & BIT(4))
+		bssid->Privacy = 1;
+	else
+		bssid->Privacy = 0;
+
+	bssid->Configuration.ATIMWindow = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* 20/40 BSS Coexistence check */
 	if ((pregistrypriv->wifi_spec == 1) && (false == pmlmeinfo->bwmode_updated)) {
 		struct mlme_priv *pmlmepriv = &padapter->mlmepriv;
 
+<<<<<<< HEAD
 		p = rtw_get_ie(bssid->ies + ie_offset, WLAN_EID_HT_CAPABILITY, &len, bssid->ie_length - ie_offset);
+=======
+		p = rtw_get_ie(bssid->IEs + ie_offset, WLAN_EID_HT_CAPABILITY, &len, bssid->IELength - ie_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (p && len > 0) {
 			struct HT_caps_element	*pHT_caps;
 
@@ -4095,9 +4424,15 @@ u8 collect_bss_info(struct adapter *padapter, union recv_frame *precv_frame, str
 			pmlmepriv->num_sta_no_ht++;
 	}
 
+<<<<<<< HEAD
 	/*  mark bss info receiving from nearby channel as signal_quality 101 */
 	if (bssid->configuration.ds_config != rtw_get_oper_ch(padapter))
 		bssid->phy_info.signal_quality = 101;
+=======
+	/*  mark bss info receiving from nearby channel as SignalQuality 101 */
+	if (bssid->Configuration.DSConfig != rtw_get_oper_ch(padapter))
+		bssid->PhyInfo.SignalQuality = 101;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return _SUCCESS;
 }
@@ -4111,7 +4446,11 @@ void start_create_ibss(struct adapter *padapter)
 	struct mlme_ext_info *pmlmeinfo = &(pmlmeext->mlmext_info);
 	struct wlan_bssid_ex		*pnetwork = (struct wlan_bssid_ex *)(&(pmlmeinfo->network));
 
+<<<<<<< HEAD
 	pmlmeext->cur_channel = (u8)pnetwork->configuration.ds_config;
+=======
+	pmlmeext->cur_channel = (u8)pnetwork->Configuration.DSConfig;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pmlmeinfo->bcn_interval = get_beacon_interval(pnetwork);
 
 	/* update wireless mode */
@@ -4141,7 +4480,11 @@ void start_create_ibss(struct adapter *padapter)
 			report_join_res(padapter, -1);
 			pmlmeinfo->state = WIFI_FW_NULL_STATE;
 		} else {
+<<<<<<< HEAD
 			rtw_hal_set_hwreg(padapter, HW_VAR_BSSID, padapter->registrypriv.dev_network.mac_address);
+=======
+			rtw_hal_set_hwreg(padapter, HW_VAR_BSSID, padapter->registrypriv.dev_network.MacAddress);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			join_type = 0;
 			rtw_hal_set_hwreg(padapter, HW_VAR_MLME_JOIN, (u8 *)(&join_type));
 
@@ -4187,7 +4530,11 @@ void start_clnt_join(struct adapter *padapter)
 		/* 	For the Win8 P2P connection, it will be hard to have a successful connection if this Wi-Fi doesn't connect to it. */
 		{
 				/* To avoid connecting to AP fail during resume process, change retry count from 5 to 1 */
+<<<<<<< HEAD
 				issue_deauth_ex(padapter, pnetwork->mac_address, WLAN_REASON_DEAUTH_LEAVING, 1, 100);
+=======
+				issue_deauth_ex(padapter, pnetwork->MacAddress, WLAN_REASON_DEAUTH_LEAVING, 1, 100);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		/* here wait for receiving the beacon to start auth */
@@ -4302,7 +4649,11 @@ static void process_80211d(struct adapter *padapter, struct wlan_bssid_ex *bssid
 		u8 noc; /*  number of channel */
 		u8 j, k;
 
+<<<<<<< HEAD
 		ie = rtw_get_ie(bssid->ies + _FIXED_IE_LENGTH_, WLAN_EID_COUNTRY, &len, bssid->ie_length - _FIXED_IE_LENGTH_);
+=======
+		ie = rtw_get_ie(bssid->IEs + _FIXED_IE_LENGTH_, WLAN_EID_COUNTRY, &len, bssid->IELength - _FIXED_IE_LENGTH_);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!ie)
 			return;
 		if (len < 6)
@@ -4409,7 +4760,11 @@ static void process_80211d(struct adapter *padapter, struct wlan_bssid_ex *bssid
 	}
 
 	/*  If channel is used by AP, set channel scan type to active */
+<<<<<<< HEAD
 	channel = bssid->configuration.ds_config;
+=======
+	channel = bssid->Configuration.DSConfig;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	chplan_new = pmlmeext->channel_set;
 	i = 0;
 	while ((i < MAX_CHANNEL_NUM) && (chplan_new[i].ChannelNum != 0)) {
@@ -4866,7 +5221,11 @@ void mlmeext_joinbss_event_callback(struct adapter *padapter, int join_res)
 	/*  update IOT-related issue */
 	update_IOT_info(padapter);
 
+<<<<<<< HEAD
 	rtw_hal_set_hwreg(padapter, HW_VAR_BASIC_RATE, cur_network->supported_rates);
+=======
+	rtw_hal_set_hwreg(padapter, HW_VAR_BASIC_RATE, cur_network->SupportedRates);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* BCN interval */
 	rtw_hal_set_hwreg(padapter, HW_VAR_BEACON_INTERVAL, (u8 *)(&pmlmeinfo->bcn_interval));
@@ -4883,7 +5242,11 @@ void mlmeext_joinbss_event_callback(struct adapter *padapter, int join_res)
 	/* Set cur_channel&cur_bwmode&cur_ch_offset */
 	set_channel_bwmode(padapter, pmlmeext->cur_channel, pmlmeext->cur_ch_offset, pmlmeext->cur_bwmode);
 
+<<<<<<< HEAD
 	psta = rtw_get_stainfo(pstapriv, cur_network->mac_address);
+=======
+	psta = rtw_get_stainfo(pstapriv, cur_network->MacAddress);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (psta) { /* only for infra. mode */
 
 		pmlmeinfo->FW_sta_info[psta->mac_id].psta = psta;
@@ -5047,7 +5410,11 @@ void linked_status_chk(struct adapter *padapter)
 		/*  Marked by Kurt 20130715 */
 		/*  For WiDi 3.5 and latered on, they don't ask WiDi sink to do roaming, so we could not check rx limit that strictly. */
 		/*  todo: To check why we under miracast session, rx_chk would be false */
+<<<<<<< HEAD
 		psta = rtw_get_stainfo(pstapriv, pmlmeinfo->network.mac_address);
+=======
+		psta = rtw_get_stainfo(pstapriv, pmlmeinfo->network.MacAddress);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (psta) {
 			if (chk_ap_is_alive(padapter, psta) == false)
 				rx_chk = _FAIL;
@@ -5058,9 +5425,15 @@ void linked_status_chk(struct adapter *padapter)
 			{
 				if (rx_chk != _SUCCESS) {
 					if (pmlmeext->retry == 0) {
+<<<<<<< HEAD
 						issue_probereq_ex(padapter, &pmlmeinfo->network.ssid, pmlmeinfo->network.mac_address, 0, 0, 0, 0);
 						issue_probereq_ex(padapter, &pmlmeinfo->network.ssid, pmlmeinfo->network.mac_address, 0, 0, 0, 0);
 						issue_probereq_ex(padapter, &pmlmeinfo->network.ssid, pmlmeinfo->network.mac_address, 0, 0, 0, 0);
+=======
+						issue_probereq_ex(padapter, &pmlmeinfo->network.Ssid, pmlmeinfo->network.MacAddress, 0, 0, 0, 0);
+						issue_probereq_ex(padapter, &pmlmeinfo->network.Ssid, pmlmeinfo->network.MacAddress, 0, 0, 0, 0);
+						issue_probereq_ex(padapter, &pmlmeinfo->network.Ssid, pmlmeinfo->network.MacAddress, 0, 0, 0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					}
 				}
 
@@ -5075,7 +5448,11 @@ void linked_status_chk(struct adapter *padapter)
 					netdev_dbg(padapter->pnetdev,
 						   FUNC_ADPT_FMT " disconnect or roaming\n",
 						   FUNC_ADPT_ARG(padapter));
+<<<<<<< HEAD
 					receive_disconnect(padapter, pmlmeinfo->network.mac_address
+=======
+					receive_disconnect(padapter, pmlmeinfo->network.MacAddress
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						, WLAN_REASON_EXPIRATION_CHK);
 					return;
 				}
@@ -5090,7 +5467,11 @@ void linked_status_chk(struct adapter *padapter)
 				pmlmeinfo->link_count = 0;
 			}
 
+<<<<<<< HEAD
 		} /* end of if ((psta = rtw_get_stainfo(pstapriv, passoc_res->network.mac_address)) != NULL) */
+=======
+		} /* end of if ((psta = rtw_get_stainfo(pstapriv, passoc_res->network.MacAddress)) != NULL) */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (is_client_associated_to_ibss(padapter)) {
 		/* linked IBSS mode */
 		/* for each assoc list entry to check the rx pkt counter */
@@ -5301,7 +5682,11 @@ u8 createbss_hdl(struct adapter *padapter, u8 *pbuf)
 	}
 
 	/* below is for ad-hoc master */
+<<<<<<< HEAD
 	if (pparm->network.infrastructure_mode == Ndis802_11IBSS) {
+=======
+	if (pparm->network.InfrastructureMode == Ndis802_11IBSS) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rtw_joinbss_reset(padapter);
 
 		pmlmeext->cur_bwmode = CHANNEL_WIDTH_20;
@@ -5328,6 +5713,7 @@ u8 createbss_hdl(struct adapter *padapter, u8 *pbuf)
 		/* clear CAM */
 		flush_all_cam_entry(padapter);
 
+<<<<<<< HEAD
 		memcpy(pnetwork, pbuf, FIELD_OFFSET(struct wlan_bssid_ex, ie_length));
 		pnetwork->ie_length = ((struct wlan_bssid_ex *)pbuf)->ie_length;
 
@@ -5335,6 +5721,15 @@ u8 createbss_hdl(struct adapter *padapter, u8 *pbuf)
 			return H2C_PARAMETERS_ERROR;
 
 		memcpy(pnetwork->ies, ((struct wlan_bssid_ex *)pbuf)->ies, pnetwork->ie_length);
+=======
+		memcpy(pnetwork, pbuf, FIELD_OFFSET(struct wlan_bssid_ex, IELength));
+		pnetwork->IELength = ((struct wlan_bssid_ex *)pbuf)->IELength;
+
+		if (pnetwork->IELength > MAX_IE_SZ)/* Check pbuf->IELength */
+			return H2C_PARAMETERS_ERROR;
+
+		memcpy(pnetwork->IEs, ((struct wlan_bssid_ex *)pbuf)->IEs, pnetwork->IELength);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		start_create_ibss(padapter);
 
@@ -5361,7 +5756,11 @@ u8 join_cmd_hdl(struct adapter *padapter, u8 *pbuf)
 	/* check already connecting to AP or not */
 	if (pmlmeinfo->state & WIFI_FW_ASSOC_SUCCESS) {
 		if (pmlmeinfo->state & WIFI_FW_STATION_STATE) {
+<<<<<<< HEAD
 			issue_deauth_ex(padapter, pnetwork->mac_address, WLAN_REASON_DEAUTH_LEAVING, 1, 100);
+=======
+			issue_deauth_ex(padapter, pnetwork->MacAddress, WLAN_REASON_DEAUTH_LEAVING, 1, 100);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		pmlmeinfo->state = WIFI_FW_NULL_STATE;
 
@@ -5393,6 +5792,7 @@ u8 join_cmd_hdl(struct adapter *padapter, u8 *pbuf)
 	/* pmlmeinfo->assoc_AP_vendor = HT_IOT_PEER_MAX; */
 	pmlmeinfo->VHT_enable = 0;
 
+<<<<<<< HEAD
 	memcpy(pnetwork, pbuf, FIELD_OFFSET(struct wlan_bssid_ex, ie_length));
 	pnetwork->ie_length = ((struct wlan_bssid_ex *)pbuf)->ie_length;
 
@@ -5412,6 +5812,27 @@ u8 join_cmd_hdl(struct adapter *padapter, u8 *pbuf)
 		pIE = (struct ndis_80211_var_ie *)(pnetwork->ies + i);
 
 		switch (pIE->element_id) {
+=======
+	memcpy(pnetwork, pbuf, FIELD_OFFSET(struct wlan_bssid_ex, IELength));
+	pnetwork->IELength = ((struct wlan_bssid_ex *)pbuf)->IELength;
+
+	if (pnetwork->IELength > MAX_IE_SZ)/* Check pbuf->IELength */
+		return H2C_PARAMETERS_ERROR;
+
+	memcpy(pnetwork->IEs, ((struct wlan_bssid_ex *)pbuf)->IEs, pnetwork->IELength);
+
+	pmlmeext->cur_channel = (u8)pnetwork->Configuration.DSConfig;
+	pmlmeinfo->bcn_interval = get_beacon_interval(pnetwork);
+
+	/* Check AP vendor to move rtw_joinbss_cmd() */
+	/* pmlmeinfo->assoc_AP_vendor = check_assoc_AP(pnetwork->IEs, pnetwork->IELength); */
+
+	/* sizeof(struct ndis_802_11_fix_ie) */
+	for (i = _FIXED_IE_LENGTH_; i < pnetwork->IELength;) {
+		pIE = (struct ndis_80211_var_ie *)(pnetwork->IEs + i);
+
+		switch (pIE->ElementID) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		case WLAN_EID_VENDOR_SPECIFIC:/* Get WMM IE. */
 			if (!memcmp(pIE->data, WMM_OUI, 4))
 				WMM_param_handler(padapter, pIE);
@@ -5428,7 +5849,14 @@ u8 join_cmd_hdl(struct adapter *padapter, u8 *pbuf)
 			{
 				struct HT_info_element *pht_info = (struct HT_info_element *)(pIE->data);
 
+<<<<<<< HEAD
 				if (pnetwork->configuration.ds_config <= 14) {
+=======
+				if (pnetwork->Configuration.DSConfig > 14) {
+					if ((pregpriv->bw_mode >> 4) > CHANNEL_WIDTH_20)
+						cbw40_enable = 1;
+				} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					if ((pregpriv->bw_mode & 0x0f) > CHANNEL_WIDTH_20)
 						cbw40_enable = 1;
 				}
@@ -5457,7 +5885,11 @@ u8 join_cmd_hdl(struct adapter *padapter, u8 *pbuf)
 			break;
 		}
 
+<<<<<<< HEAD
 		i += (pIE->length + 2);
+=======
+		i += (pIE->Length + 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* check channel, bandwidth, offset and switch */
@@ -5473,7 +5905,11 @@ u8 join_cmd_hdl(struct adapter *padapter, u8 *pbuf)
 	/* initialgain = 0x1E; */
 	/* rtw_hal_set_hwreg(padapter, HW_VAR_INITIAL_GAIN, (u8 *)(&initialgain)); */
 
+<<<<<<< HEAD
 	rtw_hal_set_hwreg(padapter, HW_VAR_BSSID, pmlmeinfo->network.mac_address);
+=======
+	rtw_hal_set_hwreg(padapter, HW_VAR_BSSID, pmlmeinfo->network.MacAddress);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	join_type = 0;
 	rtw_hal_set_hwreg(padapter, HW_VAR_MLME_JOIN, (u8 *)(&join_type));
 	rtw_hal_set_hwreg(padapter, HW_VAR_DO_IQK, NULL);
@@ -5498,7 +5934,11 @@ u8 disconnect_hdl(struct adapter *padapter, unsigned char *pbuf)
 	u8 val8;
 
 	if (is_client_associated_to_ap(padapter)) {
+<<<<<<< HEAD
 			issue_deauth_ex(padapter, pnetwork->mac_address, WLAN_REASON_DEAUTH_LEAVING, param->deauth_timeout_ms/100, 100);
+=======
+			issue_deauth_ex(padapter, pnetwork->MacAddress, WLAN_REASON_DEAUTH_LEAVING, param->deauth_timeout_ms/100, 100);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (((pmlmeinfo->state&0x03) == WIFI_FW_ADHOC_STATE) || ((pmlmeinfo->state&0x03) == WIFI_FW_AP_STATE)) {
@@ -5589,11 +6029,19 @@ u8 sitesurvey_cmd_hdl(struct adapter *padapter, u8 *pbuf)
 		pmlmeext->sitesurvey_res.channel_idx = 0;
 
 		for (i = 0; i < RTW_SSID_SCAN_AMOUNT; i++) {
+<<<<<<< HEAD
 			if (pparm->ssid[i].ssid_length) {
 				memcpy(pmlmeext->sitesurvey_res.ssid[i].ssid, pparm->ssid[i].ssid, IW_ESSID_MAX_SIZE);
 				pmlmeext->sitesurvey_res.ssid[i].ssid_length = pparm->ssid[i].ssid_length;
 			} else {
 				pmlmeext->sitesurvey_res.ssid[i].ssid_length = 0;
+=======
+			if (pparm->ssid[i].SsidLength) {
+				memcpy(pmlmeext->sitesurvey_res.ssid[i].Ssid, pparm->ssid[i].Ssid, IW_ESSID_MAX_SIZE);
+				pmlmeext->sitesurvey_res.ssid[i].SsidLength = pparm->ssid[i].SsidLength;
+			} else {
+				pmlmeext->sitesurvey_res.ssid[i].SsidLength = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 
@@ -5819,10 +6267,17 @@ u8 set_tx_beacon_cmd(struct adapter *padapter)
 
 	memcpy(&(ptxBeacon_parm->network), &(pmlmeinfo->network), sizeof(struct wlan_bssid_ex));
 
+<<<<<<< HEAD
 	len_diff = update_hidden_ssid(ptxBeacon_parm->network.ies+_BEACON_IE_OFFSET_,
 				      ptxBeacon_parm->network.ie_length-_BEACON_IE_OFFSET_,
 				      pmlmeinfo->hidden_ssid_mode);
 	ptxBeacon_parm->network.ie_length += len_diff;
+=======
+	len_diff = update_hidden_ssid(ptxBeacon_parm->network.IEs+_BEACON_IE_OFFSET_,
+				      ptxBeacon_parm->network.IELength-_BEACON_IE_OFFSET_,
+				      pmlmeinfo->hidden_ssid_mode);
+	ptxBeacon_parm->network.IELength += len_diff;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	init_h2fwcmd_w_parm_no_rsp(ph2c, ptxBeacon_parm, GEN_CMD_CODE(_TX_Beacon));
 

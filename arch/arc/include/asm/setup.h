@@ -2,8 +2,13 @@
 /*
  * Copyright (C) 2004, 2007-2010, 2011-2012 Synopsys, Inc. (www.synopsys.com)
  */
+<<<<<<< HEAD
 #ifndef __ASM_ARC_SETUP_H
 #define __ASM_ARC_SETUP_H
+=======
+#ifndef __ASMARC_SETUP_H
+#define __ASMARC_SETUP_H
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 #include <linux/types.h>
@@ -34,6 +39,7 @@ long __init arc_get_mem_sz(void);
 #define IS_AVAIL2(v, s, cfg)	IS_AVAIL1(v, s), IS_AVAIL1(v, IS_USED_CFG(cfg))
 #define IS_AVAIL3(v, v2, s)	IS_AVAIL1(v, s), IS_AVAIL1(v, IS_DISABLED_RUN(v2))
 
+<<<<<<< HEAD
 extern void arc_mmu_init(void);
 extern char *arc_mmu_mumbojumbo(int cpu_id, char *buf, int len);
 extern void read_decode_mmu_bcr(void);
@@ -42,4 +48,6 @@ extern void arc_cache_init(void);
 extern char *arc_cache_mumbojumbo(int cpu_id, char *buf, int len);
 extern void read_decode_cache_bcr(void);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __ASMARC_SETUP_H */

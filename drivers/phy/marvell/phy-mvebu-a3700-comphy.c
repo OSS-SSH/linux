@@ -29,16 +29,34 @@
 
 #define COMPHY_FW_MODE_SATA			0x1
 #define COMPHY_FW_MODE_SGMII			0x2
+<<<<<<< HEAD
 #define COMPHY_FW_MODE_2500BASEX		0x3
 #define COMPHY_FW_MODE_USB3H			0x4
 #define COMPHY_FW_MODE_USB3D			0x5
 #define COMPHY_FW_MODE_PCIE			0x6
+=======
+#define COMPHY_FW_MODE_HS_SGMII			0x3
+#define COMPHY_FW_MODE_USB3H			0x4
+#define COMPHY_FW_MODE_USB3D			0x5
+#define COMPHY_FW_MODE_PCIE			0x6
+#define COMPHY_FW_MODE_RXAUI			0x7
+#define COMPHY_FW_MODE_XFI			0x8
+#define COMPHY_FW_MODE_SFI			0x9
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define COMPHY_FW_MODE_USB3			0xa
 
 #define COMPHY_FW_SPEED_1_25G			0 /* SGMII 1G */
 #define COMPHY_FW_SPEED_2_5G			1
+<<<<<<< HEAD
 #define COMPHY_FW_SPEED_3_125G			2 /* 2500BASE-X */
 #define COMPHY_FW_SPEED_5G			3
+=======
+#define COMPHY_FW_SPEED_3_125G			2 /* SGMII 2.5G */
+#define COMPHY_FW_SPEED_5G			3
+#define COMPHY_FW_SPEED_5_15625G		4 /* XFI 5G */
+#define COMPHY_FW_SPEED_6G			5
+#define COMPHY_FW_SPEED_10_3125G		6 /* XFI 10G */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define COMPHY_FW_SPEED_MAX			0x3F
 
 #define COMPHY_FW_MODE(mode)			((mode) << 12)
@@ -78,14 +96,22 @@ static const struct mvebu_a3700_comphy_conf mvebu_a3700_comphy_modes[] = {
 	MVEBU_A3700_COMPHY_CONF_ETH(0, PHY_INTERFACE_MODE_SGMII, 1,
 				    COMPHY_FW_MODE_SGMII),
 	MVEBU_A3700_COMPHY_CONF_ETH(0, PHY_INTERFACE_MODE_2500BASEX, 1,
+<<<<<<< HEAD
 				    COMPHY_FW_MODE_2500BASEX),
+=======
+				    COMPHY_FW_MODE_HS_SGMII),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* lane 1 */
 	MVEBU_A3700_COMPHY_CONF_GEN(1, PHY_MODE_PCIE, 0,
 				    COMPHY_FW_MODE_PCIE),
 	MVEBU_A3700_COMPHY_CONF_ETH(1, PHY_INTERFACE_MODE_SGMII, 0,
 				    COMPHY_FW_MODE_SGMII),
 	MVEBU_A3700_COMPHY_CONF_ETH(1, PHY_INTERFACE_MODE_2500BASEX, 0,
+<<<<<<< HEAD
 				    COMPHY_FW_MODE_2500BASEX),
+=======
+				    COMPHY_FW_MODE_HS_SGMII),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* lane 2 */
 	MVEBU_A3700_COMPHY_CONF_GEN(2, PHY_MODE_SATA, 0,
 				    COMPHY_FW_MODE_SATA),
@@ -199,7 +225,11 @@ static int mvebu_a3700_comphy_power_on(struct phy *phy)
 						 COMPHY_FW_SPEED_1_25G);
 			break;
 		case PHY_INTERFACE_MODE_2500BASEX:
+<<<<<<< HEAD
 			dev_dbg(lane->dev, "set lane %d to 2500BASEX mode\n",
+=======
+			dev_dbg(lane->dev, "set lane %d to HS SGMII mode\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				lane->id);
 			fw_param = COMPHY_FW_NET(fw_mode, lane->port,
 						 COMPHY_FW_SPEED_3_125G);

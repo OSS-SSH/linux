@@ -81,6 +81,15 @@ static inline int ap_test_bit(unsigned int *ptr, unsigned int nr)
 #define AP_FUNC_APXA  6
 
 /*
+<<<<<<< HEAD
+=======
+ * AP interrupt states
+ */
+#define AP_INTR_DISABLED	0	/* AP interrupt disabled */
+#define AP_INTR_ENABLED		1	/* AP interrupt enabled */
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * AP queue state machine states
  */
 enum ap_sm_state {
@@ -106,7 +115,11 @@ enum ap_sm_event {
  * AP queue state wait behaviour
  */
 enum ap_sm_wait {
+<<<<<<< HEAD
 	AP_SM_WAIT_AGAIN = 0,	/* retry immediately */
+=======
+	AP_SM_WAIT_AGAIN,	/* retry immediately */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	AP_SM_WAIT_TIMEOUT,	/* wait for timeout */
 	AP_SM_WAIT_INTERRUPT,	/* wait for thin interrupt (if available) */
 	AP_SM_WAIT_NONE,	/* no wait */
@@ -151,6 +164,10 @@ void ap_driver_unregister(struct ap_driver *);
 
 struct ap_device {
 	struct device device;
+<<<<<<< HEAD
+=======
+	struct ap_driver *drv;		/* Pointer to AP device driver. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int device_type;		/* AP device type. */
 };
 
@@ -158,6 +175,10 @@ struct ap_device {
 
 struct ap_card {
 	struct ap_device ap_dev;
+<<<<<<< HEAD
+=======
+	void *private;			/* ap driver private pointer. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int raw_hwtype;			/* AP raw hardware type. */
 	unsigned int functions;		/* AP device function bitfield. */
 	int queue_depth;		/* AP queue depth.*/
@@ -174,10 +195,18 @@ struct ap_queue {
 	struct hlist_node hnode;	/* Node for the ap_queues hashtable */
 	struct ap_card *card;		/* Ptr to assoc. AP card. */
 	spinlock_t lock;		/* Per device lock. */
+<<<<<<< HEAD
 	enum ap_dev_state dev_state;	/* queue device state */
 	bool config;			/* configured state */
 	ap_qid_t qid;			/* AP queue id. */
 	bool interrupt;			/* indicate if interrupts are enabled */
+=======
+	void *private;			/* ap driver private pointer. */
+	enum ap_dev_state dev_state;	/* queue device state */
+	bool config;			/* configured state */
+	ap_qid_t qid;			/* AP queue id. */
+	int interrupt;			/* indicate if interrupts are enabled */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int queue_count;		/* # messages currently on AP queue. */
 	int pendingq_count;		/* # requests on pendingq list. */
 	int requestq_count;		/* # requests on requestq list. */

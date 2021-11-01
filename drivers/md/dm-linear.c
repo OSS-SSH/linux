@@ -106,7 +106,10 @@ static void linear_status(struct dm_target *ti, status_type_t type,
 			  unsigned status_flags, char *result, unsigned maxlen)
 {
 	struct linear_c *lc = (struct linear_c *) ti->private;
+<<<<<<< HEAD
 	size_t sz = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (type) {
 	case STATUSTYPE_INFO:
@@ -114,6 +117,7 @@ static void linear_status(struct dm_target *ti, status_type_t type,
 		break;
 
 	case STATUSTYPE_TABLE:
+<<<<<<< HEAD
 		DMEMIT("%s %llu", lc->dev->name, (unsigned long long)lc->start);
 		break;
 
@@ -121,6 +125,10 @@ static void linear_status(struct dm_target *ti, status_type_t type,
 		DMEMIT_TARGET_NAME_VERSION(ti->type);
 		DMEMIT(",device_name=%s,start=%llu;", lc->dev->name,
 		       (unsigned long long)lc->start);
+=======
+		snprintf(result, maxlen, "%s %llu", lc->dev->name,
+				(unsigned long long)lc->start);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	}
 }

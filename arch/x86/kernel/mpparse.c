@@ -19,7 +19,10 @@
 #include <linux/smp.h>
 #include <linux/pci.h>
 
+<<<<<<< HEAD
 #include <asm/i8259.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/io_apic.h>
 #include <asm/acpi.h>
 #include <asm/irqdomain.h>
@@ -252,7 +255,11 @@ static int __init ELCR_trigger(unsigned int irq)
 {
 	unsigned int port;
 
+<<<<<<< HEAD
 	port = PIC_ELCR1 + (irq >> 3);
+=======
+	port = 0x4d0 + (irq >> 3);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return (inb(port) >> (irq & 7)) & 1;
 }
 

@@ -57,6 +57,7 @@ void fpu_save_restore(struct task_struct *prev, struct task_struct *next)
 
 void fpu_init_task(struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	const unsigned int fwe = 0x80000000;
 
 	/* default rounding mode */
@@ -64,19 +65,33 @@ void fpu_init_task(struct pt_regs *regs)
 
 	/* Initialize to zero: setting requires FWE be set */
 	write_aux_reg(ARC_REG_FPU_STATUS, fwe);
+=======
+	/* default rounding mode */
+	write_aux_reg(ARC_REG_FPU_CTRL, 0x100);
+
+	/* set "Write enable" to allow explicit write to exception flags */
+	write_aux_reg(ARC_REG_FPU_STATUS, 0x80000000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void fpu_save_restore(struct task_struct *prev, struct task_struct *next)
 {
 	struct arc_fpu *save = &prev->thread.fpu;
 	struct arc_fpu *restore = &next->thread.fpu;
+<<<<<<< HEAD
 	const unsigned int fwe = 0x80000000;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	save->ctrl = read_aux_reg(ARC_REG_FPU_CTRL);
 	save->status = read_aux_reg(ARC_REG_FPU_STATUS);
 
 	write_aux_reg(ARC_REG_FPU_CTRL, restore->ctrl);
+<<<<<<< HEAD
 	write_aux_reg(ARC_REG_FPU_STATUS, (fwe | restore->status));
+=======
+	write_aux_reg(ARC_REG_FPU_STATUS, restore->status);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #endif

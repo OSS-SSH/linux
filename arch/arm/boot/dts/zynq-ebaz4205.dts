@@ -48,6 +48,7 @@
 	pinctrl-0 = <&pinctrl_gpio0_default>;
 };
 
+<<<<<<< HEAD
 &nfc0 {
 	status = "okay";
 
@@ -56,6 +57,8 @@
 	};
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &pinctrl0 {
 	pinctrl_gpio0_default: gpio0-default {
 		mux {
@@ -126,10 +129,13 @@
 	};
 };
 
+<<<<<<< HEAD
 &smcc {
 	status = "okay";
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &sdhci0 {
 	status = "okay";
 	disable-wp;

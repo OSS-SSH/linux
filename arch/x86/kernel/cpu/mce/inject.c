@@ -235,7 +235,11 @@ static void __maybe_unused raise_mce(struct mce *m)
 		unsigned long start;
 		int cpu;
 
+<<<<<<< HEAD
 		cpus_read_lock();
+=======
+		get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cpumask_copy(mce_inject_cpumask, cpu_online_mask);
 		cpumask_clear_cpu(get_cpu(), mce_inject_cpumask);
 		for_each_online_cpu(cpu) {
@@ -269,7 +273,11 @@ static void __maybe_unused raise_mce(struct mce *m)
 		}
 		raise_local();
 		put_cpu();
+<<<<<<< HEAD
 		cpus_read_unlock();
+=======
+		put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		preempt_disable();
 		raise_local();
@@ -529,7 +537,11 @@ static void do_inject(void)
 		cpu = get_nbc_for_node(topology_die_id(cpu));
 	}
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!cpu_online(cpu))
 		goto err;
 
@@ -553,7 +565,11 @@ static void do_inject(void)
 	}
 
 err:
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 }
 

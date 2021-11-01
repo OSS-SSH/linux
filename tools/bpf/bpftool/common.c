@@ -67,12 +67,15 @@ const char * const attach_type_name[__MAX_BPF_ATTACH_TYPE] = {
 	[BPF_MODIFY_RETURN]		= "mod_ret",
 	[BPF_LSM_MAC]			= "lsm_mac",
 	[BPF_SK_LOOKUP]			= "sk_lookup",
+<<<<<<< HEAD
 	[BPF_TRACE_ITER]		= "trace_iter",
 	[BPF_XDP_DEVMAP]		= "xdp_devmap",
 	[BPF_XDP_CPUMAP]		= "xdp_cpumap",
 	[BPF_XDP]			= "xdp",
 	[BPF_SK_REUSEPORT_SELECT]	= "sk_skb_reuseport_select",
 	[BPF_SK_REUSEPORT_SELECT_OR_MIGRATE]	= "sk_skb_reuseport_select_or_migrate",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 void p_err(const char *fmt, ...)
@@ -228,11 +231,14 @@ int mount_bpffs_for_pin(const char *name)
 	int err = 0;
 
 	file = malloc(strlen(name) + 1);
+<<<<<<< HEAD
 	if (!file) {
 		p_err("mem alloc failed");
 		return -1;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	strcpy(file, name);
 	dir = dirname(file);
 

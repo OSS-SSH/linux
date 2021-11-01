@@ -316,6 +316,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_enet>;
 	phy-mode = "rgmii";
+<<<<<<< HEAD
 	phy-handle = <&ethphy>;
 	phy-reset-gpios = <&gpio7 18 GPIO_ACTIVE_LOW>;
 	status = "okay";
@@ -332,6 +333,14 @@
 			txd3-skew-ps = <0>;
 		};
 	};
+=======
+	phy-reset-gpios = <&gpio7 18 GPIO_ACTIVE_LOW>;
+	txd0-skew-ps = <0>;
+	txd1-skew-ps = <0>;
+	txd2-skew-ps = <0>;
+	txd3-skew-ps = <0>;
+	status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &gpmi {

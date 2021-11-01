@@ -485,6 +485,7 @@ static int __init test_lockup_init(void)
 		       offsetof(spinlock_t, lock.wait_lock.magic),
 		       SPINLOCK_MAGIC) ||
 	    test_magic(lock_rwlock_ptr,
+<<<<<<< HEAD
 		       offsetof(rwlock_t, rwbase.rtmutex.wait_lock.magic),
 		       SPINLOCK_MAGIC) ||
 	    test_magic(lock_mutex_ptr,
@@ -492,6 +493,15 @@ static int __init test_lockup_init(void)
 		       SPINLOCK_MAGIC) ||
 	    test_magic(lock_rwsem_ptr,
 		       offsetof(struct rw_semaphore, rwbase.rtmutex.wait_lock.magic),
+=======
+		       offsetof(rwlock_t, rtmutex.wait_lock.magic),
+		       SPINLOCK_MAGIC) ||
+	    test_magic(lock_mutex_ptr,
+		       offsetof(struct mutex, lock.wait_lock.magic),
+		       SPINLOCK_MAGIC) ||
+	    test_magic(lock_rwsem_ptr,
+		       offsetof(struct rw_semaphore, rtmutex.wait_lock.magic),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       SPINLOCK_MAGIC))
 		return -EINVAL;
 #else
@@ -502,7 +512,11 @@ static int __init test_lockup_init(void)
 		       offsetof(rwlock_t, magic),
 		       RWLOCK_MAGIC) ||
 	    test_magic(lock_mutex_ptr,
+<<<<<<< HEAD
 		       offsetof(struct mutex, wait_lock.magic),
+=======
+		       offsetof(struct mutex, wait_lock.rlock.magic),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       SPINLOCK_MAGIC) ||
 	    test_magic(lock_rwsem_ptr,
 		       offsetof(struct rw_semaphore, wait_lock.magic),

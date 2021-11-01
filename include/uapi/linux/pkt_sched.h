@@ -827,8 +827,11 @@ struct tc_codel_xstats {
 
 /* FQ_CODEL */
 
+<<<<<<< HEAD
 #define FQ_CODEL_QUANTUM_MAX (1 << 20)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum {
 	TCA_FQ_CODEL_UNSPEC,
 	TCA_FQ_CODEL_TARGET,

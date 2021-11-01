@@ -572,6 +572,7 @@ static int amdgpu_cs_parser_bos(struct amdgpu_cs_parser *p,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	amdgpu_bo_list_for_each_entry(e, p->bo_list) {
 		struct amdgpu_bo *bo = ttm_to_amdgpu_bo(e->tv.bo);
 
@@ -586,6 +587,8 @@ static int amdgpu_cs_parser_bos(struct amdgpu_cs_parser *p,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	amdgpu_cs_get_threshold_for_moves(p->adev, &p->bytes_moved_threshold,
 					  &p->bytes_moved_vis_threshold);
 	p->bytes_moved = 0;
@@ -613,6 +616,18 @@ static int amdgpu_cs_parser_bos(struct amdgpu_cs_parser *p,
 	gws = p->bo_list->gws_obj;
 	oa = p->bo_list->oa_obj;
 
+<<<<<<< HEAD
+=======
+	amdgpu_bo_list_for_each_entry(e, p->bo_list) {
+		struct amdgpu_bo *bo = ttm_to_amdgpu_bo(e->tv.bo);
+
+		/* Make sure we use the exclusive slot for shared BOs */
+		if (bo->prime_shared_count)
+			e->tv.num_shared = 0;
+		e->bo_va = amdgpu_vm_bo_find(vm, bo);
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (gds) {
 		p->job->gds_base = amdgpu_bo_gpu_offset(gds) >> PAGE_SHIFT;
 		p->job->gds_size = amdgpu_bo_size(gds) >> PAGE_SHIFT;
@@ -634,6 +649,7 @@ static int amdgpu_cs_parser_bos(struct amdgpu_cs_parser *p,
 	}
 
 error_validate:
+<<<<<<< HEAD
 	if (r) {
 		amdgpu_bo_list_for_each_entry(e, p->bo_list) {
 			dma_fence_chain_free(e->chain);
@@ -641,6 +657,10 @@ error_validate:
 		}
 		ttm_eu_backoff_reservation(&p->ticket, &p->validated);
 	}
+=======
+	if (r)
+		ttm_eu_backoff_reservation(&p->ticket, &p->validated);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	return r;
 }
@@ -680,6 +700,7 @@ static void amdgpu_cs_parser_fini(struct amdgpu_cs_parser *parser, int error,
 {
 	unsigned i;
 
+<<<<<<< HEAD
 	if (error && backoff) {
 		struct amdgpu_bo_list_entry *e;
 
@@ -691,6 +712,11 @@ static void amdgpu_cs_parser_fini(struct amdgpu_cs_parser *parser, int error,
 		ttm_eu_backoff_reservation(&parser->ticket,
 					   &parser->validated);
 	}
+=======
+	if (error && backoff)
+		ttm_eu_backoff_reservation(&parser->ticket,
+					   &parser->validated);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < parser->num_post_deps; i++) {
 		drm_syncobj_put(parser->post_deps[i].syncobj);
@@ -1127,7 +1153,11 @@ static int amdgpu_cs_process_syncobj_timeline_out_dep(struct amdgpu_cs_parser *p
 
 		dep->chain = NULL;
 		if (syncobj_deps[i].point) {
+<<<<<<< HEAD
 			dep->chain = dma_fence_chain_alloc();
+=======
+			dep->chain = kmalloc(sizeof(*dep->chain), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (!dep->chain)
 				return -ENOMEM;
 		}
@@ -1135,7 +1165,11 @@ static int amdgpu_cs_process_syncobj_timeline_out_dep(struct amdgpu_cs_parser *p
 		dep->syncobj = drm_syncobj_find(p->filp,
 						syncobj_deps[i].handle);
 		if (!dep->syncobj) {
+<<<<<<< HEAD
 			dma_fence_chain_free(dep->chain);
+=======
+			kfree(dep->chain);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EINVAL;
 		}
 		dep->point = syncobj_deps[i].point;
@@ -1263,6 +1297,7 @@ static int amdgpu_cs_submit(struct amdgpu_cs_parser *p,
 
 	amdgpu_vm_move_to_lru_tail(p->adev, &fpriv->vm);
 
+<<<<<<< HEAD
 	amdgpu_bo_list_for_each_entry(e, p->bo_list) {
 		struct dma_resv *resv = e->tv.bo->base.resv;
 		struct dma_fence_chain *chain = e->chain;
@@ -1285,6 +1320,8 @@ static int amdgpu_cs_submit(struct amdgpu_cs_parser *p,
 		e->chain = NULL;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ttm_eu_fence_buffer_objects(&p->ticket, &p->validated, p->fence);
 	mutex_unlock(&p->adev->notifier_lock);
 

@@ -2,7 +2,10 @@
 
 #include <net/sock.h>
 #include <linux/ethtool_netlink.h>
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "netlink.h"
 
 static struct genl_family ethtool_genl_family;
@@ -30,6 +33,7 @@ const struct nla_policy ethnl_header_policy_stats[] = {
 							  ETHTOOL_FLAGS_STATS),
 };
 
+<<<<<<< HEAD
 int ethnl_ops_begin(struct net_device *dev)
 {
 	int ret;
@@ -68,6 +72,8 @@ void ethnl_ops_complete(struct net_device *dev)
 		pm_runtime_put(dev->dev.parent);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * ethnl_parse_header_dev_get() - parse request header
  * @req_info:    structure to put results into
@@ -140,6 +146,15 @@ int ethnl_parse_header_dev_get(struct ethnl_req_info *req_info,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+=======
+	if (dev && !netif_device_present(dev)) {
+		dev_put(dev);
+		NL_SET_ERR_MSG(extack, "device not present");
+		return -ENODEV;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	req_info->dev = dev;
 	req_info->flags = flags;
 	return 0;
@@ -281,7 +296,10 @@ ethnl_default_requests[__ETHTOOL_MSG_USER_CNT] = {
 	[ETHTOOL_MSG_TSINFO_GET]	= &ethnl_tsinfo_request_ops,
 	[ETHTOOL_MSG_MODULE_EEPROM_GET]	= &ethnl_module_eeprom_request_ops,
 	[ETHTOOL_MSG_STATS_GET]		= &ethnl_stats_request_ops,
+<<<<<<< HEAD
 	[ETHTOOL_MSG_PHC_VCLOCKS_GET]	= &ethnl_phc_vclocks_request_ops,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct ethnl_dump_ctx *ethnl_dump_context(struct netlink_callback *cb)
@@ -398,7 +416,12 @@ static int ethnl_default_doit(struct sk_buff *skb, struct genl_info *info)
 		ops->cleanup_data(reply_data);
 
 	genlmsg_end(rskb, reply_payload);
+<<<<<<< HEAD
 	dev_put(req_info->dev);
+=======
+	if (req_info->dev)
+		dev_put(req_info->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(reply_data);
 	kfree(req_info);
 	return genlmsg_reply(rskb, info);
@@ -410,7 +433,12 @@ err_cleanup:
 	if (ops->cleanup_data)
 		ops->cleanup_data(reply_data);
 err_dev:
+<<<<<<< HEAD
 	dev_put(req_info->dev);
+=======
+	if (req_info->dev)
+		dev_put(req_info->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(reply_data);
 	kfree(req_info);
 	return ret;
@@ -990,6 +1018,7 @@ static const struct genl_ops ethtool_genl_ops[] = {
 		.policy = ethnl_stats_get_policy,
 		.maxattr = ARRAY_SIZE(ethnl_stats_get_policy) - 1,
 	},
+<<<<<<< HEAD
 	{
 		.cmd	= ETHTOOL_MSG_PHC_VCLOCKS_GET,
 		.doit	= ethnl_default_doit,
@@ -999,6 +1028,8 @@ static const struct genl_ops ethtool_genl_ops[] = {
 		.policy = ethnl_phc_vclocks_get_policy,
 		.maxattr = ARRAY_SIZE(ethnl_phc_vclocks_get_policy) - 1,
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct genl_multicast_group ethtool_nl_mcgrps[] = {

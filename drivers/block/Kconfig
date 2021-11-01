@@ -74,6 +74,10 @@ config N64CART
 
 config CDROM
 	tristate
+<<<<<<< HEAD
+=======
+	select BLK_SCSI_REQUEST
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config GDROM
 	tristate "SEGA Dreamcast GD-ROM drive"
@@ -212,7 +216,11 @@ config BLK_DEV_LOOP_MIN_COUNT
 	  dynamically allocated with the /dev/loop-control interface.
 
 config BLK_DEV_CRYPTOLOOP
+<<<<<<< HEAD
 	tristate "Cryptoloop Support (DEPRECATED)"
+=======
+	tristate "Cryptoloop Support"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select CRYPTO
 	select CRYPTO_CBC
 	depends on BLK_DEV_LOOP
@@ -224,7 +232,11 @@ config BLK_DEV_CRYPTOLOOP
 	  WARNING: This device is not safe for journaled file systems like
 	  ext3 or Reiserfs. Please use the Device Mapper crypto module
 	  instead, which can be configured to be on-disk compatible with the
+<<<<<<< HEAD
 	  cryptoloop device.  cryptoloop support will be removed in Linux 5.16.
+=======
+	  cryptoloop device.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 source "drivers/block/drbd/Kconfig"
 
@@ -305,7 +317,11 @@ config CDROM_PKTCDVD
 	tristate "Packet writing on CD/DVD media (DEPRECATED)"
 	depends on !UML
 	select CDROM
+<<<<<<< HEAD
 	select SCSI_COMMON
+=======
+	select BLK_SCSI_REQUEST
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Note: This driver is deprecated and will be removed from the
 	  kernel in the near future!

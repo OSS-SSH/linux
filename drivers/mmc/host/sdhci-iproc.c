@@ -173,6 +173,7 @@ static unsigned int sdhci_iproc_get_max_clock(struct sdhci_host *host)
 		return pltfm_host->clock;
 }
 
+<<<<<<< HEAD
 /*
  * There is a known bug on BCM2711's SDHCI core integration where the
  * controller will hang when the difference between the core clock and the bus
@@ -190,6 +191,8 @@ static unsigned int sdhci_iproc_bcm2711_get_min_clock(struct sdhci_host *host)
 	return 200000;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct sdhci_ops sdhci_iproc_ops = {
 	.set_clock = sdhci_set_clock,
 	.get_max_clock = sdhci_iproc_get_max_clock,
@@ -288,7 +291,10 @@ static const struct sdhci_ops sdhci_iproc_bcm2711_ops = {
 	.set_clock = sdhci_set_clock,
 	.set_power = sdhci_set_power_and_bus_voltage,
 	.get_max_clock = sdhci_iproc_get_max_clock,
+<<<<<<< HEAD
 	.get_min_clock = sdhci_iproc_bcm2711_get_min_clock,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.set_bus_width = sdhci_set_bus_width,
 	.reset = sdhci_reset,
 	.set_uhs_signaling = sdhci_set_uhs_signaling,

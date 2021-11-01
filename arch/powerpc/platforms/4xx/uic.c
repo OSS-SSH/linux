@@ -198,6 +198,10 @@ static void uic_irq_cascade(struct irq_desc *desc)
 	struct uic *uic = irq_desc_get_handler_data(desc);
 	u32 msr;
 	int src;
+<<<<<<< HEAD
+=======
+	int subvirq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	raw_spin_lock(&desc->lock);
 	if (irqd_is_level_type(idata))
@@ -212,7 +216,12 @@ static void uic_irq_cascade(struct irq_desc *desc)
 
 	src = 32 - ffs(msr);
 
+<<<<<<< HEAD
 	generic_handle_domain_irq(uic->irqhost, src);
+=======
+	subvirq = irq_linear_revmap(uic->irqhost, src);
+	generic_handle_irq(subvirq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 uic_irq_ret:
 	raw_spin_lock(&desc->lock);

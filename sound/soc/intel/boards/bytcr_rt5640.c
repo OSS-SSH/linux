@@ -18,8 +18,11 @@
 #include <linux/clk.h>
 #include <linux/device.h>
 #include <linux/dmi.h>
+<<<<<<< HEAD
 #include <linux/gpio/consumer.h>
 #include <linux/gpio/machine.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/input.h>
 #include <linux/slab.h>
 #include <sound/pcm.h>
@@ -75,10 +78,13 @@ enum {
 #define BYT_RT5640_MCLK_EN		BIT(22)
 #define BYT_RT5640_MCLK_25MHZ		BIT(23)
 #define BYT_RT5640_NO_SPEAKERS		BIT(24)
+<<<<<<< HEAD
 #define BYT_RT5640_LINEOUT		BIT(25)
 #define BYT_RT5640_LINEOUT_AS_HP2	BIT(26)
 #define BYT_RT5640_HSMIC2_ON_IN1	BIT(27)
 #define BYT_RT5640_JD_HP_ELITEP_1000G2	BIT(28)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define BYTCR_INPUT_DEFAULTS				\
 	(BYT_RT5640_IN3_MAP |				\
@@ -92,10 +98,14 @@ enum {
 
 struct byt_rt5640_private {
 	struct snd_soc_jack jack;
+<<<<<<< HEAD
 	struct snd_soc_jack jack2;
 	struct gpio_desc *hsmic_detect;
 	struct clk *mclk;
 	struct device *codec_dev;
+=======
+	struct clk *mclk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 static bool is_bytcr;
 
@@ -134,8 +144,11 @@ static void log_quirks(struct device *dev)
 		dev_err(dev, "quirk map 0x%x is not supported, microphone input will not work\n", map);
 		break;
 	}
+<<<<<<< HEAD
 	if (byt_rt5640_quirk & BYT_RT5640_HSMIC2_ON_IN1)
 		dev_info(dev, "quirk HSMIC2_ON_IN1 enabled\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (BYT_RT5640_JDSRC(byt_rt5640_quirk)) {
 		dev_info(dev, "quirk realtek,jack-detect-source %ld\n",
 			 BYT_RT5640_JDSRC(byt_rt5640_quirk));
@@ -146,16 +159,22 @@ static void log_quirks(struct device *dev)
 	}
 	if (byt_rt5640_quirk & BYT_RT5640_JD_NOT_INV)
 		dev_info(dev, "quirk JD_NOT_INV enabled\n");
+<<<<<<< HEAD
 	if (byt_rt5640_quirk & BYT_RT5640_JD_HP_ELITEP_1000G2)
 		dev_info(dev, "quirk JD_HP_ELITEPAD_1000G2 enabled\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (byt_rt5640_quirk & BYT_RT5640_MONO_SPEAKER)
 		dev_info(dev, "quirk MONO_SPEAKER enabled\n");
 	if (byt_rt5640_quirk & BYT_RT5640_NO_SPEAKERS)
 		dev_info(dev, "quirk NO_SPEAKERS enabled\n");
+<<<<<<< HEAD
 	if (byt_rt5640_quirk & BYT_RT5640_LINEOUT)
 		dev_info(dev, "quirk LINEOUT enabled\n");
 	if (byt_rt5640_quirk & BYT_RT5640_LINEOUT_AS_HP2)
 		dev_info(dev, "quirk LINEOUT_AS_HP2 enabled\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (byt_rt5640_quirk & BYT_RT5640_DIFF_MIC)
 		dev_info(dev, "quirk DIFF_MIC enabled\n");
 	if (byt_rt5640_quirk & BYT_RT5640_SSP0_AIF1) {
@@ -241,6 +260,7 @@ static int byt_rt5640_prepare_and_enable_pll1(struct snd_soc_dai *codec_dai,
 #define BYT_CODEC_DAI1	"rt5640-aif1"
 #define BYT_CODEC_DAI2	"rt5640-aif2"
 
+<<<<<<< HEAD
 static struct snd_soc_dai *byt_rt5640_get_codec_dai(struct snd_soc_dapm_context *dapm)
 {
 	struct snd_soc_card *card = dapm->card;
@@ -255,6 +275,8 @@ static struct snd_soc_dai *byt_rt5640_get_codec_dai(struct snd_soc_dapm_context 
 	return codec_dai;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int platform_clock_control(struct snd_soc_dapm_widget *w,
 				  struct snd_kcontrol *k, int  event)
 {
@@ -264,9 +286,21 @@ static int platform_clock_control(struct snd_soc_dapm_widget *w,
 	struct byt_rt5640_private *priv = snd_soc_card_get_drvdata(card);
 	int ret;
 
+<<<<<<< HEAD
 	codec_dai = byt_rt5640_get_codec_dai(dapm);
 	if (!codec_dai)
 		return -EIO;
+=======
+	codec_dai = snd_soc_card_get_codec_dai(card, BYT_CODEC_DAI1);
+	if (!codec_dai)
+		codec_dai = snd_soc_card_get_codec_dai(card, BYT_CODEC_DAI2);
+
+	if (!codec_dai) {
+		dev_err(card->dev,
+			"Codec dai not found; Unable to set platform clock\n");
+		return -EIO;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (SND_SOC_DAPM_EVENT_ON(event)) {
 		if (byt_rt5640_quirk & BYT_RT5640_MCLK_EN) {
@@ -301,6 +335,7 @@ static int platform_clock_control(struct snd_soc_dapm_widget *w,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int byt_rt5640_event_lineout(struct snd_soc_dapm_widget *w,
 			struct snd_kcontrol *k, int event)
 {
@@ -338,11 +373,28 @@ static const struct snd_soc_dapm_widget byt_rt5640_widgets[] = {
 	SND_SOC_DAPM_SUPPLY("Platform Clock", SND_SOC_NOPM, 0, 0,
 			    platform_clock_control, SND_SOC_DAPM_PRE_PMU |
 			    SND_SOC_DAPM_POST_PMD),
+=======
+static const struct snd_soc_dapm_widget byt_rt5640_widgets[] = {
+	SND_SOC_DAPM_HP("Headphone", NULL),
+	SND_SOC_DAPM_MIC("Headset Mic", NULL),
+	SND_SOC_DAPM_MIC("Internal Mic", NULL),
+	SND_SOC_DAPM_SPK("Speaker", NULL),
+	SND_SOC_DAPM_SUPPLY("Platform Clock", SND_SOC_NOPM, 0, 0,
+			    platform_clock_control, SND_SOC_DAPM_PRE_PMU |
+			    SND_SOC_DAPM_POST_PMD),
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct snd_soc_dapm_route byt_rt5640_audio_map[] = {
 	{"Headphone", NULL, "Platform Clock"},
 	{"Headset Mic", NULL, "Platform Clock"},
+<<<<<<< HEAD
+=======
+	{"Internal Mic", NULL, "Platform Clock"},
+	{"Speaker", NULL, "Platform Clock"},
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"Headset Mic", NULL, "MICBIAS1"},
 	{"IN2P", NULL, "Headset Mic"},
 	{"Headphone", NULL, "HPOL"},
@@ -350,33 +402,48 @@ static const struct snd_soc_dapm_route byt_rt5640_audio_map[] = {
 };
 
 static const struct snd_soc_dapm_route byt_rt5640_intmic_dmic1_map[] = {
+<<<<<<< HEAD
 	{"Internal Mic", NULL, "Platform Clock"},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"DMIC1", NULL, "Internal Mic"},
 };
 
 static const struct snd_soc_dapm_route byt_rt5640_intmic_dmic2_map[] = {
+<<<<<<< HEAD
 	{"Internal Mic", NULL, "Platform Clock"},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"DMIC2", NULL, "Internal Mic"},
 };
 
 static const struct snd_soc_dapm_route byt_rt5640_intmic_in1_map[] = {
+<<<<<<< HEAD
 	{"Internal Mic", NULL, "Platform Clock"},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"Internal Mic", NULL, "MICBIAS1"},
 	{"IN1P", NULL, "Internal Mic"},
 };
 
 static const struct snd_soc_dapm_route byt_rt5640_intmic_in3_map[] = {
+<<<<<<< HEAD
 	{"Internal Mic", NULL, "Platform Clock"},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"Internal Mic", NULL, "MICBIAS1"},
 	{"IN3P", NULL, "Internal Mic"},
 };
 
+<<<<<<< HEAD
 static const struct snd_soc_dapm_route byt_rt5640_hsmic2_in1_map[] = {
 	{"Headset Mic 2", NULL, "Platform Clock"},
 	{"Headset Mic 2", NULL, "MICBIAS1"},
 	{"IN1P", NULL, "Headset Mic 2"},
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct snd_soc_dapm_route byt_rt5640_ssp2_aif1_map[] = {
 	{"ssp2 Tx", NULL, "codec_out0"},
 	{"ssp2 Tx", NULL, "codec_out1"},
@@ -414,7 +481,10 @@ static const struct snd_soc_dapm_route byt_rt5640_ssp0_aif2_map[] = {
 };
 
 static const struct snd_soc_dapm_route byt_rt5640_stereo_spk_map[] = {
+<<<<<<< HEAD
 	{"Speaker", NULL, "Platform Clock"},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"Speaker", NULL, "SPOLP"},
 	{"Speaker", NULL, "SPOLN"},
 	{"Speaker", NULL, "SPORP"},
@@ -422,11 +492,15 @@ static const struct snd_soc_dapm_route byt_rt5640_stereo_spk_map[] = {
 };
 
 static const struct snd_soc_dapm_route byt_rt5640_mono_spk_map[] = {
+<<<<<<< HEAD
 	{"Speaker", NULL, "Platform Clock"},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"Speaker", NULL, "SPOLP"},
 	{"Speaker", NULL, "SPOLN"},
 };
 
+<<<<<<< HEAD
 static const struct snd_soc_dapm_route byt_rt5640_lineout_map[] = {
 	{"Line Out", NULL, "Platform Clock"},
 	{"Line Out", NULL, "LOUTR"},
@@ -440,6 +514,13 @@ static const struct snd_kcontrol_new byt_rt5640_controls[] = {
 	SOC_DAPM_PIN_SWITCH("Internal Mic"),
 	SOC_DAPM_PIN_SWITCH("Speaker"),
 	SOC_DAPM_PIN_SWITCH("Line Out"),
+=======
+static const struct snd_kcontrol_new byt_rt5640_controls[] = {
+	SOC_DAPM_PIN_SWITCH("Headphone"),
+	SOC_DAPM_PIN_SWITCH("Headset Mic"),
+	SOC_DAPM_PIN_SWITCH("Internal Mic"),
+	SOC_DAPM_PIN_SWITCH("Speaker"),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct snd_soc_jack_pin rt5640_pins[] = {
@@ -453,6 +534,7 @@ static struct snd_soc_jack_pin rt5640_pins[] = {
 	},
 };
 
+<<<<<<< HEAD
 static struct snd_soc_jack_pin rt5640_pins2[] = {
 	{
 		/* The 2nd headset jack uses lineout with an external HP-amp */
@@ -522,6 +604,8 @@ static int byt_rt5640_hp_elitepad_1000g2_jack2_check(void *data)
 	return report;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int byt_rt5640_aif1_hw_params(struct snd_pcm_substream *substream,
 					struct snd_pcm_hw_params *params)
 {
@@ -729,12 +813,17 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Hewlett-Packard"),
 			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "HP ElitePad 1000 G2"),
 		},
+<<<<<<< HEAD
 		.driver_data = (void *)(BYT_RT5640_DMIC2_MAP |
 					BYT_RT5640_MCLK_EN |
 					BYT_RT5640_LINEOUT |
 					BYT_RT5640_LINEOUT_AS_HP2 |
 					BYT_RT5640_HSMIC2_ON_IN1 |
 					BYT_RT5640_JD_HP_ELITEP_1000G2),
+=======
+		.driver_data = (void *)(BYT_RT5640_IN1_MAP |
+					BYT_RT5640_MCLK_EN),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{	/* HP Pavilion x2 10-k0XX, 10-n0XX */
 		.matches = {
@@ -1055,6 +1144,7 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
  * Note this MUST be called before snd_soc_register_card(), so that the props
  * are in place before the codec component driver's probe function parses them.
  */
+<<<<<<< HEAD
 static int byt_rt5640_add_codec_device_props(struct device *i2c_dev,
 					     struct byt_rt5640_private *priv)
 {
@@ -1062,6 +1152,17 @@ static int byt_rt5640_add_codec_device_props(struct device *i2c_dev,
 	struct fwnode_handle *fwnode;
 	int cnt = 0;
 	int ret;
+=======
+static int byt_rt5640_add_codec_device_props(const char *i2c_dev_name)
+{
+	struct property_entry props[MAX_NO_PROPS] = {};
+	struct device *i2c_dev;
+	int ret, cnt = 0;
+
+	i2c_dev = bus_find_device_by_name(&i2c_bus_type, NULL, i2c_dev_name);
+	if (!i2c_dev)
+		return -EPROBE_DEFER;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (BYT_RT5640_MAP(byt_rt5640_quirk)) {
 	case BYT_RT5640_DMIC1_MAP:
@@ -1101,6 +1202,7 @@ static int byt_rt5640_add_codec_device_props(struct device *i2c_dev,
 	if (byt_rt5640_quirk & BYT_RT5640_JD_NOT_INV)
 		props[cnt++] = PROPERTY_ENTRY_BOOL("realtek,jack-detect-not-inverted");
 
+<<<<<<< HEAD
 	fwnode = fwnode_create_software_node(props, NULL);
 	if (IS_ERR(fwnode)) {
 		/* put_device() is handled in caller */
@@ -1110,6 +1212,10 @@ static int byt_rt5640_add_codec_device_props(struct device *i2c_dev,
 	ret = device_add_software_node(i2c_dev, to_software_node(fwnode));
 
 	fwnode_handle_put(fwnode);
+=======
+	ret = device_add_properties(i2c_dev, props);
+	put_device(i2c_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -1169,6 +1275,7 @@ static int byt_rt5640_init(struct snd_soc_pcm_runtime *runtime)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (byt_rt5640_quirk & BYT_RT5640_HSMIC2_ON_IN1) {
 		ret = snd_soc_dapm_add_routes(&card->dapm,
 					byt_rt5640_hsmic2_in1_map,
@@ -1177,6 +1284,8 @@ static int byt_rt5640_init(struct snd_soc_pcm_runtime *runtime)
 			return ret;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (byt_rt5640_quirk & BYT_RT5640_SSP2_AIF2) {
 		ret = snd_soc_dapm_add_routes(&card->dapm,
 					byt_rt5640_ssp2_aif2_map,
@@ -1209,6 +1318,7 @@ static int byt_rt5640_init(struct snd_soc_pcm_runtime *runtime)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (byt_rt5640_quirk & BYT_RT5640_LINEOUT) {
 		ret = snd_soc_dapm_add_routes(&card->dapm,
 					byt_rt5640_lineout_map,
@@ -1217,6 +1327,8 @@ static int byt_rt5640_init(struct snd_soc_pcm_runtime *runtime)
 			return ret;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (byt_rt5640_quirk & BYT_RT5640_MCLK_EN) {
 		/*
 		 * The firmware might enable the clock at
@@ -1257,6 +1369,7 @@ static int byt_rt5640_init(struct snd_soc_pcm_runtime *runtime)
 		snd_soc_component_set_jack(component, &priv->jack, NULL);
 	}
 
+<<<<<<< HEAD
 	if (byt_rt5640_quirk & BYT_RT5640_JD_HP_ELITEP_1000G2) {
 		ret = snd_soc_card_jack_new(card, "Headset",
 					    SND_JACK_HEADSET,
@@ -1304,6 +1417,11 @@ static void byt_rt5640_exit(struct snd_soc_pcm_runtime *runtime)
 	}
 }
 
+=======
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int byt_rt5640_codec_fixup(struct snd_soc_pcm_runtime *rtd,
 			    struct snd_pcm_hw_params *params)
 {
@@ -1416,7 +1534,10 @@ static struct snd_soc_dai_link byt_rt5640_dais[] = {
 		.dpcm_playback = 1,
 		.dpcm_capture = 1,
 		.init = byt_rt5640_init,
+<<<<<<< HEAD
 		.exit = byt_rt5640_exit,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.ops = &byt_rt5640_be_ssp2_ops,
 		SND_SOC_DAILINK_REG(ssp2_port, ssp2_codec, platform),
 	},
@@ -1427,7 +1548,11 @@ static char byt_rt5640_codec_name[SND_ACPI_I2C_ID_LEN];
 #if !IS_ENABLED(CONFIG_SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES)
 static char byt_rt5640_long_name[40]; /* = "bytcr-rt5640-*-spk-*-mic" */
 #endif
+<<<<<<< HEAD
 static char byt_rt5640_components[64]; /* = "cfg-spk:* cfg-mic:* ..." */
+=======
+static char byt_rt5640_components[32]; /* = "cfg-spk:* cfg-mic:*" */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int byt_rt5640_suspend(struct snd_soc_card *card)
 {
@@ -1497,13 +1622,19 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 	static const char * const map_name[] = { "dmic1", "dmic2", "in1", "in3", "none" };
 	__maybe_unused const char *spk_type;
 	const struct dmi_system_id *dmi_id;
+<<<<<<< HEAD
 	const char *headset2_string = "";
 	const char *lineout_string = "";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct byt_rt5640_private *priv;
 	struct snd_soc_acpi_mach *mach;
 	const char *platform_name;
 	struct acpi_device *adev;
+<<<<<<< HEAD
 	struct device *codec_dev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool sof_parent;
 	int ret_val = 0;
 	int dai_index = 0;
@@ -1536,9 +1667,12 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 			 "i2c-%s", acpi_dev_name(adev));
 		put_device(&adev->dev);
 		byt_rt5640_dais[dai_index].codecs->name = byt_rt5640_codec_name;
+<<<<<<< HEAD
 	} else {
 		dev_err(&pdev->dev, "Error cannot find '%s' dev\n", mach->id);
 		return -ENXIO;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/*
@@ -1615,6 +1749,7 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 		byt_rt5640_quirk = quirk_override;
 	}
 
+<<<<<<< HEAD
 	codec_dev = acpi_get_first_physical_node(adev);
 	if (!codec_dev)
 		return -EPROBE_DEFER;
@@ -1638,6 +1773,12 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 	ret_val = byt_rt5640_add_codec_device_props(codec_dev, priv);
 	if (ret_val)
 		goto err_remove_gpios;
+=======
+	/* Must be called before register_card, also see declaration comment. */
+	ret_val = byt_rt5640_add_codec_device_props(byt_rt5640_codec_name);
+	if (ret_val)
+		return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	log_quirks(&pdev->dev);
 
@@ -1668,7 +1809,11 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 			 * for all other errors, including -EPROBE_DEFER
 			 */
 			if (ret_val != -ENOENT)
+<<<<<<< HEAD
 				goto err;
+=======
+				return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			byt_rt5640_quirk &= ~BYT_RT5640_MCLK_EN;
 		}
 	}
@@ -1684,6 +1829,7 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 		spk_type = "stereo";
 	}
 
+<<<<<<< HEAD
 	if (byt_rt5640_quirk & BYT_RT5640_LINEOUT) {
 		if (byt_rt5640_quirk & BYT_RT5640_LINEOUT_AS_HP2)
 			lineout_string = " cfg-hp2:lineout";
@@ -1698,6 +1844,11 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 		 "cfg-spk:%d cfg-mic:%s aif:%d%s%s", cfg_spk,
 		 map_name[BYT_RT5640_MAP(byt_rt5640_quirk)], aif,
 		 lineout_string, headset2_string);
+=======
+	snprintf(byt_rt5640_components, sizeof(byt_rt5640_components),
+		 "cfg-spk:%d cfg-mic:%s aif:%d", cfg_spk,
+		 map_name[BYT_RT5640_MAP(byt_rt5640_quirk)], aif);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	byt_rt5640_card.components = byt_rt5640_components;
 #if !IS_ENABLED(CONFIG_SND_SOC_INTEL_USER_FRIENDLY_LONG_NAMES)
 	snprintf(byt_rt5640_long_name, sizeof(byt_rt5640_long_name),
@@ -1712,7 +1863,11 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 	ret_val = snd_soc_fixup_dai_links_platform_name(&byt_rt5640_card,
 							platform_name);
 	if (ret_val)
+<<<<<<< HEAD
 		goto err;
+=======
+		return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sof_parent = snd_soc_acpi_sof_parent(&pdev->dev);
 
@@ -1734,6 +1889,7 @@ static int snd_byt_rt5640_mc_probe(struct platform_device *pdev)
 	if (ret_val) {
 		dev_err(&pdev->dev, "devm_snd_soc_register_card failed %d\n",
 			ret_val);
+<<<<<<< HEAD
 		goto err;
 	}
 	platform_set_drvdata(pdev, &byt_rt5640_card);
@@ -1760,6 +1916,12 @@ static int snd_byt_rt5640_mc_remove(struct platform_device *pdev)
 	device_remove_software_node(priv->codec_dev);
 	put_device(priv->codec_dev);
 	return 0;
+=======
+		return ret_val;
+	}
+	platform_set_drvdata(pdev, &byt_rt5640_card);
+	return ret_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct platform_driver snd_byt_rt5640_mc_driver = {
@@ -1767,7 +1929,10 @@ static struct platform_driver snd_byt_rt5640_mc_driver = {
 		.name = "bytcr_rt5640",
 	},
 	.probe = snd_byt_rt5640_mc_probe,
+<<<<<<< HEAD
 	.remove = snd_byt_rt5640_mc_remove,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 module_platform_driver(snd_byt_rt5640_mc_driver);

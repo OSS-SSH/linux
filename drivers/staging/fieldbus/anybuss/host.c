@@ -1186,13 +1186,22 @@ static int anybus_bus_probe(struct device *dev)
 	return adrv->probe(adev);
 }
 
+<<<<<<< HEAD
 static void anybus_bus_remove(struct device *dev)
+=======
+static int anybus_bus_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct anybuss_client_driver *adrv =
 		to_anybuss_client_driver(dev->driver);
 
 	if (adrv->remove)
 		adrv->remove(to_anybuss_client(dev));
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct bus_type anybus_bus = {

@@ -1028,7 +1028,11 @@ static int vcc_tty_init(void)
 	rv = tty_register_driver(vcc_tty_driver);
 	if (rv) {
 		pr_err("VCC: TTY driver registration failed\n");
+<<<<<<< HEAD
 		tty_driver_kref_put(vcc_tty_driver);
+=======
+		put_tty_driver(vcc_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		vcc_tty_driver = NULL;
 		return rv;
 	}
@@ -1041,7 +1045,11 @@ static int vcc_tty_init(void)
 static void vcc_tty_exit(void)
 {
 	tty_unregister_driver(vcc_tty_driver);
+<<<<<<< HEAD
 	tty_driver_kref_put(vcc_tty_driver);
+=======
+	put_tty_driver(vcc_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vccdbg("VCC: TTY driver unregistered\n");
 
 	vcc_tty_driver = NULL;

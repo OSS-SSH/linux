@@ -22,6 +22,10 @@
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_gem_cma_helper.h>
 #include <drm/drm_gem_framebuffer_helper.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_vblank.h>
 
@@ -556,6 +560,7 @@ static irqreturn_t atmel_hlcdc_dc_irq_handler(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
 static void atmel_hlcdc_dc_irq_postinstall(struct drm_device *dev)
 {
 	struct atmel_hlcdc_dc *dc = dev->dev_private;
@@ -601,6 +606,8 @@ static void atmel_hlcdc_dc_irq_uninstall(struct drm_device *dev)
 	atmel_hlcdc_dc_irq_disable(dev);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct drm_mode_config_funcs mode_config_funcs = {
 	.fb_create = drm_gem_fb_create,
 	.atomic_check = drm_atomic_helper_check,
@@ -691,7 +698,11 @@ static int atmel_hlcdc_dc_load(struct drm_device *dev)
 	drm_mode_config_reset(dev);
 
 	pm_runtime_get_sync(dev->dev);
+<<<<<<< HEAD
 	ret = atmel_hlcdc_dc_irq_install(dev, dc->hlcdc->irq);
+=======
+	ret = drm_irq_install(dev, dc->hlcdc->irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pm_runtime_put_sync(dev->dev);
 	if (ret < 0) {
 		dev_err(dev->dev, "failed to install IRQ handler\n");
@@ -720,7 +731,11 @@ static void atmel_hlcdc_dc_unload(struct drm_device *dev)
 	drm_mode_config_cleanup(dev);
 
 	pm_runtime_get_sync(dev->dev);
+<<<<<<< HEAD
 	atmel_hlcdc_dc_irq_uninstall(dev);
+=======
+	drm_irq_uninstall(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pm_runtime_put_sync(dev->dev);
 
 	dev->dev_private = NULL;
@@ -729,10 +744,46 @@ static void atmel_hlcdc_dc_unload(struct drm_device *dev)
 	clk_disable_unprepare(dc->hlcdc->periph_clk);
 }
 
+<<<<<<< HEAD
+=======
+static int atmel_hlcdc_dc_irq_postinstall(struct drm_device *dev)
+{
+	struct atmel_hlcdc_dc *dc = dev->dev_private;
+	unsigned int cfg = 0;
+	int i;
+
+	/* Enable interrupts on activated layers */
+	for (i = 0; i < ATMEL_HLCDC_MAX_LAYERS; i++) {
+		if (dc->layers[i])
+			cfg |= ATMEL_HLCDC_LAYER_STATUS(i);
+	}
+
+	regmap_write(dc->hlcdc->regmap, ATMEL_HLCDC_IER, cfg);
+
+	return 0;
+}
+
+static void atmel_hlcdc_dc_irq_uninstall(struct drm_device *dev)
+{
+	struct atmel_hlcdc_dc *dc = dev->dev_private;
+	unsigned int isr;
+
+	regmap_write(dc->hlcdc->regmap, ATMEL_HLCDC_IDR, 0xffffffff);
+	regmap_read(dc->hlcdc->regmap, ATMEL_HLCDC_ISR, &isr);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 DEFINE_DRM_GEM_CMA_FOPS(fops);
 
 static const struct drm_driver atmel_hlcdc_dc_driver = {
 	.driver_features = DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
+<<<<<<< HEAD
+=======
+	.irq_handler = atmel_hlcdc_dc_irq_handler,
+	.irq_preinstall = atmel_hlcdc_dc_irq_uninstall,
+	.irq_postinstall = atmel_hlcdc_dc_irq_postinstall,
+	.irq_uninstall = atmel_hlcdc_dc_irq_uninstall,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	DRM_GEM_CMA_DRIVER_OPS,
 	.fops = &fops,
 	.name = "atmel-hlcdc",

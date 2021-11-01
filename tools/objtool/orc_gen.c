@@ -204,7 +204,11 @@ int orc_create(struct objtool_file *file)
 
 		/* Add a section terminator */
 		if (!empty) {
+<<<<<<< HEAD
 			orc_list_add(&orc_list, &null, sec, sec->sh.sh_size);
+=======
+			orc_list_add(&orc_list, &null, sec, sec->len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			nr++;
 		}
 	}

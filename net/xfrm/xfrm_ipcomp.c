@@ -241,7 +241,11 @@ static void ipcomp_free_tfms(struct crypto_comp * __percpu *tfms)
 			break;
 	}
 
+<<<<<<< HEAD
 	WARN_ON(list_entry_is_head(pos, &ipcomp_tfms_list, list));
+=======
+	WARN_ON(!pos);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (--pos->users)
 		return;

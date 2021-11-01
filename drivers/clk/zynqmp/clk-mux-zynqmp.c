@@ -159,7 +159,11 @@ struct clk_hw *zynqmp_clk_register_mux(const char *name, u32 clk_id,
 	hw = &mux->hw;
 	ret = clk_hw_register(NULL, hw);
 	if (ret) {
+<<<<<<< HEAD
 		kfree(mux);
+=======
+		kfree(hw);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hw = ERR_PTR(ret);
 	}
 

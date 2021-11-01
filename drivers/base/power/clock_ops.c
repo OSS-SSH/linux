@@ -519,6 +519,7 @@ void pm_clk_destroy(struct device *dev)
 }
 EXPORT_SYMBOL_GPL(pm_clk_destroy);
 
+<<<<<<< HEAD
 static void pm_clk_destroy_action(void *data)
 {
 	pm_clk_destroy(data);
@@ -536,6 +537,8 @@ int devm_pm_clk_create(struct device *dev)
 }
 EXPORT_SYMBOL_GPL(devm_pm_clk_create);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * pm_clk_suspend - Disable clocks in a device's PM clock list.
  * @dev: Device to disable the clocks for.

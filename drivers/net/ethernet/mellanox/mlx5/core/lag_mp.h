@@ -21,13 +21,19 @@ struct lag_mp {
 
 #ifdef CONFIG_MLX5_ESWITCH
 
+<<<<<<< HEAD
 void mlx5_lag_mp_reset(struct mlx5_lag *ldev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int mlx5_lag_mp_init(struct mlx5_lag *ldev);
 void mlx5_lag_mp_cleanup(struct mlx5_lag *ldev);
 
 #else /* CONFIG_MLX5_ESWITCH */
 
+<<<<<<< HEAD
 static inline void mlx5_lag_mp_reset(struct mlx5_lag *ldev) {};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int mlx5_lag_mp_init(struct mlx5_lag *ldev) { return 0; }
 static inline void mlx5_lag_mp_cleanup(struct mlx5_lag *ldev) {}
 

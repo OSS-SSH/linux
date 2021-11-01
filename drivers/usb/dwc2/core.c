@@ -295,7 +295,11 @@ void dwc2_hib_restore_common(struct dwc2_hsotg *hsotg, int rem_wakeup,
 	if (dwc2_hsotg_wait_bit_set(hsotg, GINTSTS, GINTSTS_RESTOREDONE,
 				    20000)) {
 		dev_dbg(hsotg->dev,
+<<<<<<< HEAD
 			"%s: Restore Done wasn't generated here\n",
+=======
+			"%s: Restore Done wan't generated here\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			__func__);
 	} else {
 		dev_dbg(hsotg->dev, "restore done  generated here\n");

@@ -735,6 +735,7 @@ static bool log_access_ok(void __user *log_base, u64 addr, unsigned long sz)
 			 (sz + VHOST_PAGE_SIZE * 8 - 1) / VHOST_PAGE_SIZE / 8);
 }
 
+<<<<<<< HEAD
 /* Make sure 64 bit math will not overflow. */
 static bool vhost_overflow(u64 uaddr, u64 size)
 {
@@ -745,6 +746,12 @@ static bool vhost_overflow(u64 uaddr, u64 size)
 		return false;
 
 	return uaddr > ULONG_MAX - size + 1;
+=======
+static bool vhost_overflow(u64 uaddr, u64 size)
+{
+	/* Make sure 64 bit math will not overflow. */
+	return uaddr > ULONG_MAX || size > ULONG_MAX || uaddr > ULONG_MAX - size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Caller should have vq mutex and device mutex. */

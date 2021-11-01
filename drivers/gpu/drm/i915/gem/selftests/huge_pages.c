@@ -167,8 +167,14 @@ huge_pages_object(struct drm_i915_private *i915,
 		return ERR_PTR(-ENOMEM);
 
 	drm_gem_private_object_init(&i915->drm, &obj->base, size);
+<<<<<<< HEAD
 	i915_gem_object_init(obj, &huge_page_ops, &lock_class, 0);
 	obj->mem_flags |= I915_BO_FLAG_STRUCT_PAGE;
+=======
+	i915_gem_object_init(obj, &huge_page_ops, &lock_class,
+			     I915_BO_ALLOC_STRUCT_PAGE);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	i915_gem_object_set_volatile(obj);
 
 	obj->write_domain = I915_GEM_DOMAIN_CPU;
@@ -496,8 +502,12 @@ static int igt_mock_memory_region_huge_pages(void *arg)
 		int i;
 
 		for (i = 0; i < ARRAY_SIZE(flags); ++i) {
+<<<<<<< HEAD
 			obj = i915_gem_object_create_region(mem,
 							    page_size, page_size,
+=======
+			obj = i915_gem_object_create_region(mem, page_size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 							    flags[i]);
 			if (IS_ERR(obj)) {
 				err = PTR_ERR(obj);

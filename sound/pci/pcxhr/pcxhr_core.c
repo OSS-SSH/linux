@@ -52,7 +52,11 @@
 #define PCXHR_DSP 2
 
 #if (PCXHR_DSP_OFFSET_MAX > PCXHR_PLX_OFFSET_MIN)
+<<<<<<< HEAD
 #error  PCXHR_REG_TO_PORT(x)
+=======
+#undef  PCXHR_REG_TO_PORT(x)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 #define PCXHR_REG_TO_PORT(x)	((x)>PCXHR_DSP_OFFSET_MAX ? PCXHR_PLX : PCXHR_DSP)
 #endif

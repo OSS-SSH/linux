@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+=======
+/* SPDX-License-Identifier: GPL-2.0-only */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
  */

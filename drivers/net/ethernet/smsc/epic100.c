@@ -312,7 +312,11 @@ static const struct net_device_ops epic_netdev_ops = {
 	.ndo_tx_timeout 	= epic_tx_timeout,
 	.ndo_get_stats		= epic_get_stats,
 	.ndo_set_rx_mode	= set_rx_mode,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= netdev_ioctl,
+=======
+	.ndo_do_ioctl 		= netdev_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_mac_address 	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
 };

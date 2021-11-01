@@ -515,7 +515,11 @@ static irqreturn_t pn544_hci_i2c_irq_thread_fn(int irq, void *phy_id)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
 static const struct nfc_phy_ops i2c_phy_ops = {
+=======
+static struct nfc_phy_ops i2c_phy_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.write = pn544_hci_i2c_write,
 	.enable = pn544_hci_i2c_enable,
 	.disable = pn544_hci_i2c_disable,

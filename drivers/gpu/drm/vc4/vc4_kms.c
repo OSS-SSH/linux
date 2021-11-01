@@ -880,6 +880,10 @@ int vc4_kms_load(struct drm_device *dev)
 	/* Set support for vblank irq fast disable, before drm_vblank_init() */
 	dev->vblank_disable_immediate = true;
 
+<<<<<<< HEAD
+=======
+	dev->irq_enabled = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = drm_vblank_init(dev, dev->mode_config.num_crtc);
 	if (ret < 0) {
 		dev_err(dev->dev, "failed to initialize vblank\n");

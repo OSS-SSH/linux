@@ -190,7 +190,11 @@ static void ip27_do_irq_mask0(struct irq_desc *desc)
 	unsigned long *mask = per_cpu(irq_enable_mask, cpu);
 	struct irq_domain *domain;
 	u64 pend0;
+<<<<<<< HEAD
 	int ret;
+=======
+	int irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* copied from Irix intpend0() */
 	pend0 = LOCAL_HUB_L(PI_INT_PEND0);
@@ -216,8 +220,15 @@ static void ip27_do_irq_mask0(struct irq_desc *desc)
 #endif
 	{
 		domain = irq_desc_get_handler_data(desc);
+<<<<<<< HEAD
 		ret = generic_handle_domain_irq(domain, __ffs(pend0));
 		if (ret)
+=======
+		irq = irq_linear_revmap(domain, __ffs(pend0));
+		if (irq)
+			generic_handle_irq(irq);
+		else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			spurious_interrupt();
 	}
 
@@ -230,7 +241,11 @@ static void ip27_do_irq_mask1(struct irq_desc *desc)
 	unsigned long *mask = per_cpu(irq_enable_mask, cpu);
 	struct irq_domain *domain;
 	u64 pend1;
+<<<<<<< HEAD
 	int ret;
+=======
+	int irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* copied from Irix intpend0() */
 	pend1 = LOCAL_HUB_L(PI_INT_PEND1);
@@ -240,8 +255,15 @@ static void ip27_do_irq_mask1(struct irq_desc *desc)
 		return;
 
 	domain = irq_desc_get_handler_data(desc);
+<<<<<<< HEAD
 	ret = generic_handle_domain_irq(domain, __ffs(pend1) + 64);
 	if (ret)
+=======
+	irq = irq_linear_revmap(domain, __ffs(pend1) + 64);
+	if (irq)
+		generic_handle_irq(irq);
+	else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		spurious_interrupt();
 
 	LOCAL_HUB_L(PI_INT_PEND1);

@@ -822,12 +822,15 @@ void xrs700x_switch_remove(struct xrs700x *priv)
 }
 EXPORT_SYMBOL(xrs700x_switch_remove);
 
+<<<<<<< HEAD
 void xrs700x_switch_shutdown(struct xrs700x *priv)
 {
 	dsa_switch_shutdown(priv->ds);
 }
 EXPORT_SYMBOL(xrs700x_switch_shutdown);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_AUTHOR("George McCollister <george.mccollister@gmail.com>");
 MODULE_DESCRIPTION("Arrow SpeedChips XRS700x DSA driver");
 MODULE_LICENSE("GPL v2");

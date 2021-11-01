@@ -52,11 +52,16 @@ static int ixgbe_xsk_pool_enable(struct ixgbe_adapter *adapter,
 
 		/* Kick start the NAPI context so that receiving will start */
 		err = ixgbe_xsk_wakeup(adapter->netdev, qid, XDP_WAKEUP_RX);
+<<<<<<< HEAD
 		if (err) {
 			clear_bit(qid, adapter->af_xdp_zc_qps);
 			xsk_pool_dma_unmap(pool, IXGBE_RX_DMA_ATTR);
 			return err;
 		}
+=======
+		if (err)
+			return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;

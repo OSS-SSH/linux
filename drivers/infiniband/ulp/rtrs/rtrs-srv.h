@@ -42,6 +42,11 @@ struct rtrs_srv_stats {
 
 struct rtrs_srv_con {
 	struct rtrs_con		c;
+<<<<<<< HEAD
+=======
+	atomic_t		wr_cnt;
+	atomic_t		sq_wr_avail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head	rsp_wr_wait_list;
 	spinlock_t		rsp_wr_wait_lock;
 };
@@ -138,6 +143,13 @@ static inline void rtrs_srv_update_rdma_stats(struct rtrs_srv_stats *s,
 int rtrs_srv_reset_rdma_stats(struct rtrs_srv_stats *stats, bool enable);
 ssize_t rtrs_srv_stats_rdma_to_str(struct rtrs_srv_stats *stats,
 				    char *page, size_t len);
+<<<<<<< HEAD
+=======
+int rtrs_srv_reset_wc_completion_stats(struct rtrs_srv_stats *stats,
+					bool enable);
+int rtrs_srv_stats_wc_completion_to_str(struct rtrs_srv_stats *stats, char *buf,
+					 size_t len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int rtrs_srv_reset_all_stats(struct rtrs_srv_stats *stats, bool enable);
 ssize_t rtrs_srv_reset_all_help(struct rtrs_srv_stats *stats,
 				 char *page, size_t len);

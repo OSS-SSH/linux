@@ -3,11 +3,16 @@
  * Copyright © 2014-2019 Intel Corporation
  */
 
+<<<<<<< HEAD
 #include <linux/bsearch.h>
 
 #include "gt/intel_gt.h"
 #include "gt/intel_lrc.h"
 #include "gt/shmem_utils.h"
+=======
+#include "gt/intel_gt.h"
+#include "gt/intel_lrc.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "intel_guc_ads.h"
 #include "intel_guc_fwif.h"
 #include "intel_uc.h"
@@ -26,6 +31,7 @@
  *      | guc_policies                          |
  *      +---------------------------------------+
  *      | guc_gt_system_info                    |
+<<<<<<< HEAD
  *      +---------------------------------------+ <== static
  *      | guc_mmio_reg[countA] (engine 0.0)     |
  *      | guc_mmio_reg[countB] (engine 0.1)     |
@@ -35,6 +41,12 @@
  *      | padding                               |
  *      +---------------------------------------+ <== 4K aligned
  *      | golden contexts                       |
+=======
+ *      +---------------------------------------+
+ *      | guc_clients_info                      |
+ *      +---------------------------------------+
+ *      | guc_ct_pool_entry[size]               |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *      +---------------------------------------+
  *      | padding                               |
  *      +---------------------------------------+ <== 4K aligned
@@ -47,6 +59,7 @@ struct __guc_ads_blob {
 	struct guc_ads ads;
 	struct guc_policies policies;
 	struct guc_gt_system_info system_info;
+<<<<<<< HEAD
 	/* From here on, location is dynamic! Refer to above diagram. */
 	struct guc_mmio_reg regset[0];
 } __packed;
@@ -62,11 +75,18 @@ static u32 guc_ads_golden_ctxt_size(struct intel_guc *guc)
 	return PAGE_ALIGN(guc->ads_golden_ctxt_size);
 }
 
+=======
+	struct guc_clients_info clients_info;
+	struct guc_ct_pool_entry ct_pool[GUC_CT_POOL_SIZE];
+} __packed;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static u32 guc_ads_private_data_size(struct intel_guc *guc)
 {
 	return PAGE_ALIGN(guc->fw.private_data_size);
 }
 
+<<<<<<< HEAD
 static u32 guc_ads_regset_offset(struct intel_guc *guc)
 {
 	return offsetof(struct __guc_ads_blob, regset);
@@ -90,6 +110,11 @@ static u32 guc_ads_private_data_offset(struct intel_guc *guc)
 		 guc_ads_golden_ctxt_size(guc);
 
 	return PAGE_ALIGN(offset);
+=======
+static u32 guc_ads_private_data_offset(struct intel_guc *guc)
+{
+	return PAGE_ALIGN(sizeof(struct __guc_ads_blob));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static u32 guc_ads_blob_size(struct intel_guc *guc)
@@ -98,6 +123,7 @@ static u32 guc_ads_blob_size(struct intel_guc *guc)
 	       guc_ads_private_data_size(guc);
 }
 
+<<<<<<< HEAD
 static void guc_policies_init(struct intel_guc *guc, struct guc_policies *policies)
 {
 	struct intel_gt *gt = guc_to_gt(guc);
@@ -158,6 +184,38 @@ int intel_guc_global_policies_update(struct intel_guc *guc)
 		ret = guc_action_policies_update(guc, blob->ads.scheduler_policies);
 
 	return ret;
+=======
+static void guc_policy_init(struct guc_policy *policy)
+{
+	policy->execution_quantum = POLICY_DEFAULT_EXECUTION_QUANTUM_US;
+	policy->preemption_time = POLICY_DEFAULT_PREEMPTION_TIME_US;
+	policy->fault_time = POLICY_DEFAULT_FAULT_TIME_US;
+	policy->policy_flags = 0;
+}
+
+static void guc_policies_init(struct guc_policies *policies)
+{
+	struct guc_policy *policy;
+	u32 p, i;
+
+	policies->dpc_promote_time = POLICY_DEFAULT_DPC_PROMOTE_TIME_US;
+	policies->max_num_work_items = POLICY_MAX_NUM_WI;
+
+	for (p = 0; p < GUC_CLIENT_PRIORITY_NUM; p++) {
+		for (i = 0; i < GUC_MAX_ENGINE_CLASSES; i++) {
+			policy = &policies->policy[p][i];
+
+			guc_policy_init(policy);
+		}
+	}
+
+	policies->is_valid = 1;
+}
+
+static void guc_ct_pool_entries_init(struct guc_ct_pool_entry *pool, u32 num)
+{
+	memset(pool, 0, num * sizeof(*pool));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void guc_mapping_table_init(struct intel_gt *gt,
@@ -182,6 +240,7 @@ static void guc_mapping_table_init(struct intel_gt *gt,
 }
 
 /*
+<<<<<<< HEAD
  * The save/restore register list must be pre-calculated to a temporary
  * buffer of driver defined size before it can be generated in place
  * inside the ADS.
@@ -454,12 +513,40 @@ static void guc_init_golden_context(struct intel_guc *guc)
 	addr_ggtt = intel_guc_ggtt_offset(guc, guc->ads_vma) + offset;
 	ptr = ((u8 *)blob) + offset;
 
+=======
+ * The first 80 dwords of the register state context, containing the
+ * execlists and ppgtt registers.
+ */
+#define LR_HW_CONTEXT_SIZE	(80 * sizeof(u32))
+
+static void __guc_ads_init(struct intel_guc *guc)
+{
+	struct intel_gt *gt = guc_to_gt(guc);
+	struct drm_i915_private *i915 = gt->i915;
+	struct __guc_ads_blob *blob = guc->ads_blob;
+	const u32 skipped_size = LRC_PPHWSP_SZ * PAGE_SIZE + LR_HW_CONTEXT_SIZE;
+	u32 base;
+	u8 engine_class, guc_class;
+
+	/* GuC scheduling policies */
+	guc_policies_init(&blob->policies);
+
+	/*
+	 * GuC expects a per-engine-class context image and size
+	 * (minus hwsp and ring context). The context image will be
+	 * used to reinitialize engines after a reset. It must exist
+	 * and be pinned in the GGTT, so that the address won't change after
+	 * we have told GuC where to find it. The context size will be used
+	 * to validate that the LRC base + size fall within allowed GGTT.
+	 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (engine_class = 0; engine_class <= MAX_ENGINE_CLASS; ++engine_class) {
 		if (engine_class == OTHER_CLASS)
 			continue;
 
 		guc_class = engine_class_to_guc_class(engine_class);
 
+<<<<<<< HEAD
 		if (!blob->system_info.engine_enabled_masks[guc_class])
 			continue;
 
@@ -500,6 +587,24 @@ static void __guc_ads_init(struct intel_guc *guc)
 
 	/* System info */
 	fill_engine_enable_masks(gt, &blob->system_info);
+=======
+		/*
+		 * TODO: Set context pointer to default state to allow
+		 * GuC to re-init guilty contexts after internal reset.
+		 */
+		blob->ads.golden_context_lrca[guc_class] = 0;
+		blob->ads.eng_state_size[guc_class] =
+			intel_engine_context_size(guc_to_gt(guc),
+						  engine_class) -
+			skipped_size;
+	}
+
+	/* System info */
+	blob->system_info.engine_enabled_masks[GUC_RENDER_CLASS] = 1;
+	blob->system_info.engine_enabled_masks[GUC_BLITTER_CLASS] = 1;
+	blob->system_info.engine_enabled_masks[GUC_VIDEO_CLASS] = VDBOX_MASK(gt);
+	blob->system_info.engine_enabled_masks[GUC_VIDEOENHANCE_CLASS] = VEBOX_MASK(gt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	blob->system_info.generic_gt_sysinfo[GUC_GENERIC_GT_SYSINFO_SLICE_ENABLED] =
 		hweight8(gt->info.sseu.slice_mask);
@@ -514,19 +619,36 @@ static void __guc_ads_init(struct intel_guc *guc)
 			 GEN12_DOORBELLS_PER_SQIDI) + 1;
 	}
 
+<<<<<<< HEAD
 	/* Golden contexts for re-initialising after a watchdog reset */
 	guc_prep_golden_context(guc, blob);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	guc_mapping_table_init(guc_to_gt(guc), &blob->system_info);
 
 	base = intel_guc_ggtt_offset(guc, guc->ads_vma);
 
+<<<<<<< HEAD
 	/* ADS */
 	blob->ads.scheduler_policies = base + ptr_offset(blob, policies);
 	blob->ads.gt_system_info = base + ptr_offset(blob, system_info);
 
 	/* MMIO save/restore list */
 	guc_mmio_reg_state_init(guc, blob);
+=======
+	/* Clients info  */
+	guc_ct_pool_entries_init(blob->ct_pool, ARRAY_SIZE(blob->ct_pool));
+
+	blob->clients_info.clients_num = 1;
+	blob->clients_info.ct_pool_addr = base + ptr_offset(blob, ct_pool);
+	blob->clients_info.ct_pool_count = ARRAY_SIZE(blob->ct_pool);
+
+	/* ADS */
+	blob->ads.scheduler_policies = base + ptr_offset(blob, policies);
+	blob->ads.gt_system_info = base + ptr_offset(blob, system_info);
+	blob->ads.clients_info = base + ptr_offset(blob, clients_info);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Private Data */
 	blob->ads.private_data = base + guc_ads_private_data_offset(guc);
@@ -548,6 +670,7 @@ int intel_guc_ads_create(struct intel_guc *guc)
 
 	GEM_BUG_ON(guc->ads_vma);
 
+<<<<<<< HEAD
 	/* Need to calculate the reg state size dynamically: */
 	ret = guc_mmio_reg_state_query(guc);
 	if (ret < 0)
@@ -561,6 +684,8 @@ int intel_guc_ads_create(struct intel_guc *guc)
 	guc->ads_golden_ctxt_size = ret;
 
 	/* Now the total size can be determined: */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size = guc_ads_blob_size(guc);
 
 	ret = intel_guc_allocate_and_map_vma(guc, size, &guc->ads_vma,
@@ -573,6 +698,7 @@ int intel_guc_ads_create(struct intel_guc *guc)
 	return 0;
 }
 
+<<<<<<< HEAD
 void intel_guc_ads_init_late(struct intel_guc *guc)
 {
 	/*
@@ -585,6 +711,8 @@ void intel_guc_ads_init_late(struct intel_guc *guc)
 	guc_init_golden_context(guc);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void intel_guc_ads_destroy(struct intel_guc *guc)
 {
 	i915_vma_unpin_and_release(&guc->ads_vma, I915_VMA_RELEASE_MAP);

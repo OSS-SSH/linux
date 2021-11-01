@@ -710,7 +710,11 @@ static u64 storvsc_next_request_id(struct vmbus_channel *channel, u64 rqst_addr)
 	 * Cannot return an ID of 0, which is reserved for an unsolicited
 	 * message from Hyper-V.
 	 */
+<<<<<<< HEAD
 	return (u64)blk_mq_unique_tag(scsi_cmd_to_rq(request->cmd)) + 1;
+=======
+	return (u64)blk_mq_unique_tag(request->cmd->request) + 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void handle_sc_creation(struct vmbus_channel *new_sc)
@@ -1199,6 +1203,7 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
 		vstor_packet->vm_srb.sense_info_length);
 
 	if (vstor_packet->vm_srb.scsi_status != 0 ||
+<<<<<<< HEAD
 	    vstor_packet->vm_srb.srb_status != SRB_STATUS_SUCCESS) {
 
 		/*
@@ -1212,11 +1217,20 @@ static void storvsc_on_io_completion(struct storvsc_device *stor_device,
 		storvsc_log(device, loglevel,
 			"tag#%d cmd 0x%x status: scsi 0x%x srb 0x%x hv 0x%x\n",
 			scsi_cmd_to_rq(request->cmd)->tag,
+=======
+	    vstor_packet->vm_srb.srb_status != SRB_STATUS_SUCCESS)
+		storvsc_log(device, STORVSC_LOGGING_ERROR,
+			"tag#%d cmd 0x%x status: scsi 0x%x srb 0x%x hv 0x%x\n",
+			request->cmd->request->tag,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			stor_pkt->vm_srb.cdb[0],
 			vstor_packet->vm_srb.scsi_status,
 			vstor_packet->vm_srb.srb_status,
 			vstor_packet->status);
+<<<<<<< HEAD
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (vstor_packet->vm_srb.scsi_status == SAM_STAT_CHECK_CONDITION &&
 	    (vstor_packet->vm_srb.srb_status & SRB_STATUS_AUTOSENSE_VALID))

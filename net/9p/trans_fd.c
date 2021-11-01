@@ -34,7 +34,11 @@
 #include <linux/syscalls.h> /* killme */
 
 #define P9_PORT 564
+<<<<<<< HEAD
 #define MAX_SOCK_BUF (1024*1024)
+=======
+#define MAX_SOCK_BUF (64*1024)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MAXPOLLWADDR	2
 
 static struct p9_trans_module p9_tcp_trans;

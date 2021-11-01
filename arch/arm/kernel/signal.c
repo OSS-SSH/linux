@@ -25,6 +25,43 @@ extern const unsigned long sigreturn_codes[17];
 
 static unsigned long signal_return_offset;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRUNCH
+static int preserve_crunch_context(struct crunch_sigframe __user *frame)
+{
+	char kbuf[sizeof(*frame) + 8];
+	struct crunch_sigframe *kframe;
+
+	/* the crunch context must be 64 bit aligned */
+	kframe = (struct crunch_sigframe *)((unsigned long)(kbuf + 8) & ~7);
+	kframe->magic = CRUNCH_MAGIC;
+	kframe->size = CRUNCH_STORAGE_SIZE;
+	crunch_task_copy(current_thread_info(), &kframe->storage);
+	return __copy_to_user(frame, kframe, sizeof(*frame));
+}
+
+static int restore_crunch_context(char __user **auxp)
+{
+	struct crunch_sigframe __user *frame =
+		(struct crunch_sigframe __user *)*auxp;
+	char kbuf[sizeof(*frame) + 8];
+	struct crunch_sigframe *kframe;
+
+	/* the crunch context must be 64 bit aligned */
+	kframe = (struct crunch_sigframe *)((unsigned long)(kbuf + 8) & ~7);
+	if (__copy_from_user(kframe, frame, sizeof(*frame)))
+		return -1;
+	if (kframe->magic != CRUNCH_MAGIC ||
+	    kframe->size != CRUNCH_STORAGE_SIZE)
+		return -1;
+	*auxp += CRUNCH_STORAGE_SIZE;
+	crunch_task_restore(current_thread_info(), &kframe->storage);
+	return 0;
+}
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_IWMMXT
 
 static int preserve_iwmmxt_context(struct iwmmxt_sigframe __user *frame)
@@ -171,6 +208,13 @@ static int restore_sigframe(struct pt_regs *regs, struct sigframe __user *sf)
 	err |= !valid_user_regs(regs);
 
 	aux = (char __user *) sf->uc.uc_regspace;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRUNCH
+	if (err == 0)
+		err |= restore_crunch_context(&aux);
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_IWMMXT
 	if (err == 0)
 		err |= restore_iwmmxt_context(&aux);
@@ -283,6 +327,13 @@ setup_sigframe(struct sigframe __user *sf, struct pt_regs *regs, sigset_t *set)
 	err |= __copy_to_user(&sf->uc.uc_sigmask, set, sizeof(*set));
 
 	aux = (struct aux_sigframe __user *) sf->uc.uc_regspace;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRUNCH
+	if (err == 0)
+		err |= preserve_crunch_context(&aux->crunch);
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_IWMMXT
 	if (err == 0)
 		err |= preserve_iwmmxt_context(&aux->iwmmxt);
@@ -628,6 +679,10 @@ do_work_pending(struct pt_regs *regs, unsigned int thread_flags, int syscall)
 				uprobe_notify_resume(regs);
 			} else {
 				tracehook_notify_resume(regs);
+<<<<<<< HEAD
+=======
+				rseq_handle_notify_resume(NULL, regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 		local_irq_disable();
@@ -668,12 +723,24 @@ struct page *get_signal_page(void)
 	return page;
 }
 
+<<<<<<< HEAD
+=======
+/* Defer to generic check */
+asmlinkage void addr_limit_check_failed(void)
+{
+#ifdef CONFIG_MMU
+	addr_limit_user_check();
+#endif
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DEBUG_RSEQ
 asmlinkage void do_rseq_syscall(struct pt_regs *regs)
 {
 	rseq_syscall(regs);
 }
 #endif
+<<<<<<< HEAD
 
 /*
  * Compile-time assertions for siginfo_t offsets. Check NSIG* as well, as
@@ -713,3 +780,5 @@ static_assert(offsetof(siginfo_t, si_fd)	== 0x10);
 static_assert(offsetof(siginfo_t, si_call_addr)	== 0x0c);
 static_assert(offsetof(siginfo_t, si_syscall)	== 0x10);
 static_assert(offsetof(siginfo_t, si_arch)	== 0x14);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

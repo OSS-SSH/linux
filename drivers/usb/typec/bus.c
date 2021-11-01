@@ -382,7 +382,11 @@ static int typec_probe(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static void typec_remove(struct device *dev)
+=======
+static int typec_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct typec_altmode_driver *drv = to_altmode_driver(dev->driver);
 	struct typec_altmode *adev = to_typec_altmode(dev);
@@ -400,6 +404,11 @@ static void typec_remove(struct device *dev)
 
 	adev->desc = NULL;
 	adev->ops = NULL;
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct bus_type typec_bus = {

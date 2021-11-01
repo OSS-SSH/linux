@@ -129,7 +129,11 @@ static int midas_aif1_hw_params(struct snd_pcm_substream *substream,
 	return midas_start_fll1(rtd, pll_out);
 }
 
+<<<<<<< HEAD
 static const struct snd_soc_ops midas_aif1_ops = {
+=======
+static struct snd_soc_ops midas_aif1_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.hw_params = midas_aif1_hw_params,
 };
 

@@ -1287,9 +1287,12 @@ static int build_insn(const struct bpf_insn *insn, struct jit_ctx *ctx)
 			return 1;
 		break;
 	}
+<<<<<<< HEAD
 	/* speculation barrier */
 	case BPF_ST | BPF_NOSPEC:
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* ST: *(size *)(dst + off) = imm */
 	case BPF_ST | BPF_MEM | BPF_W:
 	case BPF_ST | BPF_MEM | BPF_H:

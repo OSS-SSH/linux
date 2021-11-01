@@ -296,12 +296,15 @@ static ssize_t ovl_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ret = -EINVAL;
 	if (iocb->ki_flags & IOCB_DIRECT &&
 	    (!real.file->f_mapping->a_ops ||
 	     !real.file->f_mapping->a_ops->direct_IO))
 		goto out_fdput;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	old_cred = ovl_override_creds(file_inode(file)->i_sb);
 	if (is_sync_kiocb(iocb)) {
 		ret = vfs_iter_read(real.file, iter, &iocb->ki_pos,
@@ -326,7 +329,11 @@ static ssize_t ovl_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 out:
 	revert_creds(old_cred);
 	ovl_file_accessed(file);
+<<<<<<< HEAD
 out_fdput:
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fdput(real);
 
 	return ret;
@@ -355,12 +362,15 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
 	if (ret)
 		goto out_unlock;
 
+<<<<<<< HEAD
 	ret = -EINVAL;
 	if (iocb->ki_flags & IOCB_DIRECT &&
 	    (!real.file->f_mapping->a_ops ||
 	     !real.file->f_mapping->a_ops->direct_IO))
 		goto out_fdput;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!ovl_should_sync(OVL_FS(inode->i_sb)))
 		ifl &= ~(IOCB_DSYNC | IOCB_SYNC);
 
@@ -396,6 +406,7 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
 	}
 out:
 	revert_creds(old_cred);
+<<<<<<< HEAD
 out_fdput:
 	fdput(real);
 
@@ -442,6 +453,8 @@ static ssize_t ovl_splice_write(struct pipe_inode_info *pipe, struct file *out,
 	/* Update size */
 	ovl_copyattr(realinode, inode);
 	revert_creds(old_cred);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fdput(real);
 
 out_unlock:
@@ -661,7 +674,11 @@ const struct file_operations ovl_file_operations = {
 	.fadvise	= ovl_fadvise,
 	.flush		= ovl_flush,
 	.splice_read    = generic_file_splice_read,
+<<<<<<< HEAD
 	.splice_write   = ovl_splice_write,
+=======
+	.splice_write   = iter_file_splice_write,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	.copy_file_range	= ovl_copy_file_range,
 	.remap_file_range	= ovl_remap_file_range,

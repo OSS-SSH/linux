@@ -12,6 +12,7 @@
 
 #define MVM_UCODE_PNVM_TIMEOUT	(HZ / 4)
 
+<<<<<<< HEAD
 #define MAX_PNVM_NAME  64
 
 int iwl_pnvm_load(struct iwl_trans *trans,
@@ -35,4 +36,9 @@ void iwl_pnvm_get_fs_name(struct iwl_trans *trans,
 		pnvm_name[pre_len - 1] = '.';
 }
 
+=======
+int iwl_pnvm_load(struct iwl_trans *trans,
+		  struct iwl_notif_wait_data *notif_wait);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __IWL_PNVM_H__ */

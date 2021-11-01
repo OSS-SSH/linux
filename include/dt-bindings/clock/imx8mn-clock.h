@@ -241,8 +241,12 @@
 #define IMX8MN_CLK_CLKOUT2_DIV			219
 #define IMX8MN_CLK_CLKOUT2			220
 
+<<<<<<< HEAD
 #define IMX8MN_CLK_M7_CORE			221
 
 #define IMX8MN_CLK_END				222
+=======
+#define IMX8MN_CLK_END				221
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

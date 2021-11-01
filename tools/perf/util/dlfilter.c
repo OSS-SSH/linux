@@ -21,7 +21,11 @@
 #include "symbol.h"
 #include "srcline.h"
 #include "dlfilter.h"
+<<<<<<< HEAD
 #include "../include/perf/perf_dlfilter.h"
+=======
+#include "perf_dlfilter.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void al_to_d_al(struct addr_location *al, struct perf_dlfilter_al *d_al)
 {
@@ -530,8 +534,13 @@ int dlfilter__do_filter_event(struct dlfilter *d,
 	return ret;
 }
 
+<<<<<<< HEAD
 bool get_filter_desc(const char *dirname, const char *name, char **desc,
 		     char **long_desc)
+=======
+static bool get_filter_desc(const char *dirname, const char *name,
+			    char **desc, char **long_desc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	char path[PATH_MAX];
 	void *handle;

@@ -165,6 +165,10 @@ int fs_lookup_param(struct fs_context *fc,
 		return invalf(fc, "%s: not usable as path", param->key);
 	}
 
+<<<<<<< HEAD
+=======
+	f->refcnt++; /* filename_lookup() drops our ref. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = filename_lookup(param->dirfd, f, flags, _path, NULL);
 	if (ret < 0) {
 		errorf(fc, "%s: Lookup failure for '%s'", param->key, f->name);

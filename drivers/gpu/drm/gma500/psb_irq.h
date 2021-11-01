@@ -19,9 +19,15 @@ bool sysirq_init(struct drm_device *dev);
 void sysirq_uninit(struct drm_device *dev);
 
 void psb_irq_preinstall(struct drm_device *dev);
+<<<<<<< HEAD
 void psb_irq_postinstall(struct drm_device *dev);
 int  psb_irq_install(struct drm_device *dev, unsigned int irq);
 void psb_irq_uninstall(struct drm_device *dev);
+=======
+int  psb_irq_postinstall(struct drm_device *dev);
+void psb_irq_uninstall(struct drm_device *dev);
+irqreturn_t psb_irq_handler(int irq, void *arg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int  psb_enable_vblank(struct drm_crtc *crtc);
 void psb_disable_vblank(struct drm_crtc *crtc);

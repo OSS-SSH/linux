@@ -8,7 +8,11 @@ config CSKY
 	select ARCH_HAS_SYNC_DMA_FOR_DEVICE
 	select ARCH_USE_BUILTIN_BSWAP
 	select ARCH_USE_QUEUED_RWLOCKS
+<<<<<<< HEAD
 	select ARCH_WANT_FRAME_POINTERS if !CPU_CK610 && $(cc-option,-mbacktrace)
+=======
+	select ARCH_WANT_FRAME_POINTERS if !CPU_CK610
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT
 	select COMMON_CLK
 	select CLKSRC_MMIO
@@ -82,7 +86,10 @@ config CSKY
 	select PCI_SYSCALL if PCI
 	select PCI_MSI if PCI
 	select SET_FS
+<<<<<<< HEAD
 	select TRACE_IRQFLAGS_SUPPORT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config LOCKDEP_SUPPORT
 	def_bool y
@@ -140,6 +147,12 @@ config STACKTRACE_SUPPORT
 config TIME_LOW_RES
 	def_bool y
 
+<<<<<<< HEAD
+=======
+config TRACE_IRQFLAGS_SUPPORT
+	def_bool y
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config CPU_TLB_SIZE
 	int
 	default "128"	if (CPU_CK610 || CPU_CK807 || CPU_CK810)
@@ -241,7 +254,10 @@ endchoice
 
 menuconfig HAVE_TCM
 	bool "Tightly-Coupled/Sram Memory"
+<<<<<<< HEAD
 	depends on !COMPILE_TEST
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  The implementation are not only used by TCM (Tightly-Coupled Meory)
 	  but also used by sram on SOC bus. It follow existed linux tcm

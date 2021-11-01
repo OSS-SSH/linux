@@ -27,7 +27,10 @@ properties:
               - fsl,imx6ul-lcdif
               - fsl,imx7d-lcdif
               - fsl,imx8mm-lcdif
+<<<<<<< HEAD
               - fsl,imx8mn-lcdif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - fsl,imx8mq-lcdif
           - const: fsl,imx6sx-lcdif
 

@@ -278,7 +278,10 @@ static void signal_our_withdraw(struct gfs2_sbd *sdp)
 		goto skip_recovery;
 	}
 	sdp->sd_jdesc->jd_inode = inode;
+<<<<<<< HEAD
 	d_mark_dontcache(inode);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Now wait until recovery is complete.
@@ -296,7 +299,11 @@ skip_recovery:
 		fs_warn(sdp, "Journal recovery complete for jid %d.\n",
 			sdp->sd_lockstruct.ls_jid);
 	else
+<<<<<<< HEAD
 		fs_warn(sdp, "Journal recovery skipped for jid %d until next "
+=======
+		fs_warn(sdp, "Journal recovery skipped for %d until next "
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			"mount.\n", sdp->sd_lockstruct.ls_jid);
 	fs_warn(sdp, "Glock dequeues delayed: %lu\n", sdp->sd_glock_dqs_held);
 	sdp->sd_glock_dqs_held = 0;

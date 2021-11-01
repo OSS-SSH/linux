@@ -161,6 +161,10 @@ int oxygen_pci_probe(struct pci_dev *pci, int index, char *id,
 				      const struct pci_device_id *id
 				     )
 		    );
+<<<<<<< HEAD
+=======
+void oxygen_pci_remove(struct pci_dev *pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_PM_SLEEP
 extern const struct dev_pm_ops oxygen_pci_pm;
 #endif

@@ -157,7 +157,23 @@ static int mptcp_setsockopt_sol_socket_tstamp(struct mptcp_sock *msk, int optnam
 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
 		bool slow = lock_sock_fast(ssk);
 
+<<<<<<< HEAD
 		sock_set_timestamp(sk, optname, !!val);
+=======
+		switch (optname) {
+		case SO_TIMESTAMP_OLD:
+		case SO_TIMESTAMP_NEW:
+		case SO_TIMESTAMPNS_OLD:
+		case SO_TIMESTAMPNS_NEW:
+			sock_set_timestamp(sk, optname, !!val);
+			break;
+		case SO_TIMESTAMPING_NEW:
+		case SO_TIMESTAMPING_OLD:
+			sock_set_timestamping(sk, optname, val);
+			break;
+		}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unlock_sock_fast(ssk, slow);
 	}
 
@@ -166,8 +182,12 @@ static int mptcp_setsockopt_sol_socket_tstamp(struct mptcp_sock *msk, int optnam
 }
 
 static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
+<<<<<<< HEAD
 					   sockptr_t optval,
 					   unsigned int optlen)
+=======
+					   sockptr_t optval, unsigned int optlen)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int val, ret;
 
@@ -194,12 +214,18 @@ static int mptcp_setsockopt_sol_socket_int(struct mptcp_sock *msk, int optname,
 	case SO_TIMESTAMP_NEW:
 	case SO_TIMESTAMPNS_OLD:
 	case SO_TIMESTAMPNS_NEW:
+<<<<<<< HEAD
+=======
+	case SO_TIMESTAMPING_OLD:
+	case SO_TIMESTAMPING_NEW:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return mptcp_setsockopt_sol_socket_tstamp(msk, optname, val);
 	}
 
 	return -ENOPROTOOPT;
 }
 
+<<<<<<< HEAD
 static int mptcp_setsockopt_sol_socket_timestamping(struct mptcp_sock *msk,
 						    int optname,
 						    sockptr_t optval,
@@ -244,6 +270,8 @@ static int mptcp_setsockopt_sol_socket_timestamping(struct mptcp_sock *msk,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mptcp_setsockopt_sol_socket_linger(struct mptcp_sock *msk, sockptr_t optval,
 					      unsigned int optlen)
 {
@@ -330,12 +358,18 @@ static int mptcp_setsockopt_sol_socket(struct mptcp_sock *msk, int optname,
 	case SO_TIMESTAMP_NEW:
 	case SO_TIMESTAMPNS_OLD:
 	case SO_TIMESTAMPNS_NEW:
+<<<<<<< HEAD
 		return mptcp_setsockopt_sol_socket_int(msk, optname, optval,
 						       optlen);
 	case SO_TIMESTAMPING_OLD:
 	case SO_TIMESTAMPING_NEW:
 		return mptcp_setsockopt_sol_socket_timestamping(msk, optname,
 								optval, optlen);
+=======
+	case SO_TIMESTAMPING_OLD:
+	case SO_TIMESTAMPING_NEW:
+		return mptcp_setsockopt_sol_socket_int(msk, optname, optval, optlen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case SO_LINGER:
 		return mptcp_setsockopt_sol_socket_linger(msk, optval, optlen);
 	case SO_RCVLOWAT:

@@ -1656,7 +1656,11 @@ static int xs_get_srcport(struct sock_xprt *transport)
 unsigned short get_srcport(struct rpc_xprt *xprt)
 {
 	struct sock_xprt *sock = container_of(xprt, struct sock_xprt, xprt);
+<<<<<<< HEAD
 	return xs_sock_getport(sock->sock);
+=======
+	return sock->srcport;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(get_srcport);
 
@@ -2099,6 +2103,7 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
 
 	if (sock == NULL)
 		return;
+<<<<<<< HEAD
 	if (!xprt->reuseport) {
 		xs_close(xprt);
 		return;
@@ -2113,6 +2118,15 @@ static void xs_tcp_shutdown(struct rpc_xprt *xprt)
 		trace_rpc_socket_shutdown(xprt, sock);
 		break;
 	default:
+=======
+	switch (skst) {
+	default:
+		kernel_sock_shutdown(sock, SHUT_RDWR);
+		trace_rpc_socket_shutdown(xprt, sock);
+		break;
+	case TCP_CLOSE:
+	case TCP_TIME_WAIT:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xs_reset_transport(transport);
 	}
 }
@@ -3156,6 +3170,27 @@ void cleanup_socket_xprt(void)
 	xprt_unregister_transport(&xs_bc_tcp_transport);
 }
 
+<<<<<<< HEAD
+=======
+static int param_set_uint_minmax(const char *val,
+		const struct kernel_param *kp,
+		unsigned int min, unsigned int max)
+{
+	unsigned int num;
+	int ret;
+
+	if (!val)
+		return -EINVAL;
+	ret = kstrtouint(val, 0, &num);
+	if (ret)
+		return ret;
+	if (num < min || num > max)
+		return -EINVAL;
+	*((unsigned int *)kp->arg) = num;
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int param_set_portnr(const char *val, const struct kernel_param *kp)
 {
 	return param_set_uint_minmax(val, kp,

@@ -1744,15 +1744,26 @@ void latency_fsnotify(struct trace_array *tr)
 	irq_work_queue(&tr->fsnotify_irqwork);
 }
 
+<<<<<<< HEAD
 #elif defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER)	\
 	|| defined(CONFIG_OSNOISE_TRACER)
+=======
+/*
+ * (defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER)) && \
+ *  defined(CONFIG_FSNOTIFY)
+ */
+#else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define trace_create_maxlat_file(tr, d_tracer)				\
 	trace_create_file("tracing_max_latency", 0644, d_tracer,	\
 			  &tr->max_latency, &tracing_max_lat_fops)
 
+<<<<<<< HEAD
 #else
 #define trace_create_maxlat_file(tr, d_tracer)	 do { } while (0)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifdef CONFIG_TRACER_MAX_TRACE
@@ -2602,6 +2613,7 @@ enum print_line_t trace_handle_return(struct trace_seq *s)
 }
 EXPORT_SYMBOL_GPL(trace_handle_return);
 
+<<<<<<< HEAD
 static unsigned short migration_disable_value(void)
 {
 #if defined(CONFIG_SMP)
@@ -2611,6 +2623,8 @@ static unsigned short migration_disable_value(void)
 #endif
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 unsigned int tracing_gen_ctx_irq_test(unsigned int irqs_status)
 {
 	unsigned int trace_flags = irqs_status;
@@ -2629,8 +2643,12 @@ unsigned int tracing_gen_ctx_irq_test(unsigned int irqs_status)
 		trace_flags |= TRACE_FLAG_NEED_RESCHED;
 	if (test_preempt_need_resched())
 		trace_flags |= TRACE_FLAG_PREEMPT_RESCHED;
+<<<<<<< HEAD
 	return (trace_flags << 16) | (min_t(unsigned int, pc & 0xff, 0xf)) |
 		(min_t(unsigned int, migration_disable_value(), 0xf)) << 4;
+=======
+	return (trace_flags << 16) | (pc & 0xff);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct ring_buffer_event *
@@ -2906,6 +2924,7 @@ int tracepoint_printk_sysctl(struct ctl_table *table, int write,
 
 void trace_event_buffer_commit(struct trace_event_buffer *fbuffer)
 {
+<<<<<<< HEAD
 	enum event_trigger_type tt = ETT_NONE;
 	struct trace_event_file *file = fbuffer->trace_file;
 
@@ -2913,11 +2932,14 @@ void trace_event_buffer_commit(struct trace_event_buffer *fbuffer)
 			fbuffer->entry, &tt))
 		goto discard;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (static_key_false(&tracepoint_printk_key.key))
 		output_printk(fbuffer);
 
 	if (static_branch_unlikely(&trace_event_exports_enabled))
 		ftrace_exports(fbuffer->event, TRACE_EXPORT_EVENT);
+<<<<<<< HEAD
 
 	trace_buffer_unlock_commit_regs(file->tr, fbuffer->buffer,
 			fbuffer->event, fbuffer->trace_ctx, fbuffer->regs);
@@ -2926,6 +2948,11 @@ discard:
 	if (tt)
 		event_triggers_post_call(file, tt);
 
+=======
+	event_trigger_unlock_commit_regs(fbuffer->trace_file, fbuffer->buffer,
+				    fbuffer->event, fbuffer->entry,
+				    fbuffer->trace_ctx, fbuffer->regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(trace_event_buffer_commit);
 
@@ -3706,11 +3733,19 @@ static bool trace_safe_str(struct trace_iterator *iter, const char *str)
 		return false;
 
 	event = container_of(trace_event, struct trace_event_call, event);
+<<<<<<< HEAD
 	if ((event->flags & TRACE_EVENT_FL_DYNAMIC) || !event->module)
 		return false;
 
 	/* Would rather have rodata, but this will suffice */
 	if (within_module_core(addr, event->module))
+=======
+	if (!event->mod)
+		return false;
+
+	/* Would rather have rodata, but this will suffice */
+	if (within_module_core(addr, event->mod))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 
 	return false;
@@ -4198,10 +4233,16 @@ static void print_lat_help_header(struct seq_file *m)
 		    "#                  | / _----=> need-resched    \n"
 		    "#                  || / _---=> hardirq/softirq \n"
 		    "#                  ||| / _--=> preempt-depth   \n"
+<<<<<<< HEAD
 		    "#                  |||| / _-=> migrate-disable \n"
 		    "#                  ||||| /     delay           \n"
 		    "#  cmd     pid     |||||| time  |   caller     \n"
 		    "#     \\   /        ||||||  \\    |    /       \n");
+=======
+		    "#                  |||| /     delay            \n"
+		    "#  cmd     pid     ||||| time  |   caller      \n"
+		    "#     \\   /        |||||  \\    |   /         \n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void print_event_info(struct array_buffer *buf, struct seq_file *m)
@@ -4239,10 +4280,16 @@ static void print_func_help_header_irq(struct array_buffer *buf, struct seq_file
 	seq_printf(m, "#                            %.*s / _----=> need-resched\n", prec, space);
 	seq_printf(m, "#                            %.*s| / _---=> hardirq/softirq\n", prec, space);
 	seq_printf(m, "#                            %.*s|| / _--=> preempt-depth\n", prec, space);
+<<<<<<< HEAD
 	seq_printf(m, "#                            %.*s||| / _-=> migrate-disable\n", prec, space);
 	seq_printf(m, "#                            %.*s|||| /     delay\n", prec, space);
 	seq_printf(m, "#           TASK-PID  %.*s CPU#  |||||  TIMESTAMP  FUNCTION\n", prec, "     TGID   ");
 	seq_printf(m, "#              | |    %.*s   |   |||||     |         |\n", prec, "       |    ");
+=======
+	seq_printf(m, "#                            %.*s||| /     delay\n", prec, space);
+	seq_printf(m, "#           TASK-PID  %.*s CPU#  ||||   TIMESTAMP  FUNCTION\n", prec, "     TGID   ");
+	seq_printf(m, "#              | |    %.*s   |   ||||      |         |\n", prec, "       |    ");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void
@@ -5554,7 +5601,10 @@ static const char readme_msg[] =
 #ifdef CONFIG_HIST_TRIGGERS
 	"\t           s:[synthetic/]<event> <field> [<field>]\n"
 #endif
+<<<<<<< HEAD
 	"\t           e[:[<group>/]<event>] <attached-group>.<attached-event> [<args>]\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	"\t           -:[<group>/]<event>\n"
 #ifdef CONFIG_KPROBE_EVENTS
 	"\t    place: [<module>:]<symbol>[+<offset>]|<memaddr>\n"
@@ -5564,7 +5614,11 @@ static const char readme_msg[] =
   "   place (uprobe): <path>:<offset>[%return][(ref_ctr_offset)]\n"
 #endif
 	"\t     args: <name>=fetcharg[:type]\n"
+<<<<<<< HEAD
 	"\t fetcharg: (%<register>|$<efield>), @<address>, @<symbol>[+|-<offset>],\n"
+=======
+	"\t fetcharg: %<register>, @<address>, @<symbol>[+|-<offset>],\n"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_HAVE_FUNCTION_ARG_ACCESS_API
 	"\t           $stack<index>, $stack, $retval, $comm, $arg<N>,\n"
 #else
@@ -5579,8 +5633,11 @@ static const char readme_msg[] =
 	"\t    stype: u8/u16/u32/u64, s8/s16/s32/s64, pid_t,\n"
 	"\t           [unsigned] char/int/long\n"
 #endif
+<<<<<<< HEAD
 	"\t    efield: For event probes ('e' types), the field is on of the fields\n"
 	"\t            of the <attached-group>/<attached-event>.\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	"  events/\t\t- Directory containing all trace event subsystems:\n"
 	"      enable\t\t- Write 0/1 to enable/disable tracing of all events\n"
@@ -5635,10 +5692,13 @@ static const char readme_msg[] =
 	"\t            [:name=histname1]\n"
 	"\t            [:<handler>.<action>]\n"
 	"\t            [if <filter>]\n\n"
+<<<<<<< HEAD
 	"\t    Note, special fields can be used as well:\n"
 	"\t            common_timestamp - to record current timestamp\n"
 	"\t            common_cpu - to record the CPU the event happened on\n"
 	"\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	"\t    When a matching event is hit, an entry is added to a hash\n"
 	"\t    table using the key(s) and value(s) named, and the value of a\n"
 	"\t    sum called 'hitcount' is incremented.  Keys and values\n"
@@ -5668,7 +5728,10 @@ static const char readme_msg[] =
 	"\t            .execname   display a common_pid as a program name\n"
 	"\t            .syscall    display a syscall id as a syscall name\n"
 	"\t            .log2       display log2 value rather than raw number\n"
+<<<<<<< HEAD
 	"\t            .buckets=size  display values in groups of size rather than raw number\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	"\t            .usecs      display a common_timestamp in microseconds\n\n"
 	"\t    The 'pause' parameter can be used to pause an existing hist\n"
 	"\t    trigger or to start a hist trigger but not log any events\n"
@@ -9162,10 +9225,15 @@ static int trace_array_create_dir(struct trace_array *tr)
 		return -EINVAL;
 
 	ret = event_trace_add_tracer(tr->dir, tr);
+<<<<<<< HEAD
 	if (ret) {
 		tracefs_remove(tr->dir);
 		return ret;
 	}
+=======
+	if (ret)
+		tracefs_remove(tr->dir);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	init_tracer_tracefs(tr, tr->dir);
 	__update_tracer_options(tr);
@@ -9472,7 +9540,13 @@ init_tracer_tracefs(struct trace_array *tr, struct dentry *d_tracer)
 
 	create_trace_options_dir(tr);
 
+<<<<<<< HEAD
 	trace_create_maxlat_file(tr, d_tracer);
+=======
+#if defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER)
+	trace_create_maxlat_file(tr, d_tracer);
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (ftrace_create_function_files(tr, d_tracer))
 		MEM_FAIL(1, "Could not allocate function filter files");
@@ -9828,6 +9902,10 @@ void ftrace_dump(enum ftrace_dump_mode oops_dump_mode)
 	tracing_off();
 
 	local_irq_save(flags);
+<<<<<<< HEAD
+=======
+	printk_nmi_direct_enter();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Simulate the iterator */
 	trace_init_global_iter(&iter);
@@ -9909,6 +9987,10 @@ void ftrace_dump(enum ftrace_dump_mode oops_dump_mode)
 		atomic_dec(&per_cpu_ptr(iter.array_buffer->data, cpu)->disabled);
 	}
 	atomic_dec(&dump_running);
+<<<<<<< HEAD
+=======
+	printk_nmi_direct_exit();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	local_irq_restore(flags);
 }
 EXPORT_SYMBOL_GPL(ftrace_dump);

@@ -450,8 +450,12 @@ int btrfs_get_io_geometry(struct btrfs_fs_info *fs_info, struct extent_map *map,
 			  struct btrfs_io_geometry *io_geom);
 int btrfs_read_sys_array(struct btrfs_fs_info *fs_info);
 int btrfs_read_chunk_tree(struct btrfs_fs_info *fs_info);
+<<<<<<< HEAD
 struct btrfs_block_group *btrfs_alloc_chunk(struct btrfs_trans_handle *trans,
 					    u64 type);
+=======
+int btrfs_alloc_chunk(struct btrfs_trans_handle *trans, u64 type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void btrfs_mapping_tree_free(struct extent_map_tree *tree);
 blk_status_t btrfs_map_bio(struct btrfs_fs_info *fs_info, struct bio *bio,
 			   int mirror_num);
@@ -472,8 +476,12 @@ struct btrfs_device *btrfs_alloc_device(struct btrfs_fs_info *fs_info,
 					const u8 *uuid);
 void btrfs_free_device(struct btrfs_device *device);
 int btrfs_rm_device(struct btrfs_fs_info *fs_info,
+<<<<<<< HEAD
 		    const char *device_path, u64 devid,
 		    struct block_device **bdev, fmode_t *mode);
+=======
+		    const char *device_path, u64 devid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __exit btrfs_cleanup_fs_uuids(void);
 int btrfs_num_copies(struct btrfs_fs_info *fs_info, u64 logical, u64 len);
 int btrfs_grow_device(struct btrfs_trans_handle *trans,
@@ -509,8 +517,13 @@ int btrfs_is_parity_mirror(struct btrfs_fs_info *fs_info,
 			   u64 logical, u64 len);
 unsigned long btrfs_full_stripe_len(struct btrfs_fs_info *fs_info,
 				    u64 logical);
+<<<<<<< HEAD
 int btrfs_chunk_alloc_add_chunk_item(struct btrfs_trans_handle *trans,
 				     struct btrfs_block_group *bg);
+=======
+int btrfs_finish_chunk_alloc(struct btrfs_trans_handle *trans,
+			     u64 chunk_offset, u64 chunk_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int btrfs_remove_chunk(struct btrfs_trans_handle *trans, u64 chunk_offset);
 struct extent_map *btrfs_get_chunk_map(struct btrfs_fs_info *fs_info,
 				       u64 logical, u64 length);
@@ -567,6 +580,35 @@ static inline void btrfs_dev_stat_set(struct btrfs_device *dev,
 	atomic_inc(&dev->dev_stats_ccnt);
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * Convert block group flags (BTRFS_BLOCK_GROUP_*) to btrfs_raid_types, which
+ * can be used as index to access btrfs_raid_array[].
+ */
+static inline enum btrfs_raid_types btrfs_bg_flags_to_raid_index(u64 flags)
+{
+	if (flags & BTRFS_BLOCK_GROUP_RAID10)
+		return BTRFS_RAID_RAID10;
+	else if (flags & BTRFS_BLOCK_GROUP_RAID1)
+		return BTRFS_RAID_RAID1;
+	else if (flags & BTRFS_BLOCK_GROUP_RAID1C3)
+		return BTRFS_RAID_RAID1C3;
+	else if (flags & BTRFS_BLOCK_GROUP_RAID1C4)
+		return BTRFS_RAID_RAID1C4;
+	else if (flags & BTRFS_BLOCK_GROUP_DUP)
+		return BTRFS_RAID_DUP;
+	else if (flags & BTRFS_BLOCK_GROUP_RAID0)
+		return BTRFS_RAID_RAID0;
+	else if (flags & BTRFS_BLOCK_GROUP_RAID5)
+		return BTRFS_RAID_RAID5;
+	else if (flags & BTRFS_BLOCK_GROUP_RAID6)
+		return BTRFS_RAID_RAID6;
+
+	return BTRFS_RAID_SINGLE; /* BTRFS_BLOCK_GROUP_SINGLE */
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void btrfs_commit_device_sizes(struct btrfs_transaction *trans);
 
 struct list_head * __attribute_const__ btrfs_get_fs_uuids(void);
@@ -576,7 +618,10 @@ void btrfs_scratch_superblocks(struct btrfs_fs_info *fs_info,
 			       struct block_device *bdev,
 			       const char *device_path);
 
+<<<<<<< HEAD
 enum btrfs_raid_types __attribute_const__ btrfs_bg_flags_to_raid_index(u64 flags);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int btrfs_bg_type_to_factor(u64 flags);
 const char *btrfs_bg_type_to_raid_name(u64 flags);
 int btrfs_verify_dev_extents(struct btrfs_fs_info *fs_info);

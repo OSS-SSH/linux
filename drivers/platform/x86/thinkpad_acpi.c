@@ -73,7 +73,10 @@
 #include <linux/uaccess.h>
 #include <acpi/battery.h>
 #include <acpi/video.h>
+<<<<<<< HEAD
 #include "dual_accel_detect.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* ThinkPad CMOS commands */
 #define TP_CMOS_VOLUME_DOWN	0
@@ -3233,7 +3236,11 @@ static int hotkey_init_tablet_mode(void)
 		 * the laptop/tent/tablet mode to the EC. The bmc150 iio driver
 		 * does not support this, so skip the hotkey on these models.
 		 */
+<<<<<<< HEAD
 		if (has_tablet_mode && !dual_accel_detect())
+=======
+		if (has_tablet_mode && !acpi_dev_present("BOSC0200", "1", -1))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			tp_features.hotkey_tablet = TP_HOTKEY_TABLET_USES_GMMS;
 		type = "GMMS";
 	} else if (acpi_evalf(hkey_handle, &res, "MHKG", "qd")) {

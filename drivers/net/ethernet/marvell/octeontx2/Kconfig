@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 #
+<<<<<<< HEAD
 # Marvell RVU Network drivers configuration
+=======
+# Marvell OcteonTX2 drivers configuration
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #
 
 config OCTEONTX2_MBOX
@@ -12,7 +16,10 @@ config OCTEONTX2_AF
 	select NET_DEVLINK
 	depends on (64BIT && COMPILE_TEST) || ARM64
 	depends on PCI
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This driver supports Marvell's OcteonTX2 Resource Virtualization
 	  Unit's admin function manager which manages all RVU HW resources
@@ -33,7 +40,10 @@ config OCTEONTX2_PF
 	select OCTEONTX2_MBOX
 	depends on (64BIT && COMPILE_TEST) || ARM64
 	depends on PCI
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This driver supports Marvell's OcteonTX2 NIC physical function.
 

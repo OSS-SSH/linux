@@ -105,7 +105,11 @@
 #define	MVNETA_VLAN_PRIO_TO_RXQ			 0x2440
 #define      MVNETA_VLAN_PRIO_RXQ_MAP(prio, rxq) ((rxq) << ((prio) * 3))
 #define MVNETA_PORT_STATUS                       0x2444
+<<<<<<< HEAD
 #define      MVNETA_TX_IN_PRGRS                  BIT(0)
+=======
+#define      MVNETA_TX_IN_PRGRS                  BIT(1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define      MVNETA_TX_FIFO_EMPTY                BIT(8)
 #define MVNETA_RX_MIN_FRAME_SIZE                 0x247c
 /* Only exists on Armada XP and Armada 370 */
@@ -2299,6 +2303,7 @@ mvneta_swbm_add_rx_fragment(struct mvneta_port *pp,
 		skb_frag_off_set(frag, pp->rx_offset_correction);
 		skb_frag_size_set(frag, data_len);
 		__skb_frag_set_page(frag, page);
+<<<<<<< HEAD
 	} else {
 		page_pool_put_full_page(rxq->page_pool, page, true);
 	}
@@ -2311,6 +2316,20 @@ mvneta_swbm_add_rx_fragment(struct mvneta_port *pp,
 		sinfo->nr_frags = xdp_sinfo->nr_frags;
 		memcpy(sinfo->frags, xdp_sinfo->frags,
 		       sinfo->nr_frags * sizeof(skb_frag_t));
+=======
+
+		/* last fragment */
+		if (len == *size) {
+			struct skb_shared_info *sinfo;
+
+			sinfo = xdp_get_shared_info_from_buff(xdp);
+			sinfo->nr_frags = xdp_sinfo->nr_frags;
+			memcpy(sinfo->frags, xdp_sinfo->frags,
+			       sinfo->nr_frags * sizeof(skb_frag_t));
+		}
+	} else {
+		page_pool_put_full_page(rxq->page_pool, page, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	*size -= len;
 }
@@ -2327,7 +2346,11 @@ mvneta_swbm_build_skb(struct mvneta_port *pp, struct page_pool *pool,
 	if (!skb)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
 	skb_mark_for_recycle(skb);
+=======
+	skb_mark_for_recycle(skb, virt_to_page(xdp->data), pool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	skb_reserve(skb, xdp->data - xdp->data_hard_start);
 	skb_put(skb, xdp->data_end - xdp->data);
@@ -2339,6 +2362,13 @@ mvneta_swbm_build_skb(struct mvneta_port *pp, struct page_pool *pool,
 		skb_add_rx_frag(skb, skb_shinfo(skb)->nr_frags,
 				skb_frag_page(frag), skb_frag_off(frag),
 				skb_frag_size(frag), PAGE_SIZE);
+<<<<<<< HEAD
+=======
+		/* We don't need to reset pp_recycle here. It's already set, so
+		 * just mark fragments for recycling.
+		 */
+		page_pool_store_mem_info(skb_frag_page(frag), pool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return skb;
@@ -2662,7 +2692,11 @@ static int mvneta_tx_tso(struct sk_buff *skb, struct net_device *dev,
 		return 0;
 
 	if (skb_headlen(skb) < (skb_transport_offset(skb) + tcp_hdrlen(skb))) {
+<<<<<<< HEAD
 		pr_info("*** Is this even possible?\n");
+=======
+		pr_info("*** Is this even  possible???!?!?\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 	}
 
@@ -3828,6 +3862,7 @@ static void mvneta_validate(struct phylink_config *config,
 	struct mvneta_port *pp = netdev_priv(ndev);
 	__ETHTOOL_DECLARE_LINK_MODE_MASK(mask) = { 0, };
 
+<<<<<<< HEAD
 	/* We only support QSGMII, SGMII, 802.3z and RGMII modes.
 	 * When in 802.3z mode, we must have AN enabled:
 	 * "Bit 2 Field InBandAnEn In-band Auto-Negotiation enable. ...
@@ -3842,6 +3877,14 @@ static void mvneta_validate(struct phylink_config *config,
 		   state->interface != PHY_INTERFACE_MODE_QSGMII &&
 		   state->interface != PHY_INTERFACE_MODE_SGMII &&
 		   !phy_interface_mode_is_rgmii(state->interface)) {
+=======
+	/* We only support QSGMII, SGMII, 802.3z and RGMII modes */
+	if (state->interface != PHY_INTERFACE_MODE_NA &&
+	    state->interface != PHY_INTERFACE_MODE_QSGMII &&
+	    state->interface != PHY_INTERFACE_MODE_SGMII &&
+	    !phy_interface_mode_is_8023z(state->interface) &&
+	    !phy_interface_mode_is_rgmii(state->interface)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		bitmap_zero(supported, __ETHTOOL_LINK_MODE_MASK_NBITS);
 		return;
 	}
@@ -4500,11 +4543,16 @@ static int mvneta_ethtool_nway_reset(struct net_device *dev)
 }
 
 /* Set interrupt coalescing for ethtools */
+<<<<<<< HEAD
 static int
 mvneta_ethtool_set_coalesce(struct net_device *dev,
 			    struct ethtool_coalesce *c,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+=======
+static int mvneta_ethtool_set_coalesce(struct net_device *dev,
+				       struct ethtool_coalesce *c)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mvneta_port *pp = netdev_priv(dev);
 	int queue;
@@ -4527,11 +4575,16 @@ mvneta_ethtool_set_coalesce(struct net_device *dev,
 }
 
 /* get coalescing for ethtools */
+<<<<<<< HEAD
 static int
 mvneta_ethtool_get_coalesce(struct net_device *dev,
 			    struct ethtool_coalesce *c,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+=======
+static int mvneta_ethtool_get_coalesce(struct net_device *dev,
+				       struct ethtool_coalesce *c)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mvneta_port *pp = netdev_priv(dev);
 
@@ -4996,7 +5049,11 @@ static const struct net_device_ops mvneta_netdev_ops = {
 	.ndo_change_mtu      = mvneta_change_mtu,
 	.ndo_fix_features    = mvneta_fix_features,
 	.ndo_get_stats64     = mvneta_get_stats64,
+<<<<<<< HEAD
 	.ndo_eth_ioctl        = mvneta_ioctl,
+=======
+	.ndo_do_ioctl        = mvneta_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_bpf	     = mvneta_xdp,
 	.ndo_xdp_xmit        = mvneta_xdp_xmit,
 	.ndo_setup_tc	     = mvneta_setup_tc,

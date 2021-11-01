@@ -41,6 +41,7 @@
 #define EXCEPT_MAX_HDR_SIZE	0x400
 #define HDA_EXT_ROM_STATUS_SIZE 8
 
+<<<<<<< HEAD
 static const struct sof_intel_dsp_desc
 	*get_chip_info(struct snd_sof_pdata *pdata)
 {
@@ -52,6 +53,8 @@ static const struct sof_intel_dsp_desc
 	return chip_info;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if IS_ENABLED(CONFIG_SND_SOC_SOF_INTEL_SOUNDWIRE)
 
 /*
@@ -166,8 +169,11 @@ static int hda_sdw_probe(struct snd_sof_dev *sdev)
 	memset(&res, 0, sizeof(res));
 
 	res.mmio_base = sdev->bar[HDA_DSP_BAR];
+<<<<<<< HEAD
 	res.shim_base = hdev->desc->sdw_shim_base;
 	res.alh_base = hdev->desc->sdw_alh_base;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	res.irq = sdev->ipc_irq;
 	res.handle = hdev->info.handle;
 	res.parent = sdev->dev;
@@ -200,16 +206,22 @@ static int hda_sdw_probe(struct snd_sof_dev *sdev)
 int hda_sdw_startup(struct snd_sof_dev *sdev)
 {
 	struct sof_intel_hda_dev *hdev;
+<<<<<<< HEAD
 	struct snd_sof_pdata *pdata = sdev->pdata;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	hdev = sdev->pdata->hw_pdata;
 
 	if (!hdev->sdw)
 		return 0;
 
+<<<<<<< HEAD
 	if (pdata->machine && !pdata->machine->mach_params.link_mask)
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return sdw_intel_startup(hdev->sdw);
 }
 
@@ -228,7 +240,11 @@ static int hda_sdw_exit(struct snd_sof_dev *sdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 bool hda_common_check_sdw_irq(struct snd_sof_dev *sdev)
+=======
+static bool hda_dsp_check_sdw_irq(struct snd_sof_dev *sdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sof_intel_hda_dev *hdev;
 	bool ret = false;
@@ -254,6 +270,7 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 static bool hda_dsp_check_sdw_irq(struct snd_sof_dev *sdev)
 {
 	const struct sof_intel_dsp_desc *chip;
@@ -265,6 +282,8 @@ static bool hda_dsp_check_sdw_irq(struct snd_sof_dev *sdev)
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static irqreturn_t hda_dsp_sdw_thread(int irq, void *context)
 {
 	return sdw_intel_thread(irq, context);
@@ -277,7 +296,11 @@ static bool hda_sdw_check_wakeen_irq(struct snd_sof_dev *sdev)
 	hdev = sdev->pdata->hw_pdata;
 	if (hdev->sdw &&
 	    snd_sof_dsp_read(sdev, HDA_DSP_BAR,
+<<<<<<< HEAD
 			     hdev->desc->sdw_shim_base + SDW_SHIM_WAKESTS))
+=======
+			     HDA_DSP_REG_SNDW_WAKE_STS))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 
 	return false;
@@ -696,6 +719,20 @@ skip_soundwire:
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static const struct sof_intel_dsp_desc
+	*get_chip_info(struct snd_sof_pdata *pdata)
+{
+	const struct sof_dev_desc *desc = pdata->desc;
+	const struct sof_intel_dsp_desc *chip_info;
+
+	chip_info = desc->chip_info;
+
+	return chip_info;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static irqreturn_t hda_dsp_interrupt_handler(int irq, void *context)
 {
 	struct snd_sof_dev *sdev = context;
@@ -1019,6 +1056,7 @@ static int hda_generic_machine_select(struct snd_sof_dev *sdev)
 			hda_mach->mach_params.dmic_num = dmic_num;
 			pdata->machine = hda_mach;
 			pdata->tplg_filename = tplg_filename;
+<<<<<<< HEAD
 
 			if (codec_num == 2) {
 				/*
@@ -1027,6 +1065,8 @@ static int hda_generic_machine_select(struct snd_sof_dev *sdev)
 				 */
 				hda_mach->mach_params.link_mask = 0;
 			}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 

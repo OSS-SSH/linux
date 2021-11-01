@@ -1543,7 +1543,11 @@ static const struct net_device_ops ave_netdev_ops = {
 	.ndo_open		= ave_open,
 	.ndo_stop		= ave_stop,
 	.ndo_start_xmit		= ave_start_xmit,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= ave_ioctl,
+=======
+	.ndo_do_ioctl		= ave_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_rx_mode	= ave_set_rx_mode,
 	.ndo_get_stats64	= ave_get_stats64,
 	.ndo_set_mac_address	= ave_set_mac_address,

@@ -729,8 +729,13 @@ gen11_dsi_configure_transcoder(struct intel_encoder *encoder,
 {
 	struct drm_i915_private *dev_priv = to_i915(encoder->base.dev);
 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
+<<<<<<< HEAD
 	struct intel_crtc *crtc = to_intel_crtc(pipe_config->uapi.crtc);
 	enum pipe pipe = crtc->pipe;
+=======
+	struct intel_crtc *intel_crtc = to_intel_crtc(pipe_config->uapi.crtc);
+	enum pipe pipe = intel_crtc->pipe;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 tmp;
 	enum port port;
 	enum transcoder dsi_trans;
@@ -1253,6 +1258,7 @@ static void gen11_dsi_pre_enable(struct intel_atomic_state *state,
 	gen11_dsi_set_transcoder_timings(encoder, pipe_config);
 }
 
+<<<<<<< HEAD
 /*
  * Wa_1409054076:icl,jsl,ehl
  * When pipe A is disabled and MIPI DSI is enabled on pipe B,
@@ -1270,12 +1276,15 @@ static void icl_apply_kvmr_pipe_a_wa(struct intel_encoder *encoder,
 			     IGNORE_KVMR_PIPE_A,
 			     enable ? IGNORE_KVMR_PIPE_A : 0);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void gen11_dsi_enable(struct intel_atomic_state *state,
 			     struct intel_encoder *encoder,
 			     const struct intel_crtc_state *crtc_state,
 			     const struct drm_connector_state *conn_state)
 {
 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
+<<<<<<< HEAD
 	struct intel_crtc *crtc = to_intel_crtc(conn_state->crtc);
 
 	drm_WARN_ON(state->base.dev, crtc_state->has_pch_encoder);
@@ -1283,6 +1292,11 @@ static void gen11_dsi_enable(struct intel_atomic_state *state,
 	/* Wa_1409054076:icl,jsl,ehl */
 	icl_apply_kvmr_pipe_a_wa(encoder, crtc->pipe, true);
 
+=======
+
+	drm_WARN_ON(state->base.dev, crtc_state->has_pch_encoder);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* step6d: enable dsi transcoder */
 	gen11_dsi_enable_transcoder(encoder);
 
@@ -1436,7 +1450,10 @@ static void gen11_dsi_disable(struct intel_atomic_state *state,
 			      const struct drm_connector_state *old_conn_state)
 {
 	struct intel_dsi *intel_dsi = enc_to_intel_dsi(encoder);
+<<<<<<< HEAD
 	struct intel_crtc *crtc = to_intel_crtc(old_conn_state->crtc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* step1: turn off backlight */
 	intel_dsi_vbt_exec_sequence(intel_dsi, MIPI_SEQ_BACKLIGHT_OFF);
@@ -1445,9 +1462,12 @@ static void gen11_dsi_disable(struct intel_atomic_state *state,
 	/* step2d,e: disable transcoder and wait */
 	gen11_dsi_disable_transcoder(encoder);
 
+<<<<<<< HEAD
 	/* Wa_1409054076:icl,jsl,ehl */
 	icl_apply_kvmr_pipe_a_wa(encoder, crtc->pipe, false);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* step2f,g: powerdown panel */
 	gen11_dsi_powerdown_panel(encoder);
 
@@ -1573,6 +1593,7 @@ static void gen11_dsi_get_config(struct intel_encoder *encoder,
 		pipe_config->mode_flags |= I915_MODE_FLAG_DSI_PERIODIC_CMD_MODE;
 }
 
+<<<<<<< HEAD
 static void gen11_dsi_sync_state(struct intel_encoder *encoder,
 				 const struct intel_crtc_state *crtc_state)
 {
@@ -1595,6 +1616,8 @@ static void gen11_dsi_sync_state(struct intel_encoder *encoder,
 			    encoder->base.name);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int gen11_dsi_dsc_compute_config(struct intel_encoder *encoder,
 					struct intel_crtc_state *crtc_state)
 {
@@ -2013,7 +2036,10 @@ void icl_dsi_init(struct drm_i915_private *dev_priv)
 	encoder->post_disable = gen11_dsi_post_disable;
 	encoder->port = port;
 	encoder->get_config = gen11_dsi_get_config;
+<<<<<<< HEAD
 	encoder->sync_state = gen11_dsi_sync_state;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	encoder->update_pipe = intel_panel_update_backlight;
 	encoder->compute_config = gen11_dsi_compute_config;
 	encoder->get_hw_state = gen11_dsi_get_hw_state;

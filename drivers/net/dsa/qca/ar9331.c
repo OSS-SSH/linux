@@ -101,6 +101,7 @@
 	 AR9331_SW_PORT_STATUS_RX_FLOW_EN | AR9331_SW_PORT_STATUS_TX_FLOW_EN | \
 	 AR9331_SW_PORT_STATUS_SPEED_M)
 
+<<<<<<< HEAD
 #define AR9331_SW_REG_PORT_CTRL(_port)			(0x104 + (_port) * 0x100)
 #define AR9331_SW_PORT_CTRL_HEAD_EN			BIT(11)
 #define AR9331_SW_PORT_CTRL_PORT_STATE			GENMASK(2, 0)
@@ -118,6 +119,8 @@
 #define AR9331_SW_8021Q_MODE_NONE			0
 #define AR9331_SW_PORT_VLAN_PORT_VID_MEMBER		GENMASK(25, 16)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* MIB registers */
 #define AR9331_MIB_COUNTER(x)			(0x20000 + ((x) * 0x100))
 
@@ -388,6 +391,7 @@ static int ar9331_sw_mbus_init(struct ar9331_sw_priv *priv)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int ar9331_sw_setup_port(struct dsa_switch *ds, int port)
 {
 	struct ar9331_sw_priv *priv = (struct ar9331_sw_priv *)ds->priv;
@@ -436,11 +440,17 @@ error:
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ar9331_sw_setup(struct dsa_switch *ds)
 {
 	struct ar9331_sw_priv *priv = (struct ar9331_sw_priv *)ds->priv;
 	struct regmap *regmap = priv->regmap;
+<<<<<<< HEAD
 	int ret, i;
+=======
+	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = ar9331_sw_reset(priv);
 	if (ret)
@@ -467,12 +477,15 @@ static int ar9331_sw_setup(struct dsa_switch *ds)
 	if (ret)
 		goto error;
 
+<<<<<<< HEAD
 	for (i = 0; i < ds->num_ports; i++) {
 		ret = ar9331_sw_setup_port(ds, i);
 		if (ret)
 			goto error;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ds->configure_vlan_while_not_filtering = false;
 
 	return 0;
@@ -908,6 +921,7 @@ static int ar9331_mdio_write(void *ctx, u32 reg, u32 val)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	/* In case of this switch we work with 32bit registers on top of 16bit
 	 * bus. Some registers (for example access to forwarding database) have
 	 * trigger bit on the first 16bit half of request, the result and
@@ -921,11 +935,22 @@ static int ar9331_mdio_write(void *ctx, u32 reg, u32 val)
 		goto error;
 
 	ret = __ar9331_mdio_write(sbus, AR9331_SW_MDIO_PHY_MODE_REG, reg, val);
+=======
+	ret = __ar9331_mdio_write(sbus, AR9331_SW_MDIO_PHY_MODE_REG, reg, val);
+	if (ret < 0)
+		goto error;
+
+	ret = __ar9331_mdio_write(sbus, AR9331_SW_MDIO_PHY_MODE_REG, reg + 2,
+				  val >> 16);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		goto error;
 
 	return 0;
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 error:
 	dev_err_ratelimited(&sbus->dev, "Bus error. Failed to write register.\n");
 	return ret;
@@ -1083,9 +1108,12 @@ static void ar9331_sw_remove(struct mdio_device *mdiodev)
 	struct ar9331_sw_priv *priv = dev_get_drvdata(&mdiodev->dev);
 	unsigned int i;
 
+<<<<<<< HEAD
 	if (!priv)
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < ARRAY_SIZE(priv->port); i++) {
 		struct ar9331_sw_port *port = &priv->port[i];
 
@@ -1097,6 +1125,7 @@ static void ar9331_sw_remove(struct mdio_device *mdiodev)
 	dsa_unregister_switch(&priv->ds);
 
 	reset_control_assert(priv->sw_reset);
+<<<<<<< HEAD
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
 }
@@ -1111,6 +1140,8 @@ static void ar9331_sw_shutdown(struct mdio_device *mdiodev)
 	dsa_switch_shutdown(&priv->ds);
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct of_device_id ar9331_sw_of_match[] = {
@@ -1121,7 +1152,10 @@ static const struct of_device_id ar9331_sw_of_match[] = {
 static struct mdio_driver ar9331_sw_mdio_driver = {
 	.probe = ar9331_sw_probe,
 	.remove = ar9331_sw_remove,
+<<<<<<< HEAD
 	.shutdown = ar9331_sw_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.mdiodrv.driver = {
 		.name = AR9331_SW_NAME,
 		.of_match_table = ar9331_sw_of_match,

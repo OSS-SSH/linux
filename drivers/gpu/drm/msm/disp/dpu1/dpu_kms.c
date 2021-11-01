@@ -471,12 +471,16 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
 				    struct dpu_kms *dpu_kms)
 {
 	struct drm_encoder *encoder = NULL;
+<<<<<<< HEAD
 	struct msm_display_info info;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i, rc = 0;
 
 	if (!(priv->dsi[0] || priv->dsi[1]))
 		return rc;
 
+<<<<<<< HEAD
 	/*
 	 * We support following confiurations:
 	 * - Single DSI host (dsi0 or dsi1)
@@ -506,12 +510,28 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
 		memset(&info, 0, sizeof(info));
 		info.intf_type = encoder->encoder_type;
 
+=======
+	/*TODO: Support two independent DSI connectors */
+	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
+	if (IS_ERR(encoder)) {
+		DPU_ERROR("encoder init failed for dsi display\n");
+		return PTR_ERR(encoder);
+	}
+
+	priv->encoders[priv->num_encoders++] = encoder;
+
+	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+		if (!priv->dsi[i])
+			continue;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
 		if (rc) {
 			DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
 				i, rc);
 			break;
 		}
+<<<<<<< HEAD
 
 		info.h_tile_instance[info.num_of_h_tiles++] = i;
 		info.capabilities = msm_dsi_is_cmd_mode(priv->dsi[i]) ?
@@ -533,6 +553,8 @@ static int _dpu_kms_initialize_dsi(struct drm_device *dev,
 		if (rc)
 			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
 				  encoder->base.id, rc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return rc;
@@ -543,7 +565,10 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
 					    struct dpu_kms *dpu_kms)
 {
 	struct drm_encoder *encoder = NULL;
+<<<<<<< HEAD
 	struct msm_display_info info;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc = 0;
 
 	if (!priv->dp)
@@ -555,7 +580,10 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
 		return PTR_ERR(encoder);
 	}
 
+<<<<<<< HEAD
 	memset(&info, 0, sizeof(info));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rc = msm_dp_modeset_init(priv->dp, dev, encoder);
 	if (rc) {
 		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
@@ -564,6 +592,7 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
 	}
 
 	priv->encoders[priv->num_encoders++] = encoder;
+<<<<<<< HEAD
 
 	info.num_of_h_tiles = 1;
 	info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
@@ -572,6 +601,8 @@ static int _dpu_kms_initialize_displayport(struct drm_device *dev,
 	if (rc)
 		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
 			  encoder->base.id, rc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
@@ -774,6 +805,44 @@ static void dpu_kms_destroy(struct msm_kms *kms)
 	msm_kms_destroy(&dpu_kms->base);
 }
 
+<<<<<<< HEAD
+=======
+static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
+				 struct drm_encoder *encoder,
+				 bool cmd_mode)
+{
+	struct msm_display_info info;
+	struct msm_drm_private *priv = encoder->dev->dev_private;
+	int i, rc = 0;
+
+	memset(&info, 0, sizeof(info));
+
+	info.intf_type = encoder->encoder_type;
+	info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
+			MSM_DISPLAY_CAP_VID_MODE;
+
+	switch (info.intf_type) {
+	case DRM_MODE_ENCODER_DSI:
+		/* TODO: No support for DSI swap */
+		for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+			if (priv->dsi[i]) {
+				info.h_tile_instance[info.num_of_h_tiles] = i;
+				info.num_of_h_tiles++;
+			}
+		}
+		break;
+	case DRM_MODE_ENCODER_TMDS:
+		info.num_of_h_tiles = 1;
+		break;
+	}
+
+	rc = dpu_encoder_setup(encoder->dev, encoder, &info);
+	if (rc)
+		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+			encoder->base.id, rc);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static irqreturn_t dpu_irq(struct msm_kms *kms)
 {
 	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
@@ -876,6 +945,10 @@ static const struct msm_kms_funcs kms_funcs = {
 	.get_format      = dpu_get_msm_format,
 	.round_pixclk    = dpu_kms_round_pixclk,
 	.destroy         = dpu_kms_destroy,
+<<<<<<< HEAD
+=======
+	.set_encoder_mode = _dpu_kms_set_encoder_mode,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.snapshot        = dpu_kms_mdp_snapshot,
 #ifdef CONFIG_DEBUG_FS
 	.debugfs_init    = dpu_kms_debugfs_init,

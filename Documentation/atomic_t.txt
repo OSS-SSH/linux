@@ -271,6 +271,7 @@ WRITE_ONCE.  Thus:
 			SC *y, t;
 
 is allowed.
+<<<<<<< HEAD
 
 
 CMPXCHG vs TRY_CMPXCHG
@@ -365,3 +366,5 @@ Such implementations are strongly encouraged to add exponential backoff loops
 to a failed CAS in order to ensure some progress. Affected architectures are
 also strongly encouraged to inspect/audit the atomic fallbacks, refcount_t and
 their locking primitives.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -24,13 +24,17 @@
 #define AMD_C2P_MSG2	0x10508
 
 #define AMD_C2P_MSG(regno) (0x10500 + ((regno) * 4))
+<<<<<<< HEAD
 #define AMD_P2C_MSG(regno) (0x10680 + ((regno) * 4))
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* MP2 P2C Message Registers */
 #define AMD_P2C_MSG3	0x1068C /* Supported Sensors info */
 
 #define V2_STATUS	0x2
 
+<<<<<<< HEAD
 #define SENSOR_ENABLED     4
 #define SENSOR_DISABLED    5
 
@@ -38,6 +42,10 @@
 
 #define AMD_SFH_IDLE_LOOP	200
 
+=======
+#define HPD_IDX		16
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* SFH Command register */
 union sfh_cmd_base {
 	u32 ul;
@@ -57,6 +65,7 @@ union sfh_cmd_base {
 	} cmd_v2;
 };
 
+<<<<<<< HEAD
 union cmd_response {
 	u32 resp;
 	struct {
@@ -70,6 +79,8 @@ union cmd_response {
 	} response_v2;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 union sfh_cmd_param {
 	u32 ul;
 	struct {
@@ -131,14 +142,20 @@ void amd_stop_all_sensors(struct amd_mp2_dev *privdata);
 int amd_mp2_get_sensor_num(struct amd_mp2_dev *privdata, u8 *sensor_id);
 int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata);
 int amd_sfh_hid_client_deinit(struct amd_mp2_dev *privdata);
+<<<<<<< HEAD
 u32 amd_sfh_wait_for_response(struct amd_mp2_dev *mp2, u8 sid, u32 sensor_sts);
 void amd_mp2_suspend(struct amd_mp2_dev *mp2);
 void amd_mp2_resume(struct amd_mp2_dev *mp2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct amd_mp2_ops {
 	 void (*start)(struct amd_mp2_dev *privdata, struct amd_mp2_sensor_info info);
 	 void (*stop)(struct amd_mp2_dev *privdata, u16 sensor_idx);
 	 void (*stop_all)(struct amd_mp2_dev *privdata);
+<<<<<<< HEAD
 	 int (*response)(struct amd_mp2_dev *mp2, u8 sid, u32 sensor_sts);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 #endif

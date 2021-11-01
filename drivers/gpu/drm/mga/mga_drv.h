@@ -38,6 +38,10 @@
 #include <drm/drm_device.h>
 #include <drm/drm_file.h>
 #include <drm/drm_ioctl.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_legacy.h>
 #include <drm/drm_print.h>
 #include <drm/drm_sarea.h>

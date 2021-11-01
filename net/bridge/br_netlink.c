@@ -287,7 +287,11 @@ static int br_port_fill_attrs(struct sk_buff *skb,
 
 #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
 	if (nla_put_u8(skb, IFLA_BRPORT_MULTICAST_ROUTER,
+<<<<<<< HEAD
 		       p->multicast_ctx.multicast_router) ||
+=======
+		       p->multicast_router) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    nla_put_u32(skb, IFLA_BRPORT_MCAST_EHT_HOSTS_LIMIT,
 			p->multicast_eht_hosts_limit) ||
 	    nla_put_u32(skb, IFLA_BRPORT_MCAST_EHT_HOSTS_CNT,
@@ -932,8 +936,12 @@ static int br_setport(struct net_bridge_port *p, struct nlattr *tb[],
 	if (tb[IFLA_BRPORT_MULTICAST_ROUTER]) {
 		u8 mcast_router = nla_get_u8(tb[IFLA_BRPORT_MULTICAST_ROUTER]);
 
+<<<<<<< HEAD
 		err = br_multicast_set_port_router(&p->multicast_ctx,
 						   mcast_router);
+=======
+		err = br_multicast_set_port_router(p, mcast_router);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 	}
@@ -1287,8 +1295,12 @@ static int br_changelink(struct net_device *brdev, struct nlattr *tb[],
 	if (data[IFLA_BR_MCAST_ROUTER]) {
 		u8 multicast_router = nla_get_u8(data[IFLA_BR_MCAST_ROUTER]);
 
+<<<<<<< HEAD
 		err = br_multicast_set_router(&br->multicast_ctx,
 					      multicast_router);
+=======
+		err = br_multicast_set_router(br, multicast_router);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 	}
@@ -1311,8 +1323,12 @@ static int br_changelink(struct net_device *brdev, struct nlattr *tb[],
 	if (data[IFLA_BR_MCAST_QUERIER]) {
 		u8 mcast_querier = nla_get_u8(data[IFLA_BR_MCAST_QUERIER]);
 
+<<<<<<< HEAD
 		err = br_multicast_set_querier(&br->multicast_ctx,
 					       mcast_querier);
+=======
+		err = br_multicast_set_querier(br, mcast_querier);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 	}
@@ -1327,49 +1343,81 @@ static int br_changelink(struct net_device *brdev, struct nlattr *tb[],
 	if (data[IFLA_BR_MCAST_LAST_MEMBER_CNT]) {
 		u32 val = nla_get_u32(data[IFLA_BR_MCAST_LAST_MEMBER_CNT]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_last_member_count = val;
+=======
+		br->multicast_last_member_count = val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_STARTUP_QUERY_CNT]) {
 		u32 val = nla_get_u32(data[IFLA_BR_MCAST_STARTUP_QUERY_CNT]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_startup_query_count = val;
+=======
+		br->multicast_startup_query_count = val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_LAST_MEMBER_INTVL]) {
 		u64 val = nla_get_u64(data[IFLA_BR_MCAST_LAST_MEMBER_INTVL]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_last_member_interval = clock_t_to_jiffies(val);
+=======
+		br->multicast_last_member_interval = clock_t_to_jiffies(val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_MEMBERSHIP_INTVL]) {
 		u64 val = nla_get_u64(data[IFLA_BR_MCAST_MEMBERSHIP_INTVL]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_membership_interval = clock_t_to_jiffies(val);
+=======
+		br->multicast_membership_interval = clock_t_to_jiffies(val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_QUERIER_INTVL]) {
 		u64 val = nla_get_u64(data[IFLA_BR_MCAST_QUERIER_INTVL]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_querier_interval = clock_t_to_jiffies(val);
+=======
+		br->multicast_querier_interval = clock_t_to_jiffies(val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_QUERY_INTVL]) {
 		u64 val = nla_get_u64(data[IFLA_BR_MCAST_QUERY_INTVL]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_query_interval = clock_t_to_jiffies(val);
+=======
+		br->multicast_query_interval = clock_t_to_jiffies(val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_QUERY_RESPONSE_INTVL]) {
 		u64 val = nla_get_u64(data[IFLA_BR_MCAST_QUERY_RESPONSE_INTVL]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_query_response_interval = clock_t_to_jiffies(val);
+=======
+		br->multicast_query_response_interval = clock_t_to_jiffies(val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_STARTUP_QUERY_INTVL]) {
 		u64 val = nla_get_u64(data[IFLA_BR_MCAST_STARTUP_QUERY_INTVL]);
 
+<<<<<<< HEAD
 		br->multicast_ctx.multicast_startup_query_interval = clock_t_to_jiffies(val);
+=======
+		br->multicast_startup_query_interval = clock_t_to_jiffies(val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (data[IFLA_BR_MCAST_STATS_ENABLED]) {
@@ -1383,8 +1431,12 @@ static int br_changelink(struct net_device *brdev, struct nlattr *tb[],
 		__u8 igmp_version;
 
 		igmp_version = nla_get_u8(data[IFLA_BR_MCAST_IGMP_VERSION]);
+<<<<<<< HEAD
 		err = br_multicast_set_igmp_version(&br->multicast_ctx,
 						    igmp_version);
+=======
+		err = br_multicast_set_igmp_version(br, igmp_version);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 	}
@@ -1394,8 +1446,12 @@ static int br_changelink(struct net_device *brdev, struct nlattr *tb[],
 		__u8 mld_version;
 
 		mld_version = nla_get_u8(data[IFLA_BR_MCAST_MLD_VERSION]);
+<<<<<<< HEAD
 		err = br_multicast_set_mld_version(&br->multicast_ctx,
 						   mld_version);
+=======
+		err = br_multicast_set_mld_version(br, mld_version);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 	}
@@ -1502,7 +1558,10 @@ static size_t br_get_size(const struct net_device *brdev)
 	       nla_total_size_64bit(sizeof(u64)) + /* IFLA_BR_MCAST_STARTUP_QUERY_INTVL */
 	       nla_total_size(sizeof(u8)) +	/* IFLA_BR_MCAST_IGMP_VERSION */
 	       nla_total_size(sizeof(u8)) +	/* IFLA_BR_MCAST_MLD_VERSION */
+<<<<<<< HEAD
 	       br_multicast_querier_state_size() + /* IFLA_BR_MCAST_QUERIER_STATE */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 #if IS_ENABLED(CONFIG_BRIDGE_NETFILTER)
 	       nla_total_size(sizeof(u8)) +     /* IFLA_BR_NF_CALL_IPTABLES */
@@ -1572,19 +1631,28 @@ static int br_fill_info(struct sk_buff *skb, const struct net_device *brdev)
 		return -EMSGSIZE;
 #endif
 #ifdef CONFIG_BRIDGE_IGMP_SNOOPING
+<<<<<<< HEAD
 	if (nla_put_u8(skb, IFLA_BR_MCAST_ROUTER,
 		       br->multicast_ctx.multicast_router) ||
+=======
+	if (nla_put_u8(skb, IFLA_BR_MCAST_ROUTER, br->multicast_router) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    nla_put_u8(skb, IFLA_BR_MCAST_SNOOPING,
 		       br_opt_get(br, BROPT_MULTICAST_ENABLED)) ||
 	    nla_put_u8(skb, IFLA_BR_MCAST_QUERY_USE_IFADDR,
 		       br_opt_get(br, BROPT_MULTICAST_QUERY_USE_IFADDR)) ||
 	    nla_put_u8(skb, IFLA_BR_MCAST_QUERIER,
+<<<<<<< HEAD
 		       br->multicast_ctx.multicast_querier) ||
+=======
+		       br_opt_get(br, BROPT_MULTICAST_QUERIER)) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    nla_put_u8(skb, IFLA_BR_MCAST_STATS_ENABLED,
 		       br_opt_get(br, BROPT_MULTICAST_STATS_ENABLED)) ||
 	    nla_put_u32(skb, IFLA_BR_MCAST_HASH_ELASTICITY, RHT_ELASTICITY) ||
 	    nla_put_u32(skb, IFLA_BR_MCAST_HASH_MAX, br->hash_max) ||
 	    nla_put_u32(skb, IFLA_BR_MCAST_LAST_MEMBER_CNT,
+<<<<<<< HEAD
 			br->multicast_ctx.multicast_last_member_count) ||
 	    nla_put_u32(skb, IFLA_BR_MCAST_STARTUP_QUERY_CNT,
 			br->multicast_ctx.multicast_startup_query_count) ||
@@ -1619,6 +1687,40 @@ static int br_fill_info(struct sk_buff *skb, const struct net_device *brdev)
 			      IFLA_BR_PAD))
 		return -EMSGSIZE;
 	clockval = jiffies_to_clock_t(br->multicast_ctx.multicast_startup_query_interval);
+=======
+			br->multicast_last_member_count) ||
+	    nla_put_u32(skb, IFLA_BR_MCAST_STARTUP_QUERY_CNT,
+			br->multicast_startup_query_count) ||
+	    nla_put_u8(skb, IFLA_BR_MCAST_IGMP_VERSION,
+		       br->multicast_igmp_version))
+		return -EMSGSIZE;
+#if IS_ENABLED(CONFIG_IPV6)
+	if (nla_put_u8(skb, IFLA_BR_MCAST_MLD_VERSION,
+		       br->multicast_mld_version))
+		return -EMSGSIZE;
+#endif
+	clockval = jiffies_to_clock_t(br->multicast_last_member_interval);
+	if (nla_put_u64_64bit(skb, IFLA_BR_MCAST_LAST_MEMBER_INTVL, clockval,
+			      IFLA_BR_PAD))
+		return -EMSGSIZE;
+	clockval = jiffies_to_clock_t(br->multicast_membership_interval);
+	if (nla_put_u64_64bit(skb, IFLA_BR_MCAST_MEMBERSHIP_INTVL, clockval,
+			      IFLA_BR_PAD))
+		return -EMSGSIZE;
+	clockval = jiffies_to_clock_t(br->multicast_querier_interval);
+	if (nla_put_u64_64bit(skb, IFLA_BR_MCAST_QUERIER_INTVL, clockval,
+			      IFLA_BR_PAD))
+		return -EMSGSIZE;
+	clockval = jiffies_to_clock_t(br->multicast_query_interval);
+	if (nla_put_u64_64bit(skb, IFLA_BR_MCAST_QUERY_INTVL, clockval,
+			      IFLA_BR_PAD))
+		return -EMSGSIZE;
+	clockval = jiffies_to_clock_t(br->multicast_query_response_interval);
+	if (nla_put_u64_64bit(skb, IFLA_BR_MCAST_QUERY_RESPONSE_INTVL, clockval,
+			      IFLA_BR_PAD))
+		return -EMSGSIZE;
+	clockval = jiffies_to_clock_t(br->multicast_startup_query_interval);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (nla_put_u64_64bit(skb, IFLA_BR_MCAST_STARTUP_QUERY_INTVL, clockval,
 			      IFLA_BR_PAD))
 		return -EMSGSIZE;
@@ -1666,8 +1768,12 @@ static size_t br_get_linkxstats_size(const struct net_device *dev, int attr)
 	}
 
 	return numvls * nla_total_size(sizeof(struct bridge_vlan_xstats)) +
+<<<<<<< HEAD
 	       nla_total_size_64bit(sizeof(struct br_mcast_stats)) +
 	       (p ? nla_total_size_64bit(sizeof(p->stp_xstats)) : 0) +
+=======
+	       nla_total_size(sizeof(struct br_mcast_stats)) +
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	       nla_total_size(0);
 }
 

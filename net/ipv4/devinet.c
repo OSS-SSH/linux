@@ -215,7 +215,11 @@ static void devinet_sysctl_unregister(struct in_device *idev)
 
 static struct in_ifaddr *inet_alloc_ifa(void)
 {
+<<<<<<< HEAD
 	return kzalloc(sizeof(struct in_ifaddr), GFP_KERNEL_ACCOUNT);
+=======
+	return kzalloc(sizeof(struct in_ifaddr), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void inet_rcu_free_ifa(struct rcu_head *head)
@@ -1243,7 +1247,11 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 int inet_gifconf(struct net_device *dev, char __user *buf, int len, int size)
+=======
+static int inet_gifconf(struct net_device *dev, char __user *buf, int len, int size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct in_device *in_dev = __in_dev_get_rtnl(dev);
 	const struct in_ifaddr *ifa;
@@ -1950,8 +1958,12 @@ static const struct nla_policy inet_af_policy[IFLA_INET_MAX+1] = {
 };
 
 static int inet_validate_link_af(const struct net_device *dev,
+<<<<<<< HEAD
 				 const struct nlattr *nla,
 				 struct netlink_ext_ack *extack)
+=======
+				 const struct nlattr *nla)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct nlattr *a, *tb[IFLA_INET_MAX+1];
 	int err, rem;
@@ -1960,7 +1972,11 @@ static int inet_validate_link_af(const struct net_device *dev,
 		return -EAFNOSUPPORT;
 
 	err = nla_parse_nested_deprecated(tb, IFLA_INET_MAX, nla,
+<<<<<<< HEAD
 					  inet_af_policy, extack);
+=======
+					  inet_af_policy, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -2425,6 +2441,7 @@ static int devinet_sysctl_forward(struct ctl_table *ctl, int write,
 	int *valp = ctl->data;
 	int val = *valp;
 	loff_t pos = *ppos;
+<<<<<<< HEAD
 	struct net *net = ctl->extra2;
 	int ret;
 
@@ -2434,6 +2451,13 @@ static int devinet_sysctl_forward(struct ctl_table *ctl, int write,
 	ret = proc_dointvec(ctl, write, buffer, lenp, ppos);
 
 	if (write && *valp != val) {
+=======
+	int ret = proc_dointvec(ctl, write, buffer, lenp, ppos);
+
+	if (write && *valp != val) {
+		struct net *net = ctl->extra2;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (valp != &IPV4_DEVCONF_DFLT(net, FORWARDING)) {
 			if (!rtnl_trylock()) {
 				/* Restore the original values before restarting */
@@ -2767,6 +2791,11 @@ void __init devinet_init(void)
 		INIT_HLIST_HEAD(&inet_addr_lst[i]);
 
 	register_pernet_subsys(&devinet_ops);
+<<<<<<< HEAD
+=======
+
+	register_gifconf(PF_INET, inet_gifconf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	register_netdevice_notifier(&ip_netdev_notifier);
 
 	queue_delayed_work(system_power_efficient_wq, &check_lifetime_work, 0);

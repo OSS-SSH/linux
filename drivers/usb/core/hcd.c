@@ -2761,6 +2761,7 @@ static void usb_put_invalidate_rhdev(struct usb_hcd *hcd)
 }
 
 /**
+<<<<<<< HEAD
  * usb_stop_hcd - Halt the HCD
  * @hcd: the usb_hcd that has to be halted
  *
@@ -2781,6 +2782,8 @@ static void usb_stop_hcd(struct usb_hcd *hcd)
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * usb_add_hcd - finish generic HCD structure initialization and register
  * @hcd: the usb_hcd structure to initialize
  * @irqnum: Interrupt line to allocate
@@ -2795,7 +2798,10 @@ int usb_add_hcd(struct usb_hcd *hcd,
 {
 	int retval;
 	struct usb_device *rhdev;
+<<<<<<< HEAD
 	struct usb_hcd *shared_hcd;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!hcd->skip_phy_initialization && usb_hcd_is_primary_hcd(hcd)) {
 		hcd->phy_roothub = usb_phy_roothub_alloc(hcd->self.sysdev);
@@ -2956,6 +2962,7 @@ int usb_add_hcd(struct usb_hcd *hcd,
 		goto err_hcd_driver_start;
 	}
 
+<<<<<<< HEAD
 	/* starting here, usbcore will pay attention to the shared HCD roothub */
 	shared_hcd = hcd->shared_hcd;
 	if (!usb_hcd_is_primary_hcd(hcd) && shared_hcd && HCD_DEFER_RH_REGISTER(shared_hcd)) {
@@ -2976,11 +2983,30 @@ int usb_add_hcd(struct usb_hcd *hcd,
 		if (hcd->uses_new_polling && HCD_POLL_RH(hcd))
 			usb_hcd_poll_rh_status(hcd);
 	}
+=======
+	/* starting here, usbcore will pay attention to this root hub */
+	retval = register_root_hub(hcd);
+	if (retval != 0)
+		goto err_register_root_hub;
+
+	if (hcd->uses_new_polling && HCD_POLL_RH(hcd))
+		usb_hcd_poll_rh_status(hcd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return retval;
 
 err_register_root_hub:
+<<<<<<< HEAD
 	usb_stop_hcd(hcd);
+=======
+	hcd->rh_pollable = 0;
+	clear_bit(HCD_FLAG_POLL_RH, &hcd->flags);
+	del_timer_sync(&hcd->rh_timer);
+	hcd->driver->stop(hcd);
+	hcd->state = HC_STATE_HALT;
+	clear_bit(HCD_FLAG_POLL_RH, &hcd->flags);
+	del_timer_sync(&hcd->rh_timer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_hcd_driver_start:
 	if (usb_hcd_is_primary_hcd(hcd) && hcd->irq > 0)
 		free_irq(irqnum, hcd);
@@ -3013,7 +3039,10 @@ EXPORT_SYMBOL_GPL(usb_add_hcd);
 void usb_remove_hcd(struct usb_hcd *hcd)
 {
 	struct usb_device *rhdev = hcd->self.root_hub;
+<<<<<<< HEAD
 	bool rh_registered;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev_info(hcd->self.controller, "remove, state %x\n", hcd->state);
 
@@ -3024,7 +3053,10 @@ void usb_remove_hcd(struct usb_hcd *hcd)
 
 	dev_dbg(hcd->self.controller, "roothub graceful disconnect\n");
 	spin_lock_irq (&hcd_root_hub_lock);
+<<<<<<< HEAD
 	rh_registered = hcd->rh_registered;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hcd->rh_registered = 0;
 	spin_unlock_irq (&hcd_root_hub_lock);
 
@@ -3034,8 +3066,12 @@ void usb_remove_hcd(struct usb_hcd *hcd)
 	cancel_work_sync(&hcd->died_work);
 
 	mutex_lock(&usb_bus_idr_lock);
+<<<<<<< HEAD
 	if (rh_registered)
 		usb_disconnect(&rhdev);		/* Sets rhdev to NULL */
+=======
+	usb_disconnect(&rhdev);		/* Sets rhdev to NULL */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&usb_bus_idr_lock);
 
 	/*
@@ -3053,7 +3089,20 @@ void usb_remove_hcd(struct usb_hcd *hcd)
 	 * interrupt occurs), but usb_hcd_poll_rh_status() won't invoke
 	 * the hub_status_data() callback.
 	 */
+<<<<<<< HEAD
 	usb_stop_hcd(hcd);
+=======
+	hcd->rh_pollable = 0;
+	clear_bit(HCD_FLAG_POLL_RH, &hcd->flags);
+	del_timer_sync(&hcd->rh_timer);
+
+	hcd->driver->stop(hcd);
+	hcd->state = HC_STATE_HALT;
+
+	/* In case the HCD restarted the timer, stop it again. */
+	clear_bit(HCD_FLAG_POLL_RH, &hcd->flags);
+	del_timer_sync(&hcd->rh_timer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (usb_hcd_is_primary_hcd(hcd)) {
 		if (hcd->irq > 0)

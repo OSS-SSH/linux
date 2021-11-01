@@ -15,6 +15,11 @@
 
 #include "closure.h"
 
+<<<<<<< HEAD
+=======
+#define PAGE_SECTORS		(PAGE_SIZE / 512)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct closure;
 
 #ifdef CONFIG_BCACHE_DEBUG

@@ -7,7 +7,11 @@
  * Copyright (C) 2001 IBM.
  */
 
+<<<<<<< HEAD
 #include <linux/stdarg.h>
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/kernel.h>
 #include <linux/types.h>
 #include <linux/spinlock.h>

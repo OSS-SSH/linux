@@ -129,9 +129,15 @@ static void sum_vm_events(unsigned long *ret)
 */
 void all_vm_events(unsigned long *ret)
 {
+<<<<<<< HEAD
 	cpus_read_lock();
 	sum_vm_events(ret);
 	cpus_read_unlock();
+=======
+	get_online_cpus();
+	sum_vm_events(ret);
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(all_vm_events);
 
@@ -204,7 +210,11 @@ int calculate_normal_threshold(struct zone *zone)
 	 *
 	 * Some sample thresholds:
 	 *
+<<<<<<< HEAD
 	 * Threshold	Processors	(fls)	Zonesize	fls(mem)+1
+=======
+	 * Threshold	Processors	(fls)	Zonesize	fls(mem+1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * ------------------------------------------------------------------
 	 * 8		1		1	0.9-1 GB	4
 	 * 16		2		2	0.9-1 GB	4
@@ -319,6 +329,7 @@ void __mod_zone_page_state(struct zone *zone, enum zone_stat_item item,
 	long x;
 	long t;
 
+<<<<<<< HEAD
 	/*
 	 * Accurate vmstat updates require a RMW. On !PREEMPT_RT kernels,
 	 * atomicity is provided by IRQs being disabled -- either explicitly
@@ -329,6 +340,8 @@ void __mod_zone_page_state(struct zone *zone, enum zone_stat_item item,
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_disable();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	x = delta + __this_cpu_read(*p);
 
 	t = __this_cpu_read(pcp->stat_threshold);
@@ -338,9 +351,12 @@ void __mod_zone_page_state(struct zone *zone, enum zone_stat_item item,
 		x = 0;
 	}
 	__this_cpu_write(*p, x);
+<<<<<<< HEAD
 
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_enable();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(__mod_zone_page_state);
 
@@ -363,10 +379,13 @@ void __mod_node_page_state(struct pglist_data *pgdat, enum node_stat_item item,
 		delta >>= PAGE_SHIFT;
 	}
 
+<<<<<<< HEAD
 	/* See __mod_node_page_state */
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_disable();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	x = delta + __this_cpu_read(*p);
 
 	t = __this_cpu_read(pcp->stat_threshold);
@@ -376,9 +395,12 @@ void __mod_node_page_state(struct pglist_data *pgdat, enum node_stat_item item,
 		x = 0;
 	}
 	__this_cpu_write(*p, x);
+<<<<<<< HEAD
 
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_enable();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(__mod_node_page_state);
 
@@ -411,10 +433,13 @@ void __inc_zone_state(struct zone *zone, enum zone_stat_item item)
 	s8 __percpu *p = pcp->vm_stat_diff + item;
 	s8 v, t;
 
+<<<<<<< HEAD
 	/* See __mod_node_page_state */
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_disable();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	v = __this_cpu_inc_return(*p);
 	t = __this_cpu_read(pcp->stat_threshold);
 	if (unlikely(v > t)) {
@@ -423,9 +448,12 @@ void __inc_zone_state(struct zone *zone, enum zone_stat_item item)
 		zone_page_state_add(v + overstep, zone, item);
 		__this_cpu_write(*p, -overstep);
 	}
+<<<<<<< HEAD
 
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_enable();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void __inc_node_state(struct pglist_data *pgdat, enum node_stat_item item)
@@ -436,10 +464,13 @@ void __inc_node_state(struct pglist_data *pgdat, enum node_stat_item item)
 
 	VM_WARN_ON_ONCE(vmstat_item_in_bytes(item));
 
+<<<<<<< HEAD
 	/* See __mod_node_page_state */
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_disable();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	v = __this_cpu_inc_return(*p);
 	t = __this_cpu_read(pcp->stat_threshold);
 	if (unlikely(v > t)) {
@@ -448,9 +479,12 @@ void __inc_node_state(struct pglist_data *pgdat, enum node_stat_item item)
 		node_page_state_add(v + overstep, pgdat, item);
 		__this_cpu_write(*p, -overstep);
 	}
+<<<<<<< HEAD
 
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_enable();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void __inc_zone_page_state(struct page *page, enum zone_stat_item item)
@@ -471,10 +505,13 @@ void __dec_zone_state(struct zone *zone, enum zone_stat_item item)
 	s8 __percpu *p = pcp->vm_stat_diff + item;
 	s8 v, t;
 
+<<<<<<< HEAD
 	/* See __mod_node_page_state */
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_disable();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	v = __this_cpu_dec_return(*p);
 	t = __this_cpu_read(pcp->stat_threshold);
 	if (unlikely(v < - t)) {
@@ -483,9 +520,12 @@ void __dec_zone_state(struct zone *zone, enum zone_stat_item item)
 		zone_page_state_add(v - overstep, zone, item);
 		__this_cpu_write(*p, overstep);
 	}
+<<<<<<< HEAD
 
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_enable();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void __dec_node_state(struct pglist_data *pgdat, enum node_stat_item item)
@@ -496,10 +536,13 @@ void __dec_node_state(struct pglist_data *pgdat, enum node_stat_item item)
 
 	VM_WARN_ON_ONCE(vmstat_item_in_bytes(item));
 
+<<<<<<< HEAD
 	/* See __mod_node_page_state */
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_disable();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	v = __this_cpu_dec_return(*p);
 	t = __this_cpu_read(pcp->stat_threshold);
 	if (unlikely(v < - t)) {
@@ -508,9 +551,12 @@ void __dec_node_state(struct pglist_data *pgdat, enum node_stat_item item)
 		node_page_state_add(v - overstep, pgdat, item);
 		__this_cpu_write(*p, overstep);
 	}
+<<<<<<< HEAD
 
 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 		preempt_enable();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void __dec_zone_page_state(struct page *page, enum zone_stat_item item)
@@ -1265,8 +1311,11 @@ const char * const vmstat_text[] = {
 	"pgreuse",
 	"pgsteal_kswapd",
 	"pgsteal_direct",
+<<<<<<< HEAD
 	"pgdemote_kswapd",
 	"pgdemote_direct",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	"pgscan_kswapd",
 	"pgscan_direct",
 	"pgscan_direct_throttle",
@@ -1502,7 +1551,11 @@ static void pagetypeinfo_showfree_print(struct seq_file *m,
 }
 
 /* Print out the free pages at each order for each migatetype */
+<<<<<<< HEAD
 static void pagetypeinfo_showfree(struct seq_file *m, void *arg)
+=======
+static int pagetypeinfo_showfree(struct seq_file *m, void *arg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int order;
 	pg_data_t *pgdat = (pg_data_t *)arg;
@@ -1514,6 +1567,11 @@ static void pagetypeinfo_showfree(struct seq_file *m, void *arg)
 	seq_putc(m, '\n');
 
 	walk_zones_in_node(m, pgdat, true, false, pagetypeinfo_showfree_print);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void pagetypeinfo_showblockcount_print(struct seq_file *m,
@@ -1549,7 +1607,11 @@ static void pagetypeinfo_showblockcount_print(struct seq_file *m,
 }
 
 /* Print out the number of pageblocks for each migratetype */
+<<<<<<< HEAD
 static void pagetypeinfo_showblockcount(struct seq_file *m, void *arg)
+=======
+static int pagetypeinfo_showblockcount(struct seq_file *m, void *arg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int mtype;
 	pg_data_t *pgdat = (pg_data_t *)arg;
@@ -1560,6 +1622,11 @@ static void pagetypeinfo_showblockcount(struct seq_file *m, void *arg)
 	seq_putc(m, '\n');
 	walk_zones_in_node(m, pgdat, true, false,
 		pagetypeinfo_showblockcount_print);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -1920,6 +1987,14 @@ static void vmstat_update(struct work_struct *w)
 }
 
 /*
+<<<<<<< HEAD
+=======
+ * Switch off vmstat processing and then fold all the remaining differentials
+ * until the diffs stay at zero. The function is used by NOHZ and can only be
+ * invoked when tick processing is not active.
+ */
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Check if the diffs for a certain cpu indicate that
  * an update is needed.
  */
@@ -1935,15 +2010,26 @@ static bool need_update(int cpu)
 		/*
 		 * The fast way of checking if there are any vmstat diffs.
 		 */
+<<<<<<< HEAD
 		if (memchr_inv(pzstats->vm_stat_diff, 0, sizeof(pzstats->vm_stat_diff)))
+=======
+		if (memchr_inv(pzstats->vm_stat_diff, 0, NR_VM_ZONE_STAT_ITEMS *
+			       sizeof(pzstats->vm_stat_diff[0])))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return true;
 
 		if (last_pgdat == zone->zone_pgdat)
 			continue;
 		last_pgdat = zone->zone_pgdat;
 		n = per_cpu_ptr(zone->zone_pgdat->per_cpu_nodestats, cpu);
+<<<<<<< HEAD
 		if (memchr_inv(n->vm_node_stat_diff, 0, sizeof(n->vm_node_stat_diff)))
 			return true;
+=======
+		if (memchr_inv(n->vm_node_stat_diff, 0, NR_VM_NODE_STAT_ITEMS *
+			       sizeof(n->vm_node_stat_diff[0])))
+		    return true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return false;
 }
@@ -1987,7 +2073,11 @@ static void vmstat_shepherd(struct work_struct *w)
 {
 	int cpu;
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Check processors whose vmstat worker threads have been disabled */
 	for_each_online_cpu(cpu) {
 		struct delayed_work *dw = &per_cpu(vmstat_work, cpu);
@@ -1997,7 +2087,11 @@ static void vmstat_shepherd(struct work_struct *w)
 
 		cond_resched();
 	}
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	schedule_delayed_work(&shepherd,
 		round_jiffies_relative(sysctl_stat_interval));
@@ -2076,9 +2170,15 @@ void __init init_mm_internals(void)
 	if (ret < 0)
 		pr_err("vmstat: failed to register 'online' hotplug state\n");
 
+<<<<<<< HEAD
 	cpus_read_lock();
 	init_cpu_node_state();
 	cpus_read_unlock();
+=======
+	get_online_cpus();
+	init_cpu_node_state();
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	start_shepherd_timer();
 #endif

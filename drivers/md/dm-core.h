@@ -18,7 +18,10 @@
 #include <trace/events/block.h>
 
 #include "dm.h"
+<<<<<<< HEAD
 #include "dm-ima.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define DM_RESERVED_MAX_IOS		1024
 
@@ -120,10 +123,13 @@ struct mapped_device {
 	unsigned int nr_zones;
 	unsigned int *zwp_offset;
 #endif
+<<<<<<< HEAD
 
 #ifdef CONFIG_IMA
 	struct dm_ima_measurements ima;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*

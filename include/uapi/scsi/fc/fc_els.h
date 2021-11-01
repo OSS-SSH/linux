@@ -41,7 +41,10 @@ enum fc_els_cmd {
 	ELS_REC =	0x13,	/* read exchange concise */
 	ELS_SRR =	0x14,	/* sequence retransmission request */
 	ELS_FPIN =	0x16,	/* Fabric Performance Impact Notification */
+<<<<<<< HEAD
 	ELS_EDC =	0x17,	/* Exchange Diagnostic Capabilities */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ELS_RDP =	0x18,	/* Read Diagnostic Parameters */
 	ELS_RDF =	0x19,	/* Register Diagnostic Functions */
 	ELS_PRLI =	0x20,	/* process login */
@@ -112,7 +115,10 @@ enum fc_els_cmd {
 	[ELS_REC] =	"REC",			\
 	[ELS_SRR] =	"SRR",			\
 	[ELS_FPIN] =	"FPIN",			\
+<<<<<<< HEAD
 	[ELS_EDC] =	"EDC",			\
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	[ELS_RDP] =	"RDP",			\
 	[ELS_RDF] =	"RDF",			\
 	[ELS_PRLI] =	"PRLI",			\
@@ -220,10 +226,13 @@ enum fc_els_rjt_explan {
 enum fc_ls_tlv_dtag {
 	ELS_DTAG_LS_REQ_INFO =		0x00000001,
 		/* Link Service Request Information Descriptor */
+<<<<<<< HEAD
 	ELS_DTAG_LNK_FAULT_CAP =	0x0001000D,
 		/* Link Fault Capability Descriptor */
 	ELS_DTAG_CG_SIGNAL_CAP =	0x0001000F,
 		/* Congestion Signaling Capability Descriptor */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ELS_DTAG_LNK_INTEGRITY =	0x00020001,
 		/* Link Integrity Notification Descriptor */
 	ELS_DTAG_DELIVERY =		0x00020002,
@@ -242,8 +251,11 @@ enum fc_ls_tlv_dtag {
  */
 #define FC_LS_TLV_DTAG_INIT {					      \
 	{ ELS_DTAG_LS_REQ_INFO,		"Link Service Request Information" }, \
+<<<<<<< HEAD
 	{ ELS_DTAG_LNK_FAULT_CAP,	"Link Fault Capability" },	      \
 	{ ELS_DTAG_CG_SIGNAL_CAP,	"Congestion Signaling Capability" },  \
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ ELS_DTAG_LNK_INTEGRITY,	"Link Integrity Notification" },      \
 	{ ELS_DTAG_DELIVERY,		"Delivery Notification Present" },    \
 	{ ELS_DTAG_PEER_CONGEST,	"Peer Congestion Notification" },     \
@@ -1152,6 +1164,7 @@ struct fc_els_rdf_resp {
 };
 
 
+<<<<<<< HEAD
 /*
  * Diagnostic Capability Descriptors for EDC ELS
  */
@@ -1250,4 +1263,6 @@ struct fc_els_edc_resp {
 };
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _FC_ELS_H_ */

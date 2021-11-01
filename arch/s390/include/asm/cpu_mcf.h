@@ -24,6 +24,16 @@ enum cpumf_ctr_set {
 
 #define CPUMF_LCCTL_ENABLE_SHIFT    16
 #define CPUMF_LCCTL_ACTCTL_SHIFT     0
+<<<<<<< HEAD
+=======
+static const u64 cpumf_ctr_ctl[CPUMF_CTR_SET_MAX] = {
+	[CPUMF_CTR_SET_BASIC]	= 0x02,
+	[CPUMF_CTR_SET_USER]	= 0x04,
+	[CPUMF_CTR_SET_CRYPTO]	= 0x08,
+	[CPUMF_CTR_SET_EXT]	= 0x01,
+	[CPUMF_CTR_SET_MT_DIAG] = 0x20,
+};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline void ctr_set_enable(u64 *state, u64 ctrsets)
 {

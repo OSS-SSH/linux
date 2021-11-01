@@ -149,6 +149,11 @@ static void __init find_limits(unsigned long *min, unsigned long *max_low,
 
 void __init setup_arch(char **cmdline_p)
 {
+<<<<<<< HEAD
+=======
+	int dram_start;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	console_verbose();
 
 	memory_start = memblock_start_of_DRAM();

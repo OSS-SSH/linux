@@ -120,7 +120,10 @@ static int bnxt_re_setup_chip_ctx(struct bnxt_re_dev *rdev, u8 wqe_mode)
 	if (!chip_ctx)
 		return -ENOMEM;
 	chip_ctx->chip_num = bp->chip_num;
+<<<<<<< HEAD
 	chip_ctx->hw_stats_size = bp->hw_ring_stats_size;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rdev->chip_ctx = chip_ctx;
 	/* rest members to follow eventually */
@@ -551,7 +554,10 @@ static int bnxt_re_net_stats_ctx_alloc(struct bnxt_re_dev *rdev,
 				       dma_addr_t dma_map,
 				       u32 *fw_stats_ctx_id)
 {
+<<<<<<< HEAD
 	struct bnxt_qplib_chip_ctx *chip_ctx = rdev->chip_ctx;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct hwrm_stat_ctx_alloc_output resp = {0};
 	struct hwrm_stat_ctx_alloc_input req = {0};
 	struct bnxt_en_dev *en_dev = rdev->en_dev;
@@ -568,7 +574,11 @@ static int bnxt_re_net_stats_ctx_alloc(struct bnxt_re_dev *rdev,
 	bnxt_re_init_hwrm_hdr(rdev, (void *)&req, HWRM_STAT_CTX_ALLOC, -1, -1);
 	req.update_period_ms = cpu_to_le32(1000);
 	req.stats_dma_addr = cpu_to_le64(dma_map);
+<<<<<<< HEAD
 	req.stats_dma_length = cpu_to_le16(chip_ctx->hw_stats_size);
+=======
+	req.stats_dma_length = cpu_to_le16(sizeof(struct ctx_hw_stats_ext));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	req.stat_ctx_flags = STAT_CTX_ALLOC_REQ_STAT_CTX_FLAGS_ROCE;
 	bnxt_re_fill_fw_msg(&fw_msg, (void *)&req, sizeof(req), (void *)&resp,
 			    sizeof(resp), DFLT_HWRM_CMD_TIMEOUT);
@@ -711,7 +721,10 @@ static const struct ib_device_ops bnxt_re_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_ah, bnxt_re_ah, ib_ah),
 	INIT_RDMA_OBJ_SIZE(ib_cq, bnxt_re_cq, ib_cq),
 	INIT_RDMA_OBJ_SIZE(ib_pd, bnxt_re_pd, ib_pd),
+<<<<<<< HEAD
 	INIT_RDMA_OBJ_SIZE(ib_qp, bnxt_re_qp, ib_qp),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INIT_RDMA_OBJ_SIZE(ib_srq, bnxt_re_srq, ib_srq),
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, bnxt_re_ucontext, ib_uctx),
 };
@@ -1398,6 +1411,10 @@ static int bnxt_re_dev_init(struct bnxt_re_dev *rdev, u8 wqe_mode)
 	memset(&rattr, 0, sizeof(rattr));
 	rc = bnxt_re_register_netdev(rdev);
 	if (rc) {
+<<<<<<< HEAD
+=======
+		rtnl_unlock();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ibdev_err(&rdev->ibdev,
 			  "Failed to register with netedev: %#x\n", rc);
 		return -EINVAL;

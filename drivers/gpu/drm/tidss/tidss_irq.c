@@ -4,9 +4,12 @@
  * Author: Tomi Valkeinen <tomi.valkeinen@ti.com>
  */
 
+<<<<<<< HEAD
 #include <linux/platform_device.h>
 
 #include <drm/drm_drv.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_print.h>
 
 #include "tidss_crtc.h"
@@ -53,13 +56,23 @@ void tidss_irq_disable_vblank(struct drm_crtc *crtc)
 	spin_unlock_irqrestore(&tidss->wait_lock, flags);
 }
 
+<<<<<<< HEAD
 static irqreturn_t tidss_irq_handler(int irq, void *arg)
+=======
+irqreturn_t tidss_irq_handler(int irq, void *arg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct drm_device *ddev = (struct drm_device *)arg;
 	struct tidss_device *tidss = to_tidss(ddev);
 	unsigned int id;
 	dispc_irq_t irqstatus;
 
+<<<<<<< HEAD
+=======
+	if (WARN_ON(!ddev->irq_enabled))
+		return IRQ_NONE;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	irqstatus = dispc_read_and_clear_irqstatus(tidss->dispc);
 
 	for (id = 0; id < tidss->num_crtcs; id++) {
@@ -93,7 +106,11 @@ void tidss_irq_resume(struct tidss_device *tidss)
 	spin_unlock_irqrestore(&tidss->wait_lock, flags);
 }
 
+<<<<<<< HEAD
 static void tidss_irq_preinstall(struct drm_device *ddev)
+=======
+void tidss_irq_preinstall(struct drm_device *ddev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tidss_device *tidss = to_tidss(ddev);
 
@@ -107,7 +124,11 @@ static void tidss_irq_preinstall(struct drm_device *ddev)
 	tidss_runtime_put(tidss);
 }
 
+<<<<<<< HEAD
 static void tidss_irq_postinstall(struct drm_device *ddev)
+=======
+int tidss_irq_postinstall(struct drm_device *ddev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tidss_device *tidss = to_tidss(ddev);
 	unsigned long flags;
@@ -132,6 +153,7 @@ static void tidss_irq_postinstall(struct drm_device *ddev)
 	spin_unlock_irqrestore(&tidss->wait_lock, flags);
 
 	tidss_runtime_put(tidss);
+<<<<<<< HEAD
 }
 
 int tidss_irq_install(struct drm_device *ddev, unsigned int irq)
@@ -148,6 +170,8 @@ int tidss_irq_install(struct drm_device *ddev, unsigned int irq)
 		return ret;
 
 	tidss_irq_postinstall(ddev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -159,6 +183,9 @@ void tidss_irq_uninstall(struct drm_device *ddev)
 	tidss_runtime_get(tidss);
 	dispc_set_irqenable(tidss->dispc, 0);
 	tidss_runtime_put(tidss);
+<<<<<<< HEAD
 
 	free_irq(tidss->irq, ddev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

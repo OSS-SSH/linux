@@ -208,6 +208,7 @@
 	pinctrl-1 = <&mmc2_pins_hs>;
 	pinctrl-2 = <&mmc2_pins_ddr_rev20 &mmc2_iodelay_ddr_conf>;
 };
+<<<<<<< HEAD
 
 &pruss1_mdio {
 	status = "disabled";
@@ -216,3 +217,5 @@
 &pruss2_mdio {
 	status = "disabled";
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

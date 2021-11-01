@@ -78,6 +78,7 @@
  * CPU_BOOT_ERR0_DEVICE_UNUSABLE_FAIL	Device is unusable and customer support
  *					should be contacted.
  *
+<<<<<<< HEAD
  * CPU_BOOT_ERR0_ARC0_HALT_ACK_NOT_RCVD	HALT ACK from ARC0 is not received
  *					within specified retries after issuing
  *					HALT request. ARC0 appears to be in bad
@@ -98,6 +99,8 @@
  *					RUN request. ARC1 appears to be in bad
  *					reset.
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * CPU_BOOT_ERR0_ENABLED		Error registers enabled.
  *					This is a main indication that the
  *					running FW populates the error
@@ -118,10 +121,13 @@
 #define CPU_BOOT_ERR0_SEC_IMG_VER_FAIL		(1 << 11)
 #define CPU_BOOT_ERR0_PLL_FAIL			(1 << 12)
 #define CPU_BOOT_ERR0_DEVICE_UNUSABLE_FAIL	(1 << 13)
+<<<<<<< HEAD
 #define CPU_BOOT_ERR0_ARC0_HALT_ACK_NOT_RCVD	(1 << 14)
 #define CPU_BOOT_ERR0_ARC1_HALT_ACK_NOT_RCVD	(1 << 15)
 #define CPU_BOOT_ERR0_ARC0_RUN_ACK_NOT_RCVD	(1 << 16)
 #define CPU_BOOT_ERR0_ARC1_RUN_ACK_NOT_RCVD	(1 << 17)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CPU_BOOT_ERR0_ENABLED			(1 << 31)
 #define CPU_BOOT_ERR1_ENABLED			(1 << 31)
 
@@ -210,10 +216,13 @@
  *					configured and is ready for use.
  *					Initialized in: ppboot
  *
+<<<<<<< HEAD
  * CPU_BOOT_DEV_STS0_FW_NIC_MAC_EN	NIC MAC channels init is done by FW and
  *					any access to them is done via the FW.
  *					Initialized in: linux
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * CPU_BOOT_DEV_STS0_DYN_PLL_EN		Dynamic PLL configuration is enabled.
  *					FW sends to host a bitmap of supported
  *					PLLs.
@@ -237,6 +246,7 @@
  *					prevent IRQs overriding each other.
  *					Initialized in: linux
  *
+<<<<<<< HEAD
  * CPU_BOOT_DEV_STS0_FW_NIC_STAT_XPCS91_EN
  *					NIC STAT and XPCS91 access is restricted
  *					and is done via FW only.
@@ -252,6 +262,8 @@
  *					where a bit is set if the engine is not idle.
  *					Initialized in: linux
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * CPU_BOOT_DEV_STS0_ENABLED		Device status register enabled.
  *					This is a main indication that the
  *					running FW populates the device status
@@ -279,14 +291,20 @@
 #define CPU_BOOT_DEV_STS0_PKT_PI_ACK_EN			(1 << 15)
 #define CPU_BOOT_DEV_STS0_FW_LD_COM_EN			(1 << 16)
 #define CPU_BOOT_DEV_STS0_FW_IATU_CONF_EN		(1 << 17)
+<<<<<<< HEAD
 #define CPU_BOOT_DEV_STS0_FW_NIC_MAC_EN			(1 << 18)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CPU_BOOT_DEV_STS0_DYN_PLL_EN			(1 << 19)
 #define CPU_BOOT_DEV_STS0_GIC_PRIVILEGED_EN		(1 << 20)
 #define CPU_BOOT_DEV_STS0_EQ_INDEX_EN			(1 << 21)
 #define CPU_BOOT_DEV_STS0_MULTI_IRQ_POLL_EN		(1 << 22)
+<<<<<<< HEAD
 #define CPU_BOOT_DEV_STS0_FW_NIC_STAT_XPCS91_EN		(1 << 23)
 #define CPU_BOOT_DEV_STS0_FW_NIC_STAT_EXT_EN		(1 << 24)
 #define CPU_BOOT_DEV_STS0_IS_IDLE_CHECK_EN		(1 << 25)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CPU_BOOT_DEV_STS0_ENABLED			(1 << 31)
 #define CPU_BOOT_DEV_STS1_ENABLED			(1 << 31)
 
@@ -360,7 +378,14 @@ struct cpu_dyn_regs {
 	__le32 hw_state;
 	__le32 kmd_msg_to_cpu;
 	__le32 cpu_cmd_status_to_host;
+<<<<<<< HEAD
 	__le32 gic_host_pi_upd_irq;
+=======
+	union {
+		__le32 gic_host_irq_ctrl;
+		__le32 gic_host_pi_upd_irq;
+	};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__le32 gic_tpc_qm_irq_ctrl;
 	__le32 gic_mme_qm_irq_ctrl;
 	__le32 gic_dma_qm_irq_ctrl;
@@ -368,9 +393,13 @@ struct cpu_dyn_regs {
 	__le32 gic_dma_core_irq_ctrl;
 	__le32 gic_host_halt_irq;
 	__le32 gic_host_ints_irq;
+<<<<<<< HEAD
 	__le32 gic_host_soft_rst_irq;
 	__le32 gic_rot_qm_irq_ctrl;
 	__le32 reserved1[22];		/* reserve for future use */
+=======
+	__le32 reserved1[24];		/* reserve for future use */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* TODO: remove the desc magic after the code is updated to use message */
@@ -508,11 +537,14 @@ struct lkd_fw_comms_msg {
  *				Do not wait for BMC response.
  *
  * COMMS_LOW_PLL_OPP		Initialize PLLs for low OPP.
+<<<<<<< HEAD
  *
  * COMMS_PREP_DESC_ELBI		Same as COMMS_PREP_DESC only that the memory
  *				space is allocated in a ELBI access only
  *				address range.
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 enum comms_cmd {
 	COMMS_NOOP = 0,
@@ -525,7 +557,10 @@ enum comms_cmd {
 	COMMS_GOTO_WFE = 7,
 	COMMS_SKIP_BMC = 8,
 	COMMS_LOW_PLL_OPP = 9,
+<<<<<<< HEAD
 	COMMS_PREP_DESC_ELBI = 10,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	COMMS_INVLD_LAST
 };
 

@@ -215,7 +215,12 @@ struct partition_desc *partition_create_desc(struct fwnode_handle *fwnode,
 		goto out;
 	desc->domain = d;
 
+<<<<<<< HEAD
 	desc->bitmap = bitmap_zalloc(nr_parts, GFP_KERNEL);
+=======
+	desc->bitmap = kcalloc(BITS_TO_LONGS(nr_parts), sizeof(long),
+			       GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (WARN_ON(!desc->bitmap))
 		goto out;
 

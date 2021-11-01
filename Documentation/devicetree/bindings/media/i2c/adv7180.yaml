@@ -35,6 +35,7 @@ properties:
   powerdown-gpios:
     maxItems: 1
 
+<<<<<<< HEAD
   reset-gpios:
     maxItems: 1
 
@@ -43,6 +44,8 @@ properties:
       Indicates that the output is a BT.656-4 compatible stream.
     type: boolean
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   port:
     $ref: /schemas/graph.yaml#/$defs/port-base
     unevaluatedProperties: false

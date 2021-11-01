@@ -339,7 +339,11 @@ static void amdgpu_i2c_put_byte(struct amdgpu_i2c_chan *i2c_bus,
 void
 amdgpu_i2c_router_select_ddc_port(const struct amdgpu_connector *amdgpu_connector)
 {
+<<<<<<< HEAD
 	u8 val = 0;
+=======
+	u8 val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!amdgpu_connector->router.ddc_valid)
 		return;

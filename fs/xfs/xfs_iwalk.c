@@ -83,9 +83,12 @@ struct xfs_iwalk_ag {
 
 	/* Skip empty inobt records? */
 	unsigned int			skip_empty:1;
+<<<<<<< HEAD
 
 	/* Drop the (hopefully empty) transaction when calling iwalk_fn. */
 	unsigned int			drop_trans:1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -355,6 +358,10 @@ xfs_iwalk_run_callbacks(
 	int				*has_more)
 {
 	struct xfs_mount		*mp = iwag->mp;
+<<<<<<< HEAD
+=======
+	struct xfs_trans		*tp = iwag->tp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_inobt_rec_incore	*irec;
 	xfs_agino_t			next_agino;
 	int				error;
@@ -364,6 +371,7 @@ xfs_iwalk_run_callbacks(
 	ASSERT(iwag->nr_recs > 0);
 
 	/* Delete cursor but remember the last record we cached... */
+<<<<<<< HEAD
 	xfs_iwalk_del_inobt(iwag->tp, curpp, agi_bpp, 0);
 	irec = &iwag->recs[iwag->nr_recs - 1];
 	ASSERT(next_agino >= irec->ir_startino + XFS_INODES_PER_CHUNK);
@@ -373,6 +381,12 @@ xfs_iwalk_run_callbacks(
 		iwag->tp = NULL;
 	}
 
+=======
+	xfs_iwalk_del_inobt(tp, curpp, agi_bpp, 0);
+	irec = &iwag->recs[iwag->nr_recs - 1];
+	ASSERT(next_agino >= irec->ir_startino + XFS_INODES_PER_CHUNK);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	error = xfs_iwalk_ag_recs(iwag);
 	if (error)
 		return error;
@@ -383,6 +397,7 @@ xfs_iwalk_run_callbacks(
 	if (!has_more)
 		return 0;
 
+<<<<<<< HEAD
 	if (iwag->drop_trans) {
 		error = xfs_trans_alloc_empty(mp, &iwag->tp);
 		if (error)
@@ -392,6 +407,10 @@ xfs_iwalk_run_callbacks(
 	/* ...and recreate the cursor just past where we left off. */
 	error = xfs_inobt_cur(mp, iwag->tp, iwag->pag, XFS_BTNUM_INO, curpp,
 			agi_bpp);
+=======
+	/* ...and recreate the cursor just past where we left off. */
+	error = xfs_inobt_cur(mp, tp, iwag->pag, XFS_BTNUM_INO, curpp, agi_bpp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (error)
 		return error;
 
@@ -404,6 +423,10 @@ xfs_iwalk_ag(
 	struct xfs_iwalk_ag		*iwag)
 {
 	struct xfs_mount		*mp = iwag->mp;
+<<<<<<< HEAD
+=======
+	struct xfs_trans		*tp = iwag->tp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_perag		*pag = iwag->pag;
 	struct xfs_buf			*agi_bp = NULL;
 	struct xfs_btree_cur		*cur = NULL;
@@ -482,7 +505,11 @@ xfs_iwalk_ag(
 	error = xfs_iwalk_run_callbacks(iwag, &cur, &agi_bp, &has_more);
 
 out:
+<<<<<<< HEAD
 	xfs_iwalk_del_inobt(iwag->tp, &cur, &agi_bp, error);
+=======
+	xfs_iwalk_del_inobt(tp, &cur, &agi_bp, error);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return error;
 }
 
@@ -612,6 +639,7 @@ xfs_iwalk_ag_work(
 	error = xfs_iwalk_alloc(iwag);
 	if (error)
 		goto out;
+<<<<<<< HEAD
 	/*
 	 * Grab an empty transaction so that we can use its recursive buffer
 	 * locking abilities to detect cycles in the inobt without deadlocking.
@@ -624,6 +652,10 @@ xfs_iwalk_ag_work(
 	error = xfs_iwalk_ag(iwag);
 	if (iwag->tp)
 		xfs_trans_cancel(iwag->tp);
+=======
+
+	error = xfs_iwalk_ag(iwag);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xfs_iwalk_free(iwag);
 out:
 	xfs_perag_put(iwag->pag);

@@ -171,11 +171,14 @@ struct drm_bridge_funcs {
 	 * signals) feeding it is still running when this callback is called.
 	 *
 	 * The @disable callback is optional.
+<<<<<<< HEAD
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_disable.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	void (*disable)(struct drm_bridge *bridge);
 
@@ -195,11 +198,14 @@ struct drm_bridge_funcs {
 	 * called.
 	 *
 	 * The @post_disable callback is optional.
+<<<<<<< HEAD
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_post_disable.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	void (*post_disable)(struct drm_bridge *bridge);
 
@@ -225,9 +231,15 @@ struct drm_bridge_funcs {
 	 *
 	 * NOTE:
 	 *
+<<<<<<< HEAD
 	 * This is deprecated, do not use!
 	 * New drivers shall set their mode in the
 	 * &drm_bridge_funcs.atomic_enable operation.
+=======
+	 * If a need arises to store and access modes adjusted for other
+	 * locations than the connection between the CRTC and the first bridge,
+	 * the DRM framework will have to be extended with DRM bridge states.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	void (*mode_set)(struct drm_bridge *bridge,
 			 const struct drm_display_mode *mode,
@@ -249,11 +261,14 @@ struct drm_bridge_funcs {
 	 * there is one) when this callback is called.
 	 *
 	 * The @pre_enable callback is optional.
+<<<<<<< HEAD
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_pre_enable.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	void (*pre_enable)(struct drm_bridge *bridge);
 
@@ -274,11 +289,14 @@ struct drm_bridge_funcs {
 	 * chain if there is one.
 	 *
 	 * The @enable callback is optional.
+<<<<<<< HEAD
 	 *
 	 * NOTE:
 	 *
 	 * This is deprecated, do not use!
 	 * New drivers shall use &drm_bridge_funcs.atomic_enable.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	void (*enable)(struct drm_bridge *bridge);
 

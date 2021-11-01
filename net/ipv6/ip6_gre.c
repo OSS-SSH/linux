@@ -1244,9 +1244,14 @@ static void ip6gre_tnl_parm_to_user(struct ip6_tnl_parm2 *u,
 	memcpy(u->name, p->name, sizeof(u->name));
 }
 
+<<<<<<< HEAD
 static int ip6gre_tunnel_siocdevprivate(struct net_device *dev,
 					struct ifreq *ifr, void __user *data,
 					int cmd)
+=======
+static int ip6gre_tunnel_ioctl(struct net_device *dev,
+	struct ifreq *ifr, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err = 0;
 	struct ip6_tnl_parm2 p;
@@ -1260,7 +1265,11 @@ static int ip6gre_tunnel_siocdevprivate(struct net_device *dev,
 	switch (cmd) {
 	case SIOCGETTUNNEL:
 		if (dev == ign->fb_tunnel_dev) {
+<<<<<<< HEAD
 			if (copy_from_user(&p, data, sizeof(p))) {
+=======
+			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				err = -EFAULT;
 				break;
 			}
@@ -1271,7 +1280,11 @@ static int ip6gre_tunnel_siocdevprivate(struct net_device *dev,
 		}
 		memset(&p, 0, sizeof(p));
 		ip6gre_tnl_parm_to_user(&p, &t->parms);
+<<<<<<< HEAD
 		if (copy_to_user(data, &p, sizeof(p)))
+=======
+		if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = -EFAULT;
 		break;
 
@@ -1282,7 +1295,11 @@ static int ip6gre_tunnel_siocdevprivate(struct net_device *dev,
 			goto done;
 
 		err = -EFAULT;
+<<<<<<< HEAD
 		if (copy_from_user(&p, data, sizeof(p)))
+=======
+		if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto done;
 
 		err = -EINVAL;
@@ -1319,7 +1336,11 @@ static int ip6gre_tunnel_siocdevprivate(struct net_device *dev,
 
 			memset(&p, 0, sizeof(p));
 			ip6gre_tnl_parm_to_user(&p, &t->parms);
+<<<<<<< HEAD
 			if (copy_to_user(data, &p, sizeof(p)))
+=======
+			if (copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				err = -EFAULT;
 		} else
 			err = (cmd == SIOCADDTUNNEL ? -ENOBUFS : -ENOENT);
@@ -1332,7 +1353,11 @@ static int ip6gre_tunnel_siocdevprivate(struct net_device *dev,
 
 		if (dev == ign->fb_tunnel_dev) {
 			err = -EFAULT;
+<<<<<<< HEAD
 			if (copy_from_user(&p, data, sizeof(p)))
+=======
+			if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				goto done;
 			err = -ENOENT;
 			ip6gre_tnl_parm_from_user(&p1, &p);
@@ -1399,7 +1424,11 @@ static const struct net_device_ops ip6gre_netdev_ops = {
 	.ndo_init		= ip6gre_tunnel_init,
 	.ndo_uninit		= ip6gre_tunnel_uninit,
 	.ndo_start_xmit		= ip6gre_tunnel_xmit,
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= ip6gre_tunnel_siocdevprivate,
+=======
+	.ndo_do_ioctl		= ip6gre_tunnel_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_change_mtu		= ip6_tnl_change_mtu,
 	.ndo_get_stats64	= dev_get_tstats64,
 	.ndo_get_iflink		= ip6_tnl_get_iflink,

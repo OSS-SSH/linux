@@ -12,6 +12,10 @@ obj-$(CONFIG_NVME_TCP)			+= nvme-tcp.o
 nvme-core-y				:= core.o ioctl.o
 nvme-core-$(CONFIG_TRACING)		+= trace.o
 nvme-core-$(CONFIG_NVME_MULTIPATH)	+= multipath.o
+<<<<<<< HEAD
+=======
+nvme-core-$(CONFIG_NVM)			+= lightnvm.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nvme-core-$(CONFIG_BLK_DEV_ZONED)	+= zns.o
 nvme-core-$(CONFIG_FAULT_INJECTION_DEBUG_FS)	+= fault_inject.o
 nvme-core-$(CONFIG_NVME_HWMON)		+= hwmon.o

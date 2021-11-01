@@ -38,6 +38,7 @@ config MHI_WWAN_CTRL
 	  To compile this driver as a module, choose M here: the module will be
 	  called mhi_wwan_ctrl.
 
+<<<<<<< HEAD
 config MHI_WWAN_MBIM
         tristate "MHI WWAN MBIM network driver for QCOM-based PCIe modems"
         depends on MHI_BUS
@@ -50,6 +51,8 @@ config MHI_WWAN_MBIM
           To compile this driver as a module, choose M here: the module will be
           called mhi_wwan_mbim.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config RPMSG_WWAN_CTRL
 	tristate "RPMSG WWAN control driver"
 	depends on RPMSG

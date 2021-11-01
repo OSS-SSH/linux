@@ -60,6 +60,7 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
 {
 	struct dst_entry *dst = skb_dst(skb);
 	struct net_device *dev = dst->dev;
+<<<<<<< HEAD
 	struct inet6_dev *idev = ip6_dst_idev(dst);
 	unsigned int hh_len = LL_RESERVED_SPACE(dev);
 	const struct in6_addr *daddr, *nexthop;
@@ -83,6 +84,20 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
 		    ((mroute6_is_socket(net, skb) &&
 		     !(IP6CB(skb)->flags & IP6SKB_FORWARDED)) ||
 		     ipv6_chk_mcast_addr(dev, daddr, &hdr->saddr))) {
+=======
+	const struct in6_addr *nexthop;
+	struct neighbour *neigh;
+	int ret;
+
+	if (ipv6_addr_is_multicast(&ipv6_hdr(skb)->daddr)) {
+		struct inet6_dev *idev = ip6_dst_idev(skb_dst(skb));
+
+		if (!(dev->flags & IFF_LOOPBACK) && sk_mc_loop(sk) &&
+		    ((mroute6_is_socket(net, skb) &&
+		     !(IP6CB(skb)->flags & IP6SKB_FORWARDED)) ||
+		     ipv6_chk_mcast_addr(dev, &ipv6_hdr(skb)->daddr,
+					 &ipv6_hdr(skb)->saddr))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			struct sk_buff *newskb = skb_clone(skb, GFP_ATOMIC);
 
 			/* Do not check for IFF_ALLMULTI; multicast routing
@@ -93,7 +108,11 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
 					net, sk, newskb, NULL, newskb->dev,
 					dev_loopback_xmit);
 
+<<<<<<< HEAD
 			if (hdr->hop_limit == 0) {
+=======
+			if (ipv6_hdr(skb)->hop_limit == 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				IP6_INC_STATS(net, idev,
 					      IPSTATS_MIB_OUTDISCARDS);
 				kfree_skb(skb);
@@ -102,7 +121,13 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
 		}
 
 		IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUTMCAST, skb->len);
+<<<<<<< HEAD
 		if (IPV6_ADDR_MC_SCOPE(daddr) <= IPV6_ADDR_SCOPE_NODELOCAL &&
+=======
+
+		if (IPV6_ADDR_MC_SCOPE(&ipv6_hdr(skb)->daddr) <=
+		    IPV6_ADDR_SCOPE_NODELOCAL &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    !(dev->flags & IFF_LOOPBACK)) {
 			kfree_skb(skb);
 			return 0;
@@ -117,10 +142,17 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
 	}
 
 	rcu_read_lock_bh();
+<<<<<<< HEAD
 	nexthop = rt6_nexthop((struct rt6_info *)dst, daddr);
 	neigh = __ipv6_neigh_lookup_noref(dev, nexthop);
 	if (unlikely(!neigh))
 		neigh = __neigh_create(&nd_tbl, nexthop, dev, false);
+=======
+	nexthop = rt6_nexthop((struct rt6_info *)dst, &ipv6_hdr(skb)->daddr);
+	neigh = __ipv6_neigh_lookup_noref(dst->dev, nexthop);
+	if (unlikely(!neigh))
+		neigh = __neigh_create(&nd_tbl, nexthop, dst->dev, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!IS_ERR(neigh)) {
 		sock_confirm_neigh(skb, neigh);
 		ret = neigh_output(neigh, skb, false);
@@ -129,7 +161,11 @@ static int ip6_finish_output2(struct net *net, struct sock *sk, struct sk_buff *
 	}
 	rcu_read_unlock_bh();
 
+<<<<<<< HEAD
 	IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTNOROUTES);
+=======
+	IP6_INC_STATS(net, ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree_skb(skb);
 	return -EINVAL;
 }
@@ -249,8 +285,11 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
 	const struct ipv6_pinfo *np = inet6_sk(sk);
 	struct in6_addr *first_hop = &fl6->daddr;
 	struct dst_entry *dst = skb_dst(skb);
+<<<<<<< HEAD
 	struct net_device *dev = dst->dev;
 	struct inet6_dev *idev = ip6_dst_idev(dst);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int head_room;
 	struct ipv6hdr *hdr;
 	u8  proto = fl6->flowi6_proto;
@@ -258,6 +297,7 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
 	int hlimit = -1;
 	u32 mtu;
 
+<<<<<<< HEAD
 	head_room = sizeof(struct ipv6hdr) + LL_RESERVED_SPACE(dev);
 	if (opt)
 		head_room += opt->opt_nflen + opt->opt_flen;
@@ -268,6 +308,24 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
 			return -ENOBUFS;
 		}
+=======
+	head_room = sizeof(struct ipv6hdr) + LL_RESERVED_SPACE(dst->dev);
+	if (opt)
+		head_room += opt->opt_nflen + opt->opt_flen;
+
+	if (unlikely(skb_headroom(skb) < head_room)) {
+		struct sk_buff *skb2 = skb_realloc_headroom(skb, head_room);
+		if (!skb2) {
+			IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)),
+				      IPSTATS_MIB_OUTDISCARDS);
+			kfree_skb(skb);
+			return -ENOBUFS;
+		}
+		if (skb->sk)
+			skb_set_owner_w(skb2, skb->sk);
+		consume_skb(skb);
+		skb = skb2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (opt) {
@@ -309,7 +367,12 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
 
 	mtu = dst_mtu(dst);
 	if ((skb->len <= mtu) || skb->ignore_df || skb_is_gso(skb)) {
+<<<<<<< HEAD
 		IP6_UPD_PO_STATS(net, idev, IPSTATS_MIB_OUT, skb->len);
+=======
+		IP6_UPD_PO_STATS(net, ip6_dst_idev(skb_dst(skb)),
+			      IPSTATS_MIB_OUT, skb->len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* if egress device is enslaved to an L3 master device pass the
 		 * skb to its handler for processing
@@ -322,17 +385,29 @@ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
 		 * we promote our socket to non const
 		 */
 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
+<<<<<<< HEAD
 			       net, (struct sock *)sk, skb, NULL, dev,
 			       dst_output);
 	}
 
 	skb->dev = dev;
+=======
+			       net, (struct sock *)sk, skb, NULL, dst->dev,
+			       dst_output);
+	}
+
+	skb->dev = dst->dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* ipv6_local_error() does not require socket lock,
 	 * we promote our socket to non const
 	 */
 	ipv6_local_error((struct sock *)sk, EMSGSIZE, fl6, mtu);
 
+<<<<<<< HEAD
 	IP6_INC_STATS(net, idev, IPSTATS_MIB_FRAGFAILS);
+=======
+	IP6_INC_STATS(net, ip6_dst_idev(skb_dst(skb)), IPSTATS_MIB_FRAGFAILS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree_skb(skb);
 	return -EMSGSIZE;
 }
@@ -483,9 +558,13 @@ int ip6_forward(struct sk_buff *skb)
 	if (skb_warn_if_lro(skb))
 		goto drop;
 
+<<<<<<< HEAD
 	if (!net->ipv6.devconf_all->disable_policy &&
 	    !idev->cnf.disable_policy &&
 	    !xfrm6_policy_check(NULL, XFRM_POLICY_FWD, skb)) {
+=======
+	if (!xfrm6_policy_check(NULL, XFRM_POLICY_FWD, skb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		__IP6_INC_STATS(net, idev, IPSTATS_MIB_INDISCARDS);
 		goto drop;
 	}
@@ -525,10 +604,16 @@ int ip6_forward(struct sk_buff *skb)
 	if (net->ipv6.devconf_all->proxy_ndp &&
 	    pneigh_lookup(&nd_tbl, net, &hdr->daddr, skb->dev, 0)) {
 		int proxied = ip6_forward_proxy_check(skb);
+<<<<<<< HEAD
 		if (proxied > 0) {
 			hdr->hop_limit--;
 			return ip6_input(skb);
 		} else if (proxied < 0) {
+=======
+		if (proxied > 0)
+			return ip6_input(skb);
+		else if (proxied < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INDISCARDS);
 			goto drop;
 		}
@@ -584,7 +669,11 @@ int ip6_forward(struct sk_buff *skb)
 		}
 	}
 
+<<<<<<< HEAD
 	mtu = ip6_dst_mtu_maybe_forward(dst, true);
+=======
+	mtu = ip6_dst_mtu_forward(dst);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (mtu < IPV6_MIN_MTU)
 		mtu = IPV6_MIN_MTU;
 

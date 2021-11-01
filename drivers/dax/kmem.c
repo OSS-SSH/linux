@@ -37,16 +37,25 @@ static int dax_kmem_range(struct dev_dax *dev_dax, int i, struct range *r)
 
 struct dax_kmem_data {
 	const char *res_name;
+<<<<<<< HEAD
 	int mgid;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct resource *res[];
 };
 
 static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
 {
 	struct device *dev = &dev_dax->dev;
+<<<<<<< HEAD
 	unsigned long total_len = 0;
 	struct dax_kmem_data *data;
 	int i, rc, mapped = 0;
+=======
+	struct dax_kmem_data *data;
+	int rc = -ENOMEM;
+	int i, mapped = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int numa_node;
 
 	/*
@@ -62,6 +71,7 @@ static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	for (i = 0; i < dev_dax->nr_range; i++) {
 		struct range range;
 
@@ -79,27 +89,43 @@ static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	data = kzalloc(struct_size(data, res, dev_dax->nr_range), GFP_KERNEL);
 	if (!data)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	rc = -ENOMEM;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	data->res_name = kstrdup(dev_name(dev), GFP_KERNEL);
 	if (!data->res_name)
 		goto err_res_name;
 
+<<<<<<< HEAD
 	rc = memory_group_register_static(numa_node, total_len);
 	if (rc < 0)
 		goto err_reg_mgid;
 	data->mgid = rc;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < dev_dax->nr_range; i++) {
 		struct resource *res;
 		struct range range;
 
 		rc = dax_kmem_range(dev_dax, i, &range);
+<<<<<<< HEAD
 		if (rc)
 			continue;
+=======
+		if (rc) {
+			dev_info(dev, "mapping%d: %#llx-%#llx too small after alignment\n",
+					i, range.start, range.end);
+			continue;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* Region is permanently reserved if hotremove fails. */
 		res = request_mem_region(range.start, range_len(&range), data->res_name);
@@ -129,8 +155,13 @@ static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
 		 * Ensure that future kexec'd kernels will not treat
 		 * this as RAM automatically.
 		 */
+<<<<<<< HEAD
 		rc = add_memory_driver_managed(data->mgid, range.start,
 				range_len(&range), kmem_name, MHP_NID_IS_MGID);
+=======
+		rc = add_memory_driver_managed(numa_node, range.start,
+				range_len(&range), kmem_name, MHP_NONE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (rc) {
 			dev_warn(dev, "mapping%d: %#llx-%#llx memory add failed\n",
@@ -150,8 +181,11 @@ static int dev_dax_kmem_probe(struct dev_dax *dev_dax)
 	return 0;
 
 err_request_mem:
+<<<<<<< HEAD
 	memory_group_unregister(data->mgid);
 err_reg_mgid:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(data->res_name);
 err_res_name:
 	kfree(data);
@@ -179,7 +213,12 @@ static void dev_dax_kmem_remove(struct dev_dax *dev_dax)
 		if (rc)
 			continue;
 
+<<<<<<< HEAD
 		rc = remove_memory(range.start, range_len(&range));
+=======
+		rc = remove_memory(dev_dax->target_node, range.start,
+				range_len(&range));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rc == 0) {
 			release_resource(data->res[i]);
 			kfree(data->res[i]);
@@ -194,7 +233,10 @@ static void dev_dax_kmem_remove(struct dev_dax *dev_dax)
 	}
 
 	if (success >= dev_dax->nr_range) {
+<<<<<<< HEAD
 		memory_group_unregister(data->mgid);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kfree(data->res_name);
 		kfree(data);
 		dev_set_drvdata(dev, NULL);

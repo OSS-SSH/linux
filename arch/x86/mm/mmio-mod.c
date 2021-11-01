@@ -376,12 +376,20 @@ static void enter_uniprocessor(void)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cpumask_copy(downed_cpus, cpu_online_mask);
 	cpumask_clear_cpu(cpumask_first(cpu_online_mask), downed_cpus);
 	if (num_online_cpus() > 1)
 		pr_notice("Disabling non-boot CPUs...\n");
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for_each_cpu(cpu, downed_cpus) {
 		err = remove_cpu(cpu);

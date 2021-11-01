@@ -3076,7 +3076,10 @@ static void dif_copy_prot(struct scsi_cmnd *scp, sector_t sector,
 static int prot_verify_read(struct scsi_cmnd *scp, sector_t start_sec,
 			    unsigned int sectors, u32 ei_lba)
 {
+<<<<<<< HEAD
 	int ret = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int i;
 	sector_t sector;
 	struct sdeb_store_info *sip = devip2sip((struct sdebug_dev_info *)
@@ -3084,12 +3087,18 @@ static int prot_verify_read(struct scsi_cmnd *scp, sector_t start_sec,
 	struct t10_pi_tuple *sdt;
 
 	for (i = 0; i < sectors; i++, ei_lba++) {
+<<<<<<< HEAD
+=======
+		int ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sector = start_sec + i;
 		sdt = dif_store(sip, sector);
 
 		if (sdt->app_tag == cpu_to_be16(0xffff))
 			continue;
 
+<<<<<<< HEAD
 		/*
 		 * Because scsi_debug acts as both initiator and
 		 * target we proceed to verify the PI even if
@@ -3104,13 +3113,24 @@ static int prot_verify_read(struct scsi_cmnd *scp, sector_t start_sec,
 				dif_errors++;
 				break;
 			}
+=======
+		ret = dif_verify(sdt, lba2fake_store(sip, sector), sector,
+				 ei_lba);
+		if (ret) {
+			dif_errors++;
+			return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
 	dif_copy_prot(scp, start_sec, sectors, true);
 	dix_reads++;
 
+<<<<<<< HEAD
 	return ret;
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int resp_read_dt0(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
@@ -3204,6 +3224,7 @@ static int resp_read_dt0(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
 
 	/* DIX + T10 DIF */
 	if (unlikely(sdebug_dix && scsi_prot_sg_count(scp))) {
+<<<<<<< HEAD
 		switch (prot_verify_read(scp, lba, num, ei_lba)) {
 		case 1: /* Guard tag error */
 			if (cmd[1] >> 5 != 3) { /* RDPROTECT != 3 */
@@ -3227,6 +3248,14 @@ static int resp_read_dt0(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
 				return illegal_condition_result;
 			}
 			break;
+=======
+		int prot_ret = prot_verify_read(scp, lba, num, ei_lba);
+
+		if (prot_ret) {
+			read_unlock(macc_lckp);
+			mk_sense_buffer(scp, ABORTED_COMMAND, 0x10, prot_ret);
+			return illegal_condition_result;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -3257,6 +3286,31 @@ static int resp_read_dt0(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void dump_sector(unsigned char *buf, int len)
+{
+	int i, j, n;
+
+	pr_err(">>> Sector Dump <<<\n");
+	for (i = 0 ; i < len ; i += 16) {
+		char b[128];
+
+		for (j = 0, n = 0; j < 16; j++) {
+			unsigned char c = buf[i+j];
+
+			if (c >= 0x20 && c < 0x7e)
+				n += scnprintf(b + n, sizeof(b) - n,
+					       " %c ", buf[i+j]);
+			else
+				n += scnprintf(b + n, sizeof(b) - n,
+					       "%02x ", buf[i+j]);
+		}
+		pr_err("%04d: %s\n", i, b);
+	}
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int prot_verify_write(struct scsi_cmnd *SCpnt, sector_t start_sec,
 			     unsigned int sectors, u32 ei_lba)
 {
@@ -3302,10 +3356,17 @@ static int prot_verify_write(struct scsi_cmnd *SCpnt, sector_t start_sec,
 			sdt = piter.addr + ppage_offset;
 			daddr = diter.addr + dpage_offset;
 
+<<<<<<< HEAD
 			if (SCpnt->cmnd[1] >> 5 != 3) { /* WRPROTECT */
 				ret = dif_verify(sdt, daddr, sector, ei_lba);
 				if (ret)
 					goto out;
+=======
+			ret = dif_verify(sdt, daddr, sector, ei_lba);
+			if (ret) {
+				dump_sector(daddr, sdebug_sector_size);
+				goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			sector++;
@@ -3483,6 +3544,7 @@ static int resp_write_dt0(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
 
 	/* DIX + T10 DIF */
 	if (unlikely(sdebug_dix && scsi_prot_sg_count(scp))) {
+<<<<<<< HEAD
 		switch (prot_verify_write(scp, lba, num, ei_lba)) {
 		case 1: /* Guard tag error */
 			if (scp->prot_flags & SCSI_PROT_GUARD_CHECK) {
@@ -3506,6 +3568,14 @@ static int resp_write_dt0(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
 				return check_condition_result;
 			}
 			break;
+=======
+		int prot_ret = prot_verify_write(scp, lba, num, ei_lba);
+
+		if (prot_ret) {
+			write_unlock(macc_lckp);
+			mk_sense_buffer(scp, ILLEGAL_REQUEST, 0x10, prot_ret);
+			return illegal_condition_result;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -4722,7 +4792,11 @@ fini:
 static struct sdebug_queue *get_queue(struct scsi_cmnd *cmnd)
 {
 	u16 hwq;
+<<<<<<< HEAD
 	u32 tag = blk_mq_unique_tag(scsi_cmd_to_rq(cmnd));
+=======
+	u32 tag = blk_mq_unique_tag(cmnd->request);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	hwq = blk_mq_unique_tag_to_hwq(tag);
 
@@ -4735,7 +4809,11 @@ static struct sdebug_queue *get_queue(struct scsi_cmnd *cmnd)
 
 static u32 get_tag(struct scsi_cmnd *cmnd)
 {
+<<<<<<< HEAD
 	return blk_mq_unique_tag(scsi_cmd_to_rq(cmnd));
+=======
+	return blk_mq_unique_tag(cmnd->request);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Queued (deferred) command completions converge here. */
@@ -5384,7 +5462,11 @@ static int schedule_resp(struct scsi_cmnd *cmnd, struct sdebug_dev_info *devip,
 {
 	bool new_sd_dp;
 	bool inject = false;
+<<<<<<< HEAD
 	bool hipri = scsi_cmd_to_rq(cmnd)->cmd_flags & REQ_HIPRI;
+=======
+	bool hipri = (cmnd->request->cmd_flags & REQ_HIPRI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int k, num_in_q, qdepth;
 	unsigned long iflags;
 	u64 ns_from_boot = 0;
@@ -5587,9 +5669,14 @@ static int schedule_resp(struct scsi_cmnd *cmnd, struct sdebug_dev_info *devip,
 		if (sdebug_statistics)
 			sd_dp->issuing_cpu = raw_smp_processor_id();
 		if (unlikely(sd_dp->aborted)) {
+<<<<<<< HEAD
 			sdev_printk(KERN_INFO, sdp, "abort request tag %d\n",
 				    scsi_cmd_to_rq(cmnd)->tag);
 			blk_abort_request(scsi_cmd_to_rq(cmnd));
+=======
+			sdev_printk(KERN_INFO, sdp, "abort request tag %d\n", cmnd->request->tag);
+			blk_abort_request(cmnd->request);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			atomic_set(&sdeb_inject_pending, 0);
 			sd_dp->aborted = false;
 		}
@@ -7415,7 +7502,11 @@ static int scsi_debug_queuecommand(struct Scsi_Host *shost,
 					       (u32)cmd[k]);
 		}
 		sdev_printk(KERN_INFO, sdp, "%s: tag=%#x, cmd %s\n", my_name,
+<<<<<<< HEAD
 			    blk_mq_unique_tag(scsi_cmd_to_rq(scp)), b);
+=======
+			    blk_mq_unique_tag(scp->request), b);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	if (unlikely(inject_now && (sdebug_opts & SDEBUG_OPT_HOST_BUSY)))
 		return SCSI_MLQUEUE_HOST_BUSY;
@@ -7695,7 +7786,11 @@ static int sdebug_driver_probe(struct device *dev)
 	return error;
 }
 
+<<<<<<< HEAD
 static void sdebug_driver_remove(struct device *dev)
+=======
+static int sdebug_driver_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sdebug_host_info *sdbg_host;
 	struct sdebug_dev_info *sdbg_devinfo, *tmp;
@@ -7712,6 +7807,10 @@ static void sdebug_driver_remove(struct device *dev)
 	}
 
 	scsi_host_put(sdbg_host->shost);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int pseudo_lld_bus_match(struct device *dev,

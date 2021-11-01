@@ -19,9 +19,13 @@
 #include "intel_workarounds.h"
 
 struct drm_printer;
+<<<<<<< HEAD
 struct intel_context;
 struct intel_gt;
 struct lock_class_key;
+=======
+struct intel_gt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Early gen2 devices have a cacheline of just 32 bytes, using 64 is overkill,
  * but keeps the logic simple. Indeed, the whole purpose of this macro is just
@@ -125,6 +129,23 @@ execlists_active(const struct intel_engine_execlists *execlists)
 	return active;
 }
 
+<<<<<<< HEAD
+=======
+static inline void
+execlists_active_lock_bh(struct intel_engine_execlists *execlists)
+{
+	local_bh_disable(); /* prevent local softirq and lock recursion */
+	tasklet_lock(&execlists->tasklet);
+}
+
+static inline void
+execlists_active_unlock_bh(struct intel_engine_execlists *execlists)
+{
+	tasklet_unlock(&execlists->tasklet);
+	local_bh_enable(); /* restore softirq, and kick ksoftirqd! */
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct i915_request *
 execlists_unwind_incomplete_requests(struct intel_engine_execlists *execlists);
 
@@ -174,12 +195,19 @@ intel_write_status_page(struct intel_engine_cs *engine, int reg, u32 value)
 #define I915_GEM_HWS_PREEMPT_ADDR	(I915_GEM_HWS_PREEMPT * sizeof(u32))
 #define I915_GEM_HWS_SEQNO		0x40
 #define I915_GEM_HWS_SEQNO_ADDR		(I915_GEM_HWS_SEQNO * sizeof(u32))
+<<<<<<< HEAD
 #define I915_GEM_HWS_MIGRATE		(0x42 * sizeof(u32))
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define I915_GEM_HWS_SCRATCH		0x80
 
 #define I915_HWS_CSB_BUF0_INDEX		0x10
 #define I915_HWS_CSB_WRITE_INDEX	0x1f
+<<<<<<< HEAD
 #define ICL_HWS_CSB_WRITE_INDEX		0x2f
+=======
+#define CNL_HWS_CSB_WRITE_INDEX		0x2f
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void intel_engine_stop(struct intel_engine_cs *engine);
 void intel_engine_cleanup(struct intel_engine_cs *engine);
@@ -212,9 +240,12 @@ void intel_engine_get_instdone(const struct intel_engine_cs *engine,
 
 void intel_engine_init_execlists(struct intel_engine_cs *engine);
 
+<<<<<<< HEAD
 bool intel_engine_irq_enable(struct intel_engine_cs *engine);
 void intel_engine_irq_disable(struct intel_engine_cs *engine);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void __intel_engine_reset(struct intel_engine_cs *engine,
 					bool stalled)
 {
@@ -240,14 +271,18 @@ __printf(3, 4)
 void intel_engine_dump(struct intel_engine_cs *engine,
 		       struct drm_printer *m,
 		       const char *header, ...);
+<<<<<<< HEAD
 void intel_engine_dump_active_requests(struct list_head *requests,
 				       struct i915_request *hung_rq,
 				       struct drm_printer *m);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ktime_t intel_engine_get_busy_time(struct intel_engine_cs *engine,
 				   ktime_t *now);
 
 struct i915_request *
+<<<<<<< HEAD
 intel_engine_execlist_find_hung_request(struct intel_engine_cs *engine);
 
 u32 intel_engine_context_size(struct intel_gt *gt, u8 class);
@@ -261,6 +296,14 @@ intel_engine_create_pinned_context(struct intel_engine_cs *engine,
 
 void intel_engine_destroy_pinned_context(struct intel_context *ce);
 
+=======
+intel_engine_find_active_request(struct intel_engine_cs *engine);
+
+u32 intel_engine_context_size(struct intel_gt *gt, u8 class);
+
+void intel_engine_init_active(struct intel_engine_cs *engine,
+			      unsigned int subclass);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ENGINE_PHYSICAL	0
 #define ENGINE_MOCK	1
 #define ENGINE_VIRTUAL	2
@@ -279,6 +322,7 @@ intel_engine_has_preempt_reset(const struct intel_engine_cs *engine)
 	return intel_engine_has_preemption(engine);
 }
 
+<<<<<<< HEAD
 struct intel_context *
 intel_engine_create_virtual(struct intel_engine_cs **siblings,
 			    unsigned int count);
@@ -297,12 +341,15 @@ intel_virtual_engine_has_heartbeat(const struct intel_engine_cs *engine)
 	return intel_guc_virtual_engine_has_heartbeat(engine);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool
 intel_engine_has_heartbeat(const struct intel_engine_cs *engine)
 {
 	if (!IS_ACTIVE(CONFIG_DRM_I915_HEARTBEAT_INTERVAL))
 		return false;
 
+<<<<<<< HEAD
 	if (intel_engine_is_virtual(engine))
 		return intel_virtual_engine_has_heartbeat(engine);
 	else
@@ -333,6 +380,9 @@ static inline struct intel_context *
 intel_engine_get_hung_context(struct intel_engine_cs *engine)
 {
 	return engine->hung_ce;
+=======
+	return READ_ONCE(engine->props.heartbeat_interval_ms);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #endif /* _INTEL_RINGBUFFER_H_ */

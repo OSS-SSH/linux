@@ -15,9 +15,15 @@ rtw88_core-y += main.o \
 	   ps.o \
 	   sec.o \
 	   bf.o \
+<<<<<<< HEAD
 	   regd.o
 
 rtw88_core-$(CONFIG_PM) += wow.o
+=======
+	   wow.o \
+	   regd.o
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 obj-$(CONFIG_RTW88_8822B)	+= rtw88_8822b.o
 rtw88_8822b-objs		:= rtw8822b.o rtw8822b_table.o

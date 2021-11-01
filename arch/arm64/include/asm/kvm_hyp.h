@@ -95,7 +95,11 @@ void __sve_restore_state(void *sve_pffr, u32 *fpsr);
 
 #ifndef __KVM_NVHE_HYPERVISOR__
 void activate_traps_vhe_load(struct kvm_vcpu *vcpu);
+<<<<<<< HEAD
 void deactivate_traps_vhe_put(struct kvm_vcpu *vcpu);
+=======
+void deactivate_traps_vhe_put(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 u64 __guest_enter(struct kvm_vcpu *vcpu);

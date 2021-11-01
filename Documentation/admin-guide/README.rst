@@ -259,7 +259,11 @@ Configuring the kernel
 Compiling the kernel
 --------------------
 
+<<<<<<< HEAD
  - Make sure you have at least gcc 5.1 available.
+=======
+ - Make sure you have at least gcc 4.9 available.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
    For more information, refer to :ref:`Documentation/process/changes.rst <changes>`.
 
    Please note that you can still run a.out user programs with this kernel.

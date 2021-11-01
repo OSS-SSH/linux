@@ -9,7 +9,10 @@
 #include <linux/iopoll.h>
 #include <linux/of.h>
 #include <linux/of_address.h>
+<<<<<<< HEAD
 #include <linux/platform_device.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/reset-controller.h>
 #include <linux/smp.h>
 #include <asm/smp_plat.h>
@@ -82,6 +85,14 @@ static const struct reset_control_ops imx_src_ops = {
 	.reset = imx_src_reset_module,
 };
 
+<<<<<<< HEAD
+=======
+static struct reset_controller_dev imx_reset_controller = {
+	.ops = &imx_src_ops,
+	.nr_resets = ARRAY_SIZE(sw_reset_bits),
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void imx_gpcv2_set_m_core_pgc(bool enable, u32 offset)
 {
 	writel_relaxed(enable, gpc_base + offset);
@@ -173,6 +184,13 @@ void __init imx_src_init(void)
 	src_base = of_iomap(np, 0);
 	WARN_ON(!src_base);
 
+<<<<<<< HEAD
+=======
+	imx_reset_controller.of_node = np;
+	if (IS_ENABLED(CONFIG_RESET_CONTROLLER))
+		reset_controller_register(&imx_reset_controller);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * force warm reset sources to generate cold reset
 	 * for a more reliable restart
@@ -206,6 +224,7 @@ void __init imx7_src_init(void)
 	if (!gpc_base)
 		return;
 }
+<<<<<<< HEAD
 
 static const struct of_device_id imx_src_dt_ids[] = {
 	{ .compatible = "fsl,imx51-src" },
@@ -236,3 +255,5 @@ static struct platform_driver imx_src_driver = {
 	.probe = imx_src_probe,
 };
 builtin_platform_driver(imx_src_driver);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

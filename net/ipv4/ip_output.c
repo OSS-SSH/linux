@@ -198,10 +198,26 @@ static int ip_finish_output2(struct net *net, struct sock *sk, struct sk_buff *s
 	} else if (rt->rt_type == RTN_BROADCAST)
 		IP_UPD_PO_STATS(net, IPSTATS_MIB_OUTBCAST, skb->len);
 
+<<<<<<< HEAD
 	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
 		skb = skb_expand_head(skb, hh_len);
 		if (!skb)
 			return -ENOMEM;
+=======
+	/* Be paranoid, rather than too clever. */
+	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
+		struct sk_buff *skb2;
+
+		skb2 = skb_realloc_headroom(skb, LL_RESERVED_SPACE(dev));
+		if (!skb2) {
+			kfree_skb(skb);
+			return -ENOMEM;
+		}
+		if (skb->sk)
+			skb_set_owner_w(skb2, skb->sk);
+		consume_skb(skb);
+		skb = skb2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (lwtunnel_xmit_redirect(dst->lwtstate)) {
@@ -437,9 +453,14 @@ static void ip_copy_addrs(struct iphdr *iph, const struct flowi4 *fl4)
 {
 	BUILD_BUG_ON(offsetof(typeof(*fl4), daddr) !=
 		     offsetof(typeof(*fl4), saddr) + sizeof(fl4->saddr));
+<<<<<<< HEAD
 
 	iph->saddr = fl4->saddr;
 	iph->daddr = fl4->daddr;
+=======
+	memcpy(&iph->saddr, &fl4->saddr,
+	       sizeof(fl4->saddr) + sizeof(fl4->daddr));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Note: skb->sk can be different from sk, in case of tunnels */
@@ -606,6 +627,21 @@ void ip_fraglist_init(struct sk_buff *skb, struct iphdr *iph,
 }
 EXPORT_SYMBOL(ip_fraglist_init);
 
+<<<<<<< HEAD
+=======
+static void ip_fraglist_ipcb_prepare(struct sk_buff *skb,
+				     struct ip_fraglist_iter *iter)
+{
+	struct sk_buff *to = iter->frag;
+
+	/* Copy the flags to each fragment. */
+	IPCB(to)->flags = IPCB(skb)->flags;
+
+	if (iter->offset == 0)
+		ip_options_fragment(to);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void ip_fraglist_prepare(struct sk_buff *skb, struct ip_fraglist_iter *iter)
 {
 	unsigned int hlen = iter->hlen;
@@ -651,7 +687,11 @@ void ip_frag_init(struct sk_buff *skb, unsigned int hlen,
 EXPORT_SYMBOL(ip_frag_init);
 
 static void ip_frag_ipcb(struct sk_buff *from, struct sk_buff *to,
+<<<<<<< HEAD
 			 bool first_frag)
+=======
+			 bool first_frag, struct ip_frag_state *state)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	/* Copy the flags to each fragment. */
 	IPCB(to)->flags = IPCB(from)->flags;
@@ -826,14 +866,21 @@ int ip_do_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
 		/* Everything is OK. Generate! */
 		ip_fraglist_init(skb, iph, hlen, &iter);
 
+<<<<<<< HEAD
 		if (iter.frag)
 			ip_options_fragment(iter.frag);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (;;) {
 			/* Prepare header of the next frame,
 			 * before previous one went down. */
 			if (iter.frag) {
+<<<<<<< HEAD
 				IPCB(iter.frag)->flags = IPCB(skb)->flags;
+=======
+				ip_fraglist_ipcb_prepare(skb, &iter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				ip_fraglist_prepare(skb, &iter);
 			}
 
@@ -888,7 +935,11 @@ slow_path:
 			err = PTR_ERR(skb2);
 			goto fail;
 		}
+<<<<<<< HEAD
 		ip_frag_ipcb(skb, skb2, first_frag);
+=======
+		ip_frag_ipcb(skb, skb2, first_frag, &state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 *	Put this fragment into the sending queue.

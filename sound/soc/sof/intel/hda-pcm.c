@@ -15,7 +15,10 @@
  * Hardware interface for generic Intel audio DSP HDA IP
  */
 
+<<<<<<< HEAD
 #include <linux/moduleparam.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <sound/hda_register.h>
 #include <sound/pcm_params.h>
 #include "../sof-audio.h"
@@ -28,10 +31,13 @@
 #define SDnFMT_BITS(x)	((x) << 4)
 #define SDnFMT_CHAN(x)	((x) << 0)
 
+<<<<<<< HEAD
 static bool hda_always_enable_dmi_l1;
 module_param_named(always_enable_dmi_l1, hda_always_enable_dmi_l1, bool, 0444);
 MODULE_PARM_DESC(always_enable_dmi_l1, "SOF HDA always enable DMI l1");
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 u32 hda_dsp_get_mult_div(struct snd_sof_dev *sdev, int rate)
 {
 	switch (rate) {
@@ -221,7 +227,10 @@ int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
 		     struct snd_pcm_substream *substream)
 {
 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
+<<<<<<< HEAD
 	struct snd_pcm_runtime *runtime = substream->runtime;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct snd_soc_component *scomp = sdev->component;
 	struct hdac_ext_stream *dsp_stream;
 	struct snd_sof_pcm *spcm;
@@ -234,6 +243,7 @@ int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * All playback streams are DMI L1 capable, capture streams need
 	 * pause push/release to be disabled
@@ -242,6 +252,10 @@ int hda_dsp_pcm_open(struct snd_sof_dev *sdev,
 		runtime->hw.info &= ~SNDRV_PCM_INFO_PAUSE;
 
 	if (hda_always_enable_dmi_l1 ||
+=======
+	/* All playback and D0i3 compatible streams are DMI L1 capable */
+	if (direction == SNDRV_PCM_STREAM_PLAYBACK ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    spcm->stream[substream->stream].d0i3_compatible)
 		flags |= SOF_HDA_STREAM_DMI_L1_COMPATIBLE;
 

@@ -341,7 +341,11 @@ static void scu_ssp_ireq_dif_insert(struct isci_request *ireq, u8 type, u8 op)
 	tc->reserved_E8_0 = 0;
 
 	if ((type & SCSI_PROT_DIF_TYPE1) || (type & SCSI_PROT_DIF_TYPE2))
+<<<<<<< HEAD
 		tc->ref_tag_seed_gen = scsi_prot_ref_tag(scmd);
+=======
+		tc->ref_tag_seed_gen = scsi_get_lba(scmd) & 0xffffffff;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else if (type & SCSI_PROT_DIF_TYPE3)
 		tc->ref_tag_seed_gen = 0;
 }
@@ -369,7 +373,11 @@ static void scu_ssp_ireq_dif_strip(struct isci_request *ireq, u8 type, u8 op)
 	tc->app_tag_gen = 0;
 
 	if ((type & SCSI_PROT_DIF_TYPE1) || (type & SCSI_PROT_DIF_TYPE2))
+<<<<<<< HEAD
 		tc->ref_tag_seed_verify = scsi_prot_ref_tag(scmd);
+=======
+		tc->ref_tag_seed_verify = scsi_get_lba(scmd) & 0xffffffff;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else if (type & SCSI_PROT_DIF_TYPE3)
 		tc->ref_tag_seed_verify = 0;
 

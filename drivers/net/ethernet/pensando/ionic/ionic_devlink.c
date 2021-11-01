@@ -64,7 +64,11 @@ struct ionic *ionic_devlink_alloc(struct device *dev)
 {
 	struct devlink *dl;
 
+<<<<<<< HEAD
 	dl = devlink_alloc(&ionic_dl_ops, sizeof(struct ionic), dev);
+=======
+	dl = devlink_alloc(&ionic_dl_ops, sizeof(struct ionic));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return devlink_priv(dl);
 }
@@ -82,7 +86,11 @@ int ionic_devlink_register(struct ionic *ionic)
 	struct devlink_port_attrs attrs = {};
 	int err;
 
+<<<<<<< HEAD
 	err = devlink_register(dl);
+=======
+	err = devlink_register(dl, ionic->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err) {
 		dev_warn(ionic->dev, "devlink_register failed: %d\n", err);
 		return err;
@@ -91,6 +99,7 @@ int ionic_devlink_register(struct ionic *ionic)
 	attrs.flavour = DEVLINK_PORT_FLAVOUR_PHYSICAL;
 	devlink_port_attrs_set(&ionic->dl_port, &attrs);
 	err = devlink_port_register(dl, &ionic->dl_port, 0);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(ionic->dev, "devlink_port_register failed: %d\n", err);
 		devlink_unregister(dl);
@@ -99,12 +108,26 @@ int ionic_devlink_register(struct ionic *ionic)
 
 	devlink_port_type_eth_set(&ionic->dl_port, ionic->lif->netdev);
 	return 0;
+=======
+	if (err)
+		dev_err(ionic->dev, "devlink_port_register failed: %d\n", err);
+	else
+		devlink_port_type_eth_set(&ionic->dl_port,
+					  ionic->lif->netdev);
+
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void ionic_devlink_unregister(struct ionic *ionic)
 {
 	struct devlink *dl = priv_to_devlink(ionic);
 
+<<<<<<< HEAD
 	devlink_port_unregister(&ionic->dl_port);
+=======
+	if (ionic->dl_port.registered)
+		devlink_port_unregister(&ionic->dl_port);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	devlink_unregister(dl);
 }

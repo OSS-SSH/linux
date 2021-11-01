@@ -253,7 +253,11 @@ static int vboxsf_dir_instantiate(struct inode *parent, struct dentry *dentry,
 }
 
 static int vboxsf_dir_create(struct inode *parent, struct dentry *dentry,
+<<<<<<< HEAD
 			     umode_t mode, bool is_dir, bool excl, u64 *handle_ret)
+=======
+			     umode_t mode, int is_dir)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vboxsf_inode *sf_parent_i = VBOXSF_I(parent);
 	struct vboxsf_sbi *sbi = VBOXSF_SBI(parent->i_sb);
@@ -261,12 +265,19 @@ static int vboxsf_dir_create(struct inode *parent, struct dentry *dentry,
 	int err;
 
 	params.handle = SHFL_HANDLE_NIL;
+<<<<<<< HEAD
 	params.create_flags = SHFL_CF_ACT_CREATE_IF_NEW | SHFL_CF_ACCESS_READWRITE;
 	if (is_dir)
 		params.create_flags |= SHFL_CF_DIRECTORY;
 	if (excl)
 		params.create_flags |= SHFL_CF_ACT_FAIL_IF_EXISTS;
 
+=======
+	params.create_flags = SHFL_CF_ACT_CREATE_IF_NEW |
+			      SHFL_CF_ACT_FAIL_IF_EXISTS |
+			      SHFL_CF_ACCESS_READWRITE |
+			      (is_dir ? SHFL_CF_DIRECTORY : 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	params.info.attr.mode = (mode & 0777) |
 				(is_dir ? SHFL_TYPE_DIRECTORY : SHFL_TYPE_FILE);
 	params.info.attr.additional = SHFLFSOBJATTRADD_NOTHING;
@@ -278,13 +289,22 @@ static int vboxsf_dir_create(struct inode *parent, struct dentry *dentry,
 	if (params.result != SHFL_FILE_CREATED)
 		return -EPERM;
 
+<<<<<<< HEAD
 	err = vboxsf_dir_instantiate(parent, dentry, &params.info);
 	if (err)
 		goto out;
+=======
+	vboxsf_close(sbi->root, params.handle);
+
+	err = vboxsf_dir_instantiate(parent, dentry, &params.info);
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* parent directory access/change time changed */
 	sf_parent_i->force_restat = 1;
 
+<<<<<<< HEAD
 out:
 	if (err == 0 && handle_ret)
 		*handle_ret = params.handle;
@@ -292,19 +312,27 @@ out:
 		vboxsf_close(sbi->root, params.handle);
 
 	return err;
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int vboxsf_dir_mkfile(struct user_namespace *mnt_userns,
 			     struct inode *parent, struct dentry *dentry,
 			     umode_t mode, bool excl)
 {
+<<<<<<< HEAD
 	return vboxsf_dir_create(parent, dentry, mode, false, excl, NULL);
+=======
+	return vboxsf_dir_create(parent, dentry, mode, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int vboxsf_dir_mkdir(struct user_namespace *mnt_userns,
 			    struct inode *parent, struct dentry *dentry,
 			    umode_t mode)
 {
+<<<<<<< HEAD
 	return vboxsf_dir_create(parent, dentry, mode, true, true, NULL);
 }
 
@@ -353,6 +381,9 @@ static int vboxsf_dir_atomic_open(struct inode *parent, struct dentry *dentry,
 out:
 	dput(res);
 	return err;
+=======
+	return vboxsf_dir_create(parent, dentry, mode, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int vboxsf_dir_unlink(struct inode *parent, struct dentry *dentry)
@@ -475,7 +506,10 @@ const struct inode_operations vboxsf_dir_iops = {
 	.lookup  = vboxsf_dir_lookup,
 	.create  = vboxsf_dir_mkfile,
 	.mkdir   = vboxsf_dir_mkdir,
+<<<<<<< HEAD
 	.atomic_open = vboxsf_dir_atomic_open,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.rmdir   = vboxsf_dir_unlink,
 	.unlink  = vboxsf_dir_unlink,
 	.rename  = vboxsf_dir_rename,

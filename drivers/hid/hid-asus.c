@@ -82,7 +82,10 @@ MODULE_DESCRIPTION("Asus HID Keyboard and TouchPad");
 #define QUIRK_T90CHI			BIT(9)
 #define QUIRK_MEDION_E1239T		BIT(10)
 #define QUIRK_ROG_NKEY_KEYBOARD		BIT(11)
+<<<<<<< HEAD
 #define QUIRK_ROG_CLAYMORE_II_KEYBOARD BIT(12)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define I2C_KEYBOARD_QUIRKS			(QUIRK_FIX_NOTEBOOK_REPORT | \
 						 QUIRK_NO_INIT_REPORTS | \
@@ -367,6 +370,7 @@ static int asus_raw_event(struct hid_device *hdev,
 
 	}
 
+<<<<<<< HEAD
 	if (drvdata->quirks & QUIRK_ROG_CLAYMORE_II_KEYBOARD) {
 		/*
 		 * CLAYMORE II keyboard sends this packet when it goes to sleep
@@ -378,6 +382,8 @@ static int asus_raw_event(struct hid_device *hdev,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -497,6 +503,12 @@ static void asus_kbd_backlight_set(struct led_classdev *led_cdev,
 {
 	struct asus_kbd_leds *led = container_of(led_cdev, struct asus_kbd_leds,
 						 cdev);
+<<<<<<< HEAD
+=======
+	if (led->brightness == brightness)
+		return;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	led->brightness = brightness;
 	schedule_work(&led->work);
 }
@@ -1238,9 +1250,12 @@ static const struct hid_device_id asus_devices[] = {
 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_KEYBOARD2),
 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+<<<<<<< HEAD
 	    USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD),
 	  QUIRK_ROG_CLAYMORE_II_KEYBOARD },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		USB_DEVICE_ID_ASUSTEK_T100TA_KEYBOARD),
 	  QUIRK_T100_KEYBOARD | QUIRK_NO_CONSUMER_USAGES },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,

@@ -126,7 +126,11 @@ static int tm2_aif1_hw_params(struct snd_pcm_substream *substream,
 	return tm2_start_sysclk(rtd->card);
 }
 
+<<<<<<< HEAD
 static const struct snd_soc_ops tm2_aif1_ops = {
+=======
+static struct snd_soc_ops tm2_aif1_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.hw_params = tm2_aif1_hw_params,
 };
 
@@ -200,7 +204,11 @@ static int tm2_aif2_hw_free(struct snd_pcm_substream *substream)
 	return ret;
 }
 
+<<<<<<< HEAD
 static const struct snd_soc_ops tm2_aif2_ops = {
+=======
+static struct snd_soc_ops tm2_aif2_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.hw_params = tm2_aif2_hw_params,
 	.hw_free = tm2_aif2_hw_free,
 };
@@ -254,7 +262,11 @@ static int tm2_hdmi_hw_params(struct snd_pcm_substream *substream,
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct snd_soc_ops tm2_hdmi_ops = {
+=======
+static struct snd_soc_ops tm2_hdmi_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.hw_params = tm2_hdmi_hw_params,
 };
 

@@ -179,6 +179,19 @@ static int snd_gusmax_mixer(struct snd_wss *chip)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void snd_gusmax_free(struct snd_card *card)
+{
+	struct snd_gusmax *maxcard = card->private_data;
+	
+	if (maxcard == NULL)
+		return;
+	if (maxcard->irq >= 0)
+		free_irq(maxcard->irq, (void *)maxcard);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int snd_gusmax_match(struct device *pdev, unsigned int dev)
 {
 	return enable[dev];
@@ -194,10 +207,18 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 	struct snd_wss *wss;
 	struct snd_gusmax *maxcard;
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(pdev, index[dev], id[dev], THIS_MODULE,
 				sizeof(struct snd_gusmax), &card);
 	if (err < 0)
 		return err;
+=======
+	err = snd_card_new(pdev, index[dev], id[dev], THIS_MODULE,
+			   sizeof(struct snd_gusmax), &card);
+	if (err < 0)
+		return err;
+	card->private_free = snd_gusmax_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	maxcard = card->private_data;
 	maxcard->card = card;
 	maxcard->irq = -1;
@@ -207,7 +228,12 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 		xirq = snd_legacy_find_free_irq(possible_irqs);
 		if (xirq < 0) {
 			snd_printk(KERN_ERR PFX "unable to find a free IRQ\n");
+<<<<<<< HEAD
 			return -EBUSY;
+=======
+			err = -EBUSY;
+			goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 	xdma1 = dma1[dev];
@@ -215,7 +241,12 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 		xdma1 = snd_legacy_find_free_dma(possible_dmas);
 		if (xdma1 < 0) {
 			snd_printk(KERN_ERR PFX "unable to find a free DMA1\n");
+<<<<<<< HEAD
 			return -EBUSY;
+=======
+			err = -EBUSY;
+			goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 	xdma2 = dma2[dev];
@@ -223,7 +254,12 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 		xdma2 = snd_legacy_find_free_dma(possible_dmas);
 		if (xdma2 < 0) {
 			snd_printk(KERN_ERR PFX "unable to find a free DMA2\n");
+<<<<<<< HEAD
 			return -EBUSY;
+=======
+			err = -EBUSY;
+			goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -253,17 +289,26 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 		}
 	}
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	err = snd_gusmax_detect(gus);
 	if (err < 0)
 		return err;
+=======
+		goto _err;
+
+	err = snd_gusmax_detect(gus);
+	if (err < 0)
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	maxcard->gus_status_reg = gus->gf1.reg_irqstat;
 	maxcard->pcm_status_reg = gus->gf1.port + 0x10c + 2;
 	snd_gusmax_init(dev, card, gus);
 	err = snd_gus_initialize(gus);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	if (!gus->max_flag) {
@@ -275,6 +320,20 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 			     "GUS MAX", (void *)maxcard)) {
 		snd_printk(KERN_ERR PFX "unable to grab IRQ %d\n", xirq);
 		return -EBUSY;
+=======
+		goto _err;
+
+	if (!gus->max_flag) {
+		snd_printk(KERN_ERR PFX "GUS MAX soundcard was not detected at 0x%lx\n", gus->gf1.port);
+		err = -ENODEV;
+		goto _err;
+	}
+
+	if (request_irq(xirq, snd_gusmax_interrupt, 0, "GUS MAX", (void *)maxcard)) {
+		snd_printk(KERN_ERR PFX "unable to grab IRQ %d\n", xirq);
+		err = -EBUSY;
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	maxcard->irq = xirq;
 	card->sync_irq = maxcard->irq;
@@ -288,6 +347,7 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 			     WSS_HWSHARE_DMA2,
 			     &wss);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	err = snd_wss_pcm(wss, 0);
@@ -301,10 +361,26 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 	err = snd_wss_timer(wss, 2);
 	if (err < 0)
 		return err;
+=======
+		goto _err;
+
+	err = snd_wss_pcm(wss, 0);
+	if (err < 0)
+		goto _err;
+
+	err = snd_wss_mixer(wss);
+	if (err < 0)
+		goto _err;
+
+	err = snd_wss_timer(wss, 2);
+	if (err < 0)
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (pcm_channels[dev] > 0) {
 		err = snd_gf1_pcm_new(gus, 1, 1);
 		if (err < 0)
+<<<<<<< HEAD
 			return err;
 	}
 	err = snd_gusmax_mixer(wss);
@@ -314,6 +390,17 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 	err = snd_gf1_rawmidi_new(gus, 0);
 	if (err < 0)
 		return err;
+=======
+			goto _err;
+	}
+	err = snd_gusmax_mixer(wss);
+	if (err < 0)
+		goto _err;
+
+	err = snd_gf1_rawmidi_new(gus, 0);
+	if (err < 0)
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sprintf(card->longname + strlen(card->longname), " at 0x%lx, irq %i, dma %i", gus->gf1.port, xirq, xdma1);
 	if (xdma2 >= 0)
@@ -321,13 +408,29 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
+=======
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		
 	maxcard->gus = gus;
 	maxcard->wss = wss;
 
 	dev_set_drvdata(pdev, card);
 	return 0;
+<<<<<<< HEAD
+=======
+
+ _err:
+	snd_card_free(card);
+	return err;
+}
+
+static void snd_gusmax_remove(struct device *devptr, unsigned int dev)
+{
+	snd_card_free(dev_get_drvdata(devptr));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #define DEV_NAME "gusmax"
@@ -335,6 +438,10 @@ static int snd_gusmax_probe(struct device *pdev, unsigned int dev)
 static struct isa_driver snd_gusmax_driver = {
 	.match		= snd_gusmax_match,
 	.probe		= snd_gusmax_probe,
+<<<<<<< HEAD
+=======
+	.remove		= snd_gusmax_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* FIXME: suspend/resume */
 	.driver		= {
 		.name	= DEV_NAME

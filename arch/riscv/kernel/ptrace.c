@@ -10,7 +10,10 @@
 #include <asm/ptrace.h>
 #include <asm/syscall.h>
 #include <asm/thread_info.h>
+<<<<<<< HEAD
 #include <asm/switch_to.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/audit.h>
 #include <linux/ptrace.h>
 #include <linux/elf.h>
@@ -57,9 +60,12 @@ static int riscv_fpr_get(struct task_struct *target,
 {
 	struct __riscv_d_ext_state *fstate = &target->thread.fstate;
 
+<<<<<<< HEAD
 	if (target == current)
 		fstate_save(current, task_pt_regs(current));
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	membuf_write(&to, fstate, offsetof(struct __riscv_d_ext_state, fcsr));
 	membuf_store(&to, fstate->fcsr);
 	return membuf_zero(&to, 4);	// explicitly pad

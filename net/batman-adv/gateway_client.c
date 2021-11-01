@@ -59,7 +59,11 @@
  *  after rcu grace period
  * @ref: kref pointer of the gw_node
  */
+<<<<<<< HEAD
 void batadv_gw_node_release(struct kref *ref)
+=======
+static void batadv_gw_node_release(struct kref *ref)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct batadv_gw_node *gw_node;
 
@@ -70,6 +74,19 @@ void batadv_gw_node_release(struct kref *ref)
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * batadv_gw_node_put() - decrement the gw_node refcounter and possibly release
+ *  it
+ * @gw_node: gateway node to free
+ */
+void batadv_gw_node_put(struct batadv_gw_node *gw_node)
+{
+	kref_put(&gw_node->refcount, batadv_gw_node_release);
+}
+
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * batadv_gw_get_selected_gw_node() - Get currently selected gateway
  * @bat_priv: the bat priv with all the soft interface information
  *
@@ -120,7 +137,12 @@ batadv_gw_get_selected_orig(struct batadv_priv *bat_priv)
 unlock:
 	rcu_read_unlock();
 out:
+<<<<<<< HEAD
 	batadv_gw_node_put(gw_node);
+=======
+	if (gw_node)
+		batadv_gw_node_put(gw_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return orig_node;
 }
 
@@ -137,7 +159,12 @@ static void batadv_gw_select(struct batadv_priv *bat_priv,
 	curr_gw_node = rcu_replace_pointer(bat_priv->gw.curr_gw, new_gw_node,
 					   true);
 
+<<<<<<< HEAD
 	batadv_gw_node_put(curr_gw_node);
+=======
+	if (curr_gw_node)
+		batadv_gw_node_put(curr_gw_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_unlock_bh(&bat_priv->gw.list_lock);
 }
@@ -272,10 +299,21 @@ void batadv_gw_election(struct batadv_priv *bat_priv)
 	batadv_gw_select(bat_priv, next_gw);
 
 out:
+<<<<<<< HEAD
 	batadv_gw_node_put(curr_gw);
 	batadv_gw_node_put(next_gw);
 	batadv_neigh_node_put(router);
 	batadv_neigh_ifinfo_put(router_ifinfo);
+=======
+	if (curr_gw)
+		batadv_gw_node_put(curr_gw);
+	if (next_gw)
+		batadv_gw_node_put(next_gw);
+	if (router)
+		batadv_neigh_node_put(router);
+	if (router_ifinfo)
+		batadv_neigh_ifinfo_put(router_ifinfo);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -309,7 +347,12 @@ void batadv_gw_check_election(struct batadv_priv *bat_priv,
 reselect:
 	batadv_gw_reselect(bat_priv);
 out:
+<<<<<<< HEAD
 	batadv_orig_node_put(curr_gw_orig);
+=======
+	if (curr_gw_orig)
+		batadv_orig_node_put(curr_gw_orig);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -449,11 +492,21 @@ void batadv_gw_node_update(struct batadv_priv *bat_priv,
 		if (gw_node == curr_gw)
 			batadv_gw_reselect(bat_priv);
 
+<<<<<<< HEAD
 		batadv_gw_node_put(curr_gw);
 	}
 
 out:
 	batadv_gw_node_put(gw_node);
+=======
+		if (curr_gw)
+			batadv_gw_node_put(curr_gw);
+	}
+
+out:
+	if (gw_node)
+		batadv_gw_node_put(gw_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -536,8 +589,15 @@ int batadv_gw_dump(struct sk_buff *msg, struct netlink_callback *cb)
 	ret = msg->len;
 
 out:
+<<<<<<< HEAD
 	batadv_hardif_put(primary_if);
 	dev_put(soft_iface);
+=======
+	if (primary_if)
+		batadv_hardif_put(primary_if);
+	if (soft_iface)
+		dev_put(soft_iface);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -759,10 +819,23 @@ bool batadv_gw_out_of_range(struct batadv_priv *bat_priv,
 	batadv_neigh_ifinfo_put(old_ifinfo);
 
 out:
+<<<<<<< HEAD
 	batadv_orig_node_put(orig_dst_node);
 	batadv_gw_node_put(curr_gw);
 	batadv_gw_node_put(gw_node);
 	batadv_neigh_node_put(neigh_old);
 	batadv_neigh_node_put(neigh_curr);
+=======
+	if (orig_dst_node)
+		batadv_orig_node_put(orig_dst_node);
+	if (curr_gw)
+		batadv_gw_node_put(curr_gw);
+	if (gw_node)
+		batadv_gw_node_put(gw_node);
+	if (neigh_old)
+		batadv_neigh_node_put(neigh_old);
+	if (neigh_curr)
+		batadv_neigh_node_put(neigh_curr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return out_of_range;
 }

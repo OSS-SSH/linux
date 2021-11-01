@@ -3536,7 +3536,11 @@ static int idt77252_preset(struct idt77252_dev *card)
 		return -1;
 	}
 	if (!(pci_command & PCI_COMMAND_IO)) {
+<<<<<<< HEAD
 		printk("%s: PCI_COMMAND: %04x (?)\n",
+=======
+		printk("%s: PCI_COMMAND: %04x (???)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       card->name, pci_command);
 		deinit_card(card);
 		return (-1);

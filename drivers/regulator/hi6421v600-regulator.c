@@ -4,7 +4,11 @@
 //
 // Copyright (c) 2013 Linaro Ltd.
 // Copyright (c) 2011 HiSilicon Ltd.
+<<<<<<< HEAD
 // Copyright (c) 2020-2021 Huawei Technologies Co., Ltd.
+=======
+// Copyright (c) 2020-2021 Huawei Technologies Co., Ltd
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 //
 // Guodong Xu <guodong.xu@linaro.org>
 
@@ -27,34 +31,58 @@ struct hi6421_spmi_reg_info {
 	u32			eco_uA;
 };
 
+<<<<<<< HEAD
 static const unsigned int range_1v5_to_2v0[] = {
+=======
+static const unsigned int ldo3_voltages[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	1500000, 1550000, 1600000, 1650000,
 	1700000, 1725000, 1750000, 1775000,
 	1800000, 1825000, 1850000, 1875000,
 	1900000, 1925000, 1950000, 2000000
 };
 
+<<<<<<< HEAD
 static const unsigned int range_1v725_to_1v9[] = {
+=======
+static const unsigned int ldo4_voltages[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	1725000, 1750000, 1775000, 1800000,
 	1825000, 1850000, 1875000, 1900000
 };
 
+<<<<<<< HEAD
 static const unsigned int range_1v75_to_3v3[] = {
+=======
+static const unsigned int ldo9_voltages[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	1750000, 1800000, 1825000, 2800000,
 	2850000, 2950000, 3000000, 3300000
 };
 
+<<<<<<< HEAD
 static const unsigned int range_1v8_to_3v0[] = {
+=======
+static const unsigned int ldo15_voltages[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	1800000, 1850000, 2400000, 2600000,
 	2700000, 2850000, 2950000, 3000000
 };
 
+<<<<<<< HEAD
 static const unsigned int range_2v5_to_3v3[] = {
+=======
+static const unsigned int ldo17_voltages[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	2500000, 2600000, 2700000, 2800000,
 	3000000, 3100000, 3200000, 3300000
 };
 
+<<<<<<< HEAD
 static const unsigned int range_2v6_to_3v3[] = {
+=======
+static const unsigned int ldo34_voltages[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	2600000, 2700000, 2800000, 2900000,
 	3000000, 3100000, 3200000, 3300000
 };
@@ -73,14 +101,22 @@ static const unsigned int range_2v6_to_3v3[] = {
  */
 #define HI6421V600_LDO(_id, vtable, ereg, emask, vreg,			       \
 		       odelay, etime, ecomask, ecoamp)			       \
+<<<<<<< HEAD
 	[hi6421v600_##_id] = {						       \
+=======
+	[HI6421V600_##_id] = {						       \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.desc = {						       \
 			.name		= #_id,				       \
 			.of_match        = of_match_ptr(#_id),		       \
 			.regulators_node = of_match_ptr("regulators"),	       \
 			.ops		= &hi6421_spmi_ldo_rops,	       \
 			.type		= REGULATOR_VOLTAGE,		       \
+<<<<<<< HEAD
 			.id		= hi6421v600_##_id,		       \
+=======
+			.id		= HI6421V600_##_id,		       \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			.owner		= THIS_MODULE,			       \
 			.volt_table	= vtable,			       \
 			.n_voltages	= ARRAY_SIZE(vtable),		       \
@@ -98,9 +134,16 @@ static const unsigned int range_2v6_to_3v3[] = {
 
 static int hi6421_spmi_regulator_enable(struct regulator_dev *rdev)
 {
+<<<<<<< HEAD
 	struct hi6421_spmi_reg_priv *priv = rdev_get_drvdata(rdev);
 	int ret;
 
+=======
+	struct hi6421_spmi_reg_priv *priv;
+	int ret;
+
+	priv = dev_get_drvdata(rdev->dev.parent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* cannot enable more than one regulator at one time */
 	mutex_lock(&priv->enable_mutex);
 
@@ -118,10 +161,16 @@ static int hi6421_spmi_regulator_enable(struct regulator_dev *rdev)
 
 static unsigned int hi6421_spmi_regulator_get_mode(struct regulator_dev *rdev)
 {
+<<<<<<< HEAD
 	struct hi6421_spmi_reg_info *sreg;
 	unsigned int reg_val;
 
 	sreg = container_of(rdev->desc, struct hi6421_spmi_reg_info, desc);
+=======
+	struct hi6421_spmi_reg_info *sreg = rdev_get_drvdata(rdev);
+	unsigned int reg_val;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	regmap_read(rdev->regmap, rdev->desc->enable_reg, &reg_val);
 
 	if (reg_val & sreg->eco_mode_mask)
@@ -133,10 +182,16 @@ static unsigned int hi6421_spmi_regulator_get_mode(struct regulator_dev *rdev)
 static int hi6421_spmi_regulator_set_mode(struct regulator_dev *rdev,
 					  unsigned int mode)
 {
+<<<<<<< HEAD
 	struct hi6421_spmi_reg_info *sreg;
 	unsigned int val;
 
 	sreg = container_of(rdev->desc, struct hi6421_spmi_reg_info, desc);
+=======
+	struct hi6421_spmi_reg_info *sreg = rdev_get_drvdata(rdev);
+	unsigned int val;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (mode) {
 	case REGULATOR_MODE_NORMAL:
 		val = 0;
@@ -160,9 +215,13 @@ hi6421_spmi_regulator_get_optimum_mode(struct regulator_dev *rdev,
 				       int input_uV, int output_uV,
 				       int load_uA)
 {
+<<<<<<< HEAD
 	struct hi6421_spmi_reg_info *sreg;
 
 	sreg = container_of(rdev->desc, struct hi6421_spmi_reg_info, desc);
+=======
+	struct hi6421_spmi_reg_info *sreg = rdev_get_drvdata(rdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!sreg->eco_uA || ((unsigned int)load_uA > sreg->eco_uA))
 		return REGULATOR_MODE_NORMAL;
@@ -185,6 +244,7 @@ static const struct regulator_ops hi6421_spmi_ldo_rops = {
 
 /* HI6421v600 regulators with known registers */
 enum hi6421_spmi_regulator_id {
+<<<<<<< HEAD
 	hi6421v600_ldo3,
 	hi6421v600_ldo4,
 	hi6421v600_ldo9,
@@ -225,6 +285,48 @@ static struct hi6421_spmi_reg_info regulator_info[] = {
 		       20000, 120,
 		       0, 0),
 	HI6421V600_LDO(ldo34, range_2v6_to_3v3,
+=======
+	HI6421V600_LDO3,
+	HI6421V600_LDO4,
+	HI6421V600_LDO9,
+	HI6421V600_LDO15,
+	HI6421V600_LDO16,
+	HI6421V600_LDO17,
+	HI6421V600_LDO33,
+	HI6421V600_LDO34,
+};
+
+static struct hi6421_spmi_reg_info regulator_info[] = {
+	HI6421V600_LDO(LDO3, ldo3_voltages,
+		       0x16, 0x01, 0x51,
+		       20000, 120,
+		       0, 0),
+	HI6421V600_LDO(LDO4, ldo4_voltages,
+		       0x17, 0x01, 0x52,
+		       20000, 120,
+		       0x10, 10000),
+	HI6421V600_LDO(LDO9, ldo9_voltages,
+		       0x1c, 0x01, 0x57,
+		       20000, 360,
+		       0x10, 10000),
+	HI6421V600_LDO(LDO15, ldo15_voltages,
+		       0x21, 0x01, 0x5c,
+		       20000, 360,
+		       0x10, 10000),
+	HI6421V600_LDO(LDO16, ldo15_voltages,
+		       0x22, 0x01, 0x5d,
+		       20000, 360,
+		       0x10, 10000),
+	HI6421V600_LDO(LDO17, ldo17_voltages,
+		       0x23, 0x01, 0x5e,
+		       20000, 120,
+		       0x10, 10000),
+	HI6421V600_LDO(LDO33, ldo17_voltages,
+		       0x32, 0x01, 0x6d,
+		       20000, 120,
+		       0, 0),
+	HI6421V600_LDO(LDO34, ldo34_voltages,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       0x33, 0x01, 0x6e,
 		       20000, 120,
 		       0, 0),
@@ -255,12 +357,20 @@ static int hi6421_spmi_regulator_probe(struct platform_device *pdev)
 		return -ENOMEM;
 
 	mutex_init(&priv->enable_mutex);
+<<<<<<< HEAD
+=======
+	platform_set_drvdata(pdev, priv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < ARRAY_SIZE(regulator_info); i++) {
 		info = &regulator_info[i];
 
 		config.dev = pdev->dev.parent;
+<<<<<<< HEAD
 		config.driver_data = priv;
+=======
+		config.driver_data = info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		config.regmap = pmic->regmap;
 
 		rdev = devm_regulator_register(dev, &info->desc, &config);

@@ -729,7 +729,10 @@ static int do_help(int argc, char **argv)
 		"\n"
 		"       " HELP_SPEC_PROGRAM "\n"
 		"       ATTACH_TYPE := { xdp | xdpgeneric | xdpdrv | xdpoffload }\n"
+<<<<<<< HEAD
 		"       " HELP_SPEC_OPTIONS " }\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		"\n"
 		"Note: Only xdp and tc attachments are supported now.\n"
 		"      For progs attached to cgroups, use \"bpftool cgroup\"\n"

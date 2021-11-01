@@ -1133,7 +1133,11 @@ static int do_proc_control(struct usb_dev_state *ps,
 		"wIndex=%04x wLength=%04x\n",
 		ctrl->bRequestType, ctrl->bRequest, ctrl->wValue,
 		ctrl->wIndex, ctrl->wLength);
+<<<<<<< HEAD
 	if ((ctrl->bRequestType & USB_DIR_IN) && ctrl->wLength) {
+=======
+	if (ctrl->bRequestType & 0x80) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pipe = usb_rcvctrlpipe(dev, 0);
 		snoop_urb(dev, NULL, pipe, ctrl->wLength, tmo, SUBMIT, NULL, 0);
 

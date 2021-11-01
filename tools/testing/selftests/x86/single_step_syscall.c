@@ -57,6 +57,10 @@ static void clearhandler(int sig)
 
 static volatile sig_atomic_t sig_traps, sig_eflags;
 sigjmp_buf jmpbuf;
+<<<<<<< HEAD
+=======
+static unsigned char altstack_data[SIGSTKSZ];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef __x86_64__
 # define REG_IP REG_RIP
@@ -209,7 +213,11 @@ int main()
 		unsigned long nr = SYS_getpid;
 		printf("[RUN]\tSet TF and check SYSENTER\n");
 		stack_t stack = {
+<<<<<<< HEAD
 			.ss_sp = malloc(sizeof(char) * SIGSTKSZ),
+=======
+			.ss_sp = altstack_data,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			.ss_size = SIGSTKSZ,
 		};
 		if (sigaltstack(&stack, NULL) != 0)
@@ -218,7 +226,10 @@ int main()
 			   SA_RESETHAND | SA_ONSTACK);
 		sethandler(SIGILL, print_and_longjmp, SA_RESETHAND);
 		set_eflags(get_eflags() | X86_EFLAGS_TF);
+<<<<<<< HEAD
 		free(stack.ss_sp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Clear EBP first to make sure we segfault cleanly. */
 		asm volatile ("xorl %%ebp, %%ebp; SYSENTER" : "+a" (nr) :: "flags", "rcx"
 #ifdef __x86_64__

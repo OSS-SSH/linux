@@ -20,6 +20,7 @@ MODULE_IMPORT_NS(NVME_TARGET_PASSTHRU);
  */
 static DEFINE_XARRAY(passthru_subsystems);
 
+<<<<<<< HEAD
 void nvmet_passthrough_override_cap(struct nvmet_ctrl *ctrl)
 {
 	/*
@@ -30,6 +31,8 @@ void nvmet_passthrough_override_cap(struct nvmet_ctrl *ctrl)
 		ctrl->cap &= ~(1ULL << 43);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static u16 nvmet_passthru_override_id_ctrl(struct nvmet_req *req)
 {
 	struct nvmet_ctrl *ctrl = req->sq->ctrl;
@@ -228,7 +231,11 @@ static int nvmet_passthru_map_sg(struct nvmet_req *req, struct request *rq)
 
 static void nvmet_passthru_execute_cmd(struct nvmet_req *req)
 {
+<<<<<<< HEAD
 	struct nvme_ctrl *ctrl = nvmet_req_subsys(req)->passthru_ctrl;
+=======
+	struct nvme_ctrl *ctrl = nvmet_req_passthru_ctrl(req);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct request_queue *q = ctrl->admin_q;
 	struct nvme_ns *ns = NULL;
 	struct request *rq = NULL;
@@ -309,7 +316,11 @@ out:
  */
 static void nvmet_passthru_set_host_behaviour(struct nvmet_req *req)
 {
+<<<<<<< HEAD
 	struct nvme_ctrl *ctrl = nvmet_req_subsys(req)->passthru_ctrl;
+=======
+	struct nvme_ctrl *ctrl = nvmet_req_passthru_ctrl(req);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nvme_feat_host_behavior *host;
 	u16 status = NVME_SC_INTERNAL;
 	int ret;

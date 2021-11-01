@@ -525,11 +525,14 @@ alternative_endif
 #define EXPORT_SYMBOL_NOKASAN(name)	EXPORT_SYMBOL(name)
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_KASAN_HW_TAGS
 #define EXPORT_SYMBOL_NOHWKASAN(name)
 #else
 #define EXPORT_SYMBOL_NOHWKASAN(name)	EXPORT_SYMBOL_NOKASAN(name)
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Emit a 64-bit absolute little endian symbol reference in a way that
 	 * ensures that it will be resolved at build time, even when building a

@@ -26,7 +26,11 @@
 #include <linux/init.h>
 #include <linux/slab.h>
 #include <linux/debugfs.h>
+<<<<<<< HEAD
 #include <linux/utsname.h>
+=======
+#include <linux/init.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define DEFAULT_COUNT 10
 
@@ -82,7 +86,12 @@ static struct crashpoint crashpoints[] = {
 	CRASHPOINT("FS_DEVRW",		 "ll_rw_block"),
 	CRASHPOINT("MEM_SWAPOUT",	 "shrink_inactive_list"),
 	CRASHPOINT("TIMERADD",		 "hrtimer_start"),
+<<<<<<< HEAD
 	CRASHPOINT("SCSI_QUEUE_RQ",	 "scsi_queue_rq"),
+=======
+	CRASHPOINT("SCSI_DISPATCH_CMD",	 "scsi_dispatch_cmd"),
+	CRASHPOINT("IDE_CORE_CP",	 "generic_ide_ioctl"),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 };
 
@@ -118,6 +127,11 @@ static const struct crashtype crashtypes[] = {
 	CRASHTYPE(UNSET_SMEP),
 	CRASHTYPE(CORRUPT_PAC),
 	CRASHTYPE(UNALIGNED_LOAD_STORE_WRITE),
+<<<<<<< HEAD
+=======
+	CRASHTYPE(FORTIFY_OBJECT),
+	CRASHTYPE(FORTIFY_SUBOBJECT),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	CRASHTYPE(SLAB_LINEAR_OVERFLOW),
 	CRASHTYPE(VMALLOC_LINEAR_OVERFLOW),
 	CRASHTYPE(WRITE_AFTER_FREE),
@@ -177,8 +191,11 @@ static const struct crashtype crashtypes[] = {
 	CRASHTYPE(USERCOPY_KERNEL),
 	CRASHTYPE(STACKLEAK_ERASING),
 	CRASHTYPE(CFI_FORWARD_PROTO),
+<<<<<<< HEAD
 	CRASHTYPE(FORTIFIED_OBJECT),
 	CRASHTYPE(FORTIFIED_SUBOBJECT),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	CRASHTYPE(FORTIFIED_STRSCPY),
 	CRASHTYPE(DOUBLE_FAULT),
 #ifdef CONFIG_PPC_BOOK3S_64
@@ -211,8 +228,11 @@ module_param(cpoint_count, int, 0644);
 MODULE_PARM_DESC(cpoint_count, " Crash Point Count, number of times the "\
 				"crash point is to be hit to trigger action");
 
+<<<<<<< HEAD
 /* For test debug reporting. */
 char *lkdtm_kernel_info;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Return the crashtype number or NULL if the name is invalid */
 static const struct crashtype *find_crashtype(const char *name)
@@ -493,11 +513,14 @@ static int __init lkdtm_module_init(void)
 	crash_count = cpoint_count;
 #endif
 
+<<<<<<< HEAD
 	/* Common initialization. */
 	lkdtm_kernel_info = kasprintf(GFP_KERNEL, "kernel (%s %s)",
 				      init_uts_ns.name.release,
 				      init_uts_ns.name.machine);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Handle test-specific initialization. */
 	lkdtm_bugs_init(&recur_count);
 	lkdtm_perms_init();
@@ -546,8 +569,11 @@ static void __exit lkdtm_module_exit(void)
 	if (lkdtm_kprobe != NULL)
 		unregister_kprobe(lkdtm_kprobe);
 
+<<<<<<< HEAD
 	kfree(lkdtm_kernel_info);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_info("Crash point unregistered\n");
 }
 

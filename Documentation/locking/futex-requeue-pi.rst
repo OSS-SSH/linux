@@ -5,7 +5,11 @@ Futex Requeue PI
 Requeueing of tasks from a non-PI futex to a PI futex requires
 special handling in order to ensure the underlying rt_mutex is never
 left without an owner if it has waiters; doing so would break the PI
+<<<<<<< HEAD
 boosting logic [see rt-mutex-design.rst] For the purposes of
+=======
+boosting logic [see rt-mutex-desgin.txt] For the purposes of
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 brevity, this action will be referred to as "requeue_pi" throughout
 this document.  Priority inheritance is abbreviated throughout as
 "PI".

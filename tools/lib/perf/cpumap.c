@@ -68,11 +68,14 @@ static struct perf_cpu_map *cpu_map__default_new(void)
 	return cpus;
 }
 
+<<<<<<< HEAD
 struct perf_cpu_map *perf_cpu_map__default_new(void)
 {
 	return cpu_map__default_new();
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int cmp_int(const void *a, const void *b)
 {
 	return *(const int *)a - *(const int*)b;
@@ -282,8 +285,19 @@ int perf_cpu_map__idx(struct perf_cpu_map *cpus, int cpu)
 
 int perf_cpu_map__max(struct perf_cpu_map *map)
 {
+<<<<<<< HEAD
 	// cpu_map__trim_new() qsort()s it, cpu_map__default_new() sorts it as well.
 	return map->nr > 0 ? map->map[map->nr - 1] : -1;
+=======
+	int i, max = -1;
+
+	for (i = 0; i < map->nr; i++) {
+		if (map->map[i] > max)
+			max = map->map[i];
+	}
+
+	return max;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

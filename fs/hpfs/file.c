@@ -9,7 +9,10 @@
 
 #include "hpfs_fn.h"
 #include <linux/mpage.h>
+<<<<<<< HEAD
 #include <linux/iomap.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/fiemap.h>
 
 #define BLOCKS(size) (((size) + 511) >> 9)
@@ -117,6 +120,7 @@ static int hpfs_get_block(struct inode *inode, sector_t iblock, struct buffer_he
 	return r;
 }
 
+<<<<<<< HEAD
 static int hpfs_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
 		unsigned flags, struct iomap *iomap, struct iomap *srcmap)
 {
@@ -158,6 +162,8 @@ static const struct iomap_ops hpfs_iomap_ops = {
 	.iomap_begin		= hpfs_iomap_begin,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int hpfs_readpage(struct file *file, struct page *page)
 {
 	return mpage_readpage(page, hpfs_get_block);
@@ -234,6 +240,7 @@ static sector_t _hpfs_bmap(struct address_space *mapping, sector_t block)
 
 static int hpfs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo, u64 start, u64 len)
 {
+<<<<<<< HEAD
 	int ret;
 
 	inode_lock(inode);
@@ -242,6 +249,9 @@ static int hpfs_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo, 
 	inode_unlock(inode);
 
 	return ret;
+=======
+	return generic_block_fiemap(inode, fieinfo, start, len, hpfs_get_block);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 const struct address_space_operations hpfs_aops = {

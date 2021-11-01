@@ -24,10 +24,17 @@ description: |
 
 properties:
   compatible:
+<<<<<<< HEAD
     enum:
       - ti,tlv320adc3140
       - ti,tlv320adc5140
       - ti,tlv320adc6140
+=======
+    oneOf:
+      - const: ti,tlv320adc3140
+      - const: ti,tlv320adc5140
+      - const: ti,tlv320adc6140
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   reg:
     maxItems: 1

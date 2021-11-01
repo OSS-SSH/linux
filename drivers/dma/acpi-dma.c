@@ -70,6 +70,7 @@ static int acpi_dma_parse_resource_group(const struct acpi_csrt_group *grp,
 
 	si = (const struct acpi_csrt_shared_info *)&grp[1];
 
+<<<<<<< HEAD
 	/* Match device by MMIO */
 	if (si->mmio_base_low != lower_32_bits(mem) ||
 	    si->mmio_base_high != upper_32_bits(mem))
@@ -86,6 +87,12 @@ static int acpi_dma_parse_resource_group(const struct acpi_csrt_group *grp,
 
 	/* Match device by Linux vIRQ */
 	if (ret != irq)
+=======
+	/* Match device by MMIO and IRQ */
+	if (si->mmio_base_low != lower_32_bits(mem) ||
+	    si->mmio_base_high != upper_32_bits(mem) ||
+	    si->gsi_interrupt != irq)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	dev_dbg(&adev->dev, "matches with %.4s%04X (rev %u)\n",

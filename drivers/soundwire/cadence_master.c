@@ -450,6 +450,7 @@ static int cdns_parity_error_injection(void *data, u64 value)
 DEFINE_DEBUGFS_ATTRIBUTE(cdns_parity_error_fops, NULL,
 			 cdns_parity_error_injection, "%llu\n");
 
+<<<<<<< HEAD
 static int cdns_set_pdi_loopback_source(void *data, u64 value)
 {
 	struct sdw_cdns *cdns = data;
@@ -484,6 +485,8 @@ static int cdns_set_pdi_loopback_target(void *data, u64 value)
 }
 DEFINE_DEBUGFS_ATTRIBUTE(cdns_pdi_loopback_target_fops, NULL, cdns_set_pdi_loopback_target, "%llu\n");
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * sdw_cdns_debugfs_init() - Cadence debugfs init
  * @cdns: Cadence instance
@@ -498,6 +501,7 @@ void sdw_cdns_debugfs_init(struct sdw_cdns *cdns, struct dentry *root)
 
 	debugfs_create_file("cdns-parity-error-injection", 0200, root, cdns,
 			    &cdns_parity_error_fops);
+<<<<<<< HEAD
 
 	cdns->pdi_loopback_source = -1;
 	cdns->pdi_loopback_target = -1;
@@ -508,6 +512,8 @@ void sdw_cdns_debugfs_init(struct sdw_cdns *cdns, struct dentry *root)
 	debugfs_create_file("cdns-pdi-loopback-target", 0200, root, cdns,
 			    &cdns_pdi_loopback_target_fops);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(sdw_cdns_debugfs_init);
 
@@ -866,6 +872,10 @@ irqreturn_t sdw_cdns_irq(int irq, void *dev_id)
 {
 	struct sdw_cdns *cdns = dev_id;
 	u32 int_status;
+<<<<<<< HEAD
+=======
+	int ret = IRQ_HANDLED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Check if the link is up */
 	if (!cdns->link_up)
@@ -943,7 +953,11 @@ irqreturn_t sdw_cdns_irq(int irq, void *dev_id)
 	}
 
 	cdns_writel(cdns, CDNS_MCP_INTSTAT, int_status);
+<<<<<<< HEAD
 	return IRQ_HANDLED;
+=======
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(sdw_cdns_irq);
 
@@ -979,6 +993,7 @@ static void cdns_update_slave_status_work(struct work_struct *work)
 
 }
 
+<<<<<<< HEAD
 /* paranoia check to make sure self-cleared bits are indeed cleared */
 void sdw_cdns_check_self_clearing_bits(struct sdw_cdns *cdns, const char *string,
 				       bool initial_delay, int reset_iterations)
@@ -1022,6 +1037,8 @@ void sdw_cdns_check_self_clearing_bits(struct sdw_cdns *cdns, const char *string
 }
 EXPORT_SYMBOL(sdw_cdns_check_self_clearing_bits);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * init routines
  */
@@ -1032,7 +1049,14 @@ EXPORT_SYMBOL(sdw_cdns_check_self_clearing_bits);
  */
 int sdw_cdns_exit_reset(struct sdw_cdns *cdns)
 {
+<<<<<<< HEAD
 	/* keep reset delay unchanged to 4096 cycles */
+=======
+	/* program maximum length reset to be safe */
+	cdns_updatel(cdns, CDNS_MCP_CONTROL,
+		     CDNS_MCP_CONTROL_RST_DELAY,
+		     CDNS_MCP_CONTROL_RST_DELAY);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* use hardware generated reset */
 	cdns_updatel(cdns, CDNS_MCP_CONTROL,
@@ -1296,8 +1320,11 @@ int sdw_cdns_init(struct sdw_cdns *cdns)
 
 	cdns_init_clock_ctrl(cdns);
 
+<<<<<<< HEAD
 	sdw_cdns_check_self_clearing_bits(cdns, __func__, false, 0);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* reset msg_count to default value of FIFOLEVEL */
 	cdns->msg_count = cdns_readl(cdns, CDNS_MCP_FIFOLEVEL);
 
@@ -1371,6 +1398,7 @@ static int cdns_port_params(struct sdw_bus *bus,
 			    struct sdw_port_params *p_params, unsigned int bank)
 {
 	struct sdw_cdns *cdns = bus_to_cdns(bus);
+<<<<<<< HEAD
 	int dpn_config_off_source;
 	int dpn_config_off_target;
 	int target_num = p_params->num;
@@ -1402,6 +1430,22 @@ static int cdns_port_params(struct sdw_bus *bus,
 	}
 
 	cdns_writel(cdns, dpn_config_off_target, dpn_config);
+=======
+	int dpn_config = 0, dpn_config_off;
+
+	if (bank)
+		dpn_config_off = CDNS_DPN_B1_CONFIG(p_params->num);
+	else
+		dpn_config_off = CDNS_DPN_B0_CONFIG(p_params->num);
+
+	dpn_config = cdns_readl(cdns, dpn_config_off);
+
+	u32p_replace_bits(&dpn_config, (p_params->bps - 1), CDNS_DPN_CONFIG_WL);
+	u32p_replace_bits(&dpn_config, p_params->flow_mode, CDNS_DPN_CONFIG_PORT_FLOW);
+	u32p_replace_bits(&dpn_config, p_params->data_mode, CDNS_DPN_CONFIG_PORT_DAT);
+
+	cdns_writel(cdns, dpn_config_off, dpn_config);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -1411,6 +1455,7 @@ static int cdns_transport_params(struct sdw_bus *bus,
 				 enum sdw_reg_bank bank)
 {
 	struct sdw_cdns *cdns = bus_to_cdns(bus);
+<<<<<<< HEAD
 	int dpn_config;
 	int dpn_config_off_source;
 	int dpn_config_off_target;
@@ -1432,6 +1477,13 @@ static int cdns_transport_params(struct sdw_bus *bus,
 		source_num = cdns->pdi_loopback_source;
 		override = true;
 	}
+=======
+	int dpn_offsetctrl = 0, dpn_offsetctrl_off;
+	int dpn_config = 0, dpn_config_off;
+	int dpn_hctrl = 0, dpn_hctrl_off;
+	int num = t_params->port_num;
+	int dpn_samplectrl_off;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Note: Only full data port is supported on the Master side for
@@ -1439,6 +1491,7 @@ static int cdns_transport_params(struct sdw_bus *bus,
 	 */
 
 	if (bank) {
+<<<<<<< HEAD
 		dpn_config_off_source = CDNS_DPN_B1_CONFIG(source_num);
 		dpn_hctrl_off_source = CDNS_DPN_B1_HCTRL(source_num);
 		dpn_offsetctrl_off_source = CDNS_DPN_B1_OFFSET_CTRL(source_num);
@@ -1492,6 +1545,34 @@ static int cdns_transport_params(struct sdw_bus *bus,
 	else
 		dpn_samplectrl = cdns_readl(cdns, dpn_samplectrl_off_source);
 	cdns_writel(cdns, dpn_samplectrl_off_target, dpn_samplectrl);
+=======
+		dpn_config_off = CDNS_DPN_B1_CONFIG(num);
+		dpn_samplectrl_off = CDNS_DPN_B1_SAMPLE_CTRL(num);
+		dpn_hctrl_off = CDNS_DPN_B1_HCTRL(num);
+		dpn_offsetctrl_off = CDNS_DPN_B1_OFFSET_CTRL(num);
+	} else {
+		dpn_config_off = CDNS_DPN_B0_CONFIG(num);
+		dpn_samplectrl_off = CDNS_DPN_B0_SAMPLE_CTRL(num);
+		dpn_hctrl_off = CDNS_DPN_B0_HCTRL(num);
+		dpn_offsetctrl_off = CDNS_DPN_B0_OFFSET_CTRL(num);
+	}
+
+	dpn_config = cdns_readl(cdns, dpn_config_off);
+	u32p_replace_bits(&dpn_config, t_params->blk_grp_ctrl, CDNS_DPN_CONFIG_BGC);
+	u32p_replace_bits(&dpn_config, t_params->blk_pkg_mode, CDNS_DPN_CONFIG_BPM);
+	cdns_writel(cdns, dpn_config_off, dpn_config);
+
+	u32p_replace_bits(&dpn_offsetctrl, t_params->offset1, CDNS_DPN_OFFSET_CTRL_1);
+	u32p_replace_bits(&dpn_offsetctrl, t_params->offset2, CDNS_DPN_OFFSET_CTRL_2);
+	cdns_writel(cdns, dpn_offsetctrl_off,  dpn_offsetctrl);
+
+	u32p_replace_bits(&dpn_hctrl, t_params->hstart, CDNS_DPN_HCTRL_HSTART);
+	u32p_replace_bits(&dpn_hctrl, t_params->hstop, CDNS_DPN_HCTRL_HSTOP);
+	u32p_replace_bits(&dpn_hctrl, t_params->lane_ctrl, CDNS_DPN_HCTRL_LCTRL);
+
+	cdns_writel(cdns, dpn_hctrl_off, dpn_hctrl);
+	cdns_writel(cdns, dpn_samplectrl_off, (t_params->sample_interval - 1));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -1542,8 +1623,11 @@ int sdw_cdns_clock_stop(struct sdw_cdns *cdns, bool block_wake)
 	struct sdw_slave *slave;
 	int ret;
 
+<<<<<<< HEAD
 	sdw_cdns_check_self_clearing_bits(cdns, __func__, false, 0);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Check suspend status */
 	if (sdw_cdns_is_clock_stop(cdns)) {
 		dev_dbg(cdns->dev, "Clock is already stopped\n");

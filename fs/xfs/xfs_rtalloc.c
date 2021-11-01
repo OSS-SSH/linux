@@ -923,6 +923,7 @@ xfs_growfs_rt(
 	uint8_t		*rsum_cache;	/* old summary cache */
 
 	sbp = &mp->m_sb;
+<<<<<<< HEAD
 
 	if (!capable(CAP_SYS_ADMIN))
 		return -EPERM;
@@ -957,6 +958,18 @@ xfs_growfs_rt(
 	nrblocks = in->newblocks;
 	error = xfs_sb_validate_fsb_count(sbp, nrblocks);
 	if (error)
+=======
+	/*
+	 * Initial error checking.
+	 */
+	if (!capable(CAP_SYS_ADMIN))
+		return -EPERM;
+	if (mp->m_rtdev_targp == NULL || mp->m_rbmip == NULL ||
+	    (nrblocks = in->newblocks) <= sbp->sb_rblocks ||
+	    (sbp->sb_rblocks && (in->extsize != sbp->sb_rextsize)))
+		return -EINVAL;
+	if ((error = xfs_sb_validate_fsb_count(sbp, nrblocks)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return error;
 	/*
 	 * Read in the last block of the device, make sure it exists.
@@ -1020,8 +1033,12 @@ xfs_growfs_rt(
 		     ((sbp->sb_rextents & ((1 << mp->m_blkbit_log) - 1)) != 0);
 	     bmbno < nrbmblocks;
 	     bmbno++) {
+<<<<<<< HEAD
 		struct xfs_trans	*tp;
 		xfs_rfsblock_t		nrblocks_step;
+=======
+		xfs_trans_t	*tp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		*nmp = *mp;
 		nsbp = &nmp->m_sb;
@@ -1030,9 +1047,16 @@ xfs_growfs_rt(
 		 */
 		nsbp->sb_rextsize = in->extsize;
 		nsbp->sb_rbmblocks = bmbno + 1;
+<<<<<<< HEAD
 		nrblocks_step = (bmbno + 1) * NBBY * nsbp->sb_blocksize *
 				nsbp->sb_rextsize;
 		nsbp->sb_rblocks = min(nrblocks, nrblocks_step);
+=======
+		nsbp->sb_rblocks =
+			XFS_RTMIN(nrblocks,
+				  nsbp->sb_rbmblocks * NBBY *
+				  nsbp->sb_blocksize * nsbp->sb_rextsize);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		nsbp->sb_rextents = nsbp->sb_rblocks;
 		do_div(nsbp->sb_rextents, nsbp->sb_rextsize);
 		ASSERT(nsbp->sb_rextents != 0);
@@ -1130,9 +1154,12 @@ error_cancel:
 		error = xfs_trans_commit(tp);
 		if (error)
 			break;
+<<<<<<< HEAD
 
 		/* Ensure the mount RT feature flag is now set. */
 		mp->m_features |= XFS_FEAT_REALTIME;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	if (error)
 		goto out_free;

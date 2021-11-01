@@ -180,6 +180,10 @@ Limitations
 ===========
 - Not all page types are supported and never will. Most kernel internal
   objects cannot be recovered, only LRU pages for now.
+<<<<<<< HEAD
+=======
+- Right now hugepage support is missing.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ---
 Andi Kleen, Oct 2009

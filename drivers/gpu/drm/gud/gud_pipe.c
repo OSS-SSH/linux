@@ -3,6 +3,10 @@
  * Copyright 2020 Noralf Trønnes
  */
 
+<<<<<<< HEAD
+=======
+#include <linux/dma-buf.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/lz4.h>
 #include <linux/usb.h>
 #include <linux/workqueue.h>
@@ -14,8 +18,12 @@
 #include <drm/drm_format_helper.h>
 #include <drm/drm_fourcc.h>
 #include <drm/drm_framebuffer.h>
+<<<<<<< HEAD
 #include <drm/drm_gem.h>
 #include <drm/drm_gem_framebuffer_helper.h>
+=======
+#include <drm/drm_gem_shmem_helper.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_print.h>
 #include <drm/drm_rect.h>
 #include <drm/drm_simple_kms_helper.h>
@@ -24,6 +32,7 @@
 #include "gud_internal.h"
 
 /*
+<<<<<<< HEAD
  * Some userspace rendering loops runs all displays in the same loop.
  * This means that a fast display will have to wait for a slow one.
  * For this reason gud does flushing asynchronous by default.
@@ -37,6 +46,8 @@ module_param_named(async_flush, gud_async_flush, bool, 0644);
 MODULE_PARM_DESC(async_flush, "Enable asynchronous flushing [default=true]");
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * FIXME: The driver is probably broken on Big Endian machines.
  * See discussion:
  * https://lore.kernel.org/dri-devel/CAKb7UvihLX0hgBOP3VBG7O+atwZcUVCPVuBdfmDMpg0NjXe-cQ@mail.gmail.com/
@@ -152,8 +163,12 @@ static int gud_prep_flush(struct gud_device *gdrm, struct drm_framebuffer *fb,
 {
 	struct dma_buf_attachment *import_attach = fb->obj[0]->import_attach;
 	u8 compression = gdrm->compression;
+<<<<<<< HEAD
 	struct dma_buf_map map[DRM_FORMAT_MAX_PLANES];
 	struct dma_buf_map map_data[DRM_FORMAT_MAX_PLANES];
+=======
+	struct dma_buf_map map;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void *vaddr, *buf;
 	size_t pitch, len;
 	int ret = 0;
@@ -163,6 +178,7 @@ static int gud_prep_flush(struct gud_device *gdrm, struct drm_framebuffer *fb,
 	if (len > gdrm->bulk_len)
 		return -E2BIG;
 
+<<<<<<< HEAD
 	ret = drm_gem_fb_vmap(fb, map, map_data);
 	if (ret)
 		return ret;
@@ -172,6 +188,19 @@ static int gud_prep_flush(struct gud_device *gdrm, struct drm_framebuffer *fb,
 	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
 	if (ret)
 		goto vunmap;
+=======
+	ret = drm_gem_shmem_vmap(fb->obj[0], &map);
+	if (ret)
+		return ret;
+
+	vaddr = map.vaddr + fb->offsets[0];
+
+	if (import_attach) {
+		ret = dma_buf_begin_cpu_access(import_attach->dmabuf, DMA_FROM_DEVICE);
+		if (ret)
+			goto vunmap;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 retry:
 	if (compression)
 		buf = gdrm->compress_buf;
@@ -224,6 +253,7 @@ retry:
 	}
 
 end_cpu_access:
+<<<<<<< HEAD
 	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
 vunmap:
 	drm_gem_fb_vunmap(fb, map);
@@ -266,6 +296,12 @@ static int gud_usb_bulk(struct gud_device *gdrm, size_t len)
 		ret = -EIO;
 
 	destroy_timer_on_stack(&ctx.timer);
+=======
+	if (import_attach)
+		dma_buf_end_cpu_access(import_attach->dmabuf, DMA_FROM_DEVICE);
+vunmap:
+	drm_gem_shmem_vunmap(fb->obj[0], &map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -273,9 +309,16 @@ static int gud_usb_bulk(struct gud_device *gdrm, size_t len)
 static int gud_flush_rect(struct gud_device *gdrm, struct drm_framebuffer *fb,
 			  const struct drm_format_info *format, struct drm_rect *rect)
 {
+<<<<<<< HEAD
 	struct gud_set_buffer_req req;
 	size_t len, trlen;
 	int ret;
+=======
+	struct usb_device *usb = gud_to_usb_device(gdrm);
+	struct gud_set_buffer_req req;
+	int ret, actual_length;
+	size_t len, trlen;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	drm_dbg(&gdrm->drm, "Flushing [FB:%d] " DRM_RECT_FMT "\n", fb->base.id, DRM_RECT_ARG(rect));
 
@@ -304,7 +347,14 @@ static int gud_flush_rect(struct gud_device *gdrm, struct drm_framebuffer *fb,
 			return ret;
 	}
 
+<<<<<<< HEAD
 	ret = gud_usb_bulk(gdrm, trlen);
+=======
+	ret = usb_bulk_msg(usb, gdrm->bulk_pipe, gdrm->bulk_buf, trlen,
+			   &actual_length, msecs_to_jiffies(3000));
+	if (!ret && trlen != actual_length)
+		ret = -EIO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		gdrm->stats_num_errors++;
 
@@ -589,8 +639,11 @@ void gud_pipe_update(struct drm_simple_display_pipe *pipe,
 		if (gdrm->flags & GUD_DISPLAY_FLAG_FULL_UPDATE)
 			drm_rect_init(&damage, 0, 0, fb->width, fb->height);
 		gud_fb_queue_damage(gdrm, fb, &damage);
+<<<<<<< HEAD
 		if (!gud_async_flush)
 			flush_work(&gdrm->work);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (!crtc->state->enable)

@@ -10,6 +10,10 @@
 /***************************************************************************
  * OS specific includes
  */
+<<<<<<< HEAD
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/debugfs.h>
 #include <linux/firmware.h>

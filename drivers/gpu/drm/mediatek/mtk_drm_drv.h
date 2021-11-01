@@ -46,7 +46,10 @@ struct mtk_drm_private {
 	struct drm_atomic_state *suspend_state;
 };
 
+<<<<<<< HEAD
 extern struct platform_driver mtk_disp_aal_driver;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern struct platform_driver mtk_disp_ccorr_driver;
 extern struct platform_driver mtk_disp_color_driver;
 extern struct platform_driver mtk_disp_gamma_driver;

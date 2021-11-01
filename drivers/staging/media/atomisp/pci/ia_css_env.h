@@ -17,7 +17,11 @@
 #define __IA_CSS_ENV_H
 
 #include <type_support.h>
+<<<<<<< HEAD
 #include <linux/stdarg.h> /* va_list */
+=======
+#include <stdarg.h> /* va_list */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "ia_css_types.h"
 #include "ia_css_acc_types.h"
 

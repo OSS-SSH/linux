@@ -16,6 +16,10 @@
 #include <linux/utsname.h>
 #include <linux/proc_fs.h>
 #include <linux/mutex.h>
+<<<<<<< HEAD
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int snd_info_check_reserved_words(const char *str)
 {

@@ -1499,7 +1499,11 @@ static void __show_regs(struct pt_regs *regs)
 	    trap == INTERRUPT_DATA_STORAGE ||
 	    trap == INTERRUPT_ALIGNMENT) {
 		if (IS_ENABLED(CONFIG_4xx) || IS_ENABLED(CONFIG_BOOKE))
+<<<<<<< HEAD
 			pr_cont("DEAR: "REG" ESR: "REG" ", regs->dear, regs->esr);
+=======
+			pr_cont("DEAR: "REG" ESR: "REG" ", regs->dar, regs->dsisr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			pr_cont("DAR: "REG" DSISR: %08lx ", regs->dar, regs->dsisr);
 	}

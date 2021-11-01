@@ -1,6 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 menu "NVIDIA Tegra thermal drivers"
+<<<<<<< HEAD
 depends on ARCH_TEGRA || COMPILE_TEST
+=======
+depends on ARCH_TEGRA
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config TEGRA_SOCTHERM
 	tristate "Tegra SOCTHERM thermal management"
@@ -18,6 +22,7 @@ config TEGRA_BPMP_THERMAL
 	  Enable this option for support for sensing system temperature of NVIDIA
 	  Tegra systems-on-chip with the BPMP coprocessor (Tegra186).
 
+<<<<<<< HEAD
 config TEGRA30_TSENSOR
 	tristate "Tegra30 Thermal Sensor"
 	depends on ARCH_TEGRA_3x_SOC || COMPILE_TEST
@@ -25,4 +30,6 @@ config TEGRA30_TSENSOR
 	  Enable this option to support thermal management of NVIDIA Tegra30
 	  system-on-chip.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endmenu

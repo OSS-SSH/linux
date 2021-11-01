@@ -3370,7 +3370,11 @@ static void add_hpp_sort_string(struct strbuf *sb, struct hpp_dimension *s, int 
 		add_key(sb, s[i].name, llen);
 }
 
+<<<<<<< HEAD
 char *sort_help(const char *prefix)
+=======
+const char *sort_help(const char *prefix)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct strbuf sb;
 	char *s;

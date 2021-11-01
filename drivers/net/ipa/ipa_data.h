@@ -19,7 +19,11 @@
  * IPA and GSI resources to use for a given platform.  This data is supplied
  * via the Device Tree match table, associated with a particular compatible
  * string.  The data defines information about how resources, endpoints and
+<<<<<<< HEAD
  * channels, memory, power and so on are allocated and used for the
+=======
+ * channels, memory, clocking and so on are allocated and used for the
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * platform.
  *
  * Resources are data structures used internally by the IPA hardware.  The
@@ -265,12 +269,20 @@ struct ipa_interconnect_data {
 };
 
 /**
+<<<<<<< HEAD
  * struct ipa_power_data - description of IPA power configuration data
+=======
+ * struct ipa_clock_data - description of IPA clock and interconnect rates
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @core_clock_rate:	Core clock rate (Hz)
  * @interconnect_count:	Number of entries in the interconnect_data array
  * @interconnect_data:	IPA interconnect configuration data
  */
+<<<<<<< HEAD
 struct ipa_power_data {
+=======
+struct ipa_clock_data {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 core_clock_rate;
 	u32 interconnect_count;		/* # entries in interconnect_data[] */
 	const struct ipa_interconnect_data *interconnect_data;
@@ -286,7 +298,11 @@ struct ipa_power_data {
  * @endpoint_data:	IPA endpoint/GSI channel data
  * @resource_data:	IPA resource configuration data
  * @mem_data:		IPA memory region data
+<<<<<<< HEAD
  * @power_data:		IPA power data
+=======
+ * @clock_data:		IPA clock and interconnect data
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct ipa_data {
 	enum ipa_version version;
@@ -297,7 +313,11 @@ struct ipa_data {
 	const struct ipa_gsi_endpoint_data *endpoint_data;
 	const struct ipa_resource_data *resource_data;
 	const struct ipa_mem_data *mem_data;
+<<<<<<< HEAD
 	const struct ipa_power_data *power_data;
+=======
+	const struct ipa_clock_data *clock_data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 extern const struct ipa_data ipa_data_v3_1;

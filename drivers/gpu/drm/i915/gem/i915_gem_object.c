@@ -30,10 +30,21 @@
 #include "i915_gem_context.h"
 #include "i915_gem_mman.h"
 #include "i915_gem_object.h"
+<<<<<<< HEAD
 #include "i915_memcpy.h"
 #include "i915_trace.h"
 
 static struct kmem_cache *slab_objects;
+=======
+#include "i915_globals.h"
+#include "i915_memcpy.h"
+#include "i915_trace.h"
+
+static struct i915_global_object {
+	struct i915_global base;
+	struct kmem_cache *slab_objects;
+} global;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct drm_gem_object_funcs i915_gem_object_funcs;
 
@@ -41,7 +52,11 @@ struct drm_i915_gem_object *i915_gem_object_alloc(void)
 {
 	struct drm_i915_gem_object *obj;
 
+<<<<<<< HEAD
 	obj = kmem_cache_zalloc(slab_objects, GFP_KERNEL);
+=======
+	obj = kmem_cache_zalloc(global.slab_objects, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!obj)
 		return NULL;
 	obj->base.funcs = &i915_gem_object_funcs;
@@ -51,7 +66,11 @@ struct drm_i915_gem_object *i915_gem_object_alloc(void)
 
 void i915_gem_object_free(struct drm_i915_gem_object *obj)
 {
+<<<<<<< HEAD
 	return kmem_cache_free(slab_objects, obj);
+=======
+	return kmem_cache_free(global.slab_objects, obj);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void i915_gem_object_init(struct drm_i915_gem_object *obj,
@@ -168,7 +187,11 @@ static void i915_gem_close_object(struct drm_gem_object *gem, struct drm_file *f
 	}
 }
 
+<<<<<<< HEAD
 void __i915_gem_free_object_rcu(struct rcu_head *head)
+=======
+static void __i915_gem_free_object_rcu(struct rcu_head *head)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct drm_i915_gem_object *obj =
 		container_of(head, typeof(*obj), rcu);
@@ -204,6 +227,7 @@ static void __i915_gem_object_free_mmaps(struct drm_i915_gem_object *obj)
 	}
 }
 
+<<<<<<< HEAD
 void __i915_gem_free_object(struct drm_i915_gem_object *obj)
 {
 	trace_i915_gem_object_destroy(obj);
@@ -267,6 +291,61 @@ static void __i915_gem_free_objects(struct drm_i915_private *i915,
 			continue;
 		}
 		__i915_gem_free_object(obj);
+=======
+static void __i915_gem_free_objects(struct drm_i915_private *i915,
+				    struct llist_node *freed)
+{
+	struct drm_i915_gem_object *obj, *on;
+
+	llist_for_each_entry_safe(obj, on, freed, freed) {
+		trace_i915_gem_object_destroy(obj);
+
+		if (!list_empty(&obj->vma.list)) {
+			struct i915_vma *vma;
+
+			/*
+			 * Note that the vma keeps an object reference while
+			 * it is active, so it *should* not sleep while we
+			 * destroy it. Our debug code errs insits it *might*.
+			 * For the moment, play along.
+			 */
+			spin_lock(&obj->vma.lock);
+			while ((vma = list_first_entry_or_null(&obj->vma.list,
+							       struct i915_vma,
+							       obj_link))) {
+				GEM_BUG_ON(vma->obj != obj);
+				spin_unlock(&obj->vma.lock);
+
+				__i915_vma_put(vma);
+
+				spin_lock(&obj->vma.lock);
+			}
+			spin_unlock(&obj->vma.lock);
+		}
+
+		__i915_gem_object_free_mmaps(obj);
+
+		GEM_BUG_ON(!list_empty(&obj->lut_list));
+
+		atomic_set(&obj->mm.pages_pin_count, 0);
+		__i915_gem_object_put_pages(obj);
+		GEM_BUG_ON(i915_gem_object_has_pages(obj));
+		bitmap_free(obj->bit_17);
+
+		if (obj->base.import_attach)
+			drm_prime_gem_destroy(&obj->base, NULL);
+
+		drm_gem_free_mmap_offset(&obj->base);
+
+		if (obj->ops->release)
+			obj->ops->release(obj);
+
+		if (obj->mm.n_placements > 1)
+			kfree(obj->mm.placements);
+
+		if (obj->shares_resv_from)
+			i915_vm_resv_put(obj->shares_resv_from);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* But keep the pointer alive for RCU-protected lookups */
 		call_rcu(&obj->rcu, __i915_gem_free_object_rcu);
@@ -324,7 +403,10 @@ static void i915_gem_free_object(struct drm_gem_object *gem_obj)
 	 * worker and performing frees directly from subsequent allocations for
 	 * crude but effective memory throttling.
 	 */
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (llist_add(&obj->freed, &i915->mm.free_list))
 		queue_work(i915->wq, &i915->mm.free_work);
 }
@@ -417,6 +499,7 @@ int i915_gem_object_read_from_page(struct drm_i915_gem_object *obj, u64 offset, 
 	return 0;
 }
 
+<<<<<<< HEAD
 /**
  * i915_gem_object_evictable - Whether object is likely evictable after unbind.
  * @obj: The object to check
@@ -665,6 +748,36 @@ int __init i915_objects_module_init(void)
 	if (!slab_objects)
 		return -ENOMEM;
 
+=======
+void i915_gem_init__objects(struct drm_i915_private *i915)
+{
+	INIT_WORK(&i915->mm.free_work, __i915_gem_free_work);
+}
+
+static void i915_global_objects_shrink(void)
+{
+	kmem_cache_shrink(global.slab_objects);
+}
+
+static void i915_global_objects_exit(void)
+{
+	kmem_cache_destroy(global.slab_objects);
+}
+
+static struct i915_global_object global = { {
+	.shrink = i915_global_objects_shrink,
+	.exit = i915_global_objects_exit,
+} };
+
+int __init i915_global_objects_init(void)
+{
+	global.slab_objects =
+		KMEM_CACHE(drm_i915_gem_object, SLAB_HWCACHE_ALIGN);
+	if (!global.slab_objects)
+		return -ENOMEM;
+
+	i915_global_register(&global.base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -677,7 +790,10 @@ static const struct drm_gem_object_funcs i915_gem_object_funcs = {
 #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
 #include "selftests/huge_gem_object.c"
 #include "selftests/huge_pages.c"
+<<<<<<< HEAD
 #include "selftests/i915_gem_migrate.c"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "selftests/i915_gem_object.c"
 #include "selftests/i915_gem_coherency.c"
 #endif

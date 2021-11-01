@@ -29,7 +29,10 @@ struct shmob_drm_device {
 	u32 lddckr;
 	u32 ldmt1r;
 
+<<<<<<< HEAD
 	unsigned int irq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spinlock_t irq_lock;		/* Protects hardware LDINTR register */
 
 	struct drm_device *ddev;

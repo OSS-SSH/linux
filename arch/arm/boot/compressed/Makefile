@@ -85,8 +85,11 @@ compress-$(CONFIG_KERNEL_LZ4)  = lz4
 libfdt_objs := fdt_rw.o fdt_ro.o fdt_wip.o fdt.o
 
 ifeq ($(CONFIG_ARM_ATAG_DTB_COMPAT),y)
+<<<<<<< HEAD
 CFLAGS_REMOVE_atags_to_fdt.o += -Wframe-larger-than=${CONFIG_FRAME_WARN}
 CFLAGS_atags_to_fdt.o += -Wframe-larger-than=1280
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 OBJS	+= $(libfdt_objs) atags_to_fdt.o
 endif
 ifeq ($(CONFIG_USE_OF),y)

@@ -92,6 +92,7 @@
 	};
 
 	bus@8000000 {
+<<<<<<< HEAD
 		compatible = "simple-bus";
 		#address-cells = <2>;
 		#size-cells = <1>;
@@ -109,6 +110,18 @@
 				 <5 0 0 0x10000000 0x04000000>;
 			arm,hbi = <0x252>;
 			arm,vexpress,site = <0>;
+=======
+		motherboard-bus {
+			compatible = "arm,vexpress,v2p-p1", "simple-bus";
+			#address-cells = <2>;  /* SMB chipselect number and offset */
+			#size-cells = <1>;
+			#interrupt-cells = <1>;
+			ranges;
+			model = "V2M-Juno";
+			arm,hbi = <0x252>;
+			arm,vexpress,site = <0>;
+			arm,v2m-memory-map = "rs1";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			flash@0 {
 				/* 2 * 32MiB NOR Flash memory mounted on CS0 */
@@ -225,7 +238,11 @@
 					};
 				};
 
+<<<<<<< HEAD
 				mmc@50000 {
+=======
+				mmci@50000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					compatible = "arm,pl180", "arm,primecell";
 					reg = <0x050000 0x1000>;
 					interrupts = <5>;
@@ -253,7 +270,11 @@
 					clock-names = "KMIREFCLK", "apb_pclk";
 				};
 
+<<<<<<< HEAD
 				watchdog@f0000 {
+=======
+				wdt@f0000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					compatible = "arm,sp805", "arm,primecell";
 					reg = <0x0f0000 0x10000>;
 					interrupts = <7>;

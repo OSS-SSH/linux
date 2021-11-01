@@ -170,8 +170,11 @@ u32 host1x_syncpt_base_id(struct host1x_syncpt_base *base);
 void host1x_syncpt_release_vblank_reservation(struct host1x_client *client,
 					      u32 syncpt_id);
 
+<<<<<<< HEAD
 struct dma_fence *host1x_fence_create(struct host1x_syncpt *sp, u32 threshold);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * host1x channel
  */
@@ -218,8 +221,13 @@ struct host1x_job {
 	struct host1x_client *client;
 
 	/* Gathers and their memory */
+<<<<<<< HEAD
 	struct host1x_job_cmd *cmds;
 	unsigned int num_cmds;
+=======
+	struct host1x_job_gather *gathers;
+	unsigned int num_gathers;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Array of handles to be pinned & unpinned */
 	struct host1x_reloc *relocs;
@@ -236,6 +244,7 @@ struct host1x_job {
 	u32 syncpt_incrs;
 	u32 syncpt_end;
 
+<<<<<<< HEAD
 	/* Completion waiter ref */
 	void *waiter;
 
@@ -245,6 +254,11 @@ struct host1x_job {
 	/* Job has timed out and should be released */
 	bool cancelled;
 
+=======
+	/* Maximum time to wait for this job */
+	unsigned int timeout;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Index and number of slots used in the push buffer */
 	unsigned int first_get;
 	unsigned int num_slots;
@@ -265,6 +279,7 @@ struct host1x_job {
 
 	/* Add a channel wait for previous ops to complete */
 	bool serialize;
+<<<<<<< HEAD
 
 	/* Fast-forward syncpoint increments on job timeout */
 	bool syncpt_recovery;
@@ -284,6 +299,14 @@ void host1x_job_add_gather(struct host1x_job *job, struct host1x_bo *bo,
 			   unsigned int words, unsigned int offset);
 void host1x_job_add_wait(struct host1x_job *job, u32 id, u32 thresh,
 			 bool relative, u32 next_class);
+=======
+};
+
+struct host1x_job *host1x_job_alloc(struct host1x_channel *ch,
+				    u32 num_cmdbufs, u32 num_relocs);
+void host1x_job_add_gather(struct host1x_job *job, struct host1x_bo *bo,
+			   unsigned int words, unsigned int offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct host1x_job *host1x_job_get(struct host1x_job *job);
 void host1x_job_put(struct host1x_job *job);
 int host1x_job_pin(struct host1x_job *job, struct device *dev);

@@ -195,11 +195,17 @@ fail:
 
 /**
  * ps3_mm_vas_destroy -
+<<<<<<< HEAD
  *
  * called during kexec sequence with MMU off.
  */
 
 notrace void ps3_mm_vas_destroy(void)
+=======
+ */
+
+void ps3_mm_vas_destroy(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int result;
 
@@ -1245,11 +1251,17 @@ void __init ps3_mm_init(void)
 
 /**
  * ps3_mm_shutdown - final cleanup of address space
+<<<<<<< HEAD
  *
  * called during kexec sequence with MMU off.
  */
 
 notrace void ps3_mm_shutdown(void)
+=======
+ */
+
+void ps3_mm_shutdown(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	ps3_mm_region_destroy(&map.r1);
 }

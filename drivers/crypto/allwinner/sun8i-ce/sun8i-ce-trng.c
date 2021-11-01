@@ -95,8 +95,14 @@ err_pm:
 		memcpy(data, d, max);
 		err = max;
 	}
+<<<<<<< HEAD
 err_dst:
 	kfree_sensitive(d);
+=======
+	memzero_explicit(d, todo);
+err_dst:
+	kfree(d);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 

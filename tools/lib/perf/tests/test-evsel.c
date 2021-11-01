@@ -22,7 +22,11 @@ static int test_stat_cpu(void)
 		.type	= PERF_TYPE_SOFTWARE,
 		.config	= PERF_COUNT_SW_CPU_CLOCK,
 	};
+<<<<<<< HEAD
 	int err, idx;
+=======
+	int err, cpu, tmp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cpus = perf_cpu_map__new(NULL);
 	__T("failed to create cpus", cpus);
@@ -33,10 +37,17 @@ static int test_stat_cpu(void)
 	err = perf_evsel__open(evsel, cpus, NULL);
 	__T("failed to open evsel", err == 0);
 
+<<<<<<< HEAD
 	for (idx = 0; idx < perf_cpu_map__nr(cpus); idx++) {
 		struct perf_counts_values counts = { .val = 0 };
 
 		perf_evsel__read(evsel, idx, 0, &counts);
+=======
+	perf_cpu_map__for_each_cpu(cpu, tmp, cpus) {
+		struct perf_counts_values counts = { .val = 0 };
+
+		perf_evsel__read(evsel, cpu, 0, &counts);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		__T("failed to read value for evsel", counts.val != 0);
 	}
 
@@ -148,7 +159,10 @@ static int test_stat_user_read(int event)
 	__T("failed to mmap evsel", err == 0);
 
 	pc = perf_evsel__mmap_base(evsel, 0, 0);
+<<<<<<< HEAD
 	__T("failed to get mmapped address", pc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #if defined(__i386__) || defined(__x86_64__)
 	__T("userspace counter access not supported", pc->cap_user_rdpmc);

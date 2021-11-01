@@ -105,8 +105,12 @@ static void lmc_driver_timeout(struct net_device *dev, unsigned int txqueue);
  * linux reserves 16 device specific IOCTLs.  We call them
  * LMCIOC* to control various bits of our world.
  */
+<<<<<<< HEAD
 static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			      void __user *data, int cmd) /*fold00*/
+=======
+int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd) /*fold00*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
     lmc_softc_t *sc = dev_to_sc(dev);
     lmc_ctl_t ctl;
@@ -125,7 +129,11 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
          * To date internally, just copy this out to the user.
          */
     case LMCIOCGINFO: /*fold01*/
+<<<<<<< HEAD
 	if (copy_to_user(data, &sc->ictl, sizeof(lmc_ctl_t)))
+=======
+	if (copy_to_user(ifr->ifr_data, &sc->ictl, sizeof(lmc_ctl_t)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -EFAULT;
 	else
 		ret = 0;
@@ -142,7 +150,11 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
             break;
         }
 
+<<<<<<< HEAD
 	if (copy_from_user(&ctl, data, sizeof(lmc_ctl_t))) {
+=======
+	if (copy_from_user(&ctl, ifr->ifr_data, sizeof(lmc_ctl_t))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -EFAULT;
 		break;
 	}
@@ -172,7 +184,11 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 		break;
 	    }
 
+<<<<<<< HEAD
 	    if (copy_from_user(&new_type, data, sizeof(u16))) {
+=======
+	    if (copy_from_user(&new_type, ifr->ifr_data, sizeof(u16))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -EFAULT;
 		break;
 	    }
@@ -212,7 +228,12 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 
         sc->lmc_xinfo.Magic1 = 0xDEADBEEF;
 
+<<<<<<< HEAD
 	if (copy_to_user(data, &sc->lmc_xinfo, sizeof(struct lmc_xinfo)))
+=======
+        if (copy_to_user(ifr->ifr_data, &sc->lmc_xinfo,
+			 sizeof(struct lmc_xinfo)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -EFAULT;
 	else
 		ret = 0;
@@ -245,9 +266,15 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			    regVal & T1FRAMER_SEF_MASK;
 	    }
 	    spin_unlock_irqrestore(&sc->lmc_lock, flags);
+<<<<<<< HEAD
 	    if (copy_to_user(data, &sc->lmc_device->stats,
 			     sizeof(sc->lmc_device->stats)) ||
 		copy_to_user(data + sizeof(sc->lmc_device->stats),
+=======
+	    if (copy_to_user(ifr->ifr_data, &sc->lmc_device->stats,
+			     sizeof(sc->lmc_device->stats)) ||
+		copy_to_user(ifr->ifr_data + sizeof(sc->lmc_device->stats),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     &sc->extra_stats, sizeof(sc->extra_stats)))
 		    ret = -EFAULT;
 	    else
@@ -282,7 +309,11 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
             break;
         }
 
+<<<<<<< HEAD
 	if (copy_from_user(&ctl, data, sizeof(lmc_ctl_t))) {
+=======
+	if (copy_from_user(&ctl, ifr->ifr_data, sizeof(lmc_ctl_t))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -EFAULT;
 		break;
 	}
@@ -314,11 +345,19 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 
 #ifdef DEBUG
     case LMCIOCDUMPEVENTLOG:
+<<<<<<< HEAD
 	if (copy_to_user(data, &lmcEventLogIndex, sizeof(u32))) {
 		ret = -EFAULT;
 		break;
 	}
 	if (copy_to_user(data + sizeof(u32), lmcEventLogBuf,
+=======
+	if (copy_to_user(ifr->ifr_data, &lmcEventLogIndex, sizeof(u32))) {
+		ret = -EFAULT;
+		break;
+	}
+	if (copy_to_user(ifr->ifr_data + sizeof(u32), lmcEventLogBuf,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			 sizeof(lmcEventLogBuf)))
 		ret = -EFAULT;
 	else
@@ -346,7 +385,11 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
              */
             netif_stop_queue(dev);
 
+<<<<<<< HEAD
 	    if (copy_from_user(&xc, data, sizeof(struct lmc_xilinx_control))) {
+=======
+	    if (copy_from_user(&xc, ifr->ifr_data, sizeof(struct lmc_xilinx_control))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -EFAULT;
 		break;
 	    }
@@ -609,8 +652,15 @@ static int lmc_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 
         }
         break;
+<<<<<<< HEAD
     default:
 	break;
+=======
+    default: /*fold01*/
+        /* If we don't know what to do, give the protocol a shot. */
+        ret = lmc_proto_ioctl (sc, ifr, cmd);
+        break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     }
 
     return ret;
@@ -786,8 +836,12 @@ static const struct net_device_ops lmc_ops = {
 	.ndo_open       = lmc_open,
 	.ndo_stop       = lmc_close,
 	.ndo_start_xmit = hdlc_start_xmit,
+<<<<<<< HEAD
 	.ndo_siocwandev = hdlc_ioctl,
 	.ndo_siocdevprivate = lmc_siocdevprivate,
+=======
+	.ndo_do_ioctl   = lmc_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout = lmc_driver_timeout,
 	.ndo_get_stats  = lmc_get_stats,
 };

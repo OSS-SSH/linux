@@ -761,6 +761,7 @@ static void buf_lo_before_scan(struct gfs2_jdesc *jd,
 	jd->jd_replayed_blocks = 0;
 }
 
+<<<<<<< HEAD
 #define obsolete_rgrp_replay \
 "Replaying 0x%llx from jid=%d/0x%llx but we already have a bh!\n"
 #define obsolete_rgrp_replay2 \
@@ -787,6 +788,8 @@ static void obsolete_rgrp(struct gfs2_jdesc *jd, struct buffer_head *bh_log,
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int buf_lo_scan_elements(struct gfs2_jdesc *jd, u32 start,
 				struct gfs2_log_descriptor *ld, __be64 *ptr,
 				int pass)
@@ -825,9 +828,27 @@ static int buf_lo_scan_elements(struct gfs2_jdesc *jd, u32 start,
 			struct gfs2_meta_header *mh =
 				(struct gfs2_meta_header *)bh_ip->b_data;
 
+<<<<<<< HEAD
 			if (mh->mh_type == cpu_to_be32(GFS2_METATYPE_RG))
 				obsolete_rgrp(jd, bh_log, blkno);
 
+=======
+			if (mh->mh_type == cpu_to_be32(GFS2_METATYPE_RG)) {
+				struct gfs2_rgrpd *rgd;
+
+				rgd = gfs2_blk2rgrpd(sdp, blkno, false);
+				if (rgd && rgd->rd_addr == blkno &&
+				    rgd->rd_bits && rgd->rd_bits->bi_bh) {
+					fs_info(sdp, "Replaying 0x%llx but we "
+						"already have a bh!\n",
+						(unsigned long long)blkno);
+					fs_info(sdp, "busy:%d, pinned:%d\n",
+						buffer_busy(rgd->rd_bits->bi_bh) ? 1 : 0,
+						buffer_pinned(rgd->rd_bits->bi_bh));
+					gfs2_dump_glock(NULL, rgd->rd_gl, true);
+				}
+			}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			mark_buffer_dirty(bh_ip);
 		}
 		brelse(bh_log);

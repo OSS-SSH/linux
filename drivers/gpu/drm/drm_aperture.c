@@ -33,10 +33,13 @@
  *
  * .. code-block:: c
  *
+<<<<<<< HEAD
  *	static const struct drm_driver example_driver = {
  *		...
  *	};
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *	static int remove_conflicting_framebuffers(struct pci_dev *pdev)
  *	{
  *		bool primary = false;
@@ -50,7 +53,11 @@
  *	#endif
  *
  *		return drm_aperture_remove_conflicting_framebuffers(base, size, primary,
+<<<<<<< HEAD
  *		                                                    &example_driver);
+=======
+ *		                                                    "example driver");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *	}
  *
  *	static int probe(struct pci_dev *pdev)
@@ -78,7 +85,11 @@
  *
  * Drivers that are susceptible to being removed by other drivers, such as
  * generic EFI or VESA drivers, have to register themselves as owners of their
+<<<<<<< HEAD
  * given framebuffer memory. Ownership of the framebuffer memory is achieved
+=======
+ * given framebuffer memory. Ownership of the framebuffer memory is achived
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * by calling devm_aperture_acquire_from_firmware(). On success, the driver
  * is the owner of the framebuffer range. The function fails if the
  * framebuffer is already by another driver. See below for an example.
@@ -278,7 +289,11 @@ static void drm_aperture_detach_drivers(resource_size_t base, resource_size_t si
  * @base: the aperture's base address in physical memory
  * @size: aperture size in bytes
  * @primary: also kick vga16fb if present
+<<<<<<< HEAD
  * @req_driver: requesting DRM driver
+=======
+ * @name: requesting driver name
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * This function removes graphics device drivers which use memory range described by
  * @base and @size.
@@ -287,7 +302,11 @@ static void drm_aperture_detach_drivers(resource_size_t base, resource_size_t si
  * 0 on success, or a negative errno code otherwise
  */
 int drm_aperture_remove_conflicting_framebuffers(resource_size_t base, resource_size_t size,
+<<<<<<< HEAD
 						 bool primary, const struct drm_driver *req_driver)
+=======
+						 bool primary, const char *name)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 #if IS_REACHABLE(CONFIG_FB)
 	struct apertures_struct *a;
@@ -300,7 +319,11 @@ int drm_aperture_remove_conflicting_framebuffers(resource_size_t base, resource_
 	a->ranges[0].base = base;
 	a->ranges[0].size = size;
 
+<<<<<<< HEAD
 	ret = remove_conflicting_framebuffers(a, req_driver->name, primary);
+=======
+	ret = remove_conflicting_framebuffers(a, name, primary);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(a);
 
 	if (ret)
@@ -316,7 +339,11 @@ EXPORT_SYMBOL(drm_aperture_remove_conflicting_framebuffers);
 /**
  * drm_aperture_remove_conflicting_pci_framebuffers - remove existing framebuffers for PCI devices
  * @pdev: PCI device
+<<<<<<< HEAD
  * @req_driver: requesting DRM driver
+=======
+ * @name: requesting driver name
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * This function removes graphics device drivers using memory range configured
  * for any of @pdev's memory bars. The function assumes that PCI device with
@@ -325,8 +352,12 @@ EXPORT_SYMBOL(drm_aperture_remove_conflicting_framebuffers);
  * Returns:
  * 0 on success, or a negative errno code otherwise
  */
+<<<<<<< HEAD
 int drm_aperture_remove_conflicting_pci_framebuffers(struct pci_dev *pdev,
 						     const struct drm_driver *req_driver)
+=======
+int drm_aperture_remove_conflicting_pci_framebuffers(struct pci_dev *pdev, const char *name)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	resource_size_t base, size;
 	int bar, ret = 0;
@@ -344,7 +375,11 @@ int drm_aperture_remove_conflicting_pci_framebuffers(struct pci_dev *pdev,
 	 * otherwise the vga fbdev driver falls over.
 	 */
 #if IS_REACHABLE(CONFIG_FB)
+<<<<<<< HEAD
 	ret = remove_conflicting_pci_framebuffers(pdev, req_driver->name);
+=======
+	ret = remove_conflicting_pci_framebuffers(pdev, name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	if (ret == 0)
 		ret = vga_remove_vgacon(pdev);

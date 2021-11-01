@@ -142,7 +142,11 @@ then
 	echo "Cannot copy from $oldrun to $rundir."
 	usage
 fi
+<<<<<<< HEAD
 rm -f "$rundir"/*/{console.log,console.log.diags,qemu_pid,qemu-pid,qemu-retval,Warnings,kvm-test-1-run.sh.out,kvm-test-1-run-qemu.sh.out,vmlinux} "$rundir"/log
+=======
+rm -f "$rundir"/*/{console.log,console.log.diags,qemu_pid,qemu-retval,Warnings,kvm-test-1-run.sh.out,kvm-test-1-run-qemu.sh.out,vmlinux} "$rundir"/log
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 touch "$rundir/log"
 echo $scriptname $args | tee -a "$rundir/log"
 echo $oldrun > "$rundir/re-run"
@@ -179,6 +183,10 @@ if test -n "$dryrun"
 then
 	echo ---- Dryrun complete, directory: $rundir | tee -a "$rundir/log"
 else
+<<<<<<< HEAD
 	( cd "$rundir"; sh $T/runbatches.sh ) | tee -a "$rundir/log"
+=======
+	( cd "$rundir"; sh $T/runbatches.sh )
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kvm-end-run-stats.sh "$rundir" "$starttime"
 fi

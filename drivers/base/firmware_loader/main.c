@@ -165,7 +165,11 @@ static inline int fw_state_wait(struct fw_priv *fw_priv)
 	return __fw_state_wait_common(fw_priv, MAX_SCHEDULE_TIMEOUT);
 }
 
+<<<<<<< HEAD
 static void fw_cache_piggyback_on_request(struct fw_priv *fw_priv);
+=======
+static int fw_cache_piggyback_on_request(const char *name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct fw_priv *__allocate_fw_priv(const char *fw_name,
 					  struct firmware_cache *fwc,
@@ -707,8 +711,15 @@ int assign_fw(struct firmware *fw, struct device *device)
 	 * on request firmware.
 	 */
 	if (!(fw_priv->opt_flags & FW_OPT_NOCACHE) &&
+<<<<<<< HEAD
 	    fw_priv->fwc->state == FW_LOADER_START_CACHE)
 		fw_cache_piggyback_on_request(fw_priv);
+=======
+	    fw_priv->fwc->state == FW_LOADER_START_CACHE) {
+		if (fw_cache_piggyback_on_request(fw_priv->fw_name))
+			kref_get(&fw_priv->ref);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* pass the pages buffer to driver at the last minute */
 	fw_set_page_data(fw_priv, fw);
@@ -781,10 +792,15 @@ static void fw_abort_batch_reqs(struct firmware *fw)
 		return;
 
 	fw_priv = fw->priv;
+<<<<<<< HEAD
 	mutex_lock(&fw_lock);
 	if (!fw_state_is_aborted(fw_priv))
 		fw_state_aborted(fw_priv);
 	mutex_unlock(&fw_lock);
+=======
+	if (!fw_state_is_aborted(fw_priv))
+		fw_state_aborted(fw_priv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* called from request_firmware() and request_firmware_work_func() */
@@ -1257,11 +1273,19 @@ static int __fw_entry_found(const char *name)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void fw_cache_piggyback_on_request(struct fw_priv *fw_priv)
 {
 	const char *name = fw_priv->fw_name;
 	struct firmware_cache *fwc = fw_priv->fwc;
 	struct fw_cache_entry *fce;
+=======
+static int fw_cache_piggyback_on_request(const char *name)
+{
+	struct firmware_cache *fwc = &fw_cache;
+	struct fw_cache_entry *fce;
+	int ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock(&fwc->name_lock);
 	if (__fw_entry_found(name))
@@ -1269,12 +1293,21 @@ static void fw_cache_piggyback_on_request(struct fw_priv *fw_priv)
 
 	fce = alloc_fw_cache_entry(name);
 	if (fce) {
+<<<<<<< HEAD
 		list_add(&fce->list, &fwc->fw_names);
 		kref_get(&fw_priv->ref);
+=======
+		ret = 1;
+		list_add(&fce->list, &fwc->fw_names);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pr_debug("%s: fw: %s\n", __func__, name);
 	}
 found:
 	spin_unlock(&fwc->name_lock);
+<<<<<<< HEAD
+=======
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void free_fw_cache_entry(struct fw_cache_entry *fce)
@@ -1505,8 +1538,14 @@ static inline void unregister_fw_pm_ops(void)
 	unregister_pm_notifier(&fw_cache.pm_notify);
 }
 #else
+<<<<<<< HEAD
 static void fw_cache_piggyback_on_request(struct fw_priv *fw_priv)
 {
+=======
+static int fw_cache_piggyback_on_request(const char *name)
+{
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 static inline int register_fw_pm_ops(void)
 {

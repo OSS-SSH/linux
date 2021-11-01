@@ -306,7 +306,13 @@ static int nitrox_device_flr(struct pci_dev *pdev)
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
 	pcie_reset_flr(pdev, PCI_RESET_DO_RESET);
+=======
+	/* check flr support */
+	if (pcie_has_flr(pdev))
+		pcie_flr(pdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pci_restore_state(pdev);
 

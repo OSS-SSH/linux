@@ -348,7 +348,11 @@
 			reg = <0x4c>;
 			vcc-supply = <&sys_3v3_reg>;
 			interrupt-parent = <&gpio>;
+<<<<<<< HEAD
 			interrupts = <TEGRA_GPIO(CC, 2) IRQ_TYPE_EDGE_FALLING>;
+=======
+			interrupts = <TEGRA_GPIO(CC, 2) IRQ_TYPE_LEVEL_LOW>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			#thermal-sensor-cells = <1>;
 		};
 

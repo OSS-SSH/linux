@@ -41,8 +41,11 @@ int linear_range_get_selector_low(const struct linear_range *r,
 int linear_range_get_selector_high(const struct linear_range *r,
 				   unsigned int val, unsigned int *selector,
 				   bool *found);
+<<<<<<< HEAD
 void linear_range_get_selector_within(const struct linear_range *r,
 				      unsigned int val, unsigned int *selector);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int linear_range_get_selector_low_array(const struct linear_range *r,
 					int ranges, unsigned int val,
 					unsigned int *selector, bool *found);

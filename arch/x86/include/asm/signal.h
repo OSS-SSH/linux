@@ -29,7 +29,10 @@ typedef struct {
 #define SA_X32_ABI	0x01000000u
 
 #ifndef CONFIG_COMPAT
+<<<<<<< HEAD
 #define compat_sigset_t compat_sigset_t
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 typedef sigset_t compat_sigset_t;
 #endif
 

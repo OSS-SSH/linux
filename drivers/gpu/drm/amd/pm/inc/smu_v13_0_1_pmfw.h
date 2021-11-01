@@ -111,9 +111,13 @@ typedef struct {
   uint32_t InWhisperMode        : 1;
   uint32_t spare0               : 1;
   uint32_t ZstateStatus         : 4;
+<<<<<<< HEAD
   uint32_t spare1               : 4;
   uint32_t DstateFun            : 4;
   uint32_t DstateDev            : 4;
+=======
+  uint32_t spare1               :12;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   // MP1_EXT_SCRATCH2
   uint32_t P2JobHandler         :24;
   uint32_t RsmuPmiP2FinishedCnt : 8;

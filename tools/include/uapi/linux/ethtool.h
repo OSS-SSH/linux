@@ -48,6 +48,7 @@ struct ethtool_channels {
 	__u32	combined_count;
 };
 
+<<<<<<< HEAD
 #define ETHTOOL_FWVERS_LEN	32
 #define ETHTOOL_BUSINFO_LEN	32
 #define ETHTOOL_EROMVERS_LEN	32
@@ -101,4 +102,6 @@ struct ethtool_drvinfo {
 
 #define ETHTOOL_GDRVINFO	0x00000003
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _UAPI_LINUX_ETHTOOL_H */

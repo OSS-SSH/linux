@@ -1,6 +1,7 @@
 .. include:: ../disclaimer-zh_CN.rst
 
 :Original: Documentation/core-api/refcount-vs-atomic.rst
+<<<<<<< HEAD
 
 :翻译:
 
@@ -8,6 +9,13 @@
 
 .. _cn_refcount-vs-atomic:
 
+=======
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_refcount-vs-atomic:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======================================
 与atomic_t相比，refcount_t的API是这样的
 =======================================

@@ -470,6 +470,7 @@ void tick_resume_local(void)
 		else
 			tick_resume_oneshot();
 	}
+<<<<<<< HEAD
 
 	/*
 	 * Ensure that hrtimers are up to date and the clockevents device
@@ -477,6 +478,8 @@ void tick_resume_local(void)
 	 * enabled.
 	 */
 	hrtimers_resume_local();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

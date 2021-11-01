@@ -23,9 +23,15 @@ select:
   properties:
     compatible:
       contains:
+<<<<<<< HEAD
         enum:
           - arm,sp804
           - hisilicon,sp804
+=======
+        oneOf:
+          - const: arm,sp804
+          - const: hisilicon,sp804
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   required:
     - compatible
 

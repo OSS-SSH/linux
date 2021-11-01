@@ -54,7 +54,11 @@ struct dma_buf_ops {
 	 * device), and otherwise need to fail the attach operation.
 	 *
 	 * The exporter should also in general check whether the current
+<<<<<<< HEAD
 	 * allocation fulfills the DMA constraints of the new device. If this
+=======
+	 * allocation fullfills the DMA constraints of the new device. If this
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * is not the case, and the allocation cannot be moved, it should also
 	 * fail the attach operation.
 	 *
@@ -96,12 +100,15 @@ struct dma_buf_ops {
 	 * This is called automatically for non-dynamic importers from
 	 * dma_buf_attach().
 	 *
+<<<<<<< HEAD
 	 * Note that similar to non-dynamic exporters in their @map_dma_buf
 	 * callback the driver must guarantee that the memory is available for
 	 * use and cleared of any old data by the time this function returns.
 	 * Drivers which pipeline their buffer moves internally must wait for
 	 * all moves and clears to complete.
 	 *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * Returns:
 	 *
 	 * 0 on success, negative error code on failure.
@@ -150,6 +157,7 @@ struct dma_buf_ops {
 	 * This is always called with the dmabuf->resv object locked when
 	 * the dynamic_mapping flag is true.
 	 *
+<<<<<<< HEAD
 	 * Note that for non-dynamic exporters the driver must guarantee that
 	 * that the memory is available for use and cleared of any old data by
 	 * the time this function returns.  Drivers which pipeline their buffer
@@ -162,6 +170,11 @@ struct dma_buf_ops {
 	 * Returns:
 	 *
 	 * A &sg_table scatter list of the backing storage of the DMA buffer,
+=======
+	 * Returns:
+	 *
+	 * A &sg_table scatter list of or the backing storage of the DMA buffer,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * already mapped into the device address space of the &device attached
 	 * with the provided &dma_buf_attachment. The addresses and lengths in
 	 * the scatter list are PAGE_SIZE aligned.
@@ -183,7 +196,11 @@ struct dma_buf_ops {
 	 *
 	 * This is called by dma_buf_unmap_attachment() and should unmap and
 	 * release the &sg_table allocated in @map_dma_buf, and it is mandatory.
+<<<<<<< HEAD
 	 * For static dma_buf handling this might also unpin the backing
+=======
+	 * For static dma_buf handling this might also unpins the backing
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * storage if this is the last mapping of the DMA buffer.
 	 */
 	void (*unmap_dma_buf)(struct dma_buf_attachment *,
@@ -252,7 +269,11 @@ struct dma_buf_ops {
 	 * This callback is used by the dma_buf_mmap() function
 	 *
 	 * Note that the mapping needs to be incoherent, userspace is expected
+<<<<<<< HEAD
 	 * to bracket CPU access using the DMA_BUF_IOCTL_SYNC interface.
+=======
+	 * to braket CPU access using the DMA_BUF_IOCTL_SYNC interface.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 *
 	 * Because dma-buf buffers have invariant size over their lifetime, the
 	 * dma-buf core checks whether a vma is too large and rejects such
@@ -289,6 +310,30 @@ struct dma_buf_ops {
 
 /**
  * struct dma_buf - shared buffer object
+<<<<<<< HEAD
+=======
+ * @size: size of the buffer; invariant over the lifetime of the buffer.
+ * @file: file pointer used for sharing buffers across, and for refcounting.
+ * @attachments: list of dma_buf_attachment that denotes all devices attached,
+ *               protected by dma_resv lock.
+ * @ops: dma_buf_ops associated with this buffer object.
+ * @lock: used internally to serialize list manipulation, attach/detach and
+ *        vmap/unmap
+ * @vmapping_counter: used internally to refcnt the vmaps
+ * @vmap_ptr: the current vmap ptr if vmapping_counter > 0
+ * @exp_name: name of the exporter; useful for debugging.
+ * @name: userspace-provided name; useful for accounting and debugging,
+ *        protected by @resv.
+ * @name_lock: spinlock to protect name access
+ * @owner: pointer to exporter module; used for refcounting when exporter is a
+ *         kernel module.
+ * @list_node: node for dma_buf accounting and debugging.
+ * @priv: exporter specific private data for this buffer object.
+ * @resv: reservation object linked to this dma-buf
+ * @poll: for userspace poll support
+ * @cb_excl: for userspace poll support
+ * @cb_shared: for userspace poll support
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * This represents a shared buffer, created by calling dma_buf_export(). The
  * userspace representation is a normal file descriptor, which can be created by
@@ -300,6 +345,7 @@ struct dma_buf_ops {
  * Device DMA access is handled by the separate &struct dma_buf_attachment.
  */
 struct dma_buf {
+<<<<<<< HEAD
 	/**
 	 * @size:
 	 *
@@ -428,12 +474,33 @@ struct dma_buf {
 
 	/** @cb_excl: for userspace poll support */
 	/** @cb_shared: for userspace poll support */
+=======
+	size_t size;
+	struct file *file;
+	struct list_head attachments;
+	const struct dma_buf_ops *ops;
+	struct mutex lock;
+	unsigned vmapping_counter;
+	struct dma_buf_map vmap_ptr;
+	const char *exp_name;
+	const char *name;
+	spinlock_t name_lock;
+	struct module *owner;
+	struct list_head list_node;
+	void *priv;
+	struct dma_resv *resv;
+
+	/* poll support */
+	wait_queue_head_t poll;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct dma_buf_poll_cb_t {
 		struct dma_fence_cb cb;
 		wait_queue_head_t *poll;
 
 		__poll_t active;
 	} cb_excl, cb_shared;
+<<<<<<< HEAD
 #ifdef CONFIG_DMABUF_SYSFS_STATS
 	/**
 	 * @sysfs_entry:
@@ -446,6 +513,8 @@ struct dma_buf {
 		struct dma_buf *dmabuf;
 	} *sysfs_entry;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**
@@ -580,7 +649,11 @@ static inline bool dma_buf_is_dynamic(struct dma_buf *dmabuf)
 
 /**
  * dma_buf_attachment_is_dynamic - check if a DMA-buf attachment uses dynamic
+<<<<<<< HEAD
  * mappings
+=======
+ * mappinsg
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @attach: the DMA-buf attachment to check
  *
  * Returns true if a DMA-buf importer wants to call the map/unmap functions with

@@ -18,7 +18,10 @@ properties:
   compatible:
     enum:
       - qcom,sc7180-osm-l3
+<<<<<<< HEAD
       - qcom,sc8180x-osm-l3
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - qcom,sdm845-osm-l3
       - qcom,sm8150-osm-l3
       - qcom,sm8250-epss-l3

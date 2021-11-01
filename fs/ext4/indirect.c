@@ -354,8 +354,12 @@ static int ext4_alloc_branch(handle_t *handle,
 		}
 		lock_buffer(bh);
 		BUFFER_TRACE(bh, "call get_create_access");
+<<<<<<< HEAD
 		err = ext4_journal_get_create_access(handle, ar->inode->i_sb,
 						     bh, EXT4_JTR_NONE);
+=======
+		err = ext4_journal_get_create_access(handle, bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err) {
 			unlock_buffer(bh);
 			goto failed;
@@ -430,8 +434,12 @@ static int ext4_splice_branch(handle_t *handle,
 	 */
 	if (where->bh) {
 		BUFFER_TRACE(where->bh, "get_write_access");
+<<<<<<< HEAD
 		err = ext4_journal_get_write_access(handle, ar->inode->i_sb,
 						    where->bh, EXT4_JTR_NONE);
+=======
+		err = ext4_journal_get_write_access(handle, where->bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			goto err_out;
 	}
@@ -730,8 +738,12 @@ static int ext4_ind_truncate_ensure_credits(handle_t *handle,
 		return ret;
 	if (bh) {
 		BUFFER_TRACE(bh, "retaking write access");
+<<<<<<< HEAD
 		ret = ext4_journal_get_write_access(handle, inode->i_sb, bh,
 						    EXT4_JTR_NONE);
+=======
+		ret = ext4_journal_get_write_access(handle, bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (unlikely(ret))
 			return ret;
 	}
@@ -919,8 +931,12 @@ static void ext4_free_data(handle_t *handle, struct inode *inode,
 
 	if (this_bh) {				/* For indirect block */
 		BUFFER_TRACE(this_bh, "get_write_access");
+<<<<<<< HEAD
 		err = ext4_journal_get_write_access(handle, inode->i_sb,
 						    this_bh, EXT4_JTR_NONE);
+=======
+		err = ext4_journal_get_write_access(handle, this_bh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Important: if we can't update the indirect pointers
 		 * to the blocks, we can't free them. */
 		if (err)
@@ -1083,8 +1099,12 @@ static void ext4_free_branches(handle_t *handle, struct inode *inode,
 				 */
 				BUFFER_TRACE(parent_bh, "get_write_access");
 				if (!ext4_journal_get_write_access(handle,
+<<<<<<< HEAD
 						inode->i_sb, parent_bh,
 						EXT4_JTR_NONE)) {
+=======
+								   parent_bh)){
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					*p = 0;
 					BUFFER_TRACE(parent_bh,
 					"call ext4_handle_dirty_metadata");

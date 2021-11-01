@@ -578,7 +578,11 @@ static int synquacer_i2c_probe(struct platform_device *pdev)
 
 	i2c->irq = platform_get_irq(pdev, 0);
 	if (i2c->irq < 0)
+<<<<<<< HEAD
 		return i2c->irq;
+=======
+		return -ENODEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = devm_request_irq(&pdev->dev, i2c->irq, synquacer_i2c_isr,
 			       0, dev_name(&pdev->dev), i2c);

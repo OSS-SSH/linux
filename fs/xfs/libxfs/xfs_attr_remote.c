@@ -51,7 +51,11 @@ xfs_attr3_rmt_blocks(
 	struct xfs_mount *mp,
 	int		attrlen)
 {
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		int buflen = XFS_ATTR3_RMT_BUF_SPACE(mp, mp->m_sb.sb_blocksize);
 		return (attrlen + buflen - 1) / buflen;
 	}
@@ -126,11 +130,19 @@ __xfs_attr3_rmt_read_verify(
 	int		blksize = mp->m_attr_geo->blksize;
 
 	/* no verification of non-crc buffers */
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 		return 0;
 
 	ptr = bp->b_addr;
 	bno = xfs_buf_daddr(bp);
+=======
+	if (!xfs_sb_version_hascrc(&mp->m_sb))
+		return 0;
+
+	ptr = bp->b_addr;
+	bno = bp->b_bn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	len = BBTOB(bp->b_length);
 	ASSERT(len >= blksize);
 
@@ -191,11 +203,19 @@ xfs_attr3_rmt_write_verify(
 	xfs_daddr_t	bno;
 
 	/* no verification of non-crc buffers */
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
 		return;
 
 	ptr = bp->b_addr;
 	bno = xfs_buf_daddr(bp);
+=======
+	if (!xfs_sb_version_hascrc(&mp->m_sb))
+		return;
+
+	ptr = bp->b_addr;
+	bno = bp->b_bn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	len = BBTOB(bp->b_length);
 	ASSERT(len >= blksize);
 
@@ -246,7 +266,11 @@ xfs_attr3_rmt_hdr_set(
 {
 	struct xfs_attr3_rmt_hdr *rmt = ptr;
 
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
+=======
+	if (!xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	rmt->rm_magic = cpu_to_be32(XFS_ATTR3_RMT_MAGIC);
@@ -284,7 +308,11 @@ xfs_attr_rmtval_copyout(
 	uint8_t		**dst)
 {
 	char		*src = bp->b_addr;
+<<<<<<< HEAD
 	xfs_daddr_t	bno = xfs_buf_daddr(bp);
+=======
+	xfs_daddr_t	bno = bp->b_bn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int		len = BBTOB(bp->b_length);
 	int		blksize = mp->m_attr_geo->blksize;
 
@@ -296,7 +324,11 @@ xfs_attr_rmtval_copyout(
 
 		byte_cnt = min(*valuelen, byte_cnt);
 
+<<<<<<< HEAD
 		if (xfs_has_crc(mp)) {
+=======
+		if (xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (xfs_attr3_rmt_hdr_ok(src, ino, *offset,
 						  byte_cnt, bno)) {
 				xfs_alert(mp,
@@ -332,7 +364,11 @@ xfs_attr_rmtval_copyin(
 	uint8_t		**src)
 {
 	char		*dst = bp->b_addr;
+<<<<<<< HEAD
 	xfs_daddr_t	bno = xfs_buf_daddr(bp);
+=======
+	xfs_daddr_t	bno = bp->b_bn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int		len = BBTOB(bp->b_length);
 	int		blksize = mp->m_attr_geo->blksize;
 
@@ -672,7 +708,11 @@ xfs_attr_rmtval_invalidate(
  * routine until it returns something other than -EAGAIN.
  */
 int
+<<<<<<< HEAD
 xfs_attr_rmtval_remove(
+=======
+__xfs_attr_rmtval_remove(
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_delattr_context	*dac)
 {
 	struct xfs_da_args		*args = dac->da_args;
@@ -696,7 +736,10 @@ xfs_attr_rmtval_remove(
 	 */
 	if (!done) {
 		dac->flags |= XFS_DAC_DEFER_FINISH;
+<<<<<<< HEAD
 		trace_xfs_attr_rmtval_remove_return(dac->dela_state, args->dp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EAGAIN;
 	}
 

@@ -15,7 +15,10 @@
  *
  * @chip: chip identifier.
  * @chiprev: chip revision.
+<<<<<<< HEAD
  * @enum_base: base address of core enumeration space.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @cc_caps: chipcommon core capabilities.
  * @cc_caps_ext: chipcommon core extended capabilities.
  * @pmucaps: PMU capabilities.
@@ -28,7 +31,10 @@
 struct brcmf_chip {
 	u32 chip;
 	u32 chiprev;
+<<<<<<< HEAD
 	u32 enum_base;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 cc_caps;
 	u32 cc_caps_ext;
 	u32 pmucaps;
@@ -72,7 +78,11 @@ struct brcmf_buscore_ops {
 };
 
 int brcmf_chip_get_raminfo(struct brcmf_chip *pub);
+<<<<<<< HEAD
 struct brcmf_chip *brcmf_chip_attach(void *ctx, u16 devid,
+=======
+struct brcmf_chip *brcmf_chip_attach(void *ctx,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				     const struct brcmf_buscore_ops *ops);
 void brcmf_chip_detach(struct brcmf_chip *chip);
 struct brcmf_core *brcmf_chip_get_core(struct brcmf_chip *chip, u16 coreid);
@@ -87,6 +97,9 @@ void brcmf_chip_set_passive(struct brcmf_chip *ci);
 bool brcmf_chip_set_active(struct brcmf_chip *ci, u32 rstvec);
 bool brcmf_chip_sr_capable(struct brcmf_chip *pub);
 char *brcmf_chip_name(u32 chipid, u32 chiprev, char *buf, uint len);
+<<<<<<< HEAD
 u32 brcmf_chip_enum_base(u16 devid);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* BRCMF_AXIDMP_H */

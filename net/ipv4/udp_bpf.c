@@ -112,6 +112,10 @@ static struct proto udp_bpf_prots[UDP_BPF_NUM_PROTS];
 static void udp_bpf_rebuild_protos(struct proto *prot, const struct proto *base)
 {
 	*prot        = *base;
+<<<<<<< HEAD
+=======
+	prot->unhash = sock_map_unhash;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	prot->close  = sock_map_close;
 	prot->recvmsg = udp_bpf_recvmsg;
 }
@@ -133,7 +137,11 @@ static int __init udp_bpf_v4_build_proto(void)
 	udp_bpf_rebuild_protos(&udp_bpf_prots[UDP_BPF_IPV4], &udp_prot);
 	return 0;
 }
+<<<<<<< HEAD
 late_initcall(udp_bpf_v4_build_proto);
+=======
+core_initcall(udp_bpf_v4_build_proto);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int udp_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool restore)
 {

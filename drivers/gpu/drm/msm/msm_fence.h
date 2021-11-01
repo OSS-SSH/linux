@@ -9,6 +9,7 @@
 
 #include "msm_drv.h"
 
+<<<<<<< HEAD
 /**
  * struct msm_fence_context - fence context for gpu
  *
@@ -49,13 +50,31 @@ struct msm_fence_context {
 	 */
 	volatile uint32_t *fenceptr;
 
+=======
+struct msm_fence_context {
+	struct drm_device *dev;
+	char name[32];
+	unsigned context;
+	/* last_fence == completed_fence --> no pending work */
+	uint32_t last_fence;          /* last assigned fence */
+	uint32_t completed_fence;     /* last completed fence */
+	wait_queue_head_t event;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spinlock_t spinlock;
 };
 
 struct msm_fence_context * msm_fence_context_alloc(struct drm_device *dev,
+<<<<<<< HEAD
 		volatile uint32_t *fenceptr, const char *name);
 void msm_fence_context_free(struct msm_fence_context *fctx);
 
+=======
+		const char *name);
+void msm_fence_context_free(struct msm_fence_context *fctx);
+
+int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
+		ktime_t *timeout, bool interruptible);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence);
 
 struct dma_fence * msm_fence_alloc(struct msm_fence_context *fctx);

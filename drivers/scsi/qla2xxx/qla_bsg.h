@@ -31,7 +31,10 @@
 #define QL_VND_DPORT_DIAGNOSTICS	0x19
 #define QL_VND_GET_PRIV_STATS_EX	0x1A
 #define QL_VND_SS_GET_FLASH_IMAGE_STATUS	0x1E
+<<<<<<< HEAD
 #define QL_VND_EDIF_MGMT                0X1F
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define QL_VND_MANAGE_HOST_STATS	0x23
 #define QL_VND_GET_HOST_STATS		0x24
 #define QL_VND_GET_TGT_STATS		0x25
@@ -295,6 +298,9 @@ struct qla_active_regions {
 	uint8_t reserved[32];
 } __packed;
 
+<<<<<<< HEAD
 #include "qla_edif_bsg.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

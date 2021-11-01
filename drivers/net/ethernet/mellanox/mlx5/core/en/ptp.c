@@ -13,6 +13,11 @@ struct mlx5e_ptp_fs {
 	bool valid;
 };
 
+<<<<<<< HEAD
+=======
+#define MLX5E_PTP_CHANNEL_IX 0
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct mlx5e_ptp_params {
 	struct mlx5e_params params;
 	struct mlx5e_sq_param txq_sq_param;
@@ -324,14 +329,23 @@ static int mlx5e_ptp_open_txqsqs(struct mlx5e_ptp *c,
 				 struct mlx5e_ptp_params *cparams)
 {
 	struct mlx5e_params *params = &cparams->params;
+<<<<<<< HEAD
 	u8 num_tc = mlx5e_get_dcb_num_tc(params);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ix_base;
 	int err;
 	int tc;
 
+<<<<<<< HEAD
 	ix_base = num_tc * params->num_channels;
 
 	for (tc = 0; tc < num_tc; tc++) {
+=======
+	ix_base = params->num_tc * params->num_channels;
+
+	for (tc = 0; tc < params->num_tc; tc++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		int txq_ix = ix_base + tc;
 
 		err = mlx5e_ptp_open_txqsq(c, c->priv->tisn[c->lag_port][tc], txq_ix,
@@ -364,12 +378,18 @@ static int mlx5e_ptp_open_tx_cqs(struct mlx5e_ptp *c,
 	struct mlx5e_create_cq_param ccp = {};
 	struct dim_cq_moder ptp_moder = {};
 	struct mlx5e_cq_param *cq_param;
+<<<<<<< HEAD
 	u8 num_tc;
 	int err;
 	int tc;
 
 	num_tc = mlx5e_get_dcb_num_tc(params);
 
+=======
+	int err;
+	int tc;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ccp.node     = dev_to_node(mlx5_core_dma_dev(c->mdev));
 	ccp.ch_stats = c->stats;
 	ccp.napi     = &c->napi;
@@ -377,7 +397,11 @@ static int mlx5e_ptp_open_tx_cqs(struct mlx5e_ptp *c,
 
 	cq_param = &cparams->txq_sq_param.cqp;
 
+<<<<<<< HEAD
 	for (tc = 0; tc < num_tc; tc++) {
+=======
+	for (tc = 0; tc < params->num_tc; tc++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct mlx5e_cq *cq = &c->ptpsq[tc].txqsq.cq;
 
 		err = mlx5e_open_cq(c->priv, ptp_moder, cq_param, &ccp, cq);
@@ -385,7 +409,11 @@ static int mlx5e_ptp_open_tx_cqs(struct mlx5e_ptp *c,
 			goto out_err_txqsq_cq;
 	}
 
+<<<<<<< HEAD
 	for (tc = 0; tc < num_tc; tc++) {
+=======
+	for (tc = 0; tc < params->num_tc; tc++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct mlx5e_cq *cq = &c->ptpsq[tc].ts_cq;
 		struct mlx5e_ptpsq *ptpsq = &c->ptpsq[tc];
 
@@ -401,7 +429,11 @@ static int mlx5e_ptp_open_tx_cqs(struct mlx5e_ptp *c,
 out_err_ts_cq:
 	for (--tc; tc >= 0; tc--)
 		mlx5e_close_cq(&c->ptpsq[tc].ts_cq);
+<<<<<<< HEAD
 	tc = num_tc;
+=======
+	tc = params->num_tc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_err_txqsq_cq:
 	for (--tc; tc >= 0; tc--)
 		mlx5e_close_cq(&c->ptpsq[tc].txqsq.cq);
@@ -477,18 +509,27 @@ static void mlx5e_ptp_build_params(struct mlx5e_ptp *c,
 	params->num_channels = orig->num_channels;
 	params->hard_mtu = orig->hard_mtu;
 	params->sw_mtu = orig->sw_mtu;
+<<<<<<< HEAD
 	params->mqprio = orig->mqprio;
+=======
+	params->num_tc = orig->num_tc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* SQ */
 	if (test_bit(MLX5E_PTP_STATE_TX, c->state)) {
 		params->log_sq_size = orig->log_sq_size;
 		mlx5e_ptp_build_sq_param(c->mdev, params, &cparams->txq_sq_param);
 	}
+<<<<<<< HEAD
 	/* RQ */
 	if (test_bit(MLX5E_PTP_STATE_RX, c->state)) {
 		params->vlan_strip_disable = orig->vlan_strip_disable;
 		mlx5e_ptp_build_rq_param(c->mdev, c->netdev, c->priv->q_counter, cparams);
 	}
+=======
+	if (test_bit(MLX5E_PTP_STATE_RX, c->state))
+		mlx5e_ptp_build_rq_param(c->mdev, c->netdev, c->priv->q_counter, cparams);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int mlx5e_init_ptp_rq(struct mlx5e_ptp *c, struct mlx5e_params *params,
@@ -499,7 +540,11 @@ static int mlx5e_init_ptp_rq(struct mlx5e_ptp *c, struct mlx5e_params *params,
 	int err;
 
 	rq->wq_type      = params->rq_wq_type;
+<<<<<<< HEAD
 	rq->pdev         = c->pdev;
+=======
+	rq->pdev         = mdev->device;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rq->netdev       = priv->netdev;
 	rq->priv         = priv;
 	rq->clock        = &mdev->clock;
@@ -507,7 +552,10 @@ static int mlx5e_init_ptp_rq(struct mlx5e_ptp *c, struct mlx5e_params *params,
 	rq->mdev         = mdev;
 	rq->hw_mtu       = MLX5E_SW2HW_MTU(params, params->sw_mtu);
 	rq->stats        = &c->priv->ptp_stats.rq;
+<<<<<<< HEAD
 	rq->ix           = MLX5E_PTP_CHANNEL_IX;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rq->ptp_cyc2time = mlx5_rq_ts_translator(mdev);
 	err = mlx5e_rq_set_handlers(rq, params, false);
 	if (err)
@@ -608,9 +656,15 @@ static void mlx5e_ptp_rx_unset_fs(struct mlx5e_priv *priv)
 
 static int mlx5e_ptp_rx_set_fs(struct mlx5e_priv *priv)
 {
+<<<<<<< HEAD
 	u32 tirn = mlx5e_rx_res_get_tirn_ptp(priv->rx_res);
 	struct mlx5e_ptp_fs *ptp_fs = priv->fs.ptp_fs;
 	struct mlx5_flow_handle *rule;
+=======
+	struct mlx5e_ptp_fs *ptp_fs = priv->fs.ptp_fs;
+	struct mlx5_flow_handle *rule;
+	u32 tirn = priv->ptp_tir.tirn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	if (ptp_fs->valid)
@@ -620,7 +674,11 @@ static int mlx5e_ptp_rx_set_fs(struct mlx5e_priv *priv)
 	if (err)
 		goto out_free;
 
+<<<<<<< HEAD
 	rule = mlx5e_fs_tt_redirect_udp_add_rule(priv, MLX5_TT_IPV4_UDP,
+=======
+	rule = mlx5e_fs_tt_redirect_udp_add_rule(priv, MLX5E_TT_IPV4_UDP,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						 tirn, PTP_EV_PORT);
 	if (IS_ERR(rule)) {
 		err = PTR_ERR(rule);
@@ -628,7 +686,11 @@ static int mlx5e_ptp_rx_set_fs(struct mlx5e_priv *priv)
 	}
 	ptp_fs->udp_v4_rule = rule;
 
+<<<<<<< HEAD
 	rule = mlx5e_fs_tt_redirect_udp_add_rule(priv, MLX5_TT_IPV6_UDP,
+=======
+	rule = mlx5e_fs_tt_redirect_udp_add_rule(priv, MLX5E_TT_IPV6_UDP,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						 tirn, PTP_EV_PORT);
 	if (IS_ERR(rule)) {
 		err = PTR_ERR(rule);
@@ -683,7 +745,11 @@ int mlx5e_ptp_open(struct mlx5e_priv *priv, struct mlx5e_params *params,
 	c->pdev     = mlx5_core_dma_dev(priv->mdev);
 	c->netdev   = priv->netdev;
 	c->mkey_be  = cpu_to_be32(priv->mdev->mlx5e_res.hw_objs.mkey.key);
+<<<<<<< HEAD
 	c->num_tc   = mlx5e_get_dcb_num_tc(params);
+=======
+	c->num_tc   = params->num_tc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	c->stats    = &priv->ptp_stats.ch;
 	c->lag_port = lag_port;
 

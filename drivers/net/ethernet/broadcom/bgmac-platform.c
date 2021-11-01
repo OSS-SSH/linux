@@ -192,9 +192,12 @@ static int bgmac_probe(struct platform_device *pdev)
 	bgmac->dma_dev = &pdev->dev;
 
 	ret = of_get_mac_address(np, bgmac->net_dev->dev_addr);
+<<<<<<< HEAD
 	if (ret == -EPROBE_DEFER)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		dev_warn(&pdev->dev,
 			 "MAC address not present in device tree\n");

@@ -474,6 +474,11 @@ static void raid1_end_write_request(struct bio *bio)
 		/*
 		 * When the device is faulty, it is not necessary to
 		 * handle write error.
+<<<<<<< HEAD
+=======
+		 * For failfast, this is the only remaining device,
+		 * We need to retry the write without FailFast.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 */
 		if (!test_bit(Faulty, &rdev->flags))
 			set_bit(R1BIO_WriteError, &r1_bio->state);
@@ -1329,7 +1334,10 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 	struct raid1_plug_cb *plug = NULL;
 	int first_clone;
 	int max_sectors;
+<<<<<<< HEAD
 	bool write_behind = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (mddev_is_clustered(mddev) &&
 	     md_cluster_ops->area_resyncing(mddev, WRITE,
@@ -1382,6 +1390,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 	max_sectors = r1_bio->sectors;
 	for (i = 0;  i < disks; i++) {
 		struct md_rdev *rdev = rcu_dereference(conf->mirrors[i].rdev);
+<<<<<<< HEAD
 
 		/*
 		 * The write-behind io is only attempted on drives marked as
@@ -1391,6 +1400,8 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 		if (rdev && test_bit(WriteMostly, &rdev->flags))
 			write_behind = true;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rdev && unlikely(test_bit(Blocked, &rdev->flags))) {
 			atomic_inc(&rdev->nr_pending);
 			blocked_rdev = rdev;
@@ -1464,6 +1475,7 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 		goto retry_write;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * When using a bitmap, we may call alloc_behind_master_bio below.
 	 * alloc_behind_master_bio allocates a copy of the data payload a page
@@ -1473,6 +1485,8 @@ static void raid1_write_request(struct mddev *mddev, struct bio *bio,
 	if (write_behind && bitmap)
 		max_sectors = min_t(int, max_sectors,
 				    BIO_MAX_VECS * (PAGE_SIZE >> 9));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (max_sectors < bio_sectors(bio)) {
 		struct bio *split = bio_split(bio, max_sectors,
 					      GFP_NOIO, &conf->bio_split);

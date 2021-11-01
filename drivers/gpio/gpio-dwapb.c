@@ -16,6 +16,10 @@
 #include <linux/mod_devicetable.h>
 #include <linux/module.h>
 #include <linux/of.h>
+<<<<<<< HEAD
+=======
+#include <linux/platform_data/gpio-dwapb.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/platform_device.h>
 #include <linux/property.h>
 #include <linux/reset.h>
@@ -47,7 +51,10 @@
 
 #define DWAPB_DRIVER_NAME	"gpio-dwapb"
 #define DWAPB_MAX_PORTS		4
+<<<<<<< HEAD
 #define DWAPB_MAX_GPIOS		32
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define GPIO_EXT_PORT_STRIDE	0x04 /* register stride 32 bits */
 #define GPIO_SWPORT_DR_STRIDE	0x0c /* register stride 3*32 bits */
@@ -65,6 +72,7 @@
 
 struct dwapb_gpio;
 
+<<<<<<< HEAD
 struct dwapb_port_property {
 	struct fwnode_handle *fwnode;
 	unsigned int idx;
@@ -78,6 +86,8 @@ struct dwapb_platform_data {
 	unsigned int nports;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_PM_SLEEP
 /* Store GPIO context across system-wide suspend/resume transitions */
 struct dwapb_context {
@@ -449,6 +459,7 @@ static void dwapb_configure_irqs(struct dwapb_gpio *gpio,
 	pirq->irqchip.irq_set_wake = dwapb_irq_set_wake;
 #endif
 
+<<<<<<< HEAD
 	/*
 	 * Intel ACPI-based platforms mostly have the DesignWare APB GPIO
 	 * IRQ lane shared between several devices. In that case the parental
@@ -456,10 +467,26 @@ static void dwapb_configure_irqs(struct dwapb_gpio *gpio,
 	 * to all the connected devices.
 	 */
 	if (has_acpi_companion(gpio->dev)) {
+=======
+	if (!pp->irq_shared) {
+		girq->num_parents = pirq->nr_irqs;
+		girq->parents = pirq->irq;
+		girq->parent_handler_data = gpio;
+		girq->parent_handler = dwapb_irq_handler;
+	} else {
+		/* This will let us handle the parent IRQ in the driver */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		girq->num_parents = 0;
 		girq->parents = NULL;
 		girq->parent_handler = NULL;
 
+<<<<<<< HEAD
+=======
+		/*
+		 * Request a shared IRQ since where MFD would have devices
+		 * using the same irq pin
+		 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = devm_request_irq(gpio->dev, pp->irq[0],
 				       dwapb_irq_handler_mfd,
 				       IRQF_SHARED, DWAPB_DRIVER_NAME, gpio);
@@ -467,11 +494,14 @@ static void dwapb_configure_irqs(struct dwapb_gpio *gpio,
 			dev_err(gpio->dev, "error requesting IRQ\n");
 			goto err_kfree_pirq;
 		}
+<<<<<<< HEAD
 	} else {
 		girq->num_parents = pirq->nr_irqs;
 		girq->parents = pirq->irq;
 		girq->parent_handler_data = gpio;
 		girq->parent_handler = dwapb_irq_handler;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	girq->chip = &pirq->irqchip;
@@ -595,12 +625,18 @@ static struct dwapb_platform_data *dwapb_gpio_get_pdata(struct device *dev)
 			pp->ngpio = DWAPB_MAX_GPIOS;
 		}
 
+<<<<<<< HEAD
 		pp->gpio_base	= -1;
 
 		/* For internal use only, new platforms mustn't exercise this */
 		if (is_software_node(fwnode))
 			fwnode_property_read_u32(fwnode, "gpio-base", &pp->gpio_base);
 
+=======
+		pp->irq_shared	= false;
+		pp->gpio_base	= -1;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/*
 		 * Only port A can provide interrupts in all configurations of
 		 * the IP.
@@ -687,12 +723,26 @@ static int dwapb_gpio_probe(struct platform_device *pdev)
 	unsigned int i;
 	struct dwapb_gpio *gpio;
 	int err;
+<<<<<<< HEAD
 	struct dwapb_platform_data *pdata;
 	struct device *dev = &pdev->dev;
 
 	pdata = dwapb_gpio_get_pdata(dev);
 	if (IS_ERR(pdata))
 		return PTR_ERR(pdata);
+=======
+	struct device *dev = &pdev->dev;
+	struct dwapb_platform_data *pdata = dev_get_platdata(dev);
+
+	if (!pdata) {
+		pdata = dwapb_gpio_get_pdata(dev);
+		if (IS_ERR(pdata))
+			return PTR_ERR(pdata);
+	}
+
+	if (!pdata->nports)
+		return -ENODEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	gpio = devm_kzalloc(&pdev->dev, sizeof(*gpio), GFP_KERNEL);
 	if (!gpio)

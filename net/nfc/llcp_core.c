@@ -301,7 +301,11 @@ static char *wks[] = {
 	"urn:nfc:sn:snep",
 };
 
+<<<<<<< HEAD
 static int nfc_llcp_wks_sap(const char *service_name, size_t service_name_len)
+=======
+static int nfc_llcp_wks_sap(char *service_name, size_t service_name_len)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int sap, num_wks;
 
@@ -325,7 +329,11 @@ static int nfc_llcp_wks_sap(const char *service_name, size_t service_name_len)
 
 static
 struct nfc_llcp_sock *nfc_llcp_sock_from_sn(struct nfc_llcp_local *local,
+<<<<<<< HEAD
 					    const u8 *sn, size_t sn_len)
+=======
+					    u8 *sn, size_t sn_len)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sock *sk;
 	struct nfc_llcp_sock *llcp_sock, *tmp_sock;
@@ -522,7 +530,11 @@ static int nfc_llcp_build_gb(struct nfc_llcp_local *local)
 {
 	u8 *gb_cur, version, version_length;
 	u8 lto_length, wks_length, miux_length;
+<<<<<<< HEAD
 	const u8 *version_tlv = NULL, *lto_tlv = NULL,
+=======
+	u8 *version_tlv = NULL, *lto_tlv = NULL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	   *wks_tlv = NULL, *miux_tlv = NULL;
 	__be16 wks = cpu_to_be16(local->local_wks);
 	u8 gb_len = 0;
@@ -612,7 +624,11 @@ u8 *nfc_llcp_general_bytes(struct nfc_dev *dev, size_t *general_bytes_len)
 	return local->gb;
 }
 
+<<<<<<< HEAD
 int nfc_llcp_set_remote_gb(struct nfc_dev *dev, const u8 *gb, u8 gb_len)
+=======
+int nfc_llcp_set_remote_gb(struct nfc_dev *dev, u8 *gb, u8 gb_len)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct nfc_llcp_local *local;
 
@@ -639,27 +655,47 @@ int nfc_llcp_set_remote_gb(struct nfc_dev *dev, const u8 *gb, u8 gb_len)
 				     local->remote_gb_len - 3);
 }
 
+<<<<<<< HEAD
 static u8 nfc_llcp_dsap(const struct sk_buff *pdu)
+=======
+static u8 nfc_llcp_dsap(struct sk_buff *pdu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return (pdu->data[0] & 0xfc) >> 2;
 }
 
+<<<<<<< HEAD
 static u8 nfc_llcp_ptype(const struct sk_buff *pdu)
+=======
+static u8 nfc_llcp_ptype(struct sk_buff *pdu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return ((pdu->data[0] & 0x03) << 2) | ((pdu->data[1] & 0xc0) >> 6);
 }
 
+<<<<<<< HEAD
 static u8 nfc_llcp_ssap(const struct sk_buff *pdu)
+=======
+static u8 nfc_llcp_ssap(struct sk_buff *pdu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return pdu->data[1] & 0x3f;
 }
 
+<<<<<<< HEAD
 static u8 nfc_llcp_ns(const struct sk_buff *pdu)
+=======
+static u8 nfc_llcp_ns(struct sk_buff *pdu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return pdu->data[2] >> 4;
 }
 
+<<<<<<< HEAD
 static u8 nfc_llcp_nr(const struct sk_buff *pdu)
+=======
+static u8 nfc_llcp_nr(struct sk_buff *pdu)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return pdu->data[2] & 0xf;
 }
@@ -801,7 +837,11 @@ out:
 }
 
 static struct nfc_llcp_sock *nfc_llcp_sock_get_sn(struct nfc_llcp_local *local,
+<<<<<<< HEAD
 						  const u8 *sn, size_t sn_len)
+=======
+						  u8 *sn, size_t sn_len)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct nfc_llcp_sock *llcp_sock;
 
@@ -815,10 +855,16 @@ static struct nfc_llcp_sock *nfc_llcp_sock_get_sn(struct nfc_llcp_local *local,
 	return llcp_sock;
 }
 
+<<<<<<< HEAD
 static const u8 *nfc_llcp_connect_sn(const struct sk_buff *skb, size_t *sn_len)
 {
 	u8 type, length;
 	const u8 *tlv = &skb->data[2];
+=======
+static u8 *nfc_llcp_connect_sn(struct sk_buff *skb, size_t *sn_len)
+{
+	u8 *tlv = &skb->data[2], type, length;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size_t tlv_array_len = skb->len - LLCP_HEADER_SIZE, offset = 0;
 
 	while (offset < tlv_array_len) {
@@ -876,7 +922,11 @@ static void nfc_llcp_recv_ui(struct nfc_llcp_local *local,
 }
 
 static void nfc_llcp_recv_connect(struct nfc_llcp_local *local,
+<<<<<<< HEAD
 				  const struct sk_buff *skb)
+=======
+				  struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sock *new_sk, *parent;
 	struct nfc_llcp_sock *sock, *new_sock;
@@ -894,7 +944,11 @@ static void nfc_llcp_recv_connect(struct nfc_llcp_local *local,
 			goto fail;
 		}
 	} else {
+<<<<<<< HEAD
 		const u8 *sn;
+=======
+		u8 *sn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		size_t sn_len;
 
 		sn = nfc_llcp_connect_sn(skb, &sn_len);
@@ -1113,7 +1167,11 @@ static void nfc_llcp_recv_hdlc(struct nfc_llcp_local *local,
 }
 
 static void nfc_llcp_recv_disc(struct nfc_llcp_local *local,
+<<<<<<< HEAD
 			       const struct sk_buff *skb)
+=======
+			       struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct nfc_llcp_sock *llcp_sock;
 	struct sock *sk;
@@ -1156,8 +1214,12 @@ static void nfc_llcp_recv_disc(struct nfc_llcp_local *local,
 	nfc_llcp_sock_put(llcp_sock);
 }
 
+<<<<<<< HEAD
 static void nfc_llcp_recv_cc(struct nfc_llcp_local *local,
 			     const struct sk_buff *skb)
+=======
+static void nfc_llcp_recv_cc(struct nfc_llcp_local *local, struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct nfc_llcp_sock *llcp_sock;
 	struct sock *sk;
@@ -1190,8 +1252,12 @@ static void nfc_llcp_recv_cc(struct nfc_llcp_local *local,
 	nfc_llcp_sock_put(llcp_sock);
 }
 
+<<<<<<< HEAD
 static void nfc_llcp_recv_dm(struct nfc_llcp_local *local,
 			     const struct sk_buff *skb)
+=======
+static void nfc_llcp_recv_dm(struct nfc_llcp_local *local, struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct nfc_llcp_sock *llcp_sock;
 	struct sock *sk;
@@ -1229,6 +1295,7 @@ static void nfc_llcp_recv_dm(struct nfc_llcp_local *local,
 }
 
 static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
+<<<<<<< HEAD
 			      const struct sk_buff *skb)
 {
 	struct nfc_llcp_sock *llcp_sock;
@@ -1236,6 +1303,14 @@ static void nfc_llcp_recv_snl(struct nfc_llcp_local *local,
 	const u8 *tlv;
 	u16 tlv_len, offset;
 	const char *service_name;
+=======
+			      struct sk_buff *skb)
+{
+	struct nfc_llcp_sock *llcp_sock;
+	u8 dsap, ssap, *tlv, type, length, tid, sap;
+	u16 tlv_len, offset;
+	char *service_name;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size_t service_name_len;
 	struct nfc_llcp_sdp_tlv *sdp;
 	HLIST_HEAD(llc_sdres_list);

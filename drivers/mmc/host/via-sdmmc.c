@@ -491,7 +491,11 @@ static void via_sdc_preparedata(struct via_crdr_mmc_host *host,
 
 	count = dma_map_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
 		((data->flags & MMC_DATA_READ) ?
+<<<<<<< HEAD
 		DMA_FROM_DEVICE : DMA_TO_DEVICE));
+=======
+		PCI_DMA_FROMDEVICE : PCI_DMA_TODEVICE));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUG_ON(count != 1);
 
 	via_set_ddma(host, sg_dma_address(data->sg), sg_dma_len(data->sg),
@@ -638,7 +642,11 @@ static void via_sdc_finish_data(struct via_crdr_mmc_host *host)
 
 	dma_unmap_sg(mmc_dev(host->mmc), data->sg, data->sg_len,
 		((data->flags & MMC_DATA_READ) ?
+<<<<<<< HEAD
 		DMA_FROM_DEVICE : DMA_TO_DEVICE));
+=======
+		PCI_DMA_FROMDEVICE : PCI_DMA_TODEVICE));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (data->stop)
 		via_sdc_send_command(host, data->stop);

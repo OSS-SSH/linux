@@ -43,6 +43,10 @@ int sgi_partition(struct parsed_partitions *state)
 	Sector sect;
 	struct sgi_disklabel *label;
 	struct sgi_partition *p;
+<<<<<<< HEAD
+=======
+	char b[BDEVNAME_SIZE];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	label = read_part_sector(state, 0, &sect);
 	if (!label)
@@ -51,7 +55,11 @@ int sgi_partition(struct parsed_partitions *state)
 	magic = label->magic_mushroom;
 	if(be32_to_cpu(magic) != SGI_LABEL_MAGIC) {
 		/*printk("Dev %s SGI disklabel: bad magic %08x\n",
+<<<<<<< HEAD
 		       state->disk->disk_name, be32_to_cpu(magic));*/
+=======
+		       bdevname(bdev, b), be32_to_cpu(magic));*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		put_dev_sector(sect);
 		return 0;
 	}
@@ -62,7 +70,11 @@ int sgi_partition(struct parsed_partitions *state)
 	}
 	if(csum) {
 		printk(KERN_WARNING "Dev %s SGI disklabel: csum bad, label corrupted\n",
+<<<<<<< HEAD
 		       state->disk->disk_name);
+=======
+		       bdevname(state->bdev, b));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		put_dev_sector(sect);
 		return 0;
 	}

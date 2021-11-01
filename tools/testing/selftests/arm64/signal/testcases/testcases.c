@@ -50,6 +50,7 @@ bool validate_extra_context(struct extra_context *extra, char **err)
 	return true;
 }
 
+<<<<<<< HEAD
 bool validate_sve_context(struct sve_context *sve, char **err)
 {
 	/* Size will be rounded up to a multiple of 16 bytes */
@@ -75,13 +76,18 @@ bool validate_sve_context(struct sve_context *sve, char **err)
 	return true;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bool validate_reserved(ucontext_t *uc, size_t resv_sz, char **err)
 {
 	bool terminated = false;
 	size_t offs = 0;
 	int flags = 0;
 	struct extra_context *extra = NULL;
+<<<<<<< HEAD
 	struct sve_context *sve = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct _aarch64_ctx *head =
 		(struct _aarch64_ctx *)uc->uc_mcontext.__reserved;
 
@@ -116,8 +122,14 @@ bool validate_reserved(ucontext_t *uc, size_t resv_sz, char **err)
 		case SVE_MAGIC:
 			if (flags & SVE_CTX)
 				*err = "Multiple SVE_MAGIC";
+<<<<<<< HEAD
 			/* Size is validated in validate_sve_context() */
 			sve = (struct sve_context *)head;
+=======
+			else if (head->size !=
+				 sizeof(struct sve_context))
+				*err = "Bad size for sve_context";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			flags |= SVE_CTX;
 			break;
 		case EXTRA_MAGIC:
@@ -162,9 +174,12 @@ bool validate_reserved(ucontext_t *uc, size_t resv_sz, char **err)
 		if (flags & EXTRA_CTX)
 			if (!validate_extra_context(extra, err))
 				return false;
+<<<<<<< HEAD
 		if (flags & SVE_CTX)
 			if (!validate_sve_context(sve, err))
 				return false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		head = GET_RESV_NEXT_HEAD(head);
 	}

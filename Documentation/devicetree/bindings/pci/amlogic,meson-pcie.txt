@@ -3,7 +3,11 @@ Amlogic Meson AXG DWC PCIE SoC controller
 Amlogic Meson PCIe host controller is based on the Synopsys DesignWare PCI core.
 It shares common functions with the PCIe DesignWare core driver and
 inherits common properties defined in
+<<<<<<< HEAD
 Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml.
+=======
+Documentation/devicetree/bindings/pci/designware-pcie.txt.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Additional properties are described here:
 
@@ -33,7 +37,11 @@ Required properties:
 - phy-names: must contain "pcie"
 
 - device_type:
+<<<<<<< HEAD
 	should be "pci". As specified in snps,dw-pcie.yaml
+=======
+	should be "pci". As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 Example configuration:

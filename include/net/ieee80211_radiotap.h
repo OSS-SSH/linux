@@ -43,11 +43,14 @@ struct ieee80211_radiotap_header {
 	 * @it_present: (first) present word
 	 */
 	__le32 it_present;
+<<<<<<< HEAD
 
 	/**
 	 * @it_optional: all remaining presence bitmaps
 	 */
 	__le32 it_optional[];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } __packed;
 
 /* version is always 0 */

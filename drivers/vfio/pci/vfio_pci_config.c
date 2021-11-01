@@ -26,7 +26,11 @@
 #include <linux/vfio.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 #include <linux/vfio_pci_core.h>
+=======
+#include "vfio_pci_private.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Fake capability ID for standard config space */
 #define PCI_CAP_ID_BASIC	0
@@ -108,9 +112,15 @@ static const u16 pci_ext_cap_length[PCI_EXT_CAP_ID_MAX + 1] = {
 struct perm_bits {
 	u8	*virt;		/* read/write virtual data, not hw */
 	u8	*write;		/* writeable bits */
+<<<<<<< HEAD
 	int	(*readfn)(struct vfio_pci_core_device *vdev, int pos, int count,
 			  struct perm_bits *perm, int offset, __le32 *val);
 	int	(*writefn)(struct vfio_pci_core_device *vdev, int pos, int count,
+=======
+	int	(*readfn)(struct vfio_pci_device *vdev, int pos, int count,
+			  struct perm_bits *perm, int offset, __le32 *val);
+	int	(*writefn)(struct vfio_pci_device *vdev, int pos, int count,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   struct perm_bits *perm, int offset, __le32 val);
 };
 
@@ -171,7 +181,11 @@ static int vfio_user_config_write(struct pci_dev *pdev, int offset,
 	return ret;
 }
 
+<<<<<<< HEAD
 static int vfio_default_config_read(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_default_config_read(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				    int count, struct perm_bits *perm,
 				    int offset, __le32 *val)
 {
@@ -197,7 +211,11 @@ static int vfio_default_config_read(struct vfio_pci_core_device *vdev, int pos,
 	return count;
 }
 
+<<<<<<< HEAD
 static int vfio_default_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_default_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				     int count, struct perm_bits *perm,
 				     int offset, __le32 val)
 {
@@ -244,7 +262,11 @@ static int vfio_default_config_write(struct vfio_pci_core_device *vdev, int pos,
 }
 
 /* Allow direct read from hardware, except for capability next pointer */
+<<<<<<< HEAD
 static int vfio_direct_config_read(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_direct_config_read(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   int count, struct perm_bits *perm,
 				   int offset, __le32 *val)
 {
@@ -269,7 +291,11 @@ static int vfio_direct_config_read(struct vfio_pci_core_device *vdev, int pos,
 }
 
 /* Raw access skips any kind of virtualization */
+<<<<<<< HEAD
 static int vfio_raw_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_raw_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 int count, struct perm_bits *perm,
 				 int offset, __le32 val)
 {
@@ -282,7 +308,11 @@ static int vfio_raw_config_write(struct vfio_pci_core_device *vdev, int pos,
 	return count;
 }
 
+<<<<<<< HEAD
 static int vfio_raw_config_read(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_raw_config_read(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				int count, struct perm_bits *perm,
 				int offset, __le32 *val)
 {
@@ -296,7 +326,11 @@ static int vfio_raw_config_read(struct vfio_pci_core_device *vdev, int pos,
 }
 
 /* Virt access uses only virtualization */
+<<<<<<< HEAD
 static int vfio_virt_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_virt_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  int count, struct perm_bits *perm,
 				  int offset, __le32 val)
 {
@@ -304,7 +338,11 @@ static int vfio_virt_config_write(struct vfio_pci_core_device *vdev, int pos,
 	return count;
 }
 
+<<<<<<< HEAD
 static int vfio_virt_config_read(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_virt_config_read(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 int count, struct perm_bits *perm,
 				 int offset, __le32 *val)
 {
@@ -396,7 +434,11 @@ static inline void p_setd(struct perm_bits *p, int off, u32 virt, u32 write)
 }
 
 /* Caller should hold memory_lock semaphore */
+<<<<<<< HEAD
 bool __vfio_pci_memory_enabled(struct vfio_pci_core_device *vdev)
+=======
+bool __vfio_pci_memory_enabled(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u16 cmd = le16_to_cpu(*(__le16 *)&vdev->vconfig[PCI_COMMAND]);
@@ -413,7 +455,11 @@ bool __vfio_pci_memory_enabled(struct vfio_pci_core_device *vdev)
  * Restore the *real* BARs after we detect a FLR or backdoor reset.
  * (backdoor = some device specific technique that we didn't catch)
  */
+<<<<<<< HEAD
 static void vfio_bar_restore(struct vfio_pci_core_device *vdev)
+=======
+static void vfio_bar_restore(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u32 *rbar = vdev->rbar;
@@ -460,7 +506,11 @@ static __le32 vfio_generate_bar_flags(struct pci_dev *pdev, int bar)
  * Pretend we're hardware and tweak the values of the *virtual* PCI BARs
  * to reflect the hardware capabilities.  This implements BAR sizing.
  */
+<<<<<<< HEAD
 static void vfio_bar_fixup(struct vfio_pci_core_device *vdev)
+=======
+static void vfio_bar_fixup(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	int i;
@@ -514,7 +564,11 @@ static void vfio_bar_fixup(struct vfio_pci_core_device *vdev)
 	vdev->bardirty = false;
 }
 
+<<<<<<< HEAD
 static int vfio_basic_config_read(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_basic_config_read(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  int count, struct perm_bits *perm,
 				  int offset, __le32 *val)
 {
@@ -536,7 +590,11 @@ static int vfio_basic_config_read(struct vfio_pci_core_device *vdev, int pos,
 }
 
 /* Test whether BARs match the value we think they should contain */
+<<<<<<< HEAD
 static bool vfio_need_bar_restore(struct vfio_pci_core_device *vdev)
+=======
+static bool vfio_need_bar_restore(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i = 0, pos = PCI_BASE_ADDRESS_0, ret;
 	u32 bar;
@@ -552,7 +610,11 @@ static bool vfio_need_bar_restore(struct vfio_pci_core_device *vdev)
 	return false;
 }
 
+<<<<<<< HEAD
 static int vfio_basic_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_basic_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   int count, struct perm_bits *perm,
 				   int offset, __le32 val)
 {
@@ -692,7 +754,11 @@ static int __init init_pci_cap_basic_perm(struct perm_bits *perm)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int vfio_pm_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_pm_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				int count, struct perm_bits *perm,
 				int offset, __le32 val)
 {
@@ -747,7 +813,11 @@ static int __init init_pci_cap_pm_perm(struct perm_bits *perm)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int vfio_vpd_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_vpd_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 int count, struct perm_bits *perm,
 				 int offset, __le32 val)
 {
@@ -829,7 +899,11 @@ static int __init init_pci_cap_pcix_perm(struct perm_bits *perm)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int vfio_exp_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_exp_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 int count, struct perm_bits *perm,
 				 int offset, __le32 val)
 {
@@ -913,7 +987,11 @@ static int __init init_pci_cap_exp_perm(struct perm_bits *perm)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int vfio_af_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_af_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				int count, struct perm_bits *perm,
 				int offset, __le32 val)
 {
@@ -1072,7 +1150,11 @@ int __init vfio_pci_init_perm_bits(void)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int vfio_find_cap_start(struct vfio_pci_core_device *vdev, int pos)
+=======
+static int vfio_find_cap_start(struct vfio_pci_device *vdev, int pos)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u8 cap;
 	int base = (pos >= PCI_CFG_SPACE_SIZE) ? PCI_CFG_SPACE_SIZE :
@@ -1089,7 +1171,11 @@ static int vfio_find_cap_start(struct vfio_pci_core_device *vdev, int pos)
 	return pos;
 }
 
+<<<<<<< HEAD
 static int vfio_msi_config_read(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_msi_config_read(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				int count, struct perm_bits *perm,
 				int offset, __le32 *val)
 {
@@ -1109,7 +1195,11 @@ static int vfio_msi_config_read(struct vfio_pci_core_device *vdev, int pos,
 	return vfio_default_config_read(vdev, pos, count, perm, offset, val);
 }
 
+<<<<<<< HEAD
 static int vfio_msi_config_write(struct vfio_pci_core_device *vdev, int pos,
+=======
+static int vfio_msi_config_write(struct vfio_pci_device *vdev, int pos,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 int count, struct perm_bits *perm,
 				 int offset, __le32 val)
 {
@@ -1189,7 +1279,11 @@ static int init_pci_cap_msi_perm(struct perm_bits *perm, int len, u16 flags)
 }
 
 /* Determine MSI CAP field length; initialize msi_perms on 1st call per vdev */
+<<<<<<< HEAD
 static int vfio_msi_cap_len(struct vfio_pci_core_device *vdev, u8 pos)
+=======
+static int vfio_msi_cap_len(struct vfio_pci_device *vdev, u8 pos)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	int len, ret;
@@ -1222,7 +1316,11 @@ static int vfio_msi_cap_len(struct vfio_pci_core_device *vdev, u8 pos)
 }
 
 /* Determine extended capability length for VC (2 & 9) and MFVC */
+<<<<<<< HEAD
 static int vfio_vc_cap_len(struct vfio_pci_core_device *vdev, u16 pos)
+=======
+static int vfio_vc_cap_len(struct vfio_pci_device *vdev, u16 pos)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u32 tmp;
@@ -1263,7 +1361,11 @@ static int vfio_vc_cap_len(struct vfio_pci_core_device *vdev, u16 pos)
 	return len;
 }
 
+<<<<<<< HEAD
 static int vfio_cap_len(struct vfio_pci_core_device *vdev, u8 cap, u8 pos)
+=======
+static int vfio_cap_len(struct vfio_pci_device *vdev, u8 cap, u8 pos)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u32 dword;
@@ -1338,7 +1440,11 @@ static int vfio_cap_len(struct vfio_pci_core_device *vdev, u8 cap, u8 pos)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int vfio_ext_cap_len(struct vfio_pci_core_device *vdev, u16 ecap, u16 epos)
+=======
+static int vfio_ext_cap_len(struct vfio_pci_device *vdev, u16 ecap, u16 epos)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u8 byte;
@@ -1412,7 +1518,11 @@ static int vfio_ext_cap_len(struct vfio_pci_core_device *vdev, u16 ecap, u16 epo
 	return 0;
 }
 
+<<<<<<< HEAD
 static int vfio_fill_vconfig_bytes(struct vfio_pci_core_device *vdev,
+=======
+static int vfio_fill_vconfig_bytes(struct vfio_pci_device *vdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   int offset, int size)
 {
 	struct pci_dev *pdev = vdev->pdev;
@@ -1459,7 +1569,11 @@ static int vfio_fill_vconfig_bytes(struct vfio_pci_core_device *vdev,
 	return ret;
 }
 
+<<<<<<< HEAD
 static int vfio_cap_init(struct vfio_pci_core_device *vdev)
+=======
+static int vfio_cap_init(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u8 *map = vdev->pci_config_map;
@@ -1549,7 +1663,11 @@ static int vfio_cap_init(struct vfio_pci_core_device *vdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int vfio_ecap_init(struct vfio_pci_core_device *vdev)
+=======
+static int vfio_ecap_init(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u8 *map = vdev->pci_config_map;
@@ -1669,7 +1787,11 @@ static const struct pci_device_id known_bogus_vf_intx_pin[] = {
  * for each area requiring emulated bits, but the array of pointers
  * would be comparable in size (at least for standard config space).
  */
+<<<<<<< HEAD
 int vfio_config_init(struct vfio_pci_core_device *vdev)
+=======
+int vfio_config_init(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = vdev->pdev;
 	u8 *map, *vconfig;
@@ -1773,7 +1895,11 @@ out:
 	return pcibios_err_to_errno(ret);
 }
 
+<<<<<<< HEAD
 void vfio_config_free(struct vfio_pci_core_device *vdev)
+=======
+void vfio_config_free(struct vfio_pci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	kfree(vdev->vconfig);
 	vdev->vconfig = NULL;
@@ -1790,7 +1916,11 @@ void vfio_config_free(struct vfio_pci_core_device *vdev)
  * Find the remaining number of bytes in a dword that match the given
  * position.  Stop at either the end of the capability or the dword boundary.
  */
+<<<<<<< HEAD
 static size_t vfio_pci_cap_remaining_dword(struct vfio_pci_core_device *vdev,
+=======
+static size_t vfio_pci_cap_remaining_dword(struct vfio_pci_device *vdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					   loff_t pos)
 {
 	u8 cap = vdev->pci_config_map[pos];
@@ -1802,7 +1932,11 @@ static size_t vfio_pci_cap_remaining_dword(struct vfio_pci_core_device *vdev,
 	return i;
 }
 
+<<<<<<< HEAD
 static ssize_t vfio_config_do_rw(struct vfio_pci_core_device *vdev, char __user *buf,
+=======
+static ssize_t vfio_config_do_rw(struct vfio_pci_device *vdev, char __user *buf,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 size_t count, loff_t *ppos, bool iswrite)
 {
 	struct pci_dev *pdev = vdev->pdev;
@@ -1885,7 +2019,11 @@ static ssize_t vfio_config_do_rw(struct vfio_pci_core_device *vdev, char __user 
 	return ret;
 }
 
+<<<<<<< HEAD
 ssize_t vfio_pci_config_rw(struct vfio_pci_core_device *vdev, char __user *buf,
+=======
+ssize_t vfio_pci_config_rw(struct vfio_pci_device *vdev, char __user *buf,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   size_t count, loff_t *ppos, bool iswrite)
 {
 	size_t done = 0;

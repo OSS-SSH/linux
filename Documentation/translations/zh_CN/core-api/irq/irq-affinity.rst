@@ -1,5 +1,6 @@
 .. include:: ../../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/core-api/irq/irq-affinity
 
 :翻译:
@@ -8,6 +9,14 @@
 
 .. _cn_irq-affinity.rst:
 
+=======
+:Original: :doc:`../../../../core-api/irq/irq-affinity`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_irq-affinity.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ==============
 SMP IRQ 亲和性
 ==============

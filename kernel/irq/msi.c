@@ -14,20 +14,32 @@
 #include <linux/irqdomain.h>
 #include <linux/msi.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
 #include <linux/pci.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "internals.h"
 
 /**
+<<<<<<< HEAD
  * alloc_msi_entry - Allocate an initialized msi_desc
+=======
+ * alloc_msi_entry - Allocate an initialize msi_entry
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @dev:	Pointer to the device for which this is allocated
  * @nvec:	The number of vectors used in this entry
  * @affinity:	Optional pointer to an affinity mask array size of @nvec
  *
+<<<<<<< HEAD
  * If @affinity is not %NULL then an affinity array[@nvec] is allocated
  * and the affinity masks and flags from @affinity are copied.
  *
  * Return: pointer to allocated &msi_desc on success or %NULL on failure
+=======
+ * If @affinity is not NULL then an affinity array[@nvec] is allocated
+ * and the affinity masks and flags from @affinity are copied.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct msi_desc *alloc_msi_entry(struct device *dev, int nvec,
 				 const struct irq_affinity_desc *affinity)
@@ -72,6 +84,7 @@ void get_cached_msi_msg(unsigned int irq, struct msi_msg *msg)
 }
 EXPORT_SYMBOL_GPL(get_cached_msi_msg);
 
+<<<<<<< HEAD
 static ssize_t msi_mode_show(struct device *dev, struct device_attribute *attr,
 			     char *buf)
 {
@@ -205,6 +218,8 @@ void msi_destroy_sysfs(struct device *dev, const struct attribute_group **msi_ir
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_GENERIC_MSI_IRQ_DOMAIN
 static inline void irq_chip_write_msi_msg(struct irq_data *data,
 					  struct msi_msg *msg)
@@ -233,8 +248,11 @@ static void msi_check_level(struct irq_domain *domain, struct msi_msg *msg)
  *
  * Intended to be used by MSI interrupt controllers which are
  * implemented with hierarchical domains.
+<<<<<<< HEAD
  *
  * Return: IRQ_SET_MASK_* result code
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int msi_domain_set_affinity(struct irq_data *irq_data,
 			    const struct cpumask *mask, bool force)
@@ -415,12 +433,19 @@ static void msi_domain_update_chip_ops(struct msi_domain_info *info)
 }
 
 /**
+<<<<<<< HEAD
  * msi_create_irq_domain - Create an MSI interrupt domain
  * @fwnode:	Optional fwnode of the interrupt controller
  * @info:	MSI domain info
  * @parent:	Parent irq domain
  *
  * Return: pointer to the created &struct irq_domain or %NULL on failure
+=======
+ * msi_create_irq_domain - Create a MSI interrupt domain
+ * @fwnode:	Optional fwnode of the interrupt controller
+ * @info:	MSI domain info
+ * @parent:	Parent irq domain
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct irq_domain *msi_create_irq_domain(struct fwnode_handle *fwnode,
 					 struct msi_domain_info *info,
@@ -616,6 +641,14 @@ skip_activate:
 	return 0;
 
 cleanup:
+<<<<<<< HEAD
+=======
+	for_each_msi_vector(desc, i, dev) {
+		irq_data = irq_domain_get_irq_data(domain, i);
+		if (irqd_is_activated(irq_data))
+			irq_domain_deactivate_irq(irq_data);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	msi_domain_free_irqs(domain, dev);
 	return ret;
 }
@@ -627,7 +660,11 @@ cleanup:
  *		are allocated
  * @nvec:	The number of interrupts to allocate
  *
+<<<<<<< HEAD
  * Return: %0 on success or an error code.
+=======
+ * Returns 0 on success or an error code.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int msi_domain_alloc_irqs(struct irq_domain *domain, struct device *dev,
 			  int nvec)
@@ -640,6 +677,7 @@ int msi_domain_alloc_irqs(struct irq_domain *domain, struct device *dev,
 
 void __msi_domain_free_irqs(struct irq_domain *domain, struct device *dev)
 {
+<<<<<<< HEAD
 	struct irq_data *irq_data;
 	struct msi_desc *desc;
 	int i;
@@ -649,6 +687,9 @@ void __msi_domain_free_irqs(struct irq_domain *domain, struct device *dev)
 		if (irqd_is_activated(irq_data))
 			irq_domain_deactivate_irq(irq_data);
 	}
+=======
+	struct msi_desc *desc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for_each_msi_entry(desc, dev) {
 		/*
@@ -664,7 +705,11 @@ void __msi_domain_free_irqs(struct irq_domain *domain, struct device *dev)
 }
 
 /**
+<<<<<<< HEAD
  * msi_domain_free_irqs - Free interrupts from a MSI interrupt @domain associated to @dev
+=======
+ * __msi_domain_free_irqs - Free interrupts from a MSI interrupt @domain associated tp @dev
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @domain:	The domain to managing the interrupts
  * @dev:	Pointer to device struct of the device for which the interrupts
  *		are free
@@ -681,7 +726,12 @@ void msi_domain_free_irqs(struct irq_domain *domain, struct device *dev)
  * msi_get_domain_info - Get the MSI interrupt domain info for @domain
  * @domain:	The interrupt domain to retrieve data from
  *
+<<<<<<< HEAD
  * Return: the pointer to the msi_domain_info stored in @domain->host_data.
+=======
+ * Returns the pointer to the msi_domain_info stored in
+ * @domain->host_data.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct msi_domain_info *msi_get_domain_info(struct irq_domain *domain)
 {

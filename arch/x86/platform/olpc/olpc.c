@@ -274,7 +274,11 @@ static struct olpc_ec_driver ec_xo1_driver = {
 
 static struct olpc_ec_driver ec_xo1_5_driver = {
 	.ec_cmd = olpc_xo1_ec_cmd,
+<<<<<<< HEAD
 #ifdef CONFIG_OLPC_XO15_SCI
+=======
+#ifdef CONFIG_OLPC_XO1_5_SCI
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * XO-1.5 EC wakeups are available when olpc-xo15-sci driver is
 	 * compiled in

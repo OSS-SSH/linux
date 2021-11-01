@@ -55,7 +55,10 @@ int tm_sigreturn(void)
 	uint64_t ret = 0;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SKIP_IF(!is_ppc64le());
 
 	memset(&sa, 0, sizeof(sa));

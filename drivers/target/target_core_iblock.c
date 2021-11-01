@@ -83,7 +83,11 @@ static int iblock_configure_device(struct se_device *dev)
 	struct blk_integrity *bi;
 	fmode_t mode;
 	unsigned int max_write_zeroes_sectors;
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret = -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!(ib_dev->ibd_flags & IBDF_HAS_UDEV_PATH)) {
 		pr_err("Missing udev_path= parameters for IBLOCK\n");

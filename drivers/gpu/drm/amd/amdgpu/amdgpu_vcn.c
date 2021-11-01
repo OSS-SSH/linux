@@ -258,6 +258,11 @@ int amdgpu_vcn_sw_fini(struct amdgpu_device *adev)
 {
 	int i, j;
 
+<<<<<<< HEAD
+=======
+	cancel_delayed_work_sync(&adev->vcn.idle_work);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (j = 0; j < adev->vcn.num_vcn_inst; ++j) {
 		if (adev->vcn.harvest_config & (1 << j))
 			continue;

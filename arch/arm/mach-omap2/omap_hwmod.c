@@ -3614,8 +3614,11 @@ int omap_hwmod_init_module(struct device *dev,
 		oh->flags |= HWMOD_SWSUP_SIDLE_ACT;
 	if (data->cfg->quirks & SYSC_QUIRK_SWSUP_MSTANDBY)
 		oh->flags |= HWMOD_SWSUP_MSTANDBY;
+<<<<<<< HEAD
 	if (data->cfg->quirks & SYSC_QUIRK_CLKDM_NOAUTO)
 		oh->flags |= HWMOD_CLKDM_NOAUTO;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	error = omap_hwmod_check_module(dev, oh, data, sysc_fields,
 					rev_offs, sysc_offs, syss_offs,
@@ -3778,7 +3781,10 @@ struct powerdomain *omap_hwmod_get_pwrdm(struct omap_hwmod *oh)
 	struct omap_hwmod_ocp_if *oi;
 	struct clockdomain *clkdm;
 	struct clk_hw_omap *clk;
+<<<<<<< HEAD
 	struct clk_hw *hw;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!oh)
 		return NULL;
@@ -3795,6 +3801,7 @@ struct powerdomain *omap_hwmod_get_pwrdm(struct omap_hwmod *oh)
 		c = oi->_clk;
 	}
 
+<<<<<<< HEAD
 	hw = __clk_get_hw(c);
 	if (!hw)
 		return NULL;
@@ -3803,6 +3810,9 @@ struct powerdomain *omap_hwmod_get_pwrdm(struct omap_hwmod *oh)
 	if (!clk)
 		return NULL;
 
+=======
+	clk = to_clk_hw_omap(__clk_get_hw(c));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	clkdm = clk->clkdm;
 	if (!clkdm)
 		return NULL;

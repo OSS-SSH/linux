@@ -14,16 +14,23 @@ config RAID_ATTRS
 	help
 	  Provides RAID
 
+<<<<<<< HEAD
 config SCSI_COMMON
 	tristate
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config SCSI
 	tristate "SCSI device support"
 	depends on BLOCK
 	select SCSI_DMA if HAS_DMA
 	select SG_POOL
+<<<<<<< HEAD
 	select SCSI_COMMON
 	select BLK_DEV_BSG_COMMON if BLK_DEV_BSG
+=======
+	select BLK_SCSI_REQUEST
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  If you want to use a SCSI hard disk, SCSI tape drive, SCSI CD-ROM or
 	  any other SCSI device under Linux, say Y and make sure that you know
@@ -144,6 +151,7 @@ config CHR_DEV_SG
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
 config BLK_DEV_BSG
 	bool "/dev/bsg support (SG v4)"
 	depends on SCSI
@@ -156,6 +164,8 @@ config BLK_DEV_BSG
 
 	  If unsure, say Y.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config CHR_DEV_SCH
 	tristate "SCSI media changer support"
 	depends on SCSI

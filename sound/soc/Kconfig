@@ -36,7 +36,10 @@ config SND_SOC_COMPRESS
 
 config SND_SOC_TOPOLOGY
 	bool
+<<<<<<< HEAD
 	select SND_DYNAMIC_MINORS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config SND_SOC_TOPOLOGY_KUNIT_TEST
 	tristate "KUnit tests for SoC topology"

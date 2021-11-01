@@ -149,7 +149,11 @@ static const struct net_device_ops mlx5i_pkey_netdev_ops = {
 	.ndo_get_stats64         = mlx5i_get_stats,
 	.ndo_uninit              = mlx5i_pkey_dev_cleanup,
 	.ndo_change_mtu          = mlx5i_pkey_change_mtu,
+<<<<<<< HEAD
 	.ndo_eth_ioctl            = mlx5i_pkey_ioctl,
+=======
+	.ndo_do_ioctl            = mlx5i_pkey_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Child NDOs */

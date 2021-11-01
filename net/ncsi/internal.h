@@ -78,10 +78,13 @@ enum {
 /* OEM Vendor Manufacture ID */
 #define NCSI_OEM_MFR_MLX_ID             0x8119
 #define NCSI_OEM_MFR_BCM_ID             0x113d
+<<<<<<< HEAD
 #define NCSI_OEM_MFR_INTEL_ID           0x157
 /* Intel specific OEM command */
 #define NCSI_OEM_INTEL_CMD_GMA          0x06   /* CMD ID for Get MAC */
 #define NCSI_OEM_INTEL_CMD_KEEP_PHY     0x20   /* CMD ID for Keep PHY up */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Broadcom specific OEM Command */
 #define NCSI_OEM_BCM_CMD_GMA            0x01   /* CMD ID for Get MAC */
 /* Mellanox specific OEM Command */
@@ -90,8 +93,11 @@ enum {
 #define NCSI_OEM_MLX_CMD_SMAF           0x01   /* CMD ID for Set MC Affinity */
 #define NCSI_OEM_MLX_CMD_SMAF_PARAM     0x07   /* Parameter for SMAF         */
 /* OEM Command payload lengths*/
+<<<<<<< HEAD
 #define NCSI_OEM_INTEL_CMD_GMA_LEN      5
 #define NCSI_OEM_INTEL_CMD_KEEP_PHY_LEN 7
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define NCSI_OEM_BCM_CMD_GMA_LEN        12
 #define NCSI_OEM_MLX_CMD_GMA_LEN        8
 #define NCSI_OEM_MLX_CMD_SMAF_LEN        60
@@ -101,7 +107,10 @@ enum {
 /* Mac address offset in OEM response */
 #define BCM_MAC_ADDR_OFFSET             28
 #define MLX_MAC_ADDR_OFFSET             8
+<<<<<<< HEAD
 #define INTEL_MAC_ADDR_OFFSET           1
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 struct ncsi_channel_version {
@@ -278,7 +287,10 @@ enum {
 	ncsi_dev_state_probe_mlx_gma,
 	ncsi_dev_state_probe_mlx_smaf,
 	ncsi_dev_state_probe_cis,
+<<<<<<< HEAD
 	ncsi_dev_state_probe_keep_phy,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ncsi_dev_state_probe_gvi,
 	ncsi_dev_state_probe_gc,
 	ncsi_dev_state_probe_gls,

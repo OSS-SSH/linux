@@ -1418,7 +1418,11 @@ static void s5p_mfc_try_run_v5(struct s5p_mfc_dev *dev)
 		if (test_and_clear_bit(0, &dev->hw_lock) == 0)
 			mfc_err("Failed to unlock hardware\n");
 
+<<<<<<< HEAD
 		/* This is indeed important, as no operation has been
+=======
+		/* This is in deed imporant, as no operation has been
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * scheduled, reduce the clock count as no one will
 		 * ever do this, because no interrupt related to this try_run
 		 * will ever come from hardware. */

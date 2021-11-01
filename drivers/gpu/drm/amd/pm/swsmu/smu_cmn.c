@@ -55,7 +55,11 @@
 
 #undef __SMU_DUMMY_MAP
 #define __SMU_DUMMY_MAP(type)	#type
+<<<<<<< HEAD
 static const char * const __smu_message_names[] = {
+=======
+static const char* __smu_message_names[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SMU_MESSAGE_TYPES
 };
 
@@ -76,6 +80,7 @@ static void smu_cmn_read_arg(struct smu_context *smu,
 	*arg = RREG32_SOC15(MP1, 0, mmMP1_SMN_C2PMSG_82);
 }
 
+<<<<<<< HEAD
 /* Redefine the SMU error codes here.
  *
  * Note that these definitions are redundant and should be removed
@@ -122,10 +127,22 @@ static u32 __smu_cmn_poll_stat(struct smu_context *smu)
 		reg = RREG32_SOC15(MP1, 0, mmMP1_SMN_C2PMSG_90);
 		if ((reg & MP1_C2PMSG_90__CONTENT_MASK) != 0)
 			break;
+=======
+int smu_cmn_wait_for_response(struct smu_context *smu)
+{
+	struct amdgpu_device *adev = smu->adev;
+	uint32_t cur_value, i, timeout = adev->usec_timeout * 20;
+
+	for (i = 0; i < timeout; i++) {
+		cur_value = RREG32_SOC15(MP1, 0, mmMP1_SMN_C2PMSG_90);
+		if ((cur_value & MP1_C2PMSG_90__CONTENT_MASK) != 0)
+			return cur_value;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		udelay(1);
 	}
 
+<<<<<<< HEAD
 	return reg;
 }
 
@@ -319,13 +336,49 @@ int smu_cmn_wait_for_response(struct smu_context *smu)
  * @param, but we can't assume that. This also eliminates more
  * conditionals.
  */
+=======
+	/* timeout means wrong logic */
+	if (i == timeout)
+		return -ETIME;
+
+	return RREG32_SOC15(MP1, 0, mmMP1_SMN_C2PMSG_90);
+}
+
+int smu_cmn_send_msg_without_waiting(struct smu_context *smu,
+				     uint16_t msg, uint32_t param)
+{
+	struct amdgpu_device *adev = smu->adev;
+	int ret;
+
+	ret = smu_cmn_wait_for_response(smu);
+	if (ret != 0x1) {
+		dev_err(adev->dev, "Msg issuing pre-check failed(0x%x) and "
+		       "SMU may be not in the right state!\n", ret);
+		if (ret != -ETIME)
+			ret = -EIO;
+		return ret;
+	}
+
+	WREG32_SOC15(MP1, 0, mmMP1_SMN_C2PMSG_90, 0);
+	WREG32_SOC15(MP1, 0, mmMP1_SMN_C2PMSG_82, param);
+	WREG32_SOC15(MP1, 0, mmMP1_SMN_C2PMSG_66, msg);
+
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int smu_cmn_send_smc_msg_with_param(struct smu_context *smu,
 				    enum smu_message_type msg,
 				    uint32_t param,
 				    uint32_t *read_arg)
 {
+<<<<<<< HEAD
 	int res, index;
 	u32 reg;
+=======
+	struct amdgpu_device *adev = smu->adev;
+	int ret = 0, index = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (smu->adev->no_hw_access)
 		return 0;
@@ -337,6 +390,7 @@ int smu_cmn_send_smc_msg_with_param(struct smu_context *smu,
 		return index == -EACCES ? 0 : index;
 
 	mutex_lock(&smu->message_lock);
+<<<<<<< HEAD
 	reg = __smu_cmn_poll_stat(smu);
 	res = __smu_cmn_reg2errno(smu, reg);
 	if (reg == SMU_RESP_NONE ||
@@ -355,6 +409,33 @@ int smu_cmn_send_smc_msg_with_param(struct smu_context *smu,
 Out:
 	mutex_unlock(&smu->message_lock);
 	return res;
+=======
+	ret = smu_cmn_send_msg_without_waiting(smu, (uint16_t)index, param);
+	if (ret)
+		goto out;
+
+	ret = smu_cmn_wait_for_response(smu);
+	if (ret != 0x1) {
+		if (ret == -ETIME) {
+			dev_err(adev->dev, "message: %15s (%d) \tparam: 0x%08x is timeout (no response)\n",
+				smu_get_message_name(smu, msg), index, param);
+		} else {
+			dev_err(adev->dev, "failed send message: %15s (%d) \tparam: 0x%08x response %#x\n",
+				smu_get_message_name(smu, msg), index, param,
+				ret);
+			ret = -EIO;
+		}
+		goto out;
+	}
+
+	if (read_arg)
+		smu_cmn_read_arg(smu, read_arg);
+
+	ret = 0; /* 0 as driver return value */
+out:
+	mutex_unlock(&smu->message_lock);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int smu_cmn_send_smc_msg(struct smu_context *smu,
@@ -710,7 +791,11 @@ size_t smu_cmn_get_pp_feature_mask(struct smu_context *smu,
 			return 0;
 	}
 
+<<<<<<< HEAD
 	size =  sysfs_emit_at(buf, size, "features high: 0x%08x low: 0x%08x\n",
+=======
+	size =  sprintf(buf + size, "features high: 0x%08x low: 0x%08x\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			feature_mask[1], feature_mask[0]);
 
 	memset(sort_feature, -1, sizeof(sort_feature));
@@ -725,14 +810,22 @@ size_t smu_cmn_get_pp_feature_mask(struct smu_context *smu,
 		sort_feature[feature_index] = i;
 	}
 
+<<<<<<< HEAD
 	size += sysfs_emit_at(buf, size, "%-2s. %-20s  %-3s : %-s\n",
+=======
+	size += sprintf(buf + size, "%-2s. %-20s  %-3s : %-s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			"No", "Feature", "Bit", "State");
 
 	for (i = 0; i < SMU_FEATURE_COUNT; i++) {
 		if (sort_feature[i] < 0)
 			continue;
 
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%02d. %-20s (%2d) : %s\n",
+=======
+		size += sprintf(buf + size, "%02d. %-20s (%2d) : %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				count++,
 				smu_get_feature_name(smu, sort_feature[i]),
 				i,
@@ -1053,6 +1146,7 @@ int smu_cmn_set_mp1_state(struct smu_context *smu,
 
 	return ret;
 }
+<<<<<<< HEAD
 
 bool smu_cmn_is_audio_func_enabled(struct amdgpu_device *adev)
 {
@@ -1074,3 +1168,5 @@ bool smu_cmn_is_audio_func_enabled(struct amdgpu_device *adev)
 
 	return snd_driver_loaded;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

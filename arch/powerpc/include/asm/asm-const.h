@@ -12,6 +12,20 @@
 #  define ASM_CONST(x)		__ASM_CONST(x)
 #endif
 
+<<<<<<< HEAD
 #define UPD_CONSTR "<>"
+=======
+/*
+ * Inline assembly memory constraint
+ *
+ * GCC 4.9 doesn't properly handle pre update memory constraint "m<>"
+ *
+ */
+#if defined(GCC_VERSION) && GCC_VERSION < 50000
+#define UPD_CONSTR ""
+#else
+#define UPD_CONSTR "<>"
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* _ASM_POWERPC_ASM_CONST_H */

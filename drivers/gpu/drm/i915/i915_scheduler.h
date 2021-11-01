@@ -39,7 +39,11 @@ void i915_schedule(struct i915_request *request,
 		   const struct i915_sched_attr *attr);
 
 struct list_head *
+<<<<<<< HEAD
 i915_sched_lookup_priolist(struct i915_sched_engine *sched_engine, int prio);
+=======
+i915_sched_lookup_priolist(struct intel_engine_cs *engine, int prio);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void __i915_priolist_free(struct i915_priolist *p);
 static inline void i915_priolist_free(struct i915_priolist *p)
@@ -48,6 +52,7 @@ static inline void i915_priolist_free(struct i915_priolist *p)
 		__i915_priolist_free(p);
 }
 
+<<<<<<< HEAD
 struct i915_sched_engine *
 i915_sched_engine_create(unsigned int subclass);
 
@@ -91,11 +96,14 @@ i915_sched_engine_active_unlock_bh(struct i915_sched_engine *sched_engine)
 	local_bh_enable(); /* restore softirq, and kick ksoftirqd! */
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void i915_request_show_with_schedule(struct drm_printer *m,
 				     const struct i915_request *rq,
 				     const char *prefix,
 				     int indent);
 
+<<<<<<< HEAD
 static inline bool
 i915_sched_engine_disabled(struct i915_sched_engine *sched_engine)
 {
@@ -105,4 +113,6 @@ i915_sched_engine_disabled(struct i915_sched_engine *sched_engine)
 void i915_scheduler_module_exit(void);
 int i915_scheduler_module_init(void);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _I915_SCHEDULER_H_ */

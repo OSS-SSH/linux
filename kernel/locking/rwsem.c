@@ -28,7 +28,10 @@
 #include <linux/rwsem.h>
 #include <linux/atomic.h>
 
+<<<<<<< HEAD
 #ifndef CONFIG_PREEMPT_RT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "lock_events.h"
 
 /*
@@ -1166,7 +1169,11 @@ out_nolock:
  * handle waking up a waiter on the semaphore
  * - up_read/up_write has decremented the active part of count if we come here
  */
+<<<<<<< HEAD
 static struct rw_semaphore *rwsem_wake(struct rw_semaphore *sem)
+=======
+static struct rw_semaphore *rwsem_wake(struct rw_semaphore *sem, long count)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned long flags;
 	DEFINE_WAKE_Q(wake_q);
@@ -1298,7 +1305,11 @@ static inline void __up_read(struct rw_semaphore *sem)
 	if (unlikely((tmp & (RWSEM_LOCK_MASK|RWSEM_FLAG_WAITERS)) ==
 		      RWSEM_FLAG_WAITERS)) {
 		clear_nonspinnable(sem);
+<<<<<<< HEAD
 		rwsem_wake(sem);
+=======
+		rwsem_wake(sem, tmp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -1320,7 +1331,11 @@ static inline void __up_write(struct rw_semaphore *sem)
 	rwsem_clear_owner(sem);
 	tmp = atomic_long_fetch_add_release(-RWSEM_WRITER_LOCKED, &sem->count);
 	if (unlikely(tmp & RWSEM_FLAG_WAITERS))
+<<<<<<< HEAD
 		rwsem_wake(sem);
+=======
+		rwsem_wake(sem, tmp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -1345,6 +1360,7 @@ static inline void __downgrade_write(struct rw_semaphore *sem)
 		rwsem_downgrade_wake(sem);
 }
 
+<<<<<<< HEAD
 #else /* !CONFIG_PREEMPT_RT */
 
 #define RT_MUTEX_BUILD_MUTEX
@@ -1455,6 +1471,8 @@ static inline bool is_rwsem_reader_owned(struct rw_semaphore *sem)
 
 #endif /* CONFIG_PREEMPT_RT */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * lock for reading
  */

@@ -13,7 +13,10 @@
 #include <trace/events/host1x.h>
 #include "channel.h"
 #include "dev.h"
+<<<<<<< HEAD
 #include "fence.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "intr.h"
 
 /* Wait list management */
@@ -122,6 +125,7 @@ static void action_wakeup_interruptible(struct host1x_waitlist *waiter)
 	wake_up_interruptible(wq);
 }
 
+<<<<<<< HEAD
 static void action_signal_fence(struct host1x_waitlist *waiter)
 {
 	struct host1x_syncpt_fence *f = waiter->data;
@@ -129,13 +133,18 @@ static void action_signal_fence(struct host1x_waitlist *waiter)
 	host1x_fence_signal(f);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 typedef void (*action_handler)(struct host1x_waitlist *waiter);
 
 static const action_handler action_handlers[HOST1X_INTR_ACTION_COUNT] = {
 	action_submit_complete,
 	action_wakeup,
 	action_wakeup_interruptible,
+<<<<<<< HEAD
 	action_signal_fence,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static void run_handlers(struct list_head completed[HOST1X_INTR_ACTION_COUNT])

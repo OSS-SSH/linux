@@ -1368,6 +1368,7 @@ static inline int rdev_set_sar_specs(struct cfg80211_registered_device *rdev,
 	return ret;
 }
 
+<<<<<<< HEAD
 static inline int rdev_color_change(struct cfg80211_registered_device *rdev,
 				    struct net_device *dev,
 				    struct cfg80211_color_change_settings *params)
@@ -1381,4 +1382,6 @@ static inline int rdev_color_change(struct cfg80211_registered_device *rdev,
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __CFG80211_RDEV_OPS */

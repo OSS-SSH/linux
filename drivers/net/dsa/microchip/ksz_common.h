@@ -27,7 +27,10 @@ struct ksz_port_mib {
 struct ksz_port {
 	u16 member;
 	u16 vid_member;
+<<<<<<< HEAD
 	bool remove_tag;		/* Remove Tag flag set, for ksz8795 only */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int stp_state;
 	struct phy_device phydev;
 
@@ -206,8 +209,17 @@ static inline int ksz_read64(struct ksz_device *dev, u32 reg, u64 *val)
 	int ret;
 
 	ret = regmap_bulk_read(dev->regmap[2], reg, value, 2);
+<<<<<<< HEAD
 	if (!ret)
 		*val = (u64)value[0] << 32 | value[1];
+=======
+	if (!ret) {
+		/* Ick! ToDo: Add 64bit R/W to regmap on 32bit systems */
+		value[0] = swab32(value[0]);
+		value[1] = swab32(value[1]);
+		*val = swab64((u64)*value);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }

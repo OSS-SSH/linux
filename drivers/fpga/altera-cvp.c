@@ -346,7 +346,11 @@ static int altera_cvp_write_init(struct fpga_manager *mgr,
 	}
 
 	if (val & VSE_CVP_STATUS_CFG_RDY) {
+<<<<<<< HEAD
 		dev_warn(&mgr->dev, "CvP already started, tear down first\n");
+=======
+		dev_warn(&mgr->dev, "CvP already started, teardown first\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = altera_cvp_teardown(mgr, info);
 		if (ret)
 			return ret;

@@ -7,6 +7,10 @@
 #include <linux/linkage.h>
 #include <linux/syscalls.h>
 #include <asm-generic/syscalls.h>
+<<<<<<< HEAD
+=======
+#include <asm/vdso.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/syscall.h>
 
 #undef __SYSCALL

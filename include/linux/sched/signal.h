@@ -298,6 +298,14 @@ static inline void kernel_signal_stop(void)
 
 	schedule();
 }
+<<<<<<< HEAD
+=======
+#ifdef __ARCH_SI_TRAPNO
+# define ___ARCH_SI_TRAPNO(_a1) , _a1
+#else
+# define ___ARCH_SI_TRAPNO(_a1)
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef __ia64__
 # define ___ARCH_SI_IA64(_a1, _a2, _a3) , _a1, _a2, _a3
 #else
@@ -305,11 +313,22 @@ static inline void kernel_signal_stop(void)
 #endif
 
 int force_sig_fault_to_task(int sig, int code, void __user *addr
+<<<<<<< HEAD
 	___ARCH_SI_IA64(int imm, unsigned int flags, unsigned long isr)
 	, struct task_struct *t);
 int force_sig_fault(int sig, int code, void __user *addr
 	___ARCH_SI_IA64(int imm, unsigned int flags, unsigned long isr));
 int send_sig_fault(int sig, int code, void __user *addr
+=======
+	___ARCH_SI_TRAPNO(int trapno)
+	___ARCH_SI_IA64(int imm, unsigned int flags, unsigned long isr)
+	, struct task_struct *t);
+int force_sig_fault(int sig, int code, void __user *addr
+	___ARCH_SI_TRAPNO(int trapno)
+	___ARCH_SI_IA64(int imm, unsigned int flags, unsigned long isr));
+int send_sig_fault(int sig, int code, void __user *addr
+	___ARCH_SI_TRAPNO(int trapno)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	___ARCH_SI_IA64(int imm, unsigned int flags, unsigned long isr)
 	, struct task_struct *t);
 
@@ -321,10 +340,13 @@ int force_sig_pkuerr(void __user *addr, u32 pkey);
 int force_sig_perf(void __user *addr, u32 type, u64 sig_data);
 
 int force_sig_ptrace_errno_trap(int errno, void __user *addr);
+<<<<<<< HEAD
 int force_sig_fault_trapno(int sig, int code, void __user *addr, int trapno);
 int send_sig_fault_trapno(int sig, int code, void __user *addr, int trapno,
 			struct task_struct *t);
 int force_sig_seccomp(int syscall, int reason, bool force_coredump);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 extern int send_sig_info(int, struct kernel_siginfo *, struct task_struct *);
 extern void force_sigsegv(int sig);
@@ -710,12 +732,15 @@ static inline void unlock_task_sighand(struct task_struct *task,
 	spin_unlock_irqrestore(&task->sighand->siglock, *flags);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_LOCKDEP
 extern void lockdep_assert_task_sighand_held(struct task_struct *task);
 #else
 static inline void lockdep_assert_task_sighand_held(struct task_struct *task) { }
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline unsigned long task_rlimit(const struct task_struct *task,
 		unsigned int limit)
 {

@@ -707,6 +707,7 @@ struct drm_gem_object *tegra_gem_prime_import(struct drm_device *drm,
 
 	return &bo->gem;
 }
+<<<<<<< HEAD
 
 struct host1x_bo *tegra_gem_lookup(struct drm_file *file, u32 handle)
 {
@@ -720,3 +721,5 @@ struct host1x_bo *tegra_gem_lookup(struct drm_file *file, u32 handle)
 	bo = to_tegra_bo(gem);
 	return &bo->base;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

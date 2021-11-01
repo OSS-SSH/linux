@@ -416,7 +416,11 @@ static bool bpf_sk_storage_tracing_allowed(const struct bpf_prog *prog)
 BPF_CALL_4(bpf_sk_storage_get_tracing, struct bpf_map *, map, struct sock *, sk,
 	   void *, value, u64, flags)
 {
+<<<<<<< HEAD
 	if (in_hardirq() || in_nmi())
+=======
+	if (in_irq() || in_nmi())
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return (unsigned long)NULL;
 
 	return (unsigned long)____bpf_sk_storage_get(map, sk, value, flags);
@@ -425,7 +429,11 @@ BPF_CALL_4(bpf_sk_storage_get_tracing, struct bpf_map *, map, struct sock *, sk,
 BPF_CALL_2(bpf_sk_storage_delete_tracing, struct bpf_map *, map,
 	   struct sock *, sk)
 {
+<<<<<<< HEAD
 	if (in_hardirq() || in_nmi())
+=======
+	if (in_irq() || in_nmi())
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EPERM;
 
 	return ____bpf_sk_storage_delete(map, sk);

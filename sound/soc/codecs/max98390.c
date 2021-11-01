@@ -765,6 +765,7 @@ static int max98390_dsm_init(struct snd_soc_component *component)
 	vendor = dmi_get_system_info(DMI_SYS_VENDOR);
 	product = dmi_get_system_info(DMI_PRODUCT_NAME);
 
+<<<<<<< HEAD
 	if (!strcmp(max98390->dsm_param_name, "default")) {
 		if (vendor && product) {
 			snprintf(filename, sizeof(filename),
@@ -775,16 +776,28 @@ static int max98390_dsm_init(struct snd_soc_component *component)
 	} else {
 		snprintf(filename, sizeof(filename), "%s",
 			max98390->dsm_param_name);
+=======
+	if (vendor && product) {
+		snprintf(filename, sizeof(filename), "dsm_param_%s_%s.bin",
+			vendor, product);
+	} else {
+		sprintf(filename, "dsm_param.bin");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	ret = request_firmware(&fw, filename, component->dev);
 	if (ret) {
 		ret = request_firmware(&fw, "dsm_param.bin", component->dev);
+<<<<<<< HEAD
 		if (ret) {
 			ret = request_firmware(&fw, "dsmparam.bin",
 				component->dev);
 			if (ret)
 				goto err;
 		}
+=======
+		if (ret)
+			goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	dev_dbg(component->dev,
@@ -1056,11 +1069,14 @@ static int max98390_i2c_probe(struct i2c_client *i2c,
 		__func__, max98390->ref_rdc_value,
 		max98390->ambient_temp_value);
 
+<<<<<<< HEAD
 	ret = device_property_read_string(&i2c->dev, "maxim,dsm_param_name",
 				       &max98390->dsm_param_name);
 	if (ret)
 		max98390->dsm_param_name = "default";
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* voltage/current slot configuration */
 	max98390_slot_config(i2c, max98390);
 

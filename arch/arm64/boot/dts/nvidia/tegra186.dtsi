@@ -548,6 +548,7 @@
 		status = "disabled";
 	};
 
+<<<<<<< HEAD
 	pwm1: pwm@3280000 {
 		compatible = "nvidia,tegra186-pwm";
 		reg = <0x0 0x3280000 0x0 0x10000>;
@@ -625,6 +626,8 @@
 		#pwm-cells = <2>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sdmmc1: mmc@3400000 {
 		compatible = "nvidia,tegra186-sdhci";
 		reg = <0x0 0x03400000 0x0 0x10000>;
@@ -903,9 +906,12 @@
 			 <&bpmp TEGRA186_CLK_XUSB_CORE_SS>,
 			 <&bpmp TEGRA186_CLK_XUSB_FS>;
 		clock-names = "dev", "ss", "ss_src", "fs_src";
+<<<<<<< HEAD
 		interconnects = <&mc TEGRA186_MEMORY_CLIENT_XUSB_DEVR &emc>,
 				<&mc TEGRA186_MEMORY_CLIENT_XUSB_DEVW &emc>;
 		interconnect-names = "dma-mem", "write";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		iommus = <&smmu TEGRA186_SID_XUSB_DEV>;
 		power-domains = <&bpmp TEGRA186_POWER_DOMAIN_XUSBB>,
 				<&bpmp TEGRA186_POWER_DOMAIN_XUSBA>;
@@ -1024,6 +1030,7 @@
 		#interrupt-cells = <2>;
 	};
 
+<<<<<<< HEAD
 	pwm4: pwm@c340000 {
 		compatible = "nvidia,tegra186-pwm";
 		reg = <0x0 0xc340000 0x0 0x10000>;
@@ -1035,6 +1042,8 @@
 		#pwm-cells = <2>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pmc: pmc@c360000 {
 		compatible = "nvidia,tegra186-pmc";
 		reg = <0 0x0c360000 0 0x10000>,

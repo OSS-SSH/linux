@@ -501,7 +501,11 @@ our $Binary	= qr{(?i)0b[01]+$Int_type?};
 our $Hex	= qr{(?i)0x[0-9a-f]+$Int_type?};
 our $Int	= qr{[0-9]+$Int_type?};
 our $Octal	= qr{0[0-7]+$Int_type?};
+<<<<<<< HEAD
 our $String	= qr{(?:\b[Lu])?"[X\t]*"};
+=======
+our $String	= qr{"[X\t]*"};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 our $Float_hex	= qr{(?i)0x[0-9a-f]+p-?[0-9]+[fl]?};
 our $Float_dec	= qr{(?i)(?:[0-9]+\.[0-9]*|[0-9]*\.[0-9]+)(?:e-?[0-9]+)?[fl]?};
 our $Float_int	= qr{(?i)[0-9]+e-?[0-9]+[fl]?};
@@ -1181,8 +1185,12 @@ sub git_commit_info {
 #		    git log --format='%H %s' -1 $line |
 #		    echo "commit $(cut -c 1-12,41-)"
 #		done
+<<<<<<< HEAD
 	} elsif ($lines[0] =~ /^fatal: ambiguous argument '$commit': unknown revision or path not in the working tree\./ ||
 		 $lines[0] =~ /^fatal: bad object $commit/) {
+=======
+	} elsif ($lines[0] =~ /^fatal: ambiguous argument '$commit': unknown revision or path not in the working tree\./) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		$id = undef;
 	} else {
 		$id = substr($lines[0], 0, 12);
@@ -2588,8 +2596,11 @@ sub process {
 	my $reported_maintainer_file = 0;
 	my $non_utf8_charset = 0;
 
+<<<<<<< HEAD
 	my $last_git_commit_id_linenr = -1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	my $last_blank_line = 0;
 	my $last_coalesced_string_linenr = -1;
 
@@ -2912,10 +2923,17 @@ sub process {
 					my ($email_name, $email_comment, $email_address, $comment1) = parse_email($ctx);
 					my ($author_name, $author_comment, $author_address, $comment2) = parse_email($author);
 
+<<<<<<< HEAD
 					if (lc $email_address eq lc $author_address && $email_name eq $author_name) {
 						$author_sob = $ctx;
 						$authorsignoff = 2;
 					} elsif (lc $email_address eq lc $author_address) {
+=======
+					if ($email_address eq $author_address && $email_name eq $author_name) {
+						$author_sob = $ctx;
+						$authorsignoff = 2;
+					} elsif ($email_address eq $author_address) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						$author_sob = $ctx;
 						$authorsignoff = 3;
 					} elsif ($email_name eq $author_name) {
@@ -3173,6 +3191,7 @@ sub process {
 		}
 
 # Check for git id commit length and improperly formed commit descriptions
+<<<<<<< HEAD
 # A correctly formed commit description is:
 #    commit <SHA-1 hash length 12+ chars> ("Complete commit subject")
 # with the commit subject '("' prefix and '")' suffix
@@ -3187,6 +3206,12 @@ sub process {
 		    $line !~ /^This reverts commit [0-9a-f]{7,40}/ &&
 		    (($line =~ /\bcommit\s+[0-9a-f]{5,}\b/i ||
 		      ($line =~ /\bcommit\s*$/i && defined($rawlines[$linenr]) && $rawlines[$linenr] =~ /^\s*[0-9a-f]{5,}\b/i)) ||
+=======
+		if ($in_commit_log && !$commit_log_possible_stack_dump &&
+		    $line !~ /^\s*(?:Link|Patchwork|http|https|BugLink|base-commit):/i &&
+		    $line !~ /^This reverts commit [0-9a-f]{7,40}/ &&
+		    ($line =~ /\bcommit\s+[0-9a-f]{5,}\b/i ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		     ($line =~ /(?:\s|^)[0-9a-f]{12,40}(?:[\s"'\(\[]|$)/i &&
 		      $line !~ /[\<\[][0-9a-f]{12,40}[\>\]]/i &&
 		      $line !~ /\bfixes:\s*[0-9a-f]{12,40}/i))) {
@@ -3196,6 +3221,7 @@ sub process {
 			my $long = 0;
 			my $case = 1;
 			my $space = 1;
+<<<<<<< HEAD
 			my $id = '0123456789ab';
 			my $orig_desc = "commit description";
 			my $description = "";
@@ -3235,10 +3261,48 @@ sub process {
 				$orig_commit = lc($1);
 			}
 
+=======
+			my $hasdesc = 0;
+			my $hasparens = 0;
+			my $id = '0123456789ab';
+			my $orig_desc = "commit description";
+			my $description = "";
+
+			if ($line =~ /\b(c)ommit\s+([0-9a-f]{5,})\b/i) {
+				$init_char = $1;
+				$orig_commit = lc($2);
+			} elsif ($line =~ /\b([0-9a-f]{12,40})\b/i) {
+				$orig_commit = lc($1);
+			}
+
+			$short = 0 if ($line =~ /\bcommit\s+[0-9a-f]{12,40}/i);
+			$long = 1 if ($line =~ /\bcommit\s+[0-9a-f]{41,}/i);
+			$space = 0 if ($line =~ /\bcommit [0-9a-f]/i);
+			$case = 0 if ($line =~ /\b[Cc]ommit\s+[0-9a-f]{5,40}[^A-F]/);
+			if ($line =~ /\bcommit\s+[0-9a-f]{5,}\s+\("([^"]+)"\)/i) {
+				$orig_desc = $1;
+				$hasparens = 1;
+			} elsif ($line =~ /\bcommit\s+[0-9a-f]{5,}\s*$/i &&
+				 defined $rawlines[$linenr] &&
+				 $rawlines[$linenr] =~ /^\s*\("([^"]+)"\)/) {
+				$orig_desc = $1;
+				$hasparens = 1;
+			} elsif ($line =~ /\bcommit\s+[0-9a-f]{5,}\s+\("[^"]+$/i &&
+				 defined $rawlines[$linenr] &&
+				 $rawlines[$linenr] =~ /^\s*[^"]+"\)/) {
+				$line =~ /\bcommit\s+[0-9a-f]{5,}\s+\("([^"]+)$/i;
+				$orig_desc = $1;
+				$rawlines[$linenr] =~ /^\s*([^"]+)"\)/;
+				$orig_desc .= " " . $1;
+				$hasparens = 1;
+			}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			($id, $description) = git_commit_info($orig_commit,
 							      $id, $orig_desc);
 
 			if (defined($id) &&
+<<<<<<< HEAD
 			    ($short || $long || $space || $case || ($orig_desc ne $description) || !$has_quotes) &&
 			    $last_git_commit_id_linenr != $linenr - 1) {
 				ERROR("GIT_COMMIT_ID",
@@ -3246,6 +3310,12 @@ sub process {
 			}
 			#don't report the next line if this line ends in commit and the sha1 hash is the next line
 			$last_git_commit_id_linenr = $linenr if ($line =~ /\bcommit\s*$/i);
+=======
+			   ($short || $long || $space || $case || ($orig_desc ne $description) || !$hasparens)) {
+				ERROR("GIT_COMMIT_ID",
+				      "Please use git commit description style 'commit <12+ chars of sha1> (\"<title line>\")' - ie: '${init_char}ommit $id (\"$description\")'\n" . $herecurr);
+			}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 # Check for added, moved or deleted files
@@ -6152,8 +6222,12 @@ sub process {
 		}
 
 # concatenated string without spaces between elements
+<<<<<<< HEAD
 		if ($line =~ /$String[A-Z_]/ ||
 		    ($line =~ /([A-Za-z0-9_]+)$String/ && $1 !~ /^[Lu]$/)) {
+=======
+		if ($line =~ /$String[A-Za-z0-9_]/ || $line =~ /[A-Za-z0-9_]$String/) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (CHK("CONCATENATED_STRING",
 				"Concatenated strings should use spaces between elements\n" . $herecurr) &&
 			    $fix) {
@@ -6166,7 +6240,11 @@ sub process {
 		}
 
 # uncoalesced string fragments
+<<<<<<< HEAD
 		if ($line =~ /$String\s*[Lu]?"/) {
+=======
+		if ($line =~ /$String\s*"/) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (WARN("STRING_FRAGMENTS",
 				 "Consecutive strings are generally better as a single string\n" . $herecurr) &&
 			    $fix) {

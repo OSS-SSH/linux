@@ -1784,15 +1784,27 @@ gather_conf_info(struct fst_card_info *card, struct fst_port_info *port,
 
 static int
 fst_set_iface(struct fst_card_info *card, struct fst_port_info *port,
+<<<<<<< HEAD
 	      struct if_settings *ifs)
+=======
+	      struct ifreq *ifr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	sync_serial_settings sync;
 	int i;
 
+<<<<<<< HEAD
 	if (ifs->size != sizeof(sync))
 		return -ENOMEM;
 
 	if (copy_from_user(&sync, ifs->ifs_ifsu.sync, sizeof(sync)))
+=======
+	if (ifr->ifr_settings.size != sizeof(sync))
+		return -ENOMEM;
+
+	if (copy_from_user
+	    (&sync, ifr->ifr_settings.ifs_ifsu.sync, sizeof(sync)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EFAULT;
 
 	if (sync.loopback)
@@ -1800,7 +1812,11 @@ fst_set_iface(struct fst_card_info *card, struct fst_port_info *port,
 
 	i = port->index;
 
+<<<<<<< HEAD
 	switch (ifs->type) {
+=======
+	switch (ifr->ifr_settings.type) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case IF_IFACE_V35:
 		FST_WRW(card, portConfig[i].lineInterface, V35);
 		port->hwif = V35;
@@ -1856,7 +1872,11 @@ fst_set_iface(struct fst_card_info *card, struct fst_port_info *port,
 
 static int
 fst_get_iface(struct fst_card_info *card, struct fst_port_info *port,
+<<<<<<< HEAD
 	      struct if_settings *ifs)
+=======
+	      struct ifreq *ifr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	sync_serial_settings sync;
 	int i;
@@ -1867,6 +1887,7 @@ fst_get_iface(struct fst_card_info *card, struct fst_port_info *port,
 	 */
 	switch (port->hwif) {
 	case E1:
+<<<<<<< HEAD
 		ifs->type = IF_IFACE_E1;
 		break;
 	case T1:
@@ -1890,6 +1911,31 @@ fst_get_iface(struct fst_card_info *card, struct fst_port_info *port,
 		return 0;	/* only type requested */
 
 	if (ifs->size < sizeof(sync))
+=======
+		ifr->ifr_settings.type = IF_IFACE_E1;
+		break;
+	case T1:
+		ifr->ifr_settings.type = IF_IFACE_T1;
+		break;
+	case V35:
+		ifr->ifr_settings.type = IF_IFACE_V35;
+		break;
+	case V24:
+		ifr->ifr_settings.type = IF_IFACE_V24;
+		break;
+	case X21D:
+		ifr->ifr_settings.type = IF_IFACE_X21D;
+		break;
+	case X21:
+	default:
+		ifr->ifr_settings.type = IF_IFACE_X21;
+		break;
+	}
+	if (ifr->ifr_settings.size == 0)
+		return 0;	/* only type requested */
+
+	if (ifr->ifr_settings.size < sizeof(sync))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 
 	i = port->index;
@@ -1900,15 +1946,26 @@ fst_get_iface(struct fst_card_info *card, struct fst_port_info *port,
 	    INTCLK ? CLOCK_INT : CLOCK_EXT;
 	sync.loopback = 0;
 
+<<<<<<< HEAD
 	if (copy_to_user(ifs->ifs_ifsu.sync, &sync, sizeof(sync)))
 		return -EFAULT;
 
 	ifs->size = sizeof(sync);
+=======
+	if (copy_to_user(ifr->ifr_settings.ifs_ifsu.sync, &sync, sizeof(sync)))
+		return -EFAULT;
+
+	ifr->ifr_settings.size = sizeof(sync);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
 static int
+<<<<<<< HEAD
 fst_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
+=======
+fst_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fst_card_info *card;
 	struct fst_port_info *port;
@@ -1917,7 +1974,11 @@ fst_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data,
 	unsigned long flags;
 	void *buf;
 
+<<<<<<< HEAD
 	dbg(DBG_IOCTL, "ioctl: %x, %p\n", cmd, data);
+=======
+	dbg(DBG_IOCTL, "ioctl: %x, %p\n", cmd, ifr->ifr_data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	port = dev_to_port(dev);
 	card = port->card;
@@ -1941,10 +2002,18 @@ fst_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data,
 		/* First copy in the header with the length and offset of data
 		 * to write
 		 */
+<<<<<<< HEAD
 		if (!data)
 			return -EINVAL;
 
 		if (copy_from_user(&wrthdr, data, sizeof(struct fstioc_write)))
+=======
+		if (!ifr->ifr_data)
+			return -EINVAL;
+
+		if (copy_from_user(&wrthdr, ifr->ifr_data,
+				   sizeof(struct fstioc_write)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EFAULT;
 
 		/* Sanity check the parameters. We don't support partial writes
@@ -1956,7 +2025,11 @@ fst_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data,
 
 		/* Now copy the data to the card. */
 
+<<<<<<< HEAD
 		buf = memdup_user(data + sizeof(struct fstioc_write),
+=======
+		buf = memdup_user(ifr->ifr_data + sizeof(struct fstioc_write),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  wrthdr.size);
 		if (IS_ERR(buf))
 			return PTR_ERR(buf);
@@ -1989,12 +2062,20 @@ fst_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data,
 			}
 		}
 
+<<<<<<< HEAD
 		if (!data)
+=======
+		if (!ifr->ifr_data)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EINVAL;
 
 		gather_conf_info(card, port, &info);
 
+<<<<<<< HEAD
 		if (copy_to_user(data, &info, sizeof(info)))
+=======
+		if (copy_to_user(ifr->ifr_data, &info, sizeof(info)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EFAULT;
 
 		return 0;
@@ -2009,6 +2090,7 @@ fst_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data,
 			       card->card_no, card->state);
 			return -EIO;
 		}
+<<<<<<< HEAD
 		if (copy_from_user(&info, data, sizeof(info)))
 			return -EFAULT;
 
@@ -2061,6 +2143,48 @@ fst_ioctl(struct net_device *dev, struct if_settings *ifs)
 		dbg(DBG_IOCTL, "Passing this type to hdlc %x\n",
 		    ifs->type);
 		return hdlc_ioctl(dev, ifs);
+=======
+		if (copy_from_user(&info, ifr->ifr_data, sizeof(info)))
+			return -EFAULT;
+
+		return set_conf_from_info(card, port, &info);
+
+	case SIOCWANDEV:
+		switch (ifr->ifr_settings.type) {
+		case IF_GET_IFACE:
+			return fst_get_iface(card, port, ifr);
+
+		case IF_IFACE_SYNC_SERIAL:
+		case IF_IFACE_V35:
+		case IF_IFACE_V24:
+		case IF_IFACE_X21:
+		case IF_IFACE_X21D:
+		case IF_IFACE_T1:
+		case IF_IFACE_E1:
+			return fst_set_iface(card, port, ifr);
+
+		case IF_PROTO_RAW:
+			port->mode = FST_RAW;
+			return 0;
+
+		case IF_GET_PROTO:
+			if (port->mode == FST_RAW) {
+				ifr->ifr_settings.type = IF_PROTO_RAW;
+				return 0;
+			}
+			return hdlc_ioctl(dev, ifr, cmd);
+
+		default:
+			port->mode = FST_GEN_HDLC;
+			dbg(DBG_IOCTL, "Passing this type to hdlc %x\n",
+			    ifr->ifr_settings.type);
+			return hdlc_ioctl(dev, ifr, cmd);
+		}
+
+	default:
+		/* Not one of ours. Pass through to HDLC package */
+		return hdlc_ioctl(dev, ifr, cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -2320,8 +2444,12 @@ static const struct net_device_ops fst_ops = {
 	.ndo_open       = fst_open,
 	.ndo_stop       = fst_close,
 	.ndo_start_xmit = hdlc_start_xmit,
+<<<<<<< HEAD
 	.ndo_siocwandev	= fst_ioctl,
 	.ndo_siocdevprivate = fst_siocdevprivate,
+=======
+	.ndo_do_ioctl   = fst_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout = fst_tx_timeout,
 };
 

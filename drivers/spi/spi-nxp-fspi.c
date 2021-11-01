@@ -33,7 +33,10 @@
 
 #include <linux/acpi.h>
 #include <linux/bitops.h>
+<<<<<<< HEAD
 #include <linux/bitfield.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/clk.h>
 #include <linux/completion.h>
 #include <linux/delay.h>
@@ -316,7 +319,10 @@
 #define NXP_FSPI_MIN_IOMAP	SZ_4M
 
 #define DCFG_RCWSR1		0x100
+<<<<<<< HEAD
 #define SYS_PLL_RAT		GENMASK(6, 2)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Access flash memory using IP bus only */
 #define FSPI_QUIRK_USE_IP_ONLY	BIT(0)
@@ -928,8 +934,14 @@ static void erratum_err050568(struct nxp_fspi *f)
 		{ .family = "QorIQ LS1028A" },
 		{ /* sentinel */ }
 	};
+<<<<<<< HEAD
 	struct regmap *map;
 	u32 val, sys_pll_ratio;
+=======
+	struct device_node *np;
+	struct regmap *map;
+	u32 val = 0, sysclk = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	/* Check for LS1028A family */
@@ -938,6 +950,10 @@ static void erratum_err050568(struct nxp_fspi *f)
 		return;
 	}
 
+<<<<<<< HEAD
+=======
+	/* Compute system clock frequency multiplier ratio */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	map = syscon_regmap_lookup_by_compatible("fsl,ls1028a-dcfg");
 	if (IS_ERR(map)) {
 		dev_err(f->dev, "No syscon regmap\n");
@@ -948,11 +964,31 @@ static void erratum_err050568(struct nxp_fspi *f)
 	if (ret < 0)
 		goto err;
 
+<<<<<<< HEAD
 	sys_pll_ratio = FIELD_GET(SYS_PLL_RAT, val);
 	dev_dbg(f->dev, "val: 0x%08x, sys_pll_ratio: %d\n", val, sys_pll_ratio);
 
 	/* Use IP bus only if platform clock is 300MHz */
 	if (sys_pll_ratio == 3)
+=======
+	/* Strap bits 6:2 define SYS_PLL_RAT i.e frequency multiplier ratio */
+	val = (val >> 2) & 0x1F;
+	WARN(val == 0, "Strapping is zero: Cannot determine ratio");
+
+	/* Compute system clock frequency */
+	np = of_find_node_by_name(NULL, "clock-sysclk");
+	if (!np)
+		goto err;
+
+	if (of_property_read_u32(np, "clock-frequency", &sysclk))
+		goto err;
+
+	sysclk = (sysclk * val) / 1000000; /* Convert sysclk to Mhz */
+	dev_dbg(f->dev, "val: 0x%08x, sysclk: %dMhz\n", val, sysclk);
+
+	/* Use IP bus only if PLL is 300MHz */
+	if (sysclk == 300)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		f->devtype_data->quirks |= FSPI_QUIRK_USE_IP_ONLY;
 
 	return;

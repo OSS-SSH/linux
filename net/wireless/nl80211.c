@@ -759,10 +759,13 @@ static const struct nla_policy nl80211_policy[NUM_NL80211_ATTR] = {
 	[NL80211_ATTR_RECONNECT_REQUESTED] = { .type = NLA_REJECT },
 	[NL80211_ATTR_SAR_SPEC] = NLA_POLICY_NESTED(sar_policy),
 	[NL80211_ATTR_DISABLE_HE] = { .type = NLA_FLAG },
+<<<<<<< HEAD
 	[NL80211_ATTR_OBSS_COLOR_BITMAP] = { .type = NLA_U64 },
 	[NL80211_ATTR_COLOR_CHANGE_COUNT] = { .type = NLA_U8 },
 	[NL80211_ATTR_COLOR_CHANGE_COLOR] = { .type = NLA_U8 },
 	[NL80211_ATTR_COLOR_CHANGE_ELEMS] = NLA_POLICY_NESTED(nl80211_policy),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* policy for the key attributes */
@@ -2355,10 +2358,14 @@ static int nl80211_send_wiphy(struct cfg80211_registered_device *rdev,
 			goto nla_put_failure;
 
 		for (band = state->band_start;
+<<<<<<< HEAD
 		     band < (state->split ?
 				NUM_NL80211_BANDS :
 				NL80211_BAND_60GHZ + 1);
 		     band++) {
+=======
+		     band < NUM_NL80211_BANDS; band++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			struct ieee80211_supported_band *sband;
 
 			/* omit higher bands for ancient software */
@@ -6531,7 +6538,12 @@ static int nl80211_set_station(struct sk_buff *skb, struct genl_info *info)
 	err = rdev_change_station(rdev, dev, mac_addr, &params);
 
  out_put_vlan:
+<<<<<<< HEAD
 	dev_put(params.vlan);
+=======
+	if (params.vlan)
+		dev_put(params.vlan);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
@@ -6766,7 +6778,12 @@ static int nl80211_new_station(struct sk_buff *skb, struct genl_info *info)
 
 	err = rdev_add_station(rdev, dev, mac_addr, &params);
 
+<<<<<<< HEAD
 	dev_put(params.vlan);
+=======
+	if (params.vlan)
+		dev_put(params.vlan);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -8491,7 +8508,12 @@ static int nl80211_trigger_scan(struct sk_buff *skb, struct genl_info *info)
 		goto out_free;
 
 	nl80211_send_scan_start(rdev, wdev);
+<<<<<<< HEAD
 	dev_hold(wdev->netdev);
+=======
+	if (wdev->netdev)
+		dev_hold(wdev->netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 
@@ -14804,6 +14826,7 @@ bad_tid_conf:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int nl80211_color_change(struct sk_buff *skb, struct genl_info *info)
 {
 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
@@ -14904,6 +14927,8 @@ out:
 	return err;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define NL80211_FLAG_NEED_WIPHY		0x01
 #define NL80211_FLAG_NEED_NETDEV	0x02
 #define NL80211_FLAG_NEED_RTNL		0x04
@@ -14961,7 +14986,13 @@ static int nl80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
 			return -ENETDOWN;
 		}
 
+<<<<<<< HEAD
 		dev_hold(dev);
+=======
+		if (dev)
+			dev_hold(dev);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		info->user_ptr[0] = rdev;
 	}
 
@@ -14983,7 +15014,12 @@ static void nl80211_post_doit(const struct genl_ops *ops, struct sk_buff *skb,
 		if (ops->internal_flags & NL80211_FLAG_NEED_WDEV) {
 			struct wireless_dev *wdev = info->user_ptr[1];
 
+<<<<<<< HEAD
 			dev_put(wdev->netdev);
+=======
+			if (wdev->netdev)
+				dev_put(wdev->netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} else {
 			dev_put(info->user_ptr[1]);
 		}
@@ -15899,6 +15935,7 @@ static const struct genl_small_ops nl80211_small_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_WIPHY |
 				  NL80211_FLAG_NEED_RTNL,
 	},
+<<<<<<< HEAD
 	{
 		.cmd = NL80211_CMD_COLOR_CHANGE_REQUEST,
 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
@@ -15907,6 +15944,8 @@ static const struct genl_small_ops nl80211_small_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
 				  NL80211_FLAG_NEED_RTNL,
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct genl_family nl80211_fam __ro_after_init = {
@@ -17536,6 +17575,7 @@ void cfg80211_ch_switch_started_notify(struct net_device *dev,
 }
 EXPORT_SYMBOL(cfg80211_ch_switch_started_notify);
 
+<<<<<<< HEAD
 int cfg80211_bss_color_notify(struct net_device *dev, gfp_t gfp,
 			      enum nl80211_commands cmd, u8 count,
 			      u64 color_bitmap)
@@ -17581,6 +17621,8 @@ nla_put_failure:
 }
 EXPORT_SYMBOL(cfg80211_bss_color_notify);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void
 nl80211_radar_notify(struct cfg80211_registered_device *rdev,
 		     const struct cfg80211_chan_def *chandef,

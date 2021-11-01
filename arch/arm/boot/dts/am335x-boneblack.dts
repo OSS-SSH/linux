@@ -7,7 +7,10 @@
 #include "am33xx.dtsi"
 #include "am335x-bone-common.dtsi"
 #include "am335x-boneblack-common.dtsi"
+<<<<<<< HEAD
 #include "am335x-boneblack-hdmi.dtsi"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 / {
 	model = "TI AM335x BeagleBone Black";

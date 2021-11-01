@@ -16,6 +16,11 @@ struct ipa;
 /* The maximum number of route table entries (IPv4, IPv6; hashed or not) */
 #define IPA_ROUTE_COUNT_MAX	15
 
+<<<<<<< HEAD
+=======
+#ifdef IPA_VALIDATE
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * ipa_table_valid() - Validate route and filter table memory regions
  * @ipa:	IPA pointer
@@ -33,6 +38,23 @@ bool ipa_table_valid(struct ipa *ipa);
  */
 bool ipa_filter_map_valid(struct ipa *ipa, u32 filter_mask);
 
+<<<<<<< HEAD
+=======
+#else /* !IPA_VALIDATE */
+
+static inline bool ipa_table_valid(struct ipa *ipa)
+{
+	return true;
+}
+
+static inline bool ipa_filter_map_valid(struct ipa *ipa, u32 filter_mask)
+{
+	return true;
+}
+
+#endif /* !IPA_VALIDATE */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * ipa_table_hash_support() - Return true if hashed tables are supported
  * @ipa:	IPA pointer

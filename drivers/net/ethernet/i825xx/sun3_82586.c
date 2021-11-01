@@ -29,7 +29,10 @@ static int rfdadd = 0; /* rfdadd=1 may be better for 8K MEM cards */
 static int fifo=0x8;	/* don't change */
 
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/module.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/string.h>
 #include <linux/errno.h>
 #include <linux/ioport.h>
@@ -277,7 +280,11 @@ static void alloc586(struct net_device *dev)
 	memset((char *)p->scb,0,sizeof(struct scb_struct));
 }
 
+<<<<<<< HEAD
 static int __init sun3_82586_probe(void)
+=======
+struct net_device * __init sun3_82586_probe(int unit)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *dev;
 	unsigned long ioaddr;
@@ -292,6 +299,7 @@ static int __init sun3_82586_probe(void)
 		break;
 
 	default:
+<<<<<<< HEAD
 		return -ENODEV;
 	}
 
@@ -301,11 +309,30 @@ static int __init sun3_82586_probe(void)
 	ioaddr = (unsigned long)ioremap(IE_OBIO, SUN3_82586_TOTAL_SIZE);
 	if (!ioaddr)
 		return -ENOMEM;
+=======
+		return ERR_PTR(-ENODEV);
+	}
+
+	if (found)
+		return ERR_PTR(-ENODEV);
+
+	ioaddr = (unsigned long)ioremap(IE_OBIO, SUN3_82586_TOTAL_SIZE);
+	if (!ioaddr)
+		return ERR_PTR(-ENOMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	found = 1;
 
 	dev = alloc_etherdev(sizeof(struct priv));
 	if (!dev)
 		goto out;
+<<<<<<< HEAD
+=======
+	if (unit >= 0) {
+		sprintf(dev->name, "eth%d", unit);
+		netdev_boot_setup_check(dev);
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev->irq = IE_IRQ;
 	dev->base_addr = ioaddr;
 	err = sun3_82586_probe1(dev, ioaddr);
@@ -314,7 +341,11 @@ static int __init sun3_82586_probe(void)
 	err = register_netdev(dev);
 	if (err)
 		goto out2;
+<<<<<<< HEAD
 	return 0;
+=======
+	return dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 out2:
 	release_region(ioaddr, SUN3_82586_TOTAL_SIZE);
@@ -322,9 +353,14 @@ out1:
 	free_netdev(dev);
 out:
 	iounmap((void __iomem *)ioaddr);
+<<<<<<< HEAD
 	return err;
 }
 module_init(sun3_82586_probe);
+=======
+	return ERR_PTR(err);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct net_device_ops sun3_82586_netdev_ops = {
 	.ndo_open		= sun3_82586_open,

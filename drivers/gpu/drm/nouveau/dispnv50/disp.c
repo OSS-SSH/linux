@@ -31,7 +31,10 @@
 #include <linux/dma-mapping.h>
 #include <linux/hdmi.h>
 #include <linux/component.h>
+<<<<<<< HEAD
 #include <linux/iopoll.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <drm/drm_atomic.h>
 #include <drm/drm_atomic_helper.h>
@@ -1650,17 +1653,21 @@ nv50_sor_update(struct nouveau_encoder *nv_encoder, u8 head,
 	core->func->sor->ctrl(core, nv_encoder->or, nv_encoder->ctrl, asyh);
 }
 
+<<<<<<< HEAD
 /* TODO: Should we extend this to PWM-only backlights?
  * As well, should we add a DRM helper for waiting for the backlight to acknowledge
  * the panel backlight has been shut off? Intel doesn't seem to do this, and uses a
  * fixed time delay from the vbios…
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void
 nv50_sor_atomic_disable(struct drm_encoder *encoder, struct drm_atomic_state *state)
 {
 	struct nouveau_encoder *nv_encoder = nouveau_encoder(encoder);
 	struct nouveau_crtc *nv_crtc = nouveau_crtc(nv_encoder->crtc);
 	struct nouveau_connector *nv_connector = nv50_outp_get_old_connector(state, nv_encoder);
+<<<<<<< HEAD
 #ifdef CONFIG_DRM_NOUVEAU_BACKLIGHT
 	struct nouveau_drm *drm = nouveau_drm(nv_encoder->base.base.dev);
 	struct nouveau_backlight *backlight = nv_connector->backlight;
@@ -1680,6 +1687,13 @@ nv50_sor_atomic_disable(struct drm_encoder *encoder, struct drm_atomic_state *st
 
 	if (nv_encoder->dcb->type == DCB_OUTPUT_DP) {
 		ret = drm_dp_dpcd_readb(aux, DP_SET_POWER, &pwr);
+=======
+	struct drm_dp_aux *aux = &nv_connector->aux;
+	u8 pwr;
+
+	if (nv_encoder->dcb->type == DCB_OUTPUT_DP) {
+		int ret = drm_dp_dpcd_readb(aux, DP_SET_POWER, &pwr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (ret == 0) {
 			pwr &= ~DP_SET_POWER_MASK;
@@ -1716,9 +1730,12 @@ nv50_sor_atomic_enable(struct drm_encoder *encoder, struct drm_atomic_state *sta
 	struct drm_device *dev = encoder->dev;
 	struct nouveau_drm *drm = nouveau_drm(dev);
 	struct nouveau_connector *nv_connector;
+<<<<<<< HEAD
 #ifdef CONFIG_DRM_NOUVEAU_BACKLIGHT
 	struct nouveau_backlight *backlight;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nvbios *bios = &drm->vbios;
 	bool hda = false;
 	u8 proto = NV507D_SOR_SET_CONTROL_PROTOCOL_CUSTOM;
@@ -1793,6 +1810,7 @@ nv50_sor_atomic_enable(struct drm_encoder *encoder, struct drm_atomic_state *sta
 			proto = NV887D_SOR_SET_CONTROL_PROTOCOL_DP_B;
 
 		nv50_audio_enable(encoder, nv_crtc, nv_connector, state, mode);
+<<<<<<< HEAD
 
 #ifdef CONFIG_DRM_NOUVEAU_BACKLIGHT
 		backlight = nv_connector->backlight;
@@ -1801,6 +1819,8 @@ nv50_sor_atomic_enable(struct drm_encoder *encoder, struct drm_atomic_state *sta
 						 (u16)backlight->dev->props.brightness);
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	default:
 		BUG();
@@ -2268,6 +2288,7 @@ nv50_disp_atomic_commit_tail(struct drm_atomic_state *state)
 		interlock[NV50_DISP_INTERLOCK_CORE] = 0;
 	}
 
+<<<<<<< HEAD
 	/* Finish updating head(s)...
 	 *
 	 * NVD is rather picky about both where window assignments can change,
@@ -2295,6 +2316,8 @@ nv50_disp_atomic_commit_tail(struct drm_atomic_state *state)
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Update plane(s). */
 	for_each_new_plane_in_state(state, plane, new_plane_state, i) {
 		struct nv50_wndw_atom *asyw = nv50_wndw_atom(new_plane_state);
@@ -2353,7 +2376,10 @@ nv50_disp_atomic_commit_tail(struct drm_atomic_state *state)
 	nv50_crc_atomic_start_reporting(state);
 	if (!flushed)
 		nv50_crc_atomic_release_notifier_contexts(state);
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_atomic_helper_commit_hw_done(state);
 	drm_atomic_helper_cleanup_planes(dev, state);
 	drm_atomic_helper_commit_cleanup_done(state);

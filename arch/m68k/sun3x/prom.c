@@ -14,6 +14,10 @@
 #include <asm/traps.h>
 #include <asm/sun3xprom.h>
 #include <asm/idprom.h>
+<<<<<<< HEAD
+=======
+#include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/sun3ints.h>
 #include <asm/openprom.h>
 #include <asm/machines.h>

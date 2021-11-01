@@ -22,6 +22,7 @@
 
 #include <linux/types.h>
 
+<<<<<<< HEAD
 /**
  * struct dma_buf_sync - Synchronize with CPU access.
  *
@@ -72,6 +73,10 @@ struct dma_buf_sync {
 	 * DMA_BUF_SYNC_RW:
 	 *     An alias for DMA_BUF_SYNC_READ | DMA_BUF_SYNC_WRITE.
 	 */
+=======
+/* begin/end dma-buf functions used for userspace mmap. */
+struct dma_buf_sync {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u64 flags;
 };
 

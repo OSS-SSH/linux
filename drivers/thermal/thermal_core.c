@@ -222,14 +222,25 @@ int thermal_build_list_of_policies(char *buf)
 {
 	struct thermal_governor *pos;
 	ssize_t count = 0;
+<<<<<<< HEAD
+=======
+	ssize_t size = PAGE_SIZE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_lock(&thermal_governor_lock);
 
 	list_for_each_entry(pos, &thermal_governor_list, governor_list) {
+<<<<<<< HEAD
 		count += scnprintf(buf + count, PAGE_SIZE - count, "%s ",
 				   pos->name);
 	}
 	count += scnprintf(buf + count, PAGE_SIZE - count, "\n");
+=======
+		size = PAGE_SIZE - count;
+		count += scnprintf(buf + count, size, "%s ", pos->name);
+	}
+	count += scnprintf(buf + count, size, "\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_unlock(&thermal_governor_lock);
 

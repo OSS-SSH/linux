@@ -10,7 +10,13 @@
 #ifndef _UAPI_ASM_SIGINFO_H
 #define _UAPI_ASM_SIGINFO_H
 
+<<<<<<< HEAD
 #define __ARCH_SIGEV_PREAMBLE_SIZE (sizeof(long) + 2*sizeof(int))
+=======
+
+#define __ARCH_SIGEV_PREAMBLE_SIZE (sizeof(long) + 2*sizeof(int))
+#undef __ARCH_SI_TRAPNO /* exception code needs to fill this ...  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define __ARCH_HAS_SWAPPED_SIGINFO
 

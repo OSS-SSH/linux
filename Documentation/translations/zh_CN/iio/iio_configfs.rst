@@ -1,5 +1,6 @@
 .. include:: ../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/iio/iio_configfs.rst
 
 :翻译:
@@ -8,6 +9,14 @@
 
 .. _cn_iio_configfs:
 
+=======
+:Original: :doc:`../../../iio/iio_configfs`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_iio_configfs:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =====================
 工业 IIO configfs支持
 =====================

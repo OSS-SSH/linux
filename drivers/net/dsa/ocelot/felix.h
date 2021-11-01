@@ -1,11 +1,18 @@
 /* SPDX-License-Identifier: GPL-2.0 */
+<<<<<<< HEAD
 /* Copyright 2019 NXP
+=======
+/* Copyright 2019 NXP Semiconductors
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #ifndef _MSCC_FELIX_H
 #define _MSCC_FELIX_H
 
 #define ocelot_to_felix(o)		container_of((o), struct felix, ocelot)
+<<<<<<< HEAD
 #define FELIX_MAC_QUIRKS		OCELOT_QUIRK_PCS_PERFORMS_RATE_ADAPTATION
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Platform-specific information */
 struct felix_info {
@@ -61,8 +68,13 @@ struct felix {
 	struct lynx_pcs			**pcs;
 	resource_size_t			switch_base;
 	resource_size_t			imdio_base;
+<<<<<<< HEAD
 	enum dsa_tag_protocol		tag_proto;
 	struct kthread_worker		*xmit_worker;
+=======
+	struct dsa_8021q_context	*dsa_8021q_ctx;
+	enum dsa_tag_protocol		tag_proto;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct net_device *felix_port_to_netdev(struct ocelot *ocelot, int port);

@@ -122,8 +122,11 @@
 
 #define SO_NETNS_COOKIE          0x0050
 
+<<<<<<< HEAD
 #define SO_BUF_LOCK              0x0051
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if !defined(__KERNEL__)
 
 

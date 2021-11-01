@@ -22,9 +22,12 @@
 #include <net/netfilter/nf_conntrack_acct.h>
 #include <net/netfilter/nf_conntrack_zones.h>
 #include <net/netfilter/nf_conntrack_timestamp.h>
+<<<<<<< HEAD
 #ifdef CONFIG_LWTUNNEL
 #include <net/netfilter/nf_hooks_lwtunnel.h>
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/rculist_nulls.h>
 
 static bool enable_hooks __read_mostly;
@@ -432,7 +435,11 @@ static int ct_cpu_seq_show(struct seq_file *seq, void *v)
 	unsigned int nr_conntracks;
 
 	if (v == SEQ_START_TOKEN) {
+<<<<<<< HEAD
 		seq_puts(seq, "entries  clashres found new invalid ignore delete chainlength insert insert_failed drop early_drop icmp_error  expect_new expect_create expect_delete search_restart\n");
+=======
+		seq_puts(seq, "entries  clashres found new invalid ignore delete delete_list insert insert_failed drop early_drop icmp_error  expect_new expect_create expect_delete search_restart\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 	}
 
@@ -447,7 +454,11 @@ static int ct_cpu_seq_show(struct seq_file *seq, void *v)
 		   st->invalid,
 		   0,
 		   0,
+<<<<<<< HEAD
 		   st->chaintoolong,
+=======
+		   0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   st->insert,
 		   st->insert_failed,
 		   st->drop,
@@ -578,15 +589,26 @@ enum nf_ct_sysctl_index {
 	NF_SYSCTL_CT_PROTO_TIMEOUT_TCP_UNACK,
 #if IS_ENABLED(CONFIG_NF_FLOW_TABLE)
 	NF_SYSCTL_CT_PROTO_TIMEOUT_TCP_OFFLOAD,
+<<<<<<< HEAD
 #endif
 	NF_SYSCTL_CT_PROTO_TCP_LOOSE,
 	NF_SYSCTL_CT_PROTO_TCP_LIBERAL,
 	NF_SYSCTL_CT_PROTO_TCP_IGNORE_INVALID_RST,
+=======
+	NF_SYSCTL_CT_PROTO_TIMEOUT_TCP_OFFLOAD_PICKUP,
+#endif
+	NF_SYSCTL_CT_PROTO_TCP_LOOSE,
+	NF_SYSCTL_CT_PROTO_TCP_LIBERAL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NF_SYSCTL_CT_PROTO_TCP_MAX_RETRANS,
 	NF_SYSCTL_CT_PROTO_TIMEOUT_UDP,
 	NF_SYSCTL_CT_PROTO_TIMEOUT_UDP_STREAM,
 #if IS_ENABLED(CONFIG_NF_FLOW_TABLE)
 	NF_SYSCTL_CT_PROTO_TIMEOUT_UDP_OFFLOAD,
+<<<<<<< HEAD
+=======
+	NF_SYSCTL_CT_PROTO_TIMEOUT_UDP_OFFLOAD_PICKUP,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	NF_SYSCTL_CT_PROTO_TIMEOUT_ICMP,
 	NF_SYSCTL_CT_PROTO_TIMEOUT_ICMPV6,
@@ -615,9 +637,12 @@ enum nf_ct_sysctl_index {
 	NF_SYSCTL_CT_PROTO_TIMEOUT_GRE,
 	NF_SYSCTL_CT_PROTO_TIMEOUT_GRE_STREAM,
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_LWTUNNEL
 	NF_SYSCTL_CT_LWTUNNEL,
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	__NF_SYSCTL_CT_LAST_SYSCTL,
 };
@@ -780,6 +805,15 @@ static struct ctl_table nf_ct_sysctl_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec_jiffies,
 	},
+<<<<<<< HEAD
+=======
+	[NF_SYSCTL_CT_PROTO_TIMEOUT_TCP_OFFLOAD_PICKUP] = {
+		.procname	= "nf_flowtable_tcp_pickup",
+		.maxlen		= sizeof(unsigned int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_jiffies,
+	},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	[NF_SYSCTL_CT_PROTO_TCP_LOOSE] = {
 		.procname	= "nf_conntrack_tcp_loose",
@@ -797,6 +831,7 @@ static struct ctl_table nf_ct_sysctl_table[] = {
 		.extra1 	= SYSCTL_ZERO,
 		.extra2 	= SYSCTL_ONE,
 	},
+<<<<<<< HEAD
 	[NF_SYSCTL_CT_PROTO_TCP_IGNORE_INVALID_RST] = {
 		.procname	= "nf_conntrack_tcp_ignore_invalid_rst",
 		.maxlen		= sizeof(u8),
@@ -805,6 +840,8 @@ static struct ctl_table nf_ct_sysctl_table[] = {
 		.extra1		= SYSCTL_ZERO,
 		.extra2		= SYSCTL_ONE,
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	[NF_SYSCTL_CT_PROTO_TCP_MAX_RETRANS] = {
 		.procname	= "nf_conntrack_tcp_max_retrans",
 		.maxlen		= sizeof(u8),
@@ -830,6 +867,15 @@ static struct ctl_table nf_ct_sysctl_table[] = {
 		.mode		= 0644,
 		.proc_handler	= proc_dointvec_jiffies,
 	},
+<<<<<<< HEAD
+=======
+	[NF_SYSCTL_CT_PROTO_TIMEOUT_UDP_OFFLOAD_PICKUP] = {
+		.procname	= "nf_flowtable_udp_pickup",
+		.maxlen		= sizeof(unsigned int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_jiffies,
+	},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	[NF_SYSCTL_CT_PROTO_TIMEOUT_ICMP] = {
 		.procname	= "nf_conntrack_icmp_timeout",
@@ -965,6 +1011,7 @@ static struct ctl_table nf_ct_sysctl_table[] = {
 		.proc_handler   = proc_dointvec_jiffies,
 	},
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_LWTUNNEL
 	[NF_SYSCTL_CT_LWTUNNEL] = {
 		.procname	= "nf_hooks_lwtunnel",
@@ -974,6 +1021,8 @@ static struct ctl_table nf_ct_sysctl_table[] = {
 		.proc_handler	= nf_hooks_lwtunnel_sysctl_handler,
 	},
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{}
 };
 
@@ -1014,11 +1063,18 @@ static void nf_conntrack_standalone_init_tcp_sysctl(struct net *net,
 	XASSIGN(LOOSE, &tn->tcp_loose);
 	XASSIGN(LIBERAL, &tn->tcp_be_liberal);
 	XASSIGN(MAX_RETRANS, &tn->tcp_max_retrans);
+<<<<<<< HEAD
 	XASSIGN(IGNORE_INVALID_RST, &tn->tcp_ignore_invalid_rst);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #undef XASSIGN
 
 #if IS_ENABLED(CONFIG_NF_FLOW_TABLE)
 	table[NF_SYSCTL_CT_PROTO_TIMEOUT_TCP_OFFLOAD].data = &tn->offload_timeout;
+<<<<<<< HEAD
+=======
+	table[NF_SYSCTL_CT_PROTO_TIMEOUT_TCP_OFFLOAD_PICKUP].data = &tn->offload_pickup;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 }
@@ -1111,6 +1167,10 @@ static int nf_conntrack_standalone_init_sysctl(struct net *net)
 	table[NF_SYSCTL_CT_PROTO_TIMEOUT_UDP_STREAM].data = &un->timeouts[UDP_CT_REPLIED];
 #if IS_ENABLED(CONFIG_NF_FLOW_TABLE)
 	table[NF_SYSCTL_CT_PROTO_TIMEOUT_UDP_OFFLOAD].data = &un->offload_timeout;
+<<<<<<< HEAD
+=======
+	table[NF_SYSCTL_CT_PROTO_TIMEOUT_UDP_OFFLOAD_PICKUP].data = &un->offload_pickup;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 	nf_conntrack_standalone_init_tcp_sysctl(net, table);

@@ -22,6 +22,7 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
+<<<<<<< HEAD
 		cpu-map {
 			cluster0 {
 				core0 {
@@ -54,6 +55,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cpu0: cpu@0 {
 			device_type = "cpu";
 			compatible = "arm,cortex-a15";

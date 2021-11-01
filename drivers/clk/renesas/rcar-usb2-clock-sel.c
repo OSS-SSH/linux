@@ -187,7 +187,11 @@ static int rcar_usb2_clock_sel_probe(struct platform_device *pdev)
 	init.ops = &usb2_clock_sel_clock_ops;
 	priv->hw.init = &init;
 
+<<<<<<< HEAD
 	ret = devm_clk_hw_register(dev, &priv->hw);
+=======
+	ret = devm_clk_hw_register(NULL, &priv->hw);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		goto pm_put;
 

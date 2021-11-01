@@ -11,8 +11,11 @@
 #include <linux/property.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 #include "base.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct swnode {
 	struct kobject kobj;
 	struct fwnode_handle fwnode;
@@ -1055,7 +1058,11 @@ int device_add_software_node(struct device *dev, const struct software_node *nod
 	 * balance.
 	 */
 	if (device_is_registered(dev))
+<<<<<<< HEAD
 		software_node_notify(dev);
+=======
+		software_node_notify(dev, KOBJ_ADD);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -1076,8 +1083,12 @@ void device_remove_software_node(struct device *dev)
 		return;
 
 	if (device_is_registered(dev))
+<<<<<<< HEAD
 		software_node_notify_remove(dev);
 
+=======
+		software_node_notify(dev, KOBJ_REMOVE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	set_secondary_fwnode(dev, NULL);
 	kobject_put(&swnode->kobj);
 }
@@ -1116,20 +1127,28 @@ int device_create_managed_software_node(struct device *dev,
 	to_swnode(fwnode)->managed = true;
 	set_secondary_fwnode(dev, fwnode);
 
+<<<<<<< HEAD
 	if (device_is_registered(dev))
 		software_node_notify(dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 EXPORT_SYMBOL_GPL(device_create_managed_software_node);
 
+<<<<<<< HEAD
 void software_node_notify(struct device *dev)
+=======
+int software_node_notify(struct device *dev, unsigned long action)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct swnode *swnode;
 	int ret;
 
 	swnode = dev_to_swnode(dev);
 	if (!swnode)
+<<<<<<< HEAD
 		return;
 
 	ret = sysfs_create_link(&dev->kobj, &swnode->kobj, "software_node");
@@ -1161,6 +1180,39 @@ void software_node_notify_remove(struct device *dev)
 		set_secondary_fwnode(dev, NULL);
 		kobject_put(&swnode->kobj);
 	}
+=======
+		return 0;
+
+	switch (action) {
+	case KOBJ_ADD:
+		ret = sysfs_create_link(&dev->kobj, &swnode->kobj, "software_node");
+		if (ret)
+			break;
+
+		ret = sysfs_create_link(&swnode->kobj, &dev->kobj,
+					dev_name(dev));
+		if (ret) {
+			sysfs_remove_link(&dev->kobj, "software_node");
+			break;
+		}
+		kobject_get(&swnode->kobj);
+		break;
+	case KOBJ_REMOVE:
+		sysfs_remove_link(&swnode->kobj, dev_name(dev));
+		sysfs_remove_link(&dev->kobj, "software_node");
+		kobject_put(&swnode->kobj);
+
+		if (swnode->managed) {
+			set_secondary_fwnode(dev, NULL);
+			kobject_put(&swnode->kobj);
+		}
+		break;
+	default:
+		break;
+	}
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __init software_node_init(void)

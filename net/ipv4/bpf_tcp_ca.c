@@ -10,9 +10,12 @@
 #include <net/tcp.h>
 #include <net/bpf_sk_storage.h>
 
+<<<<<<< HEAD
 /* "extern" is to avoid sparse warning.  It is only used in bpf_struct_ops.c. */
 extern struct bpf_struct_ops bpf_tcp_congestion_ops;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static u32 optional_ops[] = {
 	offsetof(struct tcp_congestion_ops, init),
 	offsetof(struct tcp_congestion_ops, release),
@@ -166,6 +169,7 @@ static const struct bpf_func_proto bpf_tcp_send_ack_proto = {
 	.arg2_type	= ARG_ANYTHING,
 };
 
+<<<<<<< HEAD
 static u32 prog_ops_moff(const struct bpf_prog *prog)
 {
 	const struct btf_member *m;
@@ -179,6 +183,8 @@ static u32 prog_ops_moff(const struct bpf_prog *prog)
 	return btf_member_bit_offset(t, m) / 8;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct bpf_func_proto *
 bpf_tcp_ca_get_func_proto(enum bpf_func_id func_id,
 			  const struct bpf_prog *prog)
@@ -190,6 +196,7 @@ bpf_tcp_ca_get_func_proto(enum bpf_func_id func_id,
 		return &bpf_sk_storage_get_proto;
 	case BPF_FUNC_sk_storage_delete:
 		return &bpf_sk_storage_delete_proto;
+<<<<<<< HEAD
 	case BPF_FUNC_setsockopt:
 		/* Does not allow release() to call setsockopt.
 		 * release() is called when the current bpf-tcp-cc
@@ -212,6 +219,8 @@ bpf_tcp_ca_get_func_proto(enum bpf_func_id func_id,
 		    offsetof(struct tcp_congestion_ops, release))
 			return &bpf_sk_getsockopt_proto;
 		return NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return bpf_base_func_proto(func_id);
 	}
@@ -324,6 +333,12 @@ static void bpf_tcp_ca_unreg(void *kdata)
 	tcp_unregister_congestion_control(kdata);
 }
 
+<<<<<<< HEAD
+=======
+/* Avoid sparse warning.  It is only used in bpf_struct_ops.c. */
+extern struct bpf_struct_ops bpf_tcp_congestion_ops;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct bpf_struct_ops bpf_tcp_congestion_ops = {
 	.verifier_ops = &bpf_tcp_ca_verifier_ops,
 	.reg = bpf_tcp_ca_reg,

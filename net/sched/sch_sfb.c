@@ -257,7 +257,11 @@ static bool sfb_classify(struct sk_buff *skb, struct tcf_proto *fl,
 	struct tcf_result res;
 	int result;
 
+<<<<<<< HEAD
 	result = tcf_classify(skb, NULL, fl, &res, false);
+=======
+	result = tcf_classify(skb, fl, &res, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (result >= 0) {
 #ifdef CONFIG_NET_CLS_ACT
 		switch (result) {

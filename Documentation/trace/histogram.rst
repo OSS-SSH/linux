@@ -70,6 +70,7 @@ Documentation written by Tom Zanussi
   modified by appending any of the following modifiers to the field
   name:
 
+<<<<<<< HEAD
 	=============  =================================================
         .hex           display a number as a hex value
 	.sym           display an address as a symbol
@@ -80,6 +81,17 @@ Documentation written by Tom Zanussi
 	.buckets=size  display grouping of values rather than raw number
 	.usecs         display a common_timestamp in microseconds
 	=============  =================================================
+=======
+	=========== ==========================================
+        .hex        display a number as a hex value
+	.sym        display an address as a symbol
+	.sym-offset display an address as a symbol and offset
+	.syscall    display a syscall id as a system call name
+	.execname   display a common_pid as a program name
+	.log2       display log2 value rather than raw number
+	.usecs      display a common_timestamp in microseconds
+	=========== ==========================================
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   Note that in general the semantics of a given field aren't
   interpreted when applying a modifier to it, but there are some
@@ -192,7 +204,11 @@ Documentation written by Tom Zanussi
                                 with the event, in nanoseconds.  May be
 			        modified by .usecs to have timestamps
 			        interpreted as microseconds.
+<<<<<<< HEAD
     common_cpu             int  the cpu on which the event occurred.
+=======
+    cpu                    int  the cpu on which the event occurred.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     ====================== ==== =======================================
 
 Extended error information
@@ -229,7 +245,11 @@ Extended error information
   that lists the total number of bytes requested for each function in
   the kernel that made one or more calls to kmalloc::
 
+<<<<<<< HEAD
     # echo 'hist:key=call_site:val=bytes_req.buckets=32' > \
+=======
+    # echo 'hist:key=call_site:val=bytes_req' > \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
             /sys/kernel/debug/tracing/events/kmem/kmalloc/trigger
 
   This tells the tracing system to create a 'hist' trigger using the
@@ -1824,12 +1844,21 @@ and variables defined on other events (see Section 2.2.3 below on
 how that is done using hist trigger 'onmatch' action). Once that is
 done, the 'wakeup_latency' synthetic event instance is created.
 
+<<<<<<< HEAD
+=======
+A histogram can now be defined for the new synthetic event::
+
+  # echo 'hist:keys=pid,prio,lat.log2:sort=pid,lat' >> \
+        /sys/kernel/debug/tracing/events/synthetic/wakeup_latency/trigger
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 The new event is created under the tracing/events/synthetic/ directory
 and looks and behaves just like any other event::
 
   # ls /sys/kernel/debug/tracing/events/synthetic/wakeup_latency
         enable  filter  format  hist  id  trigger
 
+<<<<<<< HEAD
 A histogram can now be defined for the new synthetic event::
 
   # echo 'hist:keys=pid,prio,lat.log2:sort=lat' >> \
@@ -1917,6 +1946,11 @@ the ".buckets" modifier and specify a size (in this case groups of 10).
       Entries: 16
       Dropped: 0
 
+=======
+Like any other event, once a histogram is enabled for the event, the
+output can be displayed by reading the event's 'hist' file.
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 2.2.3 Hist trigger 'handlers' and 'actions'
 -------------------------------------------
 

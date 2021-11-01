@@ -563,7 +563,11 @@ static void tda1997x_delayed_work_enable_hpd(struct work_struct *work)
 						    delayed_work_enable_hpd);
 	struct v4l2_subdev *sd = &state->sd;
 
+<<<<<<< HEAD
 	v4l2_dbg(2, debug, sd, "%s\n", __func__);
+=======
+	v4l2_dbg(2, debug, sd, "%s:\n", __func__);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Set HPD high */
 	tda1997x_manual_hpd(sd, HPD_HIGH_OTHER);
@@ -1107,8 +1111,12 @@ tda1997x_detect_std(struct tda1997x_state *state,
 	hper = io_read16(sd, REG_H_PER) & MASK_HPER;
 	hsper = io_read16(sd, REG_HS_WIDTH) & MASK_HSWIDTH;
 	v4l2_dbg(1, debug, sd, "Signal Timings: %u/%u/%u\n", vper, hper, hsper);
+<<<<<<< HEAD
 
 	if (!state->input_detect[0] && !state->input_detect[1])
+=======
+	if (!vper || !hper || !hsper)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOLINK;
 
 	for (i = 0; v4l2_dv_timings_presets[i].bt.width; i++) {
@@ -1696,15 +1704,25 @@ static int tda1997x_query_dv_timings(struct v4l2_subdev *sd,
 				     struct v4l2_dv_timings *timings)
 {
 	struct tda1997x_state *state = to_state(sd);
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	v4l_dbg(1, debug, state->client, "%s\n", __func__);
 	memset(timings, 0, sizeof(struct v4l2_dv_timings));
 	mutex_lock(&state->lock);
+<<<<<<< HEAD
 	ret = tda1997x_detect_std(state, timings);
 	mutex_unlock(&state->lock);
 
 	return ret;
+=======
+	tda1997x_detect_std(state, timings);
+	mutex_unlock(&state->lock);
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct v4l2_subdev_video_ops tda1997x_video_ops = {
@@ -2235,7 +2253,10 @@ static int tda1997x_core_init(struct v4l2_subdev *sd)
 	/* get initial HDMI status */
 	state->hdmi_status = io_read(sd, REG_HDMI_FLAGS);
 
+<<<<<<< HEAD
 	io_write(sd, REG_EDID_ENABLE, EDID_ENABLE_A_EN | EDID_ENABLE_B_EN);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

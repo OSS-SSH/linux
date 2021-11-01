@@ -16,7 +16,10 @@
  * netstack, and assigning dedicated CPUs for this stage.  This
  * basically allows for 10G wirespeed pre-filtering via bpf.
  */
+<<<<<<< HEAD
 #include <linux/bitops.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/bpf.h>
 #include <linux/filter.h>
 #include <linux/ptr_ring.h>
@@ -169,6 +172,7 @@ static void put_cpu_map_entry(struct bpf_cpu_map_entry *rcpu)
 	}
 }
 
+<<<<<<< HEAD
 static void cpu_map_bpf_prog_run_skb(struct bpf_cpu_map_entry *rcpu,
 				     struct list_head *listp,
 				     struct xdp_cpumap_stats *stats)
@@ -209,6 +213,8 @@ static void cpu_map_bpf_prog_run_skb(struct bpf_cpu_map_entry *rcpu,
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int cpu_map_bpf_prog_run_xdp(struct bpf_cpu_map_entry *rcpu,
 				    void **frames, int n,
 				    struct xdp_cpumap_stats *stats)
@@ -217,6 +223,14 @@ static int cpu_map_bpf_prog_run_xdp(struct bpf_cpu_map_entry *rcpu,
 	struct xdp_buff xdp;
 	int i, nframes = 0;
 
+<<<<<<< HEAD
+=======
+	if (!rcpu->prog)
+		return n;
+
+	rcu_read_lock_bh();
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xdp_set_return_frame_no_direct();
 	xdp.rxq = &rxq;
 
@@ -263,6 +277,7 @@ static int cpu_map_bpf_prog_run_xdp(struct bpf_cpu_map_entry *rcpu,
 		}
 	}
 
+<<<<<<< HEAD
 	xdp_clear_return_frame_no_direct();
 
 	return nframes;
@@ -288,12 +303,22 @@ static int cpu_map_bpf_prog_run(struct bpf_cpu_map_entry *rcpu, void **frames,
 
 	if (unlikely(!list_empty(list)))
 		cpu_map_bpf_prog_run_skb(rcpu, list, stats);
+=======
+	if (stats->redirect)
+		xdp_do_flush_map();
+
+	xdp_clear_return_frame_no_direct();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rcu_read_unlock_bh(); /* resched point, may call do_softirq() */
 
 	return nframes;
 }
 
+<<<<<<< HEAD
+=======
+#define CPUMAP_BATCH 8
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int cpu_map_kthread_run(void *data)
 {
@@ -310,9 +335,15 @@ static int cpu_map_kthread_run(void *data)
 		struct xdp_cpumap_stats stats = {}; /* zero stats */
 		unsigned int kmem_alloc_drops = 0, sched = 0;
 		gfp_t gfp = __GFP_ZERO | GFP_ATOMIC;
+<<<<<<< HEAD
 		int i, n, m, nframes, xdp_n;
 		void *frames[CPUMAP_BATCH];
 		void *skbs[CPUMAP_BATCH];
+=======
+		void *frames[CPUMAP_BATCH];
+		void *skbs[CPUMAP_BATCH];
+		int i, n, m, nframes;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		LIST_HEAD(list);
 
 		/* Release CPU reschedule checks */
@@ -336,6 +367,7 @@ static int cpu_map_kthread_run(void *data)
 		 */
 		n = __ptr_ring_consume_batched(rcpu->queue, frames,
 					       CPUMAP_BATCH);
+<<<<<<< HEAD
 		for (i = 0, xdp_n = 0; i < n; i++) {
 			void *f = frames[i];
 			struct page *page;
@@ -350,6 +382,11 @@ static int cpu_map_kthread_run(void *data)
 
 			frames[xdp_n++] = f;
 			page = virt_to_page(f);
+=======
+		for (i = 0; i < n; i++) {
+			void *f = frames[i];
+			struct page *page = virt_to_page(f);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			/* Bring struct page memory area to curr CPU. Read by
 			 * build_skb_around via page_is_pfmemalloc(), and when
@@ -359,7 +396,11 @@ static int cpu_map_kthread_run(void *data)
 		}
 
 		/* Support running another XDP prog on this CPU */
+<<<<<<< HEAD
 		nframes = cpu_map_bpf_prog_run(rcpu, frames, xdp_n, &stats, &list);
+=======
+		nframes = cpu_map_bpf_prog_run_xdp(rcpu, frames, n, &stats);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (nframes) {
 			m = kmem_cache_alloc_bulk(skbuff_head_cache, gfp, nframes, skbs);
 			if (unlikely(m == 0)) {
@@ -397,6 +438,15 @@ static int cpu_map_kthread_run(void *data)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+bool cpu_map_prog_allowed(struct bpf_map *map)
+{
+	return map->map_type == BPF_MAP_TYPE_CPUMAP &&
+	       map->value_size != offsetofend(struct bpf_cpumap_val, qsize);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __cpu_map_load_bpf_program(struct bpf_cpu_map_entry *rcpu, int fd)
 {
 	struct bpf_prog *prog;
@@ -762,6 +812,7 @@ int cpu_map_enqueue(struct bpf_cpu_map_entry *rcpu, struct xdp_buff *xdp,
 	return 0;
 }
 
+<<<<<<< HEAD
 int cpu_map_generic_redirect(struct bpf_cpu_map_entry *rcpu,
 			     struct sk_buff *skb)
 {
@@ -781,6 +832,8 @@ trace:
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __cpu_map_flush(void)
 {
 	struct list_head *flush_list = this_cpu_ptr(&cpu_map_flush_list);

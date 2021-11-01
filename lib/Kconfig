@@ -50,6 +50,7 @@ config HAVE_ARCH_BITREVERSE
 	  This option enables the use of hardware bit-reversal instructions on
 	  architectures which support such operations.
 
+<<<<<<< HEAD
 config ARCH_HAS_STRNCPY_FROM_USER
 	bool
 
@@ -61,6 +62,13 @@ config GENERIC_STRNCPY_FROM_USER
 
 config GENERIC_STRNLEN_USER
 	def_bool !ARCH_HAS_STRNLEN_USER
+=======
+config GENERIC_STRNCPY_FROM_USER
+	bool
+
+config GENERIC_STRNLEN_USER
+	bool
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config GENERIC_NET_UTILS
 	bool
@@ -689,6 +697,12 @@ config PARMAN
 config OBJAGG
 	tristate "objagg" if COMPILE_TEST
 
+<<<<<<< HEAD
+=======
+config STRING_SELFTEST
+	tristate "Test string functions"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endmenu
 
 config GENERIC_IOREMAP

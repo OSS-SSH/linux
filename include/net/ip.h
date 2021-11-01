@@ -436,12 +436,16 @@ static inline bool ip_sk_ignore_df(const struct sock *sk)
 static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
 						    bool forwarding)
 {
+<<<<<<< HEAD
 	const struct rtable *rt = container_of(dst, struct rtable, dst);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct net *net = dev_net(dst->dev);
 	unsigned int mtu;
 
 	if (net->ipv4.sysctl_ip_fwd_use_pmtu ||
 	    ip_mtu_locked(dst) ||
+<<<<<<< HEAD
 	    !forwarding) {
 		mtu = rt->rt_pmtu;
 		if (mtu && time_before(jiffies, rt->dst.expires))
@@ -462,6 +466,15 @@ static inline unsigned int ip_dst_mtu_maybe_forward(const struct dst_entry *dst,
 
 out:
 	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
+=======
+	    !forwarding)
+		return dst_mtu(dst);
+
+	/* 'forwarding = true' case should always honour route mtu */
+	mtu = dst_metric_raw(dst, RTAX_MTU);
+	if (!mtu)
+		mtu = min(READ_ONCE(dst->dev->mtu), IP_MAX_MTU);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
 }

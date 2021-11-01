@@ -291,7 +291,12 @@ static void xgene_msi_isr(struct irq_desc *desc)
 	struct irq_chip *chip = irq_desc_get_chip(desc);
 	struct xgene_msi_group *msi_groups;
 	struct xgene_msi *xgene_msi;
+<<<<<<< HEAD
 	int msir_index, msir_val, hw_irq, ret;
+=======
+	unsigned int virq;
+	int msir_index, msir_val, hw_irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 intr_index, grp_select, msi_grp;
 
 	chained_irq_enter(chip, desc);
@@ -329,8 +334,15 @@ static void xgene_msi_isr(struct irq_desc *desc)
 			 * CPU0
 			 */
 			hw_irq = hwirq_to_canonical_hwirq(hw_irq);
+<<<<<<< HEAD
 			ret = generic_handle_domain_irq(xgene_msi->inner_domain, hw_irq);
 			WARN_ON_ONCE(ret);
+=======
+			virq = irq_find_mapping(xgene_msi->inner_domain, hw_irq);
+			WARN_ON(!virq);
+			if (virq != 0)
+				generic_handle_irq(virq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			msir_val &= ~(1 << intr_index);
 		}
 		grp_select &= ~(1 << msir_index);
@@ -448,6 +460,10 @@ static int xgene_msi_probe(struct platform_device *pdev)
 	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	xgene_msi->msi_regs = devm_ioremap_resource(&pdev->dev, res);
 	if (IS_ERR(xgene_msi->msi_regs)) {
+<<<<<<< HEAD
+=======
+		dev_err(&pdev->dev, "no reg space\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rc = PTR_ERR(xgene_msi->msi_regs);
 		goto error;
 	}

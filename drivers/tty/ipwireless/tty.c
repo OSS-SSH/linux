@@ -564,10 +564,16 @@ int ipwireless_tty_init(void)
 {
 	int result;
 
+<<<<<<< HEAD
 	ipw_tty_driver = tty_alloc_driver(IPWIRELESS_PCMCIA_MINORS,
 			TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV);
 	if (IS_ERR(ipw_tty_driver))
 		return PTR_ERR(ipw_tty_driver);
+=======
+	ipw_tty_driver = alloc_tty_driver(IPWIRELESS_PCMCIA_MINORS);
+	if (!ipw_tty_driver)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ipw_tty_driver->driver_name = IPWIRELESS_PCCARD_NAME;
 	ipw_tty_driver->name = "ttyIPWp";
@@ -575,6 +581,10 @@ int ipwireless_tty_init(void)
 	ipw_tty_driver->minor_start = IPWIRELESS_PCMCIA_START;
 	ipw_tty_driver->type = TTY_DRIVER_TYPE_SERIAL;
 	ipw_tty_driver->subtype = SERIAL_TYPE_NORMAL;
+<<<<<<< HEAD
+=======
+	ipw_tty_driver->flags = TTY_DRIVER_REAL_RAW | TTY_DRIVER_DYNAMIC_DEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ipw_tty_driver->init_termios = tty_std_termios;
 	ipw_tty_driver->init_termios.c_cflag =
 	    B9600 | CS8 | CREAD | HUPCL | CLOCAL;
@@ -585,7 +595,11 @@ int ipwireless_tty_init(void)
 	if (result) {
 		printk(KERN_ERR IPWIRELESS_PCCARD_NAME
 		       ": failed to register tty driver\n");
+<<<<<<< HEAD
 		tty_driver_kref_put(ipw_tty_driver);
+=======
+		put_tty_driver(ipw_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return result;
 	}
 
@@ -595,7 +609,11 @@ int ipwireless_tty_init(void)
 void ipwireless_tty_release(void)
 {
 	tty_unregister_driver(ipw_tty_driver);
+<<<<<<< HEAD
 	tty_driver_kref_put(ipw_tty_driver);
+=======
+	put_tty_driver(ipw_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int ipwireless_tty_is_modem(struct ipw_tty *tty)

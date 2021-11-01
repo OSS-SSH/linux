@@ -200,6 +200,22 @@ receive all frames regardless of the value of the MAC DA. This can be done by
 setting the ``promisc_on_master`` property of the ``struct dsa_device_ops``.
 Note that this assumes a DSA-unaware master driver, which is the norm.
 
+<<<<<<< HEAD
+=======
+Hardware manufacturers are strongly discouraged to do this, but some tagging
+protocols might not provide source port information on RX for all packets, but
+e.g. only for control traffic (link-local PDUs). In this case, by implementing
+the ``filter`` method of ``struct dsa_device_ops``, the tagger might select
+which packets are to be redirected on RX towards the virtual DSA user network
+interfaces, and which are to be left in the DSA master's RX data path.
+
+It might also happen (although silicon vendors are strongly discouraged to
+produce hardware like this) that a tagging protocol splits the switch-specific
+information into a header portion and a tail portion, therefore not falling
+cleanly into any of the above 3 categories. DSA does not support this
+configuration.
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Master network devices
 ----------------------
 
@@ -650,6 +666,7 @@ Bridge layer
   CPU port, and flooding towards the CPU port should also be enabled, due to a
   lack of an explicit address filtering mechanism in the DSA core.
 
+<<<<<<< HEAD
 - ``port_bridge_tx_fwd_offload``: bridge layer function invoked after
   ``port_bridge_join`` when a driver sets ``ds->num_fwd_offloading_bridges`` to
   a non-zero value. Returning success in this function activates the TX
@@ -666,6 +683,8 @@ Bridge layer
 - ``port_bridge_tx_fwd_unoffload``: bridge layer function invoken when a driver
   leaves a bridge port which had the TX forwarding offload feature enabled.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Bridge VLAN filtering
 ---------------------
 

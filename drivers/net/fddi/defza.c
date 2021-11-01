@@ -1504,8 +1504,14 @@ err_out_resource:
 	release_mem_region(start, len);
 
 err_out_kfree:
+<<<<<<< HEAD
 	pr_err("%s: initialization failure, aborting!\n", fp->name);
 	free_netdev(dev);
+=======
+	free_netdev(dev);
+
+	pr_err("%s: initialization failure, aborting!\n", fp->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 

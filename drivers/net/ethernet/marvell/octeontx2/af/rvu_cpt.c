@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0-only
+<<<<<<< HEAD
 /* Marvell RVU Admin Function driver
  *
  * Copyright (C) 2020 Marvell.
  *
  */
+=======
+/* Copyright (C) 2020 Marvell. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <linux/bitfield.h>
 #include <linux/pci.h>

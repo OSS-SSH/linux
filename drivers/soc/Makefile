@@ -13,7 +13,11 @@ obj-$(CONFIG_MACH_DOVE)		+= dove/
 obj-y				+= fsl/
 obj-$(CONFIG_ARCH_GEMINI)	+= gemini/
 obj-y				+= imx/
+<<<<<<< HEAD
 obj-y				+= ixp4xx/
+=======
+obj-$(CONFIG_ARCH_IXP4XX)	+= ixp4xx/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_SOC_XWAY)		+= lantiq/
 obj-$(CONFIG_LITEX_SOC_CONTROLLER) += litex/
 obj-y				+= mediatek/

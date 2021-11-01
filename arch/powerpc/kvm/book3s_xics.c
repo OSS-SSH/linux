@@ -10,13 +10,22 @@
 #include <linux/gfp.h>
 #include <linux/anon_inodes.h>
 #include <linux/spinlock.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 #include <linux/uaccess.h>
 
+=======
+
+#include <linux/uaccess.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/kvm_book3s.h>
 #include <asm/kvm_ppc.h>
 #include <asm/hvcall.h>
 #include <asm/xics.h>
+<<<<<<< HEAD
+=======
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/time.h>
 
 #include <linux/seq_file.h>
@@ -1024,7 +1033,11 @@ static void xics_debugfs_init(struct kvmppc_xics *xics)
 		return;
 	}
 
+<<<<<<< HEAD
 	xics->dentry = debugfs_create_file(name, 0444, arch_debugfs_dir,
+=======
+	xics->dentry = debugfs_create_file(name, 0444, powerpc_debugfs_root,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					   xics, &xics_debug_fops);
 
 	pr_debug("%s: created %s\n", __func__, name);

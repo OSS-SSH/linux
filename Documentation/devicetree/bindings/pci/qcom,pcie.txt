@@ -34,22 +34,38 @@
 - device_type:
 	Usage: required
 	Value type: <string>
+<<<<<<< HEAD
 	Definition: Should be "pci". As specified in snps,dw-pcie.yaml
+=======
+	Definition: Should be "pci". As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - #address-cells:
 	Usage: required
 	Value type: <u32>
+<<<<<<< HEAD
 	Definition: Should be 3. As specified in snps,dw-pcie.yaml
+=======
+	Definition: Should be 3. As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - #size-cells:
 	Usage: required
 	Value type: <u32>
+<<<<<<< HEAD
 	Definition: Should be 2. As specified in snps,dw-pcie.yaml
+=======
+	Definition: Should be 2. As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - ranges:
 	Usage: required
 	Value type: <prop-encoded-array>
+<<<<<<< HEAD
 	Definition: As specified in snps,dw-pcie.yaml
+=======
+	Definition: As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - interrupts:
 	Usage: required
@@ -64,17 +80,29 @@
 - #interrupt-cells:
 	Usage: required
 	Value type: <u32>
+<<<<<<< HEAD
 	Definition: Should be 1. As specified in snps,dw-pcie.yaml
+=======
+	Definition: Should be 1. As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - interrupt-map-mask:
 	Usage: required
 	Value type: <prop-encoded-array>
+<<<<<<< HEAD
 	Definition: As specified in snps,dw-pcie.yaml
+=======
+	Definition: As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - interrupt-map:
 	Usage: required
 	Value type: <prop-encoded-array>
+<<<<<<< HEAD
 	Definition: As specified in snps,dw-pcie.yaml
+=======
+	Definition: As specified in designware-pcie.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - clocks:
 	Usage: required

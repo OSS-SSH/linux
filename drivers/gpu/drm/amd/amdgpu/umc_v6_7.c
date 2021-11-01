@@ -28,6 +28,7 @@
 #include "umc/umc_6_7_0_offset.h"
 #include "umc/umc_6_7_0_sh_mask.h"
 
+<<<<<<< HEAD
 const uint32_t
 	umc_v6_7_channel_idx_tbl_second[UMC_V6_7_UMC_INSTANCE_NUM][UMC_V6_7_CHANNEL_INSTANCE_NUM] = {
 		{28, 20, 24, 16, 12, 4, 8, 0},
@@ -43,6 +44,8 @@ const uint32_t
 		{6, 30, 2, 26, 22, 14, 18, 10},
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline uint32_t get_umc_v6_7_reg_offset(struct amdgpu_device *adev,
 					      uint32_t umc_inst,
 					      uint32_t ch_inst)

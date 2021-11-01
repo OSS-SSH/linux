@@ -20,7 +20,11 @@ void __debug_switch_to_host(struct kvm_vcpu *vcpu)
 	__debug_switch_to_host_common(vcpu);
 }
 
+<<<<<<< HEAD
 u64 __kvm_get_mdcr_el2(void)
+=======
+u32 __kvm_get_mdcr_el2(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return read_sysreg(mdcr_el2);
 }

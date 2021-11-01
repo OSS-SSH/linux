@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
+=======
+ *   fs/cifs/ioctl.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   vfs operations that deal with io control
  *
@@ -358,7 +362,11 @@ long cifs_ioctl(struct file *filep, unsigned int command, unsigned long arg)
 			if (pSMBFile == NULL)
 				break;
 			tcon = tlink_tcon(pSMBFile->tlink);
+<<<<<<< HEAD
 			/* caps = le64_to_cpu(tcon->fsUnixInfo.Capability); */
+=======
+			caps = le64_to_cpu(tcon->fsUnixInfo.Capability);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			if (get_user(ExtAttrBits, (int __user *)arg)) {
 				rc = -EFAULT;

@@ -778,7 +778,11 @@ ccp_run_aes_gcm_cmd(struct ccp_cmd_queue *cmd_q, struct ccp_cmd *cmd)
 				    in_place ? DMA_BIDIRECTIONAL
 					     : DMA_TO_DEVICE);
 		if (ret)
+<<<<<<< HEAD
 			goto e_aad;
+=======
+			goto e_ctx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (in_place) {
 			dst = src;
@@ -863,7 +867,11 @@ ccp_run_aes_gcm_cmd(struct ccp_cmd_queue *cmd_q, struct ccp_cmd *cmd)
 	op.u.aes.size = 0;
 	ret = cmd_q->ccp->vdata->perform->aes(&op);
 	if (ret)
+<<<<<<< HEAD
 		goto e_final_wa;
+=======
+		goto e_dst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (aes->action == CCP_AES_ACTION_ENCRYPT) {
 		/* Put the ciphered tag after the ciphertext. */
@@ -873,19 +881,30 @@ ccp_run_aes_gcm_cmd(struct ccp_cmd_queue *cmd_q, struct ccp_cmd *cmd)
 		ret = ccp_init_dm_workarea(&tag, cmd_q, authsize,
 					   DMA_BIDIRECTIONAL);
 		if (ret)
+<<<<<<< HEAD
 			goto e_final_wa;
 		ret = ccp_set_dm_area(&tag, 0, p_tag, 0, authsize);
 		if (ret) {
 			ccp_dm_free(&tag);
 			goto e_final_wa;
 		}
+=======
+			goto e_tag;
+		ret = ccp_set_dm_area(&tag, 0, p_tag, 0, authsize);
+		if (ret)
+			goto e_tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		ret = crypto_memneq(tag.address, final_wa.address,
 				    authsize) ? -EBADMSG : 0;
 		ccp_dm_free(&tag);
 	}
 
+<<<<<<< HEAD
 e_final_wa:
+=======
+e_tag:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ccp_dm_free(&final_wa);
 
 e_dst:

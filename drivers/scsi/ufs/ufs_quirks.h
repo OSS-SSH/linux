@@ -116,10 +116,13 @@ struct ufs_dev_fix {
  */
 #define UFS_DEVICE_QUIRK_DELAY_AFTER_LPM        (1 << 11)
 
+<<<<<<< HEAD
 /*
  * Some UFS devices require L2P entry should be swapped before being sent to the
  * UFS device for HPB READ command.
  */
 #define UFS_DEVICE_QUIRK_SWAP_L2P_ENTRY_FOR_HPB_READ (1 << 12)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* UFS_QUIRKS_H_ */

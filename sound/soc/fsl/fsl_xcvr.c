@@ -1189,8 +1189,15 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
 
 	/* get IRQs */
 	irq = platform_get_irq(pdev, 0);
+<<<<<<< HEAD
 	if (irq < 0)
 		return irq;
+=======
+	if (irq < 0) {
+		dev_err(dev, "no irq[0]: %d\n", irq);
+		return irq;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = devm_request_irq(dev, irq, irq0_isr, 0, pdev->name, xcvr);
 	if (ret) {
@@ -1215,6 +1222,7 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
 	pm_runtime_enable(dev);
 	regcache_cache_only(xcvr->regmap, true);
 
+<<<<<<< HEAD
 	/*
 	 * Register platform component before registering cpu dai for there
 	 * is not defer probe for platform component in snd_soc_add_pcm_runtime().
@@ -1225,13 +1233,25 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = devm_snd_soc_register_component(dev, &fsl_xcvr_comp,
 					      &fsl_xcvr_dai, 1);
 	if (ret) {
 		dev_err(dev, "failed to register component %s\n",
 			fsl_xcvr_comp.name);
+<<<<<<< HEAD
 	}
 
+=======
+		return ret;
+	}
+
+	ret = devm_snd_dmaengine_pcm_register(dev, NULL, 0);
+	if (ret)
+		dev_err(dev, "failed to pcm register\n");
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 

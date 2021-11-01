@@ -16,6 +16,11 @@ import sys
 import os
 import sphinx
 
+<<<<<<< HEAD
+=======
+from subprocess import check_output
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # Get Sphinx version
 major, minor, patch = sphinx.version_info[:3]
 
@@ -341,9 +346,12 @@ latex_elements = {
         verbatimhintsturnover=false,
     ''',
 
+<<<<<<< HEAD
     # For CJK One-half spacing, need to be in front of hyperref
     'extrapackages': r'\usepackage{setspace}',
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     # Additional stuff for the LaTeX preamble.
     'preamble': '''
 	% Prevent column squeezing of tabulary.
@@ -356,6 +364,7 @@ latex_elements = {
      ''',
 }
 
+<<<<<<< HEAD
 # Translations have Asian (CJK) characters which are only displayed if
 # xeCJK is used
 
@@ -467,6 +476,31 @@ latex_elements['preamble']  += '''
 	\\newcommand{\\kerneldocEndJP}{}
     }
 '''
+=======
+# At least one book (translations) may have Asian characters
+# with are only displayed if xeCJK is used
+
+cjk_cmd = check_output(['fc-list', '--format="%{family[0]}\n"']).decode('utf-8', 'ignore')
+if cjk_cmd.find("Noto Sans CJK SC") >= 0:
+    latex_elements['preamble']  += '''
+	% This is needed for translations
+        \\usepackage{xeCJK}
+        \\setCJKmainfont{Noto Sans CJK SC}
+	% Define custom macros to on/off CJK
+	\\newcommand{\\kerneldocCJKon}{\\makexeCJKactive}
+	\\newcommand{\\kerneldocCJKoff}{\\makexeCJKinactive}
+	% To customize \sphinxtableofcontents
+	\\usepackage{etoolbox}
+	% Inactivate CJK after tableofcontents
+	\\apptocmd{\\sphinxtableofcontents}{\\kerneldocCJKoff}{}{}
+     '''
+else:
+    latex_elements['preamble']  += '''
+	% Custom macros to on/off CJK (Dummy)
+	\\newcommand{\\kerneldocCJKon}{}
+	\\newcommand{\\kerneldocCJKoff}{}
+     '''
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 # Fix reference escape troubles with Sphinx 1.4.x
 if major == 1:

@@ -235,7 +235,12 @@ static int beiscsi_exec_nemb_cmd(struct beiscsi_hba *phba,
 	wrb = alloc_mcc_wrb(phba, &tag);
 	if (!wrb) {
 		mutex_unlock(&ctrl->mbox_lock);
+<<<<<<< HEAD
 		return -ENOMEM;
+=======
+		rc = -ENOMEM;
+		goto free_cmd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	sge = nonembedded_sgl(wrb);
@@ -268,6 +273,27 @@ static int beiscsi_exec_nemb_cmd(struct beiscsi_hba *phba,
 	/* copy the response, if any */
 	if (resp_buf)
 		memcpy(resp_buf, nonemb_cmd->va, resp_buf_len);
+<<<<<<< HEAD
+=======
+	/**
+	 * This is special case of NTWK_GET_IF_INFO where the size of
+	 * response is not known. beiscsi_if_get_info checks the return
+	 * value to free DMA buffer.
+	 */
+	if (rc == -EAGAIN)
+		return rc;
+
+	/**
+	 * If FW is busy that is driver timed out, DMA buffer is saved with
+	 * the tag, only when the cmd completes this buffer is freed.
+	 */
+	if (rc == -EBUSY)
+		return rc;
+
+free_cmd:
+	dma_free_coherent(&ctrl->pdev->dev, nonemb_cmd->size,
+			    nonemb_cmd->va, nonemb_cmd->dma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
@@ -290,6 +316,7 @@ static int beiscsi_prep_nemb_cmd(struct beiscsi_hba *phba,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void beiscsi_free_nemb_cmd(struct beiscsi_hba *phba,
 				  struct be_dma_mem *cmd, int rc)
 {
@@ -303,6 +330,8 @@ static void beiscsi_free_nemb_cmd(struct beiscsi_hba *phba,
 	dma_free_coherent(&phba->ctrl.pdev->dev, cmd->size, cmd->va, cmd->dma);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __beiscsi_eq_delay_compl(struct beiscsi_hba *phba, unsigned int tag)
 {
 	struct be_dma_mem *tag_mem;
@@ -338,6 +367,7 @@ int beiscsi_modify_eq_delay(struct beiscsi_hba *phba,
 				cpu_to_le32(set_eqd[i].delay_multiplier);
 	}
 
+<<<<<<< HEAD
 	rc = beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, __beiscsi_eq_delay_compl,
 				   NULL, 0);
 	if (rc) {
@@ -348,6 +378,10 @@ int beiscsi_modify_eq_delay(struct beiscsi_hba *phba,
 		beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
 	}
 	return rc;
+=======
+	return beiscsi_exec_nemb_cmd(phba, &nonemb_cmd,
+				     __beiscsi_eq_delay_compl, NULL, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -374,7 +408,10 @@ int beiscsi_get_initiator_name(struct beiscsi_hba *phba, char *name, bool cfg)
 		req->hdr.version = 1;
 	rc = beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL,
 				   &resp, sizeof(resp));
+<<<<<<< HEAD
 	beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc) {
 		beiscsi_log(phba, KERN_ERR,
 			    BEISCSI_LOG_CONFIG | BEISCSI_LOG_MBOX,
@@ -452,9 +489,13 @@ static int beiscsi_if_mod_gw(struct beiscsi_hba *phba,
 	req->ip_addr.ip_type = ip_type;
 	memcpy(req->ip_addr.addr, gw,
 	       (ip_type < BEISCSI_IP_TYPE_V6) ? IP_V4_LEN : IP_V6_LEN);
+<<<<<<< HEAD
 	rt_val = beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL, NULL, 0);
 	beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rt_val);
 	return rt_val;
+=======
+	return beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL, NULL, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int beiscsi_if_set_gw(struct beiscsi_hba *phba, u32 ip_type, u8 *gw)
@@ -504,10 +545,15 @@ int beiscsi_if_get_gw(struct beiscsi_hba *phba, u32 ip_type,
 	req = nonemb_cmd.va;
 	req->ip_type = ip_type;
 
+<<<<<<< HEAD
 	rc = beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL, resp,
 				   sizeof(*resp));
 	beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
 	return rc;
+=======
+	return beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL,
+				     resp, sizeof(*resp));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int
@@ -544,7 +590,10 @@ beiscsi_if_clr_ip(struct beiscsi_hba *phba,
 			    "BG_%d : failed to clear IP: rc %d status %d\n",
 			    rc, req->ip_params.ip_record.status);
 	}
+<<<<<<< HEAD
 	beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
@@ -589,7 +638,10 @@ beiscsi_if_set_ip(struct beiscsi_hba *phba, u8 *ip,
 		if (req->ip_params.ip_record.status)
 			rc = -EINVAL;
 	}
+<<<<<<< HEAD
 	beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
@@ -617,7 +669,10 @@ int beiscsi_if_en_static(struct beiscsi_hba *phba, u32 ip_type,
 		reldhcp->interface_hndl = phba->interface_handle;
 		reldhcp->ip_type = ip_type;
 		rc = beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL, NULL, 0);
+<<<<<<< HEAD
 		beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rc < 0) {
 			beiscsi_log(phba, KERN_WARNING, BEISCSI_LOG_CONFIG,
 				    "BG_%d : failed to release existing DHCP: %d\n",
@@ -699,7 +754,11 @@ int beiscsi_if_en_dhcp(struct beiscsi_hba *phba, u32 ip_type)
 	dhcpreq->interface_hndl = phba->interface_handle;
 	dhcpreq->ip_type = ip_type;
 	rc = beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL, NULL, 0);
+<<<<<<< HEAD
 	beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 exit:
 	kfree(if_info);
 	return rc;
@@ -772,8 +831,16 @@ int beiscsi_if_get_info(struct beiscsi_hba *phba, int ip_type,
 				    BEISCSI_LOG_INIT | BEISCSI_LOG_CONFIG,
 				    "BG_%d : Memory Allocation Failure\n");
 
+<<<<<<< HEAD
 				beiscsi_free_nemb_cmd(phba, &nonemb_cmd,
 						      -ENOMEM);
+=======
+				/* Free the DMA memory for the IOCTL issuing */
+				dma_free_coherent(&phba->ctrl.pdev->dev,
+						    nonemb_cmd.size,
+						    nonemb_cmd.va,
+						    nonemb_cmd.dma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				return -ENOMEM;
 		}
 
@@ -788,6 +855,7 @@ int beiscsi_if_get_info(struct beiscsi_hba *phba, int ip_type,
 				      nonemb_cmd.va)->actual_resp_len;
 			ioctl_size += sizeof(struct be_cmd_req_hdr);
 
+<<<<<<< HEAD
 			beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
 			/* Free the virtual memory */
 			kfree(*if_info);
@@ -795,6 +863,17 @@ int beiscsi_if_get_info(struct beiscsi_hba *phba, int ip_type,
 			beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
 			break;
 		}
+=======
+			/* Free the previous allocated DMA memory */
+			dma_free_coherent(&phba->ctrl.pdev->dev, nonemb_cmd.size,
+					    nonemb_cmd.va,
+					    nonemb_cmd.dma);
+
+			/* Free the virtual memory */
+			kfree(*if_info);
+		} else
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} while (true);
 	return rc;
 }
@@ -811,9 +890,14 @@ int mgmt_get_nic_conf(struct beiscsi_hba *phba,
 	if (rc)
 		return rc;
 
+<<<<<<< HEAD
 	rc = beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL, nic, sizeof(*nic));
 	beiscsi_free_nemb_cmd(phba, &nonemb_cmd, rc);
 	return rc;
+=======
+	return beiscsi_exec_nemb_cmd(phba, &nonemb_cmd, NULL,
+				     nic, sizeof(*nic));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void beiscsi_boot_process_compl(struct beiscsi_hba *phba,

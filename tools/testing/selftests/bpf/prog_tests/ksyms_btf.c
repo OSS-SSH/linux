@@ -6,7 +6,10 @@
 #include <bpf/btf.h>
 #include "test_ksyms_btf.skel.h"
 #include "test_ksyms_btf_null_check.skel.h"
+<<<<<<< HEAD
 #include "test_ksyms_weak.skel.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int duration;
 
@@ -82,6 +85,7 @@ static void test_null_check(void)
 	test_ksyms_btf_null_check__destroy(skel);
 }
 
+<<<<<<< HEAD
 static void test_weak_syms(void)
 {
 	struct test_ksyms_weak *skel;
@@ -109,6 +113,8 @@ cleanup:
 	test_ksyms_weak__destroy(skel);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void test_ksyms_btf(void)
 {
 	int percpu_datasec;
@@ -133,7 +139,10 @@ void test_ksyms_btf(void)
 
 	if (test__start_subtest("null_check"))
 		test_null_check();
+<<<<<<< HEAD
 
 	if (test__start_subtest("weak_ksyms"))
 		test_weak_syms();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

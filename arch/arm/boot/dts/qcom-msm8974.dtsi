@@ -715,6 +715,7 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		blsp2_uart7: serial@f995d000 {
 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
 			reg = <0xf995d000 0x1000>;
@@ -724,6 +725,8 @@
 			status = "disabled";
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		blsp2_uart8: serial@f995e000 {
 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
 			reg = <0xf995e000 0x1000>;

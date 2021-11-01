@@ -971,7 +971,10 @@ D: PowerPC
 N: Daniel Drake
 E: dsd@gentoo.org
 D: USBAT02 CompactFlash support in usb-storage
+<<<<<<< HEAD
 D: ZD1211RW wireless driver
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 S: UK
 
 N: Oleg Drokin

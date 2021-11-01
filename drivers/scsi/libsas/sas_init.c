@@ -19,7 +19,11 @@
 
 #include "sas_internal.h"
 
+<<<<<<< HEAD
 #include "scsi_sas_internal.h"
+=======
+#include "../scsi_sas_internal.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct kmem_cache *sas_task_cache;
 static struct kmem_cache *sas_event_cache;

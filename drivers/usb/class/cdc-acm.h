@@ -22,8 +22,11 @@
 #define ACM_TTY_MAJOR		166
 #define ACM_TTY_MINORS		256
 
+<<<<<<< HEAD
 #define ACM_MINOR_INVALID	ACM_TTY_MINORS
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Requests.
  */

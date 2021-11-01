@@ -3,7 +3,10 @@
 	\renewcommand\thesection*
 	\renewcommand\thesubsection*
 	\kerneldocCJKon
+<<<<<<< HEAD
 	\kerneldocBeginKR
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 한국어 번역
 ===========
@@ -27,4 +30,7 @@
 .. raw:: latex
 
     \normalsize
+<<<<<<< HEAD
     \kerneldocEndKR
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

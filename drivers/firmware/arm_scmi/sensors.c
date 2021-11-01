@@ -166,8 +166,12 @@ struct scmi_msg_sensor_reading_get {
 
 struct scmi_resp_sensor_reading_complete {
 	__le32 id;
+<<<<<<< HEAD
 	__le32 readings_low;
 	__le32 readings_high;
+=======
+	__le64 readings;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct scmi_sensor_reading_resp {
@@ -718,8 +722,12 @@ static int scmi_sensor_reading_get(const struct scmi_protocol_handle *ph,
 
 			resp = t->rx.buf;
 			if (le32_to_cpu(resp->id) == sensor_id)
+<<<<<<< HEAD
 				*value =
 					get_unaligned_le64(&resp->readings_low);
+=======
+				*value = get_unaligned_le64(&resp->readings);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			else
 				ret = -EPROTO;
 		}

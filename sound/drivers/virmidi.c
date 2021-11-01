@@ -75,8 +75,13 @@ static int snd_virmidi_probe(struct platform_device *devptr)
 	int idx, err;
 	int dev = devptr->id;
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(struct snd_card_virmidi), &card);
+=======
+	err = snd_card_new(&devptr->dev, index[dev], id[dev], THIS_MODULE,
+			   sizeof(struct snd_card_virmidi), &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 	vmidi = card->private_data;
@@ -94,7 +99,11 @@ static int snd_virmidi_probe(struct platform_device *devptr)
 
 		err = snd_virmidi_new(card, idx, &rmidi);
 		if (err < 0)
+<<<<<<< HEAD
 			return err;
+=======
+			goto __nodev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rdev = rmidi->private_data;
 		vmidi->midi[idx] = rmidi;
 		strcpy(rmidi->name, "Virtual Raw MIDI");
@@ -106,10 +115,25 @@ static int snd_virmidi_probe(struct platform_device *devptr)
 	sprintf(card->longname, "Virtual MIDI Card %i", dev + 1);
 
 	err = snd_card_register(card);
+<<<<<<< HEAD
 	if (err)
 		return err;
 
 	platform_set_drvdata(devptr, card);
+=======
+	if (!err) {
+		platform_set_drvdata(devptr, card);
+		return 0;
+	}
+__nodev:
+	snd_card_free(card);
+	return err;
+}
+
+static int snd_virmidi_remove(struct platform_device *devptr)
+{
+	snd_card_free(platform_get_drvdata(devptr));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -117,6 +141,10 @@ static int snd_virmidi_probe(struct platform_device *devptr)
 
 static struct platform_driver snd_virmidi_driver = {
 	.probe		= snd_virmidi_probe,
+<<<<<<< HEAD
+=======
+	.remove		= snd_virmidi_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver		= {
 		.name	= SND_VIRMIDI_DRIVER,
 	},

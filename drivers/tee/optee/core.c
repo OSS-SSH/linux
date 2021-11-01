@@ -6,7 +6,10 @@
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
 #include <linux/arm-smccc.h>
+<<<<<<< HEAD
 #include <linux/crash_dump.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/errno.h>
 #include <linux/io.h>
 #include <linux/module.h>
@@ -278,8 +281,12 @@ static void optee_release(struct tee_context *ctx)
 	if (!ctxdata)
 		return;
 
+<<<<<<< HEAD
 	shm = tee_shm_alloc(ctx, sizeof(struct optee_msg_arg),
 			    TEE_SHM_MAPPED | TEE_SHM_PRIV);
+=======
+	shm = tee_shm_alloc(ctx, sizeof(struct optee_msg_arg), TEE_SHM_MAPPED);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!IS_ERR(shm)) {
 		arg = tee_shm_get_va(shm, 0);
 		/*
@@ -574,6 +581,7 @@ static optee_invoke_fn *get_invoke_func(struct device *dev)
 	return ERR_PTR(-EINVAL);
 }
 
+<<<<<<< HEAD
 /* optee_remove - Device Removal Routine
  * @pdev: platform device information struct
  *
@@ -581,13 +589,18 @@ static optee_invoke_fn *get_invoke_func(struct device *dev)
  * that it should release the device
  */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int optee_remove(struct platform_device *pdev)
 {
 	struct optee *optee = platform_get_drvdata(pdev);
 
+<<<<<<< HEAD
 	/* Unregister OP-TEE specific client devices on TEE bus */
 	optee_unregister_devices();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Ask OP-TEE to free all cached shared memory objects to decrease
 	 * reference counters and also avoid wild pointers in secure world
@@ -614,6 +627,7 @@ static int optee_remove(struct platform_device *pdev)
 	return 0;
 }
 
+<<<<<<< HEAD
 /* optee_shutdown - Device Removal Routine
  * @pdev: platform device information struct
  *
@@ -626,6 +640,8 @@ static void optee_shutdown(struct platform_device *pdev)
 	optee_disable_shm_cache(platform_get_drvdata(pdev));
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int optee_probe(struct platform_device *pdev)
 {
 	optee_invoke_fn *invoke_fn;
@@ -636,6 +652,7 @@ static int optee_probe(struct platform_device *pdev)
 	u32 sec_caps;
 	int rc;
 
+<<<<<<< HEAD
 	/*
 	 * The kernel may have crashed at the same time that all available
 	 * secure world threads were suspended and we cannot reschedule the
@@ -646,6 +663,8 @@ static int optee_probe(struct platform_device *pdev)
 	if (is_kdump_kernel())
 		return -ENODEV;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	invoke_fn = get_invoke_func(&pdev->dev);
 	if (IS_ERR(invoke_fn))
 		return PTR_ERR(invoke_fn);
@@ -720,6 +739,7 @@ static int optee_probe(struct platform_device *pdev)
 	optee->memremaped_shm = memremaped_shm;
 	optee->pool = pool;
 
+<<<<<<< HEAD
 	/*
 	 * Ensure that there are no pre-existing shm objects before enabling
 	 * the shm cache so that there's no chance of receiving an invalid
@@ -729,6 +749,8 @@ static int optee_probe(struct platform_device *pdev)
 	 */
 	optee_disable_unmapped_shm_cache(optee);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	optee_enable_shm_cache(optee);
 
 	if (optee->sec_caps & OPTEE_SMC_SEC_CAP_DYNAMIC_SHM)
@@ -771,7 +793,10 @@ MODULE_DEVICE_TABLE(of, optee_dt_match);
 static struct platform_driver optee_driver = {
 	.probe  = optee_probe,
 	.remove = optee_remove,
+<<<<<<< HEAD
 	.shutdown = optee_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver = {
 		.name = "optee",
 		.of_match_table = optee_dt_match,

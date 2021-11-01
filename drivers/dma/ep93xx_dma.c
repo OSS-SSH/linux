@@ -897,7 +897,11 @@ static int ep93xx_dma_alloc_chan_resources(struct dma_chan *chan)
 	if (data && data->name)
 		name = data->name;
 
+<<<<<<< HEAD
 	ret = clk_prepare_enable(edmac->clk);
+=======
+	ret = clk_enable(edmac->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 
@@ -936,7 +940,11 @@ static int ep93xx_dma_alloc_chan_resources(struct dma_chan *chan)
 fail_free_irq:
 	free_irq(edmac->irq, edmac);
 fail_clk_disable:
+<<<<<<< HEAD
 	clk_disable_unprepare(edmac->clk);
+=======
+	clk_disable(edmac->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -969,7 +977,11 @@ static void ep93xx_dma_free_chan_resources(struct dma_chan *chan)
 	list_for_each_entry_safe(desc, d, &list, node)
 		kfree(desc);
 
+<<<<<<< HEAD
 	clk_disable_unprepare(edmac->clk);
+=======
+	clk_disable(edmac->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	free_irq(edmac->irq, edmac);
 }
 

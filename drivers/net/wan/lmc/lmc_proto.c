@@ -58,6 +58,16 @@ void lmc_proto_attach(lmc_softc_t *sc) /*FOLD00*/
         }
 }
 
+<<<<<<< HEAD
+=======
+int lmc_proto_ioctl(lmc_softc_t *sc, struct ifreq *ifr, int cmd)
+{
+	if (sc->if_type == LMC_PPP)
+		return hdlc_ioctl(sc->lmc_device, ifr, cmd);
+	return -EOPNOTSUPP;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int lmc_proto_open(lmc_softc_t *sc)
 {
 	int ret = 0;

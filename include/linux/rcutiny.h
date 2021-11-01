@@ -14,6 +14,12 @@
 
 #include <asm/param.h> /* for HZ */
 
+<<<<<<< HEAD
+=======
+/* Never flag non-existent other CPUs! */
+static inline bool rcu_eqs_special_set(int cpu) { return false; }
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 unsigned long get_state_synchronize_rcu(void);
 unsigned long start_poll_synchronize_rcu(void);
 bool poll_state_synchronize_rcu(unsigned long oldstate);

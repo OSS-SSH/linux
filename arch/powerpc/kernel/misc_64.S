@@ -255,7 +255,11 @@ _GLOBAL(scom970_write)
  * Physical (hardware) cpu id should be in r3.
  */
 _GLOBAL(kexec_wait)
+<<<<<<< HEAD
 	bcl	20,31,$+4
+=======
+	bl	1f
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 1:	mflr	r5
 	addi	r5,r5,kexec_flag-1b
 

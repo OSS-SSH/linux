@@ -438,7 +438,11 @@ static void srat_detect_node(struct cpuinfo_x86 *c)
 
 	node = numa_cpu_node(cpu);
 	if (node == NUMA_NO_NODE)
+<<<<<<< HEAD
 		node = get_llc_id(cpu);
+=======
+		node = per_cpu(cpu_llc_id, cpu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * On multi-fabric platform (e.g. Numascale NumaChip) a

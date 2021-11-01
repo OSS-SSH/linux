@@ -39,11 +39,14 @@ static inline bool security_ftr_enabled(u64 feature)
 	return !!(powerpc_security_features & feature);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_PPC_BOOK3S_64
 enum stf_barrier_type stf_barrier_type_get(void);
 #else
 static inline enum stf_barrier_type stf_barrier_type_get(void) { return STF_BARRIER_NONE; }
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 // Features indicating support for Spectre/Meltdown mitigations
 

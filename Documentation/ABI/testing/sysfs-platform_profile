@@ -26,6 +26,7 @@ Contact:	Hans de Goede <hdegoede@redhat.com>
 Description:	Reading this file gives the current selected profile for this
 		device. Writing this file with one of the strings from
 		platform_profile_choices changes the profile to the new value.
+<<<<<<< HEAD
 
 		This file can be monitored for changes by polling for POLLPRI,
 		POLLPRI will be signalled on any changes, independent of those
@@ -33,3 +34,5 @@ Description:	Reading this file gives the current selected profile for this
 		source such as e.g. a hotkey triggered profile change handled
 		either directly by the embedded-controller or fully handled
 		inside the kernel.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

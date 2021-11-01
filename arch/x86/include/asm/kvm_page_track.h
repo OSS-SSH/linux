@@ -46,7 +46,11 @@ struct kvm_page_track_notifier_node {
 			    struct kvm_page_track_notifier_node *node);
 };
 
+<<<<<<< HEAD
 int kvm_page_track_init(struct kvm *kvm);
+=======
+void kvm_page_track_init(struct kvm *kvm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void kvm_page_track_cleanup(struct kvm *kvm);
 
 void kvm_page_track_free_memslot(struct kvm_memory_slot *slot);

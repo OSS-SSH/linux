@@ -2,7 +2,11 @@
 #ifndef _LINUX_KERNEL_H
 #define _LINUX_KERNEL_H
 
+<<<<<<< HEAD
 #include <linux/stdarg.h>
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/align.h>
 #include <linux/limits.h>
 #include <linux/linkage.h>

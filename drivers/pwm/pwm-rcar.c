@@ -241,12 +241,22 @@ static int rcar_pwm_probe(struct platform_device *pdev)
 static int rcar_pwm_remove(struct platform_device *pdev)
 {
 	struct rcar_pwm_chip *rcar_pwm = platform_get_drvdata(pdev);
+<<<<<<< HEAD
 
 	pwmchip_remove(&rcar_pwm->chip);
 
 	pm_runtime_disable(&pdev->dev);
 
 	return 0;
+=======
+	int ret;
+
+	ret = pwmchip_remove(&rcar_pwm->chip);
+
+	pm_runtime_disable(&pdev->dev);
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct of_device_id rcar_pwm_of_table[] = {

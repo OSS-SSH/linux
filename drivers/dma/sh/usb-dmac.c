@@ -466,7 +466,11 @@ static int usb_dmac_chan_terminate_all(struct dma_chan *chan)
 
 static unsigned int usb_dmac_get_current_residue(struct usb_dmac_chan *chan,
 						 struct usb_dmac_desc *desc,
+<<<<<<< HEAD
 						 unsigned int sg_index)
+=======
+						 int sg_index)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct usb_dmac_sg *sg = desc->sg + sg_index;
 	u32 mem_addr = sg->mem_addr & 0xffffffff;
@@ -855,8 +859,13 @@ static int usb_dmac_probe(struct platform_device *pdev)
 
 error:
 	of_dma_controller_free(pdev->dev.of_node);
+<<<<<<< HEAD
 error_pm:
 	pm_runtime_put(&pdev->dev);
+=======
+	pm_runtime_put(&pdev->dev);
+error_pm:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pm_runtime_disable(&pdev->dev);
 	return ret;
 }

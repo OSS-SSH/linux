@@ -2146,13 +2146,22 @@ static int vega12_get_ppfeature_status(struct pp_hwmgr *hwmgr, char *buf)
 		"[EnableAllSmuFeatures] Failed to get enabled smc features!",
 		return ret);
 
+<<<<<<< HEAD
 	size += sysfs_emit_at(buf, size, "Current ppfeatures: 0x%016llx\n", features_enabled);
 	size += sysfs_emit_at(buf, size, "%-19s %-22s %s\n",
+=======
+	size += sprintf(buf + size, "Current ppfeatures: 0x%016llx\n", features_enabled);
+	size += sprintf(buf + size, "%-19s %-22s %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				output_title[0],
 				output_title[1],
 				output_title[2]);
 	for (i = 0; i < GNLD_FEATURES_MAX; i++) {
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%-19s 0x%016llx %6s\n",
+=======
+		size += sprintf(buf + size, "%-19s 0x%016llx %6s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				ppfeature_name[i],
 				1ULL << i,
 				(features_enabled & (1ULL << i)) ? "Y" : "N");
@@ -2256,7 +2265,11 @@ static int vega12_print_clock_levels(struct pp_hwmgr *hwmgr,
 				"Attempt to get gfx clk levels Failed!",
 				return -1);
 		for (i = 0; i < clocks.num_levels; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz / 1000 == now / 100) ? "*" : "");
 		break;
@@ -2272,7 +2285,11 @@ static int vega12_print_clock_levels(struct pp_hwmgr *hwmgr,
 				"Attempt to get memory clk levels Failed!",
 				return -1);
 		for (i = 0; i < clocks.num_levels; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz / 1000 == now / 100) ? "*" : "");
 		break;
@@ -2290,7 +2307,11 @@ static int vega12_print_clock_levels(struct pp_hwmgr *hwmgr,
 				"Attempt to get soc clk levels Failed!",
 				return -1);
 		for (i = 0; i < clocks.num_levels; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz / 1000 == now) ? "*" : "");
 		break;
@@ -2308,7 +2329,11 @@ static int vega12_print_clock_levels(struct pp_hwmgr *hwmgr,
 				"Attempt to get dcef clk levels Failed!",
 				return -1);
 		for (i = 0; i < clocks.num_levels; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				i, clocks.data[i].clocks_in_khz / 1000,
 				(clocks.data[i].clocks_in_khz / 1000 == now) ? "*" : "");
 		break;

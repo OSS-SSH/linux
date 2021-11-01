@@ -47,6 +47,7 @@
 };
 
 &port0 {
+<<<<<<< HEAD
 	status = "okay";
 	phy-handle = <&phy0>;
 	phy-mode = "internal";
@@ -68,4 +69,19 @@
 	status = "okay";
 	phy-handle = <&phy3>;
 	phy-mode = "internal";
+=======
+	phy-handle = <&phy0>;
+};
+
+&port1 {
+	phy-handle = <&phy1>;
+};
+
+&port2 {
+	phy-handle = <&phy2>;
+};
+
+&port3 {
+	phy-handle = <&phy3>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

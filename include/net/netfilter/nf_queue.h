@@ -33,8 +33,13 @@ struct nf_queue_handler {
 	void		(*nf_hook_drop)(struct net *net);
 };
 
+<<<<<<< HEAD
 void nf_register_queue_handler(const struct nf_queue_handler *qh);
 void nf_unregister_queue_handler(void);
+=======
+void nf_register_queue_handler(struct net *net, const struct nf_queue_handler *qh);
+void nf_unregister_queue_handler(struct net *net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void nf_reinject(struct nf_queue_entry *entry, unsigned int verdict);
 
 void nf_queue_entry_get_refs(struct nf_queue_entry *entry);

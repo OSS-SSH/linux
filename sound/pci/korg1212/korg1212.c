@@ -320,10 +320,17 @@ struct snd_korg1212 {
         unsigned long inIRQ;
         void __iomem *iobase;
 
+<<<<<<< HEAD
 	struct snd_dma_buffer *dma_dsp;
 	struct snd_dma_buffer *dma_play;
 	struct snd_dma_buffer *dma_rec;
 	struct snd_dma_buffer *dma_shared;
+=======
+	struct snd_dma_buffer dma_dsp;
+        struct snd_dma_buffer dma_play;
+        struct snd_dma_buffer dma_rec;
+	struct snd_dma_buffer dma_shared;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	u32 DataBufsSize;
 
@@ -1200,8 +1207,13 @@ static int snd_korg1212_downloadDSPCode(struct snd_korg1212 *korg1212)
         snd_korg1212_setCardState(korg1212, K1212_STATE_DSP_IN_PROCESS);
 
         rc = snd_korg1212_Send1212Command(korg1212, K1212_DB_StartDSPDownload,
+<<<<<<< HEAD
 					  UpperWordSwap(korg1212->dma_dsp->addr),
 					  0, 0, 0);
+=======
+                                     UpperWordSwap(korg1212->dma_dsp.addr),
+                                     0, 0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc)
 		K1212_DEBUG_PRINTK("K1212_DEBUG: Start DSP Download RC = %d [%s]\n",
 				   rc, stateName[korg1212->cardState]);
@@ -1382,7 +1394,11 @@ static int snd_korg1212_playback_open(struct snd_pcm_substream *substream)
 	snd_korg1212_OpenCard(korg1212);
 
         runtime->hw = snd_korg1212_playback_info;
+<<<<<<< HEAD
 	snd_pcm_set_runtime_buffer(substream, korg1212->dma_play);
+=======
+	snd_pcm_set_runtime_buffer(substream, &korg1212->dma_play);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         spin_lock_irqsave(&korg1212->lock, flags);
 
@@ -1413,7 +1429,11 @@ static int snd_korg1212_capture_open(struct snd_pcm_substream *substream)
 	snd_korg1212_OpenCard(korg1212);
 
         runtime->hw = snd_korg1212_capture_info;
+<<<<<<< HEAD
 	snd_pcm_set_runtime_buffer(substream, korg1212->dma_rec);
+=======
+	snd_pcm_set_runtime_buffer(substream, &korg1212->dma_rec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         spin_lock_irqsave(&korg1212->lock, flags);
 
@@ -2080,6 +2100,7 @@ static void snd_korg1212_proc_init(struct snd_korg1212 *korg1212)
 			     snd_korg1212_proc_read);
 }
 
+<<<<<<< HEAD
 static void
 snd_korg1212_free(struct snd_card *card)
 {
@@ -2090,10 +2111,78 @@ snd_korg1212_free(struct snd_card *card)
 }
 
 static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
+=======
+static int
+snd_korg1212_free(struct snd_korg1212 *korg1212)
+{
+        snd_korg1212_TurnOffIdleMonitor(korg1212);
+
+        if (korg1212->irq >= 0) {
+                snd_korg1212_DisableCardInterrupts(korg1212);
+                free_irq(korg1212->irq, korg1212);
+                korg1212->irq = -1;
+        }
+        
+        if (korg1212->iobase != NULL) {
+                iounmap(korg1212->iobase);
+                korg1212->iobase = NULL;
+        }
+        
+	pci_release_regions(korg1212->pci);
+
+        // ----------------------------------------------------
+        // free up memory resources used for the DSP download.
+        // ----------------------------------------------------
+        if (korg1212->dma_dsp.area) {
+        	snd_dma_free_pages(&korg1212->dma_dsp);
+        	korg1212->dma_dsp.area = NULL;
+        }
+
+#ifndef K1212_LARGEALLOC
+
+        // ------------------------------------------------------
+        // free up memory resources used for the Play/Rec Buffers
+        // ------------------------------------------------------
+	if (korg1212->dma_play.area) {
+		snd_dma_free_pages(&korg1212->dma_play);
+		korg1212->dma_play.area = NULL;
+        }
+
+	if (korg1212->dma_rec.area) {
+		snd_dma_free_pages(&korg1212->dma_rec);
+		korg1212->dma_rec.area = NULL;
+        }
+
+#endif
+
+        // ----------------------------------------------------
+        // free up memory resources used for the Shared Buffers
+        // ----------------------------------------------------
+	if (korg1212->dma_shared.area) {
+		snd_dma_free_pages(&korg1212->dma_shared);
+		korg1212->dma_shared.area = NULL;
+        }
+        
+	pci_disable_device(korg1212->pci);
+        kfree(korg1212);
+        return 0;
+}
+
+static int snd_korg1212_dev_free(struct snd_device *device)
+{
+        struct snd_korg1212 *korg1212 = device->device_data;
+        K1212_DEBUG_PRINTK("K1212_DEBUG: Freeing device\n");
+	return snd_korg1212_free(korg1212);
+}
+
+static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci,
+			       struct snd_korg1212 **rchip)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 {
         int err, rc;
         unsigned int i;
+<<<<<<< HEAD
 	__maybe_unused unsigned iomem_size;
 	__maybe_unused unsigned ioport_size;
 	__maybe_unused unsigned iomem2_size;
@@ -2104,6 +2193,29 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 	if (err < 0)
                 return err;
 
+=======
+	unsigned iomem_size;
+	__maybe_unused unsigned ioport_size;
+	__maybe_unused unsigned iomem2_size;
+        struct snd_korg1212 * korg1212;
+	const struct firmware *dsp_code;
+
+	static const struct snd_device_ops ops = {
+                .dev_free = snd_korg1212_dev_free,
+        };
+
+        * rchip = NULL;
+	err = pci_enable_device(pci);
+	if (err < 0)
+                return err;
+
+        korg1212 = kzalloc(sizeof(*korg1212), GFP_KERNEL);
+        if (korg1212 == NULL) {
+		pci_disable_device(pci);
+                return -ENOMEM;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	korg1212->card = card;
 	korg1212->pci = pci;
 
@@ -2132,9 +2244,18 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
         for (i=0; i<kAudioChannels; i++)
                 korg1212->volumePhase[i] = 0;
 
+<<<<<<< HEAD
 	err = pcim_iomap_regions_request_all(pci, 1 << 0, "korg1212");
 	if (err < 0)
 		return err;
+=======
+	err = pci_request_regions(pci, "korg1212");
+	if (err < 0) {
+		kfree(korg1212);
+		pci_disable_device(pci);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         korg1212->iomem = pci_resource_start(korg1212->pci, 0);
         korg1212->ioport = pci_resource_start(korg1212->pci, 1);
@@ -2154,20 +2275,39 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 		   korg1212->iomem2, iomem2_size,
 		   stateName[korg1212->cardState]);
 
+<<<<<<< HEAD
 	korg1212->iobase = pcim_iomap_table(pci)[0];
 
 	err = devm_request_irq(&pci->dev, pci->irq, snd_korg1212_interrupt,
+=======
+	korg1212->iobase = ioremap(korg1212->iomem, iomem_size);
+	if (!korg1212->iobase) {
+		snd_printk(KERN_ERR "korg1212: unable to remap memory region 0x%lx-0x%lx\n", korg1212->iomem,
+                           korg1212->iomem + iomem_size - 1);
+                snd_korg1212_free(korg1212);
+                return -EBUSY;
+        }
+
+        err = request_irq(pci->irq, snd_korg1212_interrupt,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                           IRQF_SHARED,
                           KBUILD_MODNAME, korg1212);
 
         if (err) {
 		snd_printk(KERN_ERR "korg1212: unable to grab IRQ %d\n", pci->irq);
+<<<<<<< HEAD
+=======
+                snd_korg1212_free(korg1212);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                 return -EBUSY;
         }
 
         korg1212->irq = pci->irq;
 	card->sync_irq = korg1212->irq;
+<<<<<<< HEAD
 	card->private_free = snd_korg1212_free;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pci_set_master(korg1212->pci);
 
@@ -2206,6 +2346,7 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
                    korg1212->idRegPtr,
 		   stateName[korg1212->cardState]);
 
+<<<<<<< HEAD
 	korg1212->dma_shared = snd_devm_alloc_pages(&pci->dev,
 						    SNDRV_DMA_TYPE_DEV,
 						    sizeof(struct KorgSharedBuffer));
@@ -2213,10 +2354,21 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 		return -ENOMEM;
 	korg1212->sharedBufferPtr = (struct KorgSharedBuffer *)korg1212->dma_shared->area;
 	korg1212->sharedBufferPhy = korg1212->dma_shared->addr;
+=======
+	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &pci->dev,
+				sizeof(struct KorgSharedBuffer), &korg1212->dma_shared) < 0) {
+		snd_printk(KERN_ERR "korg1212: can not allocate shared buffer memory (%zd bytes)\n", sizeof(struct KorgSharedBuffer));
+                snd_korg1212_free(korg1212);
+                return -ENOMEM;
+        }
+        korg1212->sharedBufferPtr = (struct KorgSharedBuffer *)korg1212->dma_shared.area;
+        korg1212->sharedBufferPhy = korg1212->dma_shared.addr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         K1212_DEBUG_PRINTK("K1212_DEBUG: Shared Buffer Area = 0x%p (0x%08lx), %d bytes\n", korg1212->sharedBufferPtr, korg1212->sharedBufferPhy, sizeof(struct KorgSharedBuffer));
 
 #ifndef K1212_LARGEALLOC
+<<<<<<< HEAD
         korg1212->DataBufsSize = sizeof(struct KorgAudioBuffer) * kNumBuffers;
 	korg1212->dma_play = snd_devm_alloc_pages(&pci->dev, SNDRV_DMA_TYPE_DEV,
 						  korg1212->DataBufsSize);
@@ -2225,10 +2377,24 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 
 	korg1212->playDataBufsPtr = (struct KorgAudioBuffer *)korg1212->dma_play->area;
 	korg1212->PlayDataPhy = korg1212->dma_play->addr;
+=======
+
+        korg1212->DataBufsSize = sizeof(struct KorgAudioBuffer) * kNumBuffers;
+
+	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &pci->dev,
+				korg1212->DataBufsSize, &korg1212->dma_play) < 0) {
+		snd_printk(KERN_ERR "korg1212: can not allocate play data buffer memory (%d bytes)\n", korg1212->DataBufsSize);
+                snd_korg1212_free(korg1212);
+                return -ENOMEM;
+        }
+	korg1212->playDataBufsPtr = (struct KorgAudioBuffer *)korg1212->dma_play.area;
+	korg1212->PlayDataPhy = korg1212->dma_play.addr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         K1212_DEBUG_PRINTK("K1212_DEBUG: Play Data Area = 0x%p (0x%08x), %d bytes\n",
 		korg1212->playDataBufsPtr, korg1212->PlayDataPhy, korg1212->DataBufsSize);
 
+<<<<<<< HEAD
 	korg1212->dma_rec = snd_devm_alloc_pages(&pci->dev, SNDRV_DMA_TYPE_DEV,
 						 korg1212->DataBufsSize);
 	if (!korg1212->dma_rec)
@@ -2236,6 +2402,16 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 
 	korg1212->recordDataBufsPtr = (struct KorgAudioBuffer *)korg1212->dma_rec->area;
 	korg1212->RecDataPhy = korg1212->dma_rec->addr;
+=======
+	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &pci->dev,
+				korg1212->DataBufsSize, &korg1212->dma_rec) < 0) {
+		snd_printk(KERN_ERR "korg1212: can not allocate record data buffer memory (%d bytes)\n", korg1212->DataBufsSize);
+                snd_korg1212_free(korg1212);
+                return -ENOMEM;
+        }
+        korg1212->recordDataBufsPtr = (struct KorgAudioBuffer *)korg1212->dma_rec.area;
+        korg1212->RecDataPhy = korg1212->dma_rec.addr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         K1212_DEBUG_PRINTK("K1212_DEBUG: Record Data Area = 0x%p (0x%08x), %d bytes\n",
 		korg1212->recordDataBufsPtr, korg1212->RecDataPhy, korg1212->DataBufsSize);
@@ -2259,6 +2435,7 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 	err = request_firmware(&dsp_code, "korg/k1212.dsp", &pci->dev);
 	if (err < 0) {
 		snd_printk(KERN_ERR "firmware not available\n");
+<<<<<<< HEAD
 		return err;
 	}
 
@@ -2274,6 +2451,25 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 		   stateName[korg1212->cardState]);
 
 	memcpy(korg1212->dma_dsp->area, dsp_code->data, dsp_code->size);
+=======
+		snd_korg1212_free(korg1212);
+		return err;
+	}
+
+	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &pci->dev,
+				dsp_code->size, &korg1212->dma_dsp) < 0) {
+		snd_printk(KERN_ERR "korg1212: cannot allocate dsp code memory (%zd bytes)\n", dsp_code->size);
+                snd_korg1212_free(korg1212);
+		release_firmware(dsp_code);
+                return -ENOMEM;
+        }
+
+        K1212_DEBUG_PRINTK("K1212_DEBUG: DSP Code area = 0x%p (0x%08x) %d bytes [%s]\n",
+		   korg1212->dma_dsp.area, korg1212->dma_dsp.addr, dsp_code->size,
+		   stateName[korg1212->cardState]);
+
+	memcpy(korg1212->dma_dsp.area, dsp_code->data, dsp_code->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	release_firmware(dsp_code);
 
@@ -2282,6 +2478,15 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
 	if (rc)
 		K1212_DEBUG_PRINTK("K1212_DEBUG: Reboot Card - RC = %d [%s]\n", rc, stateName[korg1212->cardState]);
 
+<<<<<<< HEAD
+=======
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, korg1212, &ops);
+	if (err < 0) {
+                snd_korg1212_free(korg1212);
+                return err;
+        }
+        
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	snd_korg1212_EnableCardInterrupts(korg1212);
 
 	mdelay(CARD_BOOT_DELAY_IN_MS);
@@ -2323,8 +2528,15 @@ static int snd_korg1212_create(struct snd_card *card, struct pci_dev *pci)
         }
 
         snd_korg1212_proc_init(korg1212);
+<<<<<<< HEAD
 
 	return 0;
+=======
+        
+        * rchip = korg1212;
+	return 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -2347,6 +2559,7 @@ snd_korg1212_probe(struct pci_dev *pci,
 		dev++;
 		return -ENOENT;
 	}
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*korg1212), &card);
 	if (err < 0)
@@ -2356,6 +2569,18 @@ snd_korg1212_probe(struct pci_dev *pci,
 	err = snd_korg1212_create(card, pci);
 	if (err < 0)
 		return err;
+=======
+	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+			   0, &card);
+	if (err < 0)
+		return err;
+
+	err = snd_korg1212_create(card, pci, &korg1212);
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	strcpy(card->driver, "korg1212");
 	strcpy(card->shortname, "korg1212");
@@ -2365,17 +2590,36 @@ snd_korg1212_probe(struct pci_dev *pci,
         K1212_DEBUG_PRINTK("K1212_DEBUG: %s\n", card->longname);
 
 	err = snd_card_register(card);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
+=======
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void snd_korg1212_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct pci_driver korg1212_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_korg1212_ids,
 	.probe = snd_korg1212_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_korg1212_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 module_pci_driver(korg1212_driver);

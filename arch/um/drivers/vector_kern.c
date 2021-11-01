@@ -1488,9 +1488,13 @@ static void vector_get_ethtool_stats(struct net_device *dev,
 }
 
 static int vector_get_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			       struct ethtool_coalesce *ec,
 			       struct kernel_ethtool_coalesce *kernel_coal,
 			       struct netlink_ext_ack *extack)
+=======
+					struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vector_private *vp = netdev_priv(netdev);
 
@@ -1499,9 +1503,13 @@ static int vector_get_coalesce(struct net_device *netdev,
 }
 
 static int vector_set_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			       struct ethtool_coalesce *ec,
 			       struct kernel_ethtool_coalesce *kernel_coal,
 			       struct netlink_ext_ack *extack)
+=======
+					struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vector_private *vp = netdev_priv(netdev);
 

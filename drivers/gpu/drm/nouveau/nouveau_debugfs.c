@@ -207,7 +207,10 @@ static const struct file_operations nouveau_pstate_fops = {
 	.open = nouveau_debugfs_pstate_open,
 	.read = seq_read,
 	.write = nouveau_debugfs_pstate_set,
+<<<<<<< HEAD
 	.release = single_release,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct drm_info_list nouveau_debugfs_list[] = {

@@ -38,7 +38,10 @@
 
 #include <asm/trace/irq_vectors.h>
 #include <asm/irq_remapping.h>
+<<<<<<< HEAD
 #include <asm/pc-conf-reg.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/perf_event.h>
 #include <asm/x86_init.h>
 #include <linux/atomic.h>
@@ -133,14 +136,28 @@ static int enabled_via_apicbase __ro_after_init;
  */
 static inline void imcr_pic_to_apic(void)
 {
+<<<<<<< HEAD
 	/* NMI and 8259 INTR go through APIC */
 	pc_conf_set(PC_CONF_MPS_IMCR, 0x01);
+=======
+	/* select IMCR register */
+	outb(0x70, 0x22);
+	/* NMI and 8259 INTR go through APIC */
+	outb(0x01, 0x23);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void imcr_apic_to_pic(void)
 {
+<<<<<<< HEAD
 	/* NMI and 8259 INTR go directly to BSP */
 	pc_conf_set(PC_CONF_MPS_IMCR, 0x00);
+=======
+	/* select IMCR register */
+	outb(0x70, 0x22);
+	/* NMI and 8259 INTR go directly to BSP */
+	outb(0x00, 0x23);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif
 

@@ -285,13 +285,18 @@ int acpi_unbind_one(struct device *dev)
 }
 EXPORT_SYMBOL_GPL(acpi_unbind_one);
 
+<<<<<<< HEAD
 void acpi_device_notify(struct device *dev)
+=======
+static int acpi_device_notify(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct acpi_bus_type *type = acpi_get_bus_type(dev);
 	struct acpi_device *adev;
 	int ret;
 
 	ret = acpi_bind_one(dev, NULL);
+<<<<<<< HEAD
 	if (ret) {
 		if (!type)
 			goto err;
@@ -306,6 +311,24 @@ void acpi_device_notify(struct device *dev)
 			goto err;
 	}
 	adev = ACPI_COMPANION(dev);
+=======
+	if (ret && type) {
+		struct acpi_device *adev;
+
+		adev = type->find_companion(dev);
+		if (!adev) {
+			pr_debug("Unable to get handle for %s\n", dev_name(dev));
+			ret = -ENODEV;
+			goto out;
+		}
+		ret = acpi_bind_one(dev, adev);
+		if (ret)
+			goto out;
+	}
+	adev = ACPI_COMPANION(dev);
+	if (!adev)
+		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (dev_is_platform(dev))
 		acpi_configure_pmsi_domain(dev);
@@ -315,6 +338,7 @@ void acpi_device_notify(struct device *dev)
 	else if (adev->handler && adev->handler->bind)
 		adev->handler->bind(dev);
 
+<<<<<<< HEAD
 	acpi_handle_debug(ACPI_HANDLE(dev), "Bound to device %s\n",
 			  dev_name(dev));
 
@@ -325,12 +349,33 @@ err:
 }
 
 void acpi_device_notify_remove(struct device *dev)
+=======
+ out:
+	if (!ret) {
+		struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+
+		acpi_get_name(ACPI_HANDLE(dev), ACPI_FULL_PATHNAME, &buffer);
+		pr_debug("Device %s -> %s\n", dev_name(dev), (char *)buffer.pointer);
+		kfree(buffer.pointer);
+	} else {
+		pr_debug("Device %s -> No ACPI support\n", dev_name(dev));
+	}
+
+	return ret;
+}
+
+static int acpi_device_notify_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct acpi_device *adev = ACPI_COMPANION(dev);
 	struct acpi_bus_type *type;
 
 	if (!adev)
+<<<<<<< HEAD
 		return;
+=======
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	type = acpi_get_bus_type(dev);
 	if (type && type->cleanup)
@@ -339,4 +384,23 @@ void acpi_device_notify_remove(struct device *dev)
 		adev->handler->unbind(dev);
 
 	acpi_unbind_one(dev);
+<<<<<<< HEAD
+=======
+	return 0;
+}
+
+int acpi_platform_notify(struct device *dev, enum kobject_action action)
+{
+	switch (action) {
+	case KOBJ_ADD:
+		acpi_device_notify(dev);
+		break;
+	case KOBJ_REMOVE:
+		acpi_device_notify_remove(dev);
+		break;
+	default:
+		break;
+	}
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

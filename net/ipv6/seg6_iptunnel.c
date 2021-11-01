@@ -26,7 +26,10 @@
 #ifdef CONFIG_IPV6_SEG6_HMAC
 #include <net/seg6_hmac.h>
 #endif
+<<<<<<< HEAD
 #include <linux/netfilter.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static size_t seg6_lwt_headroom(struct seg6_iptunnel_encap *tuninfo)
 {
@@ -296,11 +299,15 @@ static int seg6_do_srh(struct sk_buff *skb)
 
 	ipv6_hdr(skb)->payload_len = htons(skb->len - sizeof(struct ipv6hdr));
 	skb_set_transport_header(skb, sizeof(struct ipv6hdr));
+<<<<<<< HEAD
 	nf_reset_ct(skb);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static int seg6_input_finish(struct net *net, struct sock *sk,
 			     struct sk_buff *skb)
 {
@@ -309,6 +316,9 @@ static int seg6_input_finish(struct net *net, struct sock *sk,
 
 static int seg6_input_core(struct net *net, struct sock *sk,
 			   struct sk_buff *skb)
+=======
+static int seg6_input(struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct dst_entry *orig_dst = skb_dst(skb);
 	struct dst_entry *dst = NULL;
@@ -346,6 +356,7 @@ static int seg6_input_core(struct net *net, struct sock *sk,
 	if (unlikely(err))
 		return err;
 
+<<<<<<< HEAD
 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
 			       dev_net(skb->dev), NULL, skb, NULL,
@@ -381,11 +392,21 @@ static int seg6_input(struct sk_buff *skb)
 
 static int seg6_output_core(struct net *net, struct sock *sk,
 			    struct sk_buff *skb)
+=======
+	return dst_input(skb);
+}
+
+static int seg6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct dst_entry *orig_dst = skb_dst(skb);
 	struct dst_entry *dst = NULL;
 	struct seg6_lwt *slwt;
+<<<<<<< HEAD
 	int err;
+=======
+	int err = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = seg6_do_srh(skb);
 	if (unlikely(err))
@@ -427,16 +448,20 @@ static int seg6_output_core(struct net *net, struct sock *sk,
 	if (unlikely(err))
 		goto drop;
 
+<<<<<<< HEAD
 	if (static_branch_unlikely(&nf_hooks_lwtunnel_enabled))
 		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT, net, sk, skb,
 			       NULL, skb_dst(skb)->dev, dst_output);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return dst_output(net, sk, skb);
 drop:
 	kfree_skb(skb);
 	return err;
 }
 
+<<<<<<< HEAD
 static int seg6_output_nf(struct net *net, struct sock *sk, struct sk_buff *skb)
 {
 	struct net_device *dev = skb_dst(skb)->dev;
@@ -461,6 +486,8 @@ static int seg6_output(struct net *net, struct sock *sk, struct sk_buff *skb)
 	return seg6_output_core(net, sk, skb);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int seg6_build_state(struct net *net, struct nlattr *nla,
 			    unsigned int family, const void *cfg,
 			    struct lwtunnel_state **ts,

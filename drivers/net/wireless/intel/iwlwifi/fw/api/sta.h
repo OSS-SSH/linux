@@ -1,6 +1,10 @@
 /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
 /*
+<<<<<<< HEAD
  * Copyright (C) 2012-2014, 2018-2021 Intel Corporation
+=======
+ * Copyright (C) 2012-2014, 2018-2020 Intel Corporation
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Copyright (C) 2013-2014 Intel Mobile Communications GmbH
  * Copyright (C) 2016-2017 Intel Deutschland GmbH
  */
@@ -384,17 +388,24 @@ struct iwl_mvm_add_sta_key_cmd_v1 {
  * @rx_mic_key: TKIP RX unicast or multicast key
  * @tx_mic_key: TKIP TX key
  * @transmit_seq_cnt: TSC, transmit packet number
+<<<<<<< HEAD
  *
  * Note: This is used for both v2 and v3, the difference being
  * in the way the common.rx_secur_seq_cnt is used, in v2 that's
  * the strange hole format, in v3 it's just a u64.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct iwl_mvm_add_sta_key_cmd {
 	struct iwl_mvm_add_sta_key_common common;
 	__le64 rx_mic_key;
 	__le64 tx_mic_key;
 	__le64 transmit_seq_cnt;
+<<<<<<< HEAD
 } __packed; /* ADD_MODIFY_STA_KEY_API_S_VER_2, ADD_MODIFY_STA_KEY_API_S_VER_3 */
+=======
+} __packed; /* ADD_MODIFY_STA_KEY_API_S_VER_2 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * enum iwl_mvm_add_sta_rsp_status - status in the response to ADD_STA command

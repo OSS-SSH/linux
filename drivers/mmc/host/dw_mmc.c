@@ -17,11 +17,17 @@
 #include <linux/interrupt.h>
 #include <linux/iopoll.h>
 #include <linux/ioport.h>
+<<<<<<< HEAD
 #include <linux/ktime.h>
 #include <linux/module.h>
 #include <linux/platform_device.h>
 #include <linux/pm_runtime.h>
 #include <linux/prandom.h>
+=======
+#include <linux/module.h>
+#include <linux/platform_device.h>
+#include <linux/pm_runtime.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/seq_file.h>
 #include <linux/slab.h>
 #include <linux/stat.h>
@@ -183,9 +189,12 @@ static void dw_mci_init_debugfs(struct dw_mci_slot *slot)
 			   &host->pending_events);
 	debugfs_create_xul("completed_events", S_IRUSR, root,
 			   &host->completed_events);
+<<<<<<< HEAD
 #ifdef CONFIG_FAULT_INJECTION
 	fault_create_debugfs_attr("fail_data_crc", root, &host->fail_data_crc);
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif /* defined(CONFIG_DEBUG_FS) */
 
@@ -787,7 +796,10 @@ static int dw_mci_edmac_start_dma(struct dw_mci *host,
 	int ret = 0;
 
 	/* Set external dma config: burst size, burst width */
+<<<<<<< HEAD
 	memset(&cfg, 0, sizeof(cfg));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cfg.dst_addr = host->phy_regs + fifo_offset;
 	cfg.src_addr = cfg.dst_addr;
 	cfg.dst_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
@@ -1794,6 +1806,7 @@ static const struct mmc_host_ops dw_mci_ops = {
 	.prepare_hs400_tuning	= dw_mci_prepare_hs400_tuning,
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_FAULT_INJECTION
 static enum hrtimer_restart dw_mci_fault_timer(struct hrtimer *t)
 {
@@ -1861,6 +1874,8 @@ static void dw_mci_stop_fault_timer(struct dw_mci *host)
 }
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void dw_mci_request_end(struct dw_mci *host, struct mmc_request *mrq)
 	__releases(&host->lock)
 	__acquires(&host->lock)
@@ -2091,8 +2106,13 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
 					continue;
 				}
 
+<<<<<<< HEAD
 				send_stop_abort(host, data);
 				dw_mci_stop_dma(host);
+=======
+				dw_mci_stop_dma(host);
+				send_stop_abort(host, data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				state = STATE_SENDING_STOP;
 				break;
 			}
@@ -2116,10 +2136,17 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
 			 */
 			if (test_and_clear_bit(EVENT_DATA_ERROR,
 					       &host->pending_events)) {
+<<<<<<< HEAD
 				if (!(host->data_status & (SDMMC_INT_DRTO |
 							   SDMMC_INT_EBE)))
 					send_stop_abort(host, data);
 				dw_mci_stop_dma(host);
+=======
+				dw_mci_stop_dma(host);
+				if (!(host->data_status & (SDMMC_INT_DRTO |
+							   SDMMC_INT_EBE)))
+					send_stop_abort(host, data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				state = STATE_DATA_ERROR;
 				break;
 			}
@@ -2152,10 +2179,17 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
 			 */
 			if (test_and_clear_bit(EVENT_DATA_ERROR,
 					       &host->pending_events)) {
+<<<<<<< HEAD
 				if (!(host->data_status & (SDMMC_INT_DRTO |
 							   SDMMC_INT_EBE)))
 					send_stop_abort(host, data);
 				dw_mci_stop_dma(host);
+=======
+				dw_mci_stop_dma(host);
+				if (!(host->data_status & (SDMMC_INT_DRTO |
+							   SDMMC_INT_EBE)))
+					send_stop_abort(host, data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				state = STATE_DATA_ERROR;
 				break;
 			}
@@ -2175,7 +2209,10 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
 				break;
 			}
 
+<<<<<<< HEAD
 			dw_mci_stop_fault_timer(host);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			host->data = NULL;
 			set_bit(EVENT_DATA_COMPLETE, &host->completed_events);
 			err = dw_mci_data_complete(host, data);
@@ -2225,7 +2262,10 @@ static void dw_mci_tasklet_func(struct tasklet_struct *t)
 			if (mrq->cmd->error && mrq->data)
 				dw_mci_reset(host);
 
+<<<<<<< HEAD
 			dw_mci_stop_fault_timer(host);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			host->cmd = NULL;
 			host->data = NULL;
 
@@ -2675,8 +2715,11 @@ static void dw_mci_cmd_interrupt(struct dw_mci *host, u32 status)
 
 	set_bit(EVENT_CMD_COMPLETE, &host->pending_events);
 	tasklet_schedule(&host->tasklet);
+<<<<<<< HEAD
 
 	dw_mci_start_fault_timer(host);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void dw_mci_handle_cd(struct dw_mci *host)
@@ -2726,16 +2769,22 @@ static irqreturn_t dw_mci_interrupt(int irq, void *dev_id)
 		}
 
 		if (pending & DW_MCI_DATA_ERROR_FLAGS) {
+<<<<<<< HEAD
 			spin_lock(&host->irq_lock);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* if there is an error report DATA_ERROR */
 			mci_writel(host, RINTSTS, DW_MCI_DATA_ERROR_FLAGS);
 			host->data_status = pending;
 			smp_wmb(); /* drain writebuffer */
 			set_bit(EVENT_DATA_ERROR, &host->pending_events);
 			tasklet_schedule(&host->tasklet);
+<<<<<<< HEAD
 
 			spin_unlock(&host->irq_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		if (pending & SDMMC_INT_DATA_OVER) {
@@ -3304,8 +3353,11 @@ int dw_mci_probe(struct dw_mci *host)
 	spin_lock_init(&host->irq_lock);
 	INIT_LIST_HEAD(&host->queue);
 
+<<<<<<< HEAD
 	dw_mci_init_fault(host);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Get the host data width - this assumes that HCON has been set with
 	 * the correct values.

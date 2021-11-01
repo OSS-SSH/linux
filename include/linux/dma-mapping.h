@@ -105,6 +105,7 @@ dma_addr_t dma_map_page_attrs(struct device *dev, struct page *page,
 		unsigned long attrs);
 void dma_unmap_page_attrs(struct device *dev, dma_addr_t addr, size_t size,
 		enum dma_data_direction dir, unsigned long attrs);
+<<<<<<< HEAD
 unsigned int dma_map_sg_attrs(struct device *dev, struct scatterlist *sg,
 		int nents, enum dma_data_direction dir, unsigned long attrs);
 void dma_unmap_sg_attrs(struct device *dev, struct scatterlist *sg,
@@ -112,6 +113,13 @@ void dma_unmap_sg_attrs(struct device *dev, struct scatterlist *sg,
 				      unsigned long attrs);
 int dma_map_sgtable(struct device *dev, struct sg_table *sgt,
 		enum dma_data_direction dir, unsigned long attrs);
+=======
+int dma_map_sg_attrs(struct device *dev, struct scatterlist *sg, int nents,
+		enum dma_data_direction dir, unsigned long attrs);
+void dma_unmap_sg_attrs(struct device *dev, struct scatterlist *sg,
+				      int nents, enum dma_data_direction dir,
+				      unsigned long attrs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 dma_addr_t dma_map_resource(struct device *dev, phys_addr_t phys_addr,
 		size_t size, enum dma_data_direction dir, unsigned long attrs);
 void dma_unmap_resource(struct device *dev, dma_addr_t addr, size_t size,
@@ -166,9 +174,14 @@ static inline void dma_unmap_page_attrs(struct device *dev, dma_addr_t addr,
 		size_t size, enum dma_data_direction dir, unsigned long attrs)
 {
 }
+<<<<<<< HEAD
 static inline unsigned int dma_map_sg_attrs(struct device *dev,
 		struct scatterlist *sg, int nents, enum dma_data_direction dir,
 		unsigned long attrs)
+=======
+static inline int dma_map_sg_attrs(struct device *dev, struct scatterlist *sg,
+		int nents, enum dma_data_direction dir, unsigned long attrs)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return 0;
 }
@@ -177,11 +190,14 @@ static inline void dma_unmap_sg_attrs(struct device *dev,
 		unsigned long attrs)
 {
 }
+<<<<<<< HEAD
 static inline int dma_map_sgtable(struct device *dev, struct sg_table *sgt,
 		enum dma_data_direction dir, unsigned long attrs)
 {
 	return -EOPNOTSUPP;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline dma_addr_t dma_map_resource(struct device *dev,
 		phys_addr_t phys_addr, size_t size, enum dma_data_direction dir,
 		unsigned long attrs)
@@ -352,6 +368,37 @@ static inline void dma_sync_single_range_for_device(struct device *dev,
 }
 
 /**
+<<<<<<< HEAD
+=======
+ * dma_map_sgtable - Map the given buffer for DMA
+ * @dev:	The device for which to perform the DMA operation
+ * @sgt:	The sg_table object describing the buffer
+ * @dir:	DMA direction
+ * @attrs:	Optional DMA attributes for the map operation
+ *
+ * Maps a buffer described by a scatterlist stored in the given sg_table
+ * object for the @dir DMA operation by the @dev device. After success the
+ * ownership for the buffer is transferred to the DMA domain.  One has to
+ * call dma_sync_sgtable_for_cpu() or dma_unmap_sgtable() to move the
+ * ownership of the buffer back to the CPU domain before touching the
+ * buffer by the CPU.
+ *
+ * Returns 0 on success or -EINVAL on error during mapping the buffer.
+ */
+static inline int dma_map_sgtable(struct device *dev, struct sg_table *sgt,
+		enum dma_data_direction dir, unsigned long attrs)
+{
+	int nents;
+
+	nents = dma_map_sg_attrs(dev, sgt->sgl, sgt->orig_nents, dir, attrs);
+	if (nents <= 0)
+		return -EINVAL;
+	sgt->nents = nents;
+	return 0;
+}
+
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * dma_unmap_sgtable - Unmap the given buffer for DMA
  * @dev:	The device for which to perform the DMA operation
  * @sgt:	The sg_table object describing the buffer

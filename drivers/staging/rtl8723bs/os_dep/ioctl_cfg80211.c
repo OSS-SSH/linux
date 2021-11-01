@@ -4,6 +4,10 @@
  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
  *
  ******************************************************************************/
+<<<<<<< HEAD
+=======
+#define  _IOCTL_CFG80211_C_
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <linux/etherdevice.h>
 #include <drv_types.h>
@@ -70,6 +74,11 @@ static struct ieee80211_rate rtw_rates[] = {
 	RATETAB_ENT(540, 0x800, 0),
 };
 
+<<<<<<< HEAD
+=======
+#define rtw_a_rates		(rtw_rates + 4)
+#define RTW_A_RATES_NUM	8
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define rtw_g_rates		(rtw_rates + 0)
 #define RTW_G_RATES_NUM	12
 
@@ -228,14 +237,22 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(struct adapter *padapter, struct wl
 	struct wiphy *wiphy = wdev->wiphy;
 	struct mlme_priv *pmlmepriv = &(padapter->mlmepriv);
 
+<<<<<<< HEAD
 	bssinf_len = pnetwork->network.ie_length + sizeof(struct ieee80211_hdr_3addr);
+=======
+	bssinf_len = pnetwork->network.IELength + sizeof(struct ieee80211_hdr_3addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (bssinf_len > MAX_BSSINFO_LEN)
 		goto exit;
 
 	{
 		u16 wapi_len = 0;
 
+<<<<<<< HEAD
 		if (rtw_get_wapi_ie(pnetwork->network.ies, pnetwork->network.ie_length, NULL, &wapi_len) > 0)
+=======
+		if (rtw_get_wapi_ie(pnetwork->network.IEs, pnetwork->network.IELength, NULL, &wapi_len) > 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{
 			if (wapi_len > 0)
 				goto exit;
@@ -247,13 +264,21 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(struct adapter *padapter, struct wl
 	if (adapter_wdev_data(padapter)->scan_request)
 	{
 		u8 *psr = NULL, sr = 0;
+<<<<<<< HEAD
 		struct ndis_802_11_ssid *pssid = &pnetwork->network.ssid;
+=======
+		struct ndis_802_11_ssid *pssid = &pnetwork->network.Ssid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct cfg80211_scan_request *request = adapter_wdev_data(padapter)->scan_request;
 		struct cfg80211_ssid *ssids = request->ssids;
 		u32 wpsielen = 0;
 		u8 *wpsie = NULL;
 
+<<<<<<< HEAD
 		wpsie = rtw_get_wps_ie(pnetwork->network.ies+_FIXED_IE_LENGTH_, pnetwork->network.ie_length-_FIXED_IE_LENGTH_, NULL, &wpsielen);
+=======
+		wpsie = rtw_get_wps_ie(pnetwork->network.IEs+_FIXED_IE_LENGTH_, pnetwork->network.IELength-_FIXED_IE_LENGTH_, NULL, &wpsielen);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (wpsie && wpsielen > 0)
 			psr = rtw_get_wps_attr_content(wpsie,  wpsielen, WPS_ATTR_SELECTED_REGISTRAR, (u8 *)(&sr), NULL);
@@ -263,8 +288,13 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(struct adapter *padapter, struct wl
 			if (request->n_ssids == 1 && request->n_channels == 1) /*  it means under processing WPS */
 			{
 				if (ssids[0].ssid_len != 0 &&
+<<<<<<< HEAD
 				    (pssid->ssid_length != ssids[0].ssid_len ||
 				     memcmp(pssid->ssid, ssids[0].ssid, ssids[0].ssid_len)))
+=======
+				    (pssid->SsidLength != ssids[0].ssid_len ||
+				     memcmp(pssid->Ssid, ssids[0].ssid, ssids[0].ssid_len)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				{
 					if (psr)
 						*psr = 0; /* clear sr */
@@ -275,7 +305,11 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(struct adapter *padapter, struct wl
 	/* spin_unlock_bh(&pwdev_priv->scan_req_lock); */
 
 
+<<<<<<< HEAD
 	channel = pnetwork->network.configuration.ds_config;
+=======
+	channel = pnetwork->network.Configuration.DSConfig;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	freq = rtw_ieee80211_channel_to_frequency(channel, NL80211_BAND_2GHZ);
 
 	notify_channel = ieee80211_get_channel(wiphy, freq);
@@ -287,7 +321,11 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(struct adapter *padapter, struct wl
 		is_same_network(&pmlmepriv->cur_network.network, &pnetwork->network, 0)) {
 		notify_signal = 100*translate_percentage_to_dbm(padapter->recvpriv.signal_strength);/* dbm */
 	} else {
+<<<<<<< HEAD
 		notify_signal = 100*translate_percentage_to_dbm(pnetwork->network.phy_info.signal_strength);/* dbm */
+=======
+		notify_signal = 100*translate_percentage_to_dbm(pnetwork->network.PhyInfo.SignalStrength);/* dbm */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	buf = kzalloc(MAX_BSSINFO_LEN, GFP_ATOMIC);
@@ -302,7 +340,11 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(struct adapter *padapter, struct wl
 	SetSeqNum(pwlanhdr, 0/*pmlmeext->mgnt_seq*/);
 	/* pmlmeext->mgnt_seq++; */
 
+<<<<<<< HEAD
 	if (pnetwork->network.reserved[0] == 1) { /*  WIFI_BEACON */
+=======
+	if (pnetwork->network.Reserved[0] == 1) { /*  WIFI_BEACON */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		eth_broadcast_addr(pwlanhdr->addr1);
 		SetFrameSubType(pbuf, WIFI_BEACON);
 	} else {
@@ -310,15 +352,25 @@ struct cfg80211_bss *rtw_cfg80211_inform_bss(struct adapter *padapter, struct wl
 		SetFrameSubType(pbuf, WIFI_PROBERSP);
 	}
 
+<<<<<<< HEAD
 	memcpy(pwlanhdr->addr2, pnetwork->network.mac_address, ETH_ALEN);
 	memcpy(pwlanhdr->addr3, pnetwork->network.mac_address, ETH_ALEN);
+=======
+	memcpy(pwlanhdr->addr2, pnetwork->network.MacAddress, ETH_ALEN);
+	memcpy(pwlanhdr->addr3, pnetwork->network.MacAddress, ETH_ALEN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 	pbuf += sizeof(struct ieee80211_hdr_3addr);
 	len = sizeof(struct ieee80211_hdr_3addr);
 
+<<<<<<< HEAD
 	memcpy(pbuf, pnetwork->network.ies, pnetwork->network.ie_length);
 	len += pnetwork->network.ie_length;
+=======
+	memcpy(pbuf, pnetwork->network.IEs, pnetwork->network.IELength);
+	len += pnetwork->network.IELength;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*((__le64 *)pbuf) = cpu_to_le64(notify_timestamp);
 
@@ -352,12 +404,21 @@ int rtw_cfg80211_check_bss(struct adapter *padapter)
 	if (!(pnetwork) || !(padapter->rtw_wdev))
 		return false;
 
+<<<<<<< HEAD
 	freq = rtw_ieee80211_channel_to_frequency(pnetwork->configuration.ds_config, NL80211_BAND_2GHZ);
 
 	notify_channel = ieee80211_get_channel(padapter->rtw_wdev->wiphy, freq);
 	bss = cfg80211_get_bss(padapter->rtw_wdev->wiphy, notify_channel,
 			pnetwork->mac_address, pnetwork->ssid.ssid,
 			pnetwork->ssid.ssid_length,
+=======
+	freq = rtw_ieee80211_channel_to_frequency(pnetwork->Configuration.DSConfig, NL80211_BAND_2GHZ);
+
+	notify_channel = ieee80211_get_channel(padapter->rtw_wdev->wiphy, freq);
+	bss = cfg80211_get_bss(padapter->rtw_wdev->wiphy, notify_channel,
+			pnetwork->MacAddress, pnetwork->Ssid.Ssid,
+			pnetwork->Ssid.SsidLength,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			WLAN_CAPABILITY_ESS, WLAN_CAPABILITY_ESS);
 
 	cfg80211_put_bss(padapter->rtw_wdev->wiphy, bss);
@@ -371,7 +432,11 @@ void rtw_cfg80211_ibss_indicate_connect(struct adapter *padapter)
 	struct wlan_network  *cur_network = &(pmlmepriv->cur_network);
 	struct wireless_dev *pwdev = padapter->rtw_wdev;
 	struct wiphy *wiphy = pwdev->wiphy;
+<<<<<<< HEAD
 	int freq = (int)cur_network->network.configuration.ds_config;
+=======
+	int freq = (int)cur_network->network.Configuration.DSConfig;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ieee80211_channel *chan;
 
 	if (pwdev->iftype != NL80211_IFTYPE_ADHOC)
@@ -395,8 +460,13 @@ void rtw_cfg80211_ibss_indicate_connect(struct adapter *padapter)
 				rtw_warn_on(1);
 				return;
 			}
+<<<<<<< HEAD
 			if (!memcmp(&(scanned->network.ssid), &(pnetwork->ssid), sizeof(struct ndis_802_11_ssid))
 				&& !memcmp(scanned->network.mac_address, pnetwork->mac_address, sizeof(NDIS_802_11_MAC_ADDRESS))
+=======
+			if (!memcmp(&(scanned->network.Ssid), &(pnetwork->Ssid), sizeof(struct ndis_802_11_ssid))
+				&& !memcmp(scanned->network.MacAddress, pnetwork->MacAddress, sizeof(NDIS_802_11_MAC_ADDRESS))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			)
 				rtw_cfg80211_inform_bss(padapter, scanned);
 			else
@@ -410,7 +480,11 @@ void rtw_cfg80211_ibss_indicate_connect(struct adapter *padapter)
 	}
 	/* notify cfg80211 that device joined an IBSS */
 	chan = ieee80211_get_channel(wiphy, freq);
+<<<<<<< HEAD
 	cfg80211_ibss_joined(padapter->pnetdev, cur_network->network.mac_address, chan, GFP_ATOMIC);
+=======
+	cfg80211_ibss_joined(padapter->pnetdev, cur_network->network.MacAddress, chan, GFP_ATOMIC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void rtw_cfg80211_indicate_connect(struct adapter *padapter)
@@ -437,8 +511,13 @@ void rtw_cfg80211_indicate_connect(struct adapter *padapter)
 			goto check_bss;
 		}
 
+<<<<<<< HEAD
 		if (!memcmp(scanned->network.mac_address, pnetwork->mac_address, sizeof(NDIS_802_11_MAC_ADDRESS))
 			&& !memcmp(&(scanned->network.ssid), &(pnetwork->ssid), sizeof(struct ndis_802_11_ssid))
+=======
+		if (!memcmp(scanned->network.MacAddress, pnetwork->MacAddress, sizeof(NDIS_802_11_MAC_ADDRESS))
+			&& !memcmp(&(scanned->network.Ssid), &(pnetwork->Ssid), sizeof(struct ndis_802_11_ssid))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		)
 			rtw_cfg80211_inform_bss(padapter, scanned);
 		else
@@ -455,7 +534,11 @@ check_bss:
 		struct wiphy *wiphy = pwdev->wiphy;
 		struct ieee80211_channel *notify_channel;
 		u32 freq;
+<<<<<<< HEAD
 		u16 channel = cur_network->network.configuration.ds_config;
+=======
+		u16 channel = cur_network->network.Configuration.DSConfig;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct cfg80211_roam_info roam_info = {};
 
 		freq = rtw_ieee80211_channel_to_frequency(channel, NL80211_BAND_2GHZ);
@@ -463,7 +546,11 @@ check_bss:
 		notify_channel = ieee80211_get_channel(wiphy, freq);
 
 		roam_info.channel = notify_channel;
+<<<<<<< HEAD
 		roam_info.bssid = cur_network->network.mac_address;
+=======
+		roam_info.bssid = cur_network->network.MacAddress;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		roam_info.req_ie =
 			pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2;
 		roam_info.req_ie_len =
@@ -476,7 +563,11 @@ check_bss:
 	}
 	else
 	{
+<<<<<<< HEAD
 		cfg80211_connect_result(padapter->pnetdev, cur_network->network.mac_address
+=======
+		cfg80211_connect_result(padapter->pnetdev, cur_network->network.MacAddress
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			, pmlmepriv->assoc_req+sizeof(struct ieee80211_hdr_3addr)+2
 			, pmlmepriv->assoc_req_len-sizeof(struct ieee80211_hdr_3addr)-2
 			, pmlmepriv->assoc_rsp+sizeof(struct ieee80211_hdr_3addr)+6
@@ -1110,7 +1201,11 @@ static int cfg80211_rtw_get_station(struct wiphy *wiphy,
 	{
 		struct wlan_network  *cur_network = &(pmlmepriv->cur_network);
 
+<<<<<<< HEAD
 		if (memcmp((u8 *)mac, cur_network->network.mac_address, ETH_ALEN)) {
+=======
+		if (memcmp((u8 *)mac, cur_network->network.MacAddress, ETH_ALEN)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ret = -ENOENT;
 			goto exit;
 		}
@@ -1238,8 +1333,13 @@ void rtw_cfg80211_unlink_bss(struct adapter *padapter, struct wlan_network *pnet
 	struct wlan_bssid_ex *select_network = &pnetwork->network;
 
 	bss = cfg80211_get_bss(wiphy, NULL/*notify_channel*/,
+<<<<<<< HEAD
 		select_network->mac_address, select_network->ssid.ssid,
 		select_network->ssid.ssid_length, 0/*WLAN_CAPABILITY_ESS*/,
+=======
+		select_network->MacAddress, select_network->Ssid.Ssid,
+		select_network->Ssid.SsidLength, 0/*WLAN_CAPABILITY_ESS*/,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		0/*WLAN_CAPABILITY_ESS*/);
 
 	if (bss) {
@@ -1263,8 +1363,13 @@ void rtw_cfg80211_surveydone_event_callback(struct adapter *padapter)
 		pnetwork = list_entry(plist, struct wlan_network, list);
 
 		/* report network only if the current channel set contains the channel to which this network belongs */
+<<<<<<< HEAD
 		if (rtw_ch_set_search_ch(padapter->mlmeextpriv.channel_set, pnetwork->network.configuration.ds_config) >= 0
 			&& true == rtw_validate_ssid(&(pnetwork->network.ssid))
+=======
+		if (rtw_ch_set_search_ch(padapter->mlmeextpriv.channel_set, pnetwork->network.Configuration.DSConfig) >= 0
+			&& true == rtw_validate_ssid(&(pnetwork->network.Ssid))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		)
 		{
 			/* ev =translate_scan(padapter, a, pnetwork, ev, stop); */
@@ -1395,8 +1500,13 @@ static int cfg80211_rtw_scan(struct wiphy *wiphy
 
 	/* parsing request ssids, n_ssids */
 	for (i = 0; i < request->n_ssids && i < RTW_SSID_SCAN_AMOUNT; i++) {
+<<<<<<< HEAD
 		memcpy(ssid[i].ssid, ssids[i].ssid, ssids[i].ssid_len);
 		ssid[i].ssid_length = ssids[i].ssid_len;
+=======
+		memcpy(ssid[i].Ssid, ssids[i].ssid, ssids[i].ssid_len);
+		ssid[i].SsidLength = ssids[i].ssid_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* parsing channels, n_channels */
@@ -1727,8 +1837,13 @@ static int cfg80211_rtw_join_ibss(struct wiphy *wiphy, struct net_device *ndev,
 	}
 
 	memset(&ndis_ssid, 0, sizeof(struct ndis_802_11_ssid));
+<<<<<<< HEAD
 	ndis_ssid.ssid_length = params->ssid_len;
 	memcpy(ndis_ssid.ssid, (u8 *)params->ssid, params->ssid_len);
+=======
+	ndis_ssid.SsidLength = params->ssid_len;
+	memcpy(ndis_ssid.Ssid, (u8 *)params->ssid, params->ssid_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	psecuritypriv->ndisencryptstatus = Ndis802_11EncryptionDisabled;
 	psecuritypriv->dot11PrivacyAlgrthm = _NO_PRIVACY_;
@@ -1819,8 +1934,13 @@ static int cfg80211_rtw_connect(struct wiphy *wiphy, struct net_device *ndev,
 	}
 
 	memset(&ndis_ssid, 0, sizeof(struct ndis_802_11_ssid));
+<<<<<<< HEAD
 	ndis_ssid.ssid_length = sme->ssid_len;
 	memcpy(ndis_ssid.ssid, (u8 *)sme->ssid, sme->ssid_len);
+=======
+	ndis_ssid.SsidLength = sme->ssid_len;
+	memcpy(ndis_ssid.Ssid, (u8 *)sme->ssid, sme->ssid_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (check_fwstate(pmlmepriv, _FW_UNDER_LINKING) == true) {
 		ret = -EBUSY;
@@ -1871,7 +1991,11 @@ static int cfg80211_rtw_connect(struct wiphy *wiphy, struct net_device *ndev,
 
 		if (wep_key_len > 0) {
 			wep_key_len = wep_key_len <= 5 ? 5 : 13;
+<<<<<<< HEAD
 			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, key_material);
+=======
+			wep_total_len = wep_key_len + FIELD_OFFSET(struct ndis_802_11_wep, KeyMaterial);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pwep = rtw_malloc(wep_total_len);
 			if (pwep == NULL) {
 				ret = -ENOMEM;
@@ -1880,8 +2004,13 @@ static int cfg80211_rtw_connect(struct wiphy *wiphy, struct net_device *ndev,
 
 			memset(pwep, 0, wep_total_len);
 
+<<<<<<< HEAD
 			pwep->key_length = wep_key_len;
 			pwep->length = wep_total_len;
+=======
+			pwep->KeyLength = wep_key_len;
+			pwep->Length = wep_total_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			if (wep_key_len == 13) {
 				padapter->securitypriv.dot11PrivacyAlgrthm = _WEP104_;
@@ -1892,10 +2021,17 @@ static int cfg80211_rtw_connect(struct wiphy *wiphy, struct net_device *ndev,
 			goto exit;
 		}
 
+<<<<<<< HEAD
 		pwep->key_index = wep_key_idx;
 		pwep->key_index |= 0x80000000;
 
 		memcpy(pwep->key_material,  (void *)sme->key, pwep->key_length);
+=======
+		pwep->KeyIndex = wep_key_idx;
+		pwep->KeyIndex |= 0x80000000;
+
+		memcpy(pwep->KeyMaterial,  (void *)sme->key, pwep->KeyLength);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (rtw_set_802_11_add_wep(padapter, pwep) == (u8)_FAIL)
 			ret = -EOPNOTSUPP;
@@ -2097,6 +2233,7 @@ void rtw_cfg80211_indicate_sta_disassoc(struct adapter *padapter, unsigned char 
 	cfg80211_del_sta(ndev, da, GFP_ATOMIC);
 }
 
+<<<<<<< HEAD
 static u8 rtw_get_chan_type(struct adapter *adapter)
 {
 	struct mlme_ext_priv *mlme_ext = &adapter->mlmeextpriv;
@@ -2149,6 +2286,9 @@ static int cfg80211_rtw_get_channel(struct wiphy *wiphy, struct wireless_dev *wd
 
 	return 0;
 }
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static netdev_tx_t rtw_cfg80211_monitor_if_xmit_entry(struct sk_buff *skb, struct net_device *ndev)
 {
@@ -2432,7 +2572,11 @@ static int rtw_add_beacon(struct adapter *adapter, const u8 *head, size_t head_l
 	/* check wps ie if inclued */
 	rtw_get_wps_ie(pbuf + _FIXED_IE_LENGTH_, len - _FIXED_IE_LENGTH_, NULL, &wps_ielen);
 
+<<<<<<< HEAD
 	/* pbss_network->ies will not include p2p_ie, wfd ie */
+=======
+	/* pbss_network->IEs will not include p2p_ie, wfd ie */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rtw_ies_remove_ie(pbuf, &len, _BEACON_IE_OFFSET_, WLAN_EID_VENDOR_SPECIFIC, P2P_OUI, 4);
 	rtw_ies_remove_ie(pbuf, &len, _BEACON_IE_OFFSET_, WLAN_EID_VENDOR_SPECIFIC, WFD_OUI, 4);
 
@@ -2463,10 +2607,17 @@ static int cfg80211_rtw_start_ap(struct wiphy *wiphy, struct net_device *ndev,
 		struct wlan_bssid_ex *pbss_network = &adapter->mlmepriv.cur_network.network;
 		struct wlan_bssid_ex *pbss_network_ext = &adapter->mlmeextpriv.mlmext_info.network;
 
+<<<<<<< HEAD
 		memcpy(pbss_network->ssid.ssid, (void *)settings->ssid, settings->ssid_len);
 		pbss_network->ssid.ssid_length = settings->ssid_len;
 		memcpy(pbss_network_ext->ssid.ssid, (void *)settings->ssid, settings->ssid_len);
 		pbss_network_ext->ssid.ssid_length = settings->ssid_len;
+=======
+		memcpy(pbss_network->Ssid.Ssid, (void *)settings->ssid, settings->ssid_len);
+		pbss_network->Ssid.SsidLength = settings->ssid_len;
+		memcpy(pbss_network_ext->Ssid.Ssid, (void *)settings->ssid, settings->ssid_len);
+		pbss_network_ext->Ssid.SsidLength = settings->ssid_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return ret;
@@ -2755,7 +2906,11 @@ exit:
 	return ret;
 }
 
+<<<<<<< HEAD
 static void rtw_cfg80211_init_ht_capab(struct ieee80211_sta_ht_cap *ht_cap, enum nl80211_band band)
+=======
+static void rtw_cfg80211_init_ht_capab(struct ieee80211_sta_ht_cap *ht_cap, enum nl80211_band band, u8 rf_type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 
 #define MAX_BIT_RATE_40MHZ_MCS15	300	/* Mbps */
@@ -2788,23 +2943,52 @@ static void rtw_cfg80211_init_ht_capab(struct ieee80211_sta_ht_cap *ht_cap, enum
 	 *if BW_40 rx_mask[4]= 0x01;
 	 *highest supported RX rate
 	 */
+<<<<<<< HEAD
 	ht_cap->mcs.rx_mask[0] = 0xFF;
 	ht_cap->mcs.rx_mask[1] = 0x00;
 	ht_cap->mcs.rx_mask[4] = 0x01;
 
 	ht_cap->mcs.rx_highest = cpu_to_le16(MAX_BIT_RATE_40MHZ_MCS7);
+=======
+	if (rf_type == RF_1T1R) {
+		ht_cap->mcs.rx_mask[0] = 0xFF;
+		ht_cap->mcs.rx_mask[1] = 0x00;
+		ht_cap->mcs.rx_mask[4] = 0x01;
+
+		ht_cap->mcs.rx_highest = cpu_to_le16(MAX_BIT_RATE_40MHZ_MCS7);
+	} else if ((rf_type == RF_1T2R) || (rf_type == RF_2T2R)) {
+		ht_cap->mcs.rx_mask[0] = 0xFF;
+		ht_cap->mcs.rx_mask[1] = 0xFF;
+		ht_cap->mcs.rx_mask[4] = 0x01;
+
+		ht_cap->mcs.rx_highest = cpu_to_le16(MAX_BIT_RATE_40MHZ_MCS15);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void rtw_cfg80211_init_wiphy(struct adapter *padapter)
 {
+<<<<<<< HEAD
+=======
+	u8 rf_type;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ieee80211_supported_band *bands;
 	struct wireless_dev *pwdev = padapter->rtw_wdev;
 	struct wiphy *wiphy = pwdev->wiphy;
 
+<<<<<<< HEAD
 	{
 		bands = wiphy->bands[NL80211_BAND_2GHZ];
 		if (bands)
 			rtw_cfg80211_init_ht_capab(&bands->ht_cap, NL80211_BAND_2GHZ);
+=======
+	rtw_hal_get_hwreg(padapter, HW_VAR_RF_TYPE, (u8 *)(&rf_type));
+
+	{
+		bands = wiphy->bands[NL80211_BAND_2GHZ];
+		if (bands)
+			rtw_cfg80211_init_ht_capab(&bands->ht_cap, NL80211_BAND_2GHZ, rf_type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* copy mac_addr to wiphy */
@@ -2875,7 +3059,11 @@ static struct cfg80211_ops rtw_cfg80211_ops = {
 	.set_pmksa = cfg80211_rtw_set_pmksa,
 	.del_pmksa = cfg80211_rtw_del_pmksa,
 	.flush_pmksa = cfg80211_rtw_flush_pmksa,
+<<<<<<< HEAD
 	.get_channel = cfg80211_rtw_get_channel,
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.add_virtual_intf = cfg80211_rtw_add_virtual_intf,
 	.del_virtual_intf = cfg80211_rtw_del_virtual_intf,
 

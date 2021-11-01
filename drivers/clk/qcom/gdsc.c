@@ -357,6 +357,7 @@ static int gdsc_init(struct gdsc *sc)
 	if (on < 0)
 		return on;
 
+<<<<<<< HEAD
 	if (on) {
 		/* The regulator must be on, sync the kernel state */
 		if (sc->rsupply) {
@@ -394,6 +395,29 @@ static int gdsc_init(struct gdsc *sc)
 		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
 		gdsc_enable(&sc->pd);
 		on = true;
+=======
+	/*
+	 * Votable GDSCs can be ON due to Vote from other masters.
+	 * If a Votable GDSC is ON, make sure we have a Vote.
+	 */
+	if ((sc->flags & VOTABLE) && on)
+		gdsc_enable(&sc->pd);
+
+	/*
+	 * Make sure the retain bit is set if the GDSC is already on, otherwise
+	 * we end up turning off the GDSC and destroying all the register
+	 * contents that we thought we were saving.
+	 */
+	if ((sc->flags & RETAIN_FF_ENABLE) && on)
+		gdsc_retain_ff_on(sc);
+
+	/* If ALWAYS_ON GDSCs are not ON, turn them ON */
+	if (sc->flags & ALWAYS_ON) {
+		if (!on)
+			gdsc_enable(&sc->pd);
+		on = true;
+		sc->pd.flags |= GENPD_FLAG_ALWAYS_ON;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (on || (sc->pwrsts & PWRSTS_RET))
@@ -401,8 +425,11 @@ static int gdsc_init(struct gdsc *sc)
 	else
 		gdsc_clear_mem_on(sc);
 
+<<<<<<< HEAD
 	if (sc->flags & ALWAYS_ON)
 		sc->pd.flags |= GENPD_FLAG_ALWAYS_ON;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!sc->pd.power_off)
 		sc->pd.power_off = gdsc_disable;
 	if (!sc->pd.power_on)

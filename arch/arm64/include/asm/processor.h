@@ -16,12 +16,15 @@
  */
 #define NET_IP_ALIGN	0
 
+<<<<<<< HEAD
 #define MTE_CTRL_GCR_USER_EXCL_SHIFT	0
 #define MTE_CTRL_GCR_USER_EXCL_MASK	0xffff
 
 #define MTE_CTRL_TCF_SYNC		(1UL << 16)
 #define MTE_CTRL_TCF_ASYNC		(1UL << 17)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef __ASSEMBLY__
 
 #include <linux/build_bug.h>
@@ -159,7 +162,11 @@ struct thread_struct {
 #endif
 #endif
 #ifdef CONFIG_ARM64_MTE
+<<<<<<< HEAD
 	u64			mte_ctrl;
+=======
+	u64			gcr_user_excl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	u64			sctlr_user;
 };
@@ -259,7 +266,11 @@ extern void release_thread(struct task_struct *);
 
 unsigned long get_wchan(struct task_struct *p);
 
+<<<<<<< HEAD
 void update_sctlr_el1(u64 sctlr);
+=======
+void set_task_sctlr_el1(u64 sctlr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Thread switching */
 extern struct task_struct *cpu_switch_to(struct task_struct *prev,

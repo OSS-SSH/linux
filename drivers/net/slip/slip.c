@@ -62,7 +62,10 @@
  */
 
 #define SL_CHECK_TRANSMIT
+<<<<<<< HEAD
 #include <linux/compat.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/moduleparam.h>
 
@@ -109,7 +112,11 @@ static void slip_unesc6(struct slip *sl, unsigned char c);
 #ifdef CONFIG_SLIP_SMART
 static void sl_keepalive(struct timer_list *t);
 static void sl_outfill(struct timer_list *t);
+<<<<<<< HEAD
 static int sl_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd);
+=======
+static int sl_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 /********************************
@@ -648,7 +655,11 @@ static const struct net_device_ops sl_netdev_ops = {
 	.ndo_change_mtu		= sl_change_mtu,
 	.ndo_tx_timeout		= sl_tx_timeout,
 #ifdef CONFIG_SLIP_SMART
+<<<<<<< HEAD
 	.ndo_siocdevprivate	= sl_siocdevprivate,
+=======
+	.ndo_do_ioctl		= sl_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 };
 
@@ -1180,12 +1191,20 @@ static int slip_ioctl(struct tty_struct *tty, struct file *file,
 
 /* VSV changes start here */
 #ifdef CONFIG_SLIP_SMART
+<<<<<<< HEAD
 /* function sl_siocdevprivate called from net/core/dev.c
    to allow get/set outfill/keepalive parameter
    by ifconfig                                 */
 
 static int sl_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 			     void __user *data, int cmd)
+=======
+/* function do_ioctl called from net/core/dev.c
+   to allow get/set outfill/keepalive parameter
+   by ifconfig                                 */
+
+static int sl_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct slip *sl = netdev_priv(dev);
 	unsigned long *p = (unsigned long *)&rq->ifr_ifru;
@@ -1193,9 +1212,12 @@ static int sl_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 	if (sl == NULL)		/* Allocation failed ?? */
 		return -ENODEV;
 
+<<<<<<< HEAD
 	if (in_compat_syscall())
 		return -EOPNOTSUPP;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_bh(&sl->lock);
 
 	if (!sl->tty) {

@@ -47,8 +47,16 @@ enum cifs_sec_param {
 	Opt_sec_krb5p,
 	Opt_sec_ntlmsspi,
 	Opt_sec_ntlmssp,
+<<<<<<< HEAD
 	Opt_sec_ntlmv2,
 	Opt_sec_ntlmv2i,
+=======
+	Opt_ntlm,
+	Opt_sec_ntlmi,
+	Opt_sec_ntlmv2,
+	Opt_sec_ntlmv2i,
+	Opt_sec_lanman,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	Opt_sec_none,
 
 	Opt_sec_err

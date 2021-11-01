@@ -2,10 +2,13 @@
 /*
  * Copyright (C) 2017 Oracle.  All Rights Reserved.
  * Author: Darrick J. Wong <darrick.wong@oracle.com>
+<<<<<<< HEAD
  *
  * NOTE: none of these tracepoints shall be considered a stable kernel ABI
  * as they can change at any time.  See xfs_trace.h for documentation of
  * specific units found in tracepoint output.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #undef TRACE_SYSTEM
 #define TRACE_SYSTEM xfs_scrub
@@ -83,6 +86,7 @@ TRACE_DEFINE_ENUM(XFS_SCRUB_TYPE_FSCOUNTERS);
 	{ XFS_SCRUB_TYPE_PQUOTA,	"prjquota" }, \
 	{ XFS_SCRUB_TYPE_FSCOUNTERS,	"fscounters" }
 
+<<<<<<< HEAD
 #define XFS_SCRUB_FLAG_STRINGS \
 	{ XFS_SCRUB_IFLAG_REPAIR,		"repair" }, \
 	{ XFS_SCRUB_OFLAG_CORRUPT,		"corrupt" }, \
@@ -93,6 +97,8 @@ TRACE_DEFINE_ENUM(XFS_SCRUB_TYPE_FSCOUNTERS);
 	{ XFS_SCRUB_OFLAG_WARNING,		"warning" }, \
 	{ XFS_SCRUB_OFLAG_NO_REPAIR_NEEDED,	"norepair" }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 DECLARE_EVENT_CLASS(xchk_class,
 	TP_PROTO(struct xfs_inode *ip, struct xfs_scrub_metadata *sm,
 		 int error),
@@ -117,14 +123,22 @@ DECLARE_EVENT_CLASS(xchk_class,
 		__entry->flags = sm->sm_flags;
 		__entry->error = error;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d ino 0x%llx type %s agno 0x%x inum 0x%llx gen 0x%x flags (%s) error %d",
+=======
+	TP_printk("dev %d:%d ino 0x%llx type %s agno %u inum %llu gen %u flags 0x%x error %d",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->ino,
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __entry->agno,
 		  __entry->inum,
 		  __entry->gen,
+<<<<<<< HEAD
 		  __print_flags(__entry->flags, "|", XFS_SCRUB_FLAG_STRINGS),
+=======
+		  __entry->flags,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  __entry->error)
 )
 #define DEFINE_SCRUB_EVENT(name) \
@@ -159,7 +173,11 @@ TRACE_EVENT(xchk_op_error,
 		__entry->error = error;
 		__entry->ret_ip = ret_ip;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d type %s agno 0x%x agbno 0x%x error %d ret_ip %pS",
+=======
+	TP_printk("dev %d:%d type %s agno %u agbno %u error %d ret_ip %pS",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __entry->agno,
@@ -190,10 +208,17 @@ TRACE_EVENT(xchk_file_op_error,
 		__entry->error = error;
 		__entry->ret_ip = ret_ip;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d ino 0x%llx fork %s type %s fileoff 0x%llx error %d ret_ip %pS",
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->ino,
 		  __print_symbolic(__entry->whichfork, XFS_WHICHFORK_STRINGS),
+=======
+	TP_printk("dev %d:%d ino 0x%llx fork %d type %s offset %llu error %d ret_ip %pS",
+		  MAJOR(__entry->dev), MINOR(__entry->dev),
+		  __entry->ino,
+		  __entry->whichfork,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __entry->offset,
 		  __entry->error,
@@ -207,6 +232,7 @@ DECLARE_EVENT_CLASS(xchk_block_error_class,
 		__field(dev_t, dev)
 		__field(unsigned int, type)
 		__field(xfs_agnumber_t, agno)
+<<<<<<< HEAD
 		__field(xfs_agblock_t, agbno)
 		__field(void *, ret_ip)
 	),
@@ -222,6 +248,31 @@ DECLARE_EVENT_CLASS(xchk_block_error_class,
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __entry->agno,
 		  __entry->agbno,
+=======
+		__field(xfs_agblock_t, bno)
+		__field(void *, ret_ip)
+	),
+	TP_fast_assign(
+		xfs_fsblock_t	fsbno;
+		xfs_agnumber_t	agno;
+		xfs_agblock_t	bno;
+
+		fsbno = XFS_DADDR_TO_FSB(sc->mp, daddr);
+		agno = XFS_FSB_TO_AGNO(sc->mp, fsbno);
+		bno = XFS_FSB_TO_AGBNO(sc->mp, fsbno);
+
+		__entry->dev = sc->mp->m_super->s_dev;
+		__entry->type = sc->sm->sm_type;
+		__entry->agno = agno;
+		__entry->bno = bno;
+		__entry->ret_ip = ret_ip;
+	),
+	TP_printk("dev %d:%d type %s agno %u agbno %u ret_ip %pS",
+		  MAJOR(__entry->dev), MINOR(__entry->dev),
+		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
+		  __entry->agno,
+		  __entry->bno,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  __entry->ret_ip)
 )
 
@@ -287,10 +338,17 @@ DECLARE_EVENT_CLASS(xchk_fblock_error_class,
 		__entry->offset = offset;
 		__entry->ret_ip = ret_ip;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d ino 0x%llx fork %s type %s fileoff 0x%llx ret_ip %pS",
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->ino,
 		  __print_symbolic(__entry->whichfork, XFS_WHICHFORK_STRINGS),
+=======
+	TP_printk("dev %d:%d ino 0x%llx fork %d type %s offset %llu ret_ip %pS",
+		  MAJOR(__entry->dev), MINOR(__entry->dev),
+		  __entry->ino,
+		  __entry->whichfork,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __entry->offset,
 		  __entry->ret_ip)
@@ -352,7 +410,11 @@ TRACE_EVENT(xchk_btree_op_error,
 		__entry->error = error;
 		__entry->ret_ip = ret_ip;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d type %s btree %s level %d ptr %d agno 0x%x agbno 0x%x error %d ret_ip %pS",
+=======
+	TP_printk("dev %d:%d type %s btree %s level %d ptr %d agno %u agbno %u error %d ret_ip %pS",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __print_symbolic(__entry->btnum, XFS_BTNUM_STRINGS),
@@ -395,10 +457,17 @@ TRACE_EVENT(xchk_ifork_btree_op_error,
 		__entry->error = error;
 		__entry->ret_ip = ret_ip;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d ino 0x%llx fork %s type %s btree %s level %d ptr %d agno 0x%x agbno 0x%x error %d ret_ip %pS",
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->ino,
 		  __print_symbolic(__entry->whichfork, XFS_WHICHFORK_STRINGS),
+=======
+	TP_printk("dev %d:%d ino 0x%llx fork %d type %s btree %s level %d ptr %d agno %u agbno %u error %d ret_ip %pS",
+		  MAJOR(__entry->dev), MINOR(__entry->dev),
+		  __entry->ino,
+		  __entry->whichfork,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __print_symbolic(__entry->btnum, XFS_BTNUM_STRINGS),
 		  __entry->level,
@@ -434,7 +503,11 @@ TRACE_EVENT(xchk_btree_error,
 		__entry->ptr = cur->bc_ptrs[level];
 		__entry->ret_ip = ret_ip;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d type %s btree %s level %d ptr %d agno 0x%x agbno 0x%x ret_ip %pS",
+=======
+	TP_printk("dev %d:%d type %s btree %s level %d ptr %d agno %u agbno %u ret_ip %pS",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __print_symbolic(__entry->btnum, XFS_BTNUM_STRINGS),
@@ -474,10 +547,17 @@ TRACE_EVENT(xchk_ifork_btree_error,
 		__entry->ptr = cur->bc_ptrs[level];
 		__entry->ret_ip = ret_ip;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d ino 0x%llx fork %s type %s btree %s level %d ptr %d agno 0x%x agbno 0x%x ret_ip %pS",
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->ino,
 		  __print_symbolic(__entry->whichfork, XFS_WHICHFORK_STRINGS),
+=======
+	TP_printk("dev %d:%d ino 0x%llx fork %d type %s btree %s level %d ptr %d agno %u agbno %u ret_ip %pS",
+		  MAJOR(__entry->dev), MINOR(__entry->dev),
+		  __entry->ino,
+		  __entry->whichfork,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __print_symbolic(__entry->btnum, XFS_BTNUM_STRINGS),
 		  __entry->level,
@@ -513,7 +593,11 @@ DECLARE_EVENT_CLASS(xchk_sbtree_class,
 		__entry->nlevels = cur->bc_nlevels;
 		__entry->ptr = cur->bc_ptrs[level];
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d type %s btree %s agno 0x%x agbno 0x%x level %d nlevels %d ptr %d",
+=======
+	TP_printk("dev %d:%d type %s btree %s agno %u agbno %u level %d nlevels %d ptr %d",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __print_symbolic(__entry->type, XFS_SCRUB_TYPE_STRINGS),
 		  __print_symbolic(__entry->btnum, XFS_BTNUM_STRINGS),
@@ -586,7 +670,11 @@ TRACE_EVENT(xchk_iallocbt_check_cluster,
 		__entry->holemask = holemask;
 		__entry->cluster_ino = cluster_ino;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x startino 0x%x daddr 0x%llx bbcount 0x%x chunkino 0x%x nr_inodes %u cluster_mask 0x%x holemask 0x%x cluster_ino 0x%x",
+=======
+	TP_printk("dev %d:%d agno %d startino %u daddr 0x%llx len %d chunkino %u nr_inodes %u cluster_mask 0x%x holemask 0x%x cluster_ino %u",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->startino,
@@ -676,7 +764,11 @@ DECLARE_EVENT_CLASS(xrep_extent_class,
 		__entry->agbno = agbno;
 		__entry->len = len;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x agbno 0x%x fsbcount 0x%x",
+=======
+	TP_printk("dev %d:%d agno %u agbno %u len %u",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->agbno,
@@ -713,7 +805,11 @@ DECLARE_EVENT_CLASS(xrep_rmap_class,
 		__entry->offset = offset;
 		__entry->flags = flags;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x agbno 0x%x fsbcount 0x%x owner 0x%llx fileoff 0x%llx flags 0x%x",
+=======
+	TP_printk("dev %d:%d agno %u agbno %u len %u owner %lld offset %llu flags 0x%x",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->agbno,
@@ -751,7 +847,11 @@ TRACE_EVENT(xrep_refcount_extent_fn,
 		__entry->blockcount = irec->rc_blockcount;
 		__entry->refcount = irec->rc_refcount;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x agbno 0x%x fsbcount 0x%x refcount %u",
+=======
+	TP_printk("dev %d:%d agno %u agbno %u len %u refcount %u",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->startblock,
@@ -775,7 +875,11 @@ TRACE_EVENT(xrep_init_btblock,
 		__entry->agbno = agbno;
 		__entry->btnum = btnum;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x agbno 0x%x btree %s",
+=======
+	TP_printk("dev %d:%d agno %u agbno %u btree %s",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->agbno,
@@ -799,7 +903,11 @@ TRACE_EVENT(xrep_findroot_block,
 		__entry->magic = magic;
 		__entry->level = level;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x agbno 0x%x magic 0x%x level %u",
+=======
+	TP_printk("dev %d:%d agno %u agbno %u magic 0x%x level %u",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->agbno,
@@ -827,7 +935,11 @@ TRACE_EVENT(xrep_calc_ag_resblks,
 		__entry->freelen = freelen;
 		__entry->usedlen = usedlen;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x icount %u aglen %u freelen %u usedlen %u",
+=======
+	TP_printk("dev %d:%d agno %d icount %u aglen %u freelen %u usedlen %u",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->icount,
@@ -856,7 +968,11 @@ TRACE_EVENT(xrep_calc_ag_resblks_btsize,
 		__entry->rmapbt_sz = rmapbt_sz;
 		__entry->refcbt_sz = refcbt_sz;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x bnobt %u inobt %u rmapbt %u refcountbt %u",
+=======
+	TP_printk("dev %d:%d agno %d bno %u ino %u rmap %u refcount %u",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->bnobt_sz,
@@ -900,7 +1016,11 @@ TRACE_EVENT(xrep_ialloc_insert,
 		__entry->freecount = freecount;
 		__entry->freemask = freemask;
 	),
+<<<<<<< HEAD
 	TP_printk("dev %d:%d agno 0x%x startino 0x%x holemask 0x%x count %u freecount %u freemask 0x%llx",
+=======
+	TP_printk("dev %d:%d agno %d startino %u holemask 0x%x count %u freecount %u freemask 0x%llx",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  MAJOR(__entry->dev), MINOR(__entry->dev),
 		  __entry->agno,
 		  __entry->startino,

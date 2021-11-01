@@ -387,7 +387,11 @@ __add_event(struct list_head *list, int *idx,
 		evsel->name = strdup(name);
 
 	if (config_terms)
+<<<<<<< HEAD
 		list_splice_init(config_terms, &evsel->config_terms);
+=======
+		list_splice(config_terms, &evsel->config_terms);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (list)
 		list_add_tail(&evsel->core.node, list);
@@ -535,12 +539,18 @@ int parse_events_add_cache(struct list_head *list, int *idx,
 					     config_name ? : name, &config_terms,
 					     &hybrid, parse_state);
 	if (hybrid)
+<<<<<<< HEAD
 		goto out_free_terms;
 
 	ret = add_event(list, idx, &attr, config_name ? : name, &config_terms);
 out_free_terms:
 	free_config_terms(&config_terms);
 	return ret;
+=======
+		return ret;
+
+	return add_event(list, idx, &attr, config_name ? : name, &config_terms);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void tracepoint_error(struct parse_events_error *e, int err,
@@ -1460,6 +1470,7 @@ int parse_events_add_numeric(struct parse_events_state *parse_state,
 					       get_config_name(head_config),
 					       &config_terms, &hybrid);
 	if (hybrid)
+<<<<<<< HEAD
 		goto out_free_terms;
 
 	ret = add_event(list, &parse_state->idx, &attr,
@@ -1467,6 +1478,12 @@ int parse_events_add_numeric(struct parse_events_state *parse_state,
 out_free_terms:
 	free_config_terms(&config_terms);
 	return ret;
+=======
+		return ret;
+
+	return add_event(list, &parse_state->idx, &attr,
+			 get_config_name(head_config), &config_terms);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int parse_events_add_tool(struct parse_events_state *parse_state,
@@ -1614,7 +1631,18 @@ int parse_events_add_pmu(struct parse_events_state *parse_state,
 	}
 
 	if (!parse_state->fake_pmu && perf_pmu__config(pmu, &attr, head_config, parse_state->error)) {
+<<<<<<< HEAD
 		free_config_terms(&config_terms);
+=======
+		struct evsel_config_term *pos, *tmp;
+
+		list_for_each_entry_safe(pos, tmp, &config_terms, list) {
+			list_del_init(&pos->list);
+			if (pos->free_str)
+				zfree(&pos->val.str);
+			free(pos);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 	}
 

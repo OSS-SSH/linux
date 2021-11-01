@@ -13,14 +13,20 @@
 
 #include <linux/bitops.h>
 #include <linux/clk.h>
+<<<<<<< HEAD
 #include <linux/clk-provider.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/delay.h>
 #include <linux/interrupt.h>
 #include <linux/irq.h>
 #include <linux/irqdomain.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
+<<<<<<< HEAD
 #include <linux/iopoll.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/msi.h>
 #include <linux/of_address.h>
 #include <linux/of_irq.h>
@@ -43,6 +49,7 @@ struct rcar_msi {
 	int irq2;
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARM
 /*
  * Here we keep a static copy of the remapped PCIe controller address.
@@ -58,6 +65,8 @@ static void __iomem *pcie_base;
 static struct clk *pcie_bus_clk;
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Structure representing the PCIe interface */
 struct rcar_pcie_host {
 	struct rcar_pcie	pcie;
@@ -503,10 +512,19 @@ static irqreturn_t rcar_pcie_msi_irq(int irq, void *data)
 
 	while (reg) {
 		unsigned int index = find_first_bit(&reg, 32);
+<<<<<<< HEAD
 		int ret;
 
 		ret = generic_handle_domain_irq(msi->domain->parent, index);
 		if (ret) {
+=======
+		unsigned int msi_irq;
+
+		msi_irq = irq_find_mapping(msi->domain->parent, index);
+		if (msi_irq) {
+			generic_handle_irq(msi_irq);
+		} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* Unknown MSI, just clear it */
 			dev_dbg(dev, "unexpected MSI\n");
 			rcar_pci_write_reg(pcie, BIT(index), PCIEMSIFR);
@@ -791,12 +809,15 @@ static int rcar_pcie_get_resources(struct rcar_pcie_host *host)
 	}
 	host->msi.irq2 = i;
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARM
 	/* Cache static copy for L1 link state fixup hook on aarch32 */
 	pcie_base = pcie->base;
 	pcie_bus_clk = host->bus_clk;
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 err_irq2:
@@ -1052,6 +1073,7 @@ static struct platform_driver rcar_pcie_driver = {
 	},
 	.probe = rcar_pcie_probe,
 };
+<<<<<<< HEAD
 
 #ifdef CONFIG_ARM
 static DEFINE_SPINLOCK(pmsr_lock);
@@ -1116,3 +1138,6 @@ device_initcall(rcar_pcie_init);
 #else
 builtin_platform_driver(rcar_pcie_driver);
 #endif
+=======
+builtin_platform_driver(rcar_pcie_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

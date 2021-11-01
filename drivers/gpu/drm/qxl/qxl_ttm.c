@@ -127,7 +127,11 @@ static void qxl_bo_move_notify(struct ttm_buffer_object *bo,
 	struct qxl_bo *qbo;
 	struct qxl_device *qdev;
 
+<<<<<<< HEAD
 	if (!qxl_ttm_bo_is_qxl_bo(bo) || !bo->resource)
+=======
+	if (!qxl_ttm_bo_is_qxl_bo(bo))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	qbo = to_qxl_bo(bo);
 	qdev = to_qxl(qbo->tbo.base.dev);

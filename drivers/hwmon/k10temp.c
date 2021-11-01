@@ -65,11 +65,18 @@ static DEFINE_MUTEX(nb_smu_ind_mutex);
 #define F15H_M60H_HARDWARE_TEMP_CTRL_OFFSET	0xd8200c64
 #define F15H_M60H_REPORTED_TEMP_CTRL_OFFSET	0xd8200ca4
 
+<<<<<<< HEAD
 /* Common for Zen CPU families (Family 17h and 18h and 19h) */
 #define ZEN_REPORTED_TEMP_CTRL_BASE		0x00059800
 
 #define ZEN_CCD_TEMP(offset, x)			(ZEN_REPORTED_TEMP_CTRL_BASE + \
 						 (offset) + ((x) * 4))
+=======
+/* Common for Zen CPU families (Family 17h and 18h) */
+#define ZEN_REPORTED_TEMP_CTRL_OFFSET		0x00059800
+
+#define ZEN_CCD_TEMP(x)				(0x00059954 + ((x) * 4))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ZEN_CCD_TEMP_VALID			BIT(11)
 #define ZEN_CCD_TEMP_MASK			GENMASK(10, 0)
 
@@ -104,7 +111,10 @@ struct k10temp_data {
 	u32 temp_adjust_mask;
 	u32 show_temp;
 	bool is_zen;
+<<<<<<< HEAD
 	u32 ccd_offset;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define TCTL_BIT	0
@@ -165,7 +175,11 @@ static void read_tempreg_nb_f15(struct pci_dev *pdev, u32 *regval)
 static void read_tempreg_nb_zen(struct pci_dev *pdev, u32 *regval)
 {
 	amd_smn_read(amd_pci_dev_to_node_id(pdev),
+<<<<<<< HEAD
 		     ZEN_REPORTED_TEMP_CTRL_BASE, regval);
+=======
+		     ZEN_REPORTED_TEMP_CTRL_OFFSET, regval);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static long get_raw_temp(struct k10temp_data *data)
@@ -228,8 +242,12 @@ static int k10temp_read_temp(struct device *dev, u32 attr, int channel,
 			break;
 		case 2 ... 9:		/* Tccd{1-8} */
 			amd_smn_read(amd_pci_dev_to_node_id(data->pdev),
+<<<<<<< HEAD
 				     ZEN_CCD_TEMP(data->ccd_offset, channel - 2),
 						  &regval);
+=======
+				     ZEN_CCD_TEMP(channel - 2), &regval);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			*val = (regval & ZEN_CCD_TEMP_MASK) * 125 - 49000;
 			break;
 		default:
@@ -362,6 +380,15 @@ static const struct hwmon_channel_info *k10temp_info[] = {
 			   HWMON_T_INPUT | HWMON_T_LABEL,
 			   HWMON_T_INPUT | HWMON_T_LABEL,
 			   HWMON_T_INPUT | HWMON_T_LABEL),
+<<<<<<< HEAD
+=======
+	HWMON_CHANNEL_INFO(in,
+			   HWMON_I_INPUT | HWMON_I_LABEL,
+			   HWMON_I_INPUT | HWMON_I_LABEL),
+	HWMON_CHANNEL_INFO(curr,
+			   HWMON_C_INPUT | HWMON_C_LABEL,
+			   HWMON_C_INPUT | HWMON_C_LABEL),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NULL
 };
 
@@ -384,7 +411,11 @@ static void k10temp_get_ccd_support(struct pci_dev *pdev,
 
 	for (i = 0; i < limit; i++) {
 		amd_smn_read(amd_pci_dev_to_node_id(pdev),
+<<<<<<< HEAD
 			     ZEN_CCD_TEMP(data->ccd_offset, i), &regval);
+=======
+			     ZEN_CCD_TEMP(i), &regval);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (regval & ZEN_CCD_TEMP_VALID)
 			data->show_temp |= BIT(TCCD_BIT(i));
 	}
@@ -423,6 +454,10 @@ static int k10temp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	} else if (boot_cpu_data.x86 == 0x17 || boot_cpu_data.x86 == 0x18) {
 		data->temp_adjust_mask = ZEN_CUR_TEMP_RANGE_SEL_MASK;
 		data->read_tempreg = read_tempreg_nb_zen;
+<<<<<<< HEAD
+=======
+		data->show_temp |= BIT(TDIE_BIT);	/* show Tdie */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		data->is_zen = true;
 
 		switch (boot_cpu_data.x86_model) {
@@ -430,6 +465,7 @@ static int k10temp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		case 0x8:	/* Zen+ */
 		case 0x11:	/* Zen APU */
 		case 0x18:	/* Zen+ APU */
+<<<<<<< HEAD
 			data->ccd_offset = 0x154;
 			k10temp_get_ccd_support(pdev, data, 4);
 			break;
@@ -438,23 +474,36 @@ static int k10temp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		case 0x68:	/* Lucienne */
 		case 0x71:	/* Zen2 */
 			data->ccd_offset = 0x154;
+=======
+			k10temp_get_ccd_support(pdev, data, 4);
+			break;
+		case 0x31:	/* Zen2 Threadripper */
+		case 0x71:	/* Zen2 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			k10temp_get_ccd_support(pdev, data, 8);
 			break;
 		}
 	} else if (boot_cpu_data.x86 == 0x19) {
 		data->temp_adjust_mask = ZEN_CUR_TEMP_RANGE_SEL_MASK;
 		data->read_tempreg = read_tempreg_nb_zen;
+<<<<<<< HEAD
+=======
+		data->show_temp |= BIT(TDIE_BIT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		data->is_zen = true;
 
 		switch (boot_cpu_data.x86_model) {
 		case 0x0 ... 0x1:	/* Zen3 SP3/TR */
 		case 0x21:		/* Zen3 Ryzen Desktop */
+<<<<<<< HEAD
 		case 0x50 ... 0x5f:	/* Green Sardine */
 			data->ccd_offset = 0x154;
 			k10temp_get_ccd_support(pdev, data, 8);
 			break;
 		case 0x40 ... 0x4f:	/* Yellow Carp */
 			data->ccd_offset = 0x300;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			k10temp_get_ccd_support(pdev, data, 8);
 			break;
 		}
@@ -468,7 +517,10 @@ static int k10temp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 		if (boot_cpu_data.x86 == entry->model &&
 		    strstr(boot_cpu_data.x86_model_id, entry->id)) {
+<<<<<<< HEAD
 			data->show_temp |= BIT(TDIE_BIT);	/* show Tdie */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			data->temp_offset = entry->offset;
 			break;
 		}
@@ -497,8 +549,11 @@ static const struct pci_device_id k10temp_id_table[] = {
 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_17H_M60H_DF_F3) },
 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_17H_M70H_DF_F3) },
 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_DF_F3) },
+<<<<<<< HEAD
 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M40H_DF_F3) },
 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_19H_M50H_DF_F3) },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ PCI_VDEVICE(HYGON, PCI_DEVICE_ID_AMD_17H_DF_F3) },
 	{}
 };

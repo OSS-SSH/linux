@@ -302,8 +302,11 @@ void ceph_metric_destroy(struct ceph_client_metric *m)
 	if (!m)
 		return;
 
+<<<<<<< HEAD
 	cancel_delayed_work_sync(&m->delayed_work);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	percpu_counter_destroy(&m->total_inodes);
 	percpu_counter_destroy(&m->opened_inodes);
 	percpu_counter_destroy(&m->i_caps_mis);
@@ -311,6 +314,11 @@ void ceph_metric_destroy(struct ceph_client_metric *m)
 	percpu_counter_destroy(&m->d_lease_mis);
 	percpu_counter_destroy(&m->d_lease_hit);
 
+<<<<<<< HEAD
+=======
+	cancel_delayed_work_sync(&m->delayed_work);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ceph_put_mds_session(m->session);
 }
 

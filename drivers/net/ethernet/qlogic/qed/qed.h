@@ -26,6 +26,18 @@
 
 extern const struct qed_common_ops qed_common_ops_pass;
 
+<<<<<<< HEAD
+=======
+#define QED_MAJOR_VERSION		8
+#define QED_MINOR_VERSION		37
+#define QED_REVISION_VERSION		0
+#define QED_ENGINEERING_VERSION		20
+
+#define QED_VERSION						 \
+	((QED_MAJOR_VERSION << 24) | (QED_MINOR_VERSION << 16) | \
+	 (QED_REVISION_VERSION << 8) | QED_ENGINEERING_VERSION)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define STORM_FW_VERSION				       \
 	((FW_MAJOR_VERSION << 24) | (FW_MINOR_VERSION << 16) | \
 	 (FW_REVISION_VERSION << 8) | FW_ENGINEERING_VERSION)
@@ -508,6 +520,15 @@ enum qed_hsi_def_type {
 	QED_NUM_HSI_DEFS
 };
 
+<<<<<<< HEAD
+=======
+#define DRV_MODULE_VERSION		      \
+	__stringify(QED_MAJOR_VERSION) "."    \
+	__stringify(QED_MINOR_VERSION) "."    \
+	__stringify(QED_REVISION_VERSION) "." \
+	__stringify(QED_ENGINEERING_VERSION)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct qed_simd_fp_handler {
 	void	*token;
 	void	(*func)(void *);

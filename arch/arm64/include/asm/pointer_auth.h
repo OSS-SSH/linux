@@ -10,9 +10,12 @@
 #include <asm/memory.h>
 #include <asm/sysreg.h>
 
+<<<<<<< HEAD
 #define PR_PAC_ENABLED_KEYS_MASK                                               \
 	(PR_PAC_APIAKEY | PR_PAC_APIBKEY | PR_PAC_APDAKEY | PR_PAC_APDBKEY)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_ARM64_PTR_AUTH
 /*
  * Each key is a 128-bit quantity which is split across a pair of 64-bit
@@ -120,9 +123,15 @@ static __always_inline void ptrauth_enable(void)
 									       \
 		/* enable all keys */                                          \
 		if (system_supports_address_auth())                            \
+<<<<<<< HEAD
 			ptrauth_set_enabled_keys(current,                      \
 						 PR_PAC_ENABLED_KEYS_MASK,     \
 						 PR_PAC_ENABLED_KEYS_MASK);    \
+=======
+			set_task_sctlr_el1(current->thread.sctlr_user |        \
+					   SCTLR_ELx_ENIA | SCTLR_ELx_ENIB |   \
+					   SCTLR_ELx_ENDA | SCTLR_ELx_ENDB);   \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} while (0)
 
 #define ptrauth_thread_switch_user(tsk)                                        \
@@ -149,4 +158,10 @@ static __always_inline void ptrauth_enable(void)
 #define ptrauth_thread_switch_kernel(tsk)
 #endif /* CONFIG_ARM64_PTR_AUTH_KERNEL */
 
+<<<<<<< HEAD
+=======
+#define PR_PAC_ENABLED_KEYS_MASK                                               \
+	(PR_PAC_APIAKEY | PR_PAC_APIBKEY | PR_PAC_APDAKEY | PR_PAC_APDBKEY)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __ASM_POINTER_AUTH_H */

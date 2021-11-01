@@ -243,6 +243,7 @@ int snd_pcm_info_user(struct snd_pcm_substream *substream,
 
 static bool hw_support_mmap(struct snd_pcm_substream *substream)
 {
+<<<<<<< HEAD
 	struct snd_dma_buffer *dmabuf;
 
 	if (!(substream->runtime->hw.info & SNDRV_PCM_INFO_MMAP))
@@ -266,6 +267,17 @@ static bool hw_support_mmap(struct snd_pcm_substream *substream)
 	default:
 		return dma_can_mmap(dmabuf->dev.dev);
 	}
+=======
+	if (!(substream->runtime->hw.info & SNDRV_PCM_INFO_MMAP))
+		return false;
+
+	if (substream->ops->mmap ||
+	    (substream->dma_buffer.dev.type != SNDRV_DMA_TYPE_DEV &&
+	     substream->dma_buffer.dev.type != SNDRV_DMA_TYPE_DEV_UC))
+		return true;
+
+	return dma_can_mmap(substream->dma_buffer.dev.dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int constrain_mask_params(struct snd_pcm_substream *substream,
@@ -3077,6 +3089,7 @@ static int snd_pcm_ioctl_sync_ptr_compat(struct snd_pcm_substream *substream,
 		boundary = 0x7fffffff;
 	snd_pcm_stream_lock_irq(substream);
 	/* FIXME: we should consider the boundary for the sync from app */
+<<<<<<< HEAD
 	if (!(sflags & SNDRV_PCM_SYNC_PTR_APPL)) {
 		err = pcm_lib_apply_appl_ptr(substream,
 				scontrol.appl_ptr);
@@ -3085,6 +3098,11 @@ static int snd_pcm_ioctl_sync_ptr_compat(struct snd_pcm_substream *substream,
 			return err;
 		}
 	} else
+=======
+	if (!(sflags & SNDRV_PCM_SYNC_PTR_APPL))
+		control->appl_ptr = scontrol.appl_ptr;
+	else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		scontrol.appl_ptr = control->appl_ptr % boundary;
 	if (!(sflags & SNDRV_PCM_SYNC_PTR_AVAIL_MIN))
 		control->avail_min = scontrol.avail_min;
@@ -3621,12 +3639,15 @@ static int snd_pcm_mmap_control(struct snd_pcm_substream *substream, struct file
 
 static bool pcm_status_mmap_allowed(struct snd_pcm_file *pcm_file)
 {
+<<<<<<< HEAD
 	/* If drivers require the explicit sync (typically for non-coherent
 	 * pages), we have to disable the mmap of status and control data
 	 * to enforce the control via SYNC_PTR ioctl.
 	 */
 	if (pcm_file->substream->runtime->hw.info & SNDRV_PCM_INFO_EXPLICIT_SYNC)
 		return false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* See pcm_control_mmap_allowed() below.
 	 * Since older alsa-lib requires both status and control mmaps to be
 	 * coupled, we have to disable the status mmap for old alsa-lib, too.
@@ -3641,9 +3662,12 @@ static bool pcm_control_mmap_allowed(struct snd_pcm_file *pcm_file)
 {
 	if (pcm_file->no_compat_mmap)
 		return false;
+<<<<<<< HEAD
 	/* see above */
 	if (pcm_file->substream->runtime->hw.info & SNDRV_PCM_INFO_EXPLICIT_SYNC)
 		return false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Disallow the control mmap when SYNC_APPLPTR flag is set;
 	 * it enforces the user-space to fall back to snd_pcm_sync_ptr(),
 	 * thus it effectively assures the manual update of appl_ptr.
@@ -3692,8 +3716,11 @@ static vm_fault_t snd_pcm_mmap_data_fault(struct vm_fault *vmf)
 		return VM_FAULT_SIGBUS;
 	if (substream->ops->page)
 		page = substream->ops->page(substream, offset);
+<<<<<<< HEAD
 	else if (!snd_pcm_get_dma_buf(substream))
 		page = virt_to_page(runtime->dma_area + offset);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else
 		page = snd_sgbuf_get_page(snd_pcm_get_dma_buf(substream), offset);
 	if (!page)

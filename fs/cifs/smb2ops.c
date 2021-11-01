@@ -557,8 +557,13 @@ parse_server_interfaces(struct network_interface_info_ioctl_rsp *buf,
 	p = buf;
 	while (bytes_left >= sizeof(*p)) {
 		info->speed = le64_to_cpu(p->LinkSpeed);
+<<<<<<< HEAD
 		info->rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE) ? 1 : 0;
 		info->rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE) ? 1 : 0;
+=======
+		info->rdma_capable = le32_to_cpu(p->Capability & RDMA_CAPABLE);
+		info->rss_capable = le32_to_cpu(p->Capability & RSS_CAPABLE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		cifs_dbg(FYI, "%s: adding iface %zu\n", __func__, *iface_count);
 		cifs_dbg(FYI, "%s: speed %zu bps\n", __func__, info->speed);
@@ -689,6 +694,7 @@ smb2_close_cached_fid(struct kref *ref)
 		cifs_dbg(FYI, "clear cached root file handle\n");
 		SMB2_close(0, cfid->tcon, cfid->fid->persistent_fid,
 			   cfid->fid->volatile_fid);
+<<<<<<< HEAD
 	}
 
 	/*
@@ -702,6 +708,15 @@ smb2_close_cached_fid(struct kref *ref)
 	if (cfid->dentry) {
 		dput(cfid->dentry);
 		cfid->dentry = NULL;
+=======
+		cfid->is_valid = false;
+		cfid->file_all_info_is_valid = false;
+		cfid->has_lease = false;
+		if (cfid->dentry) {
+			dput(cfid->dentry);
+			cfid->dentry = NULL;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -2916,8 +2931,11 @@ smb2_get_dfs_refer(const unsigned int xid, struct cifs_ses *ses,
 		/* ipc tcons are not refcounted */
 		spin_lock(&cifs_tcp_ses_lock);
 		tcon->tc_count--;
+<<<<<<< HEAD
 		/* tc_count can never go negative */
 		WARN_ON(tcon->tc_count < 0);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		spin_unlock(&cifs_tcp_ses_lock);
 	}
 	kfree(utf16_path);
@@ -3596,7 +3614,10 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
 		return rc;
 	}
 
+<<<<<<< HEAD
 	filemap_invalidate_lock(inode->i_mapping);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * We implement the punch hole through ioctl, so we need remove the page
 	 * caches first, otherwise the data may be inconsistent with the server.
@@ -3614,7 +3635,10 @@ static long smb3_punch_hole(struct file *file, struct cifs_tcon *tcon,
 			sizeof(struct file_zero_data_information),
 			CIFSMaxBufSize, NULL, NULL);
 	free_xid(xid);
+<<<<<<< HEAD
 	filemap_invalidate_unlock(inode->i_mapping);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
@@ -3626,7 +3650,10 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
 {
 	struct cifs_io_parms io_parms = {0};
 	int nbytes;
+<<<<<<< HEAD
 	int rc = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct kvec iov[2];
 
 	io_parms.netfid = cfile->fid.netfid;
@@ -3634,6 +3661,7 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
 	io_parms.tcon = tcon;
 	io_parms.persistent_fid = cfile->fid.persistent_fid;
 	io_parms.volatile_fid = cfile->fid.volatile_fid;
+<<<<<<< HEAD
 
 	while (len) {
 		io_parms.offset = off;
@@ -3653,6 +3681,15 @@ static int smb3_simple_fallocate_write_range(unsigned int xid,
 		len -= nbytes;
 	}
 	return rc;
+=======
+	io_parms.offset = off;
+	io_parms.length = len;
+
+	/* iov[0] is reserved for smb header */
+	iov[1].iov_base = buf;
+	iov[1].iov_len = io_parms.length;
+	return SMB2_write(xid, &io_parms, &nbytes, iov, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int smb3_simple_fallocate_range(unsigned int xid,
@@ -3676,6 +3713,14 @@ static int smb3_simple_fallocate_range(unsigned int xid,
 			(char **)&out_data, &out_data_len);
 	if (rc)
 		goto out;
+<<<<<<< HEAD
+=======
+	/*
+	 * It is already all allocated
+	 */
+	if (out_data_len == 0)
+		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	buf = kzalloc(1024 * 1024, GFP_KERNEL);
 	if (buf == NULL) {
@@ -3798,6 +3843,7 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (keep_size == true) {
 		/*
 		 * We can not preallocate pages beyond the end of the file
@@ -3816,6 +3862,8 @@ static long smb3_simple_falloc(struct file *file, struct cifs_tcon *tcon,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if ((keep_size == true) || (i_size_read(inode) >= off + len)) {
 		/*
 		 * At this point, we are trying to fallocate an internal

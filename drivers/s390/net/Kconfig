@@ -74,7 +74,10 @@ config QETH_L2
 	def_tristate y
 	prompt "qeth layer 2 device support"
 	depends on QETH
+<<<<<<< HEAD
 	depends on BRIDGE || BRIDGE=n
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Select this option to be able to run qeth devices in layer 2 mode.
 	  To compile as a module, choose M. The module name is qeth_l2.
@@ -89,6 +92,18 @@ config QETH_L3
 	  To compile as a module choose M. The module name is qeth_l3.
 	  If unsure, choose Y.
 
+<<<<<<< HEAD
+=======
+config QETH_OSN
+	def_bool !HAVE_MARCH_Z14_FEATURES
+	prompt "qeth OSN device support"
+	depends on QETH
+	help
+	  This enables the qeth driver to support devices in OSN mode.
+	  This feature will be removed in 2021.
+	  If unsure, choose N.
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config QETH_OSX
 	def_bool !HAVE_MARCH_Z15_FEATURES
 	prompt "qeth OSX device support"

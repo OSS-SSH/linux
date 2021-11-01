@@ -46,7 +46,10 @@
 #define TCMU_MAILBOX_FLAG_CAP_OOOC (1 << 0) /* Out-of-order completions */
 #define TCMU_MAILBOX_FLAG_CAP_READ_LEN (1 << 1) /* Read data length */
 #define TCMU_MAILBOX_FLAG_CAP_TMR (1 << 2) /* TMR notifications */
+<<<<<<< HEAD
 #define TCMU_MAILBOX_FLAG_CAP_KEEP_BUF (1<<3) /* Keep buf after cmd completion */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct tcmu_mailbox {
 	__u16 version;
@@ -76,7 +79,10 @@ struct tcmu_cmd_entry_hdr {
 	__u8 kflags;
 #define TCMU_UFLAG_UNKNOWN_OP 0x1
 #define TCMU_UFLAG_READ_LEN   0x2
+<<<<<<< HEAD
 #define TCMU_UFLAG_KEEP_BUF   0x4
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u8 uflags;
 
 } __packed;

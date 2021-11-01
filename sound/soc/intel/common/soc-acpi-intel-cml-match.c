@@ -75,7 +75,11 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_cml_machines[] = {
 	},
 	{
 		.id = "DLGS7219",
+<<<<<<< HEAD
 		.drv_name = "cml_da7219_mx98357a",
+=======
+		.drv_name = "cml_da7219_max98357a",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.machine_quirk = snd_soc_acpi_codec_list,
 		.quirk_data = &max98390_spk_codecs,
 		.sof_fw_filename = "sof-cml.ri",

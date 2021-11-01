@@ -245,7 +245,10 @@ void hv_ringbuffer_cleanup(struct hv_ring_buffer_info *ring_info)
 	mutex_unlock(&ring_info->ring_buffer_mutex);
 
 	kfree(ring_info->pkt_buffer);
+<<<<<<< HEAD
 	ring_info->pkt_buffer = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ring_info->pkt_buffer_size = 0;
 }
 

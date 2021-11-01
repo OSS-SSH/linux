@@ -53,6 +53,7 @@ struct bpf_reg_state {
 		/* valid when type == CONST_PTR_TO_MAP | PTR_TO_MAP_VALUE |
 		 *   PTR_TO_MAP_VALUE_OR_NULL
 		 */
+<<<<<<< HEAD
 		struct {
 			struct bpf_map *map_ptr;
 			/* To distinguish map lookups from outer map
@@ -61,6 +62,9 @@ struct bpf_reg_state {
 			 */
 			u32 map_uid;
 		};
+=======
+		struct bpf_map *map_ptr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* for PTR_TO_BTF_ID */
 		struct {
@@ -208,6 +212,7 @@ struct bpf_func_state {
 	 * zero == main subprog
 	 */
 	u32 subprogno;
+<<<<<<< HEAD
 	/* Every bpf_timer_start will increment async_entry_cnt.
 	 * It's used to distinguish:
 	 * void foo(void) { for(;;); }
@@ -216,11 +221,17 @@ struct bpf_func_state {
 	u32 async_entry_cnt;
 	bool in_callback_fn;
 	bool in_async_callback_fn;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The following fields should be last. See copy_func_state() */
 	int acquired_refs;
 	struct bpf_reference_state *refs;
 	int allocated_stack;
+<<<<<<< HEAD
+=======
+	bool in_callback_fn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct bpf_stack_state *stack;
 };
 
@@ -354,8 +365,13 @@ struct bpf_insn_aux_data {
 	};
 	u64 map_key_state; /* constant (32 bit) key tracking for maps */
 	int ctx_field_size; /* the ctx field size for load insn, maybe 0 */
+<<<<<<< HEAD
 	u32 seen; /* this insn was processed by the verifier at env->pass_cnt */
 	bool sanitize_stack_spill; /* subject to Spectre v4 sanitation */
+=======
+	int sanitize_stack_off; /* stack slot to be cleared */
+	u32 seen; /* this insn was processed by the verifier at env->pass_cnt */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool zext_dst; /* this insn zero extends dst reg */
 	u8 alu_state; /* used in combination with alu_limit */
 
@@ -406,7 +422,10 @@ struct bpf_subprog_info {
 	bool has_tail_call;
 	bool tail_call_reachable;
 	bool has_ld_abs;
+<<<<<<< HEAD
 	bool is_async_cb;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* single container for all structs
@@ -429,7 +448,10 @@ struct bpf_verifier_env {
 	u32 used_map_cnt;		/* number of used maps */
 	u32 used_btf_cnt;		/* number of used BTF objects */
 	u32 id_gen;			/* used to generate unique reg IDs */
+<<<<<<< HEAD
 	bool explore_alu_limits;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool allow_ptr_leaks;
 	bool allow_uninit_stack;
 	bool allow_ptr_to_map_access;

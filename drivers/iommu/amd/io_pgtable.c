@@ -493,6 +493,12 @@ static phys_addr_t iommu_v1_iova_to_phys(struct io_pgtable_ops *ops, unsigned lo
 	unsigned long offset_mask, pte_pgsize;
 	u64 *pte, __pte;
 
+<<<<<<< HEAD
+=======
+	if (pgtable->mode == PAGE_MODE_NONE)
+		return iova;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pte = fetch_pte(pgtable, iova, &pte_pgsize);
 
 	if (!pte || !IOMMU_PTE_PRESENT(*pte))

@@ -30,6 +30,7 @@ struct i915_address_space;
 struct intel_timeline;
 struct intel_ring;
 
+<<<<<<< HEAD
 /**
  * struct i915_gem_engines - A set of engines
  */
@@ -63,10 +64,26 @@ struct i915_gem_engines_iter {
 	unsigned int idx;
 
 	/** @engines: Engine set being iterated */
+=======
+struct i915_gem_engines {
+	union {
+		struct list_head link;
+		struct rcu_head rcu;
+	};
+	struct i915_sw_fence fence;
+	struct i915_gem_context *ctx;
+	unsigned int num_engines;
+	struct intel_context *engines[];
+};
+
+struct i915_gem_engines_iter {
+	unsigned int idx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const struct i915_gem_engines *engines;
 };
 
 /**
+<<<<<<< HEAD
  * enum i915_gem_engine_type - Describes the type of an i915_gem_proto_engine
  */
 enum i915_gem_engine_type {
@@ -201,16 +218,25 @@ struct i915_gem_proto_context {
 };
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * struct i915_gem_context - client state
  *
  * The struct i915_gem_context represents the combined view of the driver and
  * logical hardware state for a particular client.
  */
 struct i915_gem_context {
+<<<<<<< HEAD
 	/** @i915: i915 device backpointer */
 	struct drm_i915_private *i915;
 
 	/** @file_priv: owning file descriptor */
+=======
+	/** i915: i915 device backpointer */
+	struct drm_i915_private *i915;
+
+	/** file_priv: owning file descriptor */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct drm_i915_file_private *file_priv;
 
 	/**
@@ -235,6 +261,7 @@ struct i915_gem_context {
 	 * CONTEXT_USER_ENGINES flag is set).
 	 */
 	struct i915_gem_engines __rcu *engines;
+<<<<<<< HEAD
 
 	/** @engines_mutex: guards writes to engines */
 	struct mutex engines_mutex;
@@ -252,6 +279,11 @@ struct i915_gem_context {
 	 * defined results anyway so we choose to not care.
 	 */
 	struct drm_syncobj *syncobj;
+=======
+	struct mutex engines_mutex; /* guards writes to engines */
+
+	struct intel_timeline *timeline;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/**
 	 * @vm: unique address space (GTT)
@@ -274,7 +306,11 @@ struct i915_gem_context {
 	 */
 	struct pid *pid;
 
+<<<<<<< HEAD
 	/** @link: place with &drm_i915_private.context_list */
+=======
+	/** link: place with &drm_i915_private.context_list */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head link;
 
 	/**
@@ -297,6 +333,10 @@ struct i915_gem_context {
 	 * @user_flags: small set of booleans controlled by the user
 	 */
 	unsigned long user_flags;
+<<<<<<< HEAD
+=======
+#define UCONTEXT_NO_ZEROMAP		0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define UCONTEXT_NO_ERROR_CAPTURE	1
 #define UCONTEXT_BANNABLE		2
 #define UCONTEXT_RECOVERABLE		3
@@ -309,6 +349,7 @@ struct i915_gem_context {
 #define CONTEXT_CLOSED			0
 #define CONTEXT_USER_ENGINES		1
 
+<<<<<<< HEAD
 	/** @mutex: guards everything that isn't engines or handles_vma */
 	struct mutex mutex;
 
@@ -316,6 +357,13 @@ struct i915_gem_context {
 	struct i915_sched_attr sched;
 
 	/** @guilty_count: How many times this context has caused a GPU hang. */
+=======
+	struct mutex mutex;
+
+	struct i915_sched_attr sched;
+
+	/** guilty_count: How many times this context has caused a GPU hang. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	atomic_t guilty_count;
 	/**
 	 * @active_count: How many times this context was active during a GPU
@@ -323,23 +371,41 @@ struct i915_gem_context {
 	 */
 	atomic_t active_count;
 
+<<<<<<< HEAD
+=======
+	struct {
+		u64 timeout_us;
+	} watchdog;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/**
 	 * @hang_timestamp: The last time(s) this context caused a GPU hang
 	 */
 	unsigned long hang_timestamp[2];
 #define CONTEXT_FAST_HANG_JIFFIES (120 * HZ) /* 3 hangs within 120s? Banned! */
 
+<<<<<<< HEAD
 	/** @remap_slice: Bitmask of cache lines that need remapping */
 	u8 remap_slice;
 
 	/**
 	 * @handles_vma: rbtree to look up our context specific obj/vma for
+=======
+	/** remap_slice: Bitmask of cache lines that need remapping */
+	u8 remap_slice;
+
+	/**
+	 * handles_vma: rbtree to look up our context specific obj/vma for
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * the user handle. (user handles are per fd, but the binding is
 	 * per vm, which may be one per context or shared with the global GTT)
 	 */
 	struct radix_tree_root handles_vma;
+<<<<<<< HEAD
 
 	/** @lut_mutex: Locks handles_vma */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mutex lut_mutex;
 
 	/**
@@ -351,11 +417,16 @@ struct i915_gem_context {
 	 */
 	char name[TASK_COMM_LEN + 8];
 
+<<<<<<< HEAD
 	/** @stale: tracks stale engines to be destroyed */
 	struct {
 		/** @lock: guards engines */
 		spinlock_t lock;
 		/** @engines: list of stale engines */
+=======
+	struct {
+		spinlock_t lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct list_head engines;
 	} stale;
 };

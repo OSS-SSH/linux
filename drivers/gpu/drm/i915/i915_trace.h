@@ -794,17 +794,24 @@ DECLARE_EVENT_CLASS(i915_request,
 	    TP_STRUCT__entry(
 			     __field(u32, dev)
 			     __field(u64, ctx)
+<<<<<<< HEAD
 			     __field(u32, guc_id)
 			     __field(u16, class)
 			     __field(u16, instance)
 			     __field(u32, seqno)
 			     __field(u32, tail)
+=======
+			     __field(u16, class)
+			     __field(u16, instance)
+			     __field(u32, seqno)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     ),
 
 	    TP_fast_assign(
 			   __entry->dev = rq->engine->i915->drm.primary->index;
 			   __entry->class = rq->engine->uabi_class;
 			   __entry->instance = rq->engine->uabi_instance;
+<<<<<<< HEAD
 			   __entry->guc_id = rq->context->guc_id;
 			   __entry->ctx = rq->fence.context;
 			   __entry->seqno = rq->fence.seqno;
@@ -828,6 +835,23 @@ DEFINE_EVENT(i915_request, i915_request_guc_submit,
 	     TP_ARGS(rq)
 );
 
+=======
+			   __entry->ctx = rq->fence.context;
+			   __entry->seqno = rq->fence.seqno;
+			   ),
+
+	    TP_printk("dev=%u, engine=%u:%u, ctx=%llu, seqno=%u",
+		      __entry->dev, __entry->class, __entry->instance,
+		      __entry->ctx, __entry->seqno)
+);
+
+DEFINE_EVENT(i915_request, i915_request_add,
+	    TP_PROTO(struct i915_request *rq),
+	    TP_ARGS(rq)
+);
+
+#if defined(CONFIG_DRM_I915_LOW_LEVEL_TRACEPOINTS)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 DEFINE_EVENT(i915_request, i915_request_submit,
 	     TP_PROTO(struct i915_request *rq),
 	     TP_ARGS(rq)
@@ -895,6 +919,7 @@ TRACE_EVENT(i915_request_out,
 			      __entry->ctx, __entry->seqno, __entry->completed)
 );
 
+<<<<<<< HEAD
 DECLARE_EVENT_CLASS(intel_context,
 		    TP_PROTO(struct intel_context *ce),
 		    TP_ARGS(ce),
@@ -1006,6 +1031,11 @@ trace_i915_request_guc_submit(struct i915_request *rq)
 }
 
 static inline void
+=======
+#else
+#if !defined(TRACE_HEADER_MULTI_READ)
+static inline void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 trace_i915_request_submit(struct i915_request *rq)
 {
 }
@@ -1024,6 +1054,7 @@ static inline void
 trace_i915_request_out(struct i915_request *rq)
 {
 }
+<<<<<<< HEAD
 
 static inline void
 trace_intel_context_set_prio(struct intel_context *ce)
@@ -1099,6 +1130,8 @@ static inline void
 trace_intel_context_do_unpin(struct intel_context *ce)
 {
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 #endif
 

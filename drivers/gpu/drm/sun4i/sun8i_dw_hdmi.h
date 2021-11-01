@@ -169,7 +169,10 @@ struct sun8i_hdmi_phy {
 	struct clk			*clk_phy;
 	struct clk			*clk_pll0;
 	struct clk			*clk_pll1;
+<<<<<<< HEAD
 	struct device			*dev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int			rcal;
 	struct regmap			*regs;
 	struct reset_control		*rst_phy;
@@ -206,8 +209,12 @@ encoder_to_sun8i_dw_hdmi(struct drm_encoder *encoder)
 
 int sun8i_hdmi_phy_get(struct sun8i_dw_hdmi *hdmi, struct device_node *node);
 
+<<<<<<< HEAD
 int sun8i_hdmi_phy_init(struct sun8i_hdmi_phy *phy);
 void sun8i_hdmi_phy_deinit(struct sun8i_hdmi_phy *phy);
+=======
+void sun8i_hdmi_phy_init(struct sun8i_hdmi_phy *phy);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void sun8i_hdmi_phy_set_ops(struct sun8i_hdmi_phy *phy,
 			    struct dw_hdmi_plat_data *plat_data);
 

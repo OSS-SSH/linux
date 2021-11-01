@@ -219,13 +219,21 @@ retry:
 	mmap_read_unlock(mm);
 	/* Send a sigbus, regardless of whether we were in kernel
 	   or user mode.  */
+<<<<<<< HEAD
 	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address);
+=======
+	force_sig_fault(SIGBUS, BUS_ADRERR, (void __user *) address, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!user_mode(regs))
 		goto no_context;
 	return;
 
  do_sigsegv:
+<<<<<<< HEAD
 	force_sig_fault(SIGSEGV, si_code, (void __user *) address);
+=======
+	force_sig_fault(SIGSEGV, si_code, (void __user *) address, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return;
 
 #ifdef CONFIG_ALPHA_LARGE_VMALLOC

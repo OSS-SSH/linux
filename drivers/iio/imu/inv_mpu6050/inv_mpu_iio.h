@@ -149,10 +149,13 @@ struct inv_mpu6050_hw {
 		int offset;
 		int scale;
 	} temp;
+<<<<<<< HEAD
 	struct {
 		unsigned int accel;
 		unsigned int gyro;
 	} startup_time;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -324,6 +327,7 @@ struct inv_mpu6050_state {
 /* delay time in milliseconds */
 #define INV_MPU6050_POWER_UP_TIME            100
 #define INV_MPU6050_TEMP_UP_TIME             100
+<<<<<<< HEAD
 #define INV_MPU6050_ACCEL_STARTUP_TIME       20
 #define INV_MPU6050_GYRO_STARTUP_TIME        60
 #define INV_MPU6050_GYRO_DOWN_TIME           150
@@ -339,6 +343,13 @@ struct inv_mpu6050_state {
 #define INV_ICM20690_ACCEL_STARTUP_TIME      10
 
 
+=======
+#define INV_MPU6050_ACCEL_UP_TIME            20
+#define INV_MPU6050_GYRO_UP_TIME             35
+#define INV_MPU6050_GYRO_DOWN_TIME           150
+#define INV_MPU6050_SUSPEND_DELAY_MS         2000
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* delay time in microseconds */
 #define INV_MPU6050_REG_UP_TIME_MIN          5000
 #define INV_MPU6050_REG_UP_TIME_MAX          10000

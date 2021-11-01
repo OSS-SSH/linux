@@ -16,8 +16,16 @@ static void fence_complete(struct dma_fence_work *f)
 static void fence_work(struct work_struct *work)
 {
 	struct dma_fence_work *f = container_of(work, typeof(*f), work);
+<<<<<<< HEAD
 
 	f->ops->work(f);
+=======
+	int err;
+
+	err = f->ops->work(f);
+	if (err)
+		dma_fence_set_error(&f->dma, err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	fence_complete(f);
 	dma_fence_put(&f->dma);

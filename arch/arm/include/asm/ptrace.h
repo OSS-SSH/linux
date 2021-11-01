@@ -19,6 +19,10 @@ struct pt_regs {
 struct svc_pt_regs {
 	struct pt_regs regs;
 	u32 dacr;
+<<<<<<< HEAD
+=======
+	u32 addr_limit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define to_svc_pt_regs(r) container_of(r, struct svc_pt_regs, regs)

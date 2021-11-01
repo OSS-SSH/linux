@@ -86,11 +86,16 @@ void ipa_interrupt_suspend_clear_all(struct ipa_interrupt *interrupt);
 void ipa_interrupt_simulate_suspend(struct ipa_interrupt *interrupt);
 
 /**
+<<<<<<< HEAD
  * ipa_interrupt_config() - Configure the IPA interrupt framework
+=======
+ * ipa_interrupt_setup() - Set up the IPA interrupt framework
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @ipa:	IPA pointer
  *
  * Return:	Pointer to IPA SMP2P info, or a pointer-coded error
  */
+<<<<<<< HEAD
 struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa);
 
 /**
@@ -98,5 +103,14 @@ struct ipa_interrupt *ipa_interrupt_config(struct ipa *ipa);
  * @interrupt:	IPA interrupt structure
  */
 void ipa_interrupt_deconfig(struct ipa_interrupt *interrupt);
+=======
+struct ipa_interrupt *ipa_interrupt_setup(struct ipa *ipa);
+
+/**
+ * ipa_interrupt_teardown() - Tear down the IPA interrupt framework
+ * @interrupt:	IPA interrupt structure
+ */
+void ipa_interrupt_teardown(struct ipa_interrupt *interrupt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* _IPA_INTERRUPT_H_ */

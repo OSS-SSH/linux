@@ -204,6 +204,10 @@ obj-$(CONFIG_WATCHDOG_SUN4V)		+= sun4v_wdt.o
 obj-$(CONFIG_XEN_WDT) += xen_wdt.o
 
 # Architecture Independent
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_BD70528_WATCHDOG) += bd70528_wdt.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_BD957XMUF_WATCHDOG) += bd9576_wdt.o
 obj-$(CONFIG_DA9052_WATCHDOG) += da9052_wdt.o
 obj-$(CONFIG_DA9055_WATCHDOG) += da9055_wdt.o

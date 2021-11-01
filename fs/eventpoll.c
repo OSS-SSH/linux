@@ -723,7 +723,11 @@ static int ep_remove(struct eventpoll *ep, struct epitem *epi)
 	 */
 	call_rcu(&epi->rcu, epi_rcu_free);
 
+<<<<<<< HEAD
 	percpu_counter_dec(&ep->user->epoll_watches);
+=======
+	atomic_long_dec(&ep->user->epoll_watches);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -1439,6 +1443,10 @@ static int ep_insert(struct eventpoll *ep, const struct epoll_event *event,
 {
 	int error, pwake = 0;
 	__poll_t revents;
+<<<<<<< HEAD
+=======
+	long user_watches;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct epitem *epi;
 	struct ep_pqueue epq;
 	struct eventpoll *tep = NULL;
@@ -1448,6 +1456,7 @@ static int ep_insert(struct eventpoll *ep, const struct epoll_event *event,
 
 	lockdep_assert_irqs_enabled();
 
+<<<<<<< HEAD
 	if (unlikely(percpu_counter_compare(&ep->user->epoll_watches,
 					    max_user_watches) >= 0))
 		return -ENOSPC;
@@ -1457,6 +1466,13 @@ static int ep_insert(struct eventpoll *ep, const struct epoll_event *event,
 		percpu_counter_dec(&ep->user->epoll_watches);
 		return -ENOMEM;
 	}
+=======
+	user_watches = atomic_long_read(&ep->user->epoll_watches);
+	if (unlikely(user_watches >= max_user_watches))
+		return -ENOSPC;
+	if (!(epi = kmem_cache_zalloc(epi_cache, GFP_KERNEL)))
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Item initialization follow here ... */
 	INIT_LIST_HEAD(&epi->rdllink);
@@ -1469,16 +1485,27 @@ static int ep_insert(struct eventpoll *ep, const struct epoll_event *event,
 		mutex_lock_nested(&tep->mtx, 1);
 	/* Add the current item to the list of active epoll hook for this file */
 	if (unlikely(attach_epitem(tfile, epi) < 0)) {
+<<<<<<< HEAD
 		if (tep)
 			mutex_unlock(&tep->mtx);
 		kmem_cache_free(epi_cache, epi);
 		percpu_counter_dec(&ep->user->epoll_watches);
+=======
+		kmem_cache_free(epi_cache, epi);
+		if (tep)
+			mutex_unlock(&tep->mtx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 	}
 
 	if (full_check && !tep)
 		list_file(tfile);
 
+<<<<<<< HEAD
+=======
+	atomic_long_inc(&ep->user->epoll_watches);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Add the current item to the RB tree. All RB tree operations are
 	 * protected by "mtx", and ep_insert() is called with "mtx" held.
@@ -1686,8 +1713,13 @@ static int ep_send_events(struct eventpoll *ep,
 		if (!revents)
 			continue;
 
+<<<<<<< HEAD
 		events = epoll_put_uevent(revents, epi->event.data, events);
 		if (!events) {
+=======
+		if (__put_user(revents, &events->events) ||
+		    __put_user(epi->event.data, &events->data)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			list_add(&epi->rdllink, &txlist);
 			ep_pm_stay_awake(epi);
 			if (!res)
@@ -1695,6 +1727,10 @@ static int ep_send_events(struct eventpoll *ep,
 			break;
 		}
 		res++;
+<<<<<<< HEAD
+=======
+		events++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (epi->event.events & EPOLLONESHOT)
 			epi->event.events &= EP_PRIVATE_BITS;
 		else if (!(epi->event.events & EPOLLET)) {

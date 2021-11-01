@@ -202,6 +202,10 @@ static inline s8 TEMP_TO_REG(long val, s8 min, s8 max)
 }
 
 struct w83793_data {
+<<<<<<< HEAD
+=======
+	struct i2c_client *lm75[2];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct device *hwmon_dev;
 	struct mutex update_lock;
 	char valid;			/* !=0 if following fields are valid */
@@ -1565,6 +1569,10 @@ w83793_detect_subclients(struct i2c_client *client)
 	int address = client->addr;
 	u8 tmp;
 	struct i2c_adapter *adapter = client->adapter;
+<<<<<<< HEAD
+=======
+	struct w83793_data *data = i2c_get_clientdata(client);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	id = i2c_adapter_id(adapter);
 	if (force_subclients[0] == id && force_subclients[1] == address) {
@@ -1584,6 +1592,7 @@ w83793_detect_subclients(struct i2c_client *client)
 	}
 
 	tmp = w83793_read_value(client, W83793_REG_I2C_SUBADDR);
+<<<<<<< HEAD
 
 	if (!(tmp & 0x88) && (tmp & 0x7) == ((tmp >> 4) & 0x7)) {
 		dev_err(&client->dev,
@@ -1596,6 +1605,22 @@ w83793_detect_subclients(struct i2c_client *client)
 
 	if (!(tmp & 0x80))
 		devm_i2c_new_dummy_device(&client->dev, adapter, 0x48 + ((tmp >> 4) & 0x7));
+=======
+	if (!(tmp & 0x08))
+		data->lm75[0] = devm_i2c_new_dummy_device(&client->dev, adapter,
+							  0x48 + (tmp & 0x7));
+	if (!(tmp & 0x80)) {
+		if (!IS_ERR(data->lm75[0])
+		    && ((tmp & 0x7) == ((tmp >> 4) & 0x7))) {
+			dev_err(&client->dev,
+				"duplicate addresses 0x%x, "
+				"use force_subclients\n", data->lm75[0]->addr);
+			return -ENODEV;
+		}
+		data->lm75[1] = devm_i2c_new_dummy_device(&client->dev, adapter,
+							  0x48 + ((tmp >> 4) & 0x7));
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

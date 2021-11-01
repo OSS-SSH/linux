@@ -322,8 +322,12 @@ static int gve_adminq_issue_cmd(struct gve_priv *priv,
 	tail = ioread32be(&priv->reg_bar0->adminq_event_counter);
 
 	// Check if next command will overflow the buffer.
+<<<<<<< HEAD
 	if (((priv->adminq_prod_cnt + 1) & priv->adminq_mask) ==
 	    (tail & priv->adminq_mask)) {
+=======
+	if (((priv->adminq_prod_cnt + 1) & priv->adminq_mask) == tail) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		int err;
 
 		// Flush existing commands to make room.
@@ -333,8 +337,12 @@ static int gve_adminq_issue_cmd(struct gve_priv *priv,
 
 		// Retry.
 		tail = ioread32be(&priv->reg_bar0->adminq_event_counter);
+<<<<<<< HEAD
 		if (((priv->adminq_prod_cnt + 1) & priv->adminq_mask) ==
 		    (tail & priv->adminq_mask)) {
+=======
+		if (((priv->adminq_prod_cnt + 1) & priv->adminq_mask) == tail) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			// This should never happen. We just flushed the
 			// command queue so there should be enough space.
 			return -ENOMEM;

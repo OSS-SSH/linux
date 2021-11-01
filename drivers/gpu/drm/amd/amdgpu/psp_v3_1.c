@@ -103,7 +103,11 @@ static int psp_v3_1_bootloader_load_sysdrv(struct psp_context *psp)
 		return ret;
 
 	/* Copy PSP System Driver binary to memory */
+<<<<<<< HEAD
 	psp_copy_fw(psp, psp->sys.start_addr, psp->sys.size_bytes);
+=======
+	psp_copy_fw(psp, psp->sys_start_addr, psp->sys_bin_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Provide the sys driver to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,
@@ -142,7 +146,11 @@ static int psp_v3_1_bootloader_load_sos(struct psp_context *psp)
 		return ret;
 
 	/* Copy Secure OS binary to PSP memory */
+<<<<<<< HEAD
 	psp_copy_fw(psp, psp->sos.start_addr, psp->sos.size_bytes);
+=======
+	psp_copy_fw(psp, psp->sos_start_addr, psp->sos_bin_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Provide the PSP secure OS to bootloader */
 	WREG32_SOC15(MP0, 0, mmMP0_SMN_C2PMSG_36,

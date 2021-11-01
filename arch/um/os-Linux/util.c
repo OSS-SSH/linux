@@ -3,7 +3,10 @@
  * Copyright (C) 2000 - 2007 Jeff Dike (jdike@{addtoit,linux.intel}.com)
  */
 
+<<<<<<< HEAD
 #include <stdarg.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

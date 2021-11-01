@@ -514,7 +514,11 @@ static struct sem_array *sem_alloc(size_t nsems)
 	if (nsems > (INT_MAX - sizeof(*sma)) / sizeof(sma->sems[0]))
 		return NULL;
 
+<<<<<<< HEAD
 	sma = kvzalloc(struct_size(sma, sems, nsems), GFP_KERNEL_ACCOUNT);
+=======
+	sma = kvzalloc(struct_size(sma, sems, nsems), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (unlikely(!sma))
 		return NULL;
 
@@ -1855,7 +1859,11 @@ static inline int get_undo_list(struct sem_undo_list **undo_listp)
 
 	undo_list = current->sysvsem.undo_list;
 	if (!undo_list) {
+<<<<<<< HEAD
 		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL_ACCOUNT);
+=======
+		undo_list = kzalloc(sizeof(*undo_list), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (undo_list == NULL)
 			return -ENOMEM;
 		spin_lock_init(&undo_list->lock);
@@ -1941,7 +1949,11 @@ static struct sem_undo *find_alloc_undo(struct ipc_namespace *ns, int semid)
 
 	/* step 2: allocate new undo structure */
 	new = kvzalloc(sizeof(struct sem_undo) + sizeof(short)*nsems,
+<<<<<<< HEAD
 		       GFP_KERNEL_ACCOUNT);
+=======
+		       GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!new) {
 		ipc_rcu_putref(&sma->sem_perm, sem_rcu_free);
 		return ERR_PTR(-ENOMEM);
@@ -1984,6 +1996,7 @@ out:
 	return un;
 }
 
+<<<<<<< HEAD
 long __do_semtimedop(int semid, struct sembuf *sops,
 		unsigned nsops, const struct timespec64 *timeout,
 		struct ipc_namespace *ns)
@@ -1991,27 +2004,62 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 	int error = -EINVAL;
 	struct sem_array *sma;
 	struct sembuf *sop;
+=======
+static long do_semtimedop(int semid, struct sembuf __user *tsops,
+		unsigned nsops, const struct timespec64 *timeout)
+{
+	int error = -EINVAL;
+	struct sem_array *sma;
+	struct sembuf fast_sops[SEMOPM_FAST];
+	struct sembuf *sops = fast_sops, *sop;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct sem_undo *un;
 	int max, locknum;
 	bool undos = false, alter = false, dupsop = false;
 	struct sem_queue queue;
 	unsigned long dup = 0, jiffies_left = 0;
+<<<<<<< HEAD
+=======
+	struct ipc_namespace *ns;
+
+	ns = current->nsproxy->ipc_ns;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (nsops < 1 || semid < 0)
 		return -EINVAL;
 	if (nsops > ns->sc_semopm)
 		return -E2BIG;
+<<<<<<< HEAD
+=======
+	if (nsops > SEMOPM_FAST) {
+		sops = kvmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
+		if (sops == NULL)
+			return -ENOMEM;
+	}
+
+	if (copy_from_user(sops, tsops, nsops * sizeof(*tsops))) {
+		error =  -EFAULT;
+		goto out_free;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (timeout) {
 		if (timeout->tv_sec < 0 || timeout->tv_nsec < 0 ||
 			timeout->tv_nsec >= 1000000000L) {
 			error = -EINVAL;
+<<<<<<< HEAD
 			goto out;
+=======
+			goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		jiffies_left = timespec64_to_jiffies(timeout);
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	max = 0;
 	for (sop = sops; sop < sops + nsops; sop++) {
 		unsigned long mask = 1ULL << ((sop->sem_num) % BITS_PER_LONG);
@@ -2040,7 +2088,11 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 		un = find_alloc_undo(ns, semid);
 		if (IS_ERR(un)) {
 			error = PTR_ERR(un);
+<<<<<<< HEAD
 			goto out;
+=======
+			goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	} else {
 		un = NULL;
@@ -2051,25 +2103,41 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 	if (IS_ERR(sma)) {
 		rcu_read_unlock();
 		error = PTR_ERR(sma);
+<<<<<<< HEAD
 		goto out;
+=======
+		goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	error = -EFBIG;
 	if (max >= sma->sem_nsems) {
 		rcu_read_unlock();
+<<<<<<< HEAD
 		goto out;
+=======
+		goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	error = -EACCES;
 	if (ipcperms(ns, &sma->sem_perm, alter ? S_IWUGO : S_IRUGO)) {
 		rcu_read_unlock();
+<<<<<<< HEAD
 		goto out;
+=======
+		goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	error = security_sem_semop(&sma->sem_perm, sops, nsops, alter);
 	if (error) {
 		rcu_read_unlock();
+<<<<<<< HEAD
 		goto out;
+=======
+		goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	error = -EIDRM;
@@ -2083,7 +2151,11 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 	 * entangled here and why it's RMID race safe on comments at sem_lock()
 	 */
 	if (!ipc_valid_object(&sma->sem_perm))
+<<<<<<< HEAD
 		goto out_unlock;
+=======
+		goto out_unlock_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * semid identifiers are not unique - find_alloc_undo may have
 	 * allocated an undo structure, it was invalidated by an RMID
@@ -2092,7 +2164,11 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 	 * "un" itself is guaranteed by rcu.
 	 */
 	if (un && un->semid == -1)
+<<<<<<< HEAD
 		goto out_unlock;
+=======
+		goto out_unlock_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	queue.sops = sops;
 	queue.nsops = nsops;
@@ -2118,10 +2194,17 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 		rcu_read_unlock();
 		wake_up_q(&wake_q);
 
+<<<<<<< HEAD
 		goto out;
 	}
 	if (error < 0) /* non-blocking error path */
 		goto out_unlock;
+=======
+		goto out_free;
+	}
+	if (error < 0) /* non-blocking error path */
+		goto out_unlock_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * We need to sleep on this operation, so we put the current
@@ -2186,14 +2269,22 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 		if (error != -EINTR) {
 			/* see SEM_BARRIER_2 for purpose/pairing */
 			smp_acquire__after_ctrl_dep();
+<<<<<<< HEAD
 			goto out;
+=======
+			goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		rcu_read_lock();
 		locknum = sem_lock(sma, sops, nsops);
 
 		if (!ipc_valid_object(&sma->sem_perm))
+<<<<<<< HEAD
 			goto out_unlock;
+=======
+			goto out_unlock_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * No necessity for any barrier: We are protect by sem_lock()
@@ -2205,7 +2296,11 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 		 * Leave without unlink_queue(), but with sem_unlock().
 		 */
 		if (error != -EINTR)
+<<<<<<< HEAD
 			goto out_unlock;
+=======
+			goto out_unlock_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * If an interrupt occurred we have to clean up the queue.
@@ -2216,6 +2311,7 @@ long __do_semtimedop(int semid, struct sembuf *sops,
 
 	unlink_queue(sma, &queue);
 
+<<<<<<< HEAD
 out_unlock:
 	sem_unlock(sma, locknum);
 	rcu_read_unlock();
@@ -2255,6 +2351,15 @@ out_free:
 		kvfree(sops);
 
 	return ret;
+=======
+out_unlock_free:
+	sem_unlock(sma, locknum);
+	rcu_read_unlock();
+out_free:
+	if (sops != fast_sops)
+		kvfree(sops);
+	return error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 long ksys_semtimedop(int semid, struct sembuf __user *tsops,

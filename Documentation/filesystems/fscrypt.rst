@@ -1063,6 +1063,14 @@ astute users may notice some differences in behavior:
 
 - DAX (Direct Access) is not supported on encrypted files.
 
+<<<<<<< HEAD
+=======
+- The st_size of an encrypted symlink will not necessarily give the
+  length of the symlink target as required by POSIX.  It will actually
+  give the length of the ciphertext, which will be slightly longer
+  than the plaintext due to NUL-padding and an extra 2-byte overhead.
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 - The maximum length of an encrypted symlink is 2 bytes shorter than
   the maximum length of an unencrypted symlink.  For example, on an
   EXT4 filesystem with a 4K block size, unencrypted symlinks can be up
@@ -1230,12 +1238,21 @@ the user-supplied name to get the ciphertext.
 
 Lookups without the key are more complicated.  The raw ciphertext may
 contain the ``\0`` and ``/`` characters, which are illegal in
+<<<<<<< HEAD
 filenames.  Therefore, readdir() must base64url-encode the ciphertext
 for presentation.  For most filenames, this works fine; on ->lookup(),
 the filesystem just base64url-decodes the user-supplied name to get
 back to the raw ciphertext.
 
 However, for very long filenames, base64url encoding would cause the
+=======
+filenames.  Therefore, readdir() must base64-encode the ciphertext for
+presentation.  For most filenames, this works fine; on ->lookup(), the
+filesystem just base64-decodes the user-supplied name to get back to
+the raw ciphertext.
+
+However, for very long filenames, base64 encoding would cause the
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 filename length to exceed NAME_MAX.  To prevent this, readdir()
 actually presents long filenames in an abbreviated form which encodes
 a strong "hash" of the ciphertext filename, along with the optional

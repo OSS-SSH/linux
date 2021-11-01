@@ -377,6 +377,7 @@ else
 	exitcode=1
 fi
 
+<<<<<<< HEAD
 echo "-------------------------------------------------------"
 echo "running KSM MADV_MERGEABLE test with 10 identical pages"
 echo "-------------------------------------------------------"
@@ -473,6 +474,8 @@ else
 	exitcode=1
 fi
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 exit $exitcode
 
 exit $exitcode

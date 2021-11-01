@@ -1,6 +1,54 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0 or BSD-3-Clause
 /*
  * Copyright(c) 2016 - 2018 Intel Corporation.
+=======
+/*
+ * Copyright(c) 2016 - 2018 Intel Corporation.
+ *
+ * This file is provided under a dual BSD/GPLv2 license.  When using or
+ * redistributing this file, you may do so under either license.
+ *
+ * GPL LICENSE SUMMARY
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of version 2 of the GNU General Public License as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * BSD LICENSE
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  - Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ *  - Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in
+ *    the documentation and/or other materials provided with the
+ *    distribution.
+ *  - Neither the name of Intel Corporation nor the names of its
+ *    contributors may be used to endorse or promote products derived
+ *    from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/module.h>
@@ -89,6 +137,7 @@ static int rvt_query_device(struct ib_device *ibdev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int rvt_get_numa_node(struct ib_device *ibdev)
 {
 	struct rvt_dev_info *rdi = ib_to_rvt(ibdev);
@@ -96,6 +145,8 @@ static int rvt_get_numa_node(struct ib_device *ibdev)
 	return rdi->dparms.node;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int rvt_modify_device(struct ib_device *device,
 			     int device_modify_mask,
 			     struct ib_device_modify *device_modify)
@@ -345,7 +396,10 @@ static const struct ib_device_ops rvt_dev_ops = {
 	.destroy_srq = rvt_destroy_srq,
 	.detach_mcast = rvt_detach_mcast,
 	.get_dma_mr = rvt_get_dma_mr,
+<<<<<<< HEAD
 	.get_numa_node = rvt_get_numa_node,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.get_port_immutable = rvt_get_port_immutable,
 	.map_mr_sg = rvt_map_mr_sg,
 	.mmap = rvt_mmap,
@@ -372,7 +426,10 @@ static const struct ib_device_ops rvt_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_ah, rvt_ah, ibah),
 	INIT_RDMA_OBJ_SIZE(ib_cq, rvt_cq, ibcq),
 	INIT_RDMA_OBJ_SIZE(ib_pd, rvt_pd, ibpd),
+<<<<<<< HEAD
 	INIT_RDMA_OBJ_SIZE(ib_qp, rvt_qp, ibqp),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INIT_RDMA_OBJ_SIZE(ib_srq, rvt_srq, ibsrq),
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, rvt_ucontext, ibucontext),
 };

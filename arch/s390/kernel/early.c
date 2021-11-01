@@ -236,10 +236,13 @@ static __init void detect_machine_facilities(void)
 		clock_comparator_max = -1ULL >> 1;
 		__ctl_set_bit(0, 53);
 	}
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_PCI) && test_facility(153)) {
 		S390_lowcore.machine_flags |= MACHINE_FLAG_PCI_MIO;
 		/* the control bit is set during PCI initialization */
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void save_vector_registers(void)

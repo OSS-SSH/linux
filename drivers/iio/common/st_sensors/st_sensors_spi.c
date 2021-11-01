@@ -9,12 +9,22 @@
 
 #include <linux/kernel.h>
 #include <linux/module.h>
+<<<<<<< HEAD
 #include <linux/iio/iio.h>
 #include <linux/property.h>
 #include <linux/regmap.h>
 #include <linux/spi/spi.h>
 
 #include <linux/iio/common/st_sensors_spi.h>
+=======
+#include <linux/slab.h>
+#include <linux/iio/iio.h>
+#include <linux/property.h>
+#include <linux/regmap.h>
+
+#include <linux/iio/common/st_sensors_spi.h>
+#include "st_sensors_core.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define ST_SENSORS_SPI_MULTIREAD	0xc0
 

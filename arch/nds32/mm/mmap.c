@@ -59,7 +59,11 @@ arch_get_unmapped_area(struct file *filp, unsigned long addr,
 
 		vma = find_vma(mm, addr);
 		if (TASK_SIZE - len >= addr &&
+<<<<<<< HEAD
 		    (!vma || addr + len <= vm_start_gap(vma)))
+=======
+		    (!vma || addr + len <= vma->vm_start))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return addr;
 	}
 

@@ -296,7 +296,11 @@ static int prism2_fwapply(const struct ihex_binrec *rfptr,
 	memset(&getmsg, 0, sizeof(getmsg));
 	getmsg.msgcode = DIDMSG_DOT11REQ_MIBGET;
 	getmsg.msglen = sizeof(getmsg);
+<<<<<<< HEAD
 	strscpy(getmsg.devname, wlandev->name, sizeof(getmsg.devname));
+=======
+	strcpy(getmsg.devname, wlandev->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	getmsg.mibattribute.did = DIDMSG_DOT11REQ_MIBGET_MIBATTRIBUTE;
 	getmsg.mibattribute.status = P80211ENUM_msgitem_status_data_ok;
@@ -786,7 +790,11 @@ static int read_cardpda(struct pda *pda, struct wlandevice *wlandev)
 	/* set up the msg */
 	msg->msgcode = DIDMSG_P2REQ_READPDA;
 	msg->msglen = sizeof(msg);
+<<<<<<< HEAD
 	strscpy(msg->devname, wlandev->name, sizeof(msg->devname));
+=======
+	strcpy(msg->devname, wlandev->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	msg->pda.did = DIDMSG_P2REQ_READPDA_PDA;
 	msg->pda.len = HFA384x_PDA_LEN_MAX;
 	msg->pda.status = P80211ENUM_msgitem_status_no_value;
@@ -1017,7 +1025,11 @@ static int writeimage(struct wlandevice *wlandev, struct imgchunk *fchunk,
 	}
 
 	/* Initialize the messages */
+<<<<<<< HEAD
 	strscpy(rstmsg->devname, wlandev->name, sizeof(rstmsg->devname));
+=======
+	strcpy(rstmsg->devname, wlandev->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rstmsg->msgcode = DIDMSG_P2REQ_RAMDL_STATE;
 	rstmsg->msglen = sizeof(*rstmsg);
 	rstmsg->enable.did = DIDMSG_P2REQ_RAMDL_STATE_ENABLE;
@@ -1030,7 +1042,11 @@ static int writeimage(struct wlandevice *wlandev, struct imgchunk *fchunk,
 	rstmsg->exeaddr.len = sizeof(u32);
 	rstmsg->resultcode.len = sizeof(u32);
 
+<<<<<<< HEAD
 	strscpy(rwrmsg->devname, wlandev->name, sizeof(rwrmsg->devname));
+=======
+	strcpy(rwrmsg->devname, wlandev->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rwrmsg->msgcode = DIDMSG_P2REQ_RAMDL_WRITE;
 	rwrmsg->msglen = sizeof(*rwrmsg);
 	rwrmsg->addr.did = DIDMSG_P2REQ_RAMDL_WRITE_ADDR;

@@ -79,6 +79,10 @@
 
 #undef HERMES_DEBUG
 #ifdef HERMES_DEBUG
+<<<<<<< HEAD
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define DEBUG(lvl, stuff...) if ((lvl) <= HERMES_DEBUG) DMSG(stuff)
 

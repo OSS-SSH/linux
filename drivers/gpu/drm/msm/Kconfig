@@ -14,10 +14,16 @@ config DRM_MSM
 	select REGULATOR
 	select DRM_KMS_HELPER
 	select DRM_PANEL
+<<<<<<< HEAD
 	select DRM_SCHED
 	select SHMEM
 	select TMPFS
 	select QCOM_SCM
+=======
+	select SHMEM
+	select TMPFS
+	select QCOM_SCM if ARCH_QCOM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select WANT_DEV_COREDUMP
 	select SND_SOC_HDMI_CODEC if SND_SOC
 	select SYNC_FILE
@@ -55,7 +61,11 @@ config DRM_MSM_GPU_SUDO
 
 config DRM_MSM_HDMI_HDCP
 	bool "Enable HDMI HDCP support in MSM DRM driver"
+<<<<<<< HEAD
 	depends on DRM_MSM
+=======
+	depends on DRM_MSM && QCOM_SCM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default y
 	help
 	  Choose this option to enable HDCP state machine
@@ -116,9 +126,18 @@ config DRM_MSM_DSI_10NM_PHY
 	  Choose this option if DSI PHY on SDM845 is used on the platform.
 
 config DRM_MSM_DSI_7NM_PHY
+<<<<<<< HEAD
 	bool "Enable DSI 7nm PHY driver in MSM DRM"
 	depends on DRM_MSM_DSI
 	default y
 	help
 	  Choose this option if DSI PHY on SM8150/SM8250/SC7280 is used on
 	  the platform.
+=======
+	bool "Enable DSI 7nm PHY driver in MSM DRM (used by SM8150/SM8250)"
+	depends on DRM_MSM_DSI
+	default y
+	help
+	  Choose this option if DSI PHY on SM8150/SM8250 is used on the
+	  platform.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

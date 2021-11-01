@@ -89,11 +89,14 @@ static const struct intel_lpss_platform_info apl_i2c_info = {
 	.swnode = &apl_i2c_node,
 };
 
+<<<<<<< HEAD
 static const struct intel_lpss_platform_info cnl_i2c_info = {
 	.clk_rate = 216000000,
 	.swnode = &spt_i2c_node,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct acpi_device_id intel_lpss_acpi_ids[] = {
 	/* SPT */
 	{ "INT3440", (kernel_ulong_t)&spt_info },
@@ -107,6 +110,7 @@ static const struct acpi_device_id intel_lpss_acpi_ids[] = {
 	{ "INT3448", (kernel_ulong_t)&spt_uart_info },
 	{ "INT3449", (kernel_ulong_t)&spt_uart_info },
 	{ "INT344A", (kernel_ulong_t)&spt_uart_info },
+<<<<<<< HEAD
 	/* CNL */
 	{ "INT34B0", (kernel_ulong_t)&spt_info },
 	{ "INT34B1", (kernel_ulong_t)&spt_info },
@@ -120,6 +124,8 @@ static const struct acpi_device_id intel_lpss_acpi_ids[] = {
 	{ "INT34B9", (kernel_ulong_t)&spt_uart_info },
 	{ "INT34BA", (kernel_ulong_t)&spt_uart_info },
 	{ "INT34BC", (kernel_ulong_t)&spt_info },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* BXT */
 	{ "80860AAC", (kernel_ulong_t)&bxt_i2c_info },
 	{ "80860ABC", (kernel_ulong_t)&bxt_info },

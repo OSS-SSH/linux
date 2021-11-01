@@ -57,6 +57,7 @@ static bool bw_validate(char *buf, unsigned long *data, struct rdt_resource *r)
 	return true;
 }
 
+<<<<<<< HEAD
 int parse_bw(struct rdt_parse_data *data, struct resctrl_schema *s,
 	     struct rdt_domain *d)
 {
@@ -66,14 +67,27 @@ int parse_bw(struct rdt_parse_data *data, struct resctrl_schema *s,
 
 	cfg = &d->staged_config[s->conf_type];
 	if (cfg->have_new_ctrl) {
+=======
+int parse_bw(struct rdt_parse_data *data, struct rdt_resource *r,
+	     struct rdt_domain *d)
+{
+	unsigned long bw_val;
+
+	if (d->have_new_ctrl) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rdt_last_cmd_printf("Duplicate domain %d\n", d->id);
 		return -EINVAL;
 	}
 
 	if (!bw_validate(data->buf, &bw_val, r))
 		return -EINVAL;
+<<<<<<< HEAD
 	cfg->new_ctrl = bw_val;
 	cfg->have_new_ctrl = true;
+=======
+	d->new_ctrl = bw_val;
+	d->have_new_ctrl = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -128,6 +142,7 @@ static bool cbm_validate(char *buf, u32 *data, struct rdt_resource *r)
  * Read one cache bit mask (hex). Check that it is valid for the current
  * resource type.
  */
+<<<<<<< HEAD
 int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
 	      struct rdt_domain *d)
 {
@@ -138,6 +153,15 @@ int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
 
 	cfg = &d->staged_config[s->conf_type];
 	if (cfg->have_new_ctrl) {
+=======
+int parse_cbm(struct rdt_parse_data *data, struct rdt_resource *r,
+	      struct rdt_domain *d)
+{
+	struct rdtgroup *rdtgrp = data->rdtgrp;
+	u32 cbm_val;
+
+	if (d->have_new_ctrl) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rdt_last_cmd_printf("Duplicate domain %d\n", d->id);
 		return -EINVAL;
 	}
@@ -166,12 +190,20 @@ int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
 	 * The CBM may not overlap with the CBM of another closid if
 	 * either is exclusive.
 	 */
+<<<<<<< HEAD
 	if (rdtgroup_cbm_overlaps(s, d, cbm_val, rdtgrp->closid, true)) {
+=======
+	if (rdtgroup_cbm_overlaps(r, d, cbm_val, rdtgrp->closid, true)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rdt_last_cmd_puts("Overlaps with exclusive group\n");
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (rdtgroup_cbm_overlaps(s, d, cbm_val, rdtgrp->closid, false)) {
+=======
+	if (rdtgroup_cbm_overlaps(r, d, cbm_val, rdtgrp->closid, false)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rdtgrp->mode == RDT_MODE_EXCLUSIVE ||
 		    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
 			rdt_last_cmd_puts("Overlaps with other group\n");
@@ -179,8 +211,13 @@ int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
 		}
 	}
 
+<<<<<<< HEAD
 	cfg->new_ctrl = cbm_val;
 	cfg->have_new_ctrl = true;
+=======
+	d->new_ctrl = cbm_val;
+	d->have_new_ctrl = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -191,12 +228,18 @@ int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
  * separated by ";". The "id" is in decimal, and must match one of
  * the "id"s for this resource.
  */
+<<<<<<< HEAD
 static int parse_line(char *line, struct resctrl_schema *s,
 		      struct rdtgroup *rdtgrp)
 {
 	enum resctrl_conf_type t = s->conf_type;
 	struct resctrl_staged_config *cfg;
 	struct rdt_resource *r = s->res;
+=======
+static int parse_line(char *line, struct rdt_resource *r,
+		      struct rdtgroup *rdtgrp)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct rdt_parse_data data;
 	char *dom = NULL, *id;
 	struct rdt_domain *d;
@@ -222,10 +265,16 @@ next:
 		if (d->id == dom_id) {
 			data.buf = dom;
 			data.rdtgrp = rdtgrp;
+<<<<<<< HEAD
 			if (r->parse_ctrlval(&data, s, d))
 				return -EINVAL;
 			if (rdtgrp->mode ==  RDT_MODE_PSEUDO_LOCKSETUP) {
 				cfg = &d->staged_config[t];
+=======
+			if (r->parse_ctrlval(&data, r, d))
+				return -EINVAL;
+			if (rdtgrp->mode ==  RDT_MODE_PSEUDO_LOCKSETUP) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				/*
 				 * In pseudo-locking setup mode and just
 				 * parsed a valid CBM that should be
@@ -234,9 +283,15 @@ next:
 				 * the required initialization for single
 				 * region and return.
 				 */
+<<<<<<< HEAD
 				rdtgrp->plr->s = s;
 				rdtgrp->plr->d = d;
 				rdtgrp->plr->cbm = cfg->new_ctrl;
+=======
+				rdtgrp->plr->r = r;
+				rdtgrp->plr->d = d;
+				rdtgrp->plr->cbm = d->new_ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				d->plr = rdtgrp->plr;
 				return 0;
 			}
@@ -246,6 +301,7 @@ next:
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static u32 get_config_index(u32 closid, enum resctrl_conf_type type)
 {
 	switch (type) {
@@ -287,10 +343,21 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid)
 	bool mba_sc;
 	int cpu;
 	u32 idx;
+=======
+int update_domains(struct rdt_resource *r, int closid)
+{
+	struct msr_param msr_param;
+	cpumask_var_t cpu_mask;
+	struct rdt_domain *d;
+	bool mba_sc;
+	u32 *dc;
+	int cpu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!zalloc_cpumask_var(&cpu_mask, GFP_KERNEL))
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	mba_sc = is_mba_sc(r);
 	msr_param.res = NULL;
 	list_for_each_entry(d, &r->domains, list) {
@@ -312,6 +379,18 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid)
 				msr_param.low = min(msr_param.low, idx);
 				msr_param.high = max(msr_param.high, idx + 1);
 			}
+=======
+	msr_param.low = closid;
+	msr_param.high = msr_param.low + 1;
+	msr_param.res = r;
+
+	mba_sc = is_mba_sc(r);
+	list_for_each_entry(d, &r->domains, list) {
+		dc = !mba_sc ? d->ctrl_val : d->mbps_val;
+		if (d->have_new_ctrl && d->new_ctrl != dc[closid]) {
+			cpumask_set_cpu(cpumask_any(&d->cpu_mask), cpu_mask);
+			dc[closid] = d->new_ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -338,11 +417,19 @@ done:
 static int rdtgroup_parse_resource(char *resname, char *tok,
 				   struct rdtgroup *rdtgrp)
 {
+<<<<<<< HEAD
 	struct resctrl_schema *s;
 
 	list_for_each_entry(s, &resctrl_schema_all, list) {
 		if (!strcmp(resname, s->name) && rdtgrp->closid < s->num_closid)
 			return parse_line(tok, s, rdtgrp);
+=======
+	struct rdt_resource *r;
+
+	for_each_alloc_enabled_rdt_resource(r) {
+		if (!strcmp(resname, r->name) && rdtgrp->closid < r->num_closid)
+			return parse_line(tok, r, rdtgrp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	rdt_last_cmd_printf("Unknown or unsupported resource name '%s'\n", resname);
 	return -EINVAL;
@@ -351,7 +438,10 @@ static int rdtgroup_parse_resource(char *resname, char *tok,
 ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
 				char *buf, size_t nbytes, loff_t off)
 {
+<<<<<<< HEAD
 	struct resctrl_schema *s;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct rdtgroup *rdtgrp;
 	struct rdt_domain *dom;
 	struct rdt_resource *r;
@@ -382,9 +472,15 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	list_for_each_entry(s, &resctrl_schema_all, list) {
 		list_for_each_entry(dom, &s->res->domains, list)
 			memset(dom->staged_config, 0, sizeof(dom->staged_config));
+=======
+	for_each_alloc_enabled_rdt_resource(r) {
+		list_for_each_entry(dom, &r->domains, list)
+			dom->have_new_ctrl = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	while ((tok = strsep(&buf, "\n")) != NULL) {
@@ -404,9 +500,14 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
 			goto out;
 	}
 
+<<<<<<< HEAD
 	list_for_each_entry(s, &resctrl_schema_all, list) {
 		r = s->res;
 		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+=======
+	for_each_alloc_enabled_rdt_resource(r) {
+		ret = update_domains(r, rdtgrp->closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			goto out;
 	}
@@ -427,6 +528,7 @@ out:
 	return ret ?: nbytes;
 }
 
+<<<<<<< HEAD
 u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_domain *d,
 			    u32 closid, enum resctrl_conf_type type)
 {
@@ -441,17 +543,30 @@ u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_domain *d,
 static void show_doms(struct seq_file *s, struct resctrl_schema *schema, int closid)
 {
 	struct rdt_resource *r = schema->res;
+=======
+static void show_doms(struct seq_file *s, struct rdt_resource *r, int closid)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct rdt_domain *dom;
 	bool sep = false;
 	u32 ctrl_val;
 
+<<<<<<< HEAD
 	seq_printf(s, "%*s:", max_name_width, schema->name);
+=======
+	seq_printf(s, "%*s:", max_name_width, r->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_for_each_entry(dom, &r->domains, list) {
 		if (sep)
 			seq_puts(s, ";");
 
+<<<<<<< HEAD
 		ctrl_val = resctrl_arch_get_config(r, dom, closid,
 						   schema->conf_type);
+=======
+		ctrl_val = (!is_mba_sc(r) ? dom->ctrl_val[closid] :
+			    dom->mbps_val[closid]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		seq_printf(s, r->format_str, dom->id, max_data_width,
 			   ctrl_val);
 		sep = true;
@@ -462,17 +577,27 @@ static void show_doms(struct seq_file *s, struct resctrl_schema *schema, int clo
 int rdtgroup_schemata_show(struct kernfs_open_file *of,
 			   struct seq_file *s, void *v)
 {
+<<<<<<< HEAD
 	struct resctrl_schema *schema;
 	struct rdtgroup *rdtgrp;
+=======
+	struct rdtgroup *rdtgrp;
+	struct rdt_resource *r;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret = 0;
 	u32 closid;
 
 	rdtgrp = rdtgroup_kn_lock_live(of->kn);
 	if (rdtgrp) {
 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
+<<<<<<< HEAD
 			list_for_each_entry(schema, &resctrl_schema_all, list) {
 				seq_printf(s, "%s:uninitialized\n", schema->name);
 			}
+=======
+			for_each_alloc_enabled_rdt_resource(r)
+				seq_printf(s, "%s:uninitialized\n", r->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} else if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
 			if (!rdtgrp->plr->d) {
 				rdt_last_cmd_clear();
@@ -480,15 +605,25 @@ int rdtgroup_schemata_show(struct kernfs_open_file *of,
 				ret = -ENODEV;
 			} else {
 				seq_printf(s, "%s:%d=%x\n",
+<<<<<<< HEAD
 					   rdtgrp->plr->s->res->name,
+=======
+					   rdtgrp->plr->r->name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					   rdtgrp->plr->d->id,
 					   rdtgrp->plr->cbm);
 			}
 		} else {
 			closid = rdtgrp->closid;
+<<<<<<< HEAD
 			list_for_each_entry(schema, &resctrl_schema_all, list) {
 				if (closid < schema->num_closid)
 					show_doms(s, schema, closid);
+=======
+			for_each_alloc_enabled_rdt_resource(r) {
+				if (closid < r->num_closid)
+					show_doms(s, r, closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 	} else {
@@ -518,7 +653,10 @@ void mon_event_read(struct rmid_read *rr, struct rdt_resource *r,
 int rdtgroup_mondata_show(struct seq_file *m, void *arg)
 {
 	struct kernfs_open_file *of = m->private;
+<<<<<<< HEAD
 	struct rdt_hw_resource *hw_res;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 resid, evtid, domid;
 	struct rdtgroup *rdtgrp;
 	struct rdt_resource *r;
@@ -538,8 +676,12 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
 	domid = md.u.domid;
 	evtid = md.u.evtid;
 
+<<<<<<< HEAD
 	hw_res = &rdt_resources_all[resid];
 	r = &hw_res->r_resctrl;
+=======
+	r = &rdt_resources_all[resid];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	d = rdt_find_domain(r, domid, NULL);
 	if (IS_ERR_OR_NULL(d)) {
 		ret = -ENOENT;
@@ -553,7 +695,11 @@ int rdtgroup_mondata_show(struct seq_file *m, void *arg)
 	else if (rr.val & RMID_VAL_UNAVAIL)
 		seq_puts(m, "Unavailable\n");
 	else
+<<<<<<< HEAD
 		seq_printf(m, "%llu\n", rr.val * hw_res->mon_scale);
+=======
+		seq_printf(m, "%llu\n", rr.val * r->mon_scale);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 out:
 	rdtgroup_kn_unlock(of->kn);

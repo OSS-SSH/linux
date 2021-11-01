@@ -1123,7 +1123,11 @@ static int cdn_dp_suspend(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static __maybe_unused int cdn_dp_resume(struct device *dev)
+=======
+static int cdn_dp_resume(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct cdn_dp_device *dp = dev_get_drvdata(dev);
 

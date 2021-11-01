@@ -954,6 +954,11 @@ int vmw_kms_sou_init_display(struct vmw_private *dev_priv)
 	int i, ret;
 
 	if (!(dev_priv->capabilities & SVGA_CAP_SCREEN_OBJECT_2)) {
+<<<<<<< HEAD
+=======
+		DRM_INFO("Not using screen objects,"
+			 " missing cap SCREEN_OBJECT_2\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOSYS;
 	}
 
@@ -970,6 +975,11 @@ int vmw_kms_sou_init_display(struct vmw_private *dev_priv)
 
 	drm_mode_config_reset(dev);
 
+<<<<<<< HEAD
+=======
+	DRM_INFO("Screen Objects Display Unit initialized\n");
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

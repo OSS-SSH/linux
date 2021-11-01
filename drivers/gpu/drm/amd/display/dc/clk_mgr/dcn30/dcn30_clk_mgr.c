@@ -190,10 +190,13 @@ void dcn3_init_clocks(struct clk_mgr *clk_mgr_base)
 			&clk_mgr_base->bw_params->clk_table.entries[0].dtbclk_mhz,
 			&num_levels);
 
+<<<<<<< HEAD
 	/* SOCCLK */
 	dcn3_init_single_clock(clk_mgr, PPCLK_SOCCLK,
 					&clk_mgr_base->bw_params->clk_table.entries[0].socclk_mhz,
 					&num_levels);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	// DPREFCLK ???
 
 	/* DISPCLK */
@@ -284,12 +287,20 @@ static void dcn3_update_clocks(struct clk_mgr *clk_mgr_base,
 
 	if (should_set_clock(safe_to_lower, new_clocks->dcfclk_khz, clk_mgr_base->clks.dcfclk_khz)) {
 		clk_mgr_base->clks.dcfclk_khz = new_clocks->dcfclk_khz;
+<<<<<<< HEAD
 		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_DCEFCLK, khz_to_mhz_ceil(clk_mgr_base->clks.dcfclk_khz));
+=======
+		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_DCEFCLK, clk_mgr_base->clks.dcfclk_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (should_set_clock(safe_to_lower, new_clocks->dcfclk_deep_sleep_khz, clk_mgr_base->clks.dcfclk_deep_sleep_khz)) {
 		clk_mgr_base->clks.dcfclk_deep_sleep_khz = new_clocks->dcfclk_deep_sleep_khz;
+<<<<<<< HEAD
 		dcn30_smu_set_min_deep_sleep_dcef_clk(clk_mgr, khz_to_mhz_ceil(clk_mgr_base->clks.dcfclk_deep_sleep_khz));
+=======
+		dcn30_smu_set_min_deep_sleep_dcef_clk(clk_mgr, clk_mgr_base->clks.dcfclk_deep_sleep_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (should_set_clock(safe_to_lower, new_clocks->socclk_khz, clk_mgr_base->clks.socclk_khz))
@@ -317,20 +328,32 @@ static void dcn3_update_clocks(struct clk_mgr *clk_mgr_base,
 	/* set UCLK to requested value if P-State switching is supported, or to re-enable P-State switching */
 	if (clk_mgr_base->clks.p_state_change_support &&
 			(update_uclk || !clk_mgr_base->clks.prev_p_state_change_support))
+<<<<<<< HEAD
 		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK, khz_to_mhz_ceil(clk_mgr_base->clks.dramclk_khz));
+=======
+		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK, clk_mgr_base->clks.dramclk_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (should_set_clock(safe_to_lower, new_clocks->dppclk_khz, clk_mgr_base->clks.dppclk_khz)) {
 		if (clk_mgr_base->clks.dppclk_khz > new_clocks->dppclk_khz)
 			dpp_clock_lowered = true;
 
 		clk_mgr_base->clks.dppclk_khz = new_clocks->dppclk_khz;
+<<<<<<< HEAD
 		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_PIXCLK, khz_to_mhz_ceil(clk_mgr_base->clks.dppclk_khz));
+=======
+		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_PIXCLK, clk_mgr_base->clks.dppclk_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		update_dppclk = true;
 	}
 
 	if (should_set_clock(safe_to_lower, new_clocks->dispclk_khz, clk_mgr_base->clks.dispclk_khz)) {
 		clk_mgr_base->clks.dispclk_khz = new_clocks->dispclk_khz;
+<<<<<<< HEAD
 		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_DISPCLK, khz_to_mhz_ceil(clk_mgr_base->clks.dispclk_khz));
+=======
+		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_DISPCLK, clk_mgr_base->clks.dispclk_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		update_dispclk = true;
 	}
 
@@ -396,6 +419,7 @@ static void dcn3_set_hard_min_memclk(struct clk_mgr *clk_mgr_base, bool current_
 	if (!clk_mgr->smu_present)
 		return;
 
+<<<<<<< HEAD
 	if (current_mode) {
 		if (clk_mgr_base->clks.p_state_change_support)
 			dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK,
@@ -407,6 +431,14 @@ static void dcn3_set_hard_min_memclk(struct clk_mgr *clk_mgr_base, bool current_
 		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK,
 				clk_mgr_base->bw_params->clk_table.entries[0].memclk_mhz);
 	}
+=======
+	if (current_mode)
+		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK,
+				clk_mgr_base->clks.dramclk_khz / 1000);
+	else
+		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_UCLK,
+				clk_mgr_base->bw_params->clk_table.entries[0].memclk_mhz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Set max memclk to highest DPM value */
@@ -494,7 +526,11 @@ static void dcn30_notify_link_rate_change(struct clk_mgr *clk_mgr_base, struct d
 
 	if (max_phyclk_req != clk_mgr_base->clks.phyclk_khz) {
 		clk_mgr_base->clks.phyclk_khz = max_phyclk_req;
+<<<<<<< HEAD
 		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_PHYCLK, khz_to_mhz_ceil(clk_mgr_base->clks.phyclk_khz));
+=======
+		dcn30_smu_set_hard_min_by_freq(clk_mgr, PPCLK_PHYCLK, clk_mgr_base->clks.phyclk_khz / 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

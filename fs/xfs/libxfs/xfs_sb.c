@@ -30,6 +30,7 @@
  * Physical superblock buffer manipulations. Shared with libxfs in userspace.
  */
 
+<<<<<<< HEAD
 /*
  * We support all XFS versions newer than a v4 superblock with V2 directories.
  */
@@ -127,13 +128,19 @@ xfs_sb_version_to_features(
 	return features;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Check all the superblock fields we care about when reading one in. */
 STATIC int
 xfs_validate_sb_read(
 	struct xfs_mount	*mp,
 	struct xfs_sb		*sbp)
 {
+<<<<<<< HEAD
 	if (!xfs_sb_is_v5(sbp))
+=======
+	if (XFS_SB_VERSION_NUM(sbp) != XFS_SB_VERSION_5)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	/*
@@ -153,7 +160,11 @@ xfs_validate_sb_read(
 "Superblock has unknown read-only compatible features (0x%x) enabled.",
 			(sbp->sb_features_ro_compat &
 					XFS_SB_FEAT_RO_COMPAT_UNKNOWN));
+<<<<<<< HEAD
 		if (!xfs_is_readonly(mp)) {
+=======
+		if (!(mp->m_flags & XFS_MOUNT_RDONLY)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xfs_warn(mp,
 "Attempted to mount read-only compatible filesystem read-write.");
 			xfs_warn(mp,
@@ -192,7 +203,11 @@ xfs_validate_sb_write(
 	 * secondary superblocks, so allow this usage to continue because
 	 * we never read counters from such superblocks.
 	 */
+<<<<<<< HEAD
 	if (xfs_buf_daddr(bp) == XFS_SB_DADDR && !sbp->sb_inprogress &&
+=======
+	if (XFS_BUF_ADDR(bp) == XFS_SB_DADDR && !sbp->sb_inprogress &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    (sbp->sb_fdblocks > sbp->sb_dblocks ||
 	     !xfs_verify_icount(mp, sbp->sb_icount) ||
 	     sbp->sb_ifree > sbp->sb_icount)) {
@@ -200,7 +215,11 @@ xfs_validate_sb_write(
 		return -EFSCORRUPTED;
 	}
 
+<<<<<<< HEAD
 	if (!xfs_sb_is_v5(sbp))
+=======
+	if (XFS_SB_VERSION_NUM(sbp) != XFS_SB_VERSION_5)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	/*
@@ -259,7 +278,10 @@ xfs_validate_sb_common(
 	struct xfs_dsb		*dsb = bp->b_addr;
 	uint32_t		agcount = 0;
 	uint32_t		rem;
+<<<<<<< HEAD
 	bool			has_dalign;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!xfs_verify_magic(bp, dsb->sb_magicnum)) {
 		xfs_warn(mp, "bad magic number");
@@ -271,6 +293,7 @@ xfs_validate_sb_common(
 		return -EWRONGFS;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Validate feature flags and state
 	 */
@@ -283,11 +306,15 @@ xfs_validate_sb_common(
 		}
 
 		/* V5 has a separate project quota inode */
+=======
+	if (xfs_sb_version_has_pquotino(sbp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (sbp->sb_qflags & (XFS_OQUOTA_ENFD | XFS_OQUOTA_CHKD)) {
 			xfs_notice(mp,
 			   "Version 5 of Super block has XFS_OQUOTA bits.");
 			return -EFSCORRUPTED;
 		}
+<<<<<<< HEAD
 
 		/*
 		 * Full inode chunks must be aligned to inode chunk size when
@@ -306,6 +333,8 @@ xfs_validate_sb_common(
 				return -EINVAL;
 			}
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (sbp->sb_qflags & (XFS_PQUOTA_ENFD | XFS_GQUOTA_ENFD |
 				XFS_PQUOTA_CHKD | XFS_GQUOTA_CHKD)) {
 			xfs_notice(mp,
@@ -313,6 +342,27 @@ xfs_validate_sb_common(
 			return -EFSCORRUPTED;
 	}
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Full inode chunks must be aligned to inode chunk size when
+	 * sparse inodes are enabled to support the sparse chunk
+	 * allocation algorithm and prevent overlapping inode records.
+	 */
+	if (xfs_sb_version_hassparseinodes(sbp)) {
+		uint32_t	align;
+
+		align = XFS_INODES_PER_CHUNK * sbp->sb_inodesize
+				>> sbp->sb_blocklog;
+		if (sbp->sb_inoalignmt != align) {
+			xfs_warn(mp,
+"Inode block alignment (%u) must match chunk size (%u) for sparse inodes.",
+				 sbp->sb_inoalignmt, align);
+			return -EINVAL;
+		}
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (unlikely(
 	    sbp->sb_logstart == 0 && mp->m_logdev_targp == mp->m_ddev_targp)) {
 		xfs_warn(mp,
@@ -412,8 +462,12 @@ xfs_validate_sb_common(
 	 * Either (sb_unit and !hasdalign) or (!sb_unit and hasdalign)
 	 * would imply the image is corrupted.
 	 */
+<<<<<<< HEAD
 	has_dalign = sbp->sb_versionnum & XFS_SB_VERSION_DALIGNBIT;
 	if (!!sbp->sb_unit ^ has_dalign) {
+=======
+	if (!!sbp->sb_unit ^ xfs_sb_version_hasdalign(sbp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_notice(mp, "SB stripe alignment sanity check failed");
 		return -EFSCORRUPTED;
 	}
@@ -422,6 +476,15 @@ xfs_validate_sb_common(
 			XFS_FSB_TO_B(mp, sbp->sb_width), 0, false))
 		return -EFSCORRUPTED;
 
+<<<<<<< HEAD
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb) &&
+	    sbp->sb_blocksize < XFS_MIN_CRC_BLOCKSIZE) {
+		xfs_notice(mp, "v5 SB sanity check failed");
+		return -EFSCORRUPTED;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Currently only very few inode sizes are supported.
 	 */
@@ -465,7 +528,11 @@ xfs_sb_quota_from_disk(struct xfs_sb *sbp)
 	 * We need to do these manipilations only if we are working
 	 * with an older version of on-disk superblock.
 	 */
+<<<<<<< HEAD
 	if (xfs_sb_is_v5(sbp))
+=======
+	if (xfs_sb_version_has_pquotino(sbp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (sbp->sb_qflags & XFS_OQUOTA_ENFD)
@@ -558,8 +625,12 @@ __xfs_sb_from_disk(
 	 * sb_meta_uuid is only on disk if it differs from sb_uuid and the
 	 * feature flag is set; if not set we keep it only in memory.
 	 */
+<<<<<<< HEAD
 	if (xfs_sb_is_v5(to) &&
 	    (to->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_META_UUID))
+=======
+	if (xfs_sb_version_hasmetauuid(to))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uuid_copy(&to->sb_meta_uuid, &from->sb_meta_uuid);
 	else
 		uuid_copy(&to->sb_meta_uuid, &from->sb_uuid);
@@ -584,12 +655,16 @@ xfs_sb_quota_to_disk(
 	uint16_t	qflags = from->sb_qflags;
 
 	to->sb_uquotino = cpu_to_be64(from->sb_uquotino);
+<<<<<<< HEAD
 
 	/*
 	 * The in-memory superblock quota state matches the v5 on-disk format so
 	 * just write them out and return
 	 */
 	if (xfs_sb_is_v5(from)) {
+=======
+	if (xfs_sb_version_has_pquotino(from)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		to->sb_qflags = cpu_to_be16(from->sb_qflags);
 		to->sb_gquotino = cpu_to_be64(from->sb_gquotino);
 		to->sb_pquotino = cpu_to_be64(from->sb_pquotino);
@@ -597,9 +672,15 @@ xfs_sb_quota_to_disk(
 	}
 
 	/*
+<<<<<<< HEAD
 	 * For older superblocks (v4), the in-core version of sb_qflags do not
 	 * have XFS_OQUOTA_* flags, whereas the on-disk version does.  So,
 	 * convert incore XFS_{PG}QUOTA_* flags to on-disk XFS_OQUOTA_* flags.
+=======
+	 * The in-core version of sb_qflags do not have XFS_OQUOTA_*
+	 * flags, whereas the on-disk version does.  So, convert incore
+	 * XFS_{PG}QUOTA_* flags to on-disk XFS_OQUOTA_* flags.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	qflags &= ~(XFS_PQUOTA_ENFD | XFS_PQUOTA_CHKD |
 			XFS_GQUOTA_ENFD | XFS_GQUOTA_CHKD);
@@ -699,6 +780,7 @@ xfs_sb_to_disk(
 	to->sb_features2 = cpu_to_be32(from->sb_features2);
 	to->sb_bad_features2 = cpu_to_be32(from->sb_bad_features2);
 
+<<<<<<< HEAD
 	if (!xfs_sb_is_v5(from))
 		return;
 
@@ -713,6 +795,21 @@ xfs_sb_to_disk(
 	to->sb_lsn = cpu_to_be64(from->sb_lsn);
 	if (from->sb_features_incompat & XFS_SB_FEAT_INCOMPAT_META_UUID)
 		uuid_copy(&to->sb_meta_uuid, &from->sb_meta_uuid);
+=======
+	if (xfs_sb_version_hascrc(from)) {
+		to->sb_features_compat = cpu_to_be32(from->sb_features_compat);
+		to->sb_features_ro_compat =
+				cpu_to_be32(from->sb_features_ro_compat);
+		to->sb_features_incompat =
+				cpu_to_be32(from->sb_features_incompat);
+		to->sb_features_log_incompat =
+				cpu_to_be32(from->sb_features_log_incompat);
+		to->sb_spino_align = cpu_to_be32(from->sb_spino_align);
+		to->sb_lsn = cpu_to_be64(from->sb_lsn);
+		if (xfs_sb_version_hasmetauuid(from))
+			uuid_copy(&to->sb_meta_uuid, &from->sb_meta_uuid);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -747,8 +844,13 @@ xfs_sb_read_verify(
 
 		if (!xfs_buf_verify_cksum(bp, XFS_SB_CRC_OFF)) {
 			/* Only fail bad secondaries on a known V5 filesystem */
+<<<<<<< HEAD
 			if (xfs_buf_daddr(bp) == XFS_SB_DADDR ||
 			    xfs_has_crc(mp)) {
+=======
+			if (bp->b_bn == XFS_SB_DADDR ||
+			    xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				error = -EFSBADCRC;
 				goto out_error;
 			}
@@ -815,7 +917,11 @@ xfs_sb_write_verify(
 	if (error)
 		goto out_error;
 
+<<<<<<< HEAD
 	if (!xfs_sb_is_v5(&sb))
+=======
+	if (!xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (bip)
@@ -912,7 +1018,11 @@ xfs_log_sb(
 	 * unclean shutdown, this will be corrected by log recovery rebuilding
 	 * the counters from the AGF block counts.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_lazysbcount(mp)) {
+=======
+	if (xfs_sb_version_haslazysbcount(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mp->m_sb.sb_icount = percpu_counter_sum(&mp->m_icount);
 		mp->m_sb.sb_ifree = percpu_counter_sum(&mp->m_ifree);
 		mp->m_sb.sb_fdblocks = percpu_counter_sum(&mp->m_fdblocks);
@@ -1061,12 +1171,19 @@ out:
 
 void
 xfs_fs_geometry(
+<<<<<<< HEAD
 	struct xfs_mount	*mp,
 	struct xfs_fsop_geom	*geo,
 	int			struct_version)
 {
 	struct xfs_sb		*sbp = &mp->m_sb;
 
+=======
+	struct xfs_sb		*sbp,
+	struct xfs_fsop_geom	*geo,
+	int			struct_version)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memset(geo, 0, sizeof(struct xfs_fsop_geom));
 
 	geo->blocksize = sbp->sb_blocksize;
@@ -1097,6 +1214,7 @@ xfs_fs_geometry(
 	geo->flags = XFS_FSOP_GEOM_FLAGS_NLINK |
 		     XFS_FSOP_GEOM_FLAGS_DIRV2 |
 		     XFS_FSOP_GEOM_FLAGS_EXTFLG;
+<<<<<<< HEAD
 	if (xfs_has_attr(mp))
 		geo->flags |= XFS_FSOP_GEOM_FLAGS_ATTR;
 	if (xfs_has_quota(mp))
@@ -1135,13 +1253,57 @@ xfs_fs_geometry(
 	} else {
 		geo->logsectsize = BBSIZE;
 	}
+=======
+	if (xfs_sb_version_hasattr(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_ATTR;
+	if (xfs_sb_version_hasquota(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_QUOTA;
+	if (xfs_sb_version_hasalign(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_IALIGN;
+	if (xfs_sb_version_hasdalign(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_DALIGN;
+	if (xfs_sb_version_hassector(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_SECTOR;
+	if (xfs_sb_version_hasasciici(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_DIRV2CI;
+	if (xfs_sb_version_haslazysbcount(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_LAZYSB;
+	if (xfs_sb_version_hasattr2(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_ATTR2;
+	if (xfs_sb_version_hasprojid32bit(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_PROJID32;
+	if (xfs_sb_version_hascrc(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_V5SB;
+	if (xfs_sb_version_hasftype(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_FTYPE;
+	if (xfs_sb_version_hasfinobt(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_FINOBT;
+	if (xfs_sb_version_hassparseinodes(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_SPINODES;
+	if (xfs_sb_version_hasrmapbt(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_RMAPBT;
+	if (xfs_sb_version_hasreflink(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_REFLINK;
+	if (xfs_sb_version_hasbigtime(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_BIGTIME;
+	if (xfs_sb_version_hasinobtcounts(sbp))
+		geo->flags |= XFS_FSOP_GEOM_FLAGS_INOBTCNT;
+	if (xfs_sb_version_hassector(sbp))
+		geo->logsectsize = sbp->sb_logsectsize;
+	else
+		geo->logsectsize = BBSIZE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	geo->rtsectsize = sbp->sb_blocksize;
 	geo->dirblocksize = xfs_dir2_dirblock_bytes(sbp);
 
 	if (struct_version < 4)
 		return;
 
+<<<<<<< HEAD
 	if (xfs_has_logv2(mp))
+=======
+	if (xfs_sb_version_haslogv2(sbp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		geo->flags |= XFS_FSOP_GEOM_FLAGS_LOGV2;
 
 	geo->logsunit = sbp->sb_logsunit;

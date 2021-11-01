@@ -97,6 +97,7 @@ static struct posix_acl *v9fs_get_cached_acl(struct inode *inode, int type)
 	return acl;
 }
 
+<<<<<<< HEAD
 struct posix_acl *v9fs_iop_get_acl(struct inode *inode, int type, bool rcu)
 {
 	struct v9fs_session_info *v9ses;
@@ -104,6 +105,12 @@ struct posix_acl *v9fs_iop_get_acl(struct inode *inode, int type, bool rcu)
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
+=======
+struct posix_acl *v9fs_iop_get_acl(struct inode *inode, int type)
+{
+	struct v9fs_session_info *v9ses;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	v9ses = v9fs_inode2v9ses(inode);
 	if (((v9ses->flags & V9FS_ACCESS_MASK) != V9FS_ACCESS_CLIENT) ||
 			((v9ses->flags & V9FS_ACL_MASK) != V9FS_POSIX_ACL)) {

@@ -125,7 +125,10 @@ EXPORT_SYMBOL_GPL(ahci_shost_attrs);
 struct device_attribute *ahci_sdev_attrs[] = {
 	&dev_attr_sw_activity,
 	&dev_attr_unload_heads,
+<<<<<<< HEAD
 	&dev_attr_ncq_prio_supported,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	&dev_attr_ncq_prio_enable,
 	NULL
 };

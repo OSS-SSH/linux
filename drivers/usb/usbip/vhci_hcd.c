@@ -455,6 +455,7 @@ static int vhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
 			vhci_hcd->port_status[rhport] &= ~(1 << USB_PORT_FEAT_RESET);
 			vhci_hcd->re_timeout = 0;
 
+<<<<<<< HEAD
 			/*
 			 * A few drivers do usb reset during probe when
 			 * the device could be in VDEV_ST_USED state
@@ -463,6 +464,10 @@ static int vhci_hub_control(struct usb_hcd *hcd, u16 typeReq, u16 wValue,
 				VDEV_ST_NOTASSIGNED ||
 			    vhci_hcd->vdev[rhport].ud.status ==
 				VDEV_ST_USED) {
+=======
+			if (vhci_hcd->vdev[rhport].ud.status ==
+			    VDEV_ST_NOTASSIGNED) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				usbip_dbg_vhci_rh(
 					" enable rhport %d (status %u)\n",
 					rhport,
@@ -951,8 +956,12 @@ static int vhci_urb_dequeue(struct usb_hcd *hcd, struct urb *urb, int status)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void vhci_cleanup_unlink_list(struct vhci_device *vdev,
 		struct list_head *unlink_list)
+=======
+static void vhci_device_unlink_cleanup(struct vhci_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vhci_hcd *vhci_hcd = vdev_to_vhci_hcd(vdev);
 	struct usb_hcd *hcd = vhci_hcd_to_hcd(vhci_hcd);
@@ -963,11 +972,33 @@ static void vhci_cleanup_unlink_list(struct vhci_device *vdev,
 	spin_lock_irqsave(&vhci->lock, flags);
 	spin_lock(&vdev->priv_lock);
 
+<<<<<<< HEAD
 	list_for_each_entry_safe(unlink, tmp, unlink_list, list) {
 		struct urb *urb;
 
 		urb = pickup_urb_and_free_priv(vdev, unlink->unlink_seqnum);
 		if (!urb) {
+=======
+	list_for_each_entry_safe(unlink, tmp, &vdev->unlink_tx, list) {
+		pr_info("unlink cleanup tx %lu\n", unlink->unlink_seqnum);
+		list_del(&unlink->list);
+		kfree(unlink);
+	}
+
+	while (!list_empty(&vdev->unlink_rx)) {
+		struct urb *urb;
+
+		unlink = list_first_entry(&vdev->unlink_rx, struct vhci_unlink,
+			list);
+
+		/* give back URB of unanswered unlink request */
+		pr_info("unlink cleanup rx %lu\n", unlink->unlink_seqnum);
+
+		urb = pickup_urb_and_free_priv(vdev, unlink->unlink_seqnum);
+		if (!urb) {
+			pr_info("the urb (seqnum %lu) was already given back\n",
+				unlink->unlink_seqnum);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			list_del(&unlink->list);
 			kfree(unlink);
 			continue;
@@ -994,6 +1025,7 @@ static void vhci_cleanup_unlink_list(struct vhci_device *vdev,
 	spin_unlock_irqrestore(&vhci->lock, flags);
 }
 
+<<<<<<< HEAD
 static void vhci_device_unlink_cleanup(struct vhci_device *vdev)
 {
 	/* give back URB of unsent unlink request */
@@ -1003,6 +1035,8 @@ static void vhci_device_unlink_cleanup(struct vhci_device *vdev)
 	vhci_cleanup_unlink_list(vdev, &vdev->unlink_rx);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * The important thing is that only one context begins cleanup.
  * This is why error handling and cleanup become simple.

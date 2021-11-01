@@ -1,6 +1,10 @@
 /* SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause */
 /*
+<<<<<<< HEAD
  * Copyright (C) 2014, 2018-2021 Intel Corporation
+=======
+ * Copyright (C) 2014, 2018-2020 Intel Corporation
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Copyright (C) 2014-2015 Intel Mobile Communications GmbH
  * Copyright (C) 2016-2017 Intel Deutschland GmbH
  */
@@ -305,12 +309,20 @@ struct iwl_fw_ini_error_dump_header {
 /**
  * struct iwl_fw_ini_error_dump - ini region dump
  * @header: the header of this region
+<<<<<<< HEAD
  * @data: data of memory ranges in this region,
  *	see &struct iwl_fw_ini_error_dump_range
  */
 struct iwl_fw_ini_error_dump {
 	struct iwl_fw_ini_error_dump_header header;
 	u8 data[];
+=======
+ * @ranges: the memory ranges of this region
+ */
+struct iwl_fw_ini_error_dump {
+	struct iwl_fw_ini_error_dump_header header;
+	struct iwl_fw_ini_error_dump_range ranges[];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } __packed;
 
 /* This bit is used to differentiate between lmac and umac rxf */
@@ -400,13 +412,21 @@ struct iwl_fw_ini_dump_info {
  * struct iwl_fw_ini_err_table_dump - ini error table dump
  * @header: header of the region
  * @version: error table version
+<<<<<<< HEAD
  * @data: data of memory ranges in this region,
  *	see &struct iwl_fw_ini_error_dump_range
+=======
+ * @ranges: the memory ranges of this this region
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct iwl_fw_ini_err_table_dump {
 	struct iwl_fw_ini_error_dump_header header;
 	__le32 version;
+<<<<<<< HEAD
 	u8 data[];
+=======
+	struct iwl_fw_ini_error_dump_range ranges[];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } __packed;
 
 /**
@@ -429,15 +449,23 @@ struct iwl_fw_error_dump_rb {
  * @write_ptr: write pointer position in the buffer
  * @cycle_cnt: cycles count
  * @cur_frag: current fragment in use
+<<<<<<< HEAD
  * @data: data of memory ranges in this region,
  *	see &struct iwl_fw_ini_error_dump_range
+=======
+ * @ranges: the memory ranges of this this region
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct iwl_fw_ini_monitor_dump {
 	struct iwl_fw_ini_error_dump_header header;
 	__le32 write_ptr;
 	__le32 cycle_cnt;
 	__le32 cur_frag;
+<<<<<<< HEAD
 	u8 data[];
+=======
+	struct iwl_fw_ini_error_dump_range ranges[];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } __packed;
 
 /**
@@ -445,14 +473,22 @@ struct iwl_fw_ini_monitor_dump {
  * @header: header of the region
  * @type: type of special memory
  * @version: struct special memory version
+<<<<<<< HEAD
  * @data: data of memory ranges in this region,
  *	see &struct iwl_fw_ini_error_dump_range
+=======
+ * @ranges: the memory ranges of this this region
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct iwl_fw_ini_special_device_memory {
 	struct iwl_fw_ini_error_dump_header header;
 	__le16 type;
 	__le16 version;
+<<<<<<< HEAD
 	u8 data[];
+=======
+	struct iwl_fw_ini_error_dump_range ranges[];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } __packed;
 
 /**

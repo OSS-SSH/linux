@@ -288,6 +288,7 @@ invalid_guid:
 
 void __init init_prmt(void)
 {
+<<<<<<< HEAD
 	struct acpi_table_header *tbl;
 	acpi_status status;
 	int mc;
@@ -306,6 +307,12 @@ void __init init_prmt(void)
 	if (mc <= 0)
 		return;
 
+=======
+	acpi_status status;
+	int mc = acpi_table_parse_entries(ACPI_SIG_PRMT, sizeof(struct acpi_table_prmt) +
+					  sizeof (struct acpi_table_prmt_header),
+					  0, acpi_parse_prmt, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_info("PRM: found %u modules\n", mc);
 
 	status = acpi_install_address_space_handler(ACPI_ROOT_OBJECT,

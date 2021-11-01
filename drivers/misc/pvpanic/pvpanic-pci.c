@@ -108,6 +108,9 @@ static struct pci_driver pvpanic_pci_driver = {
 	},
 };
 
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(pci, pvpanic_pci_id_tbl);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 module_pci_driver(pvpanic_pci_driver);

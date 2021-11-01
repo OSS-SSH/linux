@@ -9,6 +9,7 @@
 #include <asm/page.h>
 #include <asm/ptrace.h>
 
+<<<<<<< HEAD
 typedef s32		__compat_uid_t;
 typedef s32		__compat_gid_t;
 typedef __compat_uid_t	__compat_uid32_t;
@@ -20,14 +21,28 @@ typedef __compat_gid_t	__compat_gid32_t;
 #define _COMPAT_NSIG_BPW	32
 typedef u32		compat_sigset_word;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm-generic/compat.h>
 
 #define COMPAT_USER_HZ		100
 #define COMPAT_UTS_MACHINE	"mips\0\0\0"
 
+<<<<<<< HEAD
 typedef u32		compat_dev_t;
 typedef u32		compat_nlink_t;
 typedef s32		compat_ipc_pid_t;
+=======
+typedef s32		__compat_uid_t;
+typedef s32		__compat_gid_t;
+typedef __compat_uid_t	__compat_uid32_t;
+typedef __compat_gid_t	__compat_gid32_t;
+typedef u32		compat_mode_t;
+typedef u32		compat_dev_t;
+typedef u32		compat_nlink_t;
+typedef s32		compat_ipc_pid_t;
+typedef s32		compat_caddr_t;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 typedef struct {
 	s32	val[2];
 } compat_fsid_t;
@@ -94,8 +109,28 @@ struct compat_statfs {
 
 #define COMPAT_RLIM_INFINITY	0x7fffffffUL
 
+<<<<<<< HEAD
 #define COMPAT_OFF_T_MAX	0x7fffffff
 
+=======
+typedef u32		compat_old_sigset_t;	/* at least 32 bits */
+
+#define _COMPAT_NSIG		128		/* Don't ask !$@#% ...	*/
+#define _COMPAT_NSIG_BPW	32
+
+typedef u32		compat_sigset_word;
+
+#define COMPAT_OFF_T_MAX	0x7fffffff
+
+static inline void __user *arch_compat_alloc_user_space(long len)
+{
+	struct pt_regs *regs = (struct pt_regs *)
+		((unsigned long) current_thread_info() + THREAD_SIZE - 32) - 1;
+
+	return (void __user *) (regs->regs[29] - len);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct compat_ipc64_perm {
 	compat_key_t key;
 	__compat_uid32_t uid;

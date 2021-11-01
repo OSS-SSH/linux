@@ -47,6 +47,7 @@ config RENESAS_USB_DMAC
 	help
 	  This driver supports the USB-DMA controller found in the Renesas
 	  SoCs.
+<<<<<<< HEAD
 
 config RZ_DMAC
 	tristate "Renesas RZ/G2L DMA Controller"
@@ -56,3 +57,5 @@ config RZ_DMAC
 	help
 	  This driver supports the general purpose DMA controller found in the
 	  Renesas RZ/G2L SoC variants.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

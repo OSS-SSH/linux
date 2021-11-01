@@ -50,6 +50,10 @@ properties:
 
   reg:
     minItems: 1
+<<<<<<< HEAD
+=======
+    maxItems: 3
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     items:
       - description: base register
       - description: power register
@@ -61,7 +65,11 @@ properties:
     maxItems: 1
 
   '#clock-cells':
+<<<<<<< HEAD
     true
+=======
+    const: 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   clock-output-names:
     minItems: 1
@@ -74,6 +82,7 @@ allOf:
           contains:
             enum:
               - brcm,cygnus-armpll
+<<<<<<< HEAD
               - brcm,nsp-armpll
     then:
       properties:
@@ -91,6 +100,8 @@ allOf:
           contains:
             enum:
               - brcm,cygnus-armpll
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - brcm,cygnus-genpll
               - brcm,cygnus-lcpll0
               - brcm,cygnus-mipipll
@@ -375,6 +386,10 @@ required:
   - reg
   - clocks
   - '#clock-cells'
+<<<<<<< HEAD
+=======
+  - clock-output-names
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 additionalProperties: false
 
@@ -408,6 +423,7 @@ examples:
         clocks = <&osc2>;
         clock-output-names = "keypad", "adc/touch", "pwm";
     };
+<<<<<<< HEAD
   - |
     arm_clk@0 {
         #clock-cells = <0>;
@@ -415,3 +431,5 @@ examples:
         clocks = <&osc>;
         reg = <0x0 0x1000>;
     };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

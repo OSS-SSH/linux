@@ -44,7 +44,11 @@ struct hotplug_slot_ops {
 	int (*get_attention_status)	(struct hotplug_slot *slot, u8 *value);
 	int (*get_latch_status)		(struct hotplug_slot *slot, u8 *value);
 	int (*get_adapter_status)	(struct hotplug_slot *slot, u8 *value);
+<<<<<<< HEAD
 	int (*reset_slot)		(struct hotplug_slot *slot, bool probe);
+=======
+	int (*reset_slot)		(struct hotplug_slot *slot, int probe);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**

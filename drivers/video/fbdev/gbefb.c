@@ -1267,7 +1267,11 @@ static struct platform_device *gbefb_device;
 static int __init gbefb_init(void)
 {
 	int ret = platform_driver_register(&gbefb_driver);
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_SGI_IP32) && !ret) {
+=======
+	if (!ret) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		gbefb_device = platform_device_alloc("gbefb", 0);
 		if (gbefb_device) {
 			ret = platform_device_add(gbefb_device);

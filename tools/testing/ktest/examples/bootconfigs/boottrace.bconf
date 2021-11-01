@@ -10,6 +10,7 @@ ftrace.event {
 	}
 	synthetic.initcall_latency {
 		fields = "unsigned long func", "u64 lat"
+<<<<<<< HEAD
 		hist {
 			keys = func.sym,lat
 			values = lat
@@ -27,6 +28,15 @@ ftrace.event {
 			event = initcall.initcall_start
 			trace = initcall_latency, func, $lat
 		}
+=======
+		actions = "hist:keys=func.sym,lat:vals=lat:sort=lat"
+	}
+	initcall.initcall_start {
+		actions = "hist:keys=func:ts0=common_timestamp.usecs"
+	}
+	initcall.initcall_finish {
+		actions = "hist:keys=func:lat=common_timestamp.usecs-$ts0:onmatch(initcall.initcall_start).initcall_latency(func,$lat)"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

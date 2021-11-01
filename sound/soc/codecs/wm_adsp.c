@@ -282,7 +282,10 @@
 /*
  * HALO_CCM_CORE_CONTROL
  */
+<<<<<<< HEAD
 #define HALO_CORE_RESET                     0x00000200
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define HALO_CORE_EN                        0x00000001
 
 /*
@@ -748,7 +751,10 @@ static void wm_adsp2_cleanup_debugfs(struct wm_adsp *dsp)
 {
 	wm_adsp_debugfs_clear(dsp);
 	debugfs_remove_recursive(dsp->debugfs_root);
+<<<<<<< HEAD
 	dsp->debugfs_root = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #else
 static inline void wm_adsp2_init_debugfs(struct wm_adsp *dsp,
@@ -1215,7 +1221,11 @@ static int wm_coeff_tlv_get(struct snd_kcontrol *kctl,
 
 	mutex_lock(&ctl->dsp->pwr_lock);
 
+<<<<<<< HEAD
 	ret = wm_coeff_read_ctrl(ctl, ctl->cache, size);
+=======
+	ret = wm_coeff_read_ctrl_raw(ctl, ctl->cache, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!ret && copy_to_user(bytes, ctl->cache, size))
 		ret = -EFAULT;
@@ -2031,9 +2041,16 @@ static struct wm_coeff_ctl *wm_adsp_get_ctl(struct wm_adsp *dsp,
 		if (!pos->subname)
 			continue;
 		if (strncmp(pos->subname, name, pos->subname_len) == 0 &&
+<<<<<<< HEAD
 		    pos->fw_name == fw_txt &&
 		    pos->alg_region.alg == alg &&
 		    pos->alg_region.type == type) {
+=======
+		    strncmp(pos->fw_name, fw_txt,
+			    SNDRV_CTL_ELEM_ID_NAME_MAXLEN) == 0 &&
+				pos->alg_region.alg == alg &&
+				pos->alg_region.type == type) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			rslt = pos;
 			break;
 		}
@@ -3334,8 +3351,12 @@ static int wm_halo_start_core(struct wm_adsp *dsp)
 {
 	return regmap_update_bits(dsp->regmap,
 				  dsp->base + HALO_CCM_CORE_CONTROL,
+<<<<<<< HEAD
 				  HALO_CORE_RESET | HALO_CORE_EN,
 				  HALO_CORE_RESET | HALO_CORE_EN);
+=======
+				  HALO_CORE_EN, HALO_CORE_EN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void wm_halo_stop_core(struct wm_adsp *dsp)

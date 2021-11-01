@@ -95,7 +95,11 @@ static int armada_drm_bind(struct device *dev)
 	}
 
 	/* Remove early framebuffers */
+<<<<<<< HEAD
 	ret = drm_aperture_remove_framebuffers(false, &armada_drm_driver);
+=======
+	ret = drm_aperture_remove_framebuffers(false, "armada-drm-fb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		dev_err(dev, "[" DRM_NAME ":%s] can't kick out simple-fb: %d\n",
 			__func__, ret);
@@ -130,6 +134,11 @@ static int armada_drm_bind(struct device *dev)
 	if (ret)
 		goto err_comp;
 
+<<<<<<< HEAD
+=======
+	priv->drm.irq_enabled = true;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_mode_config_reset(&priv->drm);
 
 	ret = armada_fbdev_init(&priv->drm);

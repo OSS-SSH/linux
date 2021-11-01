@@ -7,6 +7,7 @@
 
 #include "msm_gpu.h"
 
+<<<<<<< HEAD
 void __msm_file_private_destroy(struct kref *kref)
 {
 	struct msm_file_private *ctx = container_of(kref,
@@ -25,13 +26,18 @@ void __msm_file_private_destroy(struct kref *kref)
 	kfree(ctx);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void msm_submitqueue_destroy(struct kref *kref)
 {
 	struct msm_gpu_submitqueue *queue = container_of(kref,
 		struct msm_gpu_submitqueue, ref);
 
+<<<<<<< HEAD
 	idr_destroy(&queue->fence_idr);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	msm_file_private_put(queue->ctx);
 
 	kfree(queue);
@@ -77,6 +83,7 @@ void msm_submitqueue_close(struct msm_file_private *ctx)
 	}
 }
 
+<<<<<<< HEAD
 static struct drm_sched_entity *
 get_sched_entity(struct msm_file_private *ctx, struct msm_ringbuffer *ring,
 		 unsigned ring_nr, enum drm_sched_priority sched_prio)
@@ -113,18 +120,24 @@ get_sched_entity(struct msm_file_private *ctx, struct msm_ringbuffer *ring,
 	return ctx->entities[idx];
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
 		u32 prio, u32 flags, u32 *id)
 {
 	struct msm_drm_private *priv = drm->dev_private;
 	struct msm_gpu_submitqueue *queue;
+<<<<<<< HEAD
 	enum drm_sched_priority sched_prio;
 	unsigned ring_nr;
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!ctx)
 		return -ENODEV;
 
+<<<<<<< HEAD
 	if (!priv->gpu)
 		return -ENODEV;
 
@@ -132,6 +145,8 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	queue = kzalloc(sizeof(*queue), GFP_KERNEL);
 
 	if (!queue)
@@ -139,6 +154,7 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
 
 	kref_init(&queue->ref);
 	queue->flags = flags;
+<<<<<<< HEAD
 	queue->ring_nr = ring_nr;
 
 	queue->entity = get_sched_entity(ctx, priv->gpu->rb[ring_nr],
@@ -147,6 +163,16 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
 		ret = PTR_ERR(queue->entity);
 		kfree(queue);
 		return ret;
+=======
+
+	if (priv->gpu) {
+		if (prio >= priv->gpu->nr_rings) {
+			kfree(queue);
+			return -EINVAL;
+		}
+
+		queue->prio = prio;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	write_lock(&ctx->queuelock);
@@ -157,9 +183,12 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
 	if (id)
 		*id = queue->id;
 
+<<<<<<< HEAD
 	idr_init(&queue->fence_idr);
 	mutex_init(&queue->lock);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_add_tail(&queue->node, &ctx->submitqueues);
 
 	write_unlock(&ctx->queuelock);
@@ -167,6 +196,7 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
 	return 0;
 }
 
+<<<<<<< HEAD
 /*
  * Create the default submit-queue (id==0), used for backwards compatibility
  * for userspace that pre-dates the introduction of submitqueues.
@@ -187,6 +217,26 @@ int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx)
 	 * than the middle priority level.
 	 */
 	default_prio = DIV_ROUND_UP(max_priority, 2);
+=======
+int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx)
+{
+	struct msm_drm_private *priv = drm->dev_private;
+	int default_prio;
+
+	if (!ctx)
+		return 0;
+
+	/*
+	 * Select priority 2 as the "default priority" unless nr_rings is less
+	 * than 2 and then pick the lowest pirority
+	 */
+	default_prio = priv->gpu ?
+		clamp_t(uint32_t, 2, 0, priv->gpu->nr_rings - 1) : 0;
+
+	INIT_LIST_HEAD(&ctx->submitqueues);
+
+	rwlock_init(&ctx->queuelock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return msm_submitqueue_create(drm, ctx, default_prio, 0, NULL);
 }

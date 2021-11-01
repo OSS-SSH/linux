@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: LGPL-2.1 WITH Linux-syscall-note */
+=======
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Copyright(c) 2019 Intel Corporation. All rights rsvd. */
 #ifndef _USR_IDXD_H_
 #define _USR_IDXD_H_
@@ -9,6 +13,7 @@
 #include <stdint.h>
 #endif
 
+<<<<<<< HEAD
 /* Driver command error status */
 enum idxd_scmd_stat {
 	IDXD_SCMD_DEV_ENABLED = 0x80000010,
@@ -33,6 +38,8 @@ enum idxd_scmd_stat {
 #define IDXD_SCMD_SOFTERR_MASK	0x80000000
 #define IDXD_SCMD_SOFTERR_SHIFT	16
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Descriptor flags */
 #define IDXD_OP_FLAG_FENCE	0x0001
 #define IDXD_OP_FLAG_BOF	0x0002

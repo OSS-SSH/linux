@@ -1344,4 +1344,9 @@ void siw_free_qp(struct kref *ref)
 	siw_put_tx_cpu(qp->tx_cpu);
 
 	atomic_dec(&sdev->num_qp);
+<<<<<<< HEAD
+=======
+	siw_dbg_qp(qp, "free QP\n");
+	kfree_rcu(qp, rcu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

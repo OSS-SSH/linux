@@ -127,6 +127,10 @@ struct snd_intelhad {
 	union aud_cfg aud_config;	/* AUD_CONFIG reg value cache */
 	struct work_struct hdmi_audio_wq;
 	struct mutex mutex; /* for protecting chmap and eld */
+<<<<<<< HEAD
+=======
+	bool need_reset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct snd_jack *jack;
 };
 

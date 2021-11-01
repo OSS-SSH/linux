@@ -113,8 +113,12 @@
 #define BYTES_PER_POINTER	sizeof(void *)
 
 /* GFP bitmask for kmemleak internal allocations */
+<<<<<<< HEAD
 #define gfp_kmemleak_mask(gfp)	(((gfp) & (GFP_KERNEL | GFP_ATOMIC | \
 					   __GFP_NOLOCKDEP)) | \
+=======
+#define gfp_kmemleak_mask(gfp)	(((gfp) & (GFP_KERNEL | GFP_ATOMIC)) | \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 __GFP_NORETRY | __GFP_NOMEMALLOC | \
 				 __GFP_NOWARN)
 
@@ -291,7 +295,11 @@ static void hex_dump_object(struct seq_file *seq,
 	warn_or_seq_printf(seq, "  hex dump (first %zu bytes):\n", len);
 	kasan_disable_current();
 	warn_or_seq_hex_dump(seq, DUMP_PREFIX_NONE, HEX_ROW_SIZE,
+<<<<<<< HEAD
 			     HEX_GROUP_SIZE, kasan_reset_tag((void *)ptr), len, HEX_ASCII);
+=======
+			     HEX_GROUP_SIZE, ptr, len, HEX_ASCII);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kasan_enable_current();
 }
 
@@ -599,7 +607,11 @@ static struct kmemleak_object *create_object(unsigned long ptr, size_t size,
 	object->checksum = 0;
 
 	/* task information */
+<<<<<<< HEAD
 	if (in_hardirq()) {
+=======
+	if (in_irq()) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		object->pid = 0;
 		strncpy(object->comm, "hardirq", sizeof(object->comm));
 	} else if (in_serving_softirq()) {
@@ -1172,7 +1184,11 @@ static bool update_checksum(struct kmemleak_object *object)
 
 	kasan_disable_current();
 	kcsan_disable_current();
+<<<<<<< HEAD
 	object->checksum = crc32(0, kasan_reset_tag((void *)object->pointer), object->size);
+=======
+	object->checksum = crc32(0, (void *)object->pointer, object->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kasan_enable_current();
 	kcsan_enable_current();
 
@@ -1247,7 +1263,11 @@ static void scan_block(void *_start, void *_end,
 			break;
 
 		kasan_disable_current();
+<<<<<<< HEAD
 		pointer = *(unsigned long *)kasan_reset_tag((void *)ptr);
+=======
+		pointer = *ptr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kasan_enable_current();
 
 		untagged_ptr = (unsigned long)kasan_reset_tag((void *)pointer);

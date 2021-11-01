@@ -27,7 +27,10 @@
  */
 
 #include "gem/i915_gem_context.h"
+<<<<<<< HEAD
 #include "gt/intel_gt.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "gt/intel_gt_requests.h"
 
 #include "i915_drv.h"

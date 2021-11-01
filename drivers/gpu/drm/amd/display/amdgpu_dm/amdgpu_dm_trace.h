@@ -637,6 +637,7 @@ TRACE_EVENT(amdgpu_refresh_rate_track,
 		  __entry->refresh_rate_ns)
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(dcn_fpu,
 	    TP_PROTO(bool begin, const char *function, const int line, const int recursion_depth),
 	    TP_ARGS(begin, function, line, recursion_depth),
@@ -661,6 +662,8 @@ TRACE_EVENT(dcn_fpu,
 	    )
 );
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _AMDGPU_DM_TRACE_H_ */
 
 #undef TRACE_INCLUDE_PATH

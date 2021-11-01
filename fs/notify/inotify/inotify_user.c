@@ -55,27 +55,44 @@ struct kmem_cache *inotify_inode_mark_cachep __read_mostly;
 
 #include <linux/sysctl.h>
 
+<<<<<<< HEAD
 static long it_zero = 0;
 static long it_int_max = INT_MAX;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct ctl_table inotify_table[] = {
 	{
 		.procname	= "max_user_instances",
 		.data		= &init_user_ns.ucount_max[UCOUNT_INOTIFY_INSTANCES],
+<<<<<<< HEAD
 		.maxlen		= sizeof(long),
 		.mode		= 0644,
 		.proc_handler	= proc_doulongvec_minmax,
 		.extra1		= &it_zero,
 		.extra2		= &it_int_max,
+=======
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= SYSCTL_ZERO,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{
 		.procname	= "max_user_watches",
 		.data		= &init_user_ns.ucount_max[UCOUNT_INOTIFY_WATCHES],
+<<<<<<< HEAD
 		.maxlen		= sizeof(long),
 		.mode		= 0644,
 		.proc_handler	= proc_doulongvec_minmax,
 		.extra1		= &it_zero,
 		.extra2		= &it_int_max,
+=======
+		.maxlen		= sizeof(int),
+		.mode		= 0644,
+		.proc_handler	= proc_dointvec_minmax,
+		.extra1		= SYSCTL_ZERO,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{
 		.procname	= "max_queued_events",

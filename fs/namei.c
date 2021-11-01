@@ -204,6 +204,7 @@ getname_flags(const char __user *filename, int flags, int *empty)
 }
 
 struct filename *
+<<<<<<< HEAD
 getname_uflags(const char __user *filename, int uflags)
 {
 	int flags = (uflags & AT_EMPTY_PATH) ? LOOKUP_EMPTY : 0;
@@ -212,6 +213,8 @@ getname_uflags(const char __user *filename, int uflags)
 }
 
 struct filename *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 getname(const char __user * filename)
 {
 	return getname_flags(filename, 0, NULL);
@@ -255,9 +258,12 @@ getname_kernel(const char * filename)
 
 void putname(struct filename *name)
 {
+<<<<<<< HEAD
 	if (IS_ERR(name))
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUG_ON(name->refcnt <= 0);
 
 	if (--name->refcnt > 0)
@@ -2485,6 +2491,10 @@ int filename_lookup(int dfd, struct filename *name, unsigned flags,
 		audit_inode(name, path->dentry,
 			    flags & LOOKUP_MOUNTPOINT ? AUDIT_INODE_NOEVAL : 0);
 	restore_nameidata();
+<<<<<<< HEAD
+=======
+	putname(name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return retval;
 }
 
@@ -2505,16 +2515,26 @@ static int path_parentat(struct nameidata *nd, unsigned flags,
 	return err;
 }
 
+<<<<<<< HEAD
 /* Note: this does not consume "name" */
 static int filename_parentat(int dfd, struct filename *name,
 			     unsigned int flags, struct path *parent,
 			     struct qstr *last, int *type)
+=======
+static struct filename *filename_parentat(int dfd, struct filename *name,
+				unsigned int flags, struct path *parent,
+				struct qstr *last, int *type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int retval;
 	struct nameidata nd;
 
 	if (IS_ERR(name))
+<<<<<<< HEAD
 		return PTR_ERR(name);
+=======
+		return name;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	set_nameidata(&nd, dfd, name, NULL);
 	retval = path_parentat(&nd, flags | LOOKUP_RCU, parent);
 	if (unlikely(retval == -ECHILD))
@@ -2525,6 +2545,7 @@ static int filename_parentat(int dfd, struct filename *name,
 		*last = nd.last;
 		*type = nd.last_type;
 		audit_inode(name, parent->dentry, AUDIT_INODE_PARENT);
+<<<<<<< HEAD
 	}
 	restore_nameidata();
 	return retval;
@@ -2542,6 +2563,31 @@ static struct dentry *__kern_path_locked(struct filename *name, struct path *pat
 		return ERR_PTR(error);
 	if (unlikely(type != LAST_NORM)) {
 		path_put(path);
+=======
+	} else {
+		putname(name);
+		name = ERR_PTR(retval);
+	}
+	restore_nameidata();
+	return name;
+}
+
+/* does lookup, returns the object with parent locked */
+struct dentry *kern_path_locked(const char *name, struct path *path)
+{
+	struct filename *filename;
+	struct dentry *d;
+	struct qstr last;
+	int type;
+
+	filename = filename_parentat(AT_FDCWD, getname_kernel(name), 0, path,
+				    &last, &type);
+	if (IS_ERR(filename))
+		return ERR_CAST(filename);
+	if (unlikely(type != LAST_NORM)) {
+		path_put(path);
+		putname(filename);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ERR_PTR(-EINVAL);
 	}
 	inode_lock_nested(path->dentry->d_inode, I_MUTEX_PARENT);
@@ -2550,6 +2596,7 @@ static struct dentry *__kern_path_locked(struct filename *name, struct path *pat
 		inode_unlock(path->dentry->d_inode);
 		path_put(path);
 	}
+<<<<<<< HEAD
 	return d;
 }
 
@@ -2560,16 +2607,25 @@ struct dentry *kern_path_locked(const char *name, struct path *path)
 
 	putname(filename);
 	return res;
+=======
+	putname(filename);
+	return d;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int kern_path(const char *name, unsigned int flags, struct path *path)
 {
+<<<<<<< HEAD
 	struct filename *filename = getname_kernel(name);
 	int ret = filename_lookup(AT_FDCWD, filename, flags, path, NULL);
 
 	putname(filename);
 	return ret;
 
+=======
+	return filename_lookup(AT_FDCWD, getname_kernel(name),
+			       flags, path, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(kern_path);
 
@@ -2585,6 +2641,7 @@ int vfs_path_lookup(struct dentry *dentry, struct vfsmount *mnt,
 		    const char *name, unsigned int flags,
 		    struct path *path)
 {
+<<<<<<< HEAD
 	struct filename *filename;
 	struct path root = {.mnt = mnt, .dentry = dentry};
 	int ret;
@@ -2600,6 +2657,17 @@ EXPORT_SYMBOL(vfs_path_lookup);
 static int lookup_one_common(struct user_namespace *mnt_userns,
 			     const char *name, struct dentry *base, int len,
 			     struct qstr *this)
+=======
+	struct path root = {.mnt = mnt, .dentry = dentry};
+	/* the first argument of filename_lookup() is ignored with root */
+	return filename_lookup(AT_FDCWD, getname_kernel(name),
+			       flags , path, &root);
+}
+EXPORT_SYMBOL(vfs_path_lookup);
+
+static int lookup_one_len_common(const char *name, struct dentry *base,
+				 int len, struct qstr *this)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	this->name = name;
 	this->len = len;
@@ -2627,7 +2695,11 @@ static int lookup_one_common(struct user_namespace *mnt_userns,
 			return err;
 	}
 
+<<<<<<< HEAD
 	return inode_permission(mnt_userns, base->d_inode, MAY_EXEC);
+=======
+	return inode_permission(&init_user_ns, base->d_inode, MAY_EXEC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -2651,7 +2723,11 @@ struct dentry *try_lookup_one_len(const char *name, struct dentry *base, int len
 
 	WARN_ON_ONCE(!inode_is_locked(base->d_inode));
 
+<<<<<<< HEAD
 	err = lookup_one_common(&init_user_ns, name, base, len, &this);
+=======
+	err = lookup_one_len_common(name, base, len, &this);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return ERR_PTR(err);
 
@@ -2678,7 +2754,11 @@ struct dentry *lookup_one_len(const char *name, struct dentry *base, int len)
 
 	WARN_ON_ONCE(!inode_is_locked(base->d_inode));
 
+<<<<<<< HEAD
 	err = lookup_one_common(&init_user_ns, name, base, len, &this);
+=======
+	err = lookup_one_len_common(name, base, len, &this);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return ERR_PTR(err);
 
@@ -2688,6 +2768,7 @@ struct dentry *lookup_one_len(const char *name, struct dentry *base, int len)
 EXPORT_SYMBOL(lookup_one_len);
 
 /**
+<<<<<<< HEAD
  * lookup_one - filesystem helper to lookup single pathname component
  * @mnt_userns:	user namespace of the mount the lookup is performed from
  * @name:	pathname component to lookup
@@ -2718,6 +2799,8 @@ struct dentry *lookup_one(struct user_namespace *mnt_userns, const char *name,
 EXPORT_SYMBOL(lookup_one);
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * lookup_one_len_unlocked - filesystem helper to lookup single pathname component
  * @name:	pathname component to lookup
  * @base:	base directory to lookup from
@@ -2736,7 +2819,11 @@ struct dentry *lookup_one_len_unlocked(const char *name,
 	int err;
 	struct dentry *ret;
 
+<<<<<<< HEAD
 	err = lookup_one_common(&init_user_ns, name, base, len, &this);
+=======
+	err = lookup_one_len_common(name, base, len, &this);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return ERR_PTR(err);
 
@@ -2797,11 +2884,16 @@ int path_pts(struct path *path)
 int user_path_at_empty(int dfd, const char __user *name, unsigned flags,
 		 struct path *path, int *empty)
 {
+<<<<<<< HEAD
 	struct filename *filename = getname_flags(name, flags, empty);
 	int ret = filename_lookup(dfd, filename, flags, path, NULL);
 
 	putname(filename);
 	return ret;
+=======
+	return filename_lookup(dfd, getname_flags(name, flags, empty),
+			       flags, path, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(user_path_at_empty);
 
@@ -3079,7 +3171,13 @@ static int handle_truncate(struct user_namespace *mnt_userns, struct file *filp)
 	/*
 	 * Refuse to truncate files with mandatory locks held on them.
 	 */
+<<<<<<< HEAD
 	error = security_path_truncate(path);
+=======
+	error = locks_verify_locked(filp);
+	if (!error)
+		error = security_path_truncate(path);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!error) {
 		error = do_truncate(mnt_userns, path->dentry, 0,
 				    ATTR_MTIME|ATTR_CTIME|ATTR_OPEN,
@@ -3621,7 +3719,11 @@ struct file *do_file_open_root(const struct path *root,
 }
 
 static struct dentry *filename_create(int dfd, struct filename *name,
+<<<<<<< HEAD
 				      struct path *path, unsigned int lookup_flags)
+=======
+				struct path *path, unsigned int lookup_flags)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct dentry *dentry = ERR_PTR(-EEXIST);
 	struct qstr last;
@@ -3636,9 +3738,15 @@ static struct dentry *filename_create(int dfd, struct filename *name,
 	 */
 	lookup_flags &= LOOKUP_REVAL;
 
+<<<<<<< HEAD
 	error = filename_parentat(dfd, name, lookup_flags, path, &last, &type);
 	if (error)
 		return ERR_PTR(error);
+=======
+	name = filename_parentat(dfd, name, lookup_flags, path, &last, &type);
+	if (IS_ERR(name))
+		return ERR_CAST(name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Yucky last component or no last component at all?
@@ -3676,6 +3784,10 @@ static struct dentry *filename_create(int dfd, struct filename *name,
 		error = err2;
 		goto fail;
 	}
+<<<<<<< HEAD
+=======
+	putname(name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return dentry;
 fail:
 	dput(dentry);
@@ -3686,17 +3798,26 @@ unlock:
 		mnt_drop_write(path->mnt);
 out:
 	path_put(path);
+<<<<<<< HEAD
+=======
+	putname(name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return dentry;
 }
 
 struct dentry *kern_path_create(int dfd, const char *pathname,
 				struct path *path, unsigned int lookup_flags)
 {
+<<<<<<< HEAD
 	struct filename *filename = getname_kernel(pathname);
 	struct dentry *res = filename_create(dfd, filename, path, lookup_flags);
 
 	putname(filename);
 	return res;
+=======
+	return filename_create(dfd, getname_kernel(pathname),
+				path, lookup_flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(kern_path_create);
 
@@ -3712,11 +3833,15 @@ EXPORT_SYMBOL(done_path_create);
 inline struct dentry *user_path_create(int dfd, const char __user *pathname,
 				struct path *path, unsigned int lookup_flags)
 {
+<<<<<<< HEAD
 	struct filename *filename = getname(pathname);
 	struct dentry *res = filename_create(dfd, filename, path, lookup_flags);
 
 	putname(filename);
 	return res;
+=======
+	return filename_create(dfd, getname(pathname), path, lookup_flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(user_path_create);
 
@@ -3784,7 +3909,11 @@ static int may_mknod(umode_t mode)
 	}
 }
 
+<<<<<<< HEAD
 static int do_mknodat(int dfd, struct filename *name, umode_t mode,
+=======
+static long do_mknodat(int dfd, const char __user *filename, umode_t mode,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unsigned int dev)
 {
 	struct user_namespace *mnt_userns;
@@ -3795,18 +3924,30 @@ static int do_mknodat(int dfd, struct filename *name, umode_t mode,
 
 	error = may_mknod(mode);
 	if (error)
+<<<<<<< HEAD
 		goto out1;
 retry:
 	dentry = filename_create(dfd, name, &path, lookup_flags);
 	error = PTR_ERR(dentry);
 	if (IS_ERR(dentry))
 		goto out1;
+=======
+		return error;
+retry:
+	dentry = user_path_create(dfd, filename, &path, lookup_flags);
+	if (IS_ERR(dentry))
+		return PTR_ERR(dentry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!IS_POSIXACL(path.dentry->d_inode))
 		mode &= ~current_umask();
 	error = security_path_mknod(&path, dentry, mode, dev);
 	if (error)
+<<<<<<< HEAD
 		goto out2;
+=======
+		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mnt_userns = mnt_user_ns(path.mnt);
 	switch (mode & S_IFMT) {
@@ -3825,26 +3966,41 @@ retry:
 					  dentry, mode, 0);
 			break;
 	}
+<<<<<<< HEAD
 out2:
+=======
+out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	done_path_create(&path, dentry);
 	if (retry_estale(error, lookup_flags)) {
 		lookup_flags |= LOOKUP_REVAL;
 		goto retry;
 	}
+<<<<<<< HEAD
 out1:
 	putname(name);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return error;
 }
 
 SYSCALL_DEFINE4(mknodat, int, dfd, const char __user *, filename, umode_t, mode,
 		unsigned int, dev)
 {
+<<<<<<< HEAD
 	return do_mknodat(dfd, getname(filename), mode, dev);
+=======
+	return do_mknodat(dfd, filename, mode, dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 SYSCALL_DEFINE3(mknod, const char __user *, filename, umode_t, mode, unsigned, dev)
 {
+<<<<<<< HEAD
 	return do_mknodat(AT_FDCWD, getname(filename), mode, dev);
+=======
+	return do_mknodat(AT_FDCWD, filename, mode, dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -3889,7 +4045,11 @@ int vfs_mkdir(struct user_namespace *mnt_userns, struct inode *dir,
 }
 EXPORT_SYMBOL(vfs_mkdir);
 
+<<<<<<< HEAD
 int do_mkdirat(int dfd, struct filename *name, umode_t mode)
+=======
+static long do_mkdirat(int dfd, const char __user *pathname, umode_t mode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct dentry *dentry;
 	struct path path;
@@ -3897,10 +4057,16 @@ int do_mkdirat(int dfd, struct filename *name, umode_t mode)
 	unsigned int lookup_flags = LOOKUP_DIRECTORY;
 
 retry:
+<<<<<<< HEAD
 	dentry = filename_create(dfd, name, &path, lookup_flags);
 	error = PTR_ERR(dentry);
 	if (IS_ERR(dentry))
 		goto out_putname;
+=======
+	dentry = user_path_create(dfd, pathname, &path, lookup_flags);
+	if (IS_ERR(dentry))
+		return PTR_ERR(dentry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!IS_POSIXACL(path.dentry->d_inode))
 		mode &= ~current_umask();
@@ -3916,19 +4082,30 @@ retry:
 		lookup_flags |= LOOKUP_REVAL;
 		goto retry;
 	}
+<<<<<<< HEAD
 out_putname:
 	putname(name);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return error;
 }
 
 SYSCALL_DEFINE3(mkdirat, int, dfd, const char __user *, pathname, umode_t, mode)
 {
+<<<<<<< HEAD
 	return do_mkdirat(dfd, getname(pathname), mode);
+=======
+	return do_mkdirat(dfd, pathname, mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 SYSCALL_DEFINE2(mkdir, const char __user *, pathname, umode_t, mode)
 {
+<<<<<<< HEAD
 	return do_mkdirat(AT_FDCWD, getname(pathname), mode);
+=======
+	return do_mkdirat(AT_FDCWD, pathname, mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -3986,23 +4163,38 @@ out:
 }
 EXPORT_SYMBOL(vfs_rmdir);
 
+<<<<<<< HEAD
 int do_rmdir(int dfd, struct filename *name)
 {
 	struct user_namespace *mnt_userns;
 	int error;
+=======
+long do_rmdir(int dfd, struct filename *name)
+{
+	struct user_namespace *mnt_userns;
+	int error = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct dentry *dentry;
 	struct path path;
 	struct qstr last;
 	int type;
 	unsigned int lookup_flags = 0;
 retry:
+<<<<<<< HEAD
 	error = filename_parentat(dfd, name, lookup_flags, &path, &last, &type);
 	if (error)
 		goto exit1;
+=======
+	name = filename_parentat(dfd, name, lookup_flags,
+				&path, &last, &type);
+	if (IS_ERR(name))
+		return PTR_ERR(name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (type) {
 	case LAST_DOTDOT:
 		error = -ENOTEMPTY;
+<<<<<<< HEAD
 		goto exit2;
 	case LAST_DOT:
 		error = -EINVAL;
@@ -4010,16 +4202,30 @@ retry:
 	case LAST_ROOT:
 		error = -EBUSY;
 		goto exit2;
+=======
+		goto exit1;
+	case LAST_DOT:
+		error = -EINVAL;
+		goto exit1;
+	case LAST_ROOT:
+		error = -EBUSY;
+		goto exit1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	error = mnt_want_write(path.mnt);
 	if (error)
+<<<<<<< HEAD
 		goto exit2;
+=======
+		goto exit1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	inode_lock_nested(path.dentry->d_inode, I_MUTEX_PARENT);
 	dentry = __lookup_hash(&last, path.dentry, lookup_flags);
 	error = PTR_ERR(dentry);
 	if (IS_ERR(dentry))
+<<<<<<< HEAD
 		goto exit3;
 	if (!dentry->d_inode) {
 		error = -ENOENT;
@@ -4036,12 +4242,33 @@ exit3:
 	inode_unlock(path.dentry->d_inode);
 	mnt_drop_write(path.mnt);
 exit2:
+=======
+		goto exit2;
+	if (!dentry->d_inode) {
+		error = -ENOENT;
+		goto exit3;
+	}
+	error = security_path_rmdir(&path, dentry);
+	if (error)
+		goto exit3;
+	mnt_userns = mnt_user_ns(path.mnt);
+	error = vfs_rmdir(mnt_userns, path.dentry->d_inode, dentry);
+exit3:
+	dput(dentry);
+exit2:
+	inode_unlock(path.dentry->d_inode);
+	mnt_drop_write(path.mnt);
+exit1:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	path_put(&path);
 	if (retry_estale(error, lookup_flags)) {
 		lookup_flags |= LOOKUP_REVAL;
 		goto retry;
 	}
+<<<<<<< HEAD
 exit1:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	putname(name);
 	return error;
 }
@@ -4089,9 +4316,13 @@ int vfs_unlink(struct user_namespace *mnt_userns, struct inode *dir,
 		return -EPERM;
 
 	inode_lock(target);
+<<<<<<< HEAD
 	if (IS_SWAPFILE(target))
 		error = -EPERM;
 	else if (is_local_mountpoint(dentry))
+=======
+	if (is_local_mountpoint(dentry))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		error = -EBUSY;
 	else {
 		error = security_inode_unlink(dir, dentry);
@@ -4126,7 +4357,11 @@ EXPORT_SYMBOL(vfs_unlink);
  * writeout happening, and we don't want to prevent access to the directory
  * while waiting on the I/O.
  */
+<<<<<<< HEAD
 int do_unlinkat(int dfd, struct filename *name)
+=======
+long do_unlinkat(int dfd, struct filename *name)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int error;
 	struct dentry *dentry;
@@ -4137,6 +4372,7 @@ int do_unlinkat(int dfd, struct filename *name)
 	struct inode *delegated_inode = NULL;
 	unsigned int lookup_flags = 0;
 retry:
+<<<<<<< HEAD
 	error = filename_parentat(dfd, name, lookup_flags, &path, &last, &type);
 	if (error)
 		goto exit1;
@@ -4148,6 +4384,19 @@ retry:
 	error = mnt_want_write(path.mnt);
 	if (error)
 		goto exit2;
+=======
+	name = filename_parentat(dfd, name, lookup_flags, &path, &last, &type);
+	if (IS_ERR(name))
+		return PTR_ERR(name);
+
+	error = -EISDIR;
+	if (type != LAST_NORM)
+		goto exit1;
+
+	error = mnt_want_write(path.mnt);
+	if (error)
+		goto exit1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 retry_deleg:
 	inode_lock_nested(path.dentry->d_inode, I_MUTEX_PARENT);
 	dentry = __lookup_hash(&last, path.dentry, lookup_flags);
@@ -4164,11 +4413,19 @@ retry_deleg:
 		ihold(inode);
 		error = security_path_unlink(&path, dentry);
 		if (error)
+<<<<<<< HEAD
 			goto exit3;
 		mnt_userns = mnt_user_ns(path.mnt);
 		error = vfs_unlink(mnt_userns, path.dentry->d_inode, dentry,
 				   &delegated_inode);
 exit3:
+=======
+			goto exit2;
+		mnt_userns = mnt_user_ns(path.mnt);
+		error = vfs_unlink(mnt_userns, path.dentry->d_inode, dentry,
+				   &delegated_inode);
+exit2:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dput(dentry);
 	}
 	inode_unlock(path.dentry->d_inode);
@@ -4181,14 +4438,21 @@ exit3:
 			goto retry_deleg;
 	}
 	mnt_drop_write(path.mnt);
+<<<<<<< HEAD
 exit2:
+=======
+exit1:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	path_put(&path);
 	if (retry_estale(error, lookup_flags)) {
 		lookup_flags |= LOOKUP_REVAL;
 		inode = NULL;
 		goto retry;
 	}
+<<<<<<< HEAD
 exit1:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	putname(name);
 	return error;
 
@@ -4199,7 +4463,11 @@ slashes:
 		error = -EISDIR;
 	else
 		error = -ENOTDIR;
+<<<<<<< HEAD
 	goto exit3;
+=======
+	goto exit2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 SYSCALL_DEFINE3(unlinkat, int, dfd, const char __user *, pathname, int, flag)
@@ -4254,13 +4522,22 @@ int vfs_symlink(struct user_namespace *mnt_userns, struct inode *dir,
 }
 EXPORT_SYMBOL(vfs_symlink);
 
+<<<<<<< HEAD
 int do_symlinkat(struct filename *from, int newdfd, struct filename *to)
 {
 	int error;
+=======
+static long do_symlinkat(const char __user *oldname, int newdfd,
+		  const char __user *newname)
+{
+	int error;
+	struct filename *from;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct dentry *dentry;
 	struct path path;
 	unsigned int lookup_flags = 0;
 
+<<<<<<< HEAD
 	if (IS_ERR(from)) {
 		error = PTR_ERR(from);
 		goto out_putnames;
@@ -4270,6 +4547,16 @@ retry:
 	error = PTR_ERR(dentry);
 	if (IS_ERR(dentry))
 		goto out_putnames;
+=======
+	from = getname(oldname);
+	if (IS_ERR(from))
+		return PTR_ERR(from);
+retry:
+	dentry = user_path_create(newdfd, newname, &path, lookup_flags);
+	error = PTR_ERR(dentry);
+	if (IS_ERR(dentry))
+		goto out_putname;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	error = security_path_symlink(&path, dentry, from->name);
 	if (!error) {
@@ -4284,8 +4571,12 @@ retry:
 		lookup_flags |= LOOKUP_REVAL;
 		goto retry;
 	}
+<<<<<<< HEAD
 out_putnames:
 	putname(to);
+=======
+out_putname:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	putname(from);
 	return error;
 }
@@ -4293,12 +4584,20 @@ out_putnames:
 SYSCALL_DEFINE3(symlinkat, const char __user *, oldname,
 		int, newdfd, const char __user *, newname)
 {
+<<<<<<< HEAD
 	return do_symlinkat(getname(oldname), newdfd, getname(newname));
+=======
+	return do_symlinkat(oldname, newdfd, newname);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 SYSCALL_DEFINE2(symlink, const char __user *, oldname, const char __user *, newname)
 {
+<<<<<<< HEAD
 	return do_symlinkat(getname(oldname), AT_FDCWD, getname(newname));
+=======
+	return do_symlinkat(oldname, AT_FDCWD, newname);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -4399,8 +4698,13 @@ EXPORT_SYMBOL(vfs_link);
  * with linux 2.0, and to avoid hard-linking to directories
  * and other special files.  --ADM
  */
+<<<<<<< HEAD
 int do_linkat(int olddfd, struct filename *old, int newdfd,
 	      struct filename *new, int flags)
+=======
+static int do_linkat(int olddfd, const char __user *oldname, int newdfd,
+	      const char __user *newname, int flags)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct user_namespace *mnt_userns;
 	struct dentry *new_dentry;
@@ -4409,23 +4713,36 @@ int do_linkat(int olddfd, struct filename *old, int newdfd,
 	int how = 0;
 	int error;
 
+<<<<<<< HEAD
 	if ((flags & ~(AT_SYMLINK_FOLLOW | AT_EMPTY_PATH)) != 0) {
 		error = -EINVAL;
 		goto out_putnames;
 	}
+=======
+	if ((flags & ~(AT_SYMLINK_FOLLOW | AT_EMPTY_PATH)) != 0)
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * To use null names we require CAP_DAC_READ_SEARCH
 	 * This ensures that not everyone will be able to create
 	 * handlink using the passed filedescriptor.
 	 */
+<<<<<<< HEAD
 	if (flags & AT_EMPTY_PATH && !capable(CAP_DAC_READ_SEARCH)) {
 		error = -ENOENT;
 		goto out_putnames;
+=======
+	if (flags & AT_EMPTY_PATH) {
+		if (!capable(CAP_DAC_READ_SEARCH))
+			return -ENOENT;
+		how = LOOKUP_EMPTY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (flags & AT_SYMLINK_FOLLOW)
 		how |= LOOKUP_FOLLOW;
 retry:
+<<<<<<< HEAD
 	error = filename_lookup(olddfd, old, how, &old_path, NULL);
 	if (error)
 		goto out_putnames;
@@ -4435,6 +4752,17 @@ retry:
 	error = PTR_ERR(new_dentry);
 	if (IS_ERR(new_dentry))
 		goto out_putpath;
+=======
+	error = user_path_at(olddfd, oldname, how, &old_path);
+	if (error)
+		return error;
+
+	new_dentry = user_path_create(newdfd, newname, &new_path,
+					(how & LOOKUP_REVAL));
+	error = PTR_ERR(new_dentry);
+	if (IS_ERR(new_dentry))
+		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	error = -EXDEV;
 	if (old_path.mnt != new_path.mnt)
@@ -4462,11 +4790,16 @@ out_dput:
 		how |= LOOKUP_REVAL;
 		goto retry;
 	}
+<<<<<<< HEAD
 out_putpath:
 	path_put(&old_path);
 out_putnames:
 	putname(old);
 	putname(new);
+=======
+out:
+	path_put(&old_path);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return error;
 }
@@ -4474,13 +4807,21 @@ out_putnames:
 SYSCALL_DEFINE5(linkat, int, olddfd, const char __user *, oldname,
 		int, newdfd, const char __user *, newname, int, flags)
 {
+<<<<<<< HEAD
 	return do_linkat(olddfd, getname_uflags(oldname, flags),
 		newdfd, getname(newname), flags);
+=======
+	return do_linkat(olddfd, oldname, newdfd, newname, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 SYSCALL_DEFINE2(link, const char __user *, oldname, const char __user *, newname)
 {
+<<<<<<< HEAD
 	return do_linkat(AT_FDCWD, getname(oldname), AT_FDCWD, getname(newname), 0);
+=======
+	return do_linkat(AT_FDCWD, oldname, AT_FDCWD, newname, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -4599,10 +4940,13 @@ int vfs_rename(struct renamedata *rd)
 	else if (target)
 		inode_lock(target);
 
+<<<<<<< HEAD
 	error = -EPERM;
 	if (IS_SWAPFILE(source) || (target && IS_SWAPFILE(target)))
 		goto out;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	error = -EBUSY;
 	if (is_local_mountpoint(old_dentry) || is_local_mountpoint(new_dentry))
 		goto out;
@@ -4679,16 +5023,25 @@ int do_renameat2(int olddfd, struct filename *from, int newdfd,
 	int error = -EINVAL;
 
 	if (flags & ~(RENAME_NOREPLACE | RENAME_EXCHANGE | RENAME_WHITEOUT))
+<<<<<<< HEAD
 		goto put_names;
 
 	if ((flags & (RENAME_NOREPLACE | RENAME_WHITEOUT)) &&
 	    (flags & RENAME_EXCHANGE))
 		goto put_names;
+=======
+		goto put_both;
+
+	if ((flags & (RENAME_NOREPLACE | RENAME_WHITEOUT)) &&
+	    (flags & RENAME_EXCHANGE))
+		goto put_both;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (flags & RENAME_EXCHANGE)
 		target_flags = 0;
 
 retry:
+<<<<<<< HEAD
 	error = filename_parentat(olddfd, from, lookup_flags, &old_path,
 				  &old_last, &old_type);
 	if (error)
@@ -4698,6 +5051,21 @@ retry:
 				  &new_type);
 	if (error)
 		goto exit1;
+=======
+	from = filename_parentat(olddfd, from, lookup_flags, &old_path,
+					&old_last, &old_type);
+	if (IS_ERR(from)) {
+		error = PTR_ERR(from);
+		goto put_new;
+	}
+
+	to = filename_parentat(newdfd, to, lookup_flags, &new_path, &new_last,
+				&new_type);
+	if (IS_ERR(to)) {
+		error = PTR_ERR(to);
+		goto exit1;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	error = -EXDEV;
 	if (old_path.mnt != new_path.mnt)
@@ -4800,9 +5168,18 @@ exit1:
 		lookup_flags |= LOOKUP_REVAL;
 		goto retry;
 	}
+<<<<<<< HEAD
 put_names:
 	putname(from);
 	putname(to);
+=======
+put_both:
+	if (!IS_ERR(from))
+		putname(from);
+put_new:
+	if (!IS_ERR(to))
+		putname(to);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return error;
 }
 

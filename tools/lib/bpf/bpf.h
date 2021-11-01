@@ -177,6 +177,7 @@ struct bpf_link_create_opts {
 	union bpf_iter_link_info *iter_info;
 	__u32 iter_info_len;
 	__u32 target_btf_id;
+<<<<<<< HEAD
 	union {
 		struct {
 			__u64 bpf_cookie;
@@ -185,6 +186,10 @@ struct bpf_link_create_opts {
 	size_t :0;
 };
 #define bpf_link_create_opts__last_field perf_event
+=======
+};
+#define bpf_link_create_opts__last_field target_btf_id
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 LIBBPF_API int bpf_link_create(int prog_fd, int target_fd,
 			       enum bpf_attach_type attach_type,

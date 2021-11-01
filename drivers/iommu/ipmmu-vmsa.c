@@ -8,6 +8,10 @@
 
 #include <linux/bitmap.h>
 #include <linux/delay.h>
+<<<<<<< HEAD
+=======
+#include <linux/dma-iommu.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/dma-mapping.h>
 #include <linux/err.h>
 #include <linux/export.h>
@@ -563,6 +567,7 @@ static irqreturn_t ipmmu_irq(int irq, void *dev)
  * IOMMU Operations
  */
 
+<<<<<<< HEAD
 static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
 {
 	struct ipmmu_vmsa_domain *domain;
@@ -570,6 +575,12 @@ static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
 	if (type != IOMMU_DOMAIN_UNMANAGED && type != IOMMU_DOMAIN_DMA)
 		return NULL;
 
+=======
+static struct iommu_domain *__ipmmu_domain_alloc(unsigned type)
+{
+	struct ipmmu_vmsa_domain *domain;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
 	if (!domain)
 		return NULL;
@@ -579,6 +590,30 @@ static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
 	return &domain->io_domain;
 }
 
+<<<<<<< HEAD
+=======
+static struct iommu_domain *ipmmu_domain_alloc(unsigned type)
+{
+	struct iommu_domain *io_domain = NULL;
+
+	switch (type) {
+	case IOMMU_DOMAIN_UNMANAGED:
+		io_domain = __ipmmu_domain_alloc(type);
+		break;
+
+	case IOMMU_DOMAIN_DMA:
+		io_domain = __ipmmu_domain_alloc(type);
+		if (io_domain && iommu_get_dma_cookie(io_domain)) {
+			kfree(io_domain);
+			io_domain = NULL;
+		}
+		break;
+	}
+
+	return io_domain;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void ipmmu_domain_free(struct iommu_domain *io_domain)
 {
 	struct ipmmu_vmsa_domain *domain = to_vmsa_domain(io_domain);
@@ -587,6 +622,10 @@ static void ipmmu_domain_free(struct iommu_domain *io_domain)
 	 * Free the domain resources. We assume that all devices have already
 	 * been detached.
 	 */
+<<<<<<< HEAD
+=======
+	iommu_put_dma_cookie(io_domain);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ipmmu_domain_destroy_context(domain);
 	free_io_pgtable_ops(domain->iop);
 	kfree(domain);

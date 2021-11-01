@@ -637,6 +637,7 @@ unsigned int ata_sff_data_xfer32(struct ata_queued_cmd *qc, unsigned char *buf,
 }
 EXPORT_SYMBOL_GPL(ata_sff_data_xfer32);
 
+<<<<<<< HEAD
 static void ata_pio_xfer(struct ata_queued_cmd *qc, struct page *page,
 		unsigned int offset, size_t xfer_size)
 {
@@ -651,6 +652,8 @@ static void ata_pio_xfer(struct ata_queued_cmd *qc, struct page *page,
 		flush_dcache_page(page);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  *	ata_pio_sector - Transfer a sector of data.
  *	@qc: Command on going
@@ -662,9 +665,17 @@ static void ata_pio_xfer(struct ata_queued_cmd *qc, struct page *page,
  */
 static void ata_pio_sector(struct ata_queued_cmd *qc)
 {
+<<<<<<< HEAD
 	struct ata_port *ap = qc->ap;
 	struct page *page;
 	unsigned int offset;
+=======
+	int do_write = (qc->tf.flags & ATA_TFLAG_WRITE);
+	struct ata_port *ap = qc->ap;
+	struct page *page;
+	unsigned int offset;
+	unsigned char *buf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!qc->cursg) {
 		qc->curbytes = qc->nbytes;
@@ -682,6 +693,7 @@ static void ata_pio_sector(struct ata_queued_cmd *qc)
 
 	DPRINTK("data %s\n", qc->tf.flags & ATA_TFLAG_WRITE ? "write" : "read");
 
+<<<<<<< HEAD
 	/*
 	 * Split the transfer when it splits a page boundary.  Note that the
 	 * split still has to be dword aligned like all ATA data transfers.
@@ -696,6 +708,15 @@ static void ata_pio_sector(struct ata_queued_cmd *qc)
 	} else {
 		ata_pio_xfer(qc, page, offset, qc->sect_size);
 	}
+=======
+	/* do the actual data transfer */
+	buf = kmap_atomic(page);
+	ap->ops->sff_data_xfer(qc, buf + offset, qc->sect_size, do_write);
+	kunmap_atomic(buf);
+
+	if (!do_write && !PageSlab(page))
+		flush_dcache_page(page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	qc->curbytes += qc->sect_size;
 	qc->cursg_ofs += qc->sect_size;

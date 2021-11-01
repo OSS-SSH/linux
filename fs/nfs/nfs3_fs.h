@@ -11,7 +11,11 @@
  * nfs3acl.c
  */
 #ifdef CONFIG_NFS_V3_ACL
+<<<<<<< HEAD
 extern struct posix_acl *nfs3_get_acl(struct inode *inode, int type, bool rcu);
+=======
+extern struct posix_acl *nfs3_get_acl(struct inode *inode, int type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern int nfs3_set_acl(struct user_namespace *mnt_userns, struct inode *inode,
 			struct posix_acl *acl, int type);
 extern int nfs3_proc_setacls(struct inode *inode, struct posix_acl *acl,

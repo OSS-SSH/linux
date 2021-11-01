@@ -4,7 +4,10 @@
 #ifdef __KERNEL__
 
 #include <asm/asm-compat.h>
+<<<<<<< HEAD
 #include <asm/extable.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_BUG
 
@@ -31,11 +34,14 @@
 .endm
 #endif /* verbose */
 
+<<<<<<< HEAD
 .macro EMIT_WARN_ENTRY addr,file,line,flags
 	EX_TABLE(\addr,\addr+4)
 	EMIT_BUG_ENTRY \addr,\file,\line,\flags
 .endm
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else /* !__ASSEMBLY__ */
 /* _EMIT_BUG_ENTRY expects args %0,%1,%2,%3 to be FILE, LINE, flags and
    sizeof(struct bug_entry), respectively */
@@ -64,6 +70,7 @@
 		  "i" (sizeof(struct bug_entry)),	\
 		  ##__VA_ARGS__)
 
+<<<<<<< HEAD
 #define WARN_ENTRY(insn, flags, label, ...)		\
 	asm_volatile_goto(				\
 		"1:	" insn "\n"			\
@@ -74,6 +81,8 @@
 		  "i" (sizeof(struct bug_entry)),	\
 		  ##__VA_ARGS__ : : label)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * BUG_ON() and WARN_ON() do their best to cooperate with compile-time
  * optimisations. However depending on the complexity of the condition
@@ -84,6 +93,7 @@
 	BUG_ENTRY("twi 31, 0, 0", 0);				\
 	unreachable();						\
 } while (0)
+<<<<<<< HEAD
 #define HAVE_ARCH_BUG
 
 #define __WARN_FLAGS(flags) do {				\
@@ -97,6 +107,9 @@ __label_warn_on:						\
 } while (0)
 
 #ifdef CONFIG_PPC64
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define BUG_ON(x) do {						\
 	if (__builtin_constant_p(x)) {				\
 		if (x)						\
@@ -106,6 +119,7 @@ __label_warn_on:						\
 	}							\
 } while (0)
 
+<<<<<<< HEAD
 #define WARN_ON(x) ({						\
 	bool __ret_warn_on = false;				\
 	do {							\
@@ -133,16 +147,41 @@ __label_warn_on:						\
 #define HAVE_ARCH_WARN_ON
 #endif
 
+=======
+#define __WARN_FLAGS(flags) BUG_ENTRY("twi 31, 0, 0", BUGFLAG_WARNING | (flags))
+
+#define WARN_ON(x) ({						\
+	int __ret_warn_on = !!(x);				\
+	if (__builtin_constant_p(__ret_warn_on)) {		\
+		if (__ret_warn_on)				\
+			__WARN();				\
+	} else {						\
+		BUG_ENTRY(PPC_TLNEI " %4, 0",			\
+			  BUGFLAG_WARNING | BUGFLAG_TAINT(TAINT_WARN),	\
+			  "r" (__ret_warn_on));	\
+	}							\
+	unlikely(__ret_warn_on);				\
+})
+
+#define HAVE_ARCH_BUG
+#define HAVE_ARCH_BUG_ON
+#define HAVE_ARCH_WARN_ON
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __ASSEMBLY __ */
 #else
 #ifdef __ASSEMBLY__
 .macro EMIT_BUG_ENTRY addr,file,line,flags
 .endm
+<<<<<<< HEAD
 .macro EMIT_WARN_ENTRY addr,file,line,flags
 .endm
 #else /* !__ASSEMBLY__ */
 #define _EMIT_BUG_ENTRY
 #define _EMIT_WARN_ENTRY
+=======
+#else /* !__ASSEMBLY__ */
+#define _EMIT_BUG_ENTRY
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 #endif /* CONFIG_BUG */
 

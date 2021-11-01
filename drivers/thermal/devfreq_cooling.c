@@ -18,10 +18,17 @@
 #include <linux/pm_opp.h>
 #include <linux/pm_qos.h>
 #include <linux/thermal.h>
+<<<<<<< HEAD
 #include <linux/units.h>
 
 #include <trace/events/thermal.h>
 
+=======
+
+#include <trace/events/thermal.h>
+
+#define HZ_PER_KHZ		1000
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define SCALE_ERROR_MITIGATION	100
 
 /**

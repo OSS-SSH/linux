@@ -671,6 +671,14 @@ static const struct attribute_group qeth_dev_group = {
 	.attrs = qeth_dev_attrs,
 };
 
+<<<<<<< HEAD
+=======
+const struct attribute_group *qeth_osn_dev_groups[] = {
+	&qeth_dev_group,
+	NULL,
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 const struct attribute_group *qeth_dev_groups[] = {
 	&qeth_dev_group,
 	&qeth_dev_extended_group,

@@ -79,6 +79,7 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
 	},
 	{
 		/*
+<<<<<<< HEAD
 		 * Lenovo Yoga 9 14ITL5, initial notification of the LID device
 		 * never happens.
 		 */
@@ -90,6 +91,8 @@ static const struct dmi_system_id dmi_lid_quirks[] = {
 	},
 	{
 		/*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * Medion Akoya E2215T, notification of the LID device only
 		 * happens on close, not on open and _LID always returns closed.
 		 */

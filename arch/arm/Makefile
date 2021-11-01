@@ -308,8 +308,12 @@ $(BOOT_TARGETS): vmlinux
 	@$(kecho) '  Kernel: $(boot)/$@ is ready'
 
 $(INSTALL_TARGETS):
+<<<<<<< HEAD
 	$(CONFIG_SHELL) $(srctree)/$(boot)/install.sh "$(KERNELRELEASE)" \
 	$(boot)/$(patsubst %install,%Image,$@) System.map "$(INSTALL_PATH)"
+=======
+	$(Q)$(MAKE) $(build)=$(boot) MACHINE=$(MACHINE) $@
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 PHONY += vdso_install
 vdso_install:

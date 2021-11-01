@@ -115,22 +115,37 @@ int ieee80211_radiotap_iterator_init(
 	iterator->_max_length = get_unaligned_le16(&radiotap_header->it_len);
 	iterator->_arg_index = 0;
 	iterator->_bitmap_shifter = get_unaligned_le32(&radiotap_header->it_present);
+<<<<<<< HEAD
 	iterator->_arg = (uint8_t *)radiotap_header->it_optional;
 	iterator->_reset_on_ext = 0;
 	iterator->_next_bitmap = radiotap_header->it_optional;
+=======
+	iterator->_arg = (uint8_t *)radiotap_header + sizeof(*radiotap_header);
+	iterator->_reset_on_ext = 0;
+	iterator->_next_bitmap = &radiotap_header->it_present;
+	iterator->_next_bitmap++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iterator->_vns = vns;
 	iterator->current_namespace = &radiotap_ns;
 	iterator->is_radiotap_ns = 1;
 
 	/* find payload start allowing for extended bitmap(s) */
 
+<<<<<<< HEAD
 	if (iterator->_bitmap_shifter & (BIT(IEEE80211_RADIOTAP_EXT))) {
+=======
+	if (iterator->_bitmap_shifter & (1<<IEEE80211_RADIOTAP_EXT)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if ((unsigned long)iterator->_arg -
 		    (unsigned long)iterator->_rtheader + sizeof(uint32_t) >
 		    (unsigned long)iterator->_max_length)
 			return -EINVAL;
 		while (get_unaligned_le32(iterator->_arg) &
+<<<<<<< HEAD
 					(BIT(IEEE80211_RADIOTAP_EXT))) {
+=======
+					(1 << IEEE80211_RADIOTAP_EXT)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			iterator->_arg += sizeof(uint32_t);
 
 			/*

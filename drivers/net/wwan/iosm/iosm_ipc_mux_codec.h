@@ -106,7 +106,11 @@ struct mux_lite_cmdh {
  * @nr_of_bytes:	Number of bytes available to transmit in the queue.
  */
 struct mux_lite_vfl {
+<<<<<<< HEAD
 	__le32 nr_of_bytes;
+=======
+	u32 nr_of_bytes;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**

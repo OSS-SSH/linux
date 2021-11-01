@@ -209,6 +209,7 @@ SYSCALL_DEFINE3(sysfs, int, option, unsigned long, arg1, unsigned long, arg2)
 }
 #endif
 
+<<<<<<< HEAD
 int __init list_bdev_fs_names(char *buf, size_t size)
 {
 	struct file_system_type *p;
@@ -231,6 +232,23 @@ int __init list_bdev_fs_names(char *buf, size_t size)
 	}
 	read_unlock(&file_systems_lock);
 	return count;
+=======
+int __init get_filesystem_list(char *buf)
+{
+	int len = 0;
+	struct file_system_type * tmp;
+
+	read_lock(&file_systems_lock);
+	tmp = file_systems;
+	while (tmp && len < PAGE_SIZE - 80) {
+		len += sprintf(buf+len, "%s\t%s\n",
+			(tmp->fs_flags & FS_REQUIRES_DEV) ? "" : "nodev",
+			tmp->name);
+		tmp = tmp->next;
+	}
+	read_unlock(&file_systems_lock);
+	return len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_PROC_FS

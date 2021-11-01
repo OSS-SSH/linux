@@ -355,6 +355,7 @@ struct v4l2_mbus_frame_desc {
 };
 
 /**
+<<<<<<< HEAD
  * enum v4l2_subdev_pre_streamon_flags - Flags for pre_streamon subdev core op
  *
  * @V4L2_SUBDEV_PRE_STREAMON_FL_MANUAL_LP: Set the transmitter to either LP-11
@@ -365,6 +366,8 @@ enum v4l2_subdev_pre_streamon_flags {
 };
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * struct v4l2_subdev_video_ops - Callbacks used when v4l device was opened
  *				  in video mode.
  *
@@ -419,6 +422,7 @@ enum v4l2_subdev_pre_streamon_flags {
  * @s_rx_buffer: set a host allocated memory buffer for the subdev. The subdev
  *	can adjust @size to a lower value and must not write more data to the
  *	buffer starting at @data than the original value of @size.
+<<<<<<< HEAD
  *
  * @pre_streamon: May be called before streaming is actually started, to help
  *	initialising the bus. Current usage is to set a CSI-2 transmitter to
@@ -432,6 +436,8 @@ enum v4l2_subdev_pre_streamon_flags {
  *
  * @post_streamoff: Called after streaming is stopped, but if and only if
  *	pre_streamon was called earlier.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct v4l2_subdev_video_ops {
 	int (*s_routing)(struct v4l2_subdev *sd, u32 input, u32 output, u32 config);
@@ -458,8 +464,11 @@ struct v4l2_subdev_video_ops {
 			struct v4l2_dv_timings *timings);
 	int (*s_rx_buffer)(struct v4l2_subdev *sd, void *buf,
 			   unsigned int *size);
+<<<<<<< HEAD
 	int (*pre_streamon)(struct v4l2_subdev *sd, u32 flags);
 	int (*post_streamoff)(struct v4l2_subdev *sd);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**
@@ -896,7 +905,11 @@ struct v4l2_subdev_platform_data {
  * @asd: Pointer to respective &struct v4l2_async_subdev.
  * @notifier: Pointer to the managing notifier.
  * @subdev_notifier: A sub-device notifier implicitly registered for the sub-
+<<<<<<< HEAD
  *		     device using v4l2_async_register_subdev_sensor().
+=======
+ *		     device using v4l2_device_register_sensor_subdev().
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @pdata: common part of subdevice platform data
  *
  * Each instance of a subdev driver should create this struct, either

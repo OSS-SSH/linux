@@ -199,7 +199,11 @@ END_FTR_SECTION_IFSET(CPU_FTR_476_DD2)
  * Touch enough instruction cache lines to ensure cache hits
  */
 1:	mflr	r9
+<<<<<<< HEAD
 	bcl	20,31,$+4
+=======
+	bl	2f
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 2:	mflr	r6
 	li	r7,32
 	PPC_ICBT(0,R6,R7)		/* touch next cache line */
@@ -414,7 +418,11 @@ _GLOBAL(loadcam_multi)
 	 * Set up temporary TLB entry that is the same as what we're
 	 * running from, but in AS=1.
 	 */
+<<<<<<< HEAD
 	bcl	20,31,$+4
+=======
+	bl	1f
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 1:	mflr	r6
 	tlbsx	0,r8
 	mfspr	r6,SPRN_MAS1

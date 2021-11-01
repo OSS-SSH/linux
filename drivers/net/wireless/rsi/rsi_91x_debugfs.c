@@ -117,7 +117,11 @@ static int rsi_stats_read(struct seq_file *seq, void *data)
 {
 	struct rsi_common *common = seq->private;
 
+<<<<<<< HEAD
 	static const unsigned char fsm_state[][32] = {
+=======
+	unsigned char fsm_state[][32] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		"FSM_FW_NOT_LOADED",
 		"FSM_CARD_NOT_READY",
 		"FSM_COMMON_DEV_PARAMS_SENT",

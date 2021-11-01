@@ -264,7 +264,11 @@ config SPRD_MBOX
 	  you want to build the Spreatrum mailbox controller driver.
 
 config QCOM_IPCC
+<<<<<<< HEAD
 	tristate "Qualcomm Technologies, Inc. IPCC driver"
+=======
+	bool "Qualcomm Technologies, Inc. IPCC driver"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	depends on ARCH_QCOM || COMPILE_TEST
 	help
 	  Qualcomm Technologies, Inc. Inter-Processor Communication Controller

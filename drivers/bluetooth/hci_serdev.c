@@ -343,9 +343,12 @@ int hci_uart_register_device(struct hci_uart *hu,
 	hdev->setup = hci_uart_setup;
 	SET_HCIDEV_DEV(hdev, &hu->serdev->dev);
 
+<<<<<<< HEAD
 	if (test_bit(HCI_UART_NO_SUSPEND_NOTIFIER, &hu->flags))
 		set_bit(HCI_QUIRK_NO_SUSPEND_NOTIFIER, &hdev->quirks);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (test_bit(HCI_UART_RAW_DEVICE, &hu->hdev_flags))
 		set_bit(HCI_QUIRK_RAW_DEVICE, &hdev->quirks);
 

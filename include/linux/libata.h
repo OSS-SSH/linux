@@ -161,10 +161,13 @@ enum {
 	ATA_DFLAG_D_SENSE	= (1 << 29), /* Descriptor sense requested */
 	ATA_DFLAG_ZAC		= (1 << 30), /* ZAC device */
 
+<<<<<<< HEAD
 	ATA_DFLAG_FEATURES_MASK	= ATA_DFLAG_TRUSTED | ATA_DFLAG_DA | \
 				  ATA_DFLAG_DEVSLP | ATA_DFLAG_NCQ_SEND_RECV | \
 				  ATA_DFLAG_NCQ_PRIO,
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ATA_DEV_UNKNOWN		= 0,	/* unknown device */
 	ATA_DEV_ATA		= 1,	/* ATA device */
 	ATA_DEV_ATA_UNSUP	= 2,	/* ATA device (unsupported) */
@@ -426,7 +429,10 @@ enum {
 	ATA_HORKAGE_NOTRIM	= (1 << 24),	/* don't use TRIM */
 	ATA_HORKAGE_MAX_SEC_1024 = (1 << 25),	/* Limit max sects to 1024 */
 	ATA_HORKAGE_MAX_TRIM_128M = (1 << 26),	/* Limit max trim size to 128M */
+<<<<<<< HEAD
 	ATA_HORKAGE_NO_NCQ_ON_ATI = (1 << 27),	/* Disable NCQ on ATI chipset */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	 /* DMA mask for user DMA control: User visible values; DO NOT
 	    renumber */
@@ -540,7 +546,10 @@ typedef void (*ata_postreset_fn_t)(struct ata_link *link, unsigned int *classes)
 extern struct device_attribute dev_attr_unload_heads;
 #ifdef CONFIG_SATA_HOST
 extern struct device_attribute dev_attr_link_power_management_policy;
+<<<<<<< HEAD
 extern struct device_attribute dev_attr_ncq_prio_supported;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern struct device_attribute dev_attr_ncq_prio_enable;
 extern struct device_attribute dev_attr_em_message_type;
 extern struct device_attribute dev_attr_em_message;
@@ -1460,7 +1469,11 @@ static inline bool sata_pmp_attached(struct ata_port *ap)
 
 static inline bool ata_is_host_link(const struct ata_link *link)
 {
+<<<<<<< HEAD
 	return true;
+=======
+	return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif /* CONFIG_SATA_PMP */
 

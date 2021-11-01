@@ -329,6 +329,13 @@ if (defined($ENV{'KBUILD_VERBOSE'})) {
 	$verbose = "$ENV{'KBUILD_VERBOSE'}";
 }
 
+<<<<<<< HEAD
+=======
+if (defined($ENV{'KDOC_WERROR'})) {
+	$Werror = "$ENV{'KDOC_WERROR'}";
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 if (defined($ENV{'KCFLAGS'})) {
 	my $kcflags = "$ENV{'KCFLAGS'}";
 
@@ -337,10 +344,13 @@ if (defined($ENV{'KCFLAGS'})) {
 	}
 }
 
+<<<<<<< HEAD
 if (defined($ENV{'KDOC_WERROR'})) {
 	$Werror = "$ENV{'KDOC_WERROR'}";
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # Generated docbook code is inserted in a template at a point where
 # docbook v3.1 requires a non-zero sequence of RefEntry's; see:
 # https://www.oasis-open.org/docbook/documentation/reference/html/refentry.html

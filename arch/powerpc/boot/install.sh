@@ -15,11 +15,16 @@
 #   $2 - kernel image file
 #   $3 - kernel map file
 #   $4 - default install path (blank if root directory)
+<<<<<<< HEAD
+=======
+#   $5 and more - kernel boot files; zImage*, uImage, cuImage.*, etc.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #
 
 # Bail with error code if anything goes wrong
 set -e
 
+<<<<<<< HEAD
 verify () {
 	if [ ! -f "$1" ]; then
 		echo ""                                                   1>&2
@@ -34,6 +39,8 @@ verify () {
 verify "$2"
 verify "$3"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # User may have a custom install script
 
 if [ -x ~/bin/${INSTALLKERNEL} ]; then exec ~/bin/${INSTALLKERNEL} "$@"; fi
@@ -54,3 +61,18 @@ fi
 
 cat $2 > $4/$image_name
 cp $3 $4/System.map
+<<<<<<< HEAD
+=======
+
+# Copy all the bootable image files
+path=$4
+shift 4
+while [ $# -ne 0 ]; do
+	image_name=`basename $1`
+	if [ -f $path/$image_name ]; then
+		mv $path/$image_name $path/$image_name.old
+	fi
+	cat $1 > $path/$image_name
+	shift
+done;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

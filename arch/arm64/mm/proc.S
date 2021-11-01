@@ -437,7 +437,12 @@ SYM_FUNC_START(__cpu_setup)
 	mov	x10, #MAIR_ATTR_NORMAL_TAGGED
 	bfi	mair, x10, #(8 *  MT_NORMAL_TAGGED), #8
 
+<<<<<<< HEAD
 	mov	x10, #KERNEL_GCR_EL1
+=======
+	/* initialize GCR_EL1: all non-zero tags excluded by default */
+	mov	x10, #(SYS_GCR_EL1_RRND | SYS_GCR_EL1_EXCL_MASK)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	msr_s	SYS_GCR_EL1, x10
 
 	/*

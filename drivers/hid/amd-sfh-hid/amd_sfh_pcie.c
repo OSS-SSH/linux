@@ -13,7 +13,10 @@
 #include <linux/dmi.h>
 #include <linux/interrupt.h>
 #include <linux/io-64-nonatomic-lo-hi.h>
+<<<<<<< HEAD
 #include <linux/iopoll.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/slab.h>
 
@@ -32,6 +35,7 @@ static int sensor_mask_override = -1;
 module_param_named(sensor_mask, sensor_mask_override, int, 0444);
 MODULE_PARM_DESC(sensor_mask, "override the detected sensors mask");
 
+<<<<<<< HEAD
 static int amd_sfh_wait_response_v2(struct amd_mp2_dev *mp2, u8 sid, u32 sensor_sts)
 {
 	union cmd_response cmd_resp;
@@ -46,6 +50,8 @@ static int amd_sfh_wait_response_v2(struct amd_mp2_dev *mp2, u8 sid, u32 sensor_
 	return SENSOR_DISABLED;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void amd_start_sensor_v2(struct amd_mp2_dev *privdata, struct amd_mp2_sensor_info info)
 {
 	union sfh_cmd_base cmd_base;
@@ -73,7 +79,11 @@ static void amd_stop_sensor_v2(struct amd_mp2_dev *privdata, u16 sensor_idx)
 	cmd_base.cmd_v2.sensor_id = sensor_idx;
 	cmd_base.cmd_v2.length  = 16;
 
+<<<<<<< HEAD
 	writeq(0x0, privdata->mmio + AMD_C2P_MSG1);
+=======
+	writeq(0x0, privdata->mmio + AMD_C2P_MSG2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	writel(cmd_base.ul, privdata->mmio + AMD_C2P_MSG0);
 }
 
@@ -198,7 +208,10 @@ static const struct amd_mp2_ops amd_sfh_ops_v2 = {
 	.start = amd_start_sensor_v2,
 	.stop = amd_stop_sensor_v2,
 	.stop_all = amd_stop_all_sensor_v2,
+<<<<<<< HEAD
 	.response = amd_sfh_wait_response_v2,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct amd_mp2_ops amd_sfh_ops = {
@@ -255,6 +268,7 @@ static int amd_mp2_pci_probe(struct pci_dev *pdev, const struct pci_device_id *i
 	if (!privdata->cl_data)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	mp2_select_ops(privdata);
 
 	rc = amd_sfh_hid_client_init(privdata);
@@ -316,6 +330,17 @@ static int __maybe_unused amd_mp2_pci_suspend(struct device *dev)
 static SIMPLE_DEV_PM_OPS(amd_mp2_pm_ops, amd_mp2_pci_suspend,
 		amd_mp2_pci_resume);
 
+=======
+	rc = devm_add_action_or_reset(&pdev->dev, amd_mp2_pci_remove, privdata);
+	if (rc)
+		return rc;
+
+	mp2_select_ops(privdata);
+
+	return amd_sfh_hid_client_init(privdata);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct pci_device_id amd_mp2_pci_tbl[] = {
 	{ PCI_VDEVICE(AMD, PCI_DEVICE_ID_AMD_MP2) },
 	{ }
@@ -326,7 +351,10 @@ static struct pci_driver amd_mp2_pci_driver = {
 	.name		= DRIVER_NAME,
 	.id_table	= amd_mp2_pci_tbl,
 	.probe		= amd_mp2_pci_probe,
+<<<<<<< HEAD
 	.driver.pm	= &amd_mp2_pm_ops,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 module_pci_driver(amd_mp2_pci_driver);
 

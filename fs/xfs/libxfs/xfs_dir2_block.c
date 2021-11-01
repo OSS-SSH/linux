@@ -53,10 +53,17 @@ xfs_dir3_block_verify(
 	if (!xfs_verify_magic(bp, hdr3->magic))
 		return __this_address;
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 		if (!uuid_equal(&hdr3->uuid, &mp->m_sb.sb_meta_uuid))
 			return __this_address;
 		if (be64_to_cpu(hdr3->blkno) != xfs_buf_daddr(bp))
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+		if (!uuid_equal(&hdr3->uuid, &mp->m_sb.sb_meta_uuid))
+			return __this_address;
+		if (be64_to_cpu(hdr3->blkno) != bp->b_bn)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return __this_address;
 		if (!xfs_log_check_lsn(mp, be64_to_cpu(hdr3->lsn)))
 			return __this_address;
@@ -71,7 +78,11 @@ xfs_dir3_block_read_verify(
 	struct xfs_mount	*mp = bp->b_mount;
 	xfs_failaddr_t		fa;
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp) &&
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	     !xfs_buf_verify_cksum(bp, XFS_DIR3_DATA_CRC_OFF))
 		xfs_verifier_error(bp, -EFSBADCRC, __this_address);
 	else {
@@ -96,7 +107,11 @@ xfs_dir3_block_write_verify(
 		return;
 	}
 
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
+=======
+	if (!xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (bip)
@@ -121,7 +136,11 @@ xfs_dir3_block_header_check(
 {
 	struct xfs_mount	*mp = dp->i_mount;
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct xfs_dir3_blk_hdr *hdr3 = bp->b_addr;
 
 		if (be64_to_cpu(hdr3->owner) != dp->i_ino)
@@ -171,10 +190,17 @@ xfs_dir3_block_init(
 	bp->b_ops = &xfs_dir3_block_buf_ops;
 	xfs_trans_buf_set_type(tp, bp, XFS_BLFT_DIR_BLOCK_BUF);
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 		memset(hdr3, 0, sizeof(*hdr3));
 		hdr3->magic = cpu_to_be32(XFS_DIR3_BLOCK_MAGIC);
 		hdr3->blkno = cpu_to_be64(xfs_buf_daddr(bp));
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+		memset(hdr3, 0, sizeof(*hdr3));
+		hdr3->magic = cpu_to_be32(XFS_DIR3_BLOCK_MAGIC);
+		hdr3->blkno = cpu_to_be64(bp->b_bn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hdr3->owner = cpu_to_be64(dp->i_ino);
 		uuid_copy(&hdr3->uuid, &mp->m_sb.sb_meta_uuid);
 		return;

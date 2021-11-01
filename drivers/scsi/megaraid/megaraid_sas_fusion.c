@@ -402,7 +402,11 @@ megasas_get_msix_index(struct megasas_instance *instance,
 			(mega_mod64(atomic64_add_return(1, &instance->total_io_count),
 				instance->msix_vectors));
 	} else if (instance->host->nr_hw_queues > 1) {
+<<<<<<< HEAD
 		u32 tag = blk_mq_unique_tag(scsi_cmd_to_rq(scmd));
+=======
+		u32 tag = blk_mq_unique_tag(scmd->request);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		cmd->request_desc->SCSIIO.MSIxIndex = blk_mq_unique_tag_to_hwq(tag) +
 			instance->low_latency_index_start;
@@ -3023,7 +3027,11 @@ static void megasas_build_ld_nonrw_fusion(struct megasas_instance *instance,
 		io_request->DevHandle = cpu_to_le16(device_id);
 		io_request->LUN[1] = scmd->device->lun;
 		pRAID_Context->timeout_value =
+<<<<<<< HEAD
 			cpu_to_le16(scsi_cmd_to_rq(scmd)->timeout / HZ);
+=======
+			cpu_to_le16 (scmd->request->timeout / HZ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cmd->request_desc->SCSIIO.RequestFlags =
 			(MPI2_REQ_DESCRIPT_FLAGS_SCSI_IO <<
 			MEGASAS_REQ_DESCRIPT_FLAGS_TYPE_SHIFT);
@@ -3086,7 +3094,11 @@ megasas_build_syspd_fusion(struct megasas_instance *instance,
 
 	device_id = MEGASAS_DEV_INDEX(scmd);
 	pd_index = MEGASAS_PD_INDEX(scmd);
+<<<<<<< HEAD
 	os_timeout_value = scsi_cmd_to_rq(scmd)->timeout / HZ;
+=======
+	os_timeout_value = scmd->request->timeout / HZ;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mr_device_priv_data = scmd->device->hostdata;
 	cmd->pd_interface = mr_device_priv_data->interface_type;
 
@@ -3381,7 +3393,11 @@ megasas_build_and_issue_cmd_fusion(struct megasas_instance *instance,
 		return SCSI_MLQUEUE_HOST_BUSY;
 	}
 
+<<<<<<< HEAD
 	cmd = megasas_get_cmd_fusion(instance, scsi_cmd_to_rq(scmd)->tag);
+=======
+	cmd = megasas_get_cmd_fusion(instance, scmd->request->tag);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!cmd) {
 		atomic_dec(&instance->fw_outstanding);
@@ -3422,7 +3438,11 @@ megasas_build_and_issue_cmd_fusion(struct megasas_instance *instance,
 	 */
 	if (cmd->r1_alt_dev_handle != MR_DEVHANDLE_INVALID) {
 		r1_cmd = megasas_get_cmd_fusion(instance,
+<<<<<<< HEAD
 				scsi_cmd_to_rq(scmd)->tag + instance->max_fw_cmds);
+=======
+				(scmd->request->tag + instance->max_fw_cmds));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		megasas_prepare_secondRaid1_IO(instance, cmd, r1_cmd);
 	}
 

@@ -430,6 +430,7 @@ static ssize_t pimpampom_show(struct device *dev,
 }
 static DEVICE_ATTR_RO(pimpampom);
 
+<<<<<<< HEAD
 static ssize_t dev_busid_show(struct device *dev,
 			      struct device_attribute *attr,
 			      char *buf)
@@ -450,6 +451,11 @@ static struct attribute *io_subchannel_type_attrs[] = {
 	&dev_attr_chpids.attr,
 	&dev_attr_pimpampom.attr,
 	&dev_attr_dev_busid.attr,
+=======
+static struct attribute *io_subchannel_type_attrs[] = {
+	&dev_attr_chpids.attr,
+	&dev_attr_pimpampom.attr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NULL,
 };
 ATTRIBUTE_GROUPS(io_subchannel_type);
@@ -788,6 +794,7 @@ static int __unset_registered(struct device *dev, void *data)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int __unset_online(struct device *dev, void *data)
 {
 	struct idset *set = data;
@@ -808,10 +815,21 @@ void css_schedule_eval_cond(enum css_eval_cond cond, unsigned long delay)
 	/* Find unregistered subchannels. */
 	set = idset_sch_new();
 	if (!set) {
+=======
+void css_schedule_eval_all_unreg(unsigned long delay)
+{
+	unsigned long flags;
+	struct idset *unreg_set;
+
+	/* Find unregistered subchannels. */
+	unreg_set = idset_sch_new();
+	if (!unreg_set) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Fallback. */
 		css_schedule_eval_all();
 		return;
 	}
+<<<<<<< HEAD
 	idset_fill(set);
 	switch (cond) {
 	case CSS_EVAL_UNREG:
@@ -831,6 +849,17 @@ void css_schedule_eval_cond(enum css_eval_cond cond, unsigned long delay)
 	queue_delayed_work(cio_work_q, &slow_path_work, delay);
 	spin_unlock_irqrestore(&slow_subchannel_lock, flags);
 	idset_free(set);
+=======
+	idset_fill(unreg_set);
+	bus_for_each_dev(&css_bus_type, NULL, unreg_set, __unset_registered);
+	/* Apply to slow_subchannel_set. */
+	spin_lock_irqsave(&slow_subchannel_lock, flags);
+	idset_add_set(slow_subchannel_set, unreg_set);
+	atomic_set(&css_eval_scheduled, 1);
+	queue_delayed_work(cio_work_q, &slow_path_work, delay);
+	spin_unlock_irqrestore(&slow_subchannel_lock, flags);
+	idset_free(unreg_set);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void css_wait_for_slow_path(void)
@@ -842,7 +871,11 @@ void css_wait_for_slow_path(void)
 void css_schedule_reprobe(void)
 {
 	/* Schedule with a delay to allow merging of subsequent calls. */
+<<<<<<< HEAD
 	css_schedule_eval_cond(CSS_EVAL_UNREG, 1 * HZ);
+=======
+	css_schedule_eval_all_unreg(1 * HZ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(css_schedule_reprobe);
 
@@ -925,6 +958,7 @@ static ssize_t real_cssid_show(struct device *dev, struct device_attribute *a,
 }
 static DEVICE_ATTR_RO(real_cssid);
 
+<<<<<<< HEAD
 static ssize_t rescan_store(struct device *dev, struct device_attribute *a,
 			    const char *buf, size_t count)
 {
@@ -937,6 +971,8 @@ static ssize_t rescan_store(struct device *dev, struct device_attribute *a,
 }
 static DEVICE_ATTR_WO(rescan);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static ssize_t cm_enable_show(struct device *dev, struct device_attribute *a,
 			      char *buf)
 {
@@ -983,7 +1019,10 @@ static umode_t cm_enable_mode(struct kobject *kobj, struct attribute *attr,
 
 static struct attribute *cssdev_attrs[] = {
 	&dev_attr_real_cssid.attr,
+<<<<<<< HEAD
 	&dev_attr_rescan.attr,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NULL,
 };
 
@@ -1423,6 +1462,7 @@ static int css_probe(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static void css_remove(struct device *dev)
 {
 	struct subchannel *sch;
@@ -1431,6 +1471,17 @@ static void css_remove(struct device *dev)
 	if (sch->driver->remove)
 		sch->driver->remove(sch);
 	sch->driver = NULL;
+=======
+static int css_remove(struct device *dev)
+{
+	struct subchannel *sch;
+	int ret;
+
+	sch = to_subchannel(dev);
+	ret = sch->driver->remove ? sch->driver->remove(sch) : 0;
+	sch->driver = NULL;
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void css_shutdown(struct device *dev)

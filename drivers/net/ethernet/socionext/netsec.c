@@ -532,9 +532,13 @@ static void netsec_et_get_drvinfo(struct net_device *net_device,
 }
 
 static int netsec_et_get_coalesce(struct net_device *net_device,
+<<<<<<< HEAD
 				  struct ethtool_coalesce *et_coalesce,
 				  struct kernel_ethtool_coalesce *kernel_coal,
 				  struct netlink_ext_ack *extack)
+=======
+				  struct ethtool_coalesce *et_coalesce)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct netsec_priv *priv = netdev_priv(net_device);
 
@@ -544,9 +548,13 @@ static int netsec_et_get_coalesce(struct net_device *net_device,
 }
 
 static int netsec_et_set_coalesce(struct net_device *net_device,
+<<<<<<< HEAD
 				  struct ethtool_coalesce *et_coalesce,
 				  struct kernel_ethtool_coalesce *kernel_coal,
 				  struct netlink_ext_ack *extack)
+=======
+				  struct ethtool_coalesce *et_coalesce)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct netsec_priv *priv = netdev_priv(net_device);
 
@@ -1548,7 +1556,11 @@ static int netsec_start_gmac(struct netsec_priv *priv)
 	netsec_write(priv, NETSEC_REG_NRM_RX_INTEN_CLR, ~0);
 	netsec_write(priv, NETSEC_REG_NRM_TX_INTEN_CLR, ~0);
 
+<<<<<<< HEAD
 	netsec_et_set_coalesce(priv->ndev, &priv->et_coalesce, NULL, NULL);
+=======
+	netsec_et_set_coalesce(priv->ndev, &priv->et_coalesce);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (netsec_mac_write(priv, GMAC_REG_OMR, value))
 		return -ETIMEDOUT;
@@ -1835,7 +1847,11 @@ static const struct net_device_ops netsec_netdev_ops = {
 	.ndo_set_features	= netsec_netdev_set_features,
 	.ndo_set_mac_address    = eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= phy_do_ioctl,
+=======
+	.ndo_do_ioctl		= phy_do_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_xdp_xmit		= netsec_xdp_xmit,
 	.ndo_bpf		= netsec_xdp,
 };

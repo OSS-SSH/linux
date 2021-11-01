@@ -89,8 +89,13 @@ static void snd_usb_init_substream(struct snd_usb_stream *as,
 	subs->stream = as;
 	subs->direction = stream;
 	subs->dev = as->chip->dev;
+<<<<<<< HEAD
 	subs->txfr_quirk = !!(as->chip->quirk_flags & QUIRK_FLAG_ALIGN_TRANSFER);
 	subs->tx_length_quirk = !!(as->chip->quirk_flags & QUIRK_FLAG_TX_LENGTH);
+=======
+	subs->txfr_quirk = as->chip->txfr_quirk;
+	subs->tx_length_quirk = as->chip->tx_length_quirk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	subs->speed = snd_usb_get_speed(subs->dev);
 	subs->pkt_offset_adj = 0;
 	subs->stream_offset_adj = 0;

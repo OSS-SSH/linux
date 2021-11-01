@@ -32,9 +32,12 @@ static void ionic_get_stats(struct net_device *netdev,
 	struct ionic_lif *lif = netdev_priv(netdev);
 	u32 i;
 
+<<<<<<< HEAD
 	if (test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memset(buf, 0, stats->n_stats * sizeof(*buf));
 	for (i = 0; i < ionic_num_stats_grps; i++)
 		ionic_stats_groups[i].get_values(lif, &buf);
@@ -277,9 +280,12 @@ static int ionic_set_link_ksettings(struct net_device *netdev,
 	struct ionic *ionic = lif->ionic;
 	int err = 0;
 
+<<<<<<< HEAD
 	if (test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* set autoneg */
 	if (ks->base.autoneg != idev->port_info->config.an_enable) {
 		mutex_lock(&ionic->dev_cmd_lock);
@@ -326,9 +332,12 @@ static int ionic_set_pauseparam(struct net_device *netdev,
 	u32 requested_pause;
 	int err;
 
+<<<<<<< HEAD
 	if (test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (pause->autoneg)
 		return -EOPNOTSUPP;
 
@@ -381,9 +390,12 @@ static int ionic_set_fecparam(struct net_device *netdev,
 	u8 fec_type;
 	int ret = 0;
 
+<<<<<<< HEAD
 	if (test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (lif->ionic->idev.port_info->config.an_enable) {
 		netdev_err(netdev, "FEC request not allowed while autoneg is enabled\n");
 		return -EINVAL;
@@ -420,9 +432,13 @@ static int ionic_set_fecparam(struct net_device *netdev,
 }
 
 static int ionic_get_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			      struct ethtool_coalesce *coalesce,
 			      struct kernel_ethtool_coalesce *kernel_coal,
 			      struct netlink_ext_ack *extack)
+=======
+			      struct ethtool_coalesce *coalesce)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ionic_lif *lif = netdev_priv(netdev);
 
@@ -440,9 +456,13 @@ static int ionic_get_coalesce(struct net_device *netdev,
 }
 
 static int ionic_set_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			      struct ethtool_coalesce *coalesce,
 			      struct kernel_ethtool_coalesce *kernel_coal,
 			      struct netlink_ext_ack *extack)
+=======
+			      struct ethtool_coalesce *coalesce)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ionic_lif *lif = netdev_priv(netdev);
 	struct ionic_identity *ident;
@@ -544,9 +564,12 @@ static int ionic_set_ringparam(struct net_device *netdev,
 	struct ionic_queue_params qparam;
 	int err;
 
+<<<<<<< HEAD
 	if (test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ionic_init_queue_params(lif, &qparam);
 
 	if (ring->rx_mini_pending || ring->rx_jumbo_pending) {
@@ -582,10 +605,14 @@ static int ionic_set_ringparam(struct net_device *netdev,
 
 	qparam.ntxq_descs = ring->tx_pending;
 	qparam.nrxq_descs = ring->rx_pending;
+<<<<<<< HEAD
 
 	mutex_lock(&lif->queue_lock);
 	err = ionic_reconfigure_queues(lif, &qparam);
 	mutex_unlock(&lif->queue_lock);
+=======
+	err = ionic_reconfigure_queues(lif, &qparam);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		netdev_info(netdev, "Ring reconfiguration failed, changes canceled: %d\n", err);
 
@@ -619,9 +646,12 @@ static int ionic_set_channels(struct net_device *netdev,
 	int max_cnt;
 	int err;
 
+<<<<<<< HEAD
 	if (test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ionic_init_queue_params(lif, &qparam);
 
 	if (ch->rx_count != ch->tx_count) {
@@ -682,9 +712,13 @@ static int ionic_set_channels(struct net_device *netdev,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	mutex_lock(&lif->queue_lock);
 	err = ionic_reconfigure_queues(lif, &qparam);
 	mutex_unlock(&lif->queue_lock);
+=======
+	err = ionic_reconfigure_queues(lif, &qparam);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		netdev_info(netdev, "Queue reconfiguration failed, changes canceled: %d\n", err);
 
@@ -974,9 +1008,12 @@ static int ionic_nway_reset(struct net_device *netdev)
 	struct ionic *ionic = lif->ionic;
 	int err = 0;
 
+<<<<<<< HEAD
 	if (test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* flap the link to force auto-negotiation */
 
 	mutex_lock(&ionic->dev_cmd_lock);

@@ -19,6 +19,11 @@ struct ip6table_nat_pernet {
 	struct nf_hook_ops *nf_nat_ops;
 };
 
+<<<<<<< HEAD
+=======
+static int __net_init ip6table_nat_table_init(struct net *net);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static unsigned int ip6table_nat_net_id __read_mostly;
 
 static const struct xt_table nf_nat_ipv6_table = {
@@ -29,6 +34,10 @@ static const struct xt_table nf_nat_ipv6_table = {
 			  (1 << NF_INET_LOCAL_IN),
 	.me		= THIS_MODULE,
 	.af		= NFPROTO_IPV6,
+<<<<<<< HEAD
+=======
+	.table_init	= ip6table_nat_table_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static unsigned int ip6table_nat_do_chain(void *priv,
@@ -112,7 +121,11 @@ static void ip6t_nat_unregister_lookups(struct net *net)
 	kfree(ops);
 }
 
+<<<<<<< HEAD
 static int ip6table_nat_table_init(struct net *net)
+=======
+static int __net_init ip6table_nat_table_init(struct net *net)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ip6t_replace *repl;
 	int ret;
@@ -154,6 +167,7 @@ static struct pernet_operations ip6table_nat_net_ops = {
 
 static int __init ip6table_nat_init(void)
 {
+<<<<<<< HEAD
 	int ret = xt_register_template(&nf_nat_ipv6_table,
 				       ip6table_nat_table_init);
 
@@ -164,13 +178,26 @@ static int __init ip6table_nat_init(void)
 	if (ret)
 		xt_unregister_template(&nf_nat_ipv6_table);
 
+=======
+	int ret = register_pernet_subsys(&ip6table_nat_net_ops);
+
+	if (ret)
+		return ret;
+
+	ret = ip6table_nat_table_init(&init_net);
+	if (ret)
+		unregister_pernet_subsys(&ip6table_nat_net_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
 static void __exit ip6table_nat_exit(void)
 {
 	unregister_pernet_subsys(&ip6table_nat_net_ops);
+<<<<<<< HEAD
 	xt_unregister_template(&nf_nat_ipv6_table);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 module_init(ip6table_nat_init);

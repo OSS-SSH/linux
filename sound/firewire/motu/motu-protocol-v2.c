@@ -12,11 +12,19 @@
 #define  V2_CLOCK_RATE_SHIFT			3
 #define  V2_CLOCK_SRC_MASK			0x00000007
 #define  V2_CLOCK_SRC_SHIFT			0
+<<<<<<< HEAD
 #define   V2_CLOCK_SRC_AESEBU_ON_XLR		0x07	// In Traveler.
 #define   V2_CLOCK_SRC_ADAT_ON_DSUB		0x05
 #define   V2_CLOCK_SRC_WORD_ON_BNC		0x04
 #define   V2_CLOCK_SRC_SPH			0x03
 #define   V2_CLOCK_SRC_SPDIF			0x02	// on either coaxial or optical. AES/EBU in 896HD.
+=======
+#define   V2_CLOCK_SRC_AESEBU_ON_XLR		0x07
+#define   V2_CLOCK_SRC_ADAT_ON_DSUB		0x05
+#define   V2_CLOCK_SRC_WORD_ON_BNC		0x04
+#define   V2_CLOCK_SRC_SPH			0x03
+#define   V2_CLOCK_SRC_SPDIF			0x02	// on either coaxial or optical
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define   V2_CLOCK_SRC_ADAT_ON_OPT		0x01
 #define   V2_CLOCK_SRC_INTERNAL			0x00
 #define  V2_CLOCK_FETCH_ENABLE			0x02000000
@@ -100,9 +108,13 @@ static int get_clock_source(struct snd_motu *motu, u32 data,
 		bool support_iec60958_on_opt = (motu->spec == &snd_motu_spec_828mk2 ||
 						motu->spec == &snd_motu_spec_traveler);
 
+<<<<<<< HEAD
 		if (motu->spec == &snd_motu_spec_896hd) {
 			*src = SND_MOTU_CLOCK_SOURCE_AESEBU_ON_XLR;
 		} else if (!support_iec60958_on_opt) {
+=======
+		if (!support_iec60958_on_opt) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			*src = SND_MOTU_CLOCK_SOURCE_SPDIF_ON_COAX;
 		} else {
 			__be32 reg;
@@ -131,7 +143,10 @@ static int get_clock_source(struct snd_motu *motu, u32 data,
 		*src = SND_MOTU_CLOCK_SOURCE_ADAT_ON_DSUB;
 		break;
 	case V2_CLOCK_SRC_AESEBU_ON_XLR:
+<<<<<<< HEAD
 		// For Traveler.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		*src = SND_MOTU_CLOCK_SOURCE_AESEBU_ON_XLR;
 		break;
 	default:
@@ -156,7 +171,11 @@ int snd_motu_protocol_v2_get_clock_source(struct snd_motu *motu,
 	return get_clock_source(motu, be32_to_cpu(reg), src);
 }
 
+<<<<<<< HEAD
 // Expected for Traveler, which implements Altera Cyclone EP1C3.
+=======
+// Expected for Traveler and 896HD, which implements Altera Cyclone EP1C3.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int switch_fetching_mode_cyclone(struct snd_motu *motu, u32 *data,
 					bool enable)
 {
@@ -193,9 +212,12 @@ int snd_motu_protocol_v2_switch_fetching_mode(struct snd_motu *motu,
 	if (motu->spec == &snd_motu_spec_828mk2) {
 		// 828mkII implements Altera ACEX 1K EP1K30. Nothing to do.
 		return 0;
+<<<<<<< HEAD
 	} else if (motu->spec == &snd_motu_spec_896hd) {
 		// 896HD implements Altera Cyclone EP1C3 but nothing to do.
 		return 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		__be32 reg;
 		u32 data;
@@ -280,6 +302,7 @@ const struct snd_motu_spec snd_motu_spec_828mk2 = {
 	.rx_fixed_pcm_chunks = {14, 14, 0},
 };
 
+<<<<<<< HEAD
 const struct snd_motu_spec snd_motu_spec_896hd = {
 	.name = "896HD",
 	.protocol_version = SND_MOTU_PROTOCOL_V2,
@@ -288,6 +311,8 @@ const struct snd_motu_spec snd_motu_spec_896hd = {
 	.rx_fixed_pcm_chunks = {14, 14, 8},
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 const struct snd_motu_spec snd_motu_spec_traveler = {
 	.name = "Traveler",
 	.protocol_version = SND_MOTU_PROTOCOL_V2,

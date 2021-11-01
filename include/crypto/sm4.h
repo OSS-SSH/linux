@@ -3,7 +3,10 @@
 /*
  * Common values for the SM4 algorithm
  * Copyright (C) 2018 ARM Limited or its affiliates.
+<<<<<<< HEAD
  * Copyright (c) 2021 Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #ifndef _CRYPTO_SM4_H
@@ -16,11 +19,16 @@
 #define SM4_BLOCK_SIZE	16
 #define SM4_RKEY_WORDS	32
 
+<<<<<<< HEAD
 struct sm4_ctx {
+=======
+struct crypto_sm4_ctx {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 rkey_enc[SM4_RKEY_WORDS];
 	u32 rkey_dec[SM4_RKEY_WORDS];
 };
 
+<<<<<<< HEAD
 /**
  * sm4_expandkey - Expands the SM4 key as described in GB/T 32907-2016
  * @ctx:	The location where the computed key will be stored.
@@ -40,5 +48,14 @@ int sm4_expandkey(struct sm4_ctx *ctx, const u8 *in_key,
  * @in: 	Buffer containing the input data
  */
 void sm4_crypt_block(const u32 *rk, u8 *out, const u8 *in);
+=======
+int crypto_sm4_set_key(struct crypto_tfm *tfm, const u8 *in_key,
+		       unsigned int key_len);
+int crypto_sm4_expand_key(struct crypto_sm4_ctx *ctx, const u8 *in_key,
+			  unsigned int key_len);
+
+void crypto_sm4_encrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in);
+void crypto_sm4_decrypt(struct crypto_tfm *tfm, u8 *out, const u8 *in);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

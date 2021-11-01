@@ -2226,8 +2226,12 @@ static void ieee80211_start_ibss_wq(struct work_struct *work)
 	mutex_lock(&ieee->wx_mutex);
 
 	if (ieee->current_network.ssid_len == 0) {
+<<<<<<< HEAD
 		strscpy(ieee->current_network.ssid, IEEE80211_DEFAULT_TX_ESSID,
 			sizeof(ieee->current_network.ssid));
+=======
+		strcpy(ieee->current_network.ssid, IEEE80211_DEFAULT_TX_ESSID);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ieee->current_network.ssid_len = strlen(IEEE80211_DEFAULT_TX_ESSID);
 		ieee->ssid_set = 1;
 	}

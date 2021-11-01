@@ -829,7 +829,11 @@ static int macvlan_change_mtu(struct net_device *dev, int new_mtu)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int macvlan_eth_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+=======
+static int macvlan_do_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *real_dev = macvlan_dev_real_dev(dev);
 	const struct net_device_ops *ops = real_dev->netdev_ops;
@@ -845,8 +849,13 @@ static int macvlan_eth_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 			break;
 		fallthrough;
 	case SIOCGHWTSTAMP:
+<<<<<<< HEAD
 		if (netif_device_present(real_dev) && ops->ndo_eth_ioctl)
 			err = ops->ndo_eth_ioctl(real_dev, &ifrr, cmd);
+=======
+		if (netif_device_present(real_dev) && ops->ndo_do_ioctl)
+			err = ops->ndo_do_ioctl(real_dev, &ifrr, cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	}
 
@@ -1151,7 +1160,11 @@ static const struct net_device_ops macvlan_netdev_ops = {
 	.ndo_stop		= macvlan_stop,
 	.ndo_start_xmit		= macvlan_start_xmit,
 	.ndo_change_mtu		= macvlan_change_mtu,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= macvlan_eth_ioctl,
+=======
+	.ndo_do_ioctl		= macvlan_do_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_fix_features	= macvlan_fix_features,
 	.ndo_change_rx_flags	= macvlan_change_rx_flags,
 	.ndo_set_mac_address	= macvlan_set_mac_address,

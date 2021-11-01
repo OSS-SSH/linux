@@ -5,6 +5,10 @@
 
 config COMMON_CLK_XLNX_CLKWZRD
 	tristate "Xilinx Clocking Wizard"
+<<<<<<< HEAD
 	depends on COMMON_CLK && OF && HAS_IOMEM
+=======
+	depends on COMMON_CLK && OF && IOMEM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Support for the Xilinx Clocking Wizard IP core clock generator.

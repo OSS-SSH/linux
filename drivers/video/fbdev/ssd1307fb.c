@@ -82,11 +82,14 @@ struct ssd1307fb_par {
 	struct regulator *vbat_reg;
 	u32 vcomh;
 	u32 width;
+<<<<<<< HEAD
 	/* Cached address ranges */
 	u8 col_start;
 	u8 col_end;
 	u8 page_start;
 	u8 page_end;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct ssd1307fb_array {
@@ -157,6 +160,7 @@ static inline int ssd1307fb_write_cmd(struct i2c_client *client, u8 cmd)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int ssd1307fb_set_col_range(struct ssd1307fb_par *par, u8 col_start,
 				   u8 cols)
 {
@@ -212,10 +216,14 @@ static int ssd1307fb_set_page_range(struct ssd1307fb_par *par, u8 page_start,
 static int ssd1307fb_update_rect(struct ssd1307fb_par *par, unsigned int x,
 				 unsigned int y, unsigned int width,
 				 unsigned int height)
+=======
+static void ssd1307fb_update_display(struct ssd1307fb_par *par)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ssd1307fb_array *array;
 	u8 *vmem = par->info->screen_buffer;
 	unsigned int line_length = par->info->fix.line_length;
+<<<<<<< HEAD
 	unsigned int pages = DIV_ROUND_UP(y % 8 + height, 8);
 	u32 array_idx = 0;
 	int ret, i, j, k;
@@ -223,6 +231,14 @@ static int ssd1307fb_update_rect(struct ssd1307fb_par *par, unsigned int x,
 	array = ssd1307fb_alloc_array(width * pages, SSD1307FB_DATA);
 	if (!array)
 		return -ENOMEM;
+=======
+	unsigned int pages = DIV_ROUND_UP(par->height, 8);
+	int i, j, k;
+
+	array = ssd1307fb_alloc_array(par->width * pages, SSD1307FB_DATA);
+	if (!array)
+		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * The screen is divided in pages, each having a height of 8
@@ -253,6 +269,7 @@ static int ssd1307fb_update_rect(struct ssd1307fb_par *par, unsigned int x,
 	 *  (5) A4 B4 C4 D4 E4 F4 G4 H4
 	 */
 
+<<<<<<< HEAD
 	ret = ssd1307fb_set_col_range(par, par->col_offset + x, width);
 	if (ret < 0)
 		goto out_free;
@@ -270,10 +287,21 @@ static int ssd1307fb_update_rect(struct ssd1307fb_par *par, unsigned int x,
 		for (j = x; j < x + width; j++) {
 			u8 data = 0;
 
+=======
+	for (i = 0; i < pages; i++) {
+		for (j = 0; j < par->width; j++) {
+			int m = 8;
+			u32 array_idx = i * par->width + j;
+			array->data[array_idx] = 0;
+			/* Last page may be partial */
+			if (i + 1 == pages && par->height % 8)
+				m = par->height % 8;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			for (k = 0; k < m; k++) {
 				u8 byte = vmem[(8 * i + k) * line_length +
 					       j / 8];
 				u8 bit = (byte >> (j % 8)) & 1;
+<<<<<<< HEAD
 				data |= bit << k;
 			}
 			array->data[array_idx++] = data;
@@ -291,6 +319,17 @@ static int ssd1307fb_update_display(struct ssd1307fb_par *par)
 {
 	return ssd1307fb_update_rect(par, 0, 0, par->width, par->height);
 }
+=======
+				array->data[array_idx] |= bit << k;
+			}
+		}
+	}
+
+	ssd1307fb_write_array(par->client, array, par->width * pages);
+	kfree(array);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static ssize_t ssd1307fb_write(struct fb_info *info, const char __user *buf,
 		size_t count, loff_t *ppos)
@@ -299,7 +338,10 @@ static ssize_t ssd1307fb_write(struct fb_info *info, const char __user *buf,
 	unsigned long total_size;
 	unsigned long p = *ppos;
 	void *dst;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	total_size = info->fix.smem_len;
 
@@ -317,9 +359,13 @@ static ssize_t ssd1307fb_write(struct fb_info *info, const char __user *buf,
 	if (copy_from_user(dst, buf, count))
 		return -EFAULT;
 
+<<<<<<< HEAD
 	ret = ssd1307fb_update_display(par);
 	if (ret < 0)
 		return ret;
+=======
+	ssd1307fb_update_display(par);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*ppos += count;
 
@@ -340,24 +386,36 @@ static void ssd1307fb_fillrect(struct fb_info *info, const struct fb_fillrect *r
 {
 	struct ssd1307fb_par *par = info->par;
 	sys_fillrect(info, rect);
+<<<<<<< HEAD
 	ssd1307fb_update_rect(par, rect->dx, rect->dy, rect->width,
 			      rect->height);
+=======
+	ssd1307fb_update_display(par);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ssd1307fb_copyarea(struct fb_info *info, const struct fb_copyarea *area)
 {
 	struct ssd1307fb_par *par = info->par;
 	sys_copyarea(info, area);
+<<<<<<< HEAD
 	ssd1307fb_update_rect(par, area->dx, area->dy, area->width,
 			      area->height);
+=======
+	ssd1307fb_update_display(par);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ssd1307fb_imageblit(struct fb_info *info, const struct fb_image *image)
 {
 	struct ssd1307fb_par *par = info->par;
 	sys_imageblit(info, image);
+<<<<<<< HEAD
 	ssd1307fb_update_rect(par, image->dx, image->dy, image->width,
 			      image->height);
+=======
+	ssd1307fb_update_display(par);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct fb_ops ssd1307fb_ops = {
@@ -537,11 +595,45 @@ static int ssd1307fb_init(struct ssd1307fb_par *par)
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 	/* Clear the screen */
 	ret = ssd1307fb_update_display(par);
 	if (ret < 0)
 		return ret;
 
+=======
+	/* Set column range */
+	ret = ssd1307fb_write_cmd(par->client, SSD1307FB_SET_COL_RANGE);
+	if (ret < 0)
+		return ret;
+
+	ret = ssd1307fb_write_cmd(par->client, par->col_offset);
+	if (ret < 0)
+		return ret;
+
+	ret = ssd1307fb_write_cmd(par->client, par->col_offset + par->width - 1);
+	if (ret < 0)
+		return ret;
+
+	/* Set page range */
+	ret = ssd1307fb_write_cmd(par->client, SSD1307FB_SET_PAGE_RANGE);
+	if (ret < 0)
+		return ret;
+
+	ret = ssd1307fb_write_cmd(par->client, par->page_offset);
+	if (ret < 0)
+		return ret;
+
+	ret = ssd1307fb_write_cmd(par->client,
+				  par->page_offset +
+				  DIV_ROUND_UP(par->height, 8) - 1);
+	if (ret < 0)
+		return ret;
+
+	/* Clear the screen */
+	ssd1307fb_update_display(par);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Turn on the display */
 	ret = ssd1307fb_write_cmd(par->client, SSD1307FB_DISPLAY_ON);
 	if (ret < 0)

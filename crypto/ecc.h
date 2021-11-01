@@ -27,7 +27,10 @@
 #define _CRYPTO_ECC_H
 
 #include <crypto/ecc_curve.h>
+<<<<<<< HEAD
 #include <asm/unaligned.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* One digit is u64 qword. */
 #define ECC_CURVE_NIST_P192_DIGITS  3
@@ -47,13 +50,21 @@
  * @out:      Output array
  * @ndigits:  Number of digits to copy
  */
+<<<<<<< HEAD
 static inline void ecc_swap_digits(const void *in, u64 *out, unsigned int ndigits)
+=======
+static inline void ecc_swap_digits(const u64 *in, u64 *out, unsigned int ndigits)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const __be64 *src = (__force __be64 *)in;
 	int i;
 
 	for (i = 0; i < ndigits; i++)
+<<<<<<< HEAD
 		out[i] = get_unaligned_be64(&src[ndigits - 1 - i]);
+=======
+		out[i] = be64_to_cpu(src[ndigits - 1 - i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

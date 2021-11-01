@@ -223,7 +223,11 @@ static const struct net_device_ops pcnet_netdev_ops = {
 	.ndo_set_config		= set_config,
 	.ndo_start_xmit 	= ei_start_xmit,
 	.ndo_get_stats		= ei_get_stats,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= ei_ioctl,
+=======
+	.ndo_do_ioctl 		= ei_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_rx_mode	= ei_set_multicast_list,
 	.ndo_tx_timeout 	= ei_tx_timeout,
 	.ndo_set_mac_address 	= eth_mac_addr,

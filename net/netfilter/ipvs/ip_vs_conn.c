@@ -1468,10 +1468,13 @@ int __init ip_vs_conn_init(void)
 	int idx;
 
 	/* Compute size and mask */
+<<<<<<< HEAD
 	if (ip_vs_conn_tab_bits < 8 || ip_vs_conn_tab_bits > 20) {
 		pr_info("conn_tab_bits not in [8, 20]. Using default value\n");
 		ip_vs_conn_tab_bits = CONFIG_IP_VS_TAB_BITS;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ip_vs_conn_tab_size = 1 << ip_vs_conn_tab_bits;
 	ip_vs_conn_tab_mask = ip_vs_conn_tab_size - 1;
 

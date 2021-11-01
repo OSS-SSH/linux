@@ -362,7 +362,11 @@ static int iTCO_wdt_set_timeout(struct watchdog_device *wd_dev, unsigned int t)
 	 * Otherwise, the BIOS generally reboots when the SMI triggers.
 	 */
 	if (p->smi_res &&
+<<<<<<< HEAD
 	    (inl(SMI_EN(p)) & (TCO_EN | GBL_SMI_EN)) != (TCO_EN | GBL_SMI_EN))
+=======
+	    (SMI_EN(p) & (TCO_EN | GBL_SMI_EN)) != (TCO_EN | GBL_SMI_EN))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tmrval /= 2;
 
 	/* from the specs: */

@@ -1605,6 +1605,7 @@ static int blk_trace_remove_queue(struct request_queue *q)
 	if (bt == NULL)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (bt->trace_state == Blktrace_running) {
 		bt->trace_state = Blktrace_stopped;
 		spin_lock_irq(&running_trace_lock);
@@ -1613,6 +1614,8 @@ static int blk_trace_remove_queue(struct request_queue *q)
 		relay_flush(bt->rchan);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	put_probe_ref();
 	synchronize_rcu();
 	blk_trace_free(bt);

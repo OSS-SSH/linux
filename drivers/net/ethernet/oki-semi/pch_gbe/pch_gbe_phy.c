@@ -301,7 +301,13 @@ void pch_gbe_phy_init_setting(struct pch_gbe_hw *hw)
 	int ret;
 	u16 mii_reg;
 
+<<<<<<< HEAD
 	mii_ethtool_gset(&adapter->mii, &cmd);
+=======
+	ret = mii_ethtool_gset(&adapter->mii, &cmd);
+	if (ret)
+		netdev_err(adapter->netdev, "Error: mii_ethtool_gset\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ethtool_cmd_speed_set(&cmd, hw->mac.link_speed);
 	cmd.duplex = hw->mac.link_duplex;

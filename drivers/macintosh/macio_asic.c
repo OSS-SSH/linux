@@ -88,7 +88,11 @@ static int macio_device_probe(struct device *dev)
 	return error;
 }
 
+<<<<<<< HEAD
 static void macio_device_remove(struct device *dev)
+=======
+static int macio_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct macio_dev * macio_dev = to_macio_device(dev);
 	struct macio_driver * drv = to_macio_driver(dev->driver);
@@ -96,6 +100,11 @@ static void macio_device_remove(struct device *dev)
 	if (dev->driver && drv->remove)
 		drv->remove(macio_dev);
 	macio_dev_put(macio_dev);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void macio_device_shutdown(struct device *dev)

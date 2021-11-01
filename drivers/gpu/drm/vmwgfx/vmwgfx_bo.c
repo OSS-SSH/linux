@@ -405,7 +405,11 @@ static size_t vmw_bo_acc_size(struct vmw_private *dev_priv, size_t size,
 			      bool user)
 {
 	static size_t struct_size, user_struct_size;
+<<<<<<< HEAD
 	size_t num_pages = PFN_UP(size);
+=======
+	size_t num_pages = PAGE_ALIGN(size) >> PAGE_SHIFT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size_t page_array_size = ttm_round_pot(num_pages * sizeof(void *));
 
 	if (unlikely(struct_size == 0)) {
@@ -474,6 +478,10 @@ int vmw_bo_create_kernel(struct vmw_private *dev_priv, unsigned long size,
 			 struct ttm_placement *placement,
 			 struct ttm_buffer_object **p_bo)
 {
+<<<<<<< HEAD
+=======
+	unsigned npages = PAGE_ALIGN(size) >> PAGE_SHIFT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ttm_operation_ctx ctx = { false, false };
 	struct ttm_buffer_object *bo;
 	size_t acc_size;
@@ -484,7 +492,11 @@ int vmw_bo_create_kernel(struct vmw_private *dev_priv, unsigned long size,
 		return -ENOMEM;
 
 	acc_size = ttm_round_pot(sizeof(*bo));
+<<<<<<< HEAD
 	acc_size += ttm_round_pot(PFN_UP(size) * sizeof(void *));
+=======
+	acc_size += ttm_round_pot(npages * sizeof(void *));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	acc_size += ttm_round_pot(sizeof(struct ttm_tt));
 
 	ret = ttm_mem_global_alloc(&ttm_mem_glob, acc_size, &ctx);

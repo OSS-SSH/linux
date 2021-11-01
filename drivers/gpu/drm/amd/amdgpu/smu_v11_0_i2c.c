@@ -41,7 +41,13 @@
 #define I2C_SW_TIMEOUT        8
 #define I2C_ABORT             0x10
 
+<<<<<<< HEAD
 #define I2C_X_RESTART         BIT(31)
+=======
+/* I2C transaction flags */
+#define I2C_NO_STOP	1
+#define I2C_RESTART	2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define to_amdgpu_device(x) (container_of(x, struct amdgpu_device, pm.smu_i2c))
 
@@ -54,6 +60,7 @@ static void smu_v11_0_i2c_set_clock_gating(struct i2c_adapter *control, bool en)
 	WREG32_SOC15(SMUIO, 0, mmSMUIO_PWRMGT, reg);
 }
 
+<<<<<<< HEAD
 /* The T_I2C_POLL_US is defined as follows:
  *
  * "Define a timer interval (t_i2c_poll) equal to 10 times the
@@ -74,10 +81,15 @@ static void smu_v11_0_i2c_set_clock_gating(struct i2c_adapter *control, bool en)
 #define I2C_MAX_T_POLL_COUNT    1000
 
 static int smu_v11_0_i2c_enable(struct i2c_adapter *control, bool enable)
+=======
+
+static void smu_v11_0_i2c_enable(struct i2c_adapter *control, bool enable)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
 
 	WREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_ENABLE, enable ? 1 : 0);
+<<<<<<< HEAD
 
 	if (!enable) {
 		int ii;
@@ -96,6 +108,8 @@ static int smu_v11_0_i2c_enable(struct i2c_adapter *control, bool enable)
 	}
 
 	return I2C_OK;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void smu_v11_0_i2c_clear_status(struct i2c_adapter *control)
@@ -117,6 +131,7 @@ static void smu_v11_0_i2c_configure(struct i2c_adapter *control)
 	reg = REG_SET_FIELD(reg, CKSVII2C_IC_CON, IC_RESTART_EN, 1);
 	reg = REG_SET_FIELD(reg, CKSVII2C_IC_CON, IC_10BITADDR_MASTER, 0);
 	reg = REG_SET_FIELD(reg, CKSVII2C_IC_CON, IC_10BITADDR_SLAVE, 0);
+<<<<<<< HEAD
 	/* The values of IC_MAX_SPEED_MODE are,
 	 * 1: standard mode, 0 - 100 Kb/s,
 	 * 2: fast mode, <= 400 Kb/s, or fast mode plus, <= 1000 Kb/s,
@@ -124,6 +139,10 @@ static void smu_v11_0_i2c_configure(struct i2c_adapter *control)
 	 */
 	reg = REG_SET_FIELD(reg, CKSVII2C_IC_CON, IC_MAX_SPEED_MODE,
 			    I2C_SPEED_MODE_FAST);
+=======
+	/* Standard mode */
+	reg = REG_SET_FIELD(reg, CKSVII2C_IC_CON, IC_MAX_SPEED_MODE, 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	reg = REG_SET_FIELD(reg, CKSVII2C_IC_CON, IC_MASTER_MODE, 1);
 
 	WREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_CON, reg);
@@ -152,6 +171,7 @@ static void smu_v11_0_i2c_set_clock(struct i2c_adapter *control)
 	WREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_SDA_HOLD, 20);
 }
 
+<<<<<<< HEAD
 static void smu_v11_0_i2c_set_address(struct i2c_adapter *control, u16 address)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
@@ -161,6 +181,15 @@ static void smu_v11_0_i2c_set_address(struct i2c_adapter *control, u16 address)
 	 * i.e. no read/write bit--no wire format, just the address.
 	 */
 	WREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_TAR, address & 0x3FF);
+=======
+static void smu_v11_0_i2c_set_address(struct i2c_adapter *control, uint8_t address)
+{
+	struct amdgpu_device *adev = to_amdgpu_device(control);
+
+	/* Convert fromr 8-bit to 7-bit address */
+	address >>= 1;
+	WREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_TAR, (address & 0xFF));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static uint32_t smu_v11_0_i2c_poll_tx_status(struct i2c_adapter *control)
@@ -247,6 +276,12 @@ static uint32_t smu_v11_0_i2c_poll_rx_status(struct i2c_adapter *control)
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * smu_v11_0_i2c_transmit - Send a block of data over the I2C bus to a slave device.
  *
@@ -259,17 +294,29 @@ static uint32_t smu_v11_0_i2c_poll_rx_status(struct i2c_adapter *control)
  * Returns 0 on success or error.
  */
 static uint32_t smu_v11_0_i2c_transmit(struct i2c_adapter *control,
+<<<<<<< HEAD
 				       u16 address, u8 *data,
 				       u32 numbytes, u32 i2c_flag)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
 	u32 bytes_sent, reg, ret = I2C_OK;
+=======
+				  uint8_t address, uint8_t *data,
+				  uint32_t numbytes, uint32_t i2c_flag)
+{
+	struct amdgpu_device *adev = to_amdgpu_device(control);
+	uint32_t bytes_sent, reg, ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long  timeout_counter;
 
 	bytes_sent = 0;
 
 	DRM_DEBUG_DRIVER("I2C_Transmit(), address = %x, bytes = %d , data: ",
+<<<<<<< HEAD
 			 address, numbytes);
+=======
+		 (uint16_t)address, numbytes);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (drm_debug_enabled(DRM_UT_DRIVER)) {
 		print_hex_dump(KERN_INFO, "data: ", DUMP_PREFIX_NONE,
@@ -284,10 +331,15 @@ static uint32_t smu_v11_0_i2c_transmit(struct i2c_adapter *control,
 	/* Clear status bits */
 	smu_v11_0_i2c_clear_status(control);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	timeout_counter = jiffies + msecs_to_jiffies(20);
 
 	while (numbytes > 0) {
 		reg = RREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_STATUS);
+<<<<<<< HEAD
 		if (!REG_GET_FIELD(reg, CKSVII2C_IC_STATUS, TFNF)) {
 			/*
 			 * We waited for too long for the transmission
@@ -323,10 +375,53 @@ static uint32_t smu_v11_0_i2c_transmit(struct i2c_adapter *control,
 			/* Record that the bytes were transmitted */
 			bytes_sent++;
 			numbytes--;
+=======
+		if (REG_GET_FIELD(reg, CKSVII2C_IC_STATUS, TFNF)) {
+			do {
+				reg = 0;
+				/*
+				 * Prepare transaction, no need to set RESTART. I2C engine will send
+				 * START as soon as it sees data in TXFIFO
+				 */
+				if (bytes_sent == 0)
+					reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, RESTART,
+							    (i2c_flag & I2C_RESTART) ? 1 : 0);
+				reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, DAT, data[bytes_sent]);
+
+				/* determine if we need to send STOP bit or not */
+				if (numbytes == 1)
+					/* Final transaction, so send stop unless I2C_NO_STOP */
+					reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, STOP,
+							    (i2c_flag & I2C_NO_STOP) ? 0 : 1);
+				/* Write */
+				reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, CMD, 0);
+				WREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_DATA_CMD, reg);
+
+				/* Record that the bytes were transmitted */
+				bytes_sent++;
+				numbytes--;
+
+				reg = RREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_STATUS);
+
+			} while (numbytes &&  REG_GET_FIELD(reg, CKSVII2C_IC_STATUS, TFNF));
+		}
+
+		/*
+		 * We waited too long for the transmission FIFO to become not-full.
+		 * Exit the loop with error.
+		 */
+		if (time_after(jiffies, timeout_counter)) {
+			ret |= I2C_SW_TIMEOUT;
+			goto Err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
 	ret = smu_v11_0_i2c_poll_tx_status(control);
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Err:
 	/* Any error, no point in proceeding */
 	if (ret != I2C_OK) {
@@ -357,8 +452,13 @@ Err:
  * Returns 0 on success or error.
  */
 static uint32_t smu_v11_0_i2c_receive(struct i2c_adapter *control,
+<<<<<<< HEAD
 				      u16 address, u8 *data,
 				      u32 numbytes, u32 i2c_flag)
+=======
+				 uint8_t address, uint8_t *data,
+				 uint32_t numbytes, uint8_t i2c_flag)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
 	uint32_t bytes_received, ret = I2C_OK;
@@ -376,11 +476,23 @@ static uint32_t smu_v11_0_i2c_receive(struct i2c_adapter *control,
 
 		smu_v11_0_i2c_clear_status(control);
 
+<<<<<<< HEAD
 		/* Prepare transaction */
+=======
+
+		/* Prepare transaction */
+
+		/* Each time we disable I2C, so this is not a restart */
+		if (bytes_received == 0)
+			reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, RESTART,
+					    (i2c_flag & I2C_RESTART) ? 1 : 0);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, DAT, 0);
 		/* Read */
 		reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, CMD, 1);
 
+<<<<<<< HEAD
 		/* Final message, final byte, must generate a STOP
 		 * to release the bus, i.e. don't hold SCL low.
 		 */
@@ -391,6 +503,13 @@ static uint32_t smu_v11_0_i2c_receive(struct i2c_adapter *control,
 		if (bytes_received == 0 && i2c_flag & I2C_X_RESTART)
 			reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD,
 					    RESTART, 1);
+=======
+		/* Transmitting last byte */
+		if (numbytes == 1)
+			/* Final transaction, so send stop if requested */
+			reg = REG_SET_FIELD(reg, CKSVII2C_IC_DATA_CMD, STOP,
+					    (i2c_flag & I2C_NO_STOP) ? 0 : 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		WREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_DATA_CMD, reg);
 
@@ -445,6 +564,10 @@ static void smu_v11_0_i2c_abort(struct i2c_adapter *control)
 	DRM_DEBUG_DRIVER("I2C_Abort() Done.");
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool smu_v11_0_i2c_activity_done(struct i2c_adapter *control)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
@@ -456,6 +579,10 @@ static bool smu_v11_0_i2c_activity_done(struct i2c_adapter *control)
 	reg_ic_enable_status = RREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_ENABLE_STATUS);
 	reg_ic_enable = RREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_ENABLE);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if ((REG_GET_FIELD(reg_ic_enable, CKSVII2C_IC_ENABLE, ENABLE) == 0) &&
 	    (REG_GET_FIELD(reg_ic_enable_status, CKSVII2C_IC_ENABLE_STATUS, IC_EN) == 1)) {
 		/*
@@ -485,8 +612,11 @@ static bool smu_v11_0_i2c_activity_done(struct i2c_adapter *control)
 
 static void smu_v11_0_i2c_init(struct i2c_adapter *control)
 {
+<<<<<<< HEAD
 	int res;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Disable clock gating */
 	smu_v11_0_i2c_set_clock_gating(control, false);
 
@@ -494,9 +624,13 @@ static void smu_v11_0_i2c_init(struct i2c_adapter *control)
 		DRM_WARN("I2C busy !");
 
 	/* Disable I2C */
+<<<<<<< HEAD
 	res = smu_v11_0_i2c_enable(control, false);
 	if (res != I2C_OK)
 		smu_v11_0_i2c_abort(control);
+=======
+	smu_v11_0_i2c_enable(control, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Configure I2C to operate as master and in standard mode */
 	smu_v11_0_i2c_configure(control);
@@ -509,6 +643,7 @@ static void smu_v11_0_i2c_init(struct i2c_adapter *control)
 static void smu_v11_0_i2c_fini(struct i2c_adapter *control)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
+<<<<<<< HEAD
 	u32 status, enable, en_stat;
 	int res;
 
@@ -525,6 +660,23 @@ static void smu_v11_0_i2c_fini(struct i2c_adapter *control)
 		DRM_DEBUG_DRIVER("Aborting from fini: status:0x%08x "
 				 "enable:0x%08x enable_stat:0x%08x",
 				 status, enable, en_stat);
+=======
+	uint32_t reg_ic_enable_status, reg_ic_enable;
+
+	smu_v11_0_i2c_enable(control, false);
+
+	/* Double check if disabled, else force abort */
+	reg_ic_enable_status = RREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_ENABLE_STATUS);
+	reg_ic_enable = RREG32_SOC15(SMUIO, 0, mmCKSVII2C_IC_ENABLE);
+
+	if ((REG_GET_FIELD(reg_ic_enable, CKSVII2C_IC_ENABLE, ENABLE) == 0) &&
+	    (REG_GET_FIELD(reg_ic_enable_status,
+			   CKSVII2C_IC_ENABLE_STATUS, IC_EN) == 1)) {
+		/*
+		 * Nobody is using I2C engine, but engine remains active because
+		 * someone missed to send STOP
+		 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		smu_v11_0_i2c_abort(control);
 	}
 
@@ -566,12 +718,31 @@ static bool smu_v11_0_i2c_bus_unlock(struct i2c_adapter *control)
 /***************************** I2C GLUE ****************************/
 
 static uint32_t smu_v11_0_i2c_read_data(struct i2c_adapter *control,
+<<<<<<< HEAD
 					struct i2c_msg *msg, uint32_t i2c_flag)
 {
 	uint32_t  ret;
 
 	ret = smu_v11_0_i2c_receive(control, msg->addr, msg->buf, msg->len, i2c_flag);
 
+=======
+					uint8_t address,
+					uint8_t *data,
+					uint32_t numbytes)
+{
+	uint32_t  ret = 0;
+
+	/* First 2 bytes are dummy write to set EEPROM address */
+	ret = smu_v11_0_i2c_transmit(control, address, data, 2, I2C_NO_STOP);
+	if (ret != I2C_OK)
+		goto Fail;
+
+	/* Now read data starting with that address */
+	ret = smu_v11_0_i2c_receive(control, address, data + 2, numbytes - 2,
+				    I2C_RESTART);
+
+Fail:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret != I2C_OK)
 		DRM_ERROR("ReadData() - I2C error occurred :%x", ret);
 
@@ -579,6 +750,7 @@ static uint32_t smu_v11_0_i2c_read_data(struct i2c_adapter *control,
 }
 
 static uint32_t smu_v11_0_i2c_write_data(struct i2c_adapter *control,
+<<<<<<< HEAD
 					struct i2c_msg *msg, uint32_t i2c_flag)
 {
 	uint32_t  ret;
@@ -588,6 +760,30 @@ static uint32_t smu_v11_0_i2c_write_data(struct i2c_adapter *control,
 	if (ret != I2C_OK)
 		DRM_ERROR("WriteI2CData() - I2C error occurred :%x", ret);
 	
+=======
+					 uint8_t address,
+					 uint8_t *data,
+					 uint32_t numbytes)
+{
+	uint32_t  ret;
+
+	ret = smu_v11_0_i2c_transmit(control, address, data, numbytes, 0);
+
+	if (ret != I2C_OK)
+		DRM_ERROR("WriteI2CData() - I2C error occurred :%x", ret);
+	else
+		/*
+		 * According to EEPROM spec there is a MAX of 10 ms required for
+		 * EEPROM to flush internal RX buffer after STOP was issued at the
+		 * end of write transaction. During this time the EEPROM will not be
+		 * responsive to any more commands - so wait a bit more.
+		 *
+		 * TODO Improve to wait for first ACK for slave address after
+		 * internal write cycle done.
+		 */
+		msleep(10);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 
 }
@@ -596,11 +792,20 @@ static void lock_bus(struct i2c_adapter *i2c, unsigned int flags)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(i2c);
 
+<<<<<<< HEAD
 	mutex_lock(&adev->pm.smu_i2c_mutex);
 	if (!smu_v11_0_i2c_bus_lock(i2c))
 		DRM_ERROR("Failed to lock the bus from SMU");
 	else
 		adev->pm.bus_locked = true;
+=======
+	if (!smu_v11_0_i2c_bus_lock(i2c)) {
+		DRM_ERROR("Failed to lock the bus from SMU");
+		return;
+	}
+
+	adev->pm.bus_locked = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int trylock_bus(struct i2c_adapter *i2c, unsigned int flags)
@@ -613,11 +818,20 @@ static void unlock_bus(struct i2c_adapter *i2c, unsigned int flags)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(i2c);
 
+<<<<<<< HEAD
 	if (!smu_v11_0_i2c_bus_unlock(i2c))
 		DRM_ERROR("Failed to unlock the bus from SMU");
 	else
 		adev->pm.bus_locked = false;
 	mutex_unlock(&adev->pm.smu_i2c_mutex);
+=======
+	if (!smu_v11_0_i2c_bus_unlock(i2c)) {
+		DRM_ERROR("Failed to unlock the bus from SMU");
+		return;
+	}
+
+	adev->pm.bus_locked = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct i2c_lock_operations smu_v11_0_i2c_i2c_lock_ops = {
@@ -627,6 +841,7 @@ static const struct i2c_lock_operations smu_v11_0_i2c_i2c_lock_ops = {
 };
 
 static int smu_v11_0_i2c_xfer(struct i2c_adapter *i2c_adap,
+<<<<<<< HEAD
 			      struct i2c_msg *msg, int num)
 {
 	int i, ret;
@@ -681,6 +896,29 @@ static int smu_v11_0_i2c_xfer(struct i2c_adapter *i2c_adap,
 			ret = smu_v11_0_i2c_write_data(i2c_adap,
 						       msg + i,
 						       i2c_flag);
+=======
+			      struct i2c_msg *msgs, int num)
+{
+	int i, ret;
+	struct amdgpu_device *adev = to_amdgpu_device(i2c_adap);
+
+	if (!adev->pm.bus_locked) {
+		DRM_ERROR("I2C bus unlocked, stopping transaction!");
+		return -EIO;
+	}
+
+	smu_v11_0_i2c_init(i2c_adap);
+
+	for (i = 0; i < num; i++) {
+		if (msgs[i].flags & I2C_M_RD)
+			ret = smu_v11_0_i2c_read_data(i2c_adap,
+						      (uint8_t)msgs[i].addr,
+						      msgs[i].buf, msgs[i].len);
+		else
+			ret = smu_v11_0_i2c_write_data(i2c_adap,
+						       (uint8_t)msgs[i].addr,
+						       msgs[i].buf, msgs[i].len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (ret != I2C_OK) {
 			num = -EIO;
@@ -697,28 +935,43 @@ static u32 smu_v11_0_i2c_func(struct i2c_adapter *adap)
 	return I2C_FUNC_I2C | I2C_FUNC_SMBUS_EMUL;
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct i2c_algorithm smu_v11_0_i2c_algo = {
 	.master_xfer = smu_v11_0_i2c_xfer,
 	.functionality = smu_v11_0_i2c_func,
 };
 
+<<<<<<< HEAD
 static const struct i2c_adapter_quirks smu_v11_0_i2c_control_quirks = {
 	.flags = I2C_AQ_NO_ZERO_LEN,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int smu_v11_0_i2c_control_init(struct i2c_adapter *control)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
 	int res;
 
+<<<<<<< HEAD
 	mutex_init(&adev->pm.smu_i2c_mutex);
 	control->owner = THIS_MODULE;
 	control->class = I2C_CLASS_HWMON;
+=======
+	control->owner = THIS_MODULE;
+	control->class = I2C_CLASS_SPD;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	control->dev.parent = &adev->pdev->dev;
 	control->algo = &smu_v11_0_i2c_algo;
 	snprintf(control->name, sizeof(control->name), "AMDGPU SMU");
 	control->lock_ops = &smu_v11_0_i2c_i2c_lock_ops;
+<<<<<<< HEAD
 	control->quirks = &smu_v11_0_i2c_control_quirks;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	res = i2c_add_adapter(control);
 	if (res)

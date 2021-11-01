@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
+=======
+ *   fs/smb2/smb2maperror.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   Functions which do error mapping of SMB2 status codes to POSIX errors
  *

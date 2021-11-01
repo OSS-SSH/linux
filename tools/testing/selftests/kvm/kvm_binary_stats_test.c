@@ -109,6 +109,7 @@ static void stats_test(int stats_fd)
 		/* Check size field, which should not be zero */
 		TEST_ASSERT(pdesc->size, "KVM descriptor(%s) with size of 0",
 				pdesc->name);
+<<<<<<< HEAD
 		/* Check bucket_size field */
 		switch (pdesc->flags & KVM_STATS_TYPE_MASK) {
 		case KVM_STATS_TYPE_LINEAR_HIST:
@@ -121,6 +122,8 @@ static void stats_test(int stats_fd)
 			    "Bucket size of stats (%s) is not zero",
 			    pdesc->name);
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		size_data += pdesc->size * sizeof(*stats_data);
 	}
 	/* Check overlap */

@@ -14,6 +14,10 @@
 #include <stdint.h>
 #include <time.h>
 #include <sched.h>
+<<<<<<< HEAD
+=======
+#include <sys/syscall.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define VCPU_ID		5
 
@@ -97,6 +101,23 @@ static void guest_code(void)
 	GUEST_DONE();
 }
 
+<<<<<<< HEAD
+=======
+static long get_run_delay(void)
+{
+        char path[64];
+        long val[2];
+        FILE *fp;
+
+        sprintf(path, "/proc/%ld/schedstat", syscall(SYS_gettid));
+        fp = fopen(path, "r");
+        fscanf(fp, "%ld %ld ", &val[0], &val[1]);
+        fclose(fp);
+
+        return val[1];
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int cmp_timespec(struct timespec *a, struct timespec *b)
 {
 	if (a->tv_sec > b->tv_sec)

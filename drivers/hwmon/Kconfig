@@ -254,6 +254,7 @@ config SENSORS_AHT10
 	  This driver can also be built as a module. If so, the module
 	  will be called aht10.
 
+<<<<<<< HEAD
 config SENSORS_AQUACOMPUTER_D5NEXT
 	tristate "Aquacomputer D5 Next watercooling pump"
 	depends on USB_HID
@@ -264,6 +265,8 @@ config SENSORS_AQUACOMPUTER_D5NEXT
 	  This driver can also be built as a module. If so, the module
 	  will be called aquacomputer_d5next.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config SENSORS_AS370
 	tristate "Synaptics AS370 SoC hardware monitoring driver"
 	help
@@ -1561,6 +1564,7 @@ config SENSORS_SBTSI
 	  This driver can also be built as a module. If so, the module will
 	  be called sbtsi_temp.
 
+<<<<<<< HEAD
 config SENSORS_SBRMI
 	tristate "Emulated SB-RMI sensor"
 	depends on I2C
@@ -1571,6 +1575,8 @@ config SENSORS_SBRMI
 	  This driver can also be built as a module. If so, the module will
 	  be called sbrmi.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config SENSORS_SHT15
 	tristate "Sensiron humidity and temperature sensors. SHT15 and compat."
 	depends on GPIOLIB || COMPILE_TEST

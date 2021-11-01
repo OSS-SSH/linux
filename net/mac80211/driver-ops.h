@@ -1447,6 +1447,7 @@ static inline void drv_sta_set_decap_offload(struct ieee80211_local *local,
 	trace_drv_return_void(local);
 }
 
+<<<<<<< HEAD
 static inline void drv_add_twt_setup(struct ieee80211_local *local,
 				     struct ieee80211_sub_if_data *sdata,
 				     struct ieee80211_sta *sta,
@@ -1483,4 +1484,6 @@ static inline void drv_twt_teardown_request(struct ieee80211_local *local,
 	trace_drv_return_void(local);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __MAC80211_DRIVER_OPS */

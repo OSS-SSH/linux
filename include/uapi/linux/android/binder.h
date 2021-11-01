@@ -225,6 +225,7 @@ struct binder_freeze_info {
 
 struct binder_frozen_status_info {
 	__u32            pid;
+<<<<<<< HEAD
 
 	/* process received sync transactions since last frozen
 	 * bit 0: received sync transaction after being frozen
@@ -233,6 +234,9 @@ struct binder_frozen_status_info {
 	__u32            sync_recv;
 
 	/* process received async transactions since last frozen */
+=======
+	__u32            sync_recv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u32            async_recv;
 };
 

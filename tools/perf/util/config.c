@@ -581,10 +581,14 @@ const char *perf_home_perfconfig(void)
 	static const char *config;
 	static bool failed;
 
+<<<<<<< HEAD
 	if (failed || config)
 		return config;
 
 	config = home_perfconfig();
+=======
+	config = failed ? NULL : home_perfconfig();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!config)
 		failed = true;
 
@@ -801,7 +805,11 @@ int perf_config_set(struct perf_config_set *set,
 				  section->name, item->name);
 			ret = fn(key, value, data);
 			if (ret < 0) {
+<<<<<<< HEAD
 				pr_err("Error in the given config file: wrong config key-value pair %s=%s\n",
+=======
+				pr_err("Error: wrong config key-value pair %s=%s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				       key, value);
 				/*
 				 * Can't be just a 'break', as perf_config_set__for_each_entry()

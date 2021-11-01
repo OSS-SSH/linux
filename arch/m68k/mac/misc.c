@@ -18,6 +18,10 @@
 
 #include <linux/uaccess.h>
 #include <asm/io.h>
+<<<<<<< HEAD
+=======
+#include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/setup.h>
 #include <asm/macintosh.h>
 #include <asm/mac_via.h>

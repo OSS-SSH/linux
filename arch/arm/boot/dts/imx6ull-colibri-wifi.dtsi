@@ -43,7 +43,10 @@
 	assigned-clock-rates = <0>, <198000000>;
 	cap-power-off-card;
 	keep-power-in-suspend;
+<<<<<<< HEAD
 	max-frequency = <25000000>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmc-pwrseq = <&wifi_pwrseq>;
 	no-1-8-v;
 	non-removable;

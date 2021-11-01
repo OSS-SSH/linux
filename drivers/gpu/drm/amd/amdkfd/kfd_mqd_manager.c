@@ -98,13 +98,20 @@ void mqd_symmetrically_map_cu_mask(struct mqd_manager *mm,
 		uint32_t *se_mask)
 {
 	struct kfd_cu_info cu_info;
+<<<<<<< HEAD
 	uint32_t cu_per_sh[KFD_MAX_NUM_SE][KFD_MAX_NUM_SH_PER_SE] = {0};
 	int i, se, sh, cu;
+=======
+	uint32_t cu_per_se[KFD_MAX_NUM_SE] = {0};
+	int i, se, sh, cu = 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	amdgpu_amdkfd_get_cu_info(mm->dev->kgd, &cu_info);
 
 	if (cu_mask_count > cu_info.cu_active_number)
 		cu_mask_count = cu_info.cu_active_number;
 
+<<<<<<< HEAD
 	/* Exceeding these bounds corrupts the stack and indicates a coding error.
 	 * Returning with no CU's enabled will hang the queue, which should be
 	 * attention grabbing.
@@ -171,5 +178,30 @@ void mqd_symmetrically_map_cu_mask(struct mqd_manager *mm,
 				}
 			}
 		}
+=======
+	for (se = 0; se < cu_info.num_shader_engines; se++)
+		for (sh = 0; sh < cu_info.num_shader_arrays_per_engine; sh++)
+			cu_per_se[se] += hweight32(cu_info.cu_bitmap[se % 4][sh + (se / 4)]);
+
+	/* Symmetrically map cu_mask to all SEs:
+	 * cu_mask[0] bit0 -> se_mask[0] bit0;
+	 * cu_mask[0] bit1 -> se_mask[1] bit0;
+	 * ... (if # SE is 4)
+	 * cu_mask[0] bit4 -> se_mask[0] bit1;
+	 * ...
+	 */
+	se = 0;
+	for (i = 0; i < cu_mask_count; i++) {
+		if (cu_mask[i / 32] & (1 << (i % 32)))
+			se_mask[se] |= 1 << cu;
+
+		do {
+			se++;
+			if (se == cu_info.num_shader_engines) {
+				se = 0;
+				cu++;
+			}
+		} while (cu >= cu_per_se[se] && cu < 32);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }

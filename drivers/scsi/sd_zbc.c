@@ -154,8 +154,13 @@ static void *sd_zbc_alloc_report_buffer(struct scsi_disk *sdkp,
 
 	/*
 	 * Report zone buffer size should be at most 64B times the number of
+<<<<<<< HEAD
 	 * zones requested plus the 64B reply header, but should be aligned
 	 * to SECTOR_SIZE for ATA devices.
+=======
+	 * zones requested plus the 64B reply header, but should be at least
+	 * SECTOR_SIZE for ATA devices.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * Make sure that this size does not exceed the hardware capabilities.
 	 * Furthermore, since the report zone command cannot be split, make
 	 * sure that the allocated buffer can always be mapped by limiting the
@@ -174,7 +179,11 @@ static void *sd_zbc_alloc_report_buffer(struct scsi_disk *sdkp,
 			*buflen = bufsize;
 			return buf;
 		}
+<<<<<<< HEAD
 		bufsize = rounddown(bufsize >> 1, SECTOR_SIZE);
+=======
+		bufsize >>= 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return NULL;
@@ -243,7 +252,11 @@ out:
 
 static blk_status_t sd_zbc_cmnd_checks(struct scsi_cmnd *cmd)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	sector_t sector = blk_rq_pos(rq);
 
@@ -280,7 +293,11 @@ static void sd_zbc_update_wp_offset_workfn(struct work_struct *work)
 {
 	struct scsi_disk *sdkp;
 	unsigned long flags;
+<<<<<<< HEAD
 	sector_t zno;
+=======
+	unsigned int zno;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	sdkp = container_of(work, struct scsi_disk, zone_wp_offset_work);
@@ -321,7 +338,11 @@ static void sd_zbc_update_wp_offset_workfn(struct work_struct *work)
 blk_status_t sd_zbc_prepare_zone_append(struct scsi_cmnd *cmd, sector_t *lba,
 					unsigned int nr_blocks)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	unsigned int wp_offset, zno = blk_rq_zone_no(rq);
 	unsigned long flags;
@@ -386,7 +407,11 @@ blk_status_t sd_zbc_prepare_zone_append(struct scsi_cmnd *cmd, sector_t *lba,
 blk_status_t sd_zbc_setup_zone_mgmt_cmnd(struct scsi_cmnd *cmd,
 					 unsigned char op, bool all)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sector_t sector = blk_rq_pos(rq);
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	sector_t block = sectors_to_logical(sdkp->device, sector);
@@ -442,7 +467,11 @@ static unsigned int sd_zbc_zone_wp_update(struct scsi_cmnd *cmd,
 					  unsigned int good_bytes)
 {
 	int result = cmd->result;
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	unsigned int zno = blk_rq_zone_no(rq);
 	enum req_opf op = req_op(rq);
@@ -516,7 +545,11 @@ unsigned int sd_zbc_complete(struct scsi_cmnd *cmd, unsigned int good_bytes,
 		     struct scsi_sense_hdr *sshdr)
 {
 	int result = cmd->result;
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (op_is_zone_mgmt(req_op(rq)) &&
 	    result &&

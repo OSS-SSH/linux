@@ -740,6 +740,7 @@ static ssize_t iio_read_channel_label(struct device *dev,
 	struct iio_dev *indio_dev = dev_to_iio_dev(dev);
 	struct iio_dev_attr *this_attr = to_iio_dev_attr(attr);
 
+<<<<<<< HEAD
 	if (indio_dev->info->read_label)
 		return indio_dev->info->read_label(indio_dev, this_attr->c, buf);
 
@@ -747,6 +748,12 @@ static ssize_t iio_read_channel_label(struct device *dev,
 		return sprintf(buf, "%s\n", this_attr->c->extend_name);
 
 	return -EINVAL;
+=======
+	if (!indio_dev->info->read_label)
+		return -EINVAL;
+
+	return indio_dev->info->read_label(indio_dev, this_attr->c, buf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t iio_read_channel_info(struct device *dev,
@@ -1186,7 +1193,11 @@ static int iio_device_add_channel_label(struct iio_dev *indio_dev,
 	struct iio_dev_opaque *iio_dev_opaque = to_iio_dev_opaque(indio_dev);
 	int ret;
 
+<<<<<<< HEAD
 	if (!indio_dev->info->read_label && !chan->extend_name)
+=======
+	if (!indio_dev->info->read_label)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	ret = __iio_add_chan_devattr("label",
@@ -1861,6 +1872,7 @@ static int iio_check_unique_scan_index(struct iio_dev *indio_dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int iio_check_extended_name(const struct iio_dev *indio_dev)
 {
 	unsigned int i;
@@ -1879,6 +1891,8 @@ static int iio_check_extended_name(const struct iio_dev *indio_dev)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct iio_buffer_setup_ops noop_ring_setup_ops;
 
 int __iio_device_register(struct iio_dev *indio_dev, struct module *this_mod)
@@ -1903,10 +1917,13 @@ int __iio_device_register(struct iio_dev *indio_dev, struct module *this_mod)
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 	ret = iio_check_extended_name(indio_dev);
 	if (ret < 0)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iio_device_register_debugfs(indio_dev);
 
 	ret = iio_buffers_alloc_sysfs_and_mask(indio_dev);

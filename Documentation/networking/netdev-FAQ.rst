@@ -228,6 +228,7 @@ before posting to the mailing list. The patchwork build bot instance
 gets overloaded very easily and netdev@vger really doesn't need more
 traffic if we can help it.
 
+<<<<<<< HEAD
 netdevsim is great, can I extend it for my out-of-tree tests?
 -------------------------------------------------------------
 
@@ -245,6 +246,8 @@ it has a real, in-tree user. Mock-ups and tests based on `netdevsim` are
 strongly encouraged when adding new APIs, but `netdevsim` in itself
 is **not** considered a use case/user.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Any other tips to help ensure my net/net-next patch gets OK'd?
 --------------------------------------------------------------
 Attention to detail.  Re-read your own work as if you were the

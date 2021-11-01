@@ -524,11 +524,37 @@ static int lx_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
 	return lx_pcm_trigger_dispatch(chip, stream, cmd);
 }
 
+<<<<<<< HEAD
 static void snd_lx6464es_free(struct snd_card *card)
 {
 	struct lx6464es *chip = card->private_data;
 
 	lx_irq_disable(chip);
+=======
+static int snd_lx6464es_free(struct lx6464es *chip)
+{
+	dev_dbg(chip->card->dev, "->snd_lx6464es_free\n");
+
+	lx_irq_disable(chip);
+
+	if (chip->irq >= 0)
+		free_irq(chip->irq, chip);
+
+	iounmap(chip->port_dsp_bar);
+	ioport_unmap(chip->port_plx_remapped);
+
+	pci_release_regions(chip->pci);
+	pci_disable_device(chip->pci);
+
+	kfree(chip);
+
+	return 0;
+}
+
+static int snd_lx6464es_dev_free(struct snd_device *device)
+{
+	return snd_lx6464es_free(device->device_data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* reset the dsp during initialization */
@@ -912,6 +938,7 @@ static int lx_proc_create(struct snd_card *card, struct lx6464es *chip)
 
 
 static int snd_lx6464es_create(struct snd_card *card,
+<<<<<<< HEAD
 			       struct pci_dev *pci)
 {
 	struct lx6464es *chip = card->private_data;
@@ -921,6 +948,24 @@ static int snd_lx6464es_create(struct snd_card *card,
 
 	/* enable PCI device */
 	err = pcim_enable_device(pci);
+=======
+			       struct pci_dev *pci,
+			       struct lx6464es **rchip)
+{
+	struct lx6464es *chip;
+	int err;
+
+	static const struct snd_device_ops ops = {
+		.dev_free = snd_lx6464es_dev_free,
+	};
+
+	dev_dbg(card->dev, "->snd_lx6464es_create\n");
+
+	*rchip = NULL;
+
+	/* enable PCI device */
+	err = pci_enable_device(pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -931,9 +976,22 @@ static int snd_lx6464es_create(struct snd_card *card,
 	if (err < 0) {
 		dev_err(card->dev,
 			"architecture does not support 32bit PCI busmaster DMA\n");
+<<<<<<< HEAD
 		return -ENXIO;
 	}
 
+=======
+		pci_disable_device(pci);
+		return -ENXIO;
+	}
+
+	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+	if (chip == NULL) {
+		err = -ENOMEM;
+		goto alloc_failed;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	chip->card = card;
 	chip->pci = pci;
 	chip->irq = -1;
@@ -946,6 +1004,7 @@ static int snd_lx6464es_create(struct snd_card *card,
 	/* request resources */
 	err = pci_request_regions(pci, card_name);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	/* plx port */
@@ -970,6 +1029,35 @@ static int snd_lx6464es_create(struct snd_card *card,
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
 	card->private_free = snd_lx6464es_free;
+=======
+		goto request_regions_failed;
+
+	/* plx port */
+	chip->port_plx = pci_resource_start(pci, 1);
+	chip->port_plx_remapped = ioport_map(chip->port_plx,
+					     pci_resource_len(pci, 1));
+
+	/* dsp port */
+	chip->port_dsp_bar = pci_ioremap_bar(pci, 2);
+	if (!chip->port_dsp_bar) {
+		dev_err(card->dev, "cannot remap PCI memory region\n");
+		err = -ENOMEM;
+		goto remap_pci_failed;
+	}
+
+	err = request_threaded_irq(pci->irq, lx_interrupt, lx_threaded_irq,
+				   IRQF_SHARED, KBUILD_MODNAME, chip);
+	if (err) {
+		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+		goto request_irq_failed;
+	}
+	chip->irq = pci->irq;
+	card->sync_irq = chip->irq;
+
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+	if (err < 0)
+		goto device_new_failed;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = lx_init_dsp(chip);
 	if (err < 0) {
@@ -990,7 +1078,29 @@ static int snd_lx6464es_create(struct snd_card *card,
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	return 0;
+=======
+	*rchip = chip;
+	return 0;
+
+device_new_failed:
+	free_irq(pci->irq, chip);
+
+request_irq_failed:
+	iounmap(chip->port_dsp_bar);
+
+remap_pci_failed:
+	pci_release_regions(pci);
+
+request_regions_failed:
+	kfree(chip);
+
+alloc_failed:
+	pci_disable_device(pci);
+
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int snd_lx6464es_probe(struct pci_dev *pci,
@@ -1010,6 +1120,7 @@ static int snd_lx6464es_probe(struct pci_dev *pci,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
@@ -1020,6 +1131,17 @@ static int snd_lx6464es_probe(struct pci_dev *pci,
 	if (err < 0) {
 		dev_err(card->dev, "error during snd_lx6464es_create\n");
 		return err;
+=======
+	err = snd_card_new(&pci->dev, index[dev], id[dev], THIS_MODULE,
+			   0, &card);
+	if (err < 0)
+		return err;
+
+	err = snd_lx6464es_create(card, pci, &chip);
+	if (err < 0) {
+		dev_err(card->dev, "error during snd_lx6464es_create\n");
+		goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	strcpy(card->driver, "LX6464ES");
@@ -1036,18 +1158,42 @@ static int snd_lx6464es_probe(struct pci_dev *pci,
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
+=======
+		goto out_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev_dbg(chip->card->dev, "initialization successful\n");
 	pci_set_drvdata(pci, card);
 	dev++;
 	return 0;
+<<<<<<< HEAD
 }
 
+=======
+
+out_free:
+	snd_card_free(card);
+	return err;
+
+}
+
+static void snd_lx6464es_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+}
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct pci_driver lx6464es_driver = {
 	.name =     KBUILD_MODNAME,
 	.id_table = snd_lx6464es_ids,
 	.probe =    snd_lx6464es_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_lx6464es_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 module_pci_driver(lx6464es_driver);

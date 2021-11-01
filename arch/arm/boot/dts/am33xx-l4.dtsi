@@ -853,6 +853,7 @@
 			#size-cells = <1>;
 			ranges = <0x0 0x300000 0x80000>;
 			status = "disabled";
+<<<<<<< HEAD
 
 			pruss: pruss@0 {
 				compatible = "ti,am3356-pruss";
@@ -935,6 +936,8 @@
 					status = "disabled";
 				};
 			};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 	};
 };

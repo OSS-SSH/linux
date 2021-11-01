@@ -10,6 +10,11 @@
 #include <linux/io.h>
 #include <linux/types.h>
 
+<<<<<<< HEAD
+=======
+#include <asm/mips-boards/launch.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern unsigned long __cps_access_bad_size(void)
 	__compiletime_error("Bad size for CPS accessor");
 
@@ -165,11 +170,37 @@ static inline uint64_t mips_cps_cluster_config(unsigned int cluster)
  */
 static inline unsigned int mips_cps_numcores(unsigned int cluster)
 {
+<<<<<<< HEAD
+=======
+	unsigned int ncores;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!mips_cm_present())
 		return 0;
 
 	/* Add one before masking to handle 0xff indicating no cores */
+<<<<<<< HEAD
 	return (mips_cps_cluster_config(cluster) + 1) & CM_GCR_CONFIG_PCORES;
+=======
+	ncores = (mips_cps_cluster_config(cluster) + 1) & CM_GCR_CONFIG_PCORES;
+
+	if (IS_ENABLED(CONFIG_SOC_MT7621)) {
+		struct cpulaunch *launch;
+
+		/*
+		 * Ralink MT7621S SoC is single core, but the GCR_CONFIG method
+		 * always reports 2 cores. Check the second core's LAUNCH_FREADY
+		 * flag to detect if the second core is missing. This method
+		 * only works before the core has been started.
+		 */
+		launch = (struct cpulaunch *)CKSEG0ADDR(CPULAUNCH);
+		launch += 2; /* MT7621 has 2 VPEs per core */
+		if (!(launch->flags & LAUNCH_FREADY))
+			ncores = 1;
+	}
+
+	return ncores;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

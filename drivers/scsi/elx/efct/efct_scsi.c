@@ -32,7 +32,11 @@ efct_scsi_io_alloc(struct efct_node *node)
 	struct efct *efct;
 	struct efct_xport *xport;
 	struct efct_io *io;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+	unsigned long flags = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	efct = node->efct;
 
@@ -44,6 +48,10 @@ efct_scsi_io_alloc(struct efct_node *node)
 	if (!io) {
 		efc_log_err(efct, "IO alloc Failed\n");
 		atomic_add_return(1, &xport->io_alloc_failed_count);
+<<<<<<< HEAD
+=======
+		spin_unlock_irqrestore(&node->active_ios_lock, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return NULL;
 	}
 

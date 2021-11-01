@@ -87,11 +87,14 @@ typedef void *		xfs_failaddr_t;
 #define	XFS_ATTR_FORK	1
 #define	XFS_COW_FORK	2
 
+<<<<<<< HEAD
 #define XFS_WHICHFORK_STRINGS \
 	{ XFS_DATA_FORK, 	"data" }, \
 	{ XFS_ATTR_FORK,	"attr" }, \
 	{ XFS_COW_FORK,		"cow" }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Min numbers of data/attr fork btree root pointers.
  */

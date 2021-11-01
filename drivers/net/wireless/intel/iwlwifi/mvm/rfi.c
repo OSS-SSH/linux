@@ -11,7 +11,11 @@
  * DDR needs frequency in units of 16.666MHz, so provide FW with the
  * frequency values in the adjusted format.
  */
+<<<<<<< HEAD
 static const struct iwl_rfi_lut_entry iwl_rfi_table[IWL_RFI_LUT_SIZE] = {
+=======
+const static struct iwl_rfi_lut_entry iwl_rfi_table[IWL_RFI_LUT_SIZE] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* LPDDR4 */
 
 	/* frequency 3733MHz */

@@ -401,7 +401,11 @@ static int watchdog_set_pretimeout(struct watchdog_device *wdd,
 	if (watchdog_pretimeout_invalid(wdd, timeout))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (wdd->ops->set_pretimeout && (wdd->info->options & WDIOF_PRETIMEOUT))
+=======
+	if (wdd->ops->set_pretimeout)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = wdd->ops->set_pretimeout(wdd, timeout);
 	else
 		wdd->pretimeout = timeout;
@@ -1096,8 +1100,11 @@ static void watchdog_cdev_unregister(struct watchdog_device *wdd)
 		watchdog_stop(wdd);
 	}
 
+<<<<<<< HEAD
 	watchdog_hrtimer_pretimeout_stop(wdd);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_lock(&wd_data->lock);
 	wd_data->wdd = NULL;
 	wdd->wd_data = NULL;
@@ -1105,6 +1112,10 @@ static void watchdog_cdev_unregister(struct watchdog_device *wdd)
 
 	hrtimer_cancel(&wd_data->timer);
 	kthread_cancel_work_sync(&wd_data->work);
+<<<<<<< HEAD
+=======
+	watchdog_hrtimer_pretimeout_stop(wdd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	put_device(&wd_data->dev);
 }
@@ -1173,10 +1184,14 @@ int watchdog_set_last_hw_keepalive(struct watchdog_device *wdd,
 
 	wd_data->last_hw_keepalive = ktime_sub(now, ms_to_ktime(last_ping_ms));
 
+<<<<<<< HEAD
 	if (watchdog_hw_running(wdd) && handle_boot_enabled)
 		return __watchdog_ping(wdd);
 
 	return 0;
+=======
+	return __watchdog_ping(wdd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(watchdog_set_last_hw_keepalive);
 
@@ -1231,6 +1246,7 @@ void __exit watchdog_dev_exit(void)
 	kthread_destroy_worker(watchdog_kworker);
 }
 
+<<<<<<< HEAD
 int watchdog_dev_suspend(struct watchdog_device *wdd)
 {
 	struct watchdog_core_data *wd_data = wdd->wd_data;
@@ -1278,6 +1294,8 @@ int watchdog_dev_resume(struct watchdog_device *wdd)
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 module_param(handle_boot_enabled, bool, 0444);
 MODULE_PARM_DESC(handle_boot_enabled,
 	"Watchdog core auto-updates boot enabled watchdogs before userspace takes over (default="

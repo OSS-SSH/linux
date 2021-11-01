@@ -887,6 +887,7 @@ config ROCKCHIP_SARADC
 	  To compile this driver as a module, choose M here: the
 	  module will be called rockchip_saradc.
 
+<<<<<<< HEAD
 config RZG2L_ADC
 	tristate "Renesas RZ/G2L ADC driver"
 	depends on ARCH_R9A07G044 || COMPILE_TEST
@@ -897,6 +898,8 @@ config RZG2L_ADC
 	  To compile this driver as a module, choose M here: the
 	  module will be called rzg2l_adc.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config SC27XX_ADC
 	tristate "Spreadtrum SC27xx series PMICs ADC"
 	depends on MFD_SC27XX_PMIC || COMPILE_TEST

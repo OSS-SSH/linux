@@ -5,6 +5,11 @@
  *  Copyright (C) 1996-2000 Russell King - Converted to ARM.
  *  Original Copyright (C) 1995  Linus Torvalds
  */
+<<<<<<< HEAD
+=======
+#include <stdarg.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/export.h>
 #include <linux/sched.h>
 #include <linux/sched/debug.h>
@@ -106,7 +111,11 @@ void __show_regs(struct pt_regs *regs)
 	unsigned long flags;
 	char buf[64];
 #ifndef CONFIG_CPU_V7M
+<<<<<<< HEAD
 	unsigned int domain;
+=======
+	unsigned int domain, fs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_CPU_SW_DOMAIN_PAN
 	/*
 	 * Get the domain register for the parent context. In user
@@ -115,11 +124,22 @@ void __show_regs(struct pt_regs *regs)
 	 */
 	if (user_mode(regs)) {
 		domain = DACR_UACCESS_ENABLE;
+<<<<<<< HEAD
 	} else {
 		domain = to_svc_pt_regs(regs)->dacr;
 	}
 #else
 	domain = get_domain();
+=======
+		fs = get_fs();
+	} else {
+		domain = to_svc_pt_regs(regs)->dacr;
+		fs = to_svc_pt_regs(regs)->addr_limit;
+	}
+#else
+	domain = get_domain();
+	fs = get_fs();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 #endif
 
@@ -155,6 +175,11 @@ void __show_regs(struct pt_regs *regs)
 		if ((domain & domain_mask(DOMAIN_USER)) ==
 		    domain_val(DOMAIN_USER, DOMAIN_NOACCESS))
 			segment = "none";
+<<<<<<< HEAD
+=======
+		else if (fs == KERNEL_DS)
+			segment = "kernel";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			segment = "user";
 

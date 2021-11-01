@@ -166,8 +166,11 @@ static struct afs_cell *afs_alloc_cell(struct afs_net *net,
 	seqlock_init(&cell->volume_lock);
 	cell->fs_servers = RB_ROOT;
 	seqlock_init(&cell->fs_lock);
+<<<<<<< HEAD
 	INIT_LIST_HEAD(&cell->fs_open_mmaps);
 	init_rwsem(&cell->fs_open_mmaps_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rwlock_init(&cell->vl_servers_lock);
 	cell->flags = (1 << AFS_CELL_FL_CHECK_ALIAS);
 

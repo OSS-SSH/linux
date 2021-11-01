@@ -107,7 +107,11 @@ qca_tty_receive(struct serdev_device *serdev, const unsigned char *data,
 			skb_put(qca->rx_skb, retcode);
 			qca->rx_skb->protocol = eth_type_trans(
 						qca->rx_skb, qca->rx_skb->dev);
+<<<<<<< HEAD
 			skb_checksum_none_assert(qca->rx_skb);
+=======
+			qca->rx_skb->ip_summed = CHECKSUM_UNNECESSARY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			netif_rx_ni(qca->rx_skb);
 			qca->rx_skb = netdev_alloc_skb_ip_align(netdev,
 								netdev->mtu +

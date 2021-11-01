@@ -32,7 +32,11 @@ struct devlink_dev_stats {
 struct devlink_ops;
 
 struct devlink {
+<<<<<<< HEAD
 	u32 index;
+=======
+	struct list_head list;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head port_list;
 	struct list_head rate_list;
 	struct list_head sb_list;
@@ -55,9 +59,14 @@ struct devlink {
 			    * port, sb, dpipe, resource, params, region, traps and more.
 			    */
 	u8 reload_failed:1,
+<<<<<<< HEAD
 	   reload_enabled:1;
 	refcount_t refcount;
 	struct completion comp;
+=======
+	   reload_enabled:1,
+	   registered:1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	char priv[0] __aligned(NETDEV_ALIGN);
 };
 
@@ -159,6 +168,10 @@ struct devlink_port {
 	struct list_head region_list;
 	struct devlink *devlink;
 	unsigned int index;
+<<<<<<< HEAD
+=======
+	bool registered;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spinlock_t type_lock; /* Protects type and type_dev
 			       * pointer consistency.
 			       */
@@ -521,9 +534,12 @@ enum devlink_param_generic_id {
 	DEVLINK_PARAM_GENERIC_ID_RESET_DEV_ON_DRV_PROBE,
 	DEVLINK_PARAM_GENERIC_ID_ENABLE_ROCE,
 	DEVLINK_PARAM_GENERIC_ID_ENABLE_REMOTE_DEV_RESET,
+<<<<<<< HEAD
 	DEVLINK_PARAM_GENERIC_ID_ENABLE_ETH,
 	DEVLINK_PARAM_GENERIC_ID_ENABLE_RDMA,
 	DEVLINK_PARAM_GENERIC_ID_ENABLE_VNET,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* add new param generic ids above here*/
 	__DEVLINK_PARAM_GENERIC_ID_MAX,
@@ -564,6 +580,7 @@ enum devlink_param_generic_id {
 #define DEVLINK_PARAM_GENERIC_ENABLE_REMOTE_DEV_RESET_NAME "enable_remote_dev_reset"
 #define DEVLINK_PARAM_GENERIC_ENABLE_REMOTE_DEV_RESET_TYPE DEVLINK_PARAM_TYPE_BOOL
 
+<<<<<<< HEAD
 #define DEVLINK_PARAM_GENERIC_ENABLE_ETH_NAME "enable_eth"
 #define DEVLINK_PARAM_GENERIC_ENABLE_ETH_TYPE DEVLINK_PARAM_TYPE_BOOL
 
@@ -573,6 +590,8 @@ enum devlink_param_generic_id {
 #define DEVLINK_PARAM_GENERIC_ENABLE_VNET_NAME "enable_vnet"
 #define DEVLINK_PARAM_GENERIC_ENABLE_VNET_TYPE DEVLINK_PARAM_TYPE_BOOL
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define DEVLINK_PARAM_GENERIC(_id, _cmodes, _get, _set, _validate)	\
 {									\
 	.id = DEVLINK_PARAM_GENERIC_ID_##_id,				\
@@ -1410,8 +1429,13 @@ struct devlink_ops {
 	 *
 	 * Note: @extack can be NULL when port notifier queries the port function.
 	 */
+<<<<<<< HEAD
 	int (*port_function_hw_addr_get)(struct devlink_port *port, u8 *hw_addr,
 					 int *hw_addr_len,
+=======
+	int (*port_function_hw_addr_get)(struct devlink *devlink, struct devlink_port *port,
+					 u8 *hw_addr, int *hw_addr_len,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					 struct netlink_ext_ack *extack);
 	/**
 	 * @port_function_hw_addr_set: Port function's hardware address set function.
@@ -1420,7 +1444,11 @@ struct devlink_ops {
 	 * by the devlink port. Driver should return -EOPNOTSUPP if it doesn't support port
 	 * function handling for a particular port.
 	 */
+<<<<<<< HEAD
 	int (*port_function_hw_addr_set)(struct devlink_port *port,
+=======
+	int (*port_function_hw_addr_set)(struct devlink *devlink, struct devlink_port *port,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					 const u8 *hw_addr, int hw_addr_len,
 					 struct netlink_ext_ack *extack);
 	/**
@@ -1476,7 +1504,12 @@ struct devlink_ops {
 	 *
 	 * Return: 0 on success, negative value otherwise.
 	 */
+<<<<<<< HEAD
 	int (*port_fn_state_get)(struct devlink_port *port,
+=======
+	int (*port_fn_state_get)(struct devlink *devlink,
+				 struct devlink_port *port,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 enum devlink_port_fn_state *state,
 				 enum devlink_port_fn_opstate *opstate,
 				 struct netlink_ext_ack *extack);
@@ -1491,7 +1524,12 @@ struct devlink_ops {
 	 *
 	 * Return: 0 on success, negative value otherwise.
 	 */
+<<<<<<< HEAD
 	int (*port_fn_state_set)(struct devlink_port *port,
+=======
+	int (*port_fn_state_set)(struct devlink *devlink,
+				 struct devlink_port *port,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 enum devlink_port_fn_state state,
 				 struct netlink_ext_ack *extack);
 
@@ -1552,6 +1590,7 @@ static inline struct devlink *netdev_to_devlink(struct net_device *dev)
 struct ib_device;
 
 struct net *devlink_net(const struct devlink *devlink);
+<<<<<<< HEAD
 /* This call is intended for software devices that can create
  * devlink instances in other namespaces than init_net.
  *
@@ -1567,6 +1606,11 @@ static inline struct devlink *devlink_alloc(const struct devlink_ops *ops,
 	return devlink_alloc_ns(ops, priv_size, &init_net, dev);
 }
 int devlink_register(struct devlink *devlink);
+=======
+void devlink_net_set(struct devlink *devlink, struct net *net);
+struct devlink *devlink_alloc(const struct devlink_ops *ops, size_t priv_size);
+int devlink_register(struct devlink *devlink, struct device *dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void devlink_unregister(struct devlink *devlink);
 void devlink_reload_enable(struct devlink *devlink);
 void devlink_reload_disable(struct devlink *devlink);
@@ -1647,6 +1691,7 @@ int devlink_params_register(struct devlink *devlink,
 void devlink_params_unregister(struct devlink *devlink,
 			       const struct devlink_param *params,
 			       size_t params_count);
+<<<<<<< HEAD
 int devlink_param_register(struct devlink *devlink,
 			   const struct devlink_param *param);
 void devlink_param_unregister(struct devlink *devlink,
@@ -1657,6 +1702,10 @@ void devlink_param_publish(struct devlink *devlink,
 			   const struct devlink_param *param);
 void devlink_param_unpublish(struct devlink *devlink,
 			     const struct devlink_param *param);
+=======
+void devlink_params_publish(struct devlink *devlink);
+void devlink_params_unpublish(struct devlink *devlink);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int devlink_port_params_register(struct devlink_port *devlink_port,
 				 const struct devlink_param *params,
 				 size_t params_count);

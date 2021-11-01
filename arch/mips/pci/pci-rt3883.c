@@ -140,9 +140,16 @@ static void rt3883_pci_irq_handler(struct irq_desc *desc)
 	}
 
 	while (pending) {
+<<<<<<< HEAD
 		unsigned bit = __ffs(pending);
 
 		generic_handle_domain_irq(rpc->irq_domain, bit);
+=======
+		unsigned irq, bit = __ffs(pending);
+
+		irq = irq_find_mapping(rpc->irq_domain, bit);
+		generic_handle_irq(irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pending &= ~BIT(bit);
 	}

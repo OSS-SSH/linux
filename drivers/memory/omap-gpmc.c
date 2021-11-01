@@ -9,7 +9,10 @@
  * Copyright (C) 2009 Texas Instruments
  * Added OMAP4 support - Santosh Shilimkar <santosh.shilimkar@ti.com>
  */
+<<<<<<< HEAD
 #include <linux/cpu_pm.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/irq.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
@@ -233,10 +236,14 @@ struct gpmc_device {
 	int irq;
 	struct irq_chip irq_chip;
 	struct gpio_chip gpio_chip;
+<<<<<<< HEAD
 	struct notifier_block nb;
 	struct omap3_gpmc_regs context;
 	int nirqs;
 	unsigned int is_suspended:1;
+=======
+	int nirqs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct irq_domain *gpmc_irq_domain;
@@ -2388,6 +2395,7 @@ static int gpmc_gpio_init(struct gpmc_device *gpmc)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void omap3_gpmc_save_context(struct gpmc_device *gpmc)
 {
 	struct omap3_gpmc_regs *gpmc_context;
@@ -2488,6 +2496,8 @@ static int omap_gpmc_context_notifier(struct notifier_block *nb,
 	return NOTIFY_OK;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int gpmc_probe(struct platform_device *pdev)
 {
 	int rc;
@@ -2576,9 +2586,12 @@ static int gpmc_probe(struct platform_device *pdev)
 
 	gpmc_probe_dt_children(pdev);
 
+<<<<<<< HEAD
 	gpmc->nb.notifier_call = omap_gpmc_context_notifier;
 	cpu_pm_register_notifier(&gpmc->nb);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 gpio_init_failed:
@@ -2593,7 +2606,10 @@ static int gpmc_remove(struct platform_device *pdev)
 {
 	struct gpmc_device *gpmc = platform_get_drvdata(pdev);
 
+<<<<<<< HEAD
 	cpu_pm_unregister_notifier(&gpmc->nb);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	gpmc_free_irq(gpmc);
 	gpmc_mem_exit();
 	pm_runtime_put_sync(&pdev->dev);
@@ -2605,23 +2621,33 @@ static int gpmc_remove(struct platform_device *pdev)
 #ifdef CONFIG_PM_SLEEP
 static int gpmc_suspend(struct device *dev)
 {
+<<<<<<< HEAD
 	struct gpmc_device *gpmc = dev_get_drvdata(dev);
 
 	omap3_gpmc_save_context(gpmc);
 	pm_runtime_put_sync(dev);
 	gpmc->is_suspended = 1;
 
+=======
+	omap3_gpmc_save_context();
+	pm_runtime_put_sync(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
 static int gpmc_resume(struct device *dev)
 {
+<<<<<<< HEAD
 	struct gpmc_device *gpmc = dev_get_drvdata(dev);
 
 	pm_runtime_get_sync(dev);
 	omap3_gpmc_restore_context(gpmc);
 	gpmc->is_suspended = 0;
 
+=======
+	pm_runtime_get_sync(dev);
+	omap3_gpmc_restore_context();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 #endif
@@ -2643,3 +2669,77 @@ static __init int gpmc_init(void)
 	return platform_driver_register(&gpmc_driver);
 }
 postcore_initcall(gpmc_init);
+<<<<<<< HEAD
+=======
+
+static struct omap3_gpmc_regs gpmc_context;
+
+void omap3_gpmc_save_context(void)
+{
+	int i;
+
+	if (!gpmc_base)
+		return;
+
+	gpmc_context.sysconfig = gpmc_read_reg(GPMC_SYSCONFIG);
+	gpmc_context.irqenable = gpmc_read_reg(GPMC_IRQENABLE);
+	gpmc_context.timeout_ctrl = gpmc_read_reg(GPMC_TIMEOUT_CONTROL);
+	gpmc_context.config = gpmc_read_reg(GPMC_CONFIG);
+	gpmc_context.prefetch_config1 = gpmc_read_reg(GPMC_PREFETCH_CONFIG1);
+	gpmc_context.prefetch_config2 = gpmc_read_reg(GPMC_PREFETCH_CONFIG2);
+	gpmc_context.prefetch_control = gpmc_read_reg(GPMC_PREFETCH_CONTROL);
+	for (i = 0; i < gpmc_cs_num; i++) {
+		gpmc_context.cs_context[i].is_valid = gpmc_cs_mem_enabled(i);
+		if (gpmc_context.cs_context[i].is_valid) {
+			gpmc_context.cs_context[i].config1 =
+				gpmc_cs_read_reg(i, GPMC_CS_CONFIG1);
+			gpmc_context.cs_context[i].config2 =
+				gpmc_cs_read_reg(i, GPMC_CS_CONFIG2);
+			gpmc_context.cs_context[i].config3 =
+				gpmc_cs_read_reg(i, GPMC_CS_CONFIG3);
+			gpmc_context.cs_context[i].config4 =
+				gpmc_cs_read_reg(i, GPMC_CS_CONFIG4);
+			gpmc_context.cs_context[i].config5 =
+				gpmc_cs_read_reg(i, GPMC_CS_CONFIG5);
+			gpmc_context.cs_context[i].config6 =
+				gpmc_cs_read_reg(i, GPMC_CS_CONFIG6);
+			gpmc_context.cs_context[i].config7 =
+				gpmc_cs_read_reg(i, GPMC_CS_CONFIG7);
+		}
+	}
+}
+
+void omap3_gpmc_restore_context(void)
+{
+	int i;
+
+	if (!gpmc_base)
+		return;
+
+	gpmc_write_reg(GPMC_SYSCONFIG, gpmc_context.sysconfig);
+	gpmc_write_reg(GPMC_IRQENABLE, gpmc_context.irqenable);
+	gpmc_write_reg(GPMC_TIMEOUT_CONTROL, gpmc_context.timeout_ctrl);
+	gpmc_write_reg(GPMC_CONFIG, gpmc_context.config);
+	gpmc_write_reg(GPMC_PREFETCH_CONFIG1, gpmc_context.prefetch_config1);
+	gpmc_write_reg(GPMC_PREFETCH_CONFIG2, gpmc_context.prefetch_config2);
+	gpmc_write_reg(GPMC_PREFETCH_CONTROL, gpmc_context.prefetch_control);
+	for (i = 0; i < gpmc_cs_num; i++) {
+		if (gpmc_context.cs_context[i].is_valid) {
+			gpmc_cs_write_reg(i, GPMC_CS_CONFIG1,
+				gpmc_context.cs_context[i].config1);
+			gpmc_cs_write_reg(i, GPMC_CS_CONFIG2,
+				gpmc_context.cs_context[i].config2);
+			gpmc_cs_write_reg(i, GPMC_CS_CONFIG3,
+				gpmc_context.cs_context[i].config3);
+			gpmc_cs_write_reg(i, GPMC_CS_CONFIG4,
+				gpmc_context.cs_context[i].config4);
+			gpmc_cs_write_reg(i, GPMC_CS_CONFIG5,
+				gpmc_context.cs_context[i].config5);
+			gpmc_cs_write_reg(i, GPMC_CS_CONFIG6,
+				gpmc_context.cs_context[i].config6);
+			gpmc_cs_write_reg(i, GPMC_CS_CONFIG7,
+				gpmc_context.cs_context[i].config7);
+		}
+	}
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

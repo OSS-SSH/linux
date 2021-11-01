@@ -20,7 +20,10 @@ properties:
           - mediatek,mt8183-mali
           - realtek,rtd1619-mali
           - rockchip,px30-mali
+<<<<<<< HEAD
           - rockchip,rk3568-mali
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - const: arm,mali-bifrost # Mali Bifrost GPU model/revision is fully discoverable
 
   reg:
@@ -137,7 +140,11 @@ examples:
       resets = <&reset 0>, <&reset 1>;
     };
 
+<<<<<<< HEAD
     gpu_opp_table: opp-table {
+=======
+    gpu_opp_table: opp_table0 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       compatible = "operating-points-v2";
 
       opp-533000000 {

@@ -18,8 +18,11 @@ int kallsyms_find(const char *sym, unsigned long long *addr);
 
 void read_trace_pipe(void);
 
+<<<<<<< HEAD
 ssize_t get_uprobe_offset(const void *addr, ssize_t base);
 ssize_t get_base_addr(void);
 ssize_t get_rel_offset(uintptr_t addr);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

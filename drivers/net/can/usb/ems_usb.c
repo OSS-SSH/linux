@@ -255,8 +255,11 @@ struct ems_usb {
 	unsigned int free_slots; /* remember number of available slots */
 
 	struct ems_cpc_msg active_params; /* active controller parameters */
+<<<<<<< HEAD
 	void *rxbuf[MAX_RX_URBS];
 	dma_addr_t rxbuf_dma[MAX_RX_URBS];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static void ems_usb_read_interrupt_callback(struct urb *urb)
@@ -589,7 +592,10 @@ static int ems_usb_start(struct ems_usb *dev)
 	for (i = 0; i < MAX_RX_URBS; i++) {
 		struct urb *urb = NULL;
 		u8 *buf = NULL;
+<<<<<<< HEAD
 		dma_addr_t buf_dma;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* create a URB, and a buffer for it */
 		urb = usb_alloc_urb(0, GFP_KERNEL);
@@ -599,7 +605,11 @@ static int ems_usb_start(struct ems_usb *dev)
 		}
 
 		buf = usb_alloc_coherent(dev->udev, RX_BUFFER_SIZE, GFP_KERNEL,
+<<<<<<< HEAD
 					 &buf_dma);
+=======
+					 &urb->transfer_dma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!buf) {
 			netdev_err(netdev, "No memory left for USB buffer\n");
 			usb_free_urb(urb);
@@ -607,8 +617,11 @@ static int ems_usb_start(struct ems_usb *dev)
 			break;
 		}
 
+<<<<<<< HEAD
 		urb->transfer_dma = buf_dma;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usb_fill_bulk_urb(urb, dev->udev, usb_rcvbulkpipe(dev->udev, 2),
 				  buf, RX_BUFFER_SIZE,
 				  ems_usb_read_bulk_callback, dev);
@@ -624,9 +637,12 @@ static int ems_usb_start(struct ems_usb *dev)
 			break;
 		}
 
+<<<<<<< HEAD
 		dev->rxbuf[i] = buf;
 		dev->rxbuf_dma[i] = buf_dma;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Drop reference, USB core will take care of freeing it */
 		usb_free_urb(urb);
 	}
@@ -692,10 +708,13 @@ static void unlink_all_urbs(struct ems_usb *dev)
 
 	usb_kill_anchored_urbs(&dev->rx_submitted);
 
+<<<<<<< HEAD
 	for (i = 0; i < MAX_RX_URBS; ++i)
 		usb_free_coherent(dev->udev, RX_BUFFER_SIZE,
 				  dev->rxbuf[i], dev->rxbuf_dma[i]);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	usb_kill_anchored_urbs(&dev->tx_submitted);
 	atomic_set(&dev->active_tx_urbs, 0);
 

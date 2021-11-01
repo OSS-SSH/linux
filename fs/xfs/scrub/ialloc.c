@@ -418,7 +418,11 @@ xchk_iallocbt_rec_alignment(
 STATIC int
 xchk_iallocbt_rec(
 	struct xchk_btree		*bs,
+<<<<<<< HEAD
 	const union xfs_btree_rec	*rec)
+=======
+	union xfs_btree_rec		*rec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct xfs_mount		*mp = bs->cur->bc_mp;
 	struct xchk_iallocbt		*iabt = bs->private;
@@ -517,7 +521,11 @@ xchk_iallocbt_xref_rmap_btreeblks(
 	int			error;
 
 	if (!sc->sa.ino_cur || !sc->sa.rmap_cur ||
+<<<<<<< HEAD
 	    (xfs_has_finobt(sc->mp) && !sc->sa.fino_cur) ||
+=======
+	    (xfs_sb_version_hasfinobt(&sc->mp->m_sb) && !sc->sa.fino_cur) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    xchk_skip_xref(sc->sm))
 		return;
 

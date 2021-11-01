@@ -16,4 +16,7 @@ are configurable at compile, boot or run time.
    multihit.rst
    special-register-buffer-data-sampling.rst
    core-scheduling.rst
+<<<<<<< HEAD
    l1d_flush.rst
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

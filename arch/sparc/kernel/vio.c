@@ -93,7 +93,11 @@ static int vio_device_probe(struct device *dev)
 	return drv->probe(vdev, id);
 }
 
+<<<<<<< HEAD
 static void vio_device_remove(struct device *dev)
+=======
+static int vio_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vio_dev *vdev = to_vio_dev(dev);
 	struct vio_driver *drv = to_vio_driver(dev->driver);
@@ -107,6 +111,11 @@ static void vio_device_remove(struct device *dev)
 
 		drv->remove(vdev);
 	}
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t devspec_show(struct device *dev,

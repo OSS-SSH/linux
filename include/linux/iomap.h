@@ -91,12 +91,18 @@ struct iomap {
 	const struct iomap_page_ops *page_ops;
 };
 
+<<<<<<< HEAD
 static inline sector_t iomap_sector(const struct iomap *iomap, loff_t pos)
+=======
+static inline sector_t
+iomap_sector(struct iomap *iomap, loff_t pos)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return (iomap->addr + pos - iomap->offset) >> SECTOR_SHIFT;
 }
 
 /*
+<<<<<<< HEAD
  * Returns the inline data pointer for logical offset @pos.
  */
 static inline void *iomap_inline_data(const struct iomap *iomap, loff_t pos)
@@ -115,6 +121,8 @@ static inline bool iomap_inline_data_valid(const struct iomap *iomap)
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * When a filesystem sets page_ops in an iomap mapping it returns, page_prepare
  * and page_done will be called for each page written to.  This only applies to
  * buffered writes as unbuffered writes will not typically have pages
@@ -125,9 +133,16 @@ static inline bool iomap_inline_data_valid(const struct iomap *iomap)
  * associated page could not be obtained.
  */
 struct iomap_page_ops {
+<<<<<<< HEAD
 	int (*page_prepare)(struct inode *inode, loff_t pos, unsigned len);
 	void (*page_done)(struct inode *inode, loff_t pos, unsigned copied,
 			struct page *page);
+=======
+	int (*page_prepare)(struct inode *inode, loff_t pos, unsigned len,
+			struct iomap *iomap);
+	void (*page_done)(struct inode *inode, loff_t pos, unsigned copied,
+			struct page *page, struct iomap *iomap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -140,7 +155,10 @@ struct iomap_page_ops {
 #define IOMAP_DIRECT		(1 << 4) /* direct I/O */
 #define IOMAP_NOWAIT		(1 << 5) /* do not block */
 #define IOMAP_OVERWRITE_ONLY	(1 << 6) /* only pure overwrites allowed */
+<<<<<<< HEAD
 #define IOMAP_UNSHARE		(1 << 7) /* unshare_file_range */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct iomap_ops {
 	/*
@@ -162,6 +180,7 @@ struct iomap_ops {
 			ssize_t written, unsigned flags, struct iomap *iomap);
 };
 
+<<<<<<< HEAD
 /**
  * struct iomap_iter - Iterate through a range of a file
  * @inode: Set at the start of the iteration and should not change.
@@ -217,6 +236,17 @@ static inline const struct iomap *iomap_iter_srcmap(const struct iomap_iter *i)
 		return &i->srcmap;
 	return &i->iomap;
 }
+=======
+/*
+ * Main iomap iterator function.
+ */
+typedef loff_t (*iomap_actor_t)(struct inode *inode, loff_t pos, loff_t len,
+		void *data, struct iomap *iomap, struct iomap *srcmap);
+
+loff_t iomap_apply(struct inode *inode, loff_t pos, loff_t length,
+		unsigned flags, const struct iomap_ops *ops, void *data,
+		iomap_actor_t actor);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ssize_t iomap_file_buffered_write(struct kiocb *iocb, struct iov_iter *from,
 		const struct iomap_ops *ops);
@@ -313,8 +343,13 @@ int iomap_writepages(struct address_space *mapping,
 struct iomap_dio_ops {
 	int (*end_io)(struct kiocb *iocb, ssize_t size, int error,
 		      unsigned flags);
+<<<<<<< HEAD
 	blk_qc_t (*submit_io)(const struct iomap_iter *iter, struct bio *bio,
 			      loff_t file_offset);
+=======
+	blk_qc_t (*submit_io)(struct inode *inode, struct iomap *iomap,
+			struct bio *bio, loff_t file_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*

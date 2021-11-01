@@ -74,7 +74,11 @@ err_autopm_put:
 	return retval;
 }
 
+<<<<<<< HEAD
 static void usb_serial_device_remove(struct device *dev)
+=======
+static int usb_serial_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct usb_serial_port *port = to_usb_serial_port(dev);
 	struct usb_serial_driver *driver;
@@ -101,6 +105,11 @@ static void usb_serial_device_remove(struct device *dev)
 
 	if (!autopm_err)
 		usb_autopm_put_interface(port->serial->interface);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t new_id_store(struct device_driver *driver,

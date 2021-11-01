@@ -26,6 +26,10 @@ EXPORT_SYMBOL(_mcount);
  * Assembly functions that may be used (directly or indirectly) by modules
  */
 EXPORT_SYMBOL(__copy_tofrom_user);
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL(__strncpy_user);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_OPT_LIB_ASM
 EXPORT_SYMBOL(memcpy);

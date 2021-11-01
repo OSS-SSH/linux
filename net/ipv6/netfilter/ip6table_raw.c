@@ -11,6 +11,11 @@
 
 #define RAW_VALID_HOOKS ((1 << NF_INET_PRE_ROUTING) | (1 << NF_INET_LOCAL_OUT))
 
+<<<<<<< HEAD
+=======
+static int __net_init ip6table_raw_table_init(struct net *net);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool raw_before_defrag __read_mostly;
 MODULE_PARM_DESC(raw_before_defrag, "Enable raw table before defrag");
 module_param(raw_before_defrag, bool, 0000);
@@ -21,6 +26,10 @@ static const struct xt_table packet_raw = {
 	.me = THIS_MODULE,
 	.af = NFPROTO_IPV6,
 	.priority = NF_IP6_PRI_RAW,
+<<<<<<< HEAD
+=======
+	.table_init = ip6table_raw_table_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct xt_table packet_raw_before_defrag = {
@@ -29,6 +38,10 @@ static const struct xt_table packet_raw_before_defrag = {
 	.me = THIS_MODULE,
 	.af = NFPROTO_IPV6,
 	.priority = NF_IP6_PRI_RAW_BEFORE_DEFRAG,
+<<<<<<< HEAD
+=======
+	.table_init = ip6table_raw_table_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* The work comes in here from netfilter.c. */
@@ -41,7 +54,11 @@ ip6table_raw_hook(void *priv, struct sk_buff *skb,
 
 static struct nf_hook_ops *rawtable_ops __read_mostly;
 
+<<<<<<< HEAD
 static int ip6table_raw_table_init(struct net *net)
+=======
+static int __net_init ip6table_raw_table_init(struct net *net)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ip6t_replace *repl;
 	const struct xt_table *table = &packet_raw;
@@ -75,6 +92,7 @@ static struct pernet_operations ip6table_raw_net_ops = {
 
 static int __init ip6table_raw_init(void)
 {
+<<<<<<< HEAD
 	const struct xt_table *table = &packet_raw;
 	int ret;
 
@@ -93,21 +111,50 @@ static int __init ip6table_raw_init(void)
 		xt_unregister_template(table);
 		return PTR_ERR(rawtable_ops);
 	}
+=======
+	int ret;
+	const struct xt_table *table = &packet_raw;
+
+	if (raw_before_defrag) {
+		table = &packet_raw_before_defrag;
+
+		pr_info("Enabling raw table before defrag\n");
+	}
+
+	/* Register hooks */
+	rawtable_ops = xt_hook_ops_alloc(table, ip6table_raw_hook);
+	if (IS_ERR(rawtable_ops))
+		return PTR_ERR(rawtable_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = register_pernet_subsys(&ip6table_raw_net_ops);
 	if (ret < 0) {
 		kfree(rawtable_ops);
+<<<<<<< HEAD
 		xt_unregister_template(table);
 		return ret;
 	}
 
+=======
+		return ret;
+	}
+
+	ret = ip6table_raw_table_init(&init_net);
+	if (ret) {
+		unregister_pernet_subsys(&ip6table_raw_net_ops);
+		kfree(rawtable_ops);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
 static void __exit ip6table_raw_fini(void)
 {
 	unregister_pernet_subsys(&ip6table_raw_net_ops);
+<<<<<<< HEAD
 	xt_unregister_template(&packet_raw);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(rawtable_ops);
 }
 

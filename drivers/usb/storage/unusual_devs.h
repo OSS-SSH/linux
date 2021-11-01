@@ -416,6 +416,7 @@ UNUSUAL_DEV(  0x04cb, 0x0100, 0x0000, 0x2210,
 		USB_SC_UFI, USB_PR_DEVICE, NULL, US_FL_FIX_INQUIRY | US_FL_SINGLE_LUN),
 
 /*
+<<<<<<< HEAD
  * Reported by Ondrej Zary <linux@zary.sk>
  * The device reports one sector more and breaks when that sector is accessed
  * Firmwares older than 2.6c (the latest one and the only that claims Linux
@@ -426,6 +427,11 @@ UNUSUAL_DEV(  0x04ce, 0x0002, 0x0000, 0x026b,
 		"SL11R-IDE",
 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
 		US_FL_FIX_CAPACITY | US_FL_BULK_IGNORE_TAG),
+=======
+ * Reported by Ondrej Zary <linux@rainbow-software.org>
+ * The device reports one sector more and breaks when that sector is accessed
+ */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 UNUSUAL_DEV(  0x04ce, 0x0002, 0x026c, 0x026c,
 		"ScanLogic",
 		"SL11R-IDE",

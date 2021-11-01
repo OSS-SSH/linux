@@ -9,7 +9,10 @@
 #include <linux/netdevice.h>
 #include <linux/skbuff.h>
 #include <linux/if_rmnet.h>
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/remoteproc/qcom_rproc.h>
 
 #include "ipa.h"
@@ -20,8 +23,11 @@
 #include "ipa_modem.h"
 #include "ipa_smp2p.h"
 #include "ipa_qmi.h"
+<<<<<<< HEAD
 #include "ipa_uc.h"
 #include "ipa_power.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define IPA_NETDEV_NAME		"rmnet_ipa%d"
 #define IPA_NETDEV_TAILROOM	0	/* for padding by mux layer */
@@ -34,6 +40,7 @@ enum ipa_modem_state {
 	IPA_MODEM_STATE_STOPPING,
 };
 
+<<<<<<< HEAD
 /**
  * struct ipa_priv - IPA network device private data
  * @ipa:	IPA pointer
@@ -42,6 +49,11 @@ enum ipa_modem_state {
 struct ipa_priv {
 	struct ipa *ipa;
 	struct work_struct work;
+=======
+/** struct ipa_priv - IPA network device private data */
+struct ipa_priv {
+	struct ipa *ipa;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /** ipa_open() - Opens the modem network interface */
@@ -49,6 +61,7 @@ static int ipa_open(struct net_device *netdev)
 {
 	struct ipa_priv *priv = netdev_priv(netdev);
 	struct ipa *ipa = priv->ipa;
+<<<<<<< HEAD
 	struct device *dev;
 	int ret;
 
@@ -61,21 +74,34 @@ static int ipa_open(struct net_device *netdev)
 	if (ret)
 		goto err_power_put;
 
+=======
+	int ret;
+
+	ret = ipa_endpoint_enable_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]);
+	if (ret)
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = ipa_endpoint_enable_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]);
 	if (ret)
 		goto err_disable_tx;
 
 	netif_start_queue(netdev);
 
+<<<<<<< HEAD
 	pm_runtime_mark_last_busy(dev);
 	(void)pm_runtime_put_autosuspend(dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 err_disable_tx:
 	ipa_endpoint_disable_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]);
+<<<<<<< HEAD
 err_power_put:
 	pm_runtime_put_noidle(dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -85,6 +111,7 @@ static int ipa_stop(struct net_device *netdev)
 {
 	struct ipa_priv *priv = netdev_priv(netdev);
 	struct ipa *ipa = priv->ipa;
+<<<<<<< HEAD
 	struct device *dev;
 	int ret;
 
@@ -92,14 +119,19 @@ static int ipa_stop(struct net_device *netdev)
 	ret = pm_runtime_get_sync(dev);
 	if (ret < 0)
 		goto out_power_put;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	netif_stop_queue(netdev);
 
 	ipa_endpoint_disable_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]);
 	ipa_endpoint_disable_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]);
+<<<<<<< HEAD
 out_power_put:
 	pm_runtime_mark_last_busy(dev);
 	(void)pm_runtime_put_autosuspend(dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -112,15 +144,22 @@ out_power_put:
  * NETDEV_TX_OK: Success
  * NETDEV_TX_BUSY: Error while transmitting the skb. Try again later
  */
+<<<<<<< HEAD
 static netdev_tx_t
 ipa_start_xmit(struct sk_buff *skb, struct net_device *netdev)
+=======
+static int ipa_start_xmit(struct sk_buff *skb, struct net_device *netdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device_stats *stats = &netdev->stats;
 	struct ipa_priv *priv = netdev_priv(netdev);
 	struct ipa_endpoint *endpoint;
 	struct ipa *ipa = priv->ipa;
 	u32 skb_len = skb->len;
+<<<<<<< HEAD
 	struct device *dev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	if (!skb_len)
@@ -130,6 +169,7 @@ ipa_start_xmit(struct sk_buff *skb, struct net_device *netdev)
 	if (endpoint->data->qmap && skb->protocol != htons(ETH_P_MAP))
 		goto err_drop_skb;
 
+<<<<<<< HEAD
 	/* The hardware must be powered for us to transmit */
 	dev = &ipa->pdev->dev;
 	ret = pm_runtime_get(dev);
@@ -159,6 +199,9 @@ ipa_start_xmit(struct sk_buff *skb, struct net_device *netdev)
 	pm_runtime_mark_last_busy(dev);
 	(void)pm_runtime_put_autosuspend(dev);
 
+=======
+	ret = ipa_endpoint_skb_tx(endpoint, skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		if (ret != -E2BIG)
 			return NETDEV_TX_BUSY;
@@ -229,13 +272,18 @@ void ipa_modem_suspend(struct net_device *netdev)
 	struct ipa_priv *priv = netdev_priv(netdev);
 	struct ipa *ipa = priv->ipa;
 
+<<<<<<< HEAD
 	if (!(netdev->flags & IFF_UP))
 		return;
+=======
+	netif_stop_queue(netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ipa_endpoint_suspend_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]);
 	ipa_endpoint_suspend_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]);
 }
 
+<<<<<<< HEAD
 /**
  * ipa_modem_wake_queue_work() - enable modem netdev queue
  * @work:	Work structure
@@ -254,6 +302,8 @@ static void ipa_modem_wake_queue_work(struct work_struct *work)
 	ipa_power_modem_queue_wake(priv->ipa);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /** ipa_modem_resume() - resume callback for runtime_pm
  * @dev: pointer to device
  *
@@ -264,6 +314,7 @@ void ipa_modem_resume(struct net_device *netdev)
 	struct ipa_priv *priv = netdev_priv(netdev);
 	struct ipa *ipa = priv->ipa;
 
+<<<<<<< HEAD
 	if (!(netdev->flags & IFF_UP))
 		return;
 
@@ -272,6 +323,12 @@ void ipa_modem_resume(struct net_device *netdev)
 
 	/* Arrange for the TX queue to be restarted */
 	(void)queue_pm_work(&priv->work);
+=======
+	ipa_endpoint_resume_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]);
+	ipa_endpoint_resume_one(ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]);
+
+	netif_wake_queue(netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int ipa_modem_start(struct ipa *ipa)
@@ -299,6 +356,7 @@ int ipa_modem_start(struct ipa *ipa)
 	SET_NETDEV_DEV(netdev, &ipa->pdev->dev);
 	priv = netdev_priv(netdev);
 	priv->ipa = ipa;
+<<<<<<< HEAD
 	INIT_WORK(&priv->work, ipa_modem_wake_queue_work);
 	ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]->netdev = netdev;
 	ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]->netdev = netdev;
@@ -309,6 +367,15 @@ int ipa_modem_start(struct ipa *ipa)
 		ipa->modem_netdev = NULL;
 		ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]->netdev = NULL;
 		ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]->netdev = NULL;
+=======
+
+	ret = register_netdev(netdev);
+	if (!ret) {
+		ipa->modem_netdev = netdev;
+		ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]->netdev = netdev;
+		ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]->netdev = netdev;
+	} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		free_netdev(netdev);
 	}
 
@@ -342,6 +409,7 @@ int ipa_modem_stop(struct ipa *ipa)
 	/* Prevent the modem from triggering a call to ipa_setup() */
 	ipa_smp2p_disable(ipa);
 
+<<<<<<< HEAD
 	/* Clean up the netdev and endpoints if it was started */
 	if (netdev) {
 		struct ipa_priv *priv = netdev_priv(netdev);
@@ -354,6 +422,15 @@ int ipa_modem_stop(struct ipa *ipa)
 		ipa->modem_netdev = NULL;
 		ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]->netdev = NULL;
 		ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]->netdev = NULL;
+=======
+	/* Stop the queue and disable the endpoints if it's open */
+	if (netdev) {
+		(void)ipa_stop(netdev);
+		ipa->name_map[IPA_ENDPOINT_AP_MODEM_RX]->netdev = NULL;
+		ipa->name_map[IPA_ENDPOINT_AP_MODEM_TX]->netdev = NULL;
+		ipa->modem_netdev = NULL;
+		unregister_netdev(netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		free_netdev(netdev);
 	}
 
@@ -369,12 +446,15 @@ static void ipa_modem_crashed(struct ipa *ipa)
 	struct device *dev = &ipa->pdev->dev;
 	int ret;
 
+<<<<<<< HEAD
 	ret = pm_runtime_get_sync(dev);
 	if (ret < 0) {
 		dev_err(dev, "error %d getting power to handle crash\n", ret);
 		goto out_power_put;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ipa_endpoint_modem_pause_all(ipa, true);
 
 	ipa_endpoint_modem_hol_block_clear_all(ipa);
@@ -399,10 +479,13 @@ static void ipa_modem_crashed(struct ipa *ipa)
 	ret = ipa_mem_zero_modem(ipa);
 	if (ret)
 		dev_err(dev, "error %d zeroing modem memory regions\n", ret);
+<<<<<<< HEAD
 
 out_power_put:
 	pm_runtime_mark_last_busy(dev);
 	(void)pm_runtime_put_autosuspend(dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int ipa_modem_notify(struct notifier_block *nb, unsigned long action,
@@ -415,7 +498,10 @@ static int ipa_modem_notify(struct notifier_block *nb, unsigned long action,
 	switch (action) {
 	case QCOM_SSR_BEFORE_POWERUP:
 		dev_info(dev, "received modem starting event\n");
+<<<<<<< HEAD
 		ipa_uc_power(ipa);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ipa_smp2p_notify_reset(ipa);
 		break;
 
@@ -479,3 +565,16 @@ void ipa_modem_deconfig(struct ipa *ipa)
 	ipa->notifier = NULL;
 	memset(&ipa->nb, 0, sizeof(ipa->nb));
 }
+<<<<<<< HEAD
+=======
+
+int ipa_modem_setup(struct ipa *ipa)
+{
+	return ipa_qmi_setup(ipa);
+}
+
+void ipa_modem_teardown(struct ipa *ipa)
+{
+	ipa_qmi_teardown(ipa);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

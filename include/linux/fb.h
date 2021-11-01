@@ -2,7 +2,10 @@
 #ifndef _LINUX_FB_H
 #define _LINUX_FB_H
 
+<<<<<<< HEAD
 #include <linux/refcount.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/kgdb.h>
 #include <uapi/linux/fb.h>
 
@@ -436,7 +439,11 @@ struct fb_tile_ops {
 
 
 struct fb_info {
+<<<<<<< HEAD
 	refcount_t count;
+=======
+	atomic_t count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int node;
 	int flags;
 	/*

@@ -140,6 +140,10 @@ int kdb_stub(struct kgdb_state *ks)
 	 */
 	kdb_common_deinit_state();
 	KDB_STATE_CLEAR(PAGER);
+<<<<<<< HEAD
+=======
+	kdbnearsym_cleanup();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (error == KDB_CMD_KGDB) {
 		if (KDB_STATE(DOING_KGDB))
 			KDB_STATE_CLEAR(DOING_KGDB);

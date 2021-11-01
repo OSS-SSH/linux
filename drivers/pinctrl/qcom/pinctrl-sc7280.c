@@ -1496,7 +1496,10 @@ static const struct of_device_id sc7280_pinctrl_of_match[] = {
 static struct platform_driver sc7280_pinctrl_driver = {
 	.driver = {
 		.name = "sc7280-pinctrl",
+<<<<<<< HEAD
 		.pm = &msm_pinctrl_dev_pm_ops,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.of_match_table = sc7280_pinctrl_of_match,
 	},
 	.probe = sc7280_pinctrl_probe,

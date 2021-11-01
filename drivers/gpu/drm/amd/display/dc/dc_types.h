@@ -75,6 +75,21 @@ enum dce_environment {
 #define IS_DIAG_DC(dce_environment) \
 	(IS_FPGA_MAXIMUS_DC(dce_environment) || (dce_environment == DCE_ENV_DIAG))
 
+<<<<<<< HEAD
+=======
+struct hw_asic_id {
+	uint32_t chip_id;
+	uint32_t chip_family;
+	uint32_t pci_revision_id;
+	uint32_t hw_internal_rev;
+	uint32_t vram_type;
+	uint32_t vram_width;
+	uint32_t feature_flags;
+	uint32_t fake_paths_num;
+	void *atombios_base_address;
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct dc_perf_trace {
 	unsigned long read_count;
 	unsigned long write_count;
@@ -82,7 +97,40 @@ struct dc_perf_trace {
 	unsigned long last_entry_write;
 };
 
+<<<<<<< HEAD
 #define DC_MAX_EDID_BUFFER_SIZE 2048
+=======
+struct dc_context {
+	struct dc *dc;
+
+	void *driver_context; /* e.g. amdgpu_device */
+	struct dc_perf_trace *perf_trace;
+	void *cgs_device;
+
+	enum dce_environment dce_environment;
+	struct hw_asic_id asic_id;
+
+	/* todo: below should probably move to dc.  to facilitate removal
+	 * of AS we will store these here
+	 */
+	enum dce_version dce_version;
+	struct dc_bios *dc_bios;
+	bool created_bios;
+	struct gpio_service *gpio_service;
+	uint32_t dc_sink_id_count;
+	uint32_t dc_stream_id_count;
+	uint32_t dc_edp_id_count;
+	uint64_t fbc_gpu_addr;
+	struct dc_dmub_srv *dmub_srv;
+
+#ifdef CONFIG_DRM_AMD_DC_HDCP
+	struct cp_psp cp_psp;
+#endif
+};
+
+
+#define DC_MAX_EDID_BUFFER_SIZE 1280
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define DC_EDID_BLOCK_SIZE 128
 #define MAX_SURFACE_NUM 4
 #define NUM_PIXEL_FORMATS 10
@@ -795,6 +843,7 @@ struct dc_clock_config {
 	uint32_t current_clock_khz;/*current clock in use*/
 };
 
+<<<<<<< HEAD
 struct hw_asic_id {
 	uint32_t chip_id;
 	uint32_t chip_family;
@@ -835,6 +884,8 @@ struct dc_context {
 
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* DSC DPCD capabilities */
 union dsc_slice_caps1 {
 	struct {

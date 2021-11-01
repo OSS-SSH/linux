@@ -125,6 +125,7 @@ int handle_downsize(void *ctx)
 	return 0;
 }
 
+<<<<<<< HEAD
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
 #define bpf_core_read_int bpf_core_read
 #else
@@ -135,6 +136,8 @@ int handle_downsize(void *ctx)
 })
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 SEC("raw_tp/sys_enter")
 int handle_probed(void *ctx)
 {
@@ -142,6 +145,7 @@ int handle_probed(void *ctx)
 	__u64 tmp;
 
 	tmp = 0;
+<<<<<<< HEAD
 	bpf_core_read_int(&tmp, bpf_core_field_size(in->ptr), &in->ptr);
 	ptr_probed = tmp;
 
@@ -159,6 +163,25 @@ int handle_probed(void *ctx)
 
 	tmp = 0;
 	bpf_core_read_int(&tmp, bpf_core_field_size(in->val4), &in->val4);
+=======
+	bpf_core_read(&tmp, bpf_core_field_size(in->ptr), &in->ptr);
+	ptr_probed = tmp;
+
+	tmp = 0;
+	bpf_core_read(&tmp, bpf_core_field_size(in->val1), &in->val1);
+	val1_probed = tmp;
+
+	tmp = 0;
+	bpf_core_read(&tmp, bpf_core_field_size(in->val2), &in->val2);
+	val2_probed = tmp;
+
+	tmp = 0;
+	bpf_core_read(&tmp, bpf_core_field_size(in->val3), &in->val3);
+	val3_probed = tmp;
+
+	tmp = 0;
+	bpf_core_read(&tmp, bpf_core_field_size(in->val4), &in->val4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	val4_probed = tmp;
 
 	return 0;

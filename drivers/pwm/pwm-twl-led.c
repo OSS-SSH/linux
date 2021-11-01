@@ -276,6 +276,10 @@ static const struct pwm_ops twl6030_pwmled_ops = {
 static int twl_pwmled_probe(struct platform_device *pdev)
 {
 	struct twl_pwmled_chip *twl;
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	twl = devm_kzalloc(&pdev->dev, sizeof(*twl), GFP_KERNEL);
 	if (!twl)
@@ -293,7 +297,24 @@ static int twl_pwmled_probe(struct platform_device *pdev)
 
 	mutex_init(&twl->mutex);
 
+<<<<<<< HEAD
 	return devm_pwmchip_add(&pdev->dev, &twl->chip);
+=======
+	ret = pwmchip_add(&twl->chip);
+	if (ret < 0)
+		return ret;
+
+	platform_set_drvdata(pdev, twl);
+
+	return 0;
+}
+
+static int twl_pwmled_remove(struct platform_device *pdev)
+{
+	struct twl_pwmled_chip *twl = platform_get_drvdata(pdev);
+
+	return pwmchip_remove(&twl->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_OF
@@ -311,6 +332,10 @@ static struct platform_driver twl_pwmled_driver = {
 		.of_match_table = of_match_ptr(twl_pwmled_of_match),
 	},
 	.probe = twl_pwmled_probe,
+<<<<<<< HEAD
+=======
+	.remove = twl_pwmled_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 module_platform_driver(twl_pwmled_driver);
 

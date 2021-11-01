@@ -29,12 +29,20 @@ static inline gfp_t snd_mem_get_gfp_flags(const struct snd_dma_buffer *dmab,
 		return (__force gfp_t)(unsigned long)dmab->dev.dev;
 }
 
+<<<<<<< HEAD
 static void *__snd_dma_alloc_pages(struct snd_dma_buffer *dmab, size_t size)
+=======
+static int __snd_dma_alloc_pages(struct snd_dma_buffer *dmab, size_t size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct snd_malloc_ops *ops = snd_dma_get_ops(dmab);
 
 	if (WARN_ON_ONCE(!ops || !ops->alloc))
+<<<<<<< HEAD
 		return NULL;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ops->alloc(dmab, size);
 }
 
@@ -54,6 +62,11 @@ static void *__snd_dma_alloc_pages(struct snd_dma_buffer *dmab, size_t size)
 int snd_dma_alloc_pages(int type, struct device *device, size_t size,
 			struct snd_dma_buffer *dmab)
 {
+<<<<<<< HEAD
+=======
+	int err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (WARN_ON(!size))
 		return -ENXIO;
 	if (WARN_ON(!dmab))
@@ -63,9 +76,18 @@ int snd_dma_alloc_pages(int type, struct device *device, size_t size,
 	dmab->dev.type = type;
 	dmab->dev.dev = device;
 	dmab->bytes = 0;
+<<<<<<< HEAD
 	dmab->addr = 0;
 	dmab->private_data = NULL;
 	dmab->area = __snd_dma_alloc_pages(dmab, size);
+=======
+	dmab->area = NULL;
+	dmab->addr = 0;
+	dmab->private_data = NULL;
+	err = __snd_dma_alloc_pages(dmab, size);
+	if (err < 0)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!dmab->area)
 		return -ENOMEM;
 	dmab->bytes = size;
@@ -122,6 +144,7 @@ void snd_dma_free_pages(struct snd_dma_buffer *dmab)
 }
 EXPORT_SYMBOL(snd_dma_free_pages);
 
+<<<<<<< HEAD
 /* called by devres */
 static void __snd_release_pages(struct device *dev, void *res)
 {
@@ -168,6 +191,8 @@ snd_devm_alloc_pages(struct device *dev, int type, size_t size)
 }
 EXPORT_SYMBOL_GPL(snd_devm_alloc_pages);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * snd_dma_buffer_mmap - perform mmap of the given DMA buffer
  * @dmab: buffer allocation information
@@ -239,6 +264,7 @@ EXPORT_SYMBOL(snd_sgbuf_get_chunk_size);
 /*
  * Continuous pages allocator
  */
+<<<<<<< HEAD
 static void *snd_dma_continuous_alloc(struct snd_dma_buffer *dmab, size_t size)
 {
 	gfp_t gfp = snd_mem_get_gfp_flags(dmab, GFP_KERNEL);
@@ -247,6 +273,14 @@ static void *snd_dma_continuous_alloc(struct snd_dma_buffer *dmab, size_t size)
 	if (p)
 		dmab->addr = page_to_phys(virt_to_page(p));
 	return p;
+=======
+static int snd_dma_continuous_alloc(struct snd_dma_buffer *dmab, size_t size)
+{
+	gfp_t gfp = snd_mem_get_gfp_flags(dmab, GFP_KERNEL);
+
+	dmab->area = alloc_pages_exact(size, gfp);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void snd_dma_continuous_free(struct snd_dma_buffer *dmab)
@@ -272,11 +306,20 @@ static const struct snd_malloc_ops snd_dma_continuous_ops = {
 /*
  * VMALLOC allocator
  */
+<<<<<<< HEAD
 static void *snd_dma_vmalloc_alloc(struct snd_dma_buffer *dmab, size_t size)
 {
 	gfp_t gfp = snd_mem_get_gfp_flags(dmab, GFP_KERNEL | __GFP_HIGHMEM);
 
 	return __vmalloc(size, gfp);
+=======
+static int snd_dma_vmalloc_alloc(struct snd_dma_buffer *dmab, size_t size)
+{
+	gfp_t gfp = snd_mem_get_gfp_flags(dmab, GFP_KERNEL | __GFP_HIGHMEM);
+
+	dmab->area = __vmalloc(size, gfp);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void snd_dma_vmalloc_free(struct snd_dma_buffer *dmab)
@@ -290,6 +333,7 @@ static int snd_dma_vmalloc_mmap(struct snd_dma_buffer *dmab,
 	return remap_vmalloc_range(area, dmab->area, 0);
 }
 
+<<<<<<< HEAD
 #define get_vmalloc_page_addr(dmab, offset) \
 	page_to_phys(vmalloc_to_page((dmab)->area + (offset)))
 
@@ -297,6 +341,13 @@ static dma_addr_t snd_dma_vmalloc_get_addr(struct snd_dma_buffer *dmab,
 					   size_t offset)
 {
 	return get_vmalloc_page_addr(dmab, offset) + offset % PAGE_SIZE;
+=======
+static dma_addr_t snd_dma_vmalloc_get_addr(struct snd_dma_buffer *dmab,
+					   size_t offset)
+{
+	return page_to_phys(vmalloc_to_page(dmab->area + offset)) +
+		offset % PAGE_SIZE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct page *snd_dma_vmalloc_get_page(struct snd_dma_buffer *dmab,
@@ -309,6 +360,7 @@ static unsigned int
 snd_dma_vmalloc_get_chunk_size(struct snd_dma_buffer *dmab,
 			       unsigned int ofs, unsigned int size)
 {
+<<<<<<< HEAD
 	unsigned int start, end;
 	unsigned long addr;
 
@@ -326,6 +378,13 @@ snd_dma_vmalloc_get_chunk_size(struct snd_dma_buffer *dmab,
 	}
 	/* ok, all on continuous pages */
 	return size;
+=======
+	ofs %= PAGE_SIZE;
+	size += ofs;
+	if (size > PAGE_SIZE)
+		size = PAGE_SIZE;
+	return size - ofs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct snd_malloc_ops snd_dma_vmalloc_ops = {
@@ -342,20 +401,34 @@ static const struct snd_malloc_ops snd_dma_vmalloc_ops = {
  * IRAM allocator
  */
 #ifdef CONFIG_GENERIC_ALLOCATOR
+<<<<<<< HEAD
 static void *snd_dma_iram_alloc(struct snd_dma_buffer *dmab, size_t size)
 {
 	struct device *dev = dmab->dev.dev;
 	struct gen_pool *pool;
 	void *p;
+=======
+static int snd_dma_iram_alloc(struct snd_dma_buffer *dmab, size_t size)
+{
+	struct device *dev = dmab->dev.dev;
+	struct gen_pool *pool;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (dev->of_node) {
 		pool = of_gen_pool_get(dev->of_node, "iram", 0);
 		/* Assign the pool into private_data field */
 		dmab->private_data = pool;
 
+<<<<<<< HEAD
 		p = gen_pool_dma_alloc_align(pool, size, &dmab->addr, PAGE_SIZE);
 		if (p)
 			return p;
+=======
+		dmab->area = gen_pool_dma_alloc_align(pool, size, &dmab->addr,
+						      PAGE_SIZE);
+		if (dmab->area)
+			return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* Internal memory might have limited size and no enough space,
@@ -390,6 +463,7 @@ static const struct snd_malloc_ops snd_dma_iram_ops = {
 };
 #endif /* CONFIG_GENERIC_ALLOCATOR */
 
+<<<<<<< HEAD
 #define DEFAULT_GFP \
 	(GFP_KERNEL | \
 	 __GFP_COMP |    /* compound page lets parts be mapped */ \
@@ -409,12 +483,37 @@ static void *snd_dma_dev_alloc(struct snd_dma_buffer *dmab, size_t size)
 		set_memory_wc((unsigned long)p, PAGE_ALIGN(size) >> PAGE_SHIFT);
 #endif
 	return p;
+=======
+/*
+ * Coherent device pages allocator
+ */
+static int snd_dma_dev_alloc(struct snd_dma_buffer *dmab, size_t size)
+{
+	gfp_t gfp_flags;
+
+	gfp_flags = GFP_KERNEL
+		| __GFP_COMP	/* compound page lets parts be mapped */
+		| __GFP_NORETRY /* don't trigger OOM-killer */
+		| __GFP_NOWARN; /* no stack trace print - this call is non-critical */
+	dmab->area = dma_alloc_coherent(dmab->dev.dev, size, &dmab->addr,
+					gfp_flags);
+#ifdef CONFIG_X86
+	if (dmab->area && dmab->dev.type == SNDRV_DMA_TYPE_DEV_UC)
+		set_memory_wc((unsigned long)dmab->area,
+			      PAGE_ALIGN(size) >> PAGE_SHIFT);
+#endif
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void snd_dma_dev_free(struct snd_dma_buffer *dmab)
 {
 #ifdef CONFIG_X86
+<<<<<<< HEAD
 	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC)
+=======
+	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_UC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		set_memory_wb((unsigned long)dmab->area,
 			      PAGE_ALIGN(dmab->bytes) >> PAGE_SHIFT);
 #endif
@@ -424,10 +523,13 @@ static void snd_dma_dev_free(struct snd_dma_buffer *dmab)
 static int snd_dma_dev_mmap(struct snd_dma_buffer *dmab,
 			    struct vm_area_struct *area)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_X86
 	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC)
 		area->vm_page_prot = pgprot_writecombine(area->vm_page_prot);
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return dma_mmap_coherent(dmab->dev.dev, area,
 				 dmab->area, dmab->addr, dmab->bytes);
 }
@@ -437,6 +539,7 @@ static const struct snd_malloc_ops snd_dma_dev_ops = {
 	.free = snd_dma_dev_free,
 	.mmap = snd_dma_dev_mmap,
 };
+<<<<<<< HEAD
 
 /*
  * Write-combined pages
@@ -468,6 +571,8 @@ static const struct snd_malloc_ops snd_dma_wc_ops = {
 	.mmap = snd_dma_wc_mmap,
 };
 #endif /* CONFIG_X86 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* CONFIG_HAS_DMA */
 
 /*
@@ -478,14 +583,22 @@ static const struct snd_malloc_ops *dma_ops[] = {
 	[SNDRV_DMA_TYPE_VMALLOC] = &snd_dma_vmalloc_ops,
 #ifdef CONFIG_HAS_DMA
 	[SNDRV_DMA_TYPE_DEV] = &snd_dma_dev_ops,
+<<<<<<< HEAD
 	[SNDRV_DMA_TYPE_DEV_WC] = &snd_dma_wc_ops,
+=======
+	[SNDRV_DMA_TYPE_DEV_UC] = &snd_dma_dev_ops,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_GENERIC_ALLOCATOR
 	[SNDRV_DMA_TYPE_DEV_IRAM] = &snd_dma_iram_ops,
 #endif /* CONFIG_GENERIC_ALLOCATOR */
 #endif /* CONFIG_HAS_DMA */
 #ifdef CONFIG_SND_DMA_SGBUF
 	[SNDRV_DMA_TYPE_DEV_SG] = &snd_dma_sg_ops,
+<<<<<<< HEAD
 	[SNDRV_DMA_TYPE_DEV_WC_SG] = &snd_dma_sg_ops,
+=======
+	[SNDRV_DMA_TYPE_DEV_UC_SG] = &snd_dma_sg_ops,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 };
 

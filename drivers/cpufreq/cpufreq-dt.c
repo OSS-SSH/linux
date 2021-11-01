@@ -143,6 +143,11 @@ static int cpufreq_init(struct cpufreq_policy *policy)
 		cpufreq_dt_attr[1] = &cpufreq_freq_attr_scaling_boost_freqs;
 	}
 
+<<<<<<< HEAD
+=======
+	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 out_clk_put:
@@ -182,7 +187,10 @@ static struct cpufreq_driver dt_cpufreq_driver = {
 	.exit = cpufreq_exit,
 	.online = cpufreq_online,
 	.offline = cpufreq_offline,
+<<<<<<< HEAD
 	.register_em = cpufreq_register_em_with_opp,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.name = "cpufreq-dt",
 	.attr = cpufreq_dt_attr,
 	.suspend = cpufreq_generic_suspend,

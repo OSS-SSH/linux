@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
 /* Copyright (c) 2020 Mellanox Technologies Ltd. */
 
+<<<<<<< HEAD
 #include <linux/vhost_types.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/vdpa.h>
 #include <linux/gcd.h>
 #include <linux/string.h>
@@ -452,6 +455,7 @@ static void destroy_dma_mr(struct mlx5_vdpa_dev *mvdev, struct mlx5_vdpa_mr *mr)
 	mlx5_vdpa_destroy_mkey(mvdev, &mr->mkey);
 }
 
+<<<<<<< HEAD
 static int dup_iotlb(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *src)
 {
 	struct vhost_iotlb_map *map;
@@ -476,6 +480,35 @@ static int dup_iotlb(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *src)
 static void prune_iotlb(struct mlx5_vdpa_dev *mvdev)
 {
 	vhost_iotlb_del_range(mvdev->cvq.iotlb, 0, ULLONG_MAX);
+=======
+static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
+{
+	struct mlx5_vdpa_mr *mr = &mvdev->mr;
+	int err;
+
+	if (mr->initialized)
+		return 0;
+
+	if (iotlb)
+		err = create_user_mr(mvdev, iotlb);
+	else
+		err = create_dma_mr(mvdev, mr);
+
+	if (!err)
+		mr->initialized = true;
+
+	return err;
+}
+
+int mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
+{
+	int err;
+
+	mutex_lock(&mvdev->mr.mkey_mtx);
+	err = _mlx5_vdpa_create_mr(mvdev, iotlb);
+	mutex_unlock(&mvdev->mr.mkey_mtx);
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void destroy_user_mr(struct mlx5_vdpa_dev *mvdev, struct mlx5_vdpa_mr *mr)
@@ -499,7 +532,10 @@ void mlx5_vdpa_destroy_mr(struct mlx5_vdpa_dev *mvdev)
 	if (!mr->initialized)
 		goto out;
 
+<<<<<<< HEAD
 	prune_iotlb(mvdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (mr->user_mr)
 		destroy_user_mr(mvdev, mr);
 	else
@@ -511,6 +547,7 @@ out:
 	mutex_unlock(&mr->mkey_mtx);
 }
 
+<<<<<<< HEAD
 static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
 {
 	struct mlx5_vdpa_mr *mr = &mvdev->mr;
@@ -551,6 +588,11 @@ int mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
 	err = _mlx5_vdpa_create_mr(mvdev, iotlb);
 	mutex_unlock(&mvdev->mr.mkey_mtx);
 	return err;
+=======
+static bool map_empty(struct vhost_iotlb *iotlb)
+{
+	return !vhost_iotlb_itree_first(iotlb, 0, U64_MAX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int mlx5_vdpa_handle_set_map(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
@@ -560,6 +602,13 @@ int mlx5_vdpa_handle_set_map(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *io
 	int err = 0;
 
 	*change_map = false;
+<<<<<<< HEAD
+=======
+	if (map_empty(iotlb)) {
+		mlx5_vdpa_destroy_mr(mvdev);
+		return 0;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_lock(&mr->mkey_mtx);
 	if (mr->initialized) {
 		mlx5_vdpa_info(mvdev, "memory map update\n");

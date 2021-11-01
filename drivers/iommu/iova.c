@@ -121,6 +121,11 @@ int init_iova_flush_queue(struct iova_domain *iovad,
 		spin_lock_init(&fq->lock);
 	}
 
+<<<<<<< HEAD
+=======
+	smp_wmb();
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iovad->fq = queue;
 
 	timer_setup(&iovad->fq_timer, fq_flush_timeout, 0);
@@ -519,7 +524,10 @@ retry:
 
 	return new_iova->pfn_lo;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(alloc_iova_fast);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * free_iova_fast - free iova pfn range into rcache
@@ -537,7 +545,10 @@ free_iova_fast(struct iova_domain *iovad, unsigned long pfn, unsigned long size)
 
 	free_iova(iovad, pfn);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(free_iova_fast);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define fq_ring_for_each(i, fq) \
 	for ((i) = (fq)->head; (i) != (fq)->tail; (i) = ((i) + 1) % IOVA_FQ_SIZE)
@@ -633,6 +644,7 @@ void queue_iova(struct iova_domain *iovad,
 		unsigned long pfn, unsigned long pages,
 		unsigned long data)
 {
+<<<<<<< HEAD
 	struct iova_fq *fq;
 	unsigned long flags;
 	unsigned idx;
@@ -647,6 +659,12 @@ void queue_iova(struct iova_domain *iovad,
 	smp_mb();
 
 	fq = raw_cpu_ptr(iovad->fq);
+=======
+	struct iova_fq *fq = raw_cpu_ptr(iovad->fq);
+	unsigned long flags;
+	unsigned idx;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_irqsave(&fq->lock, flags);
 
 	/*

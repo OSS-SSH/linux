@@ -141,16 +141,23 @@ fail:
  * inode->i_mutex: don't care
  */
 struct posix_acl *
+<<<<<<< HEAD
 ext2_get_acl(struct inode *inode, int type, bool rcu)
+=======
+ext2_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int name_index;
 	char *value = NULL;
 	struct posix_acl *acl;
 	int retval;
 
+<<<<<<< HEAD
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (type) {
 	case ACL_TYPE_ACCESS:
 		name_index = EXT2_XATTR_INDEX_POSIX_ACL_ACCESS;

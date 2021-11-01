@@ -382,6 +382,7 @@ static int devprop_gpiochip_set_names(struct gpio_chip *chip)
 	if (count < 0)
 		return 0;
 
+<<<<<<< HEAD
 	/*
 	 * When offset is set in the driver side we assume the driver internally
 	 * is using more than one gpiochip per the same device. We have to stop
@@ -394,6 +395,12 @@ static int devprop_gpiochip_set_names(struct gpio_chip *chip)
 		dev_warn(&gdev->dev, "gpio-line-names too short (length %d), cannot map names for the gpiochip at offset %u\n",
 			 count, chip->offset);
 		return 0;
+=======
+	if (count > gdev->ngpio) {
+		dev_warn(&gdev->dev, "gpio-line-names is length %d but should be at most length %d",
+			 count, gdev->ngpio);
+		count = gdev->ngpio;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	names = kcalloc(count, sizeof(*names), GFP_KERNEL);
@@ -408,6 +415,7 @@ static int devprop_gpiochip_set_names(struct gpio_chip *chip)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * When more that one gpiochip per device is used, 'count' can
 	 * contain at most number gpiochips x chip->ngpio. We have to
@@ -424,6 +432,10 @@ static int devprop_gpiochip_set_names(struct gpio_chip *chip)
 
 	for (i = 0; i < count; i++)
 		gdev->descs[i].name = names[chip->offset + i];
+=======
+	for (i = 0; i < count; i++)
+		gdev->descs[i].name = names[i];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kfree(names);
 

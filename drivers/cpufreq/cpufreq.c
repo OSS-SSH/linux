@@ -1491,6 +1491,7 @@ static int cpufreq_online(unsigned int cpu)
 		write_lock_irqsave(&cpufreq_driver_lock, flags);
 		list_add(&policy->policy_list, &cpufreq_policy_list);
 		write_unlock_irqrestore(&cpufreq_driver_lock, flags);
+<<<<<<< HEAD
 
 		/*
 		 * Register with the energy model before
@@ -1504,6 +1505,8 @@ static int cpufreq_online(unsigned int cpu)
 		 */
 		if (cpufreq_driver->register_em)
 			cpufreq_driver->register_em(policy);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = cpufreq_init_policy(policy);
@@ -1517,6 +1520,13 @@ static int cpufreq_online(unsigned int cpu)
 
 	kobject_uevent(&policy->kobj, KOBJ_ADD);
 
+<<<<<<< HEAD
+=======
+	/* Callback for handling stuff after policy is ready */
+	if (cpufreq_driver->ready)
+		cpufreq_driver->ready(policy);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (cpufreq_thermal_control_enabled(cpufreq_driver))
 		policy->cdev = of_cpufreq_cooling_register(policy);
 
@@ -2663,18 +2673,30 @@ int cpufreq_boost_trigger_state(int state)
 	cpufreq_driver->boost_enabled = state;
 	write_unlock_irqrestore(&cpufreq_driver_lock, flags);
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for_each_active_policy(policy) {
 		ret = cpufreq_driver->set_boost(policy, state);
 		if (ret)
 			goto err_reset_state;
 	}
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 
 err_reset_state:
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	write_lock_irqsave(&cpufreq_driver_lock, flags);
 	cpufreq_driver->boost_enabled = !state;

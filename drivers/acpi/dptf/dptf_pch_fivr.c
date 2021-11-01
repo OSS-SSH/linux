@@ -9,6 +9,7 @@
 #include <linux/module.h>
 #include <linux/platform_device.h>
 
+<<<<<<< HEAD
 struct pch_fivr_resp {
 	u64 status;
 	u64 result;
@@ -45,6 +46,8 @@ release_buffer:
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Presentation of attributes which are defined for INT1045
  * They are:
@@ -59,6 +62,7 @@ static ssize_t name##_show(struct device *dev,\
 			   char *buf)\
 {\
 	struct acpi_device *acpi_dev = dev_get_drvdata(dev);\
+<<<<<<< HEAD
 	struct pch_fivr_resp fivr_resp;\
 	int status;\
 \
@@ -67,6 +71,17 @@ static ssize_t name##_show(struct device *dev,\
 		return status;\
 \
 	return sprintf(buf, "%llu\n", fivr_resp.result);\
+=======
+	unsigned long long val;\
+	acpi_status status;\
+\
+	status = acpi_evaluate_integer(acpi_dev->handle, #method,\
+				       NULL, &val);\
+	if (ACPI_SUCCESS(status))\
+		return sprintf(buf, "%d\n", (int)val);\
+	else\
+		return -EINVAL;\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #define PCH_FIVR_STORE(name, method) \
@@ -90,24 +105,33 @@ static ssize_t name##_store(struct device *dev,\
 
 PCH_FIVR_SHOW(freq_mhz_low_clock, GFC0)
 PCH_FIVR_SHOW(freq_mhz_high_clock, GFC1)
+<<<<<<< HEAD
 PCH_FIVR_SHOW(ssc_clock_info, GEMI)
 PCH_FIVR_SHOW(fivr_switching_freq_mhz, GFCS)
 PCH_FIVR_SHOW(fivr_switching_fault_status, GFFS)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 PCH_FIVR_STORE(freq_mhz_low_clock, RFC0)
 PCH_FIVR_STORE(freq_mhz_high_clock, RFC1)
 
 static DEVICE_ATTR_RW(freq_mhz_low_clock);
 static DEVICE_ATTR_RW(freq_mhz_high_clock);
+<<<<<<< HEAD
 static DEVICE_ATTR_RO(ssc_clock_info);
 static DEVICE_ATTR_RO(fivr_switching_freq_mhz);
 static DEVICE_ATTR_RO(fivr_switching_fault_status);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct attribute *fivr_attrs[] = {
 	&dev_attr_freq_mhz_low_clock.attr,
 	&dev_attr_freq_mhz_high_clock.attr,
+<<<<<<< HEAD
 	&dev_attr_ssc_clock_info.attr,
 	&dev_attr_fivr_switching_freq_mhz.attr,
 	&dev_attr_fivr_switching_fault_status.attr,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NULL
 };
 

@@ -55,6 +55,7 @@ Date:		Oct, 2016
 KernelVersion:	v4.10
 Contact:	linux-ide@vger.kernel.org
 Description:
+<<<<<<< HEAD
 		(RW) Write to the file to turn on or off the SATA NCQ (native
 		command queueing) priority support. By default this feature is
 		turned off. If the device does not support the SATA NCQ
@@ -95,3 +96,8 @@ Description:
 		This file does not exist if the HBA driver does not implement
 		support for the SATA NCQ priority feature, regardless of the
 		device support for this feature.
+=======
+		(RW) Write to the file to turn on or off the SATA ncq (native
+		command queueing) support. By default this feature is turned
+		off.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

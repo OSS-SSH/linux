@@ -69,7 +69,11 @@ functions. These can be mixed and matched. Note that these functions
 are not reentrant for performance reasons.
 
 ABI
+<<<<<<< HEAD
 ---
+=======
+==========
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 libbpf can be both linked statically or used as DSO. To avoid possible
 conflicts with other libraries an application is linked with, all
@@ -108,7 +112,11 @@ This bump in ABI version is at most once per kernel development cycle.
 
 For example, if current state of ``libbpf.map`` is:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         LIBBPF_0.0.1 {
         	global:
@@ -121,7 +129,11 @@ For example, if current state of ``libbpf.map`` is:
 , and a new symbol ``bpf_func_c`` is being introduced, then
 ``libbpf.map`` should be changed like this:
 
+<<<<<<< HEAD
 .. code-block:: none
+=======
+.. code-block:: c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         LIBBPF_0.0.1 {
         	global:

@@ -6,7 +6,10 @@
 
 #include <linux/bug.h>
 #include <linux/cpu_pm.h>
+<<<<<<< HEAD
 #include <linux/entry-kvm.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/errno.h>
 #include <linux/err.h>
 #include <linux/kvm_host.h>
@@ -16,7 +19,10 @@
 #include <linux/fs.h>
 #include <linux/mman.h>
 #include <linux/sched.h>
+<<<<<<< HEAD
 #include <linux/kmemleak.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/kvm.h>
 #include <linux/kvm_irqfd.h>
 #include <linux/irqbypass.h>
@@ -44,6 +50,13 @@
 #include <kvm/arm_pmu.h>
 #include <kvm/arm_psci.h>
 
+<<<<<<< HEAD
+=======
+#ifdef REQUIRES_VIRT
+__asm__(".arch_extension	virt");
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static enum kvm_mode kvm_mode = KVM_MODE_DEFAULT;
 DEFINE_STATIC_KEY_FALSE(kvm_protected_mode_initialized);
 
@@ -92,6 +105,7 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
 		kvm->arch.return_nisv_io_abort_to_user = true;
 		break;
 	case KVM_CAP_ARM_MTE:
+<<<<<<< HEAD
 		mutex_lock(&kvm->lock);
 		if (!system_supports_mte() || kvm->created_vcpus) {
 			r = -EINVAL;
@@ -100,6 +114,12 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
 			kvm->arch.mte_enabled = true;
 		}
 		mutex_unlock(&kvm->lock);
+=======
+		if (!system_supports_mte() || kvm->created_vcpus)
+			return -EINVAL;
+		r = 0;
+		kvm->arch.mte_enabled = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	default:
 		r = -EINVAL;
@@ -573,7 +593,11 @@ static void update_vmid(struct kvm_vmid *vmid)
 		kvm_call_hyp(__kvm_flush_vm_context);
 	}
 
+<<<<<<< HEAD
 	WRITE_ONCE(vmid->vmid, kvm_next_vmid);
+=======
+	vmid->vmid = kvm_next_vmid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kvm_next_vmid++;
 	kvm_next_vmid &= (1 << kvm_get_vmid_bits()) - 1;
 
@@ -717,6 +741,7 @@ static bool vcpu_mode_is_bad_32bit(struct kvm_vcpu *vcpu)
 }
 
 /**
+<<<<<<< HEAD
  * kvm_vcpu_exit_request - returns true if the VCPU should *not* enter the guest
  * @vcpu:	The VCPU pointer
  * @ret:	Pointer to write optional return code
@@ -756,6 +781,8 @@ static bool kvm_vcpu_exit_request(struct kvm_vcpu *vcpu, int *ret)
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * kvm_arch_vcpu_ioctl_run - the main VCPU run function to execute guest code
  * @vcpu:	The VCPU pointer
  *
@@ -798,9 +825,13 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 		/*
 		 * Check conditions before entering the guest
 		 */
+<<<<<<< HEAD
 		ret = xfer_to_guest_mode_handle_work(vcpu);
 		if (!ret)
 			ret = 1;
+=======
+		cond_resched();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		update_vmid(&vcpu->arch.hw_mmu->vmid);
 
@@ -820,6 +851,33 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 		kvm_vgic_flush_hwstate(vcpu);
 
 		/*
+<<<<<<< HEAD
+=======
+		 * Exit if we have a signal pending so that we can deliver the
+		 * signal to user space.
+		 */
+		if (signal_pending(current)) {
+			ret = -EINTR;
+			run->exit_reason = KVM_EXIT_INTR;
+		}
+
+		/*
+		 * If we're using a userspace irqchip, then check if we need
+		 * to tell a userspace irqchip about timer or PMU level
+		 * changes and if so, exit to userspace (the actual level
+		 * state gets updated in kvm_timer_update_run and
+		 * kvm_pmu_update_run below).
+		 */
+		if (static_branch_unlikely(&userspace_irqchip_in_use)) {
+			if (kvm_timer_should_notify_user(vcpu) ||
+			    kvm_pmu_should_notify_user(vcpu)) {
+				ret = -EINTR;
+				run->exit_reason = KVM_EXIT_INTR;
+			}
+		}
+
+		/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * Ensure we set mode to IN_GUEST_MODE after we disable
 		 * interrupts and before the final VCPU requests check.
 		 * See the comment in kvm_vcpu_exiting_guest_mode() and
@@ -827,7 +885,12 @@ int kvm_arch_vcpu_ioctl_run(struct kvm_vcpu *vcpu)
 		 */
 		smp_store_mb(vcpu->mode, IN_GUEST_MODE);
 
+<<<<<<< HEAD
 		if (ret <= 0 || kvm_vcpu_exit_request(vcpu, &ret)) {
+=======
+		if (ret <= 0 || need_new_vmid_gen(&vcpu->arch.hw_mmu->vmid) ||
+		    kvm_request_pending(vcpu)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			vcpu->mode = OUTSIDE_GUEST_MODE;
 			isb(); /* Ensure work in x_flush_hwstate is committed */
 			kvm_pmu_sync_hwstate(vcpu);
@@ -1053,7 +1116,11 @@ static int kvm_vcpu_set_target(struct kvm_vcpu *vcpu,
 			       const struct kvm_vcpu_init *init)
 {
 	unsigned int i, ret;
+<<<<<<< HEAD
 	u32 phys_target = kvm_target_cpu();
+=======
+	int phys_target = kvm_target_cpu();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (init->target != phys_target)
 		return -EINVAL;
@@ -1122,7 +1189,10 @@ static int kvm_arch_vcpu_ioctl_vcpu_init(struct kvm_vcpu *vcpu,
 	}
 
 	vcpu_reset_hcr(vcpu);
+<<<<<<< HEAD
 	vcpu->arch.cptr_el2 = CPTR_EL2_DEFAULT;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Handle the "start in power-off" case.
@@ -1234,6 +1304,7 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 		if (copy_from_user(&reg, argp, sizeof(reg)))
 			break;
 
+<<<<<<< HEAD
 		/*
 		 * We could owe a reset due to PSCI. Handle the pending reset
 		 * here to ensure userspace register accesses are ordered after
@@ -1242,6 +1313,8 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 		if (kvm_check_request(KVM_REQ_VCPU_RESET, vcpu))
 			kvm_reset_vcpu(vcpu);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ioctl == KVM_SET_ONE_REG)
 			r = kvm_arm_set_reg(vcpu, &reg);
 		else
@@ -1723,6 +1796,14 @@ static bool init_psci_relay(void)
 	return true;
 }
 
+<<<<<<< HEAD
+=======
+static int init_common_resources(void)
+{
+	return kvm_set_ipa_limit();
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int init_subsystems(void)
 {
 	int err = 0;
@@ -1976,6 +2057,7 @@ static void _kvm_host_prot_finalize(void *discard)
 	WARN_ON(kvm_call_hyp_nvhe(__pkvm_prot_finalize));
 }
 
+<<<<<<< HEAD
 static int finalize_hyp_mode(void)
 {
 	if (!is_protected_kvm_enabled())
@@ -1987,6 +2069,58 @@ static int finalize_hyp_mode(void)
 	 * None of other sections should ever be introspected.
 	 */
 	kmemleak_free_part(__hyp_bss_start, __hyp_bss_end - __hyp_bss_start);
+=======
+static inline int pkvm_mark_hyp(phys_addr_t start, phys_addr_t end)
+{
+	return kvm_call_hyp_nvhe(__pkvm_mark_hyp, start, end);
+}
+
+#define pkvm_mark_hyp_section(__section)		\
+	pkvm_mark_hyp(__pa_symbol(__section##_start),	\
+			__pa_symbol(__section##_end))
+
+static int finalize_hyp_mode(void)
+{
+	int cpu, ret;
+
+	if (!is_protected_kvm_enabled())
+		return 0;
+
+	ret = pkvm_mark_hyp_section(__hyp_idmap_text);
+	if (ret)
+		return ret;
+
+	ret = pkvm_mark_hyp_section(__hyp_text);
+	if (ret)
+		return ret;
+
+	ret = pkvm_mark_hyp_section(__hyp_rodata);
+	if (ret)
+		return ret;
+
+	ret = pkvm_mark_hyp_section(__hyp_bss);
+	if (ret)
+		return ret;
+
+	ret = pkvm_mark_hyp(hyp_mem_base, hyp_mem_base + hyp_mem_size);
+	if (ret)
+		return ret;
+
+	for_each_possible_cpu(cpu) {
+		phys_addr_t start = virt_to_phys((void *)kvm_arm_hyp_percpu_base[cpu]);
+		phys_addr_t end = start + (PAGE_SIZE << nvhe_percpu_order());
+
+		ret = pkvm_mark_hyp(start, end);
+		if (ret)
+			return ret;
+
+		start = virt_to_phys((void *)per_cpu(kvm_arm_hyp_stack_page, cpu));
+		end = start + PAGE_SIZE;
+		ret = pkvm_mark_hyp(start, end);
+		if (ret)
+			return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Flip the static key upfront as that may no longer be possible
@@ -1998,6 +2132,14 @@ static int finalize_hyp_mode(void)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void check_kvm_target_cpu(void *ret)
+{
+	*(int *)ret = kvm_target_cpu();
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct kvm_vcpu *kvm_mpidr_to_vcpu(struct kvm *kvm, unsigned long mpidr)
 {
 	struct kvm_vcpu *vcpu;
@@ -2057,6 +2199,10 @@ void kvm_arch_irq_bypass_start(struct irq_bypass_consumer *cons)
 int kvm_arch_init(void *opaque)
 {
 	int err;
+<<<<<<< HEAD
+=======
+	int ret, cpu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool in_hyp_mode;
 
 	if (!is_hyp_mode_available()) {
@@ -2071,7 +2217,19 @@ int kvm_arch_init(void *opaque)
 		kvm_info("Guests without required CPU erratum workarounds can deadlock system!\n" \
 			 "Only trusted guests should be used on this system.\n");
 
+<<<<<<< HEAD
 	err = kvm_set_ipa_limit();
+=======
+	for_each_online_cpu(cpu) {
+		smp_call_function_single(cpu, check_kvm_target_cpu, &ret, 1);
+		if (ret < 0) {
+			kvm_err("Error, CPU %d not supported!\n", cpu);
+			return -ENODEV;
+		}
+	}
+
+	err = init_common_resources();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return err;
 

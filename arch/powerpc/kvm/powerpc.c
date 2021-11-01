@@ -2048,9 +2048,15 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 	{
 		struct kvm_enable_cap cap;
 		r = -EFAULT;
+<<<<<<< HEAD
 		if (copy_from_user(&cap, argp, sizeof(cap)))
 			goto out;
 		vcpu_load(vcpu);
+=======
+		vcpu_load(vcpu);
+		if (copy_from_user(&cap, argp, sizeof(cap)))
+			goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		r = kvm_vcpu_ioctl_enable_cap(vcpu, &cap);
 		vcpu_put(vcpu);
 		break;
@@ -2074,9 +2080,15 @@ long kvm_arch_vcpu_ioctl(struct file *filp,
 	case KVM_DIRTY_TLB: {
 		struct kvm_dirty_tlb dirty;
 		r = -EFAULT;
+<<<<<<< HEAD
 		if (copy_from_user(&dirty, argp, sizeof(dirty)))
 			goto out;
 		vcpu_load(vcpu);
+=======
+		vcpu_load(vcpu);
+		if (copy_from_user(&dirty, argp, sizeof(dirty)))
+			goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		r = kvm_vcpu_ioctl_dirty_tlb(vcpu, &dirty);
 		vcpu_put(vcpu);
 		break;

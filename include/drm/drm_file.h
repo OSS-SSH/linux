@@ -226,6 +226,7 @@ struct drm_file {
 	/**
 	 * @master:
 	 *
+<<<<<<< HEAD
 	 * Master this node is currently associated with. Protected by struct
 	 * &drm_device.master_mutex, and serialized by @master_lookup_lock.
 	 *
@@ -242,15 +243,23 @@ struct drm_file {
 	 * use drm_file_get_master() if struct &drm_device.master_mutex is not
 	 * currently held and there is no other need to hold it. This prevents
 	 * @master from being freed during use.
+=======
+	 * Master this node is currently associated with. Only relevant if
+	 * drm_is_primary_client() returns true. Note that this only
+	 * matches &drm_device.master if the master is the currently active one.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 *
 	 * See also @authentication and @is_master and the :ref:`section on
 	 * primary nodes and authentication <drm_primary_node>`.
 	 */
 	struct drm_master *master;
 
+<<<<<<< HEAD
 	/** @master_lock: Serializes @master. */
 	spinlock_t master_lookup_lock;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/** @pid: Process that opened this file. */
 	struct pid *pid;
 

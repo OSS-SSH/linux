@@ -172,6 +172,12 @@ static void dr_ste_replace(struct mlx5dr_ste *dst, struct mlx5dr_ste *src)
 		dst->next_htbl->pointing_ste = dst;
 
 	dst->refcount = src->refcount;
+<<<<<<< HEAD
+=======
+
+	INIT_LIST_HEAD(&dst->rule_list);
+	list_splice_tail_init(&src->rule_list, &dst->rule_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Free ste which is the head and the only one in miss_list */
@@ -230,12 +236,21 @@ dr_ste_replace_head_ste(struct mlx5dr_matcher_rx_tx *nic_matcher,
 	/* Remove from the miss_list the next_ste before copy */
 	list_del_init(&next_ste->miss_list_node);
 
+<<<<<<< HEAD
 	/* Move data from next into ste */
 	dr_ste_replace(ste, next_ste);
 
 	/* Update the rule on STE change */
 	mlx5dr_rule_set_last_member(next_ste->rule_rx_tx, ste, false);
 
+=======
+	/* All rule-members that use next_ste should know about that */
+	mlx5dr_rule_update_rule_member(next_ste, ste);
+
+	/* Move data from next into ste */
+	dr_ste_replace(ste, next_ste);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Copy all 64 hw_ste bytes */
 	memcpy(hw_ste, ste->hw_ste, DR_STE_SIZE_REDUCED);
 	sb_idx = ste->ste_chain_location - 1;
@@ -379,15 +394,25 @@ void mlx5dr_ste_prepare_for_postsend(struct mlx5dr_ste_ctx *ste_ctx,
 /* Init one ste as a pattern for ste data array */
 void mlx5dr_ste_set_formatted_ste(struct mlx5dr_ste_ctx *ste_ctx,
 				  u16 gvmi,
+<<<<<<< HEAD
 				  enum mlx5dr_domain_nic_type nic_type,
+=======
+				  struct mlx5dr_domain_rx_tx *nic_dmn,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  struct mlx5dr_ste_htbl *htbl,
 				  u8 *formatted_ste,
 				  struct mlx5dr_htbl_connect_info *connect_info)
 {
+<<<<<<< HEAD
 	bool is_rx = nic_type == DR_DOMAIN_NIC_TYPE_RX;
 	struct mlx5dr_ste ste = {};
 
 	ste_ctx->ste_init(formatted_ste, htbl->lu_type, is_rx, gvmi);
+=======
+	struct mlx5dr_ste ste = {};
+
+	ste_ctx->ste_init(formatted_ste, htbl->lu_type, nic_dmn->ste_type, gvmi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ste.hw_ste = formatted_ste;
 
 	if (connect_info->type == CONNECT_HIT)
@@ -406,7 +431,11 @@ int mlx5dr_ste_htbl_init_and_postsend(struct mlx5dr_domain *dmn,
 
 	mlx5dr_ste_set_formatted_ste(dmn->ste_ctx,
 				     dmn->info.caps.gvmi,
+<<<<<<< HEAD
 				     nic_dmn->type,
+=======
+				     nic_dmn,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				     htbl,
 				     formatted_ste,
 				     connect_info);
@@ -464,6 +493,24 @@ free_table:
 	return -ENOENT;
 }
 
+<<<<<<< HEAD
+=======
+static void dr_ste_set_ctrl(struct mlx5dr_ste_htbl *htbl)
+{
+	struct mlx5dr_ste_htbl_ctrl *ctrl = &htbl->ctrl;
+	int num_of_entries;
+
+	htbl->ctrl.may_grow = true;
+
+	if (htbl->chunk_size == DR_CHUNK_SIZE_MAX - 1 || !htbl->byte_mask)
+		htbl->ctrl.may_grow = false;
+
+	/* Threshold is 50%, one is added to table of size 1 */
+	num_of_entries = mlx5dr_icm_pool_chunk_size_to_entries(htbl->chunk_size);
+	ctrl->increase_threshold = (num_of_entries + 1) / 2;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct mlx5dr_ste_htbl *mlx5dr_ste_htbl_alloc(struct mlx5dr_icm_pool *pool,
 					      enum mlx5dr_icm_chunk_size chunk_size,
 					      u16 lu_type, u16 byte_mask)
@@ -496,9 +543,17 @@ struct mlx5dr_ste_htbl *mlx5dr_ste_htbl_alloc(struct mlx5dr_icm_pool *pool,
 		ste->refcount = 0;
 		INIT_LIST_HEAD(&ste->miss_list_node);
 		INIT_LIST_HEAD(&htbl->miss_list[i]);
+<<<<<<< HEAD
 	}
 
 	htbl->chunk_size = chunk_size;
+=======
+		INIT_LIST_HEAD(&ste->rule_list);
+	}
+
+	htbl->chunk_size = chunk_size;
+	dr_ste_set_ctrl(htbl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return htbl;
 
 out_free_htbl:
@@ -630,7 +685,10 @@ int mlx5dr_ste_build_ste_arr(struct mlx5dr_matcher *matcher,
 			     u8 *ste_arr)
 {
 	struct mlx5dr_domain_rx_tx *nic_dmn = nic_matcher->nic_tbl->nic_dmn;
+<<<<<<< HEAD
 	bool is_rx = nic_dmn->type == DR_DOMAIN_NIC_TYPE_RX;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mlx5dr_domain *dmn = matcher->tbl->dmn;
 	struct mlx5dr_ste_ctx *ste_ctx = dmn->ste_ctx;
 	struct mlx5dr_ste_build *sb;
@@ -645,7 +703,11 @@ int mlx5dr_ste_build_ste_arr(struct mlx5dr_matcher *matcher,
 	for (i = 0; i < nic_matcher->num_of_builders; i++) {
 		ste_ctx->ste_init(ste_arr,
 				  sb->lu_type,
+<<<<<<< HEAD
 				  is_rx,
+=======
+				  nic_dmn->ste_type,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  dmn->info.caps.gvmi);
 
 		mlx5dr_ste_set_bit_mask(ste_arr, sb->bit_mask);

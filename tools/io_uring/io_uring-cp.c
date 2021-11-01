@@ -131,7 +131,12 @@ static int copy_file(struct io_uring *ring, off_t insize)
 	writes = reads = offset = 0;
 
 	while (insize || write_left) {
+<<<<<<< HEAD
 		int had_reads, got_comp;
+=======
+		unsigned long had_reads;
+		int got_comp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * Queue up as many reads as we can
@@ -173,6 +178,7 @@ static int copy_file(struct io_uring *ring, off_t insize)
 			if (!got_comp) {
 				ret = io_uring_wait_cqe(ring, &cqe);
 				got_comp = 1;
+<<<<<<< HEAD
 			} else {
 				ret = io_uring_peek_cqe(ring, &cqe);
 				if (ret == -EAGAIN) {
@@ -180,6 +186,10 @@ static int copy_file(struct io_uring *ring, off_t insize)
 					ret = 0;
 				}
 			}
+=======
+			} else
+				ret = io_uring_peek_cqe(ring, &cqe);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (ret < 0) {
 				fprintf(stderr, "io_uring_peek_cqe: %s\n",
 							strerror(-ret));
@@ -198,7 +208,11 @@ static int copy_file(struct io_uring *ring, off_t insize)
 				fprintf(stderr, "cqe failed: %s\n",
 						strerror(-cqe->res));
 				return 1;
+<<<<<<< HEAD
 			} else if (cqe->res != data->iov.iov_len) {
+=======
+			} else if ((size_t) cqe->res != data->iov.iov_len) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				/* Short read/write, adjust and requeue */
 				data->iov.iov_base += cqe->res;
 				data->iov.iov_len -= cqe->res;
@@ -225,6 +239,7 @@ static int copy_file(struct io_uring *ring, off_t insize)
 		}
 	}
 
+<<<<<<< HEAD
 	/* wait out pending writes */
 	while (writes) {
 		struct io_data *data;
@@ -244,6 +259,8 @@ static int copy_file(struct io_uring *ring, off_t insize)
 		io_uring_cqe_seen(ring, cqe);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

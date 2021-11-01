@@ -72,8 +72,11 @@ static int ksz9477_spi_remove(struct spi_device *spi)
 	if (dev)
 		ksz_switch_remove(dev);
 
+<<<<<<< HEAD
 	spi_set_drvdata(spi, NULL);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -81,10 +84,15 @@ static void ksz9477_spi_shutdown(struct spi_device *spi)
 {
 	struct ksz_device *dev = spi_get_drvdata(spi);
 
+<<<<<<< HEAD
 	if (dev)
 		dsa_switch_shutdown(dev->ds);
 
 	spi_set_drvdata(spi, NULL);
+=======
+	if (dev && dev->dev_ops->shutdown)
+		dev->dev_ops->shutdown(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct of_device_id ksz9477_dt_ids[] = {

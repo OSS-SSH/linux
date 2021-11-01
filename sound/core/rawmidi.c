@@ -873,21 +873,27 @@ static long snd_rawmidi_ioctl(struct file *file, unsigned int cmd, unsigned long
 			return -EINVAL;
 		}
 	}
+<<<<<<< HEAD
 	case SNDRV_RAWMIDI_IOCTL_USER_PVERSION:
 		if (get_user(rfile->user_pversion, (unsigned int __user *)arg))
 			return -EFAULT;
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case SNDRV_RAWMIDI_IOCTL_PARAMS:
 	{
 		struct snd_rawmidi_params params;
 
 		if (copy_from_user(&params, argp, sizeof(struct snd_rawmidi_params)))
 			return -EFAULT;
+<<<<<<< HEAD
 		if (rfile->user_pversion < SNDRV_PROTOCOL_VERSION(2, 0, 2)) {
 			params.mode = 0;
 			memset(params.reserved, 0, sizeof(params.reserved));
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		switch (params.stream) {
 		case SNDRV_RAWMIDI_STREAM_OUTPUT:
 			if (rfile->output == NULL)

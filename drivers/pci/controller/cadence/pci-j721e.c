@@ -27,7 +27,10 @@
 #define STATUS_REG_SYS_2	0x508
 #define STATUS_CLR_REG_SYS_2	0x708
 #define LINK_DOWN		BIT(1)
+<<<<<<< HEAD
 #define J7200_LINK_DOWN		BIT(10)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define J721E_PCIE_USER_CMD_STATUS	0x4
 #define LINK_TRAINING_ENABLE		BIT(0)
@@ -58,7 +61,10 @@ struct j721e_pcie {
 	struct cdns_pcie	*cdns_pcie;
 	void __iomem		*user_cfg_base;
 	void __iomem		*intd_cfg_base;
+<<<<<<< HEAD
 	u32			linkdown_irq_regfield;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum j721e_pcie_mode {
@@ -68,10 +74,14 @@ enum j721e_pcie_mode {
 
 struct j721e_pcie_data {
 	enum j721e_pcie_mode	mode;
+<<<<<<< HEAD
 	unsigned int		quirk_retrain_flag:1;
 	unsigned int		quirk_detect_quiet_flag:1;
 	u32			linkdown_irq_regfield;
 	unsigned int		byte_access_allowed:1;
+=======
+	bool quirk_retrain_flag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline u32 j721e_pcie_user_readl(struct j721e_pcie *pcie, u32 offset)
@@ -103,12 +113,20 @@ static irqreturn_t j721e_pcie_link_irq_handler(int irq, void *priv)
 	u32 reg;
 
 	reg = j721e_pcie_intd_readl(pcie, STATUS_REG_SYS_2);
+<<<<<<< HEAD
 	if (!(reg & pcie->linkdown_irq_regfield))
+=======
+	if (!(reg & LINK_DOWN))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return IRQ_NONE;
 
 	dev_err(dev, "LINK DOWN!\n");
 
+<<<<<<< HEAD
 	j721e_pcie_intd_writel(pcie, STATUS_CLR_REG_SYS_2, pcie->linkdown_irq_regfield);
+=======
+	j721e_pcie_intd_writel(pcie, STATUS_CLR_REG_SYS_2, LINK_DOWN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return IRQ_HANDLED;
 }
 
@@ -117,7 +135,11 @@ static void j721e_pcie_config_link_irq(struct j721e_pcie *pcie)
 	u32 reg;
 
 	reg = j721e_pcie_intd_readl(pcie, ENABLE_REG_SYS_2);
+<<<<<<< HEAD
 	reg |= pcie->linkdown_irq_regfield;
+=======
+	reg |= LINK_DOWN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	j721e_pcie_intd_writel(pcie, ENABLE_REG_SYS_2, reg);
 }
 
@@ -289,12 +311,16 @@ static struct pci_ops cdns_ti_pcie_host_ops = {
 static const struct j721e_pcie_data j721e_pcie_rc_data = {
 	.mode = PCI_MODE_RC,
 	.quirk_retrain_flag = true,
+<<<<<<< HEAD
 	.byte_access_allowed = false,
 	.linkdown_irq_regfield = LINK_DOWN,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct j721e_pcie_data j721e_pcie_ep_data = {
 	.mode = PCI_MODE_EP,
+<<<<<<< HEAD
 	.linkdown_irq_regfield = LINK_DOWN,
 };
 
@@ -319,6 +345,8 @@ static const struct j721e_pcie_data am64_pcie_rc_data = {
 static const struct j721e_pcie_data am64_pcie_ep_data = {
 	.mode = PCI_MODE_EP,
 	.linkdown_irq_regfield = J7200_LINK_DOWN,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct of_device_id of_j721e_pcie_match[] = {
@@ -330,6 +358,7 @@ static const struct of_device_id of_j721e_pcie_match[] = {
 		.compatible = "ti,j721e-pcie-ep",
 		.data = &j721e_pcie_ep_data,
 	},
+<<<<<<< HEAD
 	{
 		.compatible = "ti,j7200-pcie-host",
 		.data = &j7200_pcie_rc_data,
@@ -346,6 +375,8 @@ static const struct of_device_id of_j721e_pcie_match[] = {
 		.compatible = "ti,am64-pcie-ep",
 		.data = &am64_pcie_ep_data,
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{},
 };
 
@@ -379,7 +410,10 @@ static int j721e_pcie_probe(struct platform_device *pdev)
 
 	pcie->dev = dev;
 	pcie->mode = mode;
+<<<<<<< HEAD
 	pcie->linkdown_irq_regfield = data->linkdown_irq_regfield;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	base = devm_platform_ioremap_resource_byname(pdev, "intd_cfg");
 	if (IS_ERR(base))
@@ -439,11 +473,17 @@ static int j721e_pcie_probe(struct platform_device *pdev)
 			goto err_get_sync;
 		}
 
+<<<<<<< HEAD
 		if (!data->byte_access_allowed)
 			bridge->ops = &cdns_ti_pcie_host_ops;
 		rc = pci_host_bridge_priv(bridge);
 		rc->quirk_retrain_flag = data->quirk_retrain_flag;
 		rc->quirk_detect_quiet_flag = data->quirk_detect_quiet_flag;
+=======
+		bridge->ops = &cdns_ti_pcie_host_ops;
+		rc = pci_host_bridge_priv(bridge);
+		rc->quirk_retrain_flag = data->quirk_retrain_flag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		cdns_pcie = &rc->pcie;
 		cdns_pcie->dev = dev;
@@ -509,7 +549,10 @@ static int j721e_pcie_probe(struct platform_device *pdev)
 			ret = -ENOMEM;
 			goto err_get_sync;
 		}
+<<<<<<< HEAD
 		ep->quirk_detect_quiet_flag = data->quirk_detect_quiet_flag;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		cdns_pcie = &ep->pcie;
 		cdns_pcie->dev = dev;

@@ -330,6 +330,7 @@ static int sdio_read_cis(struct mmc_card *card, struct sdio_func *func)
 			prev = &this->next;
 
 			if (ret == -ENOENT) {
+<<<<<<< HEAD
 
 				if (time_after(jiffies, timeout))
 					break;
@@ -349,6 +350,15 @@ static int sdio_read_cis(struct mmc_card *card, struct sdio_func *func)
 						mmc_hostname(card->host),
 						tpl_code, tpl_link, this->data,
 						tpl_link);
+=======
+				if (time_after(jiffies, timeout))
+					break;
+				/* warn about unknown tuples */
+				pr_warn_ratelimited("%s: queuing unknown"
+				       " CIS tuple 0x%02x (%u bytes)\n",
+				       mmc_hostname(card->host),
+				       tpl_code, tpl_link);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			/* keep on analyzing tuples */

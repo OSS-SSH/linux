@@ -318,11 +318,14 @@ static inline bool should_update_pstate_support(bool safe_to_lower, bool calc_su
 	return false;
 }
 
+<<<<<<< HEAD
 static inline int khz_to_mhz_ceil(int khz)
 {
 	return (khz + 999) / 1000;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int clk_mgr_helper_get_active_display_cnt(
 		struct dc *dc,
 		struct dc_state *context);

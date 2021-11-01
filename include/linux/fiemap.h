@@ -18,4 +18,11 @@ int fiemap_prep(struct inode *inode, struct fiemap_extent_info *fieinfo,
 int fiemap_fill_next_extent(struct fiemap_extent_info *info, u64 logical,
 			    u64 phys, u64 len, u32 flags);
 
+<<<<<<< HEAD
+=======
+int generic_block_fiemap(struct inode *inode,
+		struct fiemap_extent_info *fieinfo, u64 start, u64 len,
+		get_block_t *get_block);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _LINUX_FIEMAP_H 1 */

@@ -79,7 +79,11 @@ static int auxiliary_bus_probe(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static void auxiliary_bus_remove(struct device *dev)
+=======
+static int auxiliary_bus_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct auxiliary_driver *auxdrv = to_auxiliary_drv(dev->driver);
 	struct auxiliary_device *auxdev = to_auxiliary_dev(dev);
@@ -87,6 +91,11 @@ static void auxiliary_bus_remove(struct device *dev)
 	if (auxdrv->remove)
 		auxdrv->remove(auxdev);
 	dev_pm_domain_detach(dev, true);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void auxiliary_bus_shutdown(struct device *dev)
@@ -229,8 +238,11 @@ EXPORT_SYMBOL_GPL(auxiliary_find_device);
 int __auxiliary_driver_register(struct auxiliary_driver *auxdrv,
 				struct module *owner, const char *modname)
 {
+<<<<<<< HEAD
 	int ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (WARN_ON(!auxdrv->probe) || WARN_ON(!auxdrv->id_table))
 		return -EINVAL;
 
@@ -246,11 +258,15 @@ int __auxiliary_driver_register(struct auxiliary_driver *auxdrv,
 	auxdrv->driver.bus = &auxiliary_bus_type;
 	auxdrv->driver.mod_name = modname;
 
+<<<<<<< HEAD
 	ret = driver_register(&auxdrv->driver);
 	if (ret)
 		kfree(auxdrv->driver.name);
 
 	return ret;
+=======
+	return driver_register(&auxdrv->driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(__auxiliary_driver_register);
 

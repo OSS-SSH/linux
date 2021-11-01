@@ -207,7 +207,11 @@ static void intel_hpd_init_pins(struct drm_i915_private *dev_priv)
 	    (!HAS_PCH_SPLIT(dev_priv) || HAS_PCH_NOP(dev_priv)))
 		return;
 
+<<<<<<< HEAD
 	if (INTEL_PCH_TYPE(dev_priv) >= PCH_DG1)
+=======
+	if (HAS_PCH_DG1(dev_priv))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hpd->pch_hpd = hpd_sde_dg1;
 	else if (INTEL_PCH_TYPE(dev_priv) >= PCH_ICP)
 		hpd->pch_hpd = hpd_icp;
@@ -2297,10 +2301,18 @@ static u32 gen8_de_port_aux_mask(struct drm_i915_private *dev_priv)
 			GEN9_AUX_CHANNEL_C |
 			GEN9_AUX_CHANNEL_D;
 
+<<<<<<< HEAD
 	if (DISPLAY_VER(dev_priv) == 11) {
 		mask |= ICL_AUX_CHANNEL_F;
 		mask |= ICL_AUX_CHANNEL_E;
 	}
+=======
+	if (IS_CNL_WITH_PORT_F(dev_priv) || DISPLAY_VER(dev_priv) == 11)
+		mask |= CNL_AUX_CHANNEL_F;
+
+	if (DISPLAY_VER(dev_priv) == 11)
+		mask |= ICL_AUX_CHANNEL_E;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return mask;
 }
@@ -2697,9 +2709,17 @@ gen11_display_irq_handler(struct drm_i915_private *i915)
 	enable_rpm_wakeref_asserts(&i915->runtime_pm);
 }
 
+<<<<<<< HEAD
 static irqreturn_t gen11_irq_handler(int irq, void *arg)
 {
 	struct drm_i915_private *i915 = arg;
+=======
+static __always_inline irqreturn_t
+__gen11_irq_handler(struct drm_i915_private * const i915,
+		    u32 (*intr_disable)(void __iomem * const regs),
+		    void (*intr_enable)(void __iomem * const regs))
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void __iomem * const regs = i915->uncore.regs;
 	struct intel_gt *gt = &i915->gt;
 	u32 master_ctl;
@@ -2708,9 +2728,15 @@ static irqreturn_t gen11_irq_handler(int irq, void *arg)
 	if (!intel_irqs_enabled(i915))
 		return IRQ_NONE;
 
+<<<<<<< HEAD
 	master_ctl = gen11_master_intr_disable(regs);
 	if (!master_ctl) {
 		gen11_master_intr_enable(regs);
+=======
+	master_ctl = intr_disable(regs);
+	if (!master_ctl) {
+		intr_enable(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return IRQ_NONE;
 	}
 
@@ -2723,7 +2749,11 @@ static irqreturn_t gen11_irq_handler(int irq, void *arg)
 
 	gu_misc_iir = gen11_gu_misc_irq_ack(gt, master_ctl);
 
+<<<<<<< HEAD
 	gen11_master_intr_enable(regs);
+=======
+	intr_enable(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	gen11_gu_misc_irq_handler(gt, gu_misc_iir);
 
@@ -2732,11 +2762,23 @@ static irqreturn_t gen11_irq_handler(int irq, void *arg)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
 static inline u32 dg1_master_intr_disable(void __iomem * const regs)
+=======
+static irqreturn_t gen11_irq_handler(int irq, void *arg)
+{
+	return __gen11_irq_handler(arg,
+				   gen11_master_intr_disable,
+				   gen11_master_intr_enable);
+}
+
+static u32 dg1_master_intr_disable_and_ack(void __iomem * const regs)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u32 val;
 
 	/* First disable interrupts */
+<<<<<<< HEAD
 	raw_reg_write(regs, DG1_MSTR_TILE_INTR, 0);
 
 	/* Get the indication levels and ack the master unit */
@@ -2745,17 +2787,43 @@ static inline u32 dg1_master_intr_disable(void __iomem * const regs)
 		return 0;
 
 	raw_reg_write(regs, DG1_MSTR_TILE_INTR, val);
+=======
+	raw_reg_write(regs, DG1_MSTR_UNIT_INTR, 0);
+
+	/* Get the indication levels and ack the master unit */
+	val = raw_reg_read(regs, DG1_MSTR_UNIT_INTR);
+	if (unlikely(!val))
+		return 0;
+
+	raw_reg_write(regs, DG1_MSTR_UNIT_INTR, val);
+
+	/*
+	 * Now with master disabled, get a sample of level indications
+	 * for this interrupt and ack them right away - we keep GEN11_MASTER_IRQ
+	 * out as this bit doesn't exist anymore for DG1
+	 */
+	val = raw_reg_read(regs, GEN11_GFX_MSTR_IRQ) & ~GEN11_MASTER_IRQ;
+	if (unlikely(!val))
+		return 0;
+
+	raw_reg_write(regs, GEN11_GFX_MSTR_IRQ, val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return val;
 }
 
 static inline void dg1_master_intr_enable(void __iomem * const regs)
 {
+<<<<<<< HEAD
 	raw_reg_write(regs, DG1_MSTR_TILE_INTR, DG1_MSTR_IRQ);
+=======
+	raw_reg_write(regs, DG1_MSTR_UNIT_INTR, DG1_MSTR_IRQ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static irqreturn_t dg1_irq_handler(int irq, void *arg)
 {
+<<<<<<< HEAD
 	struct drm_i915_private * const i915 = arg;
 	struct intel_gt *gt = &i915->gt;
 	void __iomem * const regs = i915->uncore.regs;
@@ -2795,6 +2863,11 @@ static irqreturn_t dg1_irq_handler(int irq, void *arg)
 	pmu_irq_stats(i915, IRQ_HANDLED);
 
 	return IRQ_HANDLED;
+=======
+	return __gen11_irq_handler(arg,
+				   dg1_master_intr_disable_and_ack,
+				   dg1_master_intr_enable);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Called from drm generic code, passed 'crtc' which
@@ -2895,6 +2968,7 @@ static bool gen11_dsi_configure_te(struct intel_crtc *intel_crtc,
 	return true;
 }
 
+<<<<<<< HEAD
 int bdw_enable_vblank(struct drm_crtc *_crtc)
 {
 	struct intel_crtc *crtc = to_intel_crtc(_crtc);
@@ -2903,6 +2977,16 @@ int bdw_enable_vblank(struct drm_crtc *_crtc)
 	unsigned long irqflags;
 
 	if (gen11_dsi_configure_te(crtc, true))
+=======
+int bdw_enable_vblank(struct drm_crtc *crtc)
+{
+	struct drm_i915_private *dev_priv = to_i915(crtc->dev);
+	struct intel_crtc *intel_crtc = to_intel_crtc(crtc);
+	enum pipe pipe = intel_crtc->pipe;
+	unsigned long irqflags;
+
+	if (gen11_dsi_configure_te(intel_crtc, true))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	spin_lock_irqsave(&dev_priv->irq_lock, irqflags);
@@ -2913,7 +2997,11 @@ int bdw_enable_vblank(struct drm_crtc *_crtc)
 	 * PSR is active as no frames are generated, so check only for PSR.
 	 */
 	if (HAS_PSR(dev_priv))
+<<<<<<< HEAD
 		drm_crtc_vblank_restore(&crtc->base);
+=======
+		drm_crtc_vblank_restore(crtc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -2967,6 +3055,7 @@ void ilk_disable_vblank(struct drm_crtc *crtc)
 	spin_unlock_irqrestore(&dev_priv->irq_lock, irqflags);
 }
 
+<<<<<<< HEAD
 void bdw_disable_vblank(struct drm_crtc *_crtc)
 {
 	struct intel_crtc *crtc = to_intel_crtc(_crtc);
@@ -2975,6 +3064,16 @@ void bdw_disable_vblank(struct drm_crtc *_crtc)
 	unsigned long irqflags;
 
 	if (gen11_dsi_configure_te(crtc, false))
+=======
+void bdw_disable_vblank(struct drm_crtc *crtc)
+{
+	struct drm_i915_private *dev_priv = to_i915(crtc->dev);
+	struct intel_crtc *intel_crtc = to_intel_crtc(crtc);
+	enum pipe pipe = intel_crtc->pipe;
+	unsigned long irqflags;
+
+	if (gen11_dsi_configure_te(intel_crtc, false))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	spin_lock_irqsave(&dev_priv->irq_lock, irqflags);
@@ -3079,6 +3178,27 @@ static void valleyview_irq_reset(struct drm_i915_private *dev_priv)
 	spin_unlock_irq(&dev_priv->irq_lock);
 }
 
+<<<<<<< HEAD
+=======
+static void cnp_display_clock_wa(struct drm_i915_private *dev_priv)
+{
+	struct intel_uncore *uncore = &dev_priv->uncore;
+
+	/*
+	 * Wa_14010685332:cnp/cmp,tgp,adp
+	 * TODO: Clarify which platforms this applies to
+	 * TODO: Figure out if this workaround can be applied in the s0ix suspend/resume handlers as
+	 * on earlier platforms and whether the workaround is also needed for runtime suspend/resume
+	 */
+	if (INTEL_PCH_TYPE(dev_priv) == PCH_CNP ||
+	    (INTEL_PCH_TYPE(dev_priv) >= PCH_TGP && INTEL_PCH_TYPE(dev_priv) < PCH_DG1)) {
+		intel_uncore_rmw(uncore, SOUTH_CHICKEN1, SBCLK_RUN_REFCLK_DIS,
+				 SBCLK_RUN_REFCLK_DIS);
+		intel_uncore_rmw(uncore, SOUTH_CHICKEN1, SBCLK_RUN_REFCLK_DIS, 0);
+	}
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void gen8_display_irq_reset(struct drm_i915_private *dev_priv)
 {
 	struct intel_uncore *uncore = &dev_priv->uncore;
@@ -3112,6 +3232,10 @@ static void gen8_irq_reset(struct drm_i915_private *dev_priv)
 	if (HAS_PCH_SPLIT(dev_priv))
 		ibx_irq_reset(dev_priv);
 
+<<<<<<< HEAD
+=======
+	cnp_display_clock_wa(dev_priv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void gen11_display_irq_reset(struct drm_i915_private *dev_priv)
@@ -3155,6 +3279,7 @@ static void gen11_display_irq_reset(struct drm_i915_private *dev_priv)
 
 	if (INTEL_PCH_TYPE(dev_priv) >= PCH_ICP)
 		GEN3_IRQ_RESET(uncore, SDE);
+<<<<<<< HEAD
 }
 
 static void gen11_irq_reset(struct drm_i915_private *dev_priv)
@@ -3175,6 +3300,20 @@ static void dg1_irq_reset(struct drm_i915_private *dev_priv)
 	struct intel_uncore *uncore = &dev_priv->uncore;
 
 	dg1_master_intr_disable(dev_priv->uncore.regs);
+=======
+
+	cnp_display_clock_wa(dev_priv);
+}
+
+static void gen11_irq_reset(struct drm_i915_private *dev_priv)
+{
+	struct intel_uncore *uncore = &dev_priv->uncore;
+
+	if (HAS_MASTER_UNIT_IRQ(dev_priv))
+		dg1_master_intr_disable_and_ack(dev_priv->uncore.regs);
+	else
+		gen11_master_intr_disable(dev_priv->uncore.regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	gen11_gt_irq_reset(&dev_priv->gt);
 	gen11_display_irq_reset(dev_priv);
@@ -3866,6 +4005,7 @@ static void gen11_irq_postinstall(struct drm_i915_private *dev_priv)
 
 	GEN3_IRQ_INIT(uncore, GEN11_GU_MISC_, ~gu_misc_masked, gu_misc_masked);
 
+<<<<<<< HEAD
 	gen11_master_intr_enable(uncore->regs);
 	intel_uncore_posting_read(&dev_priv->uncore, GEN11_GFX_MSTR_IRQ);
 }
@@ -3888,6 +4028,15 @@ static void dg1_irq_postinstall(struct drm_i915_private *dev_priv)
 
 	dg1_master_intr_enable(dev_priv->uncore.regs);
 	intel_uncore_posting_read(&dev_priv->uncore, DG1_MSTR_TILE_INTR);
+=======
+	if (HAS_MASTER_UNIT_IRQ(dev_priv)) {
+		dg1_master_intr_enable(uncore->regs);
+		intel_uncore_posting_read(&dev_priv->uncore, DG1_MSTR_UNIT_INTR);
+	} else {
+		gen11_master_intr_enable(uncore->regs);
+		intel_uncore_posting_read(&dev_priv->uncore, GEN11_GFX_MSTR_IRQ);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void cherryview_irq_postinstall(struct drm_i915_private *dev_priv)
@@ -4426,9 +4575,15 @@ static irq_handler_t intel_irq_handler(struct drm_i915_private *dev_priv)
 		else
 			return i8xx_irq_handler;
 	} else {
+<<<<<<< HEAD
 		if (GRAPHICS_VER_FULL(dev_priv) >= IP_VER(12, 10))
 			return dg1_irq_handler;
 		else if (GRAPHICS_VER(dev_priv) >= 11)
+=======
+		if (HAS_MASTER_UNIT_IRQ(dev_priv))
+			return dg1_irq_handler;
+		if (GRAPHICS_VER(dev_priv) >= 11)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return gen11_irq_handler;
 		else if (GRAPHICS_VER(dev_priv) >= 8)
 			return gen8_irq_handler;
@@ -4451,9 +4606,13 @@ static void intel_irq_reset(struct drm_i915_private *dev_priv)
 		else
 			i8xx_irq_reset(dev_priv);
 	} else {
+<<<<<<< HEAD
 		if (GRAPHICS_VER_FULL(dev_priv) >= IP_VER(12, 10))
 			dg1_irq_reset(dev_priv);
 		else if (GRAPHICS_VER(dev_priv) >= 11)
+=======
+		if (GRAPHICS_VER(dev_priv) >= 11)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			gen11_irq_reset(dev_priv);
 		else if (GRAPHICS_VER(dev_priv) >= 8)
 			gen8_irq_reset(dev_priv);
@@ -4476,9 +4635,13 @@ static void intel_irq_postinstall(struct drm_i915_private *dev_priv)
 		else
 			i8xx_irq_postinstall(dev_priv);
 	} else {
+<<<<<<< HEAD
 		if (GRAPHICS_VER_FULL(dev_priv) >= IP_VER(12, 10))
 			dg1_irq_postinstall(dev_priv);
 		else if (GRAPHICS_VER(dev_priv) >= 11)
+=======
+		if (GRAPHICS_VER(dev_priv) >= 11)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			gen11_irq_postinstall(dev_priv);
 		else if (GRAPHICS_VER(dev_priv) >= 8)
 			gen8_irq_postinstall(dev_priv);
@@ -4510,14 +4673,22 @@ int intel_irq_install(struct drm_i915_private *dev_priv)
 	 */
 	dev_priv->runtime_pm.irqs_enabled = true;
 
+<<<<<<< HEAD
 	dev_priv->irq_enabled = true;
+=======
+	dev_priv->drm.irq_enabled = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	intel_irq_reset(dev_priv);
 
 	ret = request_irq(irq, intel_irq_handler(dev_priv),
 			  IRQF_SHARED, DRIVER_NAME, dev_priv);
 	if (ret < 0) {
+<<<<<<< HEAD
 		dev_priv->irq_enabled = false;
+=======
+		dev_priv->drm.irq_enabled = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ret;
 	}
 
@@ -4543,10 +4714,17 @@ void intel_irq_uninstall(struct drm_i915_private *dev_priv)
 	 * intel_modeset_driver_remove() calling us out of sequence.
 	 * Would be nice if it didn't do that...
 	 */
+<<<<<<< HEAD
 	if (!dev_priv->irq_enabled)
 		return;
 
 	dev_priv->irq_enabled = false;
+=======
+	if (!dev_priv->drm.irq_enabled)
+		return;
+
+	dev_priv->drm.irq_enabled = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	intel_irq_reset(dev_priv);
 

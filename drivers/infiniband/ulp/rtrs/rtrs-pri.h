@@ -96,8 +96,11 @@ struct rtrs_con {
 	struct rdma_cm_id	*cm_id;
 	unsigned int		cid;
 	int                     nr_cqe;
+<<<<<<< HEAD
 	atomic_t		wr_cnt;
 	atomic_t		sq_wr_avail;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct rtrs_sess {
@@ -110,7 +113,10 @@ struct rtrs_sess {
 	unsigned int		con_num;
 	unsigned int		irq_con_num;
 	unsigned int		recon_cnt;
+<<<<<<< HEAD
 	unsigned int		signal_interval;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct rtrs_ib_dev	*dev;
 	int			dev_ref;
 	struct ib_cqe		*hb_cqe;
@@ -312,6 +318,12 @@ int rtrs_iu_post_rdma_write_imm(struct rtrs_con *con, struct rtrs_iu *iu,
 				struct ib_send_wr *tail);
 
 int rtrs_post_recv_empty(struct rtrs_con *con, struct ib_cqe *cqe);
+<<<<<<< HEAD
+=======
+int rtrs_post_rdma_write_imm_empty(struct rtrs_con *con, struct ib_cqe *cqe,
+				   u32 imm_data, enum ib_send_flags flags,
+				   struct ib_send_wr *head);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int rtrs_cq_qp_create(struct rtrs_sess *sess, struct rtrs_con *con,
 		      u32 max_send_sge, int cq_vector, int nr_cqe,

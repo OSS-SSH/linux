@@ -4,7 +4,10 @@
 #include <linux/virtio_config.h>
 #include <linux/module.h>
 #include <linux/idr.h>
+<<<<<<< HEAD
 #include <linux/of.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <uapi/linux/virtio_ids.h>
 
 /* Unique numbering for virtio devices. */
@@ -239,6 +242,7 @@ static int virtio_dev_probe(struct device *_d)
 		driver_features_legacy = driver_features;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Some devices detect legacy solely via F_VERSION_1. Write
 	 * F_VERSION_1 to force LE config space accesses before FEATURES_OK for
@@ -250,6 +254,8 @@ static int virtio_dev_probe(struct device *_d)
 		dev->config->finalize_features(dev);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (device_features & (1ULL << VIRTIO_F_VERSION_1))
 		dev->features = driver_features & device_features;
 	else
@@ -290,7 +296,11 @@ err:
 
 }
 
+<<<<<<< HEAD
 static void virtio_dev_remove(struct device *_d)
+=======
+static int virtio_dev_remove(struct device *_d)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct virtio_device *dev = dev_to_virtio(_d);
 	struct virtio_driver *drv = drv_to_virtio(dev->dev.driver);
@@ -304,8 +314,12 @@ static void virtio_dev_remove(struct device *_d)
 
 	/* Acknowledge the device's existence again. */
 	virtio_add_status(dev, VIRTIO_CONFIG_S_ACKNOWLEDGE);
+<<<<<<< HEAD
 
 	of_node_put(dev->dev.of_node);
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct bus_type virtio_bus = {
@@ -332,6 +346,7 @@ void unregister_virtio_driver(struct virtio_driver *driver)
 }
 EXPORT_SYMBOL_GPL(unregister_virtio_driver);
 
+<<<<<<< HEAD
 static int virtio_device_of_init(struct virtio_device *dev)
 {
 	struct device_node *np, *pnode = dev_of_node(dev->dev.parent);
@@ -374,6 +389,8 @@ out:
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * register_virtio_device - register virtio device
  * @dev        : virtio device to be registered
@@ -398,10 +415,13 @@ int register_virtio_device(struct virtio_device *dev)
 	dev->index = err;
 	dev_set_name(&dev->dev, "virtio%u", dev->index);
 
+<<<<<<< HEAD
 	err = virtio_device_of_init(dev);
 	if (err)
 		goto out_ida_remove;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_init(&dev->config_lock);
 	dev->config_enabled = false;
 	dev->config_change_pending = false;
@@ -414,7 +434,10 @@ int register_virtio_device(struct virtio_device *dev)
 	virtio_add_status(dev, VIRTIO_CONFIG_S_ACKNOWLEDGE);
 
 	INIT_LIST_HEAD(&dev->vqs);
+<<<<<<< HEAD
 	spin_lock_init(&dev->vqs_list_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * device_add() causes the bus infrastructure to look for a matching
@@ -422,6 +445,7 @@ int register_virtio_device(struct virtio_device *dev)
 	 */
 	err = device_add(&dev->dev);
 	if (err)
+<<<<<<< HEAD
 		goto out_of_node_put;
 
 	return 0;
@@ -432,6 +456,12 @@ out_ida_remove:
 	ida_simple_remove(&virtio_index_ida, dev->index);
 out:
 	virtio_add_status(dev, VIRTIO_CONFIG_S_FAILED);
+=======
+		ida_simple_remove(&virtio_index_ida, dev->index);
+out:
+	if (err)
+		virtio_add_status(dev, VIRTIO_CONFIG_S_FAILED);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 EXPORT_SYMBOL_GPL(register_virtio_device);

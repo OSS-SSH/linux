@@ -19,7 +19,11 @@ struct xfs_perag;
  * Btree block header size depends on a superblock flag.
  */
 #define XFS_INOBT_BLOCK_LEN(mp) \
+<<<<<<< HEAD
 	(xfs_has_crc(((mp))) ? \
+=======
+	(xfs_sb_version_hascrc(&((mp)->m_sb)) ? \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		XFS_BTREE_SBLOCK_CRC_LEN : XFS_BTREE_SBLOCK_LEN)
 
 /*

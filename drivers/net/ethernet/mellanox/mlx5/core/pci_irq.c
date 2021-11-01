@@ -13,12 +13,21 @@
 #endif
 
 #define MLX5_MAX_IRQ_NAME (32)
+<<<<<<< HEAD
 /* max irq_index is 2047, so four chars */
 #define MLX5_MAX_IRQ_IDX_CHARS (4)
 
 #define MLX5_SFS_PER_CTRL_IRQ 64
 #define MLX5_IRQ_CTRL_SF_MAX 8
 /* min num of vectors for SFs to be enabled */
+=======
+/* max irq_index is 255. three chars */
+#define MLX5_MAX_IRQ_IDX_CHARS (3)
+
+#define MLX5_SFS_PER_CTRL_IRQ 64
+#define MLX5_IRQ_CTRL_SF_MAX 8
+/* min num of vectores for SFs to be enabled */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MLX5_IRQ_VEC_COMP_BASE_SF 2
 
 #define MLX5_EQ_SHARE_IRQ_MAX_COMP (8)
@@ -28,6 +37,7 @@
 #define MLX5_EQ_REFS_PER_IRQ (2)
 
 struct mlx5_irq {
+<<<<<<< HEAD
 	struct atomic_notifier_head nh;
 	cpumask_var_t mask;
 	char name[MLX5_MAX_IRQ_NAME];
@@ -35,6 +45,15 @@ struct mlx5_irq {
 	int refcount;
 	u32 index;
 	int irqn;
+=======
+	u32 index;
+	struct atomic_notifier_head nh;
+	cpumask_var_t mask;
+	char name[MLX5_MAX_IRQ_NAME];
+	struct kref kref;
+	int irqn;
+	struct mlx5_irq_pool *pool;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct mlx5_irq_pool {
@@ -138,8 +157,14 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 static void irq_release(struct mlx5_irq *irq)
 {
+=======
+static void irq_release(struct kref *kref)
+{
+	struct mlx5_irq *irq = container_of(kref, struct mlx5_irq, kref);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mlx5_irq_pool *pool = irq->pool;
 
 	xa_erase(&pool->irqs, irq->index);
@@ -158,6 +183,7 @@ static void irq_put(struct mlx5_irq *irq)
 	struct mlx5_irq_pool *pool = irq->pool;
 
 	mutex_lock(&pool->lock);
+<<<<<<< HEAD
 	irq->refcount--;
 	if (!irq->refcount)
 		irq_release(irq);
@@ -183,6 +209,12 @@ static int irq_get(struct mlx5_irq *irq)
 	return err;
 }
 
+=======
+	kref_put(&irq->kref, irq_release);
+	mutex_unlock(&pool->lock);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static irqreturn_t irq_int_handler(int irq, void *nh)
 {
 	atomic_notifier_call_chain(nh, 0, NULL);
@@ -234,8 +266,12 @@ static struct mlx5_irq *irq_request(struct mlx5_irq_pool *pool, int i)
 		err = -ENOMEM;
 		goto err_cpumask;
 	}
+<<<<<<< HEAD
 	irq->pool = pool;
 	irq->refcount = 1;
+=======
+	kref_init(&irq->kref);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	irq->index = i;
 	err = xa_err(xa_store(&pool->irqs, irq->index, irq, GFP_KERNEL));
 	if (err) {
@@ -243,6 +279,10 @@ static struct mlx5_irq *irq_request(struct mlx5_irq_pool *pool, int i)
 			      irq->index, err);
 		goto err_xa;
 	}
+<<<<<<< HEAD
+=======
+	irq->pool = pool;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return irq;
 err_xa:
 	free_cpumask_var(irq->mask);
@@ -255,27 +295,46 @@ err_req_irq:
 
 int mlx5_irq_attach_nb(struct mlx5_irq *irq, struct notifier_block *nb)
 {
+<<<<<<< HEAD
 	int ret;
 
 	ret = irq_get(irq);
 	if (!ret)
+=======
+	int err;
+
+	err = kref_get_unless_zero(&irq->kref);
+	if (WARN_ON_ONCE(!err))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Something very bad happens here, we are enabling EQ
 		 * on non-existing IRQ.
 		 */
 		return -ENOENT;
+<<<<<<< HEAD
 	ret = atomic_notifier_chain_register(&irq->nh, nb);
 	if (ret)
 		irq_put(irq);
 	return ret;
+=======
+	err = atomic_notifier_chain_register(&irq->nh, nb);
+	if (err)
+		irq_put(irq);
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int mlx5_irq_detach_nb(struct mlx5_irq *irq, struct notifier_block *nb)
 {
+<<<<<<< HEAD
 	int err = 0;
 
 	err = atomic_notifier_chain_unregister(&irq->nh, nb);
 	irq_put(irq);
 	return err;
+=======
+	irq_put(irq);
+	return atomic_notifier_chain_unregister(&irq->nh, nb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct cpumask *mlx5_irq_get_affinity_mask(struct mlx5_irq *irq)
@@ -324,9 +383,16 @@ static struct mlx5_irq *irq_pool_find_least_loaded(struct mlx5_irq_pool *pool,
 	xa_for_each_range(&pool->irqs, index, iter, start, end) {
 		if (!cpumask_equal(iter->mask, affinity))
 			continue;
+<<<<<<< HEAD
 		if (iter->refcount < pool->min_threshold)
 			return iter;
 		if (!irq || iter->refcount < irq->refcount)
+=======
+		if (kref_read(&iter->kref) < pool->min_threshold)
+			return iter;
+		if (!irq || kref_read(&iter->kref) <
+		    kref_read(&irq->kref))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			irq = iter;
 	}
 	return irq;
@@ -341,7 +407,11 @@ static struct mlx5_irq *irq_pool_request_affinity(struct mlx5_irq_pool *pool,
 	mutex_lock(&pool->lock);
 	least_loaded_irq = irq_pool_find_least_loaded(pool, affinity);
 	if (least_loaded_irq &&
+<<<<<<< HEAD
 	    least_loaded_irq->refcount < pool->min_threshold)
+=======
+	    kref_read(&least_loaded_irq->kref) < pool->min_threshold)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 	new_irq = irq_pool_create_irq(pool, affinity);
 	if (IS_ERR(new_irq)) {
@@ -359,11 +429,19 @@ static struct mlx5_irq *irq_pool_request_affinity(struct mlx5_irq_pool *pool,
 	least_loaded_irq = new_irq;
 	goto unlock;
 out:
+<<<<<<< HEAD
 	irq_get_locked(least_loaded_irq);
 	if (least_loaded_irq->refcount > pool->max_threshold)
 		mlx5_core_dbg(pool->dev, "IRQ %u overloaded, pool_name: %s, %u EQs on this irq\n",
 			      least_loaded_irq->irqn, pool->name,
 			      least_loaded_irq->refcount / MLX5_EQ_REFS_PER_IRQ);
+=======
+	kref_get(&least_loaded_irq->kref);
+	if (kref_read(&least_loaded_irq->kref) > pool->max_threshold)
+		mlx5_core_dbg(pool->dev, "IRQ %u overloaded, pool_name: %s, %u EQs on this irq\n",
+			      least_loaded_irq->irqn, pool->name,
+			      kref_read(&least_loaded_irq->kref) / MLX5_EQ_REFS_PER_IRQ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 unlock:
 	mutex_unlock(&pool->lock);
 	return least_loaded_irq;
@@ -379,7 +457,11 @@ irq_pool_request_vector(struct mlx5_irq_pool *pool, int vecidx,
 	mutex_lock(&pool->lock);
 	irq = xa_load(&pool->irqs, vecidx);
 	if (irq) {
+<<<<<<< HEAD
 		irq_get_locked(irq);
+=======
+		kref_get(&irq->kref);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto unlock;
 	}
 	irq = irq_request(pool, vecidx);
@@ -446,7 +528,11 @@ out:
 		return irq;
 	mlx5_core_dbg(dev, "irq %u mapped to cpu %*pbl, %u EQs on this irq\n",
 		      irq->irqn, cpumask_pr_args(affinity),
+<<<<<<< HEAD
 		      irq->refcount / MLX5_EQ_REFS_PER_IRQ);
+=======
+		      kref_read(&irq->kref) / MLX5_EQ_REFS_PER_IRQ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return irq;
 }
 
@@ -459,7 +545,10 @@ irq_pool_alloc(struct mlx5_core_dev *dev, int start, int size, char *name,
 	if (!pool)
 		return ERR_PTR(-ENOMEM);
 	pool->dev = dev;
+<<<<<<< HEAD
 	mutex_init(&pool->lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xa_init_flags(&pool->irqs, XA_FLAGS_ALLOC);
 	pool->xa_num_irqs.min = start;
 	pool->xa_num_irqs.max = start + size - 1;
@@ -468,6 +557,10 @@ irq_pool_alloc(struct mlx5_core_dev *dev, int start, int size, char *name,
 			 name);
 	pool->min_threshold = min_threshold * MLX5_EQ_REFS_PER_IRQ;
 	pool->max_threshold = max_threshold * MLX5_EQ_REFS_PER_IRQ;
+<<<<<<< HEAD
+=======
+	mutex_init(&pool->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mlx5_core_dbg(dev, "pool->name = %s, pool->size = %d, pool->start = %d",
 		      name, size, start);
 	return pool;
@@ -478,6 +571,7 @@ static void irq_pool_free(struct mlx5_irq_pool *pool)
 	struct mlx5_irq *irq;
 	unsigned long index;
 
+<<<<<<< HEAD
 	/* There are cases in which we are destrying the irq_table before
 	 * freeing all the IRQs, fast teardown for example. Hence, free the irqs
 	 * which might not have been freed.
@@ -486,6 +580,11 @@ static void irq_pool_free(struct mlx5_irq_pool *pool)
 		irq_release(irq);
 	xa_destroy(&pool->irqs);
 	mutex_destroy(&pool->lock);
+=======
+	xa_for_each(&pool->irqs, index, irq)
+		irq_release(&irq->kref);
+	xa_destroy(&pool->irqs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kvfree(pool);
 }
 
@@ -506,7 +605,11 @@ static int irq_pools_init(struct mlx5_core_dev *dev, int sf_vec, int pf_vec)
 	if (!mlx5_sf_max_functions(dev))
 		return 0;
 	if (sf_vec < MLX5_IRQ_VEC_COMP_BASE_SF) {
+<<<<<<< HEAD
 		mlx5_core_dbg(dev, "Not enught IRQs for SFs. SF may run at lower performance\n");
+=======
+		mlx5_core_err(dev, "Not enough IRQs for SFs. SF may run at lower performance\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 	}
 
@@ -624,7 +727,11 @@ void mlx5_irq_table_destroy(struct mlx5_core_dev *dev)
 		return;
 
 	/* There are cases where IRQs still will be in used when we reaching
+<<<<<<< HEAD
 	 * to here. Hence, making sure all the irqs are released.
+=======
+	 * to here. Hence, making sure all the irqs are realeased.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	irq_pools_destroy(table);
 	pci_free_irq_vectors(dev->pdev);
@@ -633,9 +740,14 @@ void mlx5_irq_table_destroy(struct mlx5_core_dev *dev)
 int mlx5_irq_table_get_sfs_vec(struct mlx5_irq_table *table)
 {
 	if (table->sf_comp_pool)
+<<<<<<< HEAD
 		return min_t(int, num_online_cpus(),
 			     table->sf_comp_pool->xa_num_irqs.max -
 			     table->sf_comp_pool->xa_num_irqs.min + 1);
+=======
+		return table->sf_comp_pool->xa_num_irqs.max -
+			table->sf_comp_pool->xa_num_irqs.min + 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else
 		return mlx5_irq_table_get_num_comp(table);
 }

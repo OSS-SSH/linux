@@ -947,6 +947,10 @@ static const struct drm_plane_funcs ltdc_plane_funcs = {
 };
 
 static const struct drm_plane_helper_funcs ltdc_plane_helper_funcs = {
+<<<<<<< HEAD
+=======
+	.prepare_fb = drm_gem_plane_helper_prepare_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.atomic_check = ltdc_plane_atomic_check,
 	.atomic_update = ltdc_plane_atomic_update,
 	.atomic_disable = ltdc_plane_atomic_disable,
@@ -1121,9 +1125,14 @@ static int ltdc_encoder_init(struct drm_device *ddev, struct drm_bridge *bridge)
 
 	ret = drm_bridge_attach(encoder, bridge, NULL, 0);
 	if (ret) {
+<<<<<<< HEAD
 		if (ret != -EPROBE_DEFER)
 			drm_encoder_cleanup(encoder);
 		return ret;
+=======
+		drm_encoder_cleanup(encoder);
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	DRM_DEBUG_DRIVER("Bridge encoder:%d created\n", encoder->base.id);
@@ -1266,8 +1275,12 @@ int ltdc_load(struct drm_device *ddev)
 		if (bridge) {
 			ret = ltdc_encoder_init(ddev, bridge);
 			if (ret) {
+<<<<<<< HEAD
 				if (ret != -EPROBE_DEFER)
 					DRM_ERROR("init encoder endpoint %d\n", i);
+=======
+				DRM_ERROR("init encoder endpoint %d\n", i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				goto err;
 			}
 		}
@@ -1340,6 +1353,12 @@ int ltdc_load(struct drm_device *ddev)
 		goto err;
 	}
 
+<<<<<<< HEAD
+=======
+	/* Allow usage of vblank without having to call drm_irq_install */
+	ddev->irq_enabled = 1;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	clk_disable_unprepare(ldev->pixel_clk);
 
 	pinctrl_pm_select_sleep_state(ddev->dev);

@@ -92,6 +92,7 @@ static inline struct page *try_get_compound_head(struct page *page, int refs)
 	return head;
 }
 
+<<<<<<< HEAD
 /**
  * try_grab_compound_head() - attempt to elevate a page's refcount, by a
  * flags-dependent amount.
@@ -103,6 +104,12 @@ static inline struct page *try_get_compound_head(struct page *page, int refs)
  * @refs:  the value to (effectively) add to the page's refcount
  * @flags: gup flags: these are the FOLL_* flag values.
  *
+=======
+/*
+ * try_grab_compound_head() - attempt to elevate a page's refcount, by a
+ * flags-dependent amount.
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * "grab" names in this file mean, "look at flags to decide whether to use
  * FOLL_PIN or FOLL_GET behavior, when incrementing the page's refcount.
  *
@@ -110,6 +117,7 @@ static inline struct page *try_get_compound_head(struct page *page, int refs)
  * same time. (That's true throughout the get_user_pages*() and
  * pin_user_pages*() APIs.) Cases:
  *
+<<<<<<< HEAD
  *    FOLL_GET: page's refcount will be incremented by @refs.
  *
  *    FOLL_PIN on compound pages that are > two pages long: page's refcount will
@@ -118,18 +126,32 @@ static inline struct page *try_get_compound_head(struct page *page, int refs)
  *
  *    FOLL_PIN on normal pages, or compound pages that are two pages long:
  *    page's refcount will be incremented by @refs * GUP_PIN_COUNTING_BIAS.
+=======
+ *    FOLL_GET: page's refcount will be incremented by 1.
+ *    FOLL_PIN: page's refcount will be incremented by GUP_PIN_COUNTING_BIAS.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Return: head page (with refcount appropriately incremented) for success, or
  * NULL upon failure. If neither FOLL_GET nor FOLL_PIN was set, that's
  * considered failure, and furthermore, a likely bug in the caller, so a warning
  * is also emitted.
  */
+<<<<<<< HEAD
 struct page *try_grab_compound_head(struct page *page,
 				    int refs, unsigned int flags)
+=======
+__maybe_unused struct page *try_grab_compound_head(struct page *page,
+						   int refs, unsigned int flags)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (flags & FOLL_GET)
 		return try_get_compound_head(page, refs);
 	else if (flags & FOLL_PIN) {
+<<<<<<< HEAD
+=======
+		int orig_refs = refs;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/*
 		 * Can't do FOLL_LONGTERM + FOLL_PIN gup fast path if not in a
 		 * right zone, so fail and let the caller fall back to the slow
@@ -154,8 +176,11 @@ struct page *try_grab_compound_head(struct page *page,
 		 *
 		 * However, be sure to *also* increment the normal page refcount
 		 * field at least once, so that the page really is pinned.
+<<<<<<< HEAD
 		 * That's why the refcount from the earlier
 		 * try_get_compound_head() is left intact.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 */
 		if (hpage_pincount_available(page))
 			hpage_pincount_add(page, refs);
@@ -163,7 +188,11 @@ struct page *try_grab_compound_head(struct page *page,
 			page_ref_add(page, refs * (GUP_PIN_COUNTING_BIAS - 1));
 
 		mod_node_page_state(page_pgdat(page), NR_FOLL_PIN_ACQUIRED,
+<<<<<<< HEAD
 				    refs);
+=======
+				    orig_refs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		return page;
 	}
@@ -199,8 +228,15 @@ static void put_compound_head(struct page *page, int refs, unsigned int flags)
  * @flags:   gup flags: these are the FOLL_* flag values.
  *
  * Either FOLL_PIN or FOLL_GET (or neither) may be set, but not both at the same
+<<<<<<< HEAD
  * time. Cases: please see the try_grab_compound_head() documentation, with
  * "refs=1".
+=======
+ * time. Cases:
+ *
+ *    FOLL_GET: page's refcount will be incremented by 1.
+ *    FOLL_PIN: page's refcount will be incremented by GUP_PIN_COUNTING_BIAS.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Return: true for success, or if no action was required (if neither FOLL_PIN
  * nor FOLL_GET was set, nothing is done). False for failure: FOLL_GET or
@@ -208,10 +244,42 @@ static void put_compound_head(struct page *page, int refs, unsigned int flags)
  */
 bool __must_check try_grab_page(struct page *page, unsigned int flags)
 {
+<<<<<<< HEAD
 	if (!(flags & (FOLL_GET | FOLL_PIN)))
 		return true;
 
 	return try_grab_compound_head(page, 1, flags);
+=======
+	WARN_ON_ONCE((flags & (FOLL_GET | FOLL_PIN)) == (FOLL_GET | FOLL_PIN));
+
+	if (flags & FOLL_GET)
+		return try_get_page(page);
+	else if (flags & FOLL_PIN) {
+		int refs = 1;
+
+		page = compound_head(page);
+
+		if (WARN_ON_ONCE(page_ref_count(page) <= 0))
+			return false;
+
+		if (hpage_pincount_available(page))
+			hpage_pincount_add(page, 1);
+		else
+			refs = GUP_PIN_COUNTING_BIAS;
+
+		/*
+		 * Similar to try_grab_compound_head(): even if using the
+		 * hpage_pincount_add/_sub() routines, be sure to
+		 * *also* increment the normal page refcount field at least
+		 * once, so that the page really is pinned.
+		 */
+		page_ref_add(page, refs);
+
+		mod_node_page_state(page_pgdat(page), NR_FOLL_PIN_ACQUIRED, 1);
+	}
+
+	return true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1137,6 +1205,10 @@ static long __get_user_pages(struct mm_struct *mm,
 					 * We must stop here.
 					 */
 					BUG_ON(gup_flags & FOLL_NOWAIT);
+<<<<<<< HEAD
+=======
+					BUG_ON(ret != 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					goto out;
 				}
 				continue;
@@ -1261,7 +1333,11 @@ int fixup_user_fault(struct mm_struct *mm,
 		     bool *unlocked)
 {
 	struct vm_area_struct *vma;
+<<<<<<< HEAD
 	vm_fault_t ret;
+=======
+	vm_fault_t ret, major = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	address = untagged_addr(address);
 
@@ -1281,6 +1357,10 @@ retry:
 		return -EINTR;
 
 	ret = handle_mm_fault(vma, address, fault_flags, NULL);
+<<<<<<< HEAD
+=======
+	major |= ret & VM_FAULT_MAJOR;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret & VM_FAULT_ERROR) {
 		int err = vm_fault_to_errno(ret, 0);
 
@@ -1459,8 +1539,13 @@ long populate_vma_page_range(struct vm_area_struct *vma,
 	unsigned long nr_pages = (end - start) / PAGE_SIZE;
 	int gup_flags;
 
+<<<<<<< HEAD
 	VM_BUG_ON(!PAGE_ALIGNED(start));
 	VM_BUG_ON(!PAGE_ALIGNED(end));
+=======
+	VM_BUG_ON(start & ~PAGE_MASK);
+	VM_BUG_ON(end   & ~PAGE_MASK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	VM_BUG_ON_VMA(start < vma->vm_start, vma);
 	VM_BUG_ON_VMA(end   > vma->vm_end, vma);
 	mmap_assert_locked(mm);
@@ -1542,12 +1627,18 @@ long faultin_vma_page_range(struct vm_area_struct *vma, unsigned long start,
 		gup_flags |= FOLL_WRITE;
 
 	/*
+<<<<<<< HEAD
 	 * We want to report -EINVAL instead of -EFAULT for any permission
 	 * problems or incompatible mappings.
 	 */
 	if (check_vma_flags(vma, gup_flags))
 		return -EINVAL;
 
+=======
+	 * See check_vma_flags(): Will return -EFAULT on incompatible mappings
+	 * or with insufficient permissions.
+	 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return __get_user_pages(mm, start, nr_pages, gup_flags,
 				NULL, NULL, locked);
 }
@@ -1759,7 +1850,11 @@ static long check_and_migrate_movable_pages(unsigned long nr_pages,
 	if (!list_empty(&movable_page_list)) {
 		ret = migrate_pages(&movable_page_list, alloc_migration_target,
 				    NULL, (unsigned long)&mtc, MIGRATE_SYNC,
+<<<<<<< HEAD
 				    MR_LONGTERM_PIN, NULL);
+=======
+				    MR_LONGTERM_PIN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret && !list_empty(&movable_page_list))
 			putback_movable_pages(&movable_page_list);
 	}
@@ -2228,7 +2323,10 @@ static int __gup_device_huge(unsigned long pfn, unsigned long addr,
 {
 	int nr_start = *nr;
 	struct dev_pagemap *pgmap = NULL;
+<<<<<<< HEAD
 	int ret = 1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	do {
 		struct page *page = pfn_to_page(pfn);
@@ -2236,22 +2334,36 @@ static int __gup_device_huge(unsigned long pfn, unsigned long addr,
 		pgmap = get_dev_pagemap(pfn, pgmap);
 		if (unlikely(!pgmap)) {
 			undo_dev_pagemap(nr, nr_start, flags, pages);
+<<<<<<< HEAD
 			ret = 0;
 			break;
+=======
+			return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		SetPageReferenced(page);
 		pages[*nr] = page;
 		if (unlikely(!try_grab_page(page, flags))) {
 			undo_dev_pagemap(nr, nr_start, flags, pages);
+<<<<<<< HEAD
 			ret = 0;
 			break;
+=======
+			return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		(*nr)++;
 		pfn++;
 	} while (addr += PAGE_SIZE, addr != end);
 
+<<<<<<< HEAD
 	put_dev_pagemap(pgmap);
 	return ret;
+=======
+	if (pgmap)
+		put_dev_pagemap(pgmap);
+	return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __gup_device_huge_pmd(pmd_t orig, pmd_t *pmdp, unsigned long addr,

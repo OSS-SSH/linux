@@ -80,7 +80,11 @@ static long kvmppc_rm_tce_to_ua(struct kvm *kvm,
 	unsigned long gfn = tce >> PAGE_SHIFT;
 	struct kvm_memory_slot *memslot;
 
+<<<<<<< HEAD
 	memslot = __gfn_to_memslot(kvm_memslots_raw(kvm), gfn);
+=======
+	memslot = search_memslots(kvm_memslots_raw(kvm), gfn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!memslot)
 		return -EINVAL;
 
@@ -173,6 +177,7 @@ static void kvmppc_rm_tce_put(struct kvmppc_spapr_tce_table *stt,
 	idx -= stt->offset;
 	page = stt->pages[idx / TCES_PER_PAGE];
 	/*
+<<<<<<< HEAD
 	 * kvmppc_rm_ioba_validate() allows pages not be allocated if TCE is
 	 * being cleared, otherwise it returns H_TOO_HARD and we skip this.
 	 */
@@ -180,6 +185,12 @@ static void kvmppc_rm_tce_put(struct kvmppc_spapr_tce_table *stt,
 		WARN_ON_ONCE_RM(tce != 0);
 		return;
 	}
+=======
+	 * page must not be NULL in real mode,
+	 * kvmppc_rm_ioba_validate() must have taken care of this.
+	 */
+	WARN_ON_ONCE_RM(!page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tbl = kvmppc_page_address(page);
 
 	tbl[idx % TCES_PER_PAGE] = tce;

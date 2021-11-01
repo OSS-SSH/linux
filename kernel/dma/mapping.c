@@ -177,8 +177,17 @@ void dma_unmap_page_attrs(struct device *dev, dma_addr_t addr, size_t size,
 }
 EXPORT_SYMBOL(dma_unmap_page_attrs);
 
+<<<<<<< HEAD
 static int __dma_map_sg_attrs(struct device *dev, struct scatterlist *sg,
 	 int nents, enum dma_data_direction dir, unsigned long attrs)
+=======
+/*
+ * dma_maps_sg_attrs returns 0 on error and > 0 on success.
+ * It should never return a value < 0.
+ */
+int dma_map_sg_attrs(struct device *dev, struct scatterlist *sg, int nents,
+		enum dma_data_direction dir, unsigned long attrs)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct dma_map_ops *ops = get_dma_ops(dev);
 	int ents;
@@ -193,6 +202,7 @@ static int __dma_map_sg_attrs(struct device *dev, struct scatterlist *sg,
 		ents = dma_direct_map_sg(dev, sg, nents, dir, attrs);
 	else
 		ents = ops->map_sg(dev, sg, nents, dir, attrs);
+<<<<<<< HEAD
 
 	if (ents > 0)
 		debug_dma_map_sg(dev, sg, nents, ents, dir);
@@ -269,6 +279,15 @@ int dma_map_sgtable(struct device *dev, struct sg_table *sgt,
 }
 EXPORT_SYMBOL_GPL(dma_map_sgtable);
 
+=======
+	BUG_ON(ents < 0);
+	debug_dma_map_sg(dev, sg, nents, ents, dir);
+
+	return ents;
+}
+EXPORT_SYMBOL(dma_map_sg_attrs);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void dma_unmap_sg_attrs(struct device *dev, struct scatterlist *sg,
 				      int nents, enum dma_data_direction dir,
 				      unsigned long attrs)

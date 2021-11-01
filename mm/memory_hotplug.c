@@ -52,6 +52,7 @@ module_param(memmap_on_memory, bool, 0444);
 MODULE_PARM_DESC(memmap_on_memory, "Enable memmap on memory for memory hotplug");
 #endif
 
+<<<<<<< HEAD
 enum {
 	ONLINE_POLICY_CONTIG_ZONES = 0,
 	ONLINE_POLICY_AUTO_MOVABLE,
@@ -119,6 +120,8 @@ MODULE_PARM_DESC(auto_movable_numa_aware,
 		"\"auto-movable\" online policy. Default: true");
 #endif /* CONFIG_NUMA */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * online_page_callback contains pointer to current page onlining function.
  * Initially it is generic_online_page(). If it is required it could be
@@ -477,13 +480,23 @@ void __ref remove_pfn_range_from_zone(struct zone *zone,
 				 sizeof(struct page) * cur_nr_pages);
 	}
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_ZONE_DEVICE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Zone shrinking code cannot properly deal with ZONE_DEVICE. So
 	 * we will not try to shrink the zones - which is okay as
 	 * set_zone_contiguous() cannot deal with ZONE_DEVICE either way.
 	 */
+<<<<<<< HEAD
 	if (zone_is_zone_device(zone))
 		return;
+=======
+	if (zone_idx(zone) == ZONE_DEVICE)
+		return;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	clear_zone_contiguous(zone);
 
@@ -728,6 +741,7 @@ void __ref move_pfn_range_to_zone(struct zone *zone, unsigned long start_pfn,
 	set_zone_contiguous(zone);
 }
 
+<<<<<<< HEAD
 struct auto_movable_stats {
 	unsigned long kernel_early_pages;
 	unsigned long movable_pages;
@@ -831,6 +845,8 @@ static bool auto_movable_can_online_movable(int nid, struct memory_group *group,
 	return movable_pages <= (auto_movable_ratio * kernel_early_pages) / 100;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Returns a default kernel memory zone for the given pfn range.
  * If no kernel zone covers this pfn range it will automatically go
@@ -852,6 +868,7 @@ static struct zone *default_kernel_zone_for_pfn(int nid, unsigned long start_pfn
 	return &pgdat->node_zones[ZONE_NORMAL];
 }
 
+<<<<<<< HEAD
 /*
  * Determine to which zone to online memory dynamically based on user
  * configuration and system stats. We care about the following ratio:
@@ -963,6 +980,8 @@ kernel_zone:
 	return default_kernel_zone_for_pfn(nid, pfn, nr_pages);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct zone *default_zone_for_pfn(int nid, unsigned long start_pfn,
 		unsigned long nr_pages)
 {
@@ -987,8 +1006,12 @@ static inline struct zone *default_zone_for_pfn(int nid, unsigned long start_pfn
 	return movable_node_enabled ? movable_zone : kernel_zone;
 }
 
+<<<<<<< HEAD
 struct zone *zone_for_pfn_range(int online_type, int nid,
 		struct memory_group *group, unsigned long start_pfn,
+=======
+struct zone *zone_for_pfn_range(int online_type, int nid, unsigned start_pfn,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unsigned long nr_pages)
 {
 	if (online_type == MMOP_ONLINE_KERNEL)
@@ -997,9 +1020,12 @@ struct zone *zone_for_pfn_range(int online_type, int nid,
 	if (online_type == MMOP_ONLINE_MOVABLE)
 		return &NODE_DATA(nid)->node_zones[ZONE_MOVABLE];
 
+<<<<<<< HEAD
 	if (online_policy == ONLINE_POLICY_AUTO_MOVABLE)
 		return auto_movable_zone_for_pfn(nid, group, start_pfn, nr_pages);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return default_zone_for_pfn(nid, start_pfn, nr_pages);
 }
 
@@ -1007,6 +1033,7 @@ struct zone *zone_for_pfn_range(int online_type, int nid,
  * This function should only be called by memory_block_{online,offline},
  * and {online,offline}_pages.
  */
+<<<<<<< HEAD
 void adjust_present_page_count(struct page *page, struct memory_group *group,
 			       long nr_pages)
 {
@@ -1026,6 +1053,12 @@ void adjust_present_page_count(struct page *page, struct memory_group *group,
 		group->present_movable_pages += nr_pages;
 	else if (group && !movable)
 		group->present_kernel_pages += nr_pages;
+=======
+void adjust_present_page_count(struct zone *zone, long nr_pages)
+{
+	zone->present_pages += nr_pages;
+	zone->zone_pgdat->node_present_pages += nr_pages;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int mhp_init_memmap_on_memory(unsigned long pfn, unsigned long nr_pages,
@@ -1071,8 +1104,12 @@ void mhp_deinit_memmap_on_memory(unsigned long pfn, unsigned long nr_pages)
 	kasan_remove_zero_shadow(__va(PFN_PHYS(pfn)), PFN_PHYS(nr_pages));
 }
 
+<<<<<<< HEAD
 int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
 		       struct zone *zone, struct memory_group *group)
+=======
+int __ref online_pages(unsigned long pfn, unsigned long nr_pages, struct zone *zone)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned long flags;
 	int need_zonelists_rebuild = 0;
@@ -1125,7 +1162,11 @@ int __ref online_pages(unsigned long pfn, unsigned long nr_pages,
 	}
 
 	online_pages_range(pfn, nr_pages);
+<<<<<<< HEAD
 	adjust_present_page_count(pfn_to_page(pfn), group, nr_pages);
+=======
+	adjust_present_page_count(zone, nr_pages);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	node_states_set_node(nid, &arg);
 	if (need_zonelists_rebuild)
@@ -1358,7 +1399,10 @@ int __ref add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags)
 {
 	struct mhp_params params = { .pgprot = pgprot_mhp(PAGE_KERNEL) };
 	struct vmem_altmap mhp_altmap = {};
+<<<<<<< HEAD
 	struct memory_group *group = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 start, size;
 	bool new_node = false;
 	int ret;
@@ -1370,6 +1414,7 @@ int __ref add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (mhp_flags & MHP_NID_IS_MGID) {
 		group = memory_group_find_by_id(nid);
 		if (!group)
@@ -1377,6 +1422,8 @@ int __ref add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags)
 		nid = group->nid;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!node_possible(nid)) {
 		WARN(1, "node %d was absent from the node_possible_map\n", nid);
 		return -EINVAL;
@@ -1411,10 +1458,16 @@ int __ref add_memory_resource(int nid, struct resource *res, mhp_t mhp_flags)
 		goto error;
 
 	/* create memory block devices after memory was added */
+<<<<<<< HEAD
 	ret = create_memory_block_devices(start, size, mhp_altmap.alloc,
 					  group);
 	if (ret) {
 		arch_remove_memory(start, size, NULL);
+=======
+	ret = create_memory_block_devices(start, size, mhp_altmap.alloc);
+	if (ret) {
+		arch_remove_memory(nid, start, size, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto error;
 	}
 
@@ -1606,7 +1659,11 @@ struct zone *test_pages_in_a_zone(unsigned long start_pfn,
 	unsigned long pfn, sec_end_pfn;
 	struct zone *zone = NULL;
 	struct page *page;
+<<<<<<< HEAD
 
+=======
+	int i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (pfn = start_pfn, sec_end_pfn = SECTION_ALIGN_UP(start_pfn + 1);
 	     pfn < end_pfn;
 	     pfn = sec_end_pfn, sec_end_pfn += PAGES_PER_SECTION) {
@@ -1615,10 +1672,24 @@ struct zone *test_pages_in_a_zone(unsigned long start_pfn,
 			continue;
 		for (; pfn < sec_end_pfn && pfn < end_pfn;
 		     pfn += MAX_ORDER_NR_PAGES) {
+<<<<<<< HEAD
 			/* Check if we got outside of the zone */
 			if (zone && !zone_spans_pfn(zone, pfn))
 				return NULL;
 			page = pfn_to_page(pfn);
+=======
+			i = 0;
+			/* This is just a CONFIG_HOLES_IN_ZONE check.*/
+			while ((i < MAX_ORDER_NR_PAGES) &&
+				!pfn_valid_within(pfn + i))
+				i++;
+			if (i == MAX_ORDER_NR_PAGES || pfn + i >= end_pfn)
+				continue;
+			/* Check if we got outside of the zone */
+			if (zone && !zone_spans_pfn(zone, pfn + i))
+				return NULL;
+			page = pfn_to_page(pfn + i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (zone && page_zone(page) != zone)
 				return NULL;
 			zone = page_zone(page);
@@ -1770,7 +1841,11 @@ do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
 		if (nodes_empty(nmask))
 			node_set(mtc.nid, nmask);
 		ret = migrate_pages(&source, alloc_migration_target, NULL,
+<<<<<<< HEAD
 			(unsigned long)&mtc, MIGRATE_SYNC, MR_MEMORY_HOTPLUG, NULL);
+=======
+			(unsigned long)&mtc, MIGRATE_SYNC, MR_MEMORY_HOTPLUG);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret) {
 			list_for_each_entry(page, &source, lru) {
 				if (__ratelimit(&migrate_rs)) {
@@ -1869,8 +1944,12 @@ static int count_system_ram_pages_cb(unsigned long start_pfn,
 	return 0;
 }
 
+<<<<<<< HEAD
 int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
 			struct memory_group *group)
+=======
+int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const unsigned long end_pfn = start_pfn + nr_pages;
 	unsigned long pfn, system_ram_pages = 0;
@@ -2006,7 +2085,11 @@ int __ref offline_pages(unsigned long start_pfn, unsigned long nr_pages,
 
 	/* removal success */
 	adjust_managed_page_count(pfn_to_page(start_pfn), -nr_pages);
+<<<<<<< HEAD
 	adjust_present_page_count(pfn_to_page(start_pfn), group, -nr_pages);
+=======
+	adjust_present_page_count(zone, -nr_pages);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* reinitialise watermarks and update pcp limits */
 	init_per_zone_wmark_min();
@@ -2033,7 +2116,10 @@ failed_removal_isolated:
 	undo_isolate_page_range(start_pfn, end_pfn, MIGRATE_MOVABLE);
 	memory_notify(MEM_CANCEL_OFFLINE, &arg);
 failed_removal_pcplists_disabled:
+<<<<<<< HEAD
 	lru_cache_enable();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	zone_pcp_enable(zone);
 failed_removal:
 	pr_debug("memory offlining [mem %#010llx-%#010llx] failed due to %s\n",
@@ -2048,9 +2134,13 @@ failed_removal:
 static int check_memblock_offlined_cb(struct memory_block *mem, void *arg)
 {
 	int ret = !is_memblock_offlined(mem);
+<<<<<<< HEAD
 	int *nid = arg;
 
 	*nid = mem->nid;
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (unlikely(ret)) {
 		phys_addr_t beginpa, endpa;
 
@@ -2143,12 +2233,21 @@ void try_offline_node(int nid)
 }
 EXPORT_SYMBOL(try_offline_node);
 
+<<<<<<< HEAD
 static int __ref try_remove_memory(u64 start, u64 size)
 {
 	struct vmem_altmap mhp_altmap = {};
 	struct vmem_altmap *altmap = NULL;
 	unsigned long nr_vmemmap_pages;
 	int rc = 0, nid = NUMA_NO_NODE;
+=======
+static int __ref try_remove_memory(int nid, u64 start, u64 size)
+{
+	int rc = 0;
+	struct vmem_altmap mhp_altmap = {};
+	struct vmem_altmap *altmap = NULL;
+	unsigned long nr_vmemmap_pages;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	BUG_ON(check_hotplug_memory_range(start, size));
 
@@ -2156,12 +2255,17 @@ static int __ref try_remove_memory(u64 start, u64 size)
 	 * All memory blocks must be offlined before removing memory.  Check
 	 * whether all memory blocks in question are offline and return error
 	 * if this is not the case.
+<<<<<<< HEAD
 	 *
 	 * While at it, determine the nid. Note that if we'd have mixed nodes,
 	 * we'd only try to offline the last determined one -- which is good
 	 * enough for the cases we care about.
 	 */
 	rc = walk_memory_blocks(start, size, &nid, check_memblock_offlined_cb);
+=======
+	 */
+	rc = walk_memory_blocks(start, size, NULL, check_memblock_offlined_cb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc)
 		return rc;
 
@@ -2201,7 +2305,11 @@ static int __ref try_remove_memory(u64 start, u64 size)
 
 	mem_hotplug_begin();
 
+<<<<<<< HEAD
 	arch_remove_memory(start, size, altmap);
+=======
+	arch_remove_memory(nid, start, size, altmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (IS_ENABLED(CONFIG_ARCH_KEEP_MEMBLOCK)) {
 		memblock_free(start, size);
@@ -2210,8 +2318,12 @@ static int __ref try_remove_memory(u64 start, u64 size)
 
 	release_mem_region_adjustable(start, size);
 
+<<<<<<< HEAD
 	if (nid != NUMA_NO_NODE)
 		try_offline_node(nid);
+=======
+	try_offline_node(nid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mem_hotplug_done();
 	return 0;
@@ -2219,6 +2331,10 @@ static int __ref try_remove_memory(u64 start, u64 size)
 
 /**
  * __remove_memory - Remove memory if every memory block is offline
+<<<<<<< HEAD
+=======
+ * @nid: the node ID
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @start: physical address of the region to remove
  * @size: size of the region to remove
  *
@@ -2226,14 +2342,22 @@ static int __ref try_remove_memory(u64 start, u64 size)
  * and online/offline operations before this call, as required by
  * try_offline_node().
  */
+<<<<<<< HEAD
 void __remove_memory(u64 start, u64 size)
+=======
+void __remove_memory(int nid, u64 start, u64 size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 
 	/*
 	 * trigger BUG() if some memory is not offlined prior to calling this
 	 * function
 	 */
+<<<<<<< HEAD
 	if (try_remove_memory(start, size))
+=======
+	if (try_remove_memory(nid, start, size))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		BUG();
 }
 
@@ -2241,12 +2365,20 @@ void __remove_memory(u64 start, u64 size)
  * Remove memory if every memory block is offline, otherwise return -EBUSY is
  * some memory is not offline
  */
+<<<<<<< HEAD
 int remove_memory(u64 start, u64 size)
+=======
+int remove_memory(int nid, u64 start, u64 size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int rc;
 
 	lock_device_hotplug();
+<<<<<<< HEAD
 	rc = try_remove_memory(start, size);
+=======
+	rc  = try_remove_memory(nid, start, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unlock_device_hotplug();
 
 	return rc;
@@ -2306,7 +2438,11 @@ static int try_reonline_memory_block(struct memory_block *mem, void *arg)
  * unplugged all memory (so it's no longer in use) and want to offline + remove
  * that memory.
  */
+<<<<<<< HEAD
 int offline_and_remove_memory(u64 start, u64 size)
+=======
+int offline_and_remove_memory(int nid, u64 start, u64 size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const unsigned long mb_count = size / memory_block_size_bytes();
 	uint8_t *online_types, *tmp;
@@ -2342,7 +2478,11 @@ int offline_and_remove_memory(u64 start, u64 size)
 	 * This cannot fail as it cannot get onlined in the meantime.
 	 */
 	if (!rc) {
+<<<<<<< HEAD
 		rc = try_remove_memory(start, size);
+=======
+		rc = try_remove_memory(nid, start, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rc)
 			pr_err("%s: Failed to remove memory: %d", __func__, rc);
 	}

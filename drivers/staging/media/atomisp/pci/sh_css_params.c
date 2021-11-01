@@ -813,15 +813,24 @@ convert_allocate_fpntbl(struct ia_css_isp_parameters *params)
 }
 
 static int
+<<<<<<< HEAD
 store_fpntbl(struct ia_css_isp_parameters *params, ia_css_ptr ptr)
 {
+=======
+store_fpntbl(struct ia_css_isp_parameters *params, ia_css_ptr ptr) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ia_css_host_data *isp_data;
 
 	assert(params);
 	assert(ptr != mmgr_NULL);
 
 	isp_data = convert_allocate_fpntbl(params);
+<<<<<<< HEAD
 	if (!isp_data) {
+=======
+	if (!isp_data)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		IA_CSS_LEAVE_ERR_PRIVATE(-ENOMEM);
 		return -ENOMEM;
 	}
@@ -894,8 +903,12 @@ ia_css_process_kernel(struct ia_css_stream *stream,
 
 static int
 sh_css_select_dp_10bpp_config(const struct ia_css_pipe *pipe,
+<<<<<<< HEAD
 			      bool *is_dp_10bpp)
 {
+=======
+			      bool *is_dp_10bpp) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 	/* Currently we check if 10bpp DPC configuration is required based
 	 * on the use case,i.e. if BDS and DPC is both enabled. The more cleaner
@@ -904,10 +917,19 @@ sh_css_select_dp_10bpp_config(const struct ia_css_pipe *pipe,
 	 * implementation. (This is because the configuration is set before a
 	 * binary is selected, and the binary info is not available)
 	 */
+<<<<<<< HEAD
 	if ((!pipe) || (!is_dp_10bpp)) {
 		IA_CSS_LEAVE_ERR_PRIVATE(-EINVAL);
 		err = -EINVAL;
 	} else {
+=======
+	if ((!pipe) || (!is_dp_10bpp))
+	{
+		IA_CSS_LEAVE_ERR_PRIVATE(-EINVAL);
+		err = -EINVAL;
+	} else
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		*is_dp_10bpp = false;
 
 		/* check if DPC is enabled from the host */
@@ -935,8 +957,12 @@ sh_css_select_dp_10bpp_config(const struct ia_css_pipe *pipe,
 
 int
 sh_css_set_black_frame(struct ia_css_stream *stream,
+<<<<<<< HEAD
 		       const struct ia_css_frame *raw_black_frame)
 {
+=======
+		       const struct ia_css_frame *raw_black_frame) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ia_css_isp_parameters *params;
 	/* this function desperately needs to be moved to the ISP or SP such
 	 * that it can use the DMA.
@@ -957,11 +983,21 @@ sh_css_set_black_frame(struct ia_css_stream *stream,
 	IA_CSS_ENTER_PRIVATE("black_frame=%p", raw_black_frame);
 
 	if (params->fpn_config.data &&
+<<<<<<< HEAD
 	    (params->fpn_config.width != width || params->fpn_config.height != height)) {
 		kvfree(params->fpn_config.data);
 		params->fpn_config.data = NULL;
 	}
 	if (!params->fpn_config.data) {
+=======
+	    (params->fpn_config.width != width || params->fpn_config.height != height))
+	{
+		kvfree(params->fpn_config.data);
+		params->fpn_config.data = NULL;
+	}
+	if (!params->fpn_config.data)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		params->fpn_config.data = kvmalloc(height * width *
 						   sizeof(short), GFP_KERNEL);
 		if (!params->fpn_config.data) {
@@ -975,7 +1011,12 @@ sh_css_set_black_frame(struct ia_css_stream *stream,
 	}
 
 	/* store raw to fpntbl */
+<<<<<<< HEAD
 	for (y = 0; y < height; y++) {
+=======
+	for (y = 0; y < height; y++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (x = 0; x < width; x += (ISP_VEC_NELEMS * 2)) {
 			int ofs = y * width + x;
 
@@ -1178,8 +1219,12 @@ sh_css_enable_pipeline(const struct ia_css_binary *binary)
 static int
 ia_css_process_zoom_and_motion(
     struct ia_css_isp_parameters *params,
+<<<<<<< HEAD
     const struct ia_css_pipeline_stage *first_stage)
 {
+=======
+    const struct ia_css_pipeline_stage *first_stage) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* first_stage can be  NULL */
 	const struct ia_css_pipeline_stage *stage;
 	int err = 0;
@@ -1193,7 +1238,12 @@ ia_css_process_zoom_and_motion(
 	IA_CSS_ENTER_PRIVATE("");
 
 	/* Go through all stages to udate uds and cropping */
+<<<<<<< HEAD
 	for (stage = first_stage; stage; stage = stage->next) {
+=======
+	for (stage = first_stage; stage; stage = stage->next)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct ia_css_binary *binary;
 		/* note: the var below is made static as it is quite large;
 		   if it is not static it ends up on the stack which could
@@ -1578,8 +1628,12 @@ err:
 
 int
 ia_css_get_3a_statistics(struct ia_css_3a_statistics           *host_stats,
+<<<<<<< HEAD
 			 const struct ia_css_isp_3a_statistics *isp_stats)
 {
+=======
+			 const struct ia_css_isp_3a_statistics *isp_stats) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ia_css_isp_3a_statistics_map *map;
 	int ret = 0;
 
@@ -1589,11 +1643,21 @@ ia_css_get_3a_statistics(struct ia_css_3a_statistics           *host_stats,
 	assert(isp_stats);
 
 	map = ia_css_isp_3a_statistics_map_allocate(isp_stats, NULL);
+<<<<<<< HEAD
 	if (map) {
 		hmm_load(isp_stats->data_ptr, map->data_ptr, isp_stats->size);
 		ia_css_translate_3a_statistics(host_stats, map);
 		ia_css_isp_3a_statistics_map_free(map);
 	} else {
+=======
+	if (map)
+	{
+		hmm_load(isp_stats->data_ptr, map->data_ptr, isp_stats->size);
+		ia_css_translate_3a_statistics(host_stats, map);
+		ia_css_isp_3a_statistics_map_free(map);
+	} else
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		IA_CSS_ERROR("out of memory");
 		ret = -ENOMEM;
 	}
@@ -1890,8 +1954,12 @@ sh_css_pipe_isp_config_get(struct ia_css_pipe *pipe)
 int
 ia_css_stream_set_isp_config(
     struct ia_css_stream *stream,
+<<<<<<< HEAD
     const struct ia_css_isp_config *config)
 {
+=======
+    const struct ia_css_isp_config *config) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ia_css_stream_set_isp_config_on_pipe(stream, config, NULL);
 }
 
@@ -1899,8 +1967,12 @@ int
 ia_css_stream_set_isp_config_on_pipe(
     struct ia_css_stream *stream,
     const struct ia_css_isp_config *config,
+<<<<<<< HEAD
     struct ia_css_pipe *pipe)
 {
+=======
+    struct ia_css_pipe *pipe) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 
 	if ((!stream) || (!config))
@@ -1921,8 +1993,12 @@ ia_css_stream_set_isp_config_on_pipe(
 
 int
 ia_css_pipe_set_isp_config(struct ia_css_pipe *pipe,
+<<<<<<< HEAD
 			   struct ia_css_isp_config *config)
 {
+=======
+			   struct ia_css_isp_config *config) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ia_css_pipe *pipe_in = pipe;
 	int err = 0;
 
@@ -1947,8 +2023,12 @@ static int
 sh_css_set_global_isp_config_on_pipe(
     struct ia_css_pipe *curr_pipe,
     const struct ia_css_isp_config *config,
+<<<<<<< HEAD
     struct ia_css_pipe *pipe)
 {
+=======
+    struct ia_css_pipe *pipe) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 	int err1 = 0;
 	int err2 = 0;
@@ -1977,8 +2057,12 @@ static int
 sh_css_set_per_frame_isp_config_on_pipe(
     struct ia_css_stream *stream,
     const struct ia_css_isp_config *config,
+<<<<<<< HEAD
     struct ia_css_pipe *pipe)
 {
+=======
+    struct ia_css_pipe *pipe) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int i;
 	bool per_frame_config_created = false;
 	int err = 0;
@@ -1992,7 +2076,12 @@ sh_css_set_per_frame_isp_config_on_pipe(
 
 	IA_CSS_ENTER_PRIVATE("stream=%p, config=%p, pipe=%p", stream, config, pipe);
 
+<<<<<<< HEAD
 	if (!pipe) {
+=======
+	if (!pipe)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = -EINVAL;
 		goto exit;
 	}
@@ -2000,7 +2089,12 @@ sh_css_set_per_frame_isp_config_on_pipe(
 	/* create per-frame ISP params object with default values
 	 * from stream->isp_params_configs if one doesn't already exist
 	*/
+<<<<<<< HEAD
 	if (!stream->per_frame_isp_params_configs) {
+=======
+	if (!stream->per_frame_isp_params_configs)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = sh_css_create_isp_params(stream,
 					       &stream->per_frame_isp_params_configs);
 		if (err)
@@ -2011,13 +2105,23 @@ sh_css_set_per_frame_isp_config_on_pipe(
 	params = stream->per_frame_isp_params_configs;
 
 	/* update new ISP params object with the new config */
+<<<<<<< HEAD
 	if (!sh_css_init_isp_params_from_global(stream, params, false, pipe)) {
+=======
+	if (!sh_css_init_isp_params_from_global(stream, params, false, pipe))
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err1 = -EINVAL;
 	}
 
 	err2 = sh_css_init_isp_params_from_config(stream->pipes[0], params, config, pipe);
 
+<<<<<<< HEAD
 	if (per_frame_config_created) {
+=======
+	if (per_frame_config_created)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ddr_ptrs = &params->ddr_ptrs;
 		ddr_ptrs_size = &params->ddr_ptrs_size;
 		/* create per pipe reference to general ddr_ptrs */
@@ -2048,8 +2152,12 @@ static int
 sh_css_init_isp_params_from_config(struct ia_css_pipe *pipe,
 				   struct ia_css_isp_parameters *params,
 				   const struct ia_css_isp_config *config,
+<<<<<<< HEAD
 				   struct ia_css_pipe *pipe_in)
 {
+=======
+				   struct ia_css_pipe *pipe_in) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 	bool is_dp_10bpp = true;
 
@@ -2094,7 +2202,12 @@ sh_css_init_isp_params_from_config(struct ia_css_pipe *pipe,
 	}
 
 	if (0 ==
+<<<<<<< HEAD
 	    sh_css_select_dp_10bpp_config(pipe, &is_dp_10bpp)) {
+=======
+	    sh_css_select_dp_10bpp_config(pipe, &is_dp_10bpp))
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* return an error when both DPC and BDS is enabled by the
 		 * user. */
 		/* we do not exit from this point immediately to allow internal
@@ -2102,7 +2215,12 @@ sh_css_init_isp_params_from_config(struct ia_css_pipe *pipe,
 		if (is_dp_10bpp) {
 			err = -EINVAL;
 		}
+<<<<<<< HEAD
 	} else {
+=======
+	} else
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = -EINVAL;
 		goto exit;
 	}
@@ -2355,8 +2473,12 @@ static unsigned int g_param_buffer_dequeue_count;
 static unsigned int g_param_buffer_enqueue_count;
 
 int
+<<<<<<< HEAD
 ia_css_stream_isp_parameters_init(struct ia_css_stream *stream)
 {
+=======
+ia_css_stream_isp_parameters_init(struct ia_css_stream *stream) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 	unsigned int i;
 	struct sh_css_ddr_address_map *ddr_ptrs;
@@ -2366,7 +2488,12 @@ ia_css_stream_isp_parameters_init(struct ia_css_stream *stream)
 	assert(stream);
 	IA_CSS_ENTER_PRIVATE("void");
 
+<<<<<<< HEAD
 	if (!stream) {
+=======
+	if (!stream)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		IA_CSS_LEAVE_ERR_PRIVATE(-EINVAL);
 		return -EINVAL;
 	}
@@ -2381,7 +2508,12 @@ ia_css_stream_isp_parameters_init(struct ia_css_stream *stream)
 		goto ERR;
 
 	params = stream->isp_params_configs;
+<<<<<<< HEAD
 	if (!sh_css_init_isp_params_from_global(stream, params, true, NULL)) {
+=======
+	if (!sh_css_init_isp_params_from_global(stream, params, true, NULL))
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* we do not return the error immediately to enable internal
 		 * firmware feature testing */
 		err = -EINVAL;
@@ -2391,7 +2523,12 @@ ia_css_stream_isp_parameters_init(struct ia_css_stream *stream)
 	ddr_ptrs_size = &params->ddr_ptrs_size;
 
 	/* create per pipe reference to general ddr_ptrs */
+<<<<<<< HEAD
 	for (i = 0; i < IA_CSS_PIPE_ID_NUM; i++) {
+=======
+	for (i = 0; i < IA_CSS_PIPE_ID_NUM; i++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ref_sh_css_ddr_address_map(ddr_ptrs, &params->pipe_ddr_ptrs[i]);
 		params->pipe_ddr_ptrs_size[i] = *ddr_ptrs_size;
 	}
@@ -2425,8 +2562,12 @@ ia_css_set_sdis2_config(
 
 static int
 sh_css_create_isp_params(struct ia_css_stream *stream,
+<<<<<<< HEAD
 			 struct ia_css_isp_parameters **isp_params_out)
 {
+=======
+			 struct ia_css_isp_parameters **isp_params_out) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool succ = true;
 	unsigned int i;
 	struct sh_css_ddr_address_map *ddr_ptrs;
@@ -2436,20 +2577,35 @@ sh_css_create_isp_params(struct ia_css_stream *stream,
 	struct ia_css_isp_parameters *params =
 	kvmalloc(sizeof(struct ia_css_isp_parameters), GFP_KERNEL);
 
+<<<<<<< HEAD
 	if (!params) {
+=======
+	if (!params)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		*isp_params_out = NULL;
 		err = -ENOMEM;
 		IA_CSS_ERROR("%s:%d error: cannot allocate memory", __FILE__, __LINE__);
 		IA_CSS_LEAVE_ERR_PRIVATE(err);
 		return err;
+<<<<<<< HEAD
 	} else {
+=======
+	} else
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		memset(params, 0, sizeof(struct ia_css_isp_parameters));
 	}
 
 	ddr_ptrs = &params->ddr_ptrs;
 	ddr_ptrs_size = &params->ddr_ptrs_size;
 
+<<<<<<< HEAD
 	for (i = 0; i < IA_CSS_PIPE_ID_NUM; i++) {
+=======
+	for (i = 0; i < IA_CSS_PIPE_ID_NUM; i++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		memset(&params->pipe_ddr_ptrs[i], 0,
 		       sizeof(params->pipe_ddr_ptrs[i]));
 		memset(&params->pipe_ddr_ptrs_size[i], 0,
@@ -2706,8 +2862,12 @@ exit:
 }
 
 int
+<<<<<<< HEAD
 sh_css_params_init(void)
 {
+=======
+sh_css_params_init(void) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i, p;
 
 	IA_CSS_ENTER_PRIVATE("void");
@@ -2716,7 +2876,12 @@ sh_css_params_init(void)
 	g_param_buffer_dequeue_count = 0;
 	g_param_buffer_enqueue_count = 0;
 
+<<<<<<< HEAD
 	for (p = 0; p < IA_CSS_PIPE_ID_NUM; p++) {
+=======
+	for (p = 0; p < IA_CSS_PIPE_ID_NUM; p++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (i = 0; i < SH_CSS_MAX_STAGES; i++) {
 			xmem_sp_stage_ptrs[p][i] =
 			ia_css_refcount_increment(-1,
@@ -2754,7 +2919,12 @@ sh_css_params_init(void)
 								 ATOMISP_MAP_FLAG_CLEARED));
 
 	if ((sp_ddr_ptrs == mmgr_NULL) ||
+<<<<<<< HEAD
 	    (xmem_sp_group_ptrs == mmgr_NULL)) {
+=======
+	    (xmem_sp_group_ptrs == mmgr_NULL))
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ia_css_uninit();
 		IA_CSS_LEAVE_ERR_PRIVATE(-ENOMEM);
 		return -ENOMEM;
@@ -3085,14 +3255,23 @@ store_morph_plane(
     unsigned int width,
     unsigned int height,
     ia_css_ptr dest,
+<<<<<<< HEAD
     unsigned int aligned_width)
 {
+=======
+    unsigned int aligned_width) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ia_css_host_data *isp_data;
 
 	assert(dest != mmgr_NULL);
 
 	isp_data = convert_allocate_morph_plane(data, width, height, aligned_width);
+<<<<<<< HEAD
 	if (!isp_data) {
+=======
+	if (!isp_data)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		IA_CSS_LEAVE_ERR_PRIVATE(-ENOMEM);
 		return -ENOMEM;
 	}
@@ -3212,8 +3391,12 @@ int
 sh_css_param_update_isp_params(struct ia_css_pipe *curr_pipe,
 			       struct ia_css_isp_parameters *params,
 			       bool commit,
+<<<<<<< HEAD
 			       struct ia_css_pipe *pipe_in)
 {
+=======
+			       struct ia_css_pipe *pipe_in) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 	ia_css_ptr cpy;
 	int i;
@@ -3230,13 +3413,23 @@ sh_css_param_update_isp_params(struct ia_css_pipe *curr_pipe,
 	raw_bit_depth = ia_css_stream_input_format_bits_per_pixel(curr_pipe->stream);
 
 	/* now make the map available to the sp */
+<<<<<<< HEAD
 	if (!commit) {
+=======
+	if (!commit)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		IA_CSS_LEAVE_ERR_PRIVATE(err);
 		return err;
 	}
 	/* enqueue a copies of the mem_map to
 	   the designated pipelines */
+<<<<<<< HEAD
 	for (i = 0; i < curr_pipe->stream->num_pipes; i++) {
+=======
+	for (i = 0; i < curr_pipe->stream->num_pipes; i++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct ia_css_pipe *pipe;
 		struct sh_css_ddr_address_map *cur_map;
 		struct sh_css_ddr_address_map_size *cur_map_size;
@@ -3420,8 +3613,12 @@ sh_css_params_write_to_ddr_internal(
     struct ia_css_isp_parameters *params,
     const struct ia_css_pipeline_stage *stage,
     struct sh_css_ddr_address_map *ddr_map,
+<<<<<<< HEAD
     struct sh_css_ddr_address_map_size *ddr_map_size)
 {
+=======
+    struct sh_css_ddr_address_map_size *ddr_map_size) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 	const struct ia_css_binary *binary;
 
@@ -3443,7 +3640,12 @@ sh_css_params_write_to_ddr_internal(
 
 	stage_num = stage->stage_num;
 
+<<<<<<< HEAD
 	if (binary->info->sp.enable.fpnr) {
+=======
+	if (binary->info->sp.enable.fpnr)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		buff_realloced = reallocate_buffer(&ddr_map->fpn_tbl,
 						   &ddr_map_size->fpn_tbl,
 						   (size_t)(FPNTBL_BYTES(binary)),
@@ -3464,7 +3666,12 @@ sh_css_params_write_to_ddr_internal(
 		}
 	}
 
+<<<<<<< HEAD
 	if (binary->info->sp.enable.sc) {
+=======
+	if (binary->info->sp.enable.sc)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		u32 enable_conv;
 		size_t bytes;
 
@@ -3566,7 +3773,12 @@ sh_css_params_write_to_ddr_internal(
 	 * DPC kernel. The code below sets the pipe specific configuration to
 	 * individual binaries. */
 	if (IS_ISP2401 &&
+<<<<<<< HEAD
 	    params->pipe_dpc_config_changed[pipe_id] && binary->info->sp.enable.dpc) {
+=======
+	    params->pipe_dpc_config_changed[pipe_id] && binary->info->sp.enable.dpc)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unsigned int size   =
 		    stage->binary->info->mem_offsets.offsets.param->dmem.dp.size;
 
@@ -3584,7 +3796,12 @@ sh_css_params_write_to_ddr_internal(
 		}
 	}
 
+<<<<<<< HEAD
 	if (params->config_changed[IA_CSS_MACC_ID] && binary->info->sp.enable.macc) {
+=======
+	if (params->config_changed[IA_CSS_MACC_ID] && binary->info->sp.enable.macc)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unsigned int i, j, idx;
 		unsigned int idx_map[] = {
 			0, 1, 3, 2, 6, 7, 5, 4, 12, 13, 15, 14, 10, 11, 9, 8
@@ -3633,7 +3850,12 @@ sh_css_params_write_to_ddr_internal(
 			   sizeof(converted_macc_table.data));
 	}
 
+<<<<<<< HEAD
 	if (binary->info->sp.enable.dvs_6axis) {
+=======
+	if (binary->info->sp.enable.dvs_6axis)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* because UV is packed into the Y plane, calc total
 		 * YYU size = /2 gives size of UV-only,
 		 * total YYU size = UV-only * 3.
@@ -3691,7 +3913,12 @@ sh_css_params_write_to_ddr_internal(
 		}
 	}
 
+<<<<<<< HEAD
 	if (binary->info->sp.enable.ca_gdc) {
+=======
+	if (binary->info->sp.enable.ca_gdc)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unsigned int i;
 		ia_css_ptr *virt_addr_tetra_x[
 
@@ -3796,7 +4023,12 @@ sh_css_params_write_to_ddr_internal(
 	}
 
 	/* After special cases like SC, FPN since they may change parameters */
+<<<<<<< HEAD
 	for (mem = 0; mem < N_IA_CSS_MEMORIES; mem++) {
+=======
+	for (mem = 0; mem < N_IA_CSS_MEMORIES; mem++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		const struct ia_css_isp_data *isp_data =
 		    ia_css_isp_param_get_isp_mem_init(&binary->info->sp.mem_initializers,
 						    IA_CSS_PARAM_CLASS_PARAM, mem);
@@ -4009,8 +4241,12 @@ static int write_ia_css_isp_parameter_set_info_to_ddr(
 
 static int
 free_ia_css_isp_parameter_set_info(
+<<<<<<< HEAD
     ia_css_ptr ptr)
 {
+=======
+    ia_css_ptr ptr) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 	struct ia_css_isp_parameter_set_info isp_params_info;
 	unsigned int i;
@@ -4019,7 +4255,12 @@ free_ia_css_isp_parameter_set_info(
 	IA_CSS_ENTER_PRIVATE("ptr = %u", ptr);
 
 	/* sanity check - ptr must be valid */
+<<<<<<< HEAD
 	if (!ia_css_refcount_is_valid(ptr)) {
+=======
+	if (!ia_css_refcount_is_valid(ptr))
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		IA_CSS_ERROR("%s: IA_CSS_REFCOUNT_PARAM_SET_POOL(0x%x) invalid arg", __func__,
 			     ptr);
 		err = -EINVAL;
@@ -4030,7 +4271,12 @@ free_ia_css_isp_parameter_set_info(
 	hmm_load(ptr, &isp_params_info.mem_map, sizeof(struct sh_css_ddr_address_map));
 	/* copy map using size info */
 	for (i = 0; i < (sizeof(struct sh_css_ddr_address_map_size) /
+<<<<<<< HEAD
 			 sizeof(size_t)); i++) {
+=======
+			 sizeof(size_t)); i++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (addrs[i] == mmgr_NULL)
 			continue;
 
@@ -4237,8 +4483,12 @@ sh_css_update_uds_and_crop_info_based_on_zoom_region(
     struct sh_css_uds_info *uds,		/* out */
     struct sh_css_crop_pos *sp_out_crop_pos,	/* out */
     struct ia_css_resolution pipe_in_res,
+<<<<<<< HEAD
     bool enable_zoom)
 {
+=======
+    bool enable_zoom) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 	int err = 0;
 	/* Note:
@@ -4269,16 +4519,31 @@ sh_css_update_uds_and_crop_info_based_on_zoom_region(
 	if ((x0 > x1) || (y0 > y1) || (x1 > pipe_in_res.width) || (y1 > pipe_in_res.height))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (!enable_zoom) {
+=======
+	if (!enable_zoom)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uds->curr_dx = HRT_GDC_N;
 		uds->curr_dy = HRT_GDC_N;
 	}
 
+<<<<<<< HEAD
 	if (info->enable.dvs_envelope) {
 		/* Zoom region is only supported by the UDS module on ISP
 		 * 2 and higher. It is not supported in video mode on ISP 1 */
 		return -EINVAL;
 	} else {
+=======
+	if (info->enable.dvs_envelope)
+	{
+		/* Zoom region is only supported by the UDS module on ISP
+		 * 2 and higher. It is not supported in video mode on ISP 1 */
+		return -EINVAL;
+	} else
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (enable_zoom) {
 			/* A. Calculate dx/dy based on crop region using in_frame_info
 			* Scale the crop region if in_frame_info to the stage is not same as

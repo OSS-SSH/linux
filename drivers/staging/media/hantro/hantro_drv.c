@@ -582,7 +582,10 @@ static const struct v4l2_file_operations hantro_fops = {
 
 static const struct of_device_id of_hantro_match[] = {
 #ifdef CONFIG_VIDEO_HANTRO_ROCKCHIP
+<<<<<<< HEAD
 	{ .compatible = "rockchip,px30-vpu",   .data = &px30_vpu_variant, },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ .compatible = "rockchip,rk3036-vpu", .data = &rk3036_vpu_variant, },
 	{ .compatible = "rockchip,rk3066-vpu", .data = &rk3066_vpu_variant, },
 	{ .compatible = "rockchip,rk3288-vpu", .data = &rk3288_vpu_variant, },
@@ -919,7 +922,11 @@ static int hantro_probe(struct platform_device *pdev)
 		if (!vpu->variant->irqs[i].handler)
 			continue;
 
+<<<<<<< HEAD
 		if (vpu->variant->num_irqs > 1) {
+=======
+		if (vpu->variant->num_clocks > 1) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			irq_name = vpu->variant->irqs[i].name;
 			irq = platform_get_irq_byname(vpu->pdev, irq_name);
 		} else {
@@ -943,12 +950,19 @@ static int hantro_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
 	if (vpu->variant->init) {
 		ret = vpu->variant->init(vpu);
 		if (ret) {
 			dev_err(&pdev->dev, "Failed to init VPU hardware\n");
 			return ret;
 		}
+=======
+	ret = vpu->variant->init(vpu);
+	if (ret) {
+		dev_err(&pdev->dev, "Failed to init VPU hardware\n");
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	pm_runtime_set_autosuspend_delay(vpu->dev, 100);

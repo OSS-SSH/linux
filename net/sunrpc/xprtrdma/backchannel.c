@@ -115,7 +115,11 @@ int xprt_rdma_bc_send_reply(struct rpc_rqst *rqst)
 	if (rc < 0)
 		goto failed_marshal;
 
+<<<<<<< HEAD
 	if (frwr_send(r_xprt, req))
+=======
+	if (rpcrdma_post_sends(r_xprt, req))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto drop_connection;
 	return 0;
 

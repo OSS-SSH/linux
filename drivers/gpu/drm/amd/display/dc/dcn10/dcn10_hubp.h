@@ -682,10 +682,13 @@ struct dcn_hubp_state {
 	uint32_t min_ttu_vblank;
 	uint32_t qos_level_low_wm;
 	uint32_t qos_level_high_wm;
+<<<<<<< HEAD
 	uint32_t primary_surface_addr_lo;
 	uint32_t primary_surface_addr_hi;
 	uint32_t primary_meta_addr_lo;
 	uint32_t primary_meta_addr_hi;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct dcn10_hubp {

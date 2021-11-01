@@ -13,7 +13,11 @@ readonly NS_DST=$BASE$DST
 readonly BM_NET_V4=192.168.1.
 readonly BM_NET_V6=2001:db8::
 
+<<<<<<< HEAD
 readonly CPUS=`nproc`
+=======
+readonly NPROCS=`nproc`
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ret=0
 
 cleanup() {
@@ -75,6 +79,7 @@ chk_tso_flag() {
 	__chk_flag "$1" $2 $3 tcp-segmentation-offload
 }
 
+<<<<<<< HEAD
 chk_channels() {
 	local msg="$1"
 	local target=$2
@@ -98,6 +103,8 @@ chk_channels() {
 	fi
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 chk_gro() {
 	local msg="$1"
 	local expected=$2
@@ -130,6 +137,7 @@ chk_gro() {
 	fi
 }
 
+<<<<<<< HEAD
 __change_channels()
 {
 	local cur_cpu
@@ -216,14 +224,19 @@ while getopts "hs:" option; do
 	esac
 done
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 if [ ! -f ../bpf/xdp_dummy.o ]; then
 	echo "Missing xdp_dummy helper. Build bpf selftest first"
 	exit 1
 fi
 
+<<<<<<< HEAD
 [ $CPUS -lt 2 ] && echo "Only one CPU available, some tests will be skipped"
 [ $STRESS -gt 0 -a $CPUS -lt 3 ] && echo " stress test will be skipped, too"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 create_ns
 chk_gro_flag "default - gro flag" $SRC off
 chk_gro_flag "        - peer gro flag" $DST off
@@ -246,8 +259,11 @@ chk_gro "        - aggregation with TSO off" 1
 cleanup
 
 create_ns
+<<<<<<< HEAD
 chk_channels "default channels" $DST 1 1
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ip -n $NS_DST link set dev veth$DST down
 ip netns exec $NS_DST ethtool -K veth$DST gro on
 chk_gro_flag "with gro enabled on link down - gro flag" $DST on
@@ -261,6 +277,7 @@ chk_gro "        - aggregation with TSO off" 1
 cleanup
 
 create_ns
+<<<<<<< HEAD
 
 CUR_TX=1
 CUR_RX=1
@@ -311,6 +328,8 @@ if [ $CPUS -gt 2 ]; then
 	chk_channels "setting invalid channels nr" $DST 2 2
 fi
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ip -n $NS_DST link set dev veth$DST xdp object ../bpf/xdp_dummy.o section xdp_dummy 2>/dev/null
 chk_gro_flag "with xdp attached - gro flag" $DST on
 chk_gro_flag "        - peer gro flag" $SRC off
@@ -331,16 +350,20 @@ chk_gro_flag "        - after gro on xdp off, gro flag" $DST on
 chk_gro_flag "        - peer gro flag" $SRC off
 chk_tso_flag "        - tso flag" $SRC on
 chk_tso_flag "        - peer tso flag" $DST on
+<<<<<<< HEAD
 
 if [ $CPUS -gt 1 ]; then
 	ip netns exec $NS_DST ethtool -L veth$DST tx 1
 	chk_channels "decreasing tx channels with device down" $DST 2 1
 fi
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ip -n $NS_DST link set dev veth$DST up
 ip -n $NS_SRC link set dev veth$SRC up
 chk_gro "        - aggregation" 1
 
+<<<<<<< HEAD
 if [ $CPUS -gt 1 ]; then
 	[ $STRESS -gt 0 -a $CPUS -gt 2 ] && do_stress
 
@@ -352,6 +375,8 @@ if [ $CPUS -gt 1 ]; then
 	ip -n $NS_SRC link set dev veth$SRC up
 fi
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ip netns exec $NS_DST ethtool -K veth$DST gro off
 ip netns exec $NS_SRC ethtool -K veth$SRC tx-udp-segmentation off
 chk_gro "aggregation again with default and TSO off" 10

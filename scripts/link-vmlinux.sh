@@ -149,18 +149,27 @@ objtool_link()
 # ${2}, ${3}, ... - optional extra .o files
 vmlinux_link()
 {
+<<<<<<< HEAD
 	local output=${1}
 	local objs
 	local libs
 	local ld
 	local ldflags
 	local ldlibs
+=======
+	local lds="${objtree}/${KBUILD_LDS}"
+	local output=${1}
+	local objects
+	local strip_debug
+	local map_option
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	info LD ${output}
 
 	# skip output file argument
 	shift
 
+<<<<<<< HEAD
 	if [ -n "${CONFIG_LTO_CLANG}" ]; then
 		# Use vmlinux.o instead of performing the slow LTO link again.
 		objs=vmlinux.o
@@ -197,6 +206,58 @@ vmlinux_link()
 		${wl}--whole-archive ${objs} ${wl}--no-whole-archive	\
 		${wl}--start-group ${libs} ${wl}--end-group		\
 		$@ ${ldlibs}
+=======
+	# The kallsyms linking does not need debug symbols included.
+	if [ "$output" != "${output#.tmp_vmlinux.kallsyms}" ] ; then
+		strip_debug=-Wl,--strip-debug
+	fi
+
+	if [ -n "${CONFIG_VMLINUX_MAP}" ]; then
+		map_option="-Map=${output}.map"
+	fi
+
+	if [ "${SRCARCH}" != "um" ]; then
+		if [ -n "${CONFIG_LTO_CLANG}" ]; then
+			# Use vmlinux.o instead of performing the slow LTO
+			# link again.
+			objects="--whole-archive		\
+				vmlinux.o 			\
+				--no-whole-archive		\
+				${@}"
+		else
+			objects="--whole-archive		\
+				${KBUILD_VMLINUX_OBJS}		\
+				--no-whole-archive		\
+				--start-group			\
+				${KBUILD_VMLINUX_LIBS}		\
+				--end-group			\
+				${@}"
+		fi
+
+		${LD} ${KBUILD_LDFLAGS} ${LDFLAGS_vmlinux}	\
+			${strip_debug#-Wl,}			\
+			-o ${output}				\
+			${map_option}				\
+			-T ${lds} ${objects}
+	else
+		objects="-Wl,--whole-archive			\
+			${KBUILD_VMLINUX_OBJS}			\
+			-Wl,--no-whole-archive			\
+			-Wl,--start-group			\
+			${KBUILD_VMLINUX_LIBS}			\
+			-Wl,--end-group				\
+			${@}"
+
+		${CC} ${CFLAGS_vmlinux}				\
+			${strip_debug}				\
+			-o ${output}				\
+			${map_option:+-Wl,${map_option}}	\
+			-Wl,-T,${lds}				\
+			${objects}				\
+			-lutil -lrt -lpthread
+		rm -f linux
+	fi
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 # generate .BTF typeinfo from DWARF debuginfo

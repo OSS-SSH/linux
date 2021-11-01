@@ -1,5 +1,9 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 /*
+<<<<<<< HEAD
+=======
+ *   fs/cifs/cifspdu.h
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   Copyright (c) International Business Machines  Corp., 2002,2009
  *   Author(s): Steve French (sfrench@us.ibm.com)
@@ -11,9 +15,21 @@
 
 #include <net/sock.h>
 #include <asm/unaligned.h>
+<<<<<<< HEAD
 #include "../smbfs_common/smbfsctl.h"
 
 #define CIFS_PROT   0
+=======
+#include "smbfsctl.h"
+
+#ifdef CONFIG_CIFS_WEAK_PW_HASH
+#define LANMAN_PROT 0
+#define LANMAN2_PROT 1
+#define CIFS_PROT   2
+#else
+#define CIFS_PROT   0
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define POSIX_PROT  (CIFS_PROT+1)
 #define BAD_PROT 0xFFFF
 
@@ -498,8 +514,35 @@ typedef struct negotiate_req {
 	unsigned char DialectsArray[1];
 } __attribute__((packed)) NEGOTIATE_REQ;
 
+<<<<<<< HEAD
 #define MIN_TZ_ADJ (15 * 60) /* minimum grid for timezones in seconds */
 
+=======
+/* Dialect index is 13 for LANMAN */
+
+#define MIN_TZ_ADJ (15 * 60) /* minimum grid for timezones in seconds */
+
+typedef struct lanman_neg_rsp {
+	struct smb_hdr hdr;	/* wct = 13 */
+	__le16 DialectIndex;
+	__le16 SecurityMode;
+	__le16 MaxBufSize;
+	__le16 MaxMpxCount;
+	__le16 MaxNumberVcs;
+	__le16 RawMode;
+	__le32 SessionKey;
+	struct {
+		__le16 Time;
+		__le16 Date;
+	} __attribute__((packed)) SrvTime;
+	__le16 ServerTimeZone;
+	__le16 EncryptionKeyLength;
+	__le16 Reserved;
+	__u16  ByteCount;
+	unsigned char EncryptionKey[1];
+} __attribute__((packed)) LANMAN_NEG_RSP;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define READ_RAW_ENABLE 1
 #define WRITE_RAW_ENABLE 2
 #define RAW_ENABLE (READ_RAW_ENABLE | WRITE_RAW_ENABLE)

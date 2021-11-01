@@ -54,6 +54,19 @@ static noinline void dump_vnode(struct afs_vnode *vnode, struct afs_vnode *paren
 }
 
 /*
+<<<<<<< HEAD
+=======
+ * Set the file size and block count.  Estimate the number of 512 bytes blocks
+ * used, rounded up to nearest 1K for consistency with other AFS clients.
+ */
+static void afs_set_i_size(struct afs_vnode *vnode, u64 size)
+{
+	i_size_write(&vnode->vfs_inode, size);
+	vnode->vfs_inode.i_blocks = ((size + 1023) >> 10) << 1;
+}
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Initialise an inode from the vnode status.
  */
 static int afs_inode_init_from_status(struct afs_operation *op,
@@ -577,6 +590,7 @@ static void afs_zap_data(struct afs_vnode *vnode)
 }
 
 /*
+<<<<<<< HEAD
  * Check to see if we have a server currently serving this volume and that it
  * hasn't been reinitialised or dropped from the list.
  */
@@ -603,6 +617,24 @@ static bool afs_check_server_good(struct afs_vnode *vnode)
 	}
 
 	rcu_read_unlock();
+=======
+ * Get the server reinit counter for a vnode's current server.
+ */
+static bool afs_get_s_break_rcu(struct afs_vnode *vnode, unsigned int *_s_break)
+{
+	struct afs_server_list *slist = rcu_dereference(vnode->volume->servers);
+	struct afs_server *server;
+	int i;
+
+	for (i = 0; i < slist->nr_servers; i++) {
+		server = slist->servers[i].server;
+		if (server == vnode->cb_server) {
+			*_s_break = READ_ONCE(server->cb_s_break);
+			return true;
+		}
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return false;
 }
 
@@ -611,13 +643,22 @@ static bool afs_check_server_good(struct afs_vnode *vnode)
  */
 bool afs_check_validity(struct afs_vnode *vnode)
 {
+<<<<<<< HEAD
 	enum afs_cb_break_reason need_clear = afs_cb_break_no_break;
 	time64_t now = ktime_get_real_seconds();
 	unsigned int cb_break;
+=======
+	struct afs_volume *volume = vnode->volume;
+	enum afs_cb_break_reason need_clear = afs_cb_break_no_break;
+	time64_t now = ktime_get_real_seconds();
+	bool valid;
+	unsigned int cb_break, cb_s_break, cb_v_break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int seq = 0;
 
 	do {
 		read_seqbegin_or_lock(&vnode->cb_lock, &seq);
+<<<<<<< HEAD
 		cb_break = vnode->cb_break;
 
 		if (test_bit(AFS_VNODE_CB_PROMISED, &vnode->flags)) {
@@ -633,12 +674,40 @@ bool afs_check_validity(struct afs_vnode *vnode)
 			;
 		} else {
 			need_clear = afs_cb_break_no_promise;
+=======
+		cb_v_break = READ_ONCE(volume->cb_v_break);
+		cb_break = vnode->cb_break;
+
+		if (test_bit(AFS_VNODE_CB_PROMISED, &vnode->flags) &&
+		    afs_get_s_break_rcu(vnode, &cb_s_break)) {
+			if (vnode->cb_s_break != cb_s_break ||
+			    vnode->cb_v_break != cb_v_break) {
+				vnode->cb_s_break = cb_s_break;
+				vnode->cb_v_break = cb_v_break;
+				need_clear = afs_cb_break_for_vsbreak;
+				valid = false;
+			} else if (test_bit(AFS_VNODE_ZAP_DATA, &vnode->flags)) {
+				need_clear = afs_cb_break_for_zap;
+				valid = false;
+			} else if (vnode->cb_expires_at - 10 <= now) {
+				need_clear = afs_cb_break_for_lapsed;
+				valid = false;
+			} else {
+				valid = true;
+			}
+		} else if (test_bit(AFS_VNODE_DELETED, &vnode->flags)) {
+			valid = true;
+		} else {
+			vnode->cb_v_break = cb_v_break;
+			valid = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 	} while (need_seqretry(&vnode->cb_lock, seq));
 
 	done_seqretry(&vnode->cb_lock, seq);
 
+<<<<<<< HEAD
 	if (need_clear == afs_cb_break_no_break)
 		return true;
 
@@ -651,6 +720,19 @@ bool afs_check_validity(struct afs_vnode *vnode)
 		trace_afs_cb_miss(&vnode->fid, need_clear);
 	write_sequnlock(&vnode->cb_lock);
 	return false;
+=======
+	if (need_clear != afs_cb_break_no_break) {
+		write_seqlock(&vnode->cb_lock);
+		if (cb_break == vnode->cb_break)
+			__afs_break_callback(vnode, need_clear);
+		else
+			trace_afs_cb_miss(&vnode->fid, need_clear);
+		write_sequnlock(&vnode->cb_lock);
+		valid = false;
+	}
+
+	return valid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -664,12 +746,17 @@ bool afs_check_validity(struct afs_vnode *vnode)
  */
 int afs_validate(struct afs_vnode *vnode, struct key *key)
 {
+<<<<<<< HEAD
+=======
+	bool valid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	_enter("{v={%llx:%llu} fl=%lx},%x",
 	       vnode->fid.vid, vnode->fid.vnode, vnode->flags,
 	       key_serial(key));
 
+<<<<<<< HEAD
 	if (unlikely(test_bit(AFS_VNODE_DELETED, &vnode->flags))) {
 		if (vnode->vfs_inode.i_nlink)
 			clear_nlink(&vnode->vfs_inode);
@@ -678,6 +765,16 @@ int afs_validate(struct afs_vnode *vnode, struct key *key)
 
 	if (test_bit(AFS_VNODE_CB_PROMISED, &vnode->flags) &&
 	    afs_check_validity(vnode))
+=======
+	rcu_read_lock();
+	valid = afs_check_validity(vnode);
+	rcu_read_unlock();
+
+	if (test_bit(AFS_VNODE_DELETED, &vnode->flags))
+		clear_nlink(&vnode->vfs_inode);
+
+	if (valid)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto valid;
 
 	down_write(&vnode->validate_lock);

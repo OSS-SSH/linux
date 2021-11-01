@@ -150,6 +150,11 @@ void __init setup_arch(char **cmdline_p)
 #ifdef CONFIG_PA11
 	dma_ops_init();
 #endif
+<<<<<<< HEAD
+=======
+
+	clear_sched_clock_stable();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

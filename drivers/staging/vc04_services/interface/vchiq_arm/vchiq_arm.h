@@ -14,12 +14,15 @@
 #include "vchiq_core.h"
 #include "vchiq_debugfs.h"
 
+<<<<<<< HEAD
 /* Some per-instance constants */
 #define MAX_COMPLETIONS 128
 #define MAX_SERVICES 64
 #define MAX_ELEMENTS 8
 #define MSG_QUEUE_SIZE 128
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum USE_TYPE_E {
 	USE_TYPE_SERVICE,
 	USE_TYPE_VCHIQ
@@ -64,6 +67,7 @@ struct vchiq_drvdata {
 	struct rpi_firmware *fw;
 };
 
+<<<<<<< HEAD
 struct user_service {
 	struct vchiq_service *service;
 	void __user *userdata;
@@ -121,6 +125,11 @@ extern int vchiq_susp_log_level;
 extern spinlock_t msg_queue_spinlock;
 extern struct vchiq_state g_state;
 
+=======
+extern int vchiq_arm_log_level;
+extern int vchiq_susp_log_level;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int vchiq_platform_init(struct platform_device *pdev,
 			struct vchiq_state *state);
 
@@ -174,6 +183,7 @@ vchiq_instance_get_trace(struct vchiq_instance *instance);
 extern void
 vchiq_instance_set_trace(struct vchiq_instance *instance, int trace);
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_VCHIQ_CDEV)
 
 extern void
@@ -196,4 +206,6 @@ service_callback(enum vchiq_reason reason, struct vchiq_header *header,
 extern void
 free_bulk_waiter(struct vchiq_instance *instance);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* VCHIQ_ARM_H */

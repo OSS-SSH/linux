@@ -36,7 +36,11 @@ source "drivers/staging/rtl8723bs/Kconfig"
 
 source "drivers/staging/rtl8712/Kconfig"
 
+<<<<<<< HEAD
 source "drivers/staging/r8188eu/Kconfig"
+=======
+source "drivers/staging/rtl8188eu/Kconfig"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 source "drivers/staging/rts5208/Kconfig"
 
@@ -102,4 +106,9 @@ source "drivers/staging/qlge/Kconfig"
 
 source "drivers/staging/wfx/Kconfig"
 
+<<<<<<< HEAD
+=======
+source "drivers/staging/hikey9xx/Kconfig"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endif # STAGING

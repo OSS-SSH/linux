@@ -10,12 +10,15 @@
 #include "mt8173.dtsi"
 
 / {
+<<<<<<< HEAD
 	aliases {
 		mmc0 = &mmc0;
 		mmc1 = &mmc1;
 		mmc2 = &mmc3;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memory@40000000 {
 		device_type = "memory";
 		reg = <0 0x40000000 0 0x80000000>;
@@ -163,10 +166,13 @@
 	};
 };
 
+<<<<<<< HEAD
 &mfg_async {
 	domain-supply = <&da9211_vgpu_reg>;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &cec {
 	status = "okay";
 };

@@ -78,6 +78,7 @@
 #define IVTV_PCI_ID_SONY		0x104d
 
 /* hardware flags, no gaps allowed */
+<<<<<<< HEAD
 enum ivtv_hw_bits {
 	IVTV_HW_BIT_CX25840,
 	IVTV_HW_BIT_SAA7115,
@@ -125,6 +126,29 @@ enum ivtv_hw_bits {
 #define IVTV_HW_I2C_IR_RX_HAUP_INT	BIT(IVTV_HW_BIT_I2C_IR_RX_HAUP_INT)
 #define IVTV_HW_Z8F0811_IR_HAUP		BIT(IVTV_HW_BIT_Z8F0811_IR_HAUP)
 #define IVTV_HW_I2C_IR_RX_ADAPTEC	BIT(IVTV_HW_BIT_I2C_IR_RX_ADAPTEC)
+=======
+#define IVTV_HW_CX25840			(1 << 0)
+#define IVTV_HW_SAA7115			(1 << 1)
+#define IVTV_HW_SAA7127			(1 << 2)
+#define IVTV_HW_MSP34XX			(1 << 3)
+#define IVTV_HW_TUNER			(1 << 4)
+#define IVTV_HW_WM8775			(1 << 5)
+#define IVTV_HW_CS53L32A		(1 << 6)
+#define IVTV_HW_TVEEPROM		(1 << 7)
+#define IVTV_HW_SAA7114			(1 << 8)
+#define IVTV_HW_UPD64031A		(1 << 9)
+#define IVTV_HW_UPD6408X		(1 << 10)
+#define IVTV_HW_SAA717X			(1 << 11)
+#define IVTV_HW_WM8739			(1 << 12)
+#define IVTV_HW_VP27SMPX		(1 << 13)
+#define IVTV_HW_M52790			(1 << 14)
+#define IVTV_HW_GPIO			(1 << 15)
+#define IVTV_HW_I2C_IR_RX_AVER		(1 << 16)
+#define IVTV_HW_I2C_IR_RX_HAUP_EXT	(1 << 17) /* External before internal */
+#define IVTV_HW_I2C_IR_RX_HAUP_INT	(1 << 18)
+#define IVTV_HW_Z8F0811_IR_HAUP		(1 << 19)
+#define IVTV_HW_I2C_IR_RX_ADAPTEC	(1 << 20)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define IVTV_HW_SAA711X   (IVTV_HW_SAA7115 | IVTV_HW_SAA7114)
 

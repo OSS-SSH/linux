@@ -16,6 +16,7 @@ struct adr_remap {
 };
 
 /*
+<<<<<<< HEAD
  * Some TigerLake devices based on an initial Intel BIOS do not expose
  * the correct _ADR in the DSDT.
  * Remap the bad _ADR values to the ones reported by hardware
@@ -28,6 +29,20 @@ static const struct adr_remap intel_tgl_bios[] = {
 	{
 		0x000110025d070100ull,
 		0x000120025D130800ull
+=======
+ * HP Spectre 360 Convertible devices do not expose the correct _ADR
+ * in the DSDT.
+ * Remap the bad _ADR values to the ones reported by hardware
+ */
+static const struct adr_remap hp_spectre_360[] = {
+	{
+		0x000010025D070100,
+		0x000020025D071100
+	},
+	{
+		0x000110025d070100,
+		0x000120025D130800
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{}
 };
@@ -39,6 +54,7 @@ static const struct adr_remap intel_tgl_bios[] = {
 static const struct adr_remap dell_sku_0A3E[] = {
 	/* rt715 on link0 */
 	{
+<<<<<<< HEAD
 		0x00020025d071100ull,
 		0x00021025d071500ull
 	},
@@ -51,6 +67,20 @@ static const struct adr_remap dell_sku_0A3E[] = {
 	{
 		0x000220025d071500ull,
 		0x000220025d130800ull
+=======
+		0x00020025d071100,
+		0x00021025d071500
+	},
+	/* rt711 on link1 */
+	{
+		0x000120025d130800,
+		0x000120025d071100,
+	},
+	/* rt1308 on link2 */
+	{
+		0x000220025d071500,
+		0x000220025d130800
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{}
 };
@@ -61,6 +91,7 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
 			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Spectre x360 Convertible"),
 		},
+<<<<<<< HEAD
 		.driver_data = (void *)intel_tgl_bios,
 	},
 	{
@@ -70,6 +101,9 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
 			DMI_MATCH(DMI_PRODUCT_NAME, "LAPBC"),
 		},
 		.driver_data = (void *)intel_tgl_bios,
+=======
+		.driver_data = (void *)hp_spectre_360,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{
 		.matches = {

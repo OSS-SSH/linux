@@ -70,6 +70,7 @@ static void show_heartbeat(const struct i915_request *rq,
 {
 	struct drm_printer p = drm_debug_printer("heartbeat");
 
+<<<<<<< HEAD
 	if (!rq) {
 		intel_engine_dump(engine, &p,
 				  "%s heartbeat not ticking\n",
@@ -102,6 +103,14 @@ reset_engine(struct intel_engine_cs *engine, struct i915_request *rq)
 			      I915_ERROR_CAPTURE,
 			      "stopped heartbeat on %s",
 			      engine->name);
+=======
+	intel_engine_dump(engine, &p,
+			  "%s heartbeat {seqno:%llx:%lld, prio:%d} not ticking\n",
+			  engine->name,
+			  rq->fence.context,
+			  rq->fence.seqno,
+			  rq->sched.attr.priority);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void heartbeat(struct work_struct *wrk)
@@ -128,11 +137,14 @@ static void heartbeat(struct work_struct *wrk)
 	if (intel_gt_is_wedged(engine->gt))
 		goto out;
 
+<<<<<<< HEAD
 	if (i915_sched_engine_disabled(engine->sched_engine)) {
 		reset_engine(engine, engine->heartbeat.systole);
 		goto out;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (engine->heartbeat.systole) {
 		long delay = READ_ONCE(engine->props.heartbeat_interval_ms);
 
@@ -152,7 +164,11 @@ static void heartbeat(struct work_struct *wrk)
 			 * but all other contexts, including the kernel
 			 * context are stuck waiting for the signal.
 			 */
+<<<<<<< HEAD
 		} else if (engine->sched_engine->schedule &&
+=======
+		} else if (engine->schedule &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   rq->sched.attr.priority < I915_PRIORITY_BARRIER) {
 			/*
 			 * Gradually raise the priority of the heartbeat to
@@ -167,10 +183,23 @@ static void heartbeat(struct work_struct *wrk)
 				attr.priority = I915_PRIORITY_BARRIER;
 
 			local_bh_disable();
+<<<<<<< HEAD
 			engine->sched_engine->schedule(rq, &attr);
 			local_bh_enable();
 		} else {
 			reset_engine(engine, rq);
+=======
+			engine->schedule(rq, &attr);
+			local_bh_enable();
+		} else {
+			if (IS_ENABLED(CONFIG_DRM_I915_DEBUG_GEM))
+				show_heartbeat(rq, engine);
+
+			intel_gt_handle_error(engine->gt, engine->mask,
+					      I915_ERROR_CAPTURE,
+					      "stopped heartbeat on %s",
+					      engine->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		rq->emitted_jiffies = jiffies;
@@ -219,6 +248,7 @@ void intel_engine_park_heartbeat(struct intel_engine_cs *engine)
 		i915_request_put(fetch_and_zero(&engine->heartbeat.systole));
 }
 
+<<<<<<< HEAD
 void intel_gt_unpark_heartbeats(struct intel_gt *gt)
 {
 	struct intel_engine_cs *engine;
@@ -238,6 +268,8 @@ void intel_gt_park_heartbeats(struct intel_gt *gt)
 		intel_engine_park_heartbeat(engine);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void intel_engine_init_heartbeat(struct intel_engine_cs *engine)
 {
 	INIT_DELAYED_WORK(&engine->heartbeat.work, heartbeat);

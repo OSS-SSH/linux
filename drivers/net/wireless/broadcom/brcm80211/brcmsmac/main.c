@@ -704,7 +704,11 @@ static void brcms_c_write_inits(struct brcms_hardware *wlc_hw,
 static void brcms_c_write_mhf(struct brcms_hardware *wlc_hw, u16 *mhfs)
 {
 	u8 idx;
+<<<<<<< HEAD
 	static const u16 addr[] = {
+=======
+	u16 addr[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		M_HOST_FLAGS1, M_HOST_FLAGS2, M_HOST_FLAGS3, M_HOST_FLAGS4,
 		M_HOST_FLAGS5
 	};

@@ -96,10 +96,13 @@ ifeq ($(CONFIG_BLK_DEV_ZONED),y)
 dm-mod-objs			+= dm-zone.o
 endif
 
+<<<<<<< HEAD
 ifeq ($(CONFIG_IMA),y)
 dm-mod-objs			+= dm-ima.o
 endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ifeq ($(CONFIG_DM_VERITY_FEC),y)
 dm-verity-objs			+= dm-verity-fec.o
 endif

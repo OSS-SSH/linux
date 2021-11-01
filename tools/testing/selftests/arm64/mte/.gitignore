@@ -1,5 +1,8 @@
 check_buffer_fill
+<<<<<<< HEAD
 check_gcr_el1_cswitch
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 check_tags_inclusion
 check_child_memory
 check_mmap_options

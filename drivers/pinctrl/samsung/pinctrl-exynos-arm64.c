@@ -40,6 +40,7 @@ static const struct samsung_pin_bank_type exynos5433_bank_type_alive = {
 	.reg_offset = { 0x00, 0x04, 0x08, 0x0c, },
 };
 
+<<<<<<< HEAD
 /*
  * Bank type for non-alive type. Bit fields:
  * CON: 4, DAT: 1, PUD: 4, DRV: 4, CONPDN: 2, PUDPDN: 4
@@ -58,6 +59,8 @@ static const struct samsung_pin_bank_type exynos850_bank_type_alive = {
 	.reg_offset = { 0x00, 0x04, 0x08, 0x0c, },
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Pad retention control code for accessing PMU regmap */
 static atomic_t exynos_shared_retention_refcnt;
 
@@ -440,6 +443,7 @@ const struct samsung_pinctrl_of_match_data exynos7_of_data __initconst = {
 	.ctrl		= exynos7_pin_ctrl,
 	.num_ctrl	= ARRAY_SIZE(exynos7_pin_ctrl),
 };
+<<<<<<< HEAD
 
 /* pin banks of exynos850 pin-controller 0 (ALIVE) */
 static const struct samsung_pin_bank_data exynos850_pin_banks0[] __initconst = {
@@ -538,3 +542,5 @@ const struct samsung_pinctrl_of_match_data exynos850_of_data __initconst = {
 	.ctrl		= exynos850_pin_ctrl,
 	.num_ctrl	= ARRAY_SIZE(exynos850_pin_ctrl),
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

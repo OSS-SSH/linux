@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C Z6.0+pooncelock+pooncelock+pombonce
 
 (*
@@ -6,6 +7,17 @@ C Z6.0+pooncelock+pooncelock+pombonce
  * This example demonstrates that a pair of accesses made by different
  * processes each while holding a given lock will not necessarily be
  * seen as ordered by a third process not holding that lock.
+=======
+C Z6.0+pooncelock+poonceLock+pombonce
+
+(*
+ * Result: Never
+ *
+ * This litmus test demonstrates how smp_mb__after_spinlock() may be
+ * used to ensure that accesses in different critical sections for a
+ * given lock running on different CPUs are nevertheless seen in order
+ * by CPUs not holding that lock.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *)
 
 {}
@@ -23,6 +35,10 @@ P1(int *y, int *z, spinlock_t *mylock)
 	int r0;
 
 	spin_lock(mylock);
+<<<<<<< HEAD
+=======
+	smp_mb__after_spinlock();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	r0 = READ_ONCE(*y);
 	WRITE_ONCE(*z, 1);
 	spin_unlock(mylock);

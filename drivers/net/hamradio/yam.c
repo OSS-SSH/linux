@@ -920,15 +920,24 @@ static int yam_close(struct net_device *dev)
 
 /* --------------------------------------------------------------------- */
 
+<<<<<<< HEAD
 static int yam_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __user *data, int cmd)
+=======
+static int yam_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct yam_port *yp = netdev_priv(dev);
 	struct yamdrv_ioctl_cfg yi;
 	struct yamdrv_ioctl_mcs *ym;
 	int ioctl_cmd;
 
+<<<<<<< HEAD
 	if (copy_from_user(&ioctl_cmd, data, sizeof(int)))
 		return -EFAULT;
+=======
+	if (copy_from_user(&ioctl_cmd, ifr->ifr_data, sizeof(int)))
+		 return -EFAULT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (yp->magic != YAM_MAGIC)
 		return -EINVAL;
@@ -947,7 +956,12 @@ static int yam_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __
 	case SIOCYAMSMCS:
 		if (netif_running(dev))
 			return -EINVAL;		/* Cannot change this parameter when up */
+<<<<<<< HEAD
 		ym = memdup_user(data, sizeof(struct yamdrv_ioctl_mcs));
+=======
+		ym = memdup_user(ifr->ifr_data,
+				 sizeof(struct yamdrv_ioctl_mcs));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (IS_ERR(ym))
 			return PTR_ERR(ym);
 		if (ym->cmd != SIOCYAMSMCS)
@@ -964,8 +978,13 @@ static int yam_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __
 	case SIOCYAMSCFG:
 		if (!capable(CAP_SYS_RAWIO))
 			return -EPERM;
+<<<<<<< HEAD
 		if (copy_from_user(&yi, data, sizeof(struct yamdrv_ioctl_cfg)))
 			return -EFAULT;
+=======
+		if (copy_from_user(&yi, ifr->ifr_data, sizeof(struct yamdrv_ioctl_cfg)))
+			 return -EFAULT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (yi.cmd != SIOCYAMSCFG)
 			return -EINVAL;
@@ -1044,8 +1063,13 @@ static int yam_siocdevprivate(struct net_device *dev, struct ifreq *ifr, void __
 		yi.cfg.txtail = yp->txtail;
 		yi.cfg.persist = yp->pers;
 		yi.cfg.slottime = yp->slot;
+<<<<<<< HEAD
 		if (copy_to_user(data, &yi, sizeof(struct yamdrv_ioctl_cfg)))
 			return -EFAULT;
+=======
+		if (copy_to_user(ifr->ifr_data, &yi, sizeof(struct yamdrv_ioctl_cfg)))
+			 return -EFAULT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 
 	default:
@@ -1073,7 +1097,11 @@ static const struct net_device_ops yam_netdev_ops = {
 	.ndo_open	     = yam_open,
 	.ndo_stop	     = yam_close,
 	.ndo_start_xmit      = yam_send_packet,
+<<<<<<< HEAD
 	.ndo_siocdevprivate  = yam_siocdevprivate,
+=======
+	.ndo_do_ioctl 	     = yam_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_mac_address = yam_set_mac_address,
 };
 

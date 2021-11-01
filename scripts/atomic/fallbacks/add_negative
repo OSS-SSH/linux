@@ -1,6 +1,10 @@
 cat <<EOF
 /**
+<<<<<<< HEAD
  * arch_${atomic}_add_negative - add and test if negative
+=======
+ * ${arch}${atomic}_add_negative - add and test if negative
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @i: integer value to add
  * @v: pointer of type ${atomic}_t
  *
@@ -9,8 +13,14 @@ cat <<EOF
  * result is greater than or equal to zero.
  */
 static __always_inline bool
+<<<<<<< HEAD
 arch_${atomic}_add_negative(${int} i, ${atomic}_t *v)
 {
 	return arch_${atomic}_add_return(i, v) < 0;
+=======
+${arch}${atomic}_add_negative(${int} i, ${atomic}_t *v)
+{
+	return ${arch}${atomic}_add_return(i, v) < 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EOF

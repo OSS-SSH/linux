@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0 OR Linux-OpenIB
 /* Copyright (c) 2020 Mellanox Technologies Ltd. */
 
+<<<<<<< HEAD
 #include <linux/iova.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/mlx5/driver.h>
 #include "mlx5_vdpa.h"
 
@@ -129,6 +132,7 @@ int mlx5_vdpa_create_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 *
 	return err;
 }
 
+<<<<<<< HEAD
 int mlx5_vdpa_modify_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 rqtn)
 {
 	u32 out[MLX5_ST_SZ_DW(create_rqt_out)] = {};
@@ -139,6 +143,8 @@ int mlx5_vdpa_modify_rqt(struct mlx5_vdpa_dev *mvdev, void *in, int inlen, u32 r
 	return mlx5_cmd_exec(mvdev->mdev, in, inlen, out, sizeof(out));
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void mlx5_vdpa_destroy_rqt(struct mlx5_vdpa_dev *mvdev, u32 rqtn)
 {
 	u32 in[MLX5_ST_SZ_DW(destroy_rqt_in)] = {};
@@ -232,6 +238,7 @@ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, struct mlx5_core_mkey *m
 	return mlx5_cmd_exec_in(mvdev->mdev, destroy_mkey, in);
 }
 
+<<<<<<< HEAD
 static int init_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
 {
 	mvdev->cvq.iotlb = vhost_iotlb_alloc(0, 0);
@@ -248,6 +255,8 @@ static void cleanup_ctrl_vq(struct mlx5_vdpa_dev *mvdev)
 	vhost_iotlb_free(mvdev->cvq.iotlb);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int mlx5_vdpa_alloc_resources(struct mlx5_vdpa_dev *mvdev)
 {
 	u64 offset = MLX5_CAP64_DEV_VDPA_EMULATION(mvdev->mdev, doorbell_bar_offset);
@@ -287,17 +296,23 @@ int mlx5_vdpa_alloc_resources(struct mlx5_vdpa_dev *mvdev)
 		err = -ENOMEM;
 		goto err_key;
 	}
+<<<<<<< HEAD
 
 	err = init_ctrl_vq(mvdev);
 	if (err)
 		goto err_ctrl;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	res->valid = true;
 
 	return 0;
 
+<<<<<<< HEAD
 err_ctrl:
 	iounmap(res->kick_addr);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_key:
 	dealloc_pd(mvdev, res->pdn, res->uid);
 err_pd:
@@ -316,7 +331,10 @@ void mlx5_vdpa_free_resources(struct mlx5_vdpa_dev *mvdev)
 	if (!res->valid)
 		return;
 
+<<<<<<< HEAD
 	cleanup_ctrl_vq(mvdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iounmap(res->kick_addr);
 	res->kick_addr = NULL;
 	dealloc_pd(mvdev, res->pdn, res->uid);

@@ -9,7 +9,10 @@
 
 #include "main.h"
 
+<<<<<<< HEAD
 #include <linux/kref.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/netlink.h>
 #include <linux/skbuff.h>
 #include <linux/types.h>
@@ -28,7 +31,11 @@ void batadv_gw_node_update(struct batadv_priv *bat_priv,
 void batadv_gw_node_delete(struct batadv_priv *bat_priv,
 			   struct batadv_orig_node *orig_node);
 void batadv_gw_node_free(struct batadv_priv *bat_priv);
+<<<<<<< HEAD
 void batadv_gw_node_release(struct kref *ref);
+=======
+void batadv_gw_node_put(struct batadv_gw_node *gw_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct batadv_gw_node *
 batadv_gw_get_selected_gw_node(struct batadv_priv *bat_priv);
 int batadv_gw_dump(struct sk_buff *msg, struct netlink_callback *cb);
@@ -39,6 +46,7 @@ batadv_gw_dhcp_recipient_get(struct sk_buff *skb, unsigned int *header_len,
 struct batadv_gw_node *batadv_gw_node_get(struct batadv_priv *bat_priv,
 					  struct batadv_orig_node *orig_node);
 
+<<<<<<< HEAD
 /**
  * batadv_gw_node_put() - decrement the gw_node refcounter and possibly release
  *  it
@@ -52,4 +60,6 @@ static inline void batadv_gw_node_put(struct batadv_gw_node *gw_node)
 	kref_put(&gw_node->refcount, batadv_gw_node_release);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _NET_BATMAN_ADV_GATEWAY_CLIENT_H_ */

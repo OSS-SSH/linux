@@ -38,6 +38,7 @@ properties:
       - const: ippc
 
   interrupts:
+<<<<<<< HEAD
     description:
       use "interrupts-extended" when the interrupts are connected to the
       separate interrupt controllers
@@ -50,6 +51,9 @@ properties:
     items:
       - const: device
       - const: wakeup
+=======
+    maxItems: 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   power-domains:
     description: A phandle to USB power domain node to control USB's MTCMOS
@@ -117,7 +121,11 @@ properties:
   extcon:
     deprecated: true
     description: |
+<<<<<<< HEAD
       Phandle to the extcon device detecting the IDDIG state, needed
+=======
+      Phandle to the extcon device detecting the IDDIG/VBUS state, neede
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       when supports dual-role mode.
       It's considered valid for compatibility reasons, not allowed for
       new bindings, and use "usb-role-switch" property instead.
@@ -127,10 +135,13 @@ properties:
     description: Support role switch.
     type: boolean
 
+<<<<<<< HEAD
   role-switch-default-mode:
     enum: [host, peripheral]
     default: host
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   connector:
     $ref: /connector/usb-connector.yaml#
     description:
@@ -181,12 +192,15 @@ properties:
     description: The mask to disable u3ports, bit0 for u3port0,
       bit1 for u3port1, ... etc
 
+<<<<<<< HEAD
   mediatek,u2p-dis-msk:
     $ref: /schemas/types.yaml#/definitions/uint32
     description: The mask to disable u2ports, bit0 for u2port0,
       bit1 for u2port1, ... etc; but can't disable u2port0 if dual role mode
       is enabled, so will be skipped in this case.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # Required child node when support dual-role
 patternProperties:
   "^usb@[0-9a-f]+$":
@@ -199,7 +213,10 @@ patternProperties:
 dependencies:
   connector: [ 'usb-role-switch' ]
   port: [ 'usb-role-switch' ]
+<<<<<<< HEAD
   role-switch-default-mode: [ 'usb-role-switch' ]
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   wakeup-source: [ 'mediatek,syscon-wakeup' ]
 
 required:
@@ -252,7 +269,11 @@ examples:
         };
     };
 
+<<<<<<< HEAD
   # Dual role switch by gpio-usb-b-connector
+=======
+  # Enable/disable device by an input gpio for VBUS pin
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   - |
     #include <dt-bindings/gpio/gpio.h>
     #include <dt-bindings/power/mt2712-power.h>
@@ -266,6 +287,7 @@ examples:
         power-domains = <&scpsys MT2712_POWER_DOMAIN_USB2>;
         clocks = <&topckgen CLK_TOP_USB30_SEL>;
         clock-names = "sys_ck";
+<<<<<<< HEAD
         dr_mode = "otg";
         usb-role-switch;
         #address-cells = <1>;
@@ -281,12 +303,20 @@ examples:
             clocks = <&topckgen CLK_TOP_USB30_SEL>, <&clk26m>;
             clock-names = "sys_ck", "ref_ck";
         };
+=======
+        dr_mode = "peripheral";
+        usb-role-switch;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         connector {
             compatible = "gpio-usb-b-connector", "usb-b-connector";
             type = "micro";
+<<<<<<< HEAD
             id-gpios = <&pio 12 GPIO_ACTIVE_HIGH>;
             vbus-supply = <&usb_p0_vbus>;
+=======
+            vbus-gpios = <&pio 13 GPIO_ACTIVE_HIGH>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         };
     };
 
@@ -304,7 +334,10 @@ examples:
         wakeup-source;
         dr_mode = "otg";
         usb-role-switch;
+<<<<<<< HEAD
         role-switch-default-mode = "host";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         #address-cells = <1>;
         #size-cells = <1>;
         ranges;

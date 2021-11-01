@@ -15,6 +15,7 @@
 #define KMB_MAX_HEIGHT			1080 /*Max height in pixels */
 #define KMB_MIN_WIDTH                   1920 /*Max width in pixels */
 #define KMB_MIN_HEIGHT                  1080 /*Max height in pixels */
+<<<<<<< HEAD
 
 #define DRIVER_DATE			"20210223"
 #define DRIVER_MAJOR			1
@@ -25,6 +26,8 @@
 #define KMB_FB_MIN_WIDTH		1
 #define KMB_FB_MIN_HEIGHT		1
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define KMB_LCD_DEFAULT_CLK		200000000
 #define KMB_SYS_CLK_MHZ			500
 

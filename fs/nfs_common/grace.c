@@ -42,6 +42,10 @@ EXPORT_SYMBOL_GPL(locks_start_grace);
 
 /**
  * locks_end_grace
+<<<<<<< HEAD
+=======
+ * @net: net namespace that this lock manager belongs to
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @lm: who this grace period is for
  *
  * Call this function to state that the given lock manager is ready to

@@ -48,7 +48,10 @@ properties:
               - qcom,sc7180-tsens
               - qcom,sc7280-tsens
               - qcom,sc8180x-tsens
+<<<<<<< HEAD
               - qcom,sdm630-tsens
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - qcom,sdm845-tsens
               - qcom,sm8150-tsens
               - qcom,sm8250-tsens

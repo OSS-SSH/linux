@@ -3516,7 +3516,11 @@ static const struct net_device_ops ucc_geth_netdev_ops = {
 	.ndo_set_mac_address	= ucc_geth_set_mac_addr,
 	.ndo_set_rx_mode	= ucc_geth_set_multi,
 	.ndo_tx_timeout		= ucc_geth_timeout,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= ucc_geth_ioctl,
+=======
+	.ndo_do_ioctl		= ucc_geth_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	= ucc_netpoll,
 #endif

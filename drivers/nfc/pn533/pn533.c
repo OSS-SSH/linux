@@ -2623,7 +2623,11 @@ static int pn533_dev_down(struct nfc_dev *nfc_dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static const struct nfc_ops pn533_nfc_ops = {
+=======
+static struct nfc_ops pn533_nfc_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.dev_up = pn533_dev_up,
 	.dev_down = pn533_dev_down,
 	.dep_link_up = pn533_dep_link_up,

@@ -15,10 +15,17 @@
 #include <linux/bitfield.h>
 #include <linux/clk.h>
 #include <linux/device.h>
+<<<<<<< HEAD
 #include <linux/mod_devicetable.h>
 #include <linux/module.h>
 #include <linux/pm_runtime.h>
 #include <linux/property.h>
+=======
+#include <linux/module.h>
+#include <linux/of.h>
+#include <linux/of_device.h>
+#include <linux/pm_runtime.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm/unaligned.h>
 
@@ -1456,7 +1463,11 @@ mcp251xfd_rx_ring_update(const struct mcp251xfd_priv *priv,
 }
 
 static void
+<<<<<<< HEAD
 mcp251xfd_hw_rx_obj_to_skb(const struct mcp251xfd_priv *priv,
+=======
+mcp251xfd_hw_rx_obj_to_skb(struct mcp251xfd_priv *priv,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   const struct mcp251xfd_hw_rx_obj_canfd *hw_rx_obj,
 			   struct sk_buff *skb)
 {
@@ -2195,10 +2206,15 @@ static irqreturn_t mcp251xfd_irq(int irq, void *dev_id)
 			FIELD_GET(MCP251XFD_REG_INT_IE_MASK,
 				  priv->regs_status.intf);
 
+<<<<<<< HEAD
 		if (!(intf_pending)) {
 			can_rx_offload_threaded_irq_finish(&priv->offload);
 			return handled;
 		}
+=======
+		if (!(intf_pending))
+			return handled;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* Some interrupts must be ACKed in the
 		 * MCP251XFD_REG_INT register.
@@ -2298,13 +2314,19 @@ static irqreturn_t mcp251xfd_irq(int irq, void *dev_id)
 	} while (1);
 
  out_fail:
+<<<<<<< HEAD
 	can_rx_offload_threaded_irq_finish(&priv->offload);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netdev_err(priv->ndev, "IRQ handler returned %d (intf=0x%08x).\n",
 		   err, priv->regs_status.intf);
 	mcp251xfd_dump(priv);
 	mcp251xfd_chip_interrupts_disable(priv);
+<<<<<<< HEAD
 	mcp251xfd_timestamp_stop(priv);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return handled;
 }
@@ -2528,8 +2550,13 @@ static int mcp251xfd_open(struct net_device *ndev)
 	can_rx_offload_enable(&priv->offload);
 
 	err = request_threaded_irq(spi->irq, NULL, mcp251xfd_irq,
+<<<<<<< HEAD
 				   IRQF_SHARED | IRQF_ONESHOT,
 				   dev_name(&spi->dev), priv);
+=======
+				   IRQF_ONESHOT, dev_name(&spi->dev),
+				   priv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto out_can_rx_offload_disable;
 
@@ -2861,7 +2888,11 @@ static int mcp251xfd_probe(struct spi_device *spi)
 	struct gpio_desc *rx_int;
 	struct regulator *reg_vdd, *reg_xceiver;
 	struct clk *clk;
+<<<<<<< HEAD
 	u32 freq = 0;
+=======
+	u32 freq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	if (!spi->irq)
@@ -2888,6 +2919,7 @@ static int mcp251xfd_probe(struct spi_device *spi)
 		return dev_err_probe(&spi->dev, PTR_ERR(reg_xceiver),
 				     "Failed to get Transceiver regulator!\n");
 
+<<<<<<< HEAD
 	clk = devm_clk_get_optional(&spi->dev, NULL);
 	if (IS_ERR(clk))
 		return dev_err_probe(&spi->dev, PTR_ERR(clk),
@@ -2901,6 +2933,13 @@ static int mcp251xfd_probe(struct spi_device *spi)
 			return dev_err_probe(&spi->dev, err,
 					     "Failed to get clock-frequency!\n");
 	}
+=======
+	clk = devm_clk_get(&spi->dev, NULL);
+	if (IS_ERR(clk))
+		return dev_err_probe(&spi->dev, PTR_ERR(clk),
+				     "Failed to get Oscillator (clock)!\n");
+	freq = clk_get_rate(clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Sanity check */
 	if (freq < MCP251XFD_SYSCLOCK_HZ_MIN ||

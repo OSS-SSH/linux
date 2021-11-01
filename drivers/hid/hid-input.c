@@ -419,6 +419,11 @@ static int hidinput_get_battery_property(struct power_supply *psy,
 
 		if (dev->battery_status == HID_BATTERY_UNKNOWN)
 			val->intval = POWER_SUPPLY_STATUS_UNKNOWN;
+<<<<<<< HEAD
+=======
+		else if (dev->battery_capacity == 100)
+			val->intval = POWER_SUPPLY_STATUS_FULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			val->intval = POWER_SUPPLY_STATUS_DISCHARGING;
 		break;

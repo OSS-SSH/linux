@@ -10,7 +10,11 @@
  * Oh, it's a waste of space, but oh-so-yummy for debugging.
  */
 
+<<<<<<< HEAD
 #include <linux/stdarg.h>
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <linux/compiler.h>
 #include <linux/ctype.h>

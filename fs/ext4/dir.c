@@ -551,7 +551,11 @@ static int ext4_dx_readdir(struct file *file, struct dir_context *ctx)
 	struct dir_private_info *info = file->private_data;
 	struct inode *inode = file_inode(file);
 	struct fname *fname;
+<<<<<<< HEAD
 	int ret = 0;
+=======
+	int	ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!info) {
 		info = ext4_htree_create_dir_info(file, ctx->pos);
@@ -599,7 +603,11 @@ static int ext4_dx_readdir(struct file *file, struct dir_context *ctx)
 						   info->curr_minor_hash,
 						   &info->next_hash);
 			if (ret < 0)
+<<<<<<< HEAD
 				goto finished;
+=======
+				return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (ret == 0) {
 				ctx->pos = ext4_get_htree_eof(file);
 				break;
@@ -630,7 +638,11 @@ static int ext4_dx_readdir(struct file *file, struct dir_context *ctx)
 	}
 finished:
 	info->last_pos = ctx->pos;
+<<<<<<< HEAD
 	return ret < 0 ? ret : 0;
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int ext4_release_dir(struct inode *inode, struct file *filp)

@@ -947,7 +947,11 @@ sba_map_sg(struct device *dev, struct scatterlist *sglist, int nents,
 
 	ioc = GET_IOC(dev);
 	if (!ioc)
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Fast path single entry scatterlists. */
 	if (nents == 1) {

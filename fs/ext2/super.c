@@ -206,6 +206,12 @@ static void init_once(void *foo)
 	init_rwsem(&ei->xattr_sem);
 #endif
 	mutex_init(&ei->truncate_mutex);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_FS_DAX
+	init_rwsem(&ei->dax_sem);
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	inode_init_once(&ei->vfs_inode);
 }
 
@@ -946,8 +952,12 @@ static int ext2_fill_super(struct super_block *sb, void *data, int silent)
 	blocksize = BLOCK_SIZE << le32_to_cpu(sbi->s_es->s_log_block_size);
 
 	if (test_opt(sb, DAX)) {
+<<<<<<< HEAD
 		if (!dax_supported(dax_dev, sb->s_bdev, blocksize, 0,
 				bdev_nr_sectors(sb->s_bdev))) {
+=======
+		if (!bdev_dax_supported(sb->s_bdev, blocksize)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ext2_msg(sb, KERN_ERR,
 				"DAX unsupported by block device. Turning off DAX.");
 			clear_opt(sbi->s_mount_opt, DAX);

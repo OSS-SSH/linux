@@ -419,7 +419,11 @@ static struct ctl_table net_core_table[] = {
 		.mode		= 0600,
 		.proc_handler	= proc_dolongvec_minmax_bpf_restricted,
 		.extra1		= &long_one,
+<<<<<<< HEAD
 		.extra2		= &long_max,
+=======
+		.extra2		= &bpf_jit_limit_max,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 #endif
 	{

@@ -221,6 +221,7 @@ extern int test__join_cgroup(const char *path);
 	___ok;								\
 })
 
+<<<<<<< HEAD
 #define ASSERT_STRNEQ(actual, expected, len, name) ({			\
 	static int duration = 0;					\
 	const char *___act = actual;					\
@@ -233,6 +234,8 @@ extern int test__join_cgroup(const char *path);
 	___ok;								\
 })
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ASSERT_OK(res, name) ({						\
 	static int duration = 0;					\
 	long long ___res = (res);					\

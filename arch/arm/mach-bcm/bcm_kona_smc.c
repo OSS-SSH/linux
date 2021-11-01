@@ -10,6 +10,11 @@
  * of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  */
+<<<<<<< HEAD
+=======
+
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/smp.h>
 #include <linux/io.h>
 #include <linux/ioport.h>

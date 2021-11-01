@@ -21,6 +21,29 @@
  */
 
 /*
+<<<<<<< HEAD
+=======
+ * __has_attribute is supported on gcc >= 5, clang >= 2.9 and icc >= 17.
+ * In the meantime, to support gcc < 5, we implement __has_attribute
+ * by hand.
+ */
+#ifndef __has_attribute
+# define __has_attribute(x) __GCC4_has_attribute_##x
+# define __GCC4_has_attribute___assume_aligned__      1
+# define __GCC4_has_attribute___copy__                0
+# define __GCC4_has_attribute___designated_init__     0
+# define __GCC4_has_attribute___externally_visible__  1
+# define __GCC4_has_attribute___no_caller_saved_registers__ 0
+# define __GCC4_has_attribute___noclone__             1
+# define __GCC4_has_attribute___no_profile_instrument_function__ 0
+# define __GCC4_has_attribute___nonstring__           0
+# define __GCC4_has_attribute___no_sanitize_address__ 1
+# define __GCC4_has_attribute___no_sanitize_undefined__ 1
+# define __GCC4_has_attribute___fallthrough__         0
+#endif
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-alias-function-attribute
  */
 #define __alias(symbol)                 __attribute__((__alias__(#symbol)))
@@ -54,6 +77,10 @@
  * compiler should see some alignment anyway, when the return value is
  * massaged by 'flags = ptr & 3; ptr &= ~3;').
  *
+<<<<<<< HEAD
+=======
+ * Optional: only supported since gcc >= 4.9
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Optional: not supported by icc
  *
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-assume_005faligned-function-attribute
@@ -117,6 +144,7 @@
 #endif
 
 /*
+<<<<<<< HEAD
  * Optional: only supported since clang >= 14.0
  *
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-error-function-attribute
@@ -128,6 +156,8 @@
 #endif
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Optional: not supported by clang
  *
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-externally_005fvisible-function-attribute
@@ -289,6 +319,7 @@
 #define __must_check                    __attribute__((__warn_unused_result__))
 
 /*
+<<<<<<< HEAD
  * Optional: only supported since clang >= 14.0
  *
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-warning-function-attribute
@@ -300,6 +331,8 @@
 #endif
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Function-Attributes.html#index-weak-function-attribute
  *   gcc: https://gcc.gnu.org/onlinedocs/gcc/Common-Variable-Attributes.html#index-weak-variable-attribute
  */

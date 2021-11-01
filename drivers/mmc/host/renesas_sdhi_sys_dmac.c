@@ -108,9 +108,15 @@ static void renesas_sdhi_sys_dmac_abort_dma(struct tmio_mmc_host *host)
 	renesas_sdhi_sys_dmac_enable_dma(host, false);
 
 	if (host->chan_rx)
+<<<<<<< HEAD
 		dmaengine_terminate_sync(host->chan_rx);
 	if (host->chan_tx)
 		dmaengine_terminate_sync(host->chan_tx);
+=======
+		dmaengine_terminate_all(host->chan_rx);
+	if (host->chan_tx)
+		dmaengine_terminate_all(host->chan_tx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	renesas_sdhi_sys_dmac_enable_dma(host, true);
 }
@@ -451,8 +457,12 @@ static const struct tmio_mmc_dma_ops renesas_sdhi_sys_dmac_dma_ops = {
 
 static int renesas_sdhi_sys_dmac_probe(struct platform_device *pdev)
 {
+<<<<<<< HEAD
 	return renesas_sdhi_probe(pdev, &renesas_sdhi_sys_dmac_dma_ops,
 				  of_device_get_match_data(&pdev->dev), NULL);
+=======
+	return renesas_sdhi_probe(pdev, &renesas_sdhi_sys_dmac_dma_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct dev_pm_ops renesas_sdhi_sys_dmac_dev_pm_ops = {

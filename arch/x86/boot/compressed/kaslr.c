@@ -668,7 +668,11 @@ static bool process_mem_region(struct mem_vector *region,
 
 		if (slot_area_index == MAX_SLOT_AREA) {
 			debug_putstr("Aborted e820/efi memmap scan when walking immovable regions(slot_areas full)!\n");
+<<<<<<< HEAD
 			return true;
+=======
+			return 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 #endif

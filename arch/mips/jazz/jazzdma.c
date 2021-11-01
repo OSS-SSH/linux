@@ -552,7 +552,11 @@ static int jazz_dma_map_sg(struct device *dev, struct scatterlist *sglist,
 				dir);
 		sg->dma_address = vdma_alloc(sg_phys(sg), sg->length);
 		if (sg->dma_address == DMA_MAPPING_ERROR)
+<<<<<<< HEAD
 			return -EIO;
+=======
+			return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sg_dma_len(sg) = sg->length;
 	}
 

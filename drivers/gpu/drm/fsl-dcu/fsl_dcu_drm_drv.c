@@ -23,6 +23,10 @@
 #include <drm/drm_fb_cma_helper.h>
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_gem_cma_helper.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_modeset_helper.h>
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_vblank.h>
@@ -50,7 +54,11 @@ static const struct regmap_config fsl_dcu_regmap_config = {
 	.volatile_reg = fsl_dcu_drm_is_volatile_reg,
 };
 
+<<<<<<< HEAD
 static void fsl_dcu_irq_reset(struct drm_device *dev)
+=======
+static void fsl_dcu_irq_uninstall(struct drm_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
 
@@ -58,6 +66,7 @@ static void fsl_dcu_irq_reset(struct drm_device *dev)
 	regmap_write(fsl_dev->regmap, DCU_INT_MASK, ~0);
 }
 
+<<<<<<< HEAD
 static irqreturn_t fsl_dcu_drm_irq(int irq, void *arg)
 {
 	struct drm_device *dev = arg;
@@ -97,6 +106,8 @@ static void fsl_dcu_irq_uninstall(struct drm_device *dev)
 	free_irq(fsl_dev->irq, dev);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
 {
 	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
@@ -111,6 +122,7 @@ static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
 	ret = drm_vblank_init(dev, dev->mode_config.num_crtc);
 	if (ret < 0) {
 		dev_err(dev->dev, "failed to initialize vblank\n");
+<<<<<<< HEAD
 		goto done_vblank;
 	}
 
@@ -118,6 +130,15 @@ static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
 	if (ret < 0) {
 		dev_err(dev->dev, "failed to install IRQ handler\n");
 		goto done_irq;
+=======
+		goto done;
+	}
+
+	ret = drm_irq_install(dev, fsl_dev->irq);
+	if (ret < 0) {
+		dev_err(dev->dev, "failed to install IRQ handler\n");
+		goto done;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (legacyfb_depth != 16 && legacyfb_depth != 24 &&
@@ -128,11 +149,19 @@ static int fsl_dcu_load(struct drm_device *dev, unsigned long flags)
 	}
 
 	return 0;
+<<<<<<< HEAD
 done_irq:
 	drm_kms_helper_poll_fini(dev);
 
 	drm_mode_config_cleanup(dev);
 done_vblank:
+=======
+done:
+	drm_kms_helper_poll_fini(dev);
+
+	drm_mode_config_cleanup(dev);
+	drm_irq_uninstall(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev->dev_private = NULL;
 
 	return ret;
@@ -144,17 +173,51 @@ static void fsl_dcu_unload(struct drm_device *dev)
 	drm_kms_helper_poll_fini(dev);
 
 	drm_mode_config_cleanup(dev);
+<<<<<<< HEAD
 	fsl_dcu_irq_uninstall(dev);
+=======
+	drm_irq_uninstall(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev->dev_private = NULL;
 }
 
+<<<<<<< HEAD
+=======
+static irqreturn_t fsl_dcu_drm_irq(int irq, void *arg)
+{
+	struct drm_device *dev = arg;
+	struct fsl_dcu_drm_device *fsl_dev = dev->dev_private;
+	unsigned int int_status;
+	int ret;
+
+	ret = regmap_read(fsl_dev->regmap, DCU_INT_STATUS, &int_status);
+	if (ret) {
+		dev_err(dev->dev, "read DCU_INT_STATUS failed\n");
+		return IRQ_NONE;
+	}
+
+	if (int_status & DCU_INT_STATUS_VBLANK)
+		drm_handle_vblank(dev, 0);
+
+	regmap_write(fsl_dev->regmap, DCU_INT_STATUS, int_status);
+
+	return IRQ_HANDLED;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 DEFINE_DRM_GEM_CMA_FOPS(fsl_dcu_drm_fops);
 
 static const struct drm_driver fsl_dcu_drm_driver = {
 	.driver_features	= DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
 	.load			= fsl_dcu_load,
 	.unload			= fsl_dcu_unload,
+<<<<<<< HEAD
+=======
+	.irq_handler		= fsl_dcu_drm_irq,
+	.irq_preinstall		= fsl_dcu_irq_uninstall,
+	.irq_uninstall		= fsl_dcu_irq_uninstall,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	DRM_GEM_CMA_DRIVER_OPS,
 	.fops			= &fsl_dcu_drm_fops,
 	.name			= "fsl-dcu-drm",

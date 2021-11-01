@@ -93,13 +93,19 @@ static void mtk8250_dma_rx_complete(void *param)
 	struct dma_tx_state state;
 	int copied, total, cnt;
 	unsigned char *ptr;
+<<<<<<< HEAD
 	unsigned long flags;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (data->rx_status == DMA_RX_SHUTDOWN)
 		return;
 
+<<<<<<< HEAD
 	spin_lock_irqsave(&up->port.lock, flags);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
 	total = dma->rx_size - state.residue;
 	cnt = total;
@@ -123,8 +129,11 @@ static void mtk8250_dma_rx_complete(void *param)
 	tty_flip_buffer_push(tty_port);
 
 	mtk8250_rx_dma(up);
+<<<<<<< HEAD
 
 	spin_unlock_irqrestore(&up->port.lock, flags);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void mtk8250_rx_dma(struct uart_8250_port *up)

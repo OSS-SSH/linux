@@ -44,7 +44,11 @@ COMMON OPTIONS
 
 -f::
 --force::
+<<<<<<< HEAD
 	Don't complain, do it.
+=======
+	Don't complan, do it.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 REPORT OPTIONS
 --------------

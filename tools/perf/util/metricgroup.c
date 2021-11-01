@@ -313,7 +313,11 @@ static int metricgroup__setup_events(struct list_head *groups,
 	struct evsel *evsel, *tmp;
 	unsigned long *evlist_used;
 
+<<<<<<< HEAD
 	evlist_used = bitmap_zalloc(perf_evlist->core.nr_entries);
+=======
+	evlist_used = bitmap_alloc(perf_evlist->core.nr_entries);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!evlist_used)
 		return -ENOMEM;
 

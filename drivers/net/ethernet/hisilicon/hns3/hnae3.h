@@ -65,7 +65,11 @@
 #define HNAE3_UNIC_CLIENT_INITED_B		0x4
 #define HNAE3_ROCE_CLIENT_INITED_B		0x5
 
+<<<<<<< HEAD
 #define HNAE3_DEV_SUPPORT_ROCE_DCB_BITS (BIT(HNAE3_DEV_SUPPORT_DCB_B) | \
+=======
+#define HNAE3_DEV_SUPPORT_ROCE_DCB_BITS (BIT(HNAE3_DEV_SUPPORT_DCB_B) |\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		BIT(HNAE3_DEV_SUPPORT_ROCE_B))
 
 #define hnae3_dev_roce_supported(hdev) \
@@ -718,8 +722,11 @@ struct hnae3_ae_ops {
 			    u32 nsec, u32 sec);
 	int (*get_ts_info)(struct hnae3_handle *handle,
 			   struct ethtool_ts_info *info);
+<<<<<<< HEAD
 	int (*get_link_diagnosis_info)(struct hnae3_handle *handle,
 				       u32 *status_code);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct hnae3_dcb_ops {
@@ -752,6 +759,10 @@ struct hnae3_tc_info {
 	u8 prio_tc[HNAE3_MAX_USER_PRIO]; /* TC indexed by prio */
 	u16 tqp_count[HNAE3_MAX_TC];
 	u16 tqp_offset[HNAE3_MAX_TC];
+<<<<<<< HEAD
+=======
+	unsigned long tc_en; /* bitmap of TC enabled */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 num_tc; /* Total number of enabled TCs */
 	bool mqprio_active;
 };
@@ -773,7 +784,10 @@ struct hnae3_knic_private_info {
 
 	u16 int_rl_setting;
 	enum pkt_hash_types rss_type;
+<<<<<<< HEAD
 	void __iomem *io_base;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct hnae3_roce_private_info {

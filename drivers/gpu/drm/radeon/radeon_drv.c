@@ -330,7 +330,11 @@ static int radeon_pci_probe(struct pci_dev *pdev,
 		return -EPROBE_DEFER;
 
 	/* Get rid of things like offb */
+<<<<<<< HEAD
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &kms_driver);
+=======
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "radeondrmfb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 
@@ -607,6 +611,13 @@ static const struct drm_driver kms_driver = {
 	.postclose = radeon_driver_postclose_kms,
 	.lastclose = radeon_driver_lastclose_kms,
 	.unload = radeon_driver_unload_kms,
+<<<<<<< HEAD
+=======
+	.irq_preinstall = radeon_driver_irq_preinstall_kms,
+	.irq_postinstall = radeon_driver_irq_postinstall_kms,
+	.irq_uninstall = radeon_driver_irq_uninstall_kms,
+	.irq_handler = radeon_driver_irq_handler_kms,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ioctls = radeon_ioctls_kms,
 	.num_ioctls = ARRAY_SIZE(radeon_ioctls_kms),
 	.dumb_create = radeon_mode_dumb_create,

@@ -54,7 +54,10 @@
 
 &mscc_felix_port0 {
 	label = "swp0";
+<<<<<<< HEAD
 	managed = "in-band-status";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy-handle = <&phy0>;
 	phy-mode = "sgmii";
 	status = "okay";
@@ -62,7 +65,10 @@
 
 &mscc_felix_port1 {
 	label = "swp1";
+<<<<<<< HEAD
 	managed = "in-band-status";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy-handle = <&phy1>;
 	phy-mode = "sgmii";
 	status = "okay";

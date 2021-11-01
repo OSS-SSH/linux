@@ -202,7 +202,11 @@ finished_setup:
 1006:		adr	r0, .Lbad
 		mov	r1, loglvl
 		mov	r2, frame
+<<<<<<< HEAD
 		bl	_printk
+=======
+		bl	printk
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 no_frame:	ldmfd	sp!, {r4 - r9, fp, pc}
 ENDPROC(c_backtrace)
 		.pushsection __ex_table,"a"

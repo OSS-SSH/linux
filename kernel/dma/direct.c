@@ -75,6 +75,7 @@ static bool dma_coherent_ok(struct device *dev, phys_addr_t phys, size_t size)
 		min_not_zero(dev->coherent_dma_mask, dev->bus_dma_limit);
 }
 
+<<<<<<< HEAD
 static void __dma_direct_free_pages(struct device *dev, struct page *page,
 				    size_t size)
 {
@@ -84,6 +85,8 @@ static void __dma_direct_free_pages(struct device *dev, struct page *page,
 	dma_free_contiguous(dev, page, size);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct page *__dma_direct_alloc_pages(struct device *dev, size_t size,
 		gfp_t gfp)
 {
@@ -95,6 +98,7 @@ static struct page *__dma_direct_alloc_pages(struct device *dev, size_t size,
 
 	gfp |= dma_direct_optimal_gfp_mask(dev, dev->coherent_dma_mask,
 					   &phys_limit);
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_DMA_RESTRICTED_POOL) &&
 	    is_swiotlb_for_alloc(dev)) {
 		page = swiotlb_alloc(dev, size);
@@ -105,6 +109,8 @@ static struct page *__dma_direct_alloc_pages(struct device *dev, size_t size,
 		return page;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	page = dma_alloc_contiguous(dev, size, gfp);
 	if (page && !dma_coherent_ok(dev, page_to_phys(page), size)) {
 		dma_free_contiguous(dev, page, size);
@@ -161,7 +167,11 @@ void *dma_direct_alloc(struct device *dev, size_t size,
 		gfp |= __GFP_NOWARN;
 
 	if ((attrs & DMA_ATTR_NO_KERNEL_MAPPING) &&
+<<<<<<< HEAD
 	    !force_dma_unencrypted(dev) && !is_swiotlb_for_alloc(dev)) {
+=======
+	    !force_dma_unencrypted(dev)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		page = __dma_direct_alloc_pages(dev, size, gfp & ~__GFP_ZERO);
 		if (!page)
 			return NULL;
@@ -175,6 +185,7 @@ void *dma_direct_alloc(struct device *dev, size_t size,
 
 	if (!IS_ENABLED(CONFIG_ARCH_HAS_DMA_SET_UNCACHED) &&
 	    !IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) &&
+<<<<<<< HEAD
 	    !IS_ENABLED(CONFIG_DMA_GLOBAL_POOL) &&
 	    !dev_is_dma_coherent(dev) &&
 	    !is_swiotlb_for_alloc(dev))
@@ -183,20 +194,31 @@ void *dma_direct_alloc(struct device *dev, size_t size,
 	if (IS_ENABLED(CONFIG_DMA_GLOBAL_POOL) &&
 	    !dev_is_dma_coherent(dev))
 		return dma_alloc_from_global_coherent(dev, size, dma_handle);
+=======
+	    !dev_is_dma_coherent(dev))
+		return arch_dma_alloc(dev, size, dma_handle, gfp, attrs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Remapping or decrypting memory may block. If either is required and
 	 * we can't block, allocate the memory from the atomic pools.
+<<<<<<< HEAD
 	 * If restricted DMA (i.e., is_swiotlb_for_alloc) is required, one must
 	 * set up another device coherent pool by shared-dma-pool and use
 	 * dma_alloc_from_dev_coherent instead.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	if (IS_ENABLED(CONFIG_DMA_COHERENT_POOL) &&
 	    !gfpflags_allow_blocking(gfp) &&
 	    (force_dma_unencrypted(dev) ||
+<<<<<<< HEAD
 	     (IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) &&
 	      !dev_is_dma_coherent(dev))) &&
 	    !is_swiotlb_for_alloc(dev))
+=======
+	     (IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) && !dev_is_dma_coherent(dev))))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
 
 	/* we always manually zero the memory once we are done */
@@ -267,7 +289,11 @@ out_encrypt_pages:
 			return NULL;
 	}
 out_free_pages:
+<<<<<<< HEAD
 	__dma_direct_free_pages(dev, page, size);
+=======
+	dma_free_contiguous(dev, page, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return NULL;
 }
 
@@ -277,7 +303,11 @@ void dma_direct_free(struct device *dev, size_t size,
 	unsigned int page_order = get_order(size);
 
 	if ((attrs & DMA_ATTR_NO_KERNEL_MAPPING) &&
+<<<<<<< HEAD
 	    !force_dma_unencrypted(dev) && !is_swiotlb_for_alloc(dev)) {
+=======
+	    !force_dma_unencrypted(dev)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* cpu_addr is a struct page cookie, not a kernel address */
 		dma_free_contiguous(dev, cpu_addr, size);
 		return;
@@ -285,6 +315,7 @@ void dma_direct_free(struct device *dev, size_t size,
 
 	if (!IS_ENABLED(CONFIG_ARCH_HAS_DMA_SET_UNCACHED) &&
 	    !IS_ENABLED(CONFIG_DMA_DIRECT_REMAP) &&
+<<<<<<< HEAD
 	    !IS_ENABLED(CONFIG_DMA_GLOBAL_POOL) &&
 	    !dev_is_dma_coherent(dev) &&
 	    !is_swiotlb_for_alloc(dev)) {
@@ -296,6 +327,10 @@ void dma_direct_free(struct device *dev, size_t size,
 	    !dev_is_dma_coherent(dev)) {
 		if (!dma_release_from_global_coherent(page_order, cpu_addr))
 			WARN_ON_ONCE(1);
+=======
+	    !dev_is_dma_coherent(dev)) {
+		arch_dma_free(dev, size, cpu_addr, dma_addr, attrs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	}
 
@@ -312,7 +347,11 @@ void dma_direct_free(struct device *dev, size_t size,
 	else if (IS_ENABLED(CONFIG_ARCH_HAS_DMA_CLEAR_UNCACHED))
 		arch_dma_clear_uncached(cpu_addr, size);
 
+<<<<<<< HEAD
 	__dma_direct_free_pages(dev, dma_direct_to_page(dev, dma_addr), size);
+=======
+	dma_free_contiguous(dev, dma_direct_to_page(dev, dma_addr), size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct page *dma_direct_alloc_pages(struct device *dev, size_t size,
@@ -322,8 +361,12 @@ struct page *dma_direct_alloc_pages(struct device *dev, size_t size,
 	void *ret;
 
 	if (IS_ENABLED(CONFIG_DMA_COHERENT_POOL) &&
+<<<<<<< HEAD
 	    force_dma_unencrypted(dev) && !gfpflags_allow_blocking(gfp) &&
 	    !is_swiotlb_for_alloc(dev))
+=======
+	    force_dma_unencrypted(dev) && !gfpflags_allow_blocking(gfp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return dma_direct_alloc_from_pool(dev, size, dma_handle, gfp);
 
 	page = __dma_direct_alloc_pages(dev, size, gfp);
@@ -350,7 +393,11 @@ struct page *dma_direct_alloc_pages(struct device *dev, size_t size,
 	*dma_handle = phys_to_dma_direct(dev, page_to_phys(page));
 	return page;
 out_free_pages:
+<<<<<<< HEAD
 	__dma_direct_free_pages(dev, page, size);
+=======
+	dma_free_contiguous(dev, page, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return NULL;
 }
 
@@ -369,7 +416,11 @@ void dma_direct_free_pages(struct device *dev, size_t size,
 	if (force_dma_unencrypted(dev))
 		set_memory_encrypted((unsigned long)vaddr, 1 << page_order);
 
+<<<<<<< HEAD
 	__dma_direct_free_pages(dev, page, size);
+=======
+	dma_free_contiguous(dev, page, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #if defined(CONFIG_ARCH_HAS_SYNC_DMA_FOR_DEVICE) || \
@@ -383,7 +434,11 @@ void dma_direct_sync_sg_for_device(struct device *dev,
 	for_each_sg(sgl, sg, nents, i) {
 		phys_addr_t paddr = dma_to_phys(dev, sg_dma_address(sg));
 
+<<<<<<< HEAD
 		if (unlikely(is_swiotlb_buffer(dev, paddr)))
+=======
+		if (unlikely(is_swiotlb_buffer(paddr)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			swiotlb_sync_single_for_device(dev, paddr, sg->length,
 						       dir);
 
@@ -409,7 +464,11 @@ void dma_direct_sync_sg_for_cpu(struct device *dev,
 		if (!dev_is_dma_coherent(dev))
 			arch_sync_dma_for_cpu(paddr, sg->length, dir);
 
+<<<<<<< HEAD
 		if (unlikely(is_swiotlb_buffer(dev, paddr)))
+=======
+		if (unlikely(is_swiotlb_buffer(paddr)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			swiotlb_sync_single_for_cpu(dev, paddr, sg->length,
 						    dir);
 
@@ -451,7 +510,11 @@ int dma_direct_map_sg(struct device *dev, struct scatterlist *sgl, int nents,
 
 out_unmap:
 	dma_direct_unmap_sg(dev, sgl, i, dir, attrs | DMA_ATTR_SKIP_CPU_SYNC);
+<<<<<<< HEAD
 	return -EIO;
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 dma_addr_t dma_direct_map_resource(struct device *dev, phys_addr_t paddr,
@@ -502,8 +565,11 @@ int dma_direct_mmap(struct device *dev, struct vm_area_struct *vma,
 
 	if (dma_mmap_from_dev_coherent(dev, vma, cpu_addr, size, &ret))
 		return ret;
+<<<<<<< HEAD
 	if (dma_mmap_from_global_coherent(vma, cpu_addr, size, &ret))
 		return ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (vma->vm_pgoff >= count || user_count > count - vma->vm_pgoff)
 		return -ENXIO;
@@ -537,8 +603,13 @@ int dma_direct_supported(struct device *dev, u64 mask)
 size_t dma_direct_max_mapping_size(struct device *dev)
 {
 	/* If SWIOTLB is active, use its maximum mapping size */
+<<<<<<< HEAD
 	if (is_swiotlb_active(dev) &&
 	    (dma_addressing_limited(dev) || is_swiotlb_force_bounce(dev)))
+=======
+	if (is_swiotlb_active() &&
+	    (dma_addressing_limited(dev) || swiotlb_force == SWIOTLB_FORCE))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return swiotlb_max_mapping_size(dev);
 	return SIZE_MAX;
 }
@@ -546,7 +617,11 @@ size_t dma_direct_max_mapping_size(struct device *dev)
 bool dma_direct_need_sync(struct device *dev, dma_addr_t dma_addr)
 {
 	return !dev_is_dma_coherent(dev) ||
+<<<<<<< HEAD
 	       is_swiotlb_buffer(dev, dma_to_phys(dev, dma_addr));
+=======
+		is_swiotlb_buffer(dma_to_phys(dev, dma_addr));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

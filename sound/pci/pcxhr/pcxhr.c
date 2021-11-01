@@ -366,7 +366,11 @@ static int pcxhr_sub_set_clock(struct pcxhr_mgr *mgr,
 		mgr->codec_speed = speed;	/* save new codec speed */
 	}
 
+<<<<<<< HEAD
 	dev_dbg(&mgr->pci->dev, "%s to %dHz (realfreq=%d)\n", __func__,
+=======
+	dev_dbg(&mgr->pci->dev, "pcxhr_sub_set_clock to %dHz (realfreq=%d)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    rate, realfreq);
 	return 0;
 }
@@ -499,7 +503,11 @@ static int pcxhr_set_stream_state(struct snd_pcxhr *chip,
 	else {
 		if (stream->status != PCXHR_STREAM_STATUS_SCHEDULE_STOP) {
 			dev_err(chip->card->dev,
+<<<<<<< HEAD
 				"%s CANNOT be stopped\n", __func__);
+=======
+				"pcxhr_set_stream_state CANNOT be stopped\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EINVAL;
 		}
 		start = 0;
@@ -524,7 +532,11 @@ static int pcxhr_set_stream_state(struct snd_pcxhr *chip,
 	err = pcxhr_send_msg(chip->mgr, &rmh);
 	if (err)
 		dev_err(chip->card->dev,
+<<<<<<< HEAD
 			"ERROR %s err=%x;\n", __func__, err);
+=======
+			"ERROR pcxhr_set_stream_state err=%x;\n", err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	stream->status =
 	  start ? PCXHR_STREAM_STATUS_STARTED : PCXHR_STREAM_STATUS_STOPPED;
 	return err;
@@ -570,7 +582,11 @@ static int pcxhr_set_format(struct pcxhr_stream *stream)
 		break;
 	default:
 		dev_err(chip->card->dev,
+<<<<<<< HEAD
 			"error %s() : unknown format\n", __func__);
+=======
+			"error pcxhr_set_format() : unknown format\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 	}
 
@@ -615,7 +631,11 @@ static int pcxhr_set_format(struct pcxhr_stream *stream)
 	err = pcxhr_send_msg(chip->mgr, &rmh);
 	if (err)
 		dev_err(chip->card->dev,
+<<<<<<< HEAD
 			"ERROR %s err=%x;\n", __func__, err);
+=======
+			"ERROR pcxhr_set_format err=%x;\n", err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -630,7 +650,11 @@ static int pcxhr_update_r_buffer(struct pcxhr_stream *stream)
 	stream_num = is_capture ? 0 : subs->number;
 
 	dev_dbg(chip->card->dev,
+<<<<<<< HEAD
 		"%s(pcm%c%d) : addr(%p) bytes(%zx) subs(%d)\n", __func__,
+=======
+		"pcxhr_update_r_buffer(pcm%c%d) : addr(%p) bytes(%zx) subs(%d)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		is_capture ? 'c' : 'p',
 		chip->chip_idx, (void *)(long)subs->runtime->dma_addr,
 		subs->runtime->dma_bytes, subs->number);
@@ -721,20 +745,36 @@ static void pcxhr_start_linked_stream(struct pcxhr_mgr *mgr)
 	}
 	if (capture_mask == 0 && playback_mask == 0) {
 		mutex_unlock(&mgr->setup_mutex);
+<<<<<<< HEAD
 		dev_err(&mgr->pci->dev, "%s : no pipes\n", __func__);
 		return;
 	}
 
 	dev_dbg(&mgr->pci->dev, "%s : playback_mask=%x capture_mask=%x\n",
 		    __func__, playback_mask, capture_mask);
+=======
+		dev_err(&mgr->pci->dev, "pcxhr_start_linked_stream : no pipes\n");
+		return;
+	}
+
+	dev_dbg(&mgr->pci->dev, "pcxhr_start_linked_stream : "
+		    "playback_mask=%x capture_mask=%x\n",
+		    playback_mask, capture_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* synchronous stop of all the pipes concerned */
 	err = pcxhr_set_pipe_state(mgr,  playback_mask, capture_mask, 0);
 	if (err) {
 		mutex_unlock(&mgr->setup_mutex);
+<<<<<<< HEAD
 		dev_err(&mgr->pci->dev, "%s : "
 			   "error stop pipes (P%x C%x)\n",
 			   __func__, playback_mask, capture_mask);
+=======
+		dev_err(&mgr->pci->dev, "pcxhr_start_linked_stream : "
+			   "error stop pipes (P%x C%x)\n",
+			   playback_mask, capture_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	}
 
@@ -777,9 +817,15 @@ static void pcxhr_start_linked_stream(struct pcxhr_mgr *mgr)
 	err = pcxhr_set_pipe_state(mgr, playback_mask, capture_mask, 1);
 	if (err) {
 		mutex_unlock(&mgr->setup_mutex);
+<<<<<<< HEAD
 		dev_err(&mgr->pci->dev, "%s : "
 			   "error start pipes (P%x C%x)\n",
 			   __func__, playback_mask, capture_mask);
+=======
+		dev_err(&mgr->pci->dev, "pcxhr_start_linked_stream : "
+			   "error start pipes (P%x C%x)\n",
+			   playback_mask, capture_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	}
 
@@ -888,7 +934,11 @@ static int pcxhr_hardware_timer(struct pcxhr_mgr *mgr, int start)
 	}
 	err = pcxhr_send_msg(mgr, &rmh);
 	if (err < 0)
+<<<<<<< HEAD
 		dev_err(&mgr->pci->dev, "error %s err(%x)\n", __func__,
+=======
+		dev_err(&mgr->pci->dev, "error pcxhr_hardware_timer err(%x)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   err);
 	return err;
 }
@@ -903,7 +953,11 @@ static int pcxhr_prepare(struct snd_pcm_substream *subs)
 	int err = 0;
 
 	dev_dbg(chip->card->dev,
+<<<<<<< HEAD
 		"%s : period_size(%lx) periods(%x) buffer_size(%lx)\n", __func__,
+=======
+		"pcxhr_prepare : period_size(%lx) periods(%x) buffer_size(%lx)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    subs->runtime->period_size, subs->runtime->periods,
 		    subs->runtime->buffer_size);
 
@@ -996,12 +1050,21 @@ static int pcxhr_open(struct snd_pcm_substream *subs)
 	runtime->hw = pcxhr_caps;
 
 	if( subs->stream == SNDRV_PCM_STREAM_PLAYBACK ) {
+<<<<<<< HEAD
 		dev_dbg(chip->card->dev, "%s playback chip%d subs%d\n",
 			    __func__, chip->chip_idx, subs->number);
 		stream = &chip->playback_stream[subs->number];
 	} else {
 		dev_dbg(chip->card->dev, "%s capture chip%d subs%d\n",
 			    __func__, chip->chip_idx, subs->number);
+=======
+		dev_dbg(chip->card->dev, "pcxhr_open playback chip%d subs%d\n",
+			    chip->chip_idx, subs->number);
+		stream = &chip->playback_stream[subs->number];
+	} else {
+		dev_dbg(chip->card->dev, "pcxhr_open capture chip%d subs%d\n",
+			    chip->chip_idx, subs->number);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (mgr->mono_capture)
 			runtime->hw.channels_max = 1;
 		else
@@ -1010,8 +1073,13 @@ static int pcxhr_open(struct snd_pcm_substream *subs)
 	}
 	if (stream->status != PCXHR_STREAM_STATUS_FREE){
 		/* streams in use */
+<<<<<<< HEAD
 		dev_err(chip->card->dev, "%s chip%d subs%d in use\n",
 			   __func__, chip->chip_idx, subs->number);
+=======
+		dev_err(chip->card->dev, "pcxhr_open chip%d subs%d in use\n",
+			   chip->chip_idx, subs->number);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mutex_unlock(&mgr->setup_mutex);
 		return -EBUSY;
 	}
@@ -1076,7 +1144,11 @@ static int pcxhr_close(struct snd_pcm_substream *subs)
 
 	mutex_lock(&mgr->setup_mutex);
 
+<<<<<<< HEAD
 	dev_dbg(chip->card->dev, "%s chip%d subs%d\n", __func__,
+=======
+	dev_dbg(chip->card->dev, "pcxhr_close chip%d subs%d\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    chip->chip_idx, subs->number);
 
 	/* sample rate released */
@@ -1571,7 +1643,11 @@ static int pcxhr_probe(struct pci_dev *pci,
 	/* init setup mutex*/
 	mutex_init(&mgr->setup_mutex);
 
+<<<<<<< HEAD
 	mgr->prmh = kmalloc(sizeof(*mgr->prmh) +
+=======
+	mgr->prmh = kmalloc(sizeof(*mgr->prmh) + 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			    sizeof(u32) * (PCXHR_SIZE_MAX_LONG_STATUS -
 					   PCXHR_SIZE_MAX_STATUS),
 			    GFP_KERNEL);

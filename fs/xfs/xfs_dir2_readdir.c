@@ -32,7 +32,11 @@ xfs_dir3_get_dtype(
 	struct xfs_mount	*mp,
 	uint8_t			filetype)
 {
+<<<<<<< HEAD
 	if (!xfs_has_ftype(mp))
+=======
+	if (!xfs_sb_version_hasftype(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return DT_UNKNOWN;
 
 	if (filetype >= XFS_DIR3_FT_MAX)
@@ -512,7 +516,11 @@ xfs_readdir(
 
 	trace_xfs_readdir(dp);
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(dp->i_mount))
+=======
+	if (XFS_FORCED_SHUTDOWN(dp->i_mount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	ASSERT(S_ISDIR(VFS_I(dp)->i_mode));

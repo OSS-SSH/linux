@@ -2872,6 +2872,7 @@ static int process_single_tx_qlock(struct drm_dp_mst_topology_mgr *mgr,
 	idx += tosend + 1;
 
 	ret = drm_dp_send_sideband_msg(mgr, up, chunk, idx);
+<<<<<<< HEAD
 	if (ret) {
 		if (drm_debug_enabled(DRM_UT_DP)) {
 			struct drm_printer p = drm_debug_printer(DBG_PREFIX);
@@ -2879,6 +2880,13 @@ static int process_single_tx_qlock(struct drm_dp_mst_topology_mgr *mgr,
 			drm_printf(&p, "sideband msg failed to send\n");
 			drm_dp_mst_dump_sideband_msg_tx(&p, txmsg);
 		}
+=======
+	if (unlikely(ret) && drm_debug_enabled(DRM_UT_DP)) {
+		struct drm_printer p = drm_debug_printer(DBG_PREFIX);
+
+		drm_printf(&p, "sideband msg failed to send\n");
+		drm_dp_mst_dump_sideband_msg_tx(&p, txmsg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ret;
 	}
 

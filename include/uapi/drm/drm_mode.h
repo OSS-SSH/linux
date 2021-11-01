@@ -312,6 +312,7 @@ struct drm_mode_set_plane {
 	__u32 src_w;
 };
 
+<<<<<<< HEAD
 /**
  * struct drm_mode_get_plane - Get plane metadata.
  *
@@ -354,6 +355,18 @@ struct drm_mode_get_plane {
 	 * @format_type_ptr: Pointer to ``__u32`` array of formats that are
 	 * supported by the plane. These formats do not require modifiers.
 	 */
+=======
+struct drm_mode_get_plane {
+	__u32 plane_id;
+
+	__u32 crtc_id;
+	__u32 fb_id;
+
+	__u32 possible_crtcs;
+	__u32 gamma_size;
+
+	__u32 count_format_types;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u64 format_type_ptr;
 };
 
@@ -541,6 +554,7 @@ struct drm_mode_get_connector {
  */
 #define DRM_MODE_PROP_ATOMIC        0x80000000
 
+<<<<<<< HEAD
 /**
  * struct drm_mode_property_enum - Description for an enum/bitfield entry.
  * @value: numeric value for this enum entry.
@@ -548,11 +562,14 @@ struct drm_mode_get_connector {
  *
  * See struct drm_property_enum for details.
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct drm_mode_property_enum {
 	__u64 value;
 	char name[DRM_PROP_NAME_LEN];
 };
 
+<<<<<<< HEAD
 /**
  * struct drm_mode_get_property - Get property metadata.
  *
@@ -609,6 +626,19 @@ struct drm_mode_get_property {
 	/** @count_values: Number of elements in @values_ptr. */
 	__u32 count_values;
 	/** @count_enum_blobs: Number of elements in @enum_blob_ptr. */
+=======
+struct drm_mode_get_property {
+	__u64 values_ptr; /* values and blob lengths */
+	__u64 enum_blob_ptr; /* enum and blob id ptrs */
+
+	__u32 prop_id;
+	__u32 flags;
+	char name[DRM_PROP_NAME_LEN];
+
+	__u32 count_values;
+	/* This is only used to count enum values, not blobs. The _blobs is
+	 * simply because of a historical reason, i.e. backwards compat. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u32 count_enum_blobs;
 };
 

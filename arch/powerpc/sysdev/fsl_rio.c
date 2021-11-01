@@ -108,7 +108,11 @@ int fsl_rio_mcheck_exception(struct pt_regs *regs)
 				 __func__);
 			out_be32((u32 *)(rio_regs_win + RIO_LTLEDCSR),
 				 0);
+<<<<<<< HEAD
 			regs_set_recoverable(regs);
+=======
+			regs_set_return_msr(regs, regs->msr | MSR_RI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			regs_set_return_ip(regs, extable_fixup(entry));
 			return 1;
 		}

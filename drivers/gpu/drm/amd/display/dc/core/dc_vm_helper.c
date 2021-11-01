@@ -47,9 +47,12 @@ int dc_setup_system_context(struct dc *dc, struct dc_phy_addr_space_config *pa_c
 		 */
 		memcpy(&dc->vm_pa_config, pa_config, sizeof(struct dc_phy_addr_space_config));
 		dc->vm_pa_config.valid = true;
+<<<<<<< HEAD
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 		dc_z10_save_init(dc);
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return num_vmids;

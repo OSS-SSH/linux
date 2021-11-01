@@ -73,6 +73,10 @@ struct i915_ppgtt *mock_ppgtt(struct drm_i915_private *i915, const char *name)
 	ppgtt->vm.gt = &i915->gt;
 	ppgtt->vm.i915 = i915;
 	ppgtt->vm.total = round_down(U64_MAX, PAGE_SIZE);
+<<<<<<< HEAD
+=======
+	ppgtt->vm.file = ERR_PTR(-ENODEV);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ppgtt->vm.dma = i915->drm.dev;
 
 	i915_address_space_init(&ppgtt->vm, VM_CLASS_PPGTT);

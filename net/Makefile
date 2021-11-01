@@ -78,4 +78,7 @@ obj-$(CONFIG_QRTR)		+= qrtr/
 obj-$(CONFIG_NET_NCSI)		+= ncsi/
 obj-$(CONFIG_XDP_SOCKETS)	+= xdp/
 obj-$(CONFIG_MPTCP)		+= mptcp/
+<<<<<<< HEAD
 obj-$(CONFIG_MCTP)		+= mctp/
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

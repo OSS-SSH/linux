@@ -271,8 +271,11 @@ patternProperties:
     description: Shenzen Chuangsiqi Technology Co.,Ltd.
   "^cubietech,.*":
     description: Cubietech, Ltd.
+<<<<<<< HEAD
   "^cui,.*":
     description: CUI Devices
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^cypress,.*":
     description: Cypress Semiconductor Corporation
   "^cznic,.*":
@@ -341,8 +344,11 @@ patternProperties:
     description: eGalax_eMPIA Technology Inc
   "^einfochips,.*":
     description: Einfochips
+<<<<<<< HEAD
   "^eink,.*":
     description: E Ink Corporation
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^elan,.*":
     description: Elan Microelectronic Corp.
   "^element14,.*":
@@ -567,8 +573,11 @@ patternProperties:
     description: ITE Tech. Inc.
   "^itead,.*":
     description: ITEAD Intelligent Systems Co.Ltd
+<<<<<<< HEAD
   "^itian,.*":
     description: ITian Corporation
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^iwave,.*":
     description: iWave Systems Technologies Pvt. Ltd.
   "^jdi,.*":
@@ -741,8 +750,11 @@ patternProperties:
     description: MiraMEMS Sensing Technology Co., Ltd.
   "^mitsubishi,.*":
     description: Mitsubishi Electric Corporation
+<<<<<<< HEAD
   "^mntre,.*":
     description: MNT Research GmbH
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^modtronix,.*":
     description: Modtronix Engineering
   "^mosaixtech,.*":
@@ -944,8 +956,11 @@ patternProperties:
     description: Chengdu Kaixuan Information Technology Co., Ltd.
   "^qiaodian,.*":
     description: QiaoDian XianShi Corporation
+<<<<<<< HEAD
   "^qishenglong,.*":
     description: Shenzhen QiShenglong Industrialist Co., Ltd.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^qnap,.*":
     description: QNAP Systems, Inc.
   "^radxa,.*":
@@ -1076,8 +1091,11 @@ patternProperties:
     description: Silicon Integrated Systems Corp.
   "^sitronix,.*":
     description: Sitronix Technology Corporation
+<<<<<<< HEAD
   "^skov,.*":
     description: SKOV A/S
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^skyworks,.*":
     description: Skyworks Solutions, Inc.
   "^smartlabs,.*":
@@ -1123,10 +1141,13 @@ patternProperties:
   "^st-ericsson,.*":
     description: ST-Ericsson
     deprecated: true
+<<<<<<< HEAD
   "^storlink,.*":
     description: StorLink Semiconductors, Inc.
   "^storm,.*":
     description: Storm Semiconductor, Inc.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^summit,.*":
     description: Summit microelectronics
   "^sunchip,.*":
@@ -1159,8 +1180,11 @@ patternProperties:
     description: TechNexion
   "^technologic,.*":
     description: Technologic Systems
+<<<<<<< HEAD
   "^teltonika,.*":
     description: Teltonika Networks
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^tempo,.*":
     description: Tempo Semiconductor
   "^techstar,.*":
@@ -1183,8 +1207,11 @@ patternProperties:
     description: Tecon Microprocessor Technologies, LLC.
   "^topeet,.*":
     description: Topeet
+<<<<<<< HEAD
   "^topic,.*":
     description: Topic Embedded Systems
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^toppoly,.*":
     description: TPO (deprecated, use tpo)
     deprecated: true
@@ -1204,8 +1231,11 @@ patternProperties:
     description: TPO
   "^tq,.*":
     description: TQ-Systems GmbH
+<<<<<<< HEAD
   "^traverse,.*":
     description: Traverse Technologies Australia Pty Ltd
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^tronfy,.*":
     description: Tronfy
   "^tronsmart,.*":
@@ -1290,8 +1320,11 @@ patternProperties:
     description: Shenzhen whwave Electronics, Inc.
   "^wi2wi,.*":
     description: Wi2Wi, Inc.
+<<<<<<< HEAD
   "^wiligear,.*":
     description: Wiligear, Ltd.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^winbond,.*":
     description: Winbond Electronics corp.
   "^winstar,.*":

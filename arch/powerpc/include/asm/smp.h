@@ -33,10 +33,13 @@ extern bool coregroup_enabled;
 extern int cpu_to_chip_id(int cpu);
 extern int *chip_id_lookup_table;
 
+<<<<<<< HEAD
 DECLARE_PER_CPU(cpumask_var_t, thread_group_l1_cache_map);
 DECLARE_PER_CPU(cpumask_var_t, thread_group_l2_cache_map);
 DECLARE_PER_CPU(cpumask_var_t, thread_group_l3_cache_map);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_SMP
 
 struct smp_ops_t {
@@ -145,7 +148,10 @@ extern int cpu_to_core_id(int cpu);
 
 extern bool has_big_cores;
 extern bool thread_group_shares_l2;
+<<<<<<< HEAD
 extern bool thread_group_shares_l3;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define cpu_smt_mask cpu_smt_mask
 #ifdef CONFIG_SCHED_SMT
@@ -200,7 +206,10 @@ extern void __cpu_die(unsigned int cpu);
 #define hard_smp_processor_id()		get_hard_smp_processor_id(0)
 #define smp_setup_cpu_maps()
 #define thread_group_shares_l2  0
+<<<<<<< HEAD
 #define thread_group_shares_l3	0
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void inhibit_secondary_onlining(void) {}
 static inline void uninhibit_secondary_onlining(void) {}
 static inline const struct cpumask *cpu_sibling_mask(int cpu)

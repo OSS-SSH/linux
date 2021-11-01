@@ -24,7 +24,11 @@
 
 	memory@80000000 {
 		device_type = "memory";
+<<<<<<< HEAD
 		reg = <0x0 0x80000000 0x4 0x00000000>;
+=======
+		reg = <0x0 0x80000000 0x2 0x00000000>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	soc {

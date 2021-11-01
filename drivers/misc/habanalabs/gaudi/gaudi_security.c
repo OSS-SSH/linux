@@ -8,6 +8,7 @@
 #include "gaudiP.h"
 #include "../include/gaudi/asic_reg/gaudi_regs.h"
 
+<<<<<<< HEAD
 #define GAUDI_NUMBER_OF_LBW_RR_REGS	28
 #define GAUDI_NUMBER_OF_HBW_RR_REGS	24
 #define GAUDI_NUMBER_OF_LBW_RANGES	10
@@ -23,6 +24,18 @@ static u64 gaudi_rr_lbw_hit_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_N_DMA0_HIT_WPROT,
 	mmDMA_IF_W_N_DMA1_HIT_WPROT,
 	mmDMA_IF_E_N_SOB_HIT_WPROT,
+=======
+#define GAUDI_NUMBER_OF_RR_REGS		24
+#define GAUDI_NUMBER_OF_LBW_RANGES	12
+
+static u64 gaudi_rr_lbw_hit_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+	mmDMA_IF_W_S_DMA0_HIT_WPROT,
+	mmDMA_IF_W_S_DMA1_HIT_WPROT,
+	mmDMA_IF_E_S_DMA0_HIT_WPROT,
+	mmDMA_IF_E_S_DMA1_HIT_WPROT,
+	mmDMA_IF_W_N_DMA0_HIT_WPROT,
+	mmDMA_IF_W_N_DMA1_HIT_WPROT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_E_N_DMA0_HIT_WPROT,
 	mmDMA_IF_E_N_DMA1_HIT_WPROT,
 	mmSIF_RTR_0_LBW_RANGE_PROT_HIT_AW,
@@ -43,6 +56,7 @@ static u64 gaudi_rr_lbw_hit_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmNIF_RTR_7_LBW_RANGE_PROT_HIT_AW,
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_lbw_hit_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_S_SOB_HIT_RPROT,
 	mmDMA_IF_W_S_DMA0_HIT_RPROT,
@@ -54,6 +68,15 @@ static u64 gaudi_rr_lbw_hit_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_N_DMA0_HIT_RPROT,
 	mmDMA_IF_W_N_DMA1_HIT_RPROT,
 	mmDMA_IF_E_N_SOB_HIT_RPROT,
+=======
+static u64 gaudi_rr_lbw_hit_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+	mmDMA_IF_W_S_DMA0_HIT_RPROT,
+	mmDMA_IF_W_S_DMA1_HIT_RPROT,
+	mmDMA_IF_E_S_DMA0_HIT_RPROT,
+	mmDMA_IF_E_S_DMA1_HIT_RPROT,
+	mmDMA_IF_W_N_DMA0_HIT_RPROT,
+	mmDMA_IF_W_N_DMA1_HIT_RPROT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_E_N_DMA0_HIT_RPROT,
 	mmDMA_IF_E_N_DMA1_HIT_RPROT,
 	mmSIF_RTR_0_LBW_RANGE_PROT_HIT_AR,
@@ -74,6 +97,7 @@ static u64 gaudi_rr_lbw_hit_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmNIF_RTR_7_LBW_RANGE_PROT_HIT_AR,
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_lbw_min_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_S_SOB_MIN_WPROT_0,
 	mmDMA_IF_W_S_DMA0_MIN_WPROT_0,
@@ -85,6 +109,15 @@ static u64 gaudi_rr_lbw_min_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_N_DMA0_MIN_WPROT_0,
 	mmDMA_IF_W_N_DMA1_MIN_WPROT_0,
 	mmDMA_IF_E_N_SOB_MIN_WPROT_0,
+=======
+static u64 gaudi_rr_lbw_min_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+	mmDMA_IF_W_S_DMA0_MIN_WPROT_0,
+	mmDMA_IF_W_S_DMA1_MIN_WPROT_0,
+	mmDMA_IF_E_S_DMA0_MIN_WPROT_0,
+	mmDMA_IF_E_S_DMA1_MIN_WPROT_0,
+	mmDMA_IF_W_N_DMA0_MIN_WPROT_0,
+	mmDMA_IF_W_N_DMA1_MIN_WPROT_0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_E_N_DMA0_MIN_WPROT_0,
 	mmDMA_IF_E_N_DMA1_MIN_WPROT_0,
 	mmSIF_RTR_0_LBW_RANGE_PROT_MIN_AW_0,
@@ -105,6 +138,7 @@ static u64 gaudi_rr_lbw_min_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmNIF_RTR_7_LBW_RANGE_PROT_MIN_AW_0,
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_lbw_max_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_S_SOB_MAX_WPROT_0,
 	mmDMA_IF_W_S_DMA0_MAX_WPROT_0,
@@ -116,6 +150,15 @@ static u64 gaudi_rr_lbw_max_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_N_DMA0_MAX_WPROT_0,
 	mmDMA_IF_W_N_DMA1_MAX_WPROT_0,
 	mmDMA_IF_E_N_SOB_MAX_WPROT_0,
+=======
+static u64 gaudi_rr_lbw_max_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+	mmDMA_IF_W_S_DMA0_MAX_WPROT_0,
+	mmDMA_IF_W_S_DMA1_MAX_WPROT_0,
+	mmDMA_IF_E_S_DMA0_MAX_WPROT_0,
+	mmDMA_IF_E_S_DMA1_MAX_WPROT_0,
+	mmDMA_IF_W_N_DMA0_MAX_WPROT_0,
+	mmDMA_IF_W_N_DMA1_MAX_WPROT_0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_E_N_DMA0_MAX_WPROT_0,
 	mmDMA_IF_E_N_DMA1_MAX_WPROT_0,
 	mmSIF_RTR_0_LBW_RANGE_PROT_MAX_AW_0,
@@ -136,6 +179,7 @@ static u64 gaudi_rr_lbw_max_aw_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmNIF_RTR_7_LBW_RANGE_PROT_MAX_AW_0,
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_lbw_min_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_S_SOB_MIN_RPROT_0,
 	mmDMA_IF_W_S_DMA0_MIN_RPROT_0,
@@ -147,6 +191,15 @@ static u64 gaudi_rr_lbw_min_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_N_DMA0_MIN_RPROT_0,
 	mmDMA_IF_W_N_DMA1_MIN_RPROT_0,
 	mmDMA_IF_E_N_SOB_MIN_RPROT_0,
+=======
+static u64 gaudi_rr_lbw_min_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+	mmDMA_IF_W_S_DMA0_MIN_RPROT_0,
+	mmDMA_IF_W_S_DMA1_MIN_RPROT_0,
+	mmDMA_IF_E_S_DMA0_MIN_RPROT_0,
+	mmDMA_IF_E_S_DMA1_MIN_RPROT_0,
+	mmDMA_IF_W_N_DMA0_MIN_RPROT_0,
+	mmDMA_IF_W_N_DMA1_MIN_RPROT_0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_E_N_DMA0_MIN_RPROT_0,
 	mmDMA_IF_E_N_DMA1_MIN_RPROT_0,
 	mmSIF_RTR_0_LBW_RANGE_PROT_MIN_AR_0,
@@ -167,6 +220,7 @@ static u64 gaudi_rr_lbw_min_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmNIF_RTR_7_LBW_RANGE_PROT_MIN_AR_0,
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_lbw_max_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_S_SOB_MAX_RPROT_0,
 	mmDMA_IF_W_S_DMA0_MAX_RPROT_0,
@@ -178,6 +232,15 @@ static u64 gaudi_rr_lbw_max_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmDMA_IF_W_N_DMA0_MAX_RPROT_0,
 	mmDMA_IF_W_N_DMA1_MAX_RPROT_0,
 	mmDMA_IF_E_N_SOB_MAX_RPROT_0,
+=======
+static u64 gaudi_rr_lbw_max_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+	mmDMA_IF_W_S_DMA0_MAX_RPROT_0,
+	mmDMA_IF_W_S_DMA1_MAX_RPROT_0,
+	mmDMA_IF_E_S_DMA0_MAX_RPROT_0,
+	mmDMA_IF_E_S_DMA1_MAX_RPROT_0,
+	mmDMA_IF_W_N_DMA0_MAX_RPROT_0,
+	mmDMA_IF_W_N_DMA1_MAX_RPROT_0,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_E_N_DMA0_MAX_RPROT_0,
 	mmDMA_IF_E_N_DMA1_MAX_RPROT_0,
 	mmSIF_RTR_0_LBW_RANGE_PROT_MAX_AR_0,
@@ -198,7 +261,11 @@ static u64 gaudi_rr_lbw_max_ar_regs[GAUDI_NUMBER_OF_LBW_RR_REGS] = {
 	mmNIF_RTR_7_LBW_RANGE_PROT_MAX_AR_0,
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_hit_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_hit_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_HIT_AW,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_HIT_AW,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_HIT_AW,
@@ -225,7 +292,11 @@ static u64 gaudi_rr_hbw_hit_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_HIT_AW
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_hit_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_hit_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_HIT_AR,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_HIT_AR,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_HIT_AR,
@@ -252,7 +323,11 @@ static u64 gaudi_rr_hbw_hit_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_HIT_AR
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_base_low_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_base_low_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_BASE_LOW_AW_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_BASE_LOW_AW_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_BASE_LOW_AW_0,
@@ -279,7 +354,11 @@ static u64 gaudi_rr_hbw_base_low_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_BASE_LOW_AW_0
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_base_high_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_base_high_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_BASE_HIGH_AW_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_BASE_HIGH_AW_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_BASE_HIGH_AW_0,
@@ -306,7 +385,11 @@ static u64 gaudi_rr_hbw_base_high_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_BASE_HIGH_AW_0
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_mask_low_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_mask_low_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_MASK_LOW_AW_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_MASK_LOW_AW_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_MASK_LOW_AW_0,
@@ -333,7 +416,11 @@ static u64 gaudi_rr_hbw_mask_low_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_MASK_LOW_AW_0
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_mask_high_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_mask_high_aw_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_MASK_HIGH_AW_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_MASK_HIGH_AW_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_MASK_HIGH_AW_0,
@@ -360,7 +447,11 @@ static u64 gaudi_rr_hbw_mask_high_aw_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_MASK_HIGH_AW_0
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_base_low_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_base_low_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_BASE_LOW_AR_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_BASE_LOW_AR_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_BASE_LOW_AR_0,
@@ -387,7 +478,11 @@ static u64 gaudi_rr_hbw_base_low_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_BASE_LOW_AR_0
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_base_high_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_base_high_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_BASE_HIGH_AR_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_BASE_HIGH_AR_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_BASE_HIGH_AR_0,
@@ -414,7 +509,11 @@ static u64 gaudi_rr_hbw_base_high_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_BASE_HIGH_AR_0
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_mask_low_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_mask_low_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_MASK_LOW_AR_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_MASK_LOW_AR_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_MASK_LOW_AR_0,
@@ -441,7 +540,11 @@ static u64 gaudi_rr_hbw_mask_low_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
 	mmNIF_RTR_CTRL_7_RANGE_SEC_MASK_LOW_AR_0
 };
 
+<<<<<<< HEAD
 static u64 gaudi_rr_hbw_mask_high_ar_regs[GAUDI_NUMBER_OF_HBW_RR_REGS] = {
+=======
+static u64 gaudi_rr_hbw_mask_high_ar_regs[GAUDI_NUMBER_OF_RR_REGS] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmDMA_IF_W_S_DOWN_CH0_RANGE_SEC_MASK_HIGH_AR_0,
 	mmDMA_IF_W_S_DOWN_CH1_RANGE_SEC_MASK_HIGH_AR_0,
 	mmDMA_IF_E_S_DOWN_CH0_RANGE_SEC_MASK_HIGH_AR_0,
@@ -9584,7 +9687,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC0_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC0_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC0_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC0_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC0_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC0_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC0_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -10039,7 +10145,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC1_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC1_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC1_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC1_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC1_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC1_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC1_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -10493,7 +10602,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC2_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC2_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC2_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC2_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC2_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC2_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC2_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -10947,7 +11059,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC3_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC3_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC3_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC3_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC3_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC3_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC3_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -11401,7 +11516,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC4_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC4_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC4_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC4_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC4_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC4_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC4_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -11855,7 +11973,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC5_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC5_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC5_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC5_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC5_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC5_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC5_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -12311,7 +12432,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC6_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC6_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC6_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC6_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC6_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC6_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC6_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -12767,7 +12891,10 @@ static void gaudi_init_tpc_protection_bits(struct hl_device *hdev)
 	mask |= 1U << ((mmTPC7_CFG_CFG_BASE_ADDRESS_HIGH & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC7_CFG_CFG_SUBTRACT_VALUE & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC7_CFG_TPC_STALL & 0x7F) >> 2);
+<<<<<<< HEAD
 	mask |= 1U << ((mmTPC7_CFG_ICACHE_BASE_ADDERESS_HIGH & 0x7F) >> 2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mask |= 1U << ((mmTPC7_CFG_RD_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC7_CFG_WR_RATE_LIMIT & 0x7F) >> 2);
 	mask |= 1U << ((mmTPC7_CFG_MSS_CONFIG & 0x7F) >> 2);
@@ -12874,6 +13001,7 @@ static void gaudi_init_range_registers_lbw(struct hl_device *hdev)
 	u32 lbw_rng_end[GAUDI_NUMBER_OF_LBW_RANGES];
 	int i, j;
 
+<<<<<<< HEAD
 	lbw_rng_start[0]  = (0xFC0E8000 & 0x3FFFFFF) - 1; /* 0x000E7FFF */
 	lbw_rng_end[0]    = (0xFC11FFFF & 0x3FFFFFF) + 1; /* 0x00120000 */
 
@@ -12905,13 +13033,56 @@ static void gaudi_init_range_registers_lbw(struct hl_device *hdev)
 	lbw_rng_end[9]    = (0xFFFFFFFE & 0x3FFFFFF) + 1; /* 0x03FFFFFF */
 
 	for (i = 0 ; i < GAUDI_NUMBER_OF_LBW_RR_REGS ; i++) {
+=======
+	lbw_rng_start[0]  = (0xFBFE0000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[0]    = (0xFBFFF000 & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[1]  = (0xFC0E8000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[1]    = (0xFC120000 & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[2]  = (0xFC1E8000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[2]    = (0xFC48FFFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[3]  = (0xFC600000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[3]    = (0xFCC48FFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[4]  = (0xFCC4A000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[4]    = (0xFCCDFFFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[5]  = (0xFCCE4000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[5]    = (0xFCD1FFFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[6]  = (0xFCD24000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[6]    = (0xFCD5FFFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[7]  = (0xFCD64000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[7]    = (0xFCD9FFFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[8]  = (0xFCDA4000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[8]    = (0xFCDDFFFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[9]  = (0xFCDE4000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[9]    = (0xFCE05FFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[10]  = (0xFEC43000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[10]    = (0xFEC43FFF & 0x3FFFFFF) + 1;
+
+	lbw_rng_start[11] = (0xFE484000 & 0x3FFFFFF) - 1;
+	lbw_rng_end[11]   = (0xFE484FFF & 0x3FFFFFF) + 1;
+
+	for (i = 0 ; i < GAUDI_NUMBER_OF_RR_REGS ; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		WREG32(gaudi_rr_lbw_hit_aw_regs[i],
 				(1 << GAUDI_NUMBER_OF_LBW_RANGES) - 1);
 		WREG32(gaudi_rr_lbw_hit_ar_regs[i],
 				(1 << GAUDI_NUMBER_OF_LBW_RANGES) - 1);
 	}
 
+<<<<<<< HEAD
 	for (i = 0 ; i < GAUDI_NUMBER_OF_LBW_RR_REGS ; i++)
+=======
+	for (i = 0 ; i < GAUDI_NUMBER_OF_RR_REGS ; i++)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (j = 0 ; j < GAUDI_NUMBER_OF_LBW_RANGES ; j++) {
 			WREG32(gaudi_rr_lbw_min_aw_regs[i] + (j << 2),
 							lbw_rng_start[j]);
@@ -12958,12 +13129,20 @@ static void gaudi_init_range_registers_hbw(struct hl_device *hdev)
 	 * 6th range is the host
 	 */
 
+<<<<<<< HEAD
 	for (i = 0 ; i < GAUDI_NUMBER_OF_HBW_RR_REGS ; i++) {
+=======
+	for (i = 0 ; i < GAUDI_NUMBER_OF_RR_REGS ; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		WREG32(gaudi_rr_hbw_hit_aw_regs[i], 0x1F);
 		WREG32(gaudi_rr_hbw_hit_ar_regs[i], 0x1D);
 	}
 
+<<<<<<< HEAD
 	for (i = 0 ; i < GAUDI_NUMBER_OF_HBW_RR_REGS ; i++) {
+=======
+	for (i = 0 ; i < GAUDI_NUMBER_OF_RR_REGS ; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		WREG32(gaudi_rr_hbw_base_low_aw_regs[i], dram_addr_lo);
 		WREG32(gaudi_rr_hbw_base_low_ar_regs[i], dram_addr_lo);
 

@@ -1339,6 +1339,10 @@ void *__init fixmap_remap_fdt(phys_addr_t dt_phys, int *size, pgprot_t prot)
 	return dt_virt;
 }
 
+<<<<<<< HEAD
+=======
+#if CONFIG_PGTABLE_LEVELS > 3
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int pud_set_huge(pud_t *pudp, phys_addr_t phys, pgprot_t prot)
 {
 	pud_t new_pud = pfn_pud(__phys_to_pfn(phys), mk_pud_sect_prot(prot));
@@ -1353,6 +1357,19 @@ int pud_set_huge(pud_t *pudp, phys_addr_t phys, pgprot_t prot)
 	return 1;
 }
 
+<<<<<<< HEAD
+=======
+int pud_clear_huge(pud_t *pudp)
+{
+	if (!pud_sect(READ_ONCE(*pudp)))
+		return 0;
+	pud_clear(pudp);
+	return 1;
+}
+#endif
+
+#if CONFIG_PGTABLE_LEVELS > 2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int pmd_set_huge(pmd_t *pmdp, phys_addr_t phys, pgprot_t prot)
 {
 	pmd_t new_pmd = pfn_pmd(__phys_to_pfn(phys), mk_pmd_sect_prot(prot));
@@ -1367,6 +1384,7 @@ int pmd_set_huge(pmd_t *pmdp, phys_addr_t phys, pgprot_t prot)
 	return 1;
 }
 
+<<<<<<< HEAD
 int pud_clear_huge(pud_t *pudp)
 {
 	if (!pud_sect(READ_ONCE(*pudp)))
@@ -1375,6 +1393,8 @@ int pud_clear_huge(pud_t *pudp)
 	return 1;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int pmd_clear_huge(pmd_t *pmdp)
 {
 	if (!pmd_sect(READ_ONCE(*pmdp)))
@@ -1382,6 +1402,10 @@ int pmd_clear_huge(pmd_t *pmdp)
 	pmd_clear(pmdp);
 	return 1;
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int pmd_free_pte_page(pmd_t *pmdp, unsigned long addr)
 {
@@ -1502,7 +1526,12 @@ int arch_add_memory(int nid, u64 start, u64 size,
 	return ret;
 }
 
+<<<<<<< HEAD
 void arch_remove_memory(u64 start, u64 size, struct vmem_altmap *altmap)
+=======
+void arch_remove_memory(int nid, u64 start, u64 size,
+			struct vmem_altmap *altmap)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned long start_pfn = start >> PAGE_SHIFT;
 	unsigned long nr_pages = size >> PAGE_SHIFT;

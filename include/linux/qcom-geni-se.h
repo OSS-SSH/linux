@@ -8,6 +8,7 @@
 
 #include <linux/interconnect.h>
 
+<<<<<<< HEAD
 /**
  * enum geni_se_xfer_mode: Transfer modes supported by Serial Engines
  *
@@ -21,11 +22,17 @@
  * interchangeably used as GSI or GPI which seem to imply the same DMAengine
  */
 
+=======
+/* Transfer mode supported by GENI Serial Engines */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum geni_se_xfer_mode {
 	GENI_SE_INVALID,
 	GENI_SE_FIFO,
 	GENI_SE_DMA,
+<<<<<<< HEAD
 	GENI_GPI_DMA,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Protocols supported by GENI Serial Engines */
@@ -76,7 +83,10 @@ struct geni_se {
 #define SE_GENI_STATUS			0x40
 #define GENI_SER_M_CLK_CFG		0x48
 #define GENI_SER_S_CLK_CFG		0x4c
+<<<<<<< HEAD
 #define GENI_IF_DISABLE_RO		0x64
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define GENI_FW_REVISION_RO		0x68
 #define SE_GENI_CLK_SEL			0x7c
 #define SE_GENI_DMA_MODE_EN		0x258
@@ -119,9 +129,12 @@ struct geni_se {
 #define CLK_DIV_MSK			GENMASK(15, 4)
 #define CLK_DIV_SHFT			4
 
+<<<<<<< HEAD
 /* GENI_IF_DISABLE_RO fields */
 #define FIFO_IF_DISABLE			(BIT(0))
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* GENI_FW_REVISION_RO fields */
 #define FW_REV_PROTOCOL_MSK		GENMASK(15, 8)
 #define FW_REV_PROTOCOL_SHFT		8

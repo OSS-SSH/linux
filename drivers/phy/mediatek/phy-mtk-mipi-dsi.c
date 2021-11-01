@@ -130,6 +130,10 @@ static int mtk_mipi_tx_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct mtk_mipi_tx *mipi_tx;
+<<<<<<< HEAD
+=======
+	struct resource *mem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const char *ref_clk_name;
 	struct clk *ref_clk;
 	struct clk_init_data clk_init = {
@@ -147,9 +151,17 @@ static int mtk_mipi_tx_probe(struct platform_device *pdev)
 
 	mipi_tx->driver_data = of_device_get_match_data(dev);
 
+<<<<<<< HEAD
 	mipi_tx->regs = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(mipi_tx->regs))
 		return PTR_ERR(mipi_tx->regs);
+=======
+	mem = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	mipi_tx->regs = devm_ioremap_resource(dev, mem);
+	if (IS_ERR(mipi_tx->regs)) {
+		return PTR_ERR(mipi_tx->regs);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ref_clk = devm_clk_get(dev, NULL);
 	if (IS_ERR(ref_clk)) {
@@ -200,8 +212,15 @@ static int mtk_mipi_tx_probe(struct platform_device *pdev)
 	phy_set_drvdata(phy, mipi_tx);
 
 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+<<<<<<< HEAD
 	if (IS_ERR(phy_provider))
 		return PTR_ERR(phy_provider);
+=======
+	if (IS_ERR(phy_provider)) {
+		ret = PTR_ERR(phy_provider);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mipi_tx->dev = dev;
 

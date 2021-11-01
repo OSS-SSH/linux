@@ -1,6 +1,7 @@
 .. include:: ../disclaimer-zh_CN.rst
 
 :Original: Documentation/core-api/symbol-namespaces.rst
+<<<<<<< HEAD
 
 :翻译:
 
@@ -8,6 +9,13 @@
 
 .. _cn_symbol-namespaces.rst:
 
+=======
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_symbol-namespaces.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =================================
 符号命名空间（Symbol Namespaces）
 =================================

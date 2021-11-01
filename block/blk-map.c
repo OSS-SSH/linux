@@ -309,7 +309,11 @@ static int bio_map_user_iov(struct request *rq, struct iov_iter *iter,
 
 static void bio_invalidate_vmalloc_pages(struct bio *bio)
 {
+<<<<<<< HEAD
 #ifdef ARCH_IMPLEMENTS_FLUSH_KERNEL_VMAP_RANGE
+=======
+#ifdef ARCH_HAS_FLUSH_KERNEL_DCACHE_PAGE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (bio->bi_private && !op_is_write(bio_op(bio))) {
 		unsigned long i, len = 0;
 
@@ -400,7 +404,11 @@ static void bio_copy_kern_endio_read(struct bio *bio)
 	struct bvec_iter_all iter_all;
 
 	bio_for_each_segment_all(bvec, bio, iter_all) {
+<<<<<<< HEAD
 		memcpy_from_bvec(p, bvec);
+=======
+		memcpy(p, page_address(bvec->bv_page), bvec->bv_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		p += bvec->bv_len;
 	}
 

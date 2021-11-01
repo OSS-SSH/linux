@@ -204,8 +204,14 @@ struct intel_dpll_hw_state {
 	/* HDMI only, 0 when used for DP */
 	u32 cfgcr1, cfgcr2;
 
+<<<<<<< HEAD
 	/* icl */
 	u32 cfgcr0;
+=======
+	/* cnl */
+	u32 cfgcr0;
+	/* CNL also uses cfgcr1 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* bxt */
 	u32 ebb0, ebb4, pll0, pll1, pll2, pll3, pll6, pll8, pll9, pll10, pcsdw12;

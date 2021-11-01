@@ -49,7 +49,11 @@ static int wait_for_submit(struct intel_engine_cs *engine,
 			   unsigned long timeout)
 {
 	/* Ignore our own attempts to suppress excess tasklets */
+<<<<<<< HEAD
 	tasklet_hi_schedule(&engine->sched_engine->tasklet);
+=======
+	tasklet_hi_schedule(&engine->execlists.tasklet);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	timeout += jiffies;
 	do {
@@ -1613,12 +1617,20 @@ static void garbage_reset(struct intel_engine_cs *engine,
 
 	local_bh_disable();
 	if (!test_and_set_bit(bit, lock)) {
+<<<<<<< HEAD
 		tasklet_disable(&engine->sched_engine->tasklet);
+=======
+		tasklet_disable(&engine->execlists.tasklet);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (!rq->fence.error)
 			__intel_engine_reset_bh(engine, NULL);
 
+<<<<<<< HEAD
 		tasklet_enable(&engine->sched_engine->tasklet);
+=======
+		tasklet_enable(&engine->execlists.tasklet);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		clear_and_wake_up_bit(bit, lock);
 	}
 	local_bh_enable();

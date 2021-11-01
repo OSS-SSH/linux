@@ -16,6 +16,7 @@
 #include "sdm850.dtsi"
 #include "pm8998.dtsi"
 
+<<<<<<< HEAD
 /*
  * Update following upstream (sdm845.dtsi) reserved
  * memory mappings for firmware loading to succeed
@@ -27,6 +28,8 @@
 /delete-node/ &adsp_mem;
 /delete-node/ &wlan_msa_mem;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 / {
 	model = "Lenovo Yoga C630";
 	compatible = "lenovo,yoga-c630", "qcom,sdm845";
@@ -69,6 +72,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	/* Reserved memory changes for IPA */
 	reserved-memory {
 		wlan_msa_mem: memory@8c400000 {
@@ -92,6 +96,8 @@
 		};
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sn65dsi86_refclk: sn65dsi86-refclk {
 		compatible = "fixed-clock";
 		#clock-cells = <0>;
@@ -449,11 +455,14 @@
 	};
 };
 
+<<<<<<< HEAD
 &ipa {
 	status = "okay";
 	memory-region = <&ipa_fw_mem>;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &mdss {
 	status = "okay";
 };
@@ -739,7 +748,11 @@
 		left_spkr: wsa8810-left{
 			compatible = "sdw10217211000";
 			reg = <0 3>;
+<<<<<<< HEAD
 			powerdown-gpios = <&wcdgpio 1 GPIO_ACTIVE_HIGH>;
+=======
+			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			#thermal-sensor-cells = <0>;
 			sound-name-prefix = "SpkrLeft";
 			#sound-dai-cells = <0>;
@@ -747,7 +760,11 @@
 
 		right_spkr: wsa8810-right{
 			compatible = "sdw10217211000";
+<<<<<<< HEAD
 			powerdown-gpios = <&wcdgpio 2 GPIO_ACTIVE_HIGH>;
+=======
+			powerdown-gpios = <&wcdgpio 3 GPIO_ACTIVE_HIGH>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			reg = <0 4>;
 			#thermal-sensor-cells = <0>;
 			sound-name-prefix = "SpkrRight";

@@ -1169,6 +1169,7 @@ out:
 }
 
 /**
+<<<<<<< HEAD
  * mpt3sas_config_get_pcie_iounit_pg1 - obtain pcie iounit page 1
  * @ioc: per adapter object
  * @mpi_reply: reply mf payload returned from firmware
@@ -1206,6 +1207,8 @@ out:
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * mpt3sas_config_get_pcie_device_pg2 - obtain pcie device page 2
  * @ioc: per adapter object
  * @mpi_reply: reply mf payload returned from firmware

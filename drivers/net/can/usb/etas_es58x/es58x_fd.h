@@ -96,6 +96,7 @@ struct es58x_fd_bittiming {
  * @ctrlmode: type enum es58x_fd_ctrlmode.
  * @canfd_enabled: boolean (0: Classical CAN, 1: CAN and/or CANFD).
  * @data_bittiming: Bittiming for flexible data-rate transmission.
+<<<<<<< HEAD
  * @tdc_enabled: Transmitter Delay Compensation switch (0: TDC is
  *	disabled, 1: TDC is enabled).
  * @tdco: Transmitter Delay Compensation Offset.
@@ -104,6 +105,25 @@ struct es58x_fd_bittiming {
  * Please refer to the microcontroller datasheet: "SAM E70/S70/V70/V71
  * Family" section 49 "Controller Area Network (MCAN)" for additional
  * information.
+=======
+ * @tdc_enabled: Transmitter Delay Compensation switch (0: disabled,
+ *	1: enabled). On very high bitrates, the delay between when the
+ *	bit is sent and received on the CANTX and CANRX pins of the
+ *	transceiver start to be significant enough for errors to occur
+ *	and thus need to be compensated.
+ * @tdco: Transmitter Delay Compensation Offset. Offset value, in time
+ *	quanta, defining the delay between the start of the bit
+ *	reception on the CANRX pin of the transceiver and the SSP
+ *	(Secondary Sample Point). Valid values: 0 to 127.
+ * @tdcf: Transmitter Delay Compensation Filter window. Defines the
+ *	minimum value for the SSP position, in time quanta. The
+ *	feature is enabled when TDCF is configured to a value greater
+ *	than TDCO. Valid values: 0 to 127.
+ *
+ * Please refer to the microcontroller datasheet: "SAM
+ * E701/S70/V70/V71 Family" section 49 "Controller Area Network
+ * (MCAN)" for additional information.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct es58x_fd_tx_conf_msg {
 	struct es58x_fd_bittiming nominal_bittiming;

@@ -25,7 +25,10 @@
 #include <linux/tracehook.h>
 #include <linux/unistd.h>
 
+<<<<<<< HEAD
 #include <asm/syscall.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/traps.h>
 
 #define CREATE_TRACE_POINTS
@@ -319,6 +322,35 @@ static int ptrace_setwmmxregs(struct task_struct *tsk, void __user *ufp)
 
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRUNCH
+/*
+ * Get the child Crunch state.
+ */
+static int ptrace_getcrunchregs(struct task_struct *tsk, void __user *ufp)
+{
+	struct thread_info *thread = task_thread_info(tsk);
+
+	crunch_task_disable(thread);  /* force it to ram */
+	return copy_to_user(ufp, &thread->crunchstate, CRUNCH_SIZE)
+		? -EFAULT : 0;
+}
+
+/*
+ * Set the child Crunch state.
+ */
+static int ptrace_setcrunchregs(struct task_struct *tsk, void __user *ufp)
+{
+	struct thread_info *thread = task_thread_info(tsk);
+
+	crunch_task_release(thread);  /* force a reload */
+	return copy_from_user(&thread->crunchstate, ufp, CRUNCH_SIZE)
+		? -EFAULT : 0;
+}
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_HAVE_HW_BREAKPOINT
 /*
  * Convert a virtual register number into an index for a thread_info
@@ -786,11 +818,28 @@ long arch_ptrace(struct task_struct *child, long request,
 			break;
 
 		case PTRACE_SET_SYSCALL:
+<<<<<<< HEAD
 			task_thread_info(child)->abi_syscall = data &
 							__NR_SYSCALL_MASK;
 			ret = 0;
 			break;
 
+=======
+			task_thread_info(child)->syscall = data;
+			ret = 0;
+			break;
+
+#ifdef CONFIG_CRUNCH
+		case PTRACE_GETCRUNCHREGS:
+			ret = ptrace_getcrunchregs(child, datap);
+			break;
+
+		case PTRACE_SETCRUNCHREGS:
+			ret = ptrace_setcrunchregs(child, datap);
+			break;
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_VFP
 		case PTRACE_GETVFPREGS:
 			ret = copy_regset_to_user(child,
@@ -846,14 +895,24 @@ static void tracehook_report_syscall(struct pt_regs *regs,
 	if (dir == PTRACE_SYSCALL_EXIT)
 		tracehook_report_syscall_exit(regs, 0);
 	else if (tracehook_report_syscall_entry(regs))
+<<<<<<< HEAD
 		current_thread_info()->abi_syscall = -1;
+=======
+		current_thread_info()->syscall = -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	regs->ARM_ip = ip;
 }
 
+<<<<<<< HEAD
 asmlinkage int syscall_trace_enter(struct pt_regs *regs)
 {
 	int scno;
+=======
+asmlinkage int syscall_trace_enter(struct pt_regs *regs, int scno)
+{
+	current_thread_info()->syscall = scno;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (test_thread_flag(TIF_SYSCALL_TRACE))
 		tracehook_report_syscall(regs, PTRACE_SYSCALL_ENTER);
@@ -864,11 +923,19 @@ asmlinkage int syscall_trace_enter(struct pt_regs *regs)
 		return -1;
 #else
 	/* XXX: remove this once OABI gets fixed */
+<<<<<<< HEAD
 	secure_computing_strict(syscall_get_nr(current, regs));
 #endif
 
 	/* Tracer or seccomp may have changed syscall. */
 	scno = syscall_get_nr(current, regs);
+=======
+	secure_computing_strict(current_thread_info()->syscall);
+#endif
+
+	/* Tracer or seccomp may have changed syscall. */
+	scno = current_thread_info()->syscall;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (test_thread_flag(TIF_SYSCALL_TRACEPOINT))
 		trace_sys_enter(regs, scno);

@@ -1257,6 +1257,7 @@ int mv88e6xxx_port_set_8021q_mode(struct mv88e6xxx_chip *chip, int port,
 	return 0;
 }
 
+<<<<<<< HEAD
 int mv88e6xxx_port_drop_untagged(struct mv88e6xxx_chip *chip, int port,
 				 bool drop_untagged)
 {
@@ -1278,6 +1279,8 @@ int mv88e6xxx_port_drop_untagged(struct mv88e6xxx_chip *chip, int port,
 	return mv88e6xxx_port_write(chip, port, MV88E6XXX_PORT_CTL2, new);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int mv88e6xxx_port_set_map_da(struct mv88e6xxx_chip *chip, int port)
 {
 	u16 reg;
@@ -1298,8 +1301,11 @@ int mv88e6165_port_set_jumbo_size(struct mv88e6xxx_chip *chip, int port,
 	u16 reg;
 	int err;
 
+<<<<<<< HEAD
 	size += VLAN_ETH_HLEN + ETH_FCS_LEN;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = mv88e6xxx_port_read(chip, port, MV88E6XXX_PORT_CTL2, &reg);
 	if (err)
 		return err;

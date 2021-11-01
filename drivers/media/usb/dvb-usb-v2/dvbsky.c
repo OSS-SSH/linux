@@ -541,9 +541,13 @@ static int dvbsky_mygica_t230c_attach(struct dvb_usb_adapter *adap)
 	si2168_config.i2c_adapter = &i2c_adapter;
 	si2168_config.fe = &adap->fe[0];
 	si2168_config.ts_mode = SI2168_TS_PARALLEL;
+<<<<<<< HEAD
 	if (le16_to_cpu(d->udev->descriptor.idProduct) == USB_PID_MYGICA_T230C2 ||
 	    le16_to_cpu(d->udev->descriptor.idProduct) == USB_PID_MYGICA_T230C2_LITE ||
 	    le16_to_cpu(d->udev->descriptor.idProduct) == USB_PID_MYGICA_T230A)
+=======
+	if (le16_to_cpu(d->udev->descriptor.idProduct) == USB_PID_MYGICA_T230C2)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		si2168_config.ts_mode |= SI2168_TS_CLK_MANUAL;
 	si2168_config.ts_clock_inv = 1;
 
@@ -579,6 +583,7 @@ static int dvbsky_mygica_t230c_attach(struct dvb_usb_adapter *adap)
 
 static int dvbsky_identify_state(struct dvb_usb_device *d, const char **name)
 {
+<<<<<<< HEAD
 	if (le16_to_cpu(d->udev->descriptor.idProduct) == USB_PID_MYGICA_T230A) {
 		dvbsky_gpio_ctrl(d, 0x87, 0);
 		msleep(20);
@@ -597,6 +602,17 @@ static int dvbsky_identify_state(struct dvb_usb_device *d, const char **name)
 		dvbsky_gpio_ctrl(d, 0xc0, 0);
 		msleep(50);
 	}
+=======
+	dvbsky_gpio_ctrl(d, 0x04, 1);
+	msleep(20);
+	dvbsky_gpio_ctrl(d, 0x83, 0);
+	dvbsky_gpio_ctrl(d, 0xc0, 1);
+	msleep(100);
+	dvbsky_gpio_ctrl(d, 0x83, 1);
+	dvbsky_gpio_ctrl(d, 0xc0, 0);
+	msleep(50);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return WARM;
 }
 
@@ -800,12 +816,15 @@ static const struct usb_device_id dvbsky_id_table[] = {
 	{ DVB_USB_DEVICE(USB_VID_CONEXANT, USB_PID_MYGICA_T230C2,
 		&mygica_t230c_props, "MyGica Mini DVB-(T/T2/C) USB Stick T230C v2",
 		RC_MAP_TOTAL_MEDIA_IN_HAND_02) },
+<<<<<<< HEAD
 	{ DVB_USB_DEVICE(USB_VID_CONEXANT, USB_PID_MYGICA_T230C2_LITE,
 		 &mygica_t230c_props, "MyGica Mini DVB-(T/T2/C) USB Stick T230C v2  Lite",
 		 NULL) },
 	{ DVB_USB_DEVICE(USB_VID_CONEXANT, USB_PID_MYGICA_T230A,
 		 &mygica_t230c_props, "MyGica Mini DVB-(T/T2/C) USB Stick T230A",
 		 NULL) },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ }
 };
 MODULE_DEVICE_TABLE(usb, dvbsky_id_table);

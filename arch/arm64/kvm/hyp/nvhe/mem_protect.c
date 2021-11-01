@@ -31,7 +31,11 @@ static struct hyp_pool host_s2_pool;
 u64 id_aa64mmfr0_el1_sys_val;
 u64 id_aa64mmfr1_el1_sys_val;
 
+<<<<<<< HEAD
 const u8 pkvm_hyp_id = 1;
+=======
+static const u8 pkvm_hyp_id = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void *host_s2_zalloc_pages_exact(size_t size)
 {
@@ -89,8 +93,11 @@ static void prepare_host_vtcr(void)
 					  id_aa64mmfr1_el1_sys_val, phys_shift);
 }
 
+<<<<<<< HEAD
 static bool host_stage2_force_pte_cb(u64 addr, u64 end, enum kvm_pgtable_prot prot);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int kvm_host_prepare_stage2(void *pgt_pool_base)
 {
 	struct kvm_s2_mmu *mmu = &host_kvm.arch.mmu;
@@ -103,17 +110,27 @@ int kvm_host_prepare_stage2(void *pgt_pool_base)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ret = __kvm_pgtable_stage2_init(&host_kvm.pgt, &host_kvm.arch,
 					&host_kvm.mm_ops, KVM_HOST_S2_FLAGS,
 					host_stage2_force_pte_cb);
+=======
+	ret = kvm_pgtable_stage2_init_flags(&host_kvm.pgt, &host_kvm.arch,
+					    &host_kvm.mm_ops, KVM_HOST_S2_FLAGS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 
 	mmu->pgd_phys = __hyp_pa(host_kvm.pgt.pgd);
 	mmu->arch = &host_kvm.arch;
 	mmu->pgt = &host_kvm.pgt;
+<<<<<<< HEAD
 	WRITE_ONCE(mmu->vmid.vmid_gen, 0);
 	WRITE_ONCE(mmu->vmid.vmid, 0);
+=======
+	mmu->vmid.vmid_gen = 0;
+	mmu->vmid.vmid = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -129,7 +146,11 @@ int __pkvm_prot_finalize(void)
 	kvm_flush_dcache_to_poc(params, sizeof(*params));
 
 	write_sysreg(params->hcr_el2, hcr_el2);
+<<<<<<< HEAD
 	__load_stage2(&host_kvm.arch.mmu, &host_kvm.arch);
+=======
+	__load_stage2(&host_kvm.arch.mmu, host_kvm.arch.vtcr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Make sure to have an ISB before the TLB maintenance below but only
@@ -162,11 +183,14 @@ static int host_stage2_unmap_dev_all(void)
 	return kvm_pgtable_stage2_unmap(pgt, addr, BIT(pgt->ia_bits) - addr);
 }
 
+<<<<<<< HEAD
 struct kvm_mem_range {
 	u64 start;
 	u64 end;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool find_mem_range(phys_addr_t addr, struct kvm_mem_range *range)
 {
 	int cur, left = 0, right = hyp_memblock_nr;
@@ -197,6 +221,7 @@ static bool find_mem_range(phys_addr_t addr, struct kvm_mem_range *range)
 	return false;
 }
 
+<<<<<<< HEAD
 bool addr_is_memory(phys_addr_t phys)
 {
 	struct kvm_mem_range range;
@@ -217,6 +242,18 @@ static bool range_is_memory(u64 start, u64 end)
 		return false;
 
 	return is_in_mem_range(end - 1, &r);
+=======
+static bool range_is_memory(u64 start, u64 end)
+{
+	struct kvm_mem_range r1, r2;
+
+	if (!find_mem_range(start, &r1) || !find_mem_range(end, &r2))
+		return false;
+	if (r1.start != r2.start)
+		return false;
+
+	return true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int __host_stage2_idmap(u64 start, u64 end,
@@ -226,6 +263,7 @@ static inline int __host_stage2_idmap(u64 start, u64 end,
 				      prot, &host_s2_pool);
 }
 
+<<<<<<< HEAD
 /*
  * The pool has been provided with enough pages to cover all of memory with
  * page granularity, but it is difficult to know how much of the MMIO range
@@ -428,6 +466,62 @@ unlock:
 	hyp_spin_unlock(&host_kvm.lock);
 
 	return ret;
+=======
+static int host_stage2_idmap(u64 addr)
+{
+	enum kvm_pgtable_prot prot = KVM_PGTABLE_PROT_R | KVM_PGTABLE_PROT_W;
+	struct kvm_mem_range range;
+	bool is_memory = find_mem_range(addr, &range);
+	int ret;
+
+	if (is_memory)
+		prot |= KVM_PGTABLE_PROT_X;
+
+	hyp_spin_lock(&host_kvm.lock);
+	ret = kvm_pgtable_stage2_find_range(&host_kvm.pgt, addr, prot, &range);
+	if (ret)
+		goto unlock;
+
+	ret = __host_stage2_idmap(range.start, range.end, prot);
+	if (ret != -ENOMEM)
+		goto unlock;
+
+	/*
+	 * The pool has been provided with enough pages to cover all of memory
+	 * with page granularity, but it is difficult to know how much of the
+	 * MMIO range we will need to cover upfront, so we may need to 'recycle'
+	 * the pages if we run out.
+	 */
+	ret = host_stage2_unmap_dev_all();
+	if (ret)
+		goto unlock;
+
+	ret = __host_stage2_idmap(range.start, range.end, prot);
+
+unlock:
+	hyp_spin_unlock(&host_kvm.lock);
+
+	return ret;
+}
+
+int __pkvm_mark_hyp(phys_addr_t start, phys_addr_t end)
+{
+	int ret;
+
+	/*
+	 * host_stage2_unmap_dev_all() currently relies on MMIO mappings being
+	 * non-persistent, so don't allow changing page ownership in MMIO range.
+	 */
+	if (!range_is_memory(start, end))
+		return -EINVAL;
+
+	hyp_spin_lock(&host_kvm.lock);
+	ret = kvm_pgtable_stage2_set_owner(&host_kvm.pgt, start, end - start,
+					   &host_s2_pool, pkvm_hyp_id);
+	hyp_spin_unlock(&host_kvm.lock);
+
+	return ret != -EAGAIN ? ret : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void handle_host_mem_abort(struct kvm_cpu_context *host_ctxt)

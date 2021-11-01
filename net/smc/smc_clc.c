@@ -230,8 +230,12 @@ static int smc_clc_prfx_set(struct socket *clcsock,
 		goto out_rel;
 	}
 	/* get address to which the internal TCP socket is bound */
+<<<<<<< HEAD
 	if (kernel_getsockname(clcsock, (struct sockaddr *)&addrs) < 0)
 		goto out_rel;
+=======
+	kernel_getsockname(clcsock, (struct sockaddr *)&addrs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* analyze IP specific data of net_device belonging to TCP socket */
 	addr6 = (struct sockaddr_in6 *)&addrs;
 	rcu_read_lock();

@@ -31,6 +31,7 @@ properties:
   compatible:
     const: simple-battery
 
+<<<<<<< HEAD
   device-chemistry:
     description: This describes the chemical technology of the battery.
     oneOf:
@@ -45,6 +46,8 @@ properties:
       - const: lithium-ion-iron-phosphate
       - const: lithium-ion-manganese-oxide
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   over-voltage-threshold-microvolt:
     description: battery over-voltage limit
 

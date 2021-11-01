@@ -2290,6 +2290,11 @@ static int tty_fasync(int fd, struct file *filp, int on)
  *	Locking:
  *		Called functions take tty_ldiscs_lock
  *		current->signal->tty check is safe without locks
+<<<<<<< HEAD
+=======
+ *
+ *	FIXME: may race normal receive processing
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 static int tiocsti(struct tty_struct *tty, char __user *p)
@@ -2305,10 +2310,15 @@ static int tiocsti(struct tty_struct *tty, char __user *p)
 	ld = tty_ldisc_ref_wait(tty);
 	if (!ld)
 		return -EIO;
+<<<<<<< HEAD
 	tty_buffer_lock_exclusive(tty->port);
 	if (ld->ops->receive_buf)
 		ld->ops->receive_buf(tty, &ch, &mbz, 1);
 	tty_buffer_unlock_exclusive(tty->port);
+=======
+	if (ld->ops->receive_buf)
+		ld->ops->receive_buf(tty, &ch, &mbz, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tty_ldisc_deref(ld);
 	return 0;
 }
@@ -3438,6 +3448,22 @@ void tty_driver_kref_put(struct tty_driver *driver)
 }
 EXPORT_SYMBOL(tty_driver_kref_put);
 
+<<<<<<< HEAD
+=======
+void tty_set_operations(struct tty_driver *driver,
+			const struct tty_operations *op)
+{
+	driver->ops = op;
+};
+EXPORT_SYMBOL(tty_set_operations);
+
+void put_tty_driver(struct tty_driver *d)
+{
+	tty_driver_kref_put(d);
+}
+EXPORT_SYMBOL(put_tty_driver);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Called by a tty driver to register itself.
  */

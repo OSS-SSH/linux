@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
+=======
+ *   fs/cifs/readdir.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   Directory search handling
  *
@@ -368,7 +372,11 @@ int get_symlink_reparse_path(char *full_path, struct cifs_sb_info *cifs_sb,
  */
 
 static int
+<<<<<<< HEAD
 _initiate_cifs_search(const unsigned int xid, struct file *file,
+=======
+initiate_cifs_search(const unsigned int xid, struct file *file,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		     const char *full_path)
 {
 	__u16 search_flags;
@@ -450,6 +458,7 @@ error_exit:
 	return rc;
 }
 
+<<<<<<< HEAD
 static int
 initiate_cifs_search(const unsigned int xid, struct file *file,
 		     const char *full_path)
@@ -471,6 +480,8 @@ initiate_cifs_search(const unsigned int xid, struct file *file,
 	return rc;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* return length of unicode string in bytes */
 static int cifs_unicode_bytelen(const char *str)
 {

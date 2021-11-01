@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
  * Device Tree Source for the H3ULCB (R-Car Starter Kit Premier) board with R-Car H3 ES1.x
+=======
+ * Device Tree Source for the H3ULCB (R-Car Starter Kit Premier) board
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (C) 2016 Renesas Electronics Corp.
  * Copyright (C) 2016 Cogent Embedded, Inc.

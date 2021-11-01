@@ -1038,6 +1038,7 @@ static const struct tty_operations hvsi_ops = {
 
 static int __init hvsi_init(void)
 {
+<<<<<<< HEAD
 	struct tty_driver *driver;
 	int i, ret;
 
@@ -1055,12 +1056,35 @@ static int __init hvsi_init(void)
 	driver->init_termios.c_ispeed = 9600;
 	driver->init_termios.c_ospeed = 9600;
 	tty_set_operations(driver, &hvsi_ops);
+=======
+	int i;
+
+	hvsi_driver = alloc_tty_driver(hvsi_count);
+	if (!hvsi_driver)
+		return -ENOMEM;
+
+	hvsi_driver->driver_name = "hvsi";
+	hvsi_driver->name = "hvsi";
+	hvsi_driver->major = HVSI_MAJOR;
+	hvsi_driver->minor_start = HVSI_MINOR;
+	hvsi_driver->type = TTY_DRIVER_TYPE_SYSTEM;
+	hvsi_driver->init_termios = tty_std_termios;
+	hvsi_driver->init_termios.c_cflag = B9600 | CS8 | CREAD | HUPCL;
+	hvsi_driver->init_termios.c_ispeed = 9600;
+	hvsi_driver->init_termios.c_ospeed = 9600;
+	hvsi_driver->flags = TTY_DRIVER_REAL_RAW;
+	tty_set_operations(hvsi_driver, &hvsi_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i=0; i < hvsi_count; i++) {
 		struct hvsi_struct *hp = &hvsi_ports[i];
 		int ret = 1;
 
+<<<<<<< HEAD
 		tty_port_link_device(&hp->port, driver, i);
+=======
+		tty_port_link_device(&hp->port, hvsi_driver, i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		ret = request_irq(hp->virq, hvsi_interrupt, 0, "hvsi", hp);
 		if (ret)
@@ -1069,6 +1093,7 @@ static int __init hvsi_init(void)
 	}
 	hvsi_wait = wait_for_state; /* irqs active now */
 
+<<<<<<< HEAD
 	ret = tty_register_driver(driver);
 	if (ret) {
 		pr_err("Couldn't register hvsi console driver\n");
@@ -1076,10 +1101,15 @@ static int __init hvsi_init(void)
 	}
 
 	hvsi_driver = driver;
+=======
+	if (tty_register_driver(hvsi_driver))
+		panic("Couldn't register hvsi console driver\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	printk(KERN_DEBUG "HVSI: registered %i devices\n", hvsi_count);
 
 	return 0;
+<<<<<<< HEAD
 err_free_irq:
 	hvsi_wait = poll_for_state;
 	for (i = 0; i < hvsi_count; i++) {
@@ -1090,6 +1120,8 @@ err_free_irq:
 	tty_driver_kref_put(driver);
 
 	return ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 device_initcall(hvsi_init);
 

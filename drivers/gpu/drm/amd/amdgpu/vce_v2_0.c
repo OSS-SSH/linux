@@ -477,6 +477,7 @@ static int vce_v2_0_hw_init(void *handle)
 
 static int vce_v2_0_hw_fini(void *handle)
 {
+<<<<<<< HEAD
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 
 	/*
@@ -502,6 +503,8 @@ static int vce_v2_0_hw_fini(void *handle)
 						       AMD_CG_STATE_GATE);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

@@ -336,9 +336,12 @@ enum elv_merge elv_merge(struct request_queue *q, struct request **req,
 	__rq = elv_rqhash_find(q, bio->bi_iter.bi_sector);
 	if (__rq && elv_bio_merge_ok(__rq, bio)) {
 		*req = __rq;
+<<<<<<< HEAD
 
 		if (blk_discard_mergable(__rq))
 			return ELEVATOR_DISCARD_MERGE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ELEVATOR_BACK_MERGE;
 	}
 
@@ -633,9 +636,12 @@ static inline bool elv_support_iosched(struct request_queue *q)
  */
 static struct elevator_type *elevator_get_default(struct request_queue *q)
 {
+<<<<<<< HEAD
 	if (q->tag_set && q->tag_set->flags & BLK_MQ_F_NO_SCHED_BY_DEFAULT)
 		return NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (q->nr_hw_queues != 1 &&
 			!blk_mq_is_sbitmap_shared(q->tag_set->flags))
 		return NULL;
@@ -708,6 +714,10 @@ void elevator_init_mq(struct request_queue *q)
 		elevator_put(e);
 	}
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL_GPL(elevator_init_mq); /* only for dm-rq */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * switch to new_e io scheduler. be careful not to introduce deadlocks -

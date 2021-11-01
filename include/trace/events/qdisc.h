@@ -41,11 +41,16 @@ TRACE_EVENT(qdisc_dequeue,
 		__entry->txq_state	= txq->state;
 	),
 
+<<<<<<< HEAD
 	TP_printk("dequeue ifindex=%d qdisc handle=0x%X parent=0x%X txq_state=0x%lX packets=%d skbaddr=%px",
+=======
+	TP_printk("dequeue ifindex=%d qdisc handle=0x%X parent=0x%X txq_state=0x%lX packets=%d skbaddr=%p",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		  __entry->ifindex, __entry->handle, __entry->parent,
 		  __entry->txq_state, __entry->packets, __entry->skbaddr )
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(qdisc_enqueue,
 
 	TP_PROTO(struct Qdisc *qdisc, const struct netdev_queue *txq, struct sk_buff *skb),
@@ -74,6 +79,8 @@ TRACE_EVENT(qdisc_enqueue,
 		  __entry->ifindex, __entry->handle, __entry->parent, __entry->skbaddr)
 );
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 TRACE_EVENT(qdisc_reset,
 
 	TP_PROTO(struct Qdisc *q),

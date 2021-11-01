@@ -114,7 +114,11 @@ properties:
 
   ports:
     $ref: /schemas/graph.yaml#/properties/ports
+<<<<<<< HEAD
     patternProperties:
+=======
+    properties:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       port(@[0-9a-f]+)?:
         $ref: audio-graph-port.yaml#
         unevaluatedProperties: false

@@ -98,6 +98,7 @@ static inline u8 llc_ui_header_len(struct sock *sk, struct sockaddr_llc *addr)
 {
 	u8 rc = LLC_PDU_LEN_U;
 
+<<<<<<< HEAD
 	if (addr->sllc_test)
 		rc = LLC_PDU_LEN_U;
 	else if (addr->sllc_xid)
@@ -108,6 +109,10 @@ static inline u8 llc_ui_header_len(struct sock *sk, struct sockaddr_llc *addr)
 		 * bytes, llc_pdu_init_as_xid_cmd() will overwrite user data
 		 */
 		rc = LLC_PDU_LEN_U_XID;
+=======
+	if (addr->sllc_test || addr->sllc_xid)
+		rc = LLC_PDU_LEN_U;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else if (sk->sk_type == SOCK_STREAM)
 		rc = LLC_PDU_LEN_I;
 	return rc;
@@ -224,7 +229,12 @@ static int llc_ui_release(struct socket *sock)
 	} else {
 		release_sock(sk);
 	}
+<<<<<<< HEAD
 	dev_put(llc->dev);
+=======
+	if (llc->dev)
+		dev_put(llc->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sock_put(sk);
 	llc_sk_free(sk);
 out:
@@ -362,7 +372,12 @@ static int llc_ui_bind(struct socket *sock, struct sockaddr *uaddr, int addrlen)
 	} else
 		llc->dev = dev_getbyhwaddr_rcu(&init_net, addr->sllc_arphrd,
 					   addr->sllc_mac);
+<<<<<<< HEAD
 	dev_hold(llc->dev);
+=======
+	if (llc->dev)
+		dev_hold(llc->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rcu_read_unlock();
 	if (!llc->dev)
 		goto out;

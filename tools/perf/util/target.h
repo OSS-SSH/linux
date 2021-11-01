@@ -17,7 +17,10 @@ struct target {
 	bool	     default_per_cpu;
 	bool	     per_thread;
 	bool	     use_bpf;
+<<<<<<< HEAD
 	bool	     hybrid;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const char   *attr_map;
 };
 

@@ -202,6 +202,9 @@ int devtmpfs_delete_node(struct device *dev);
 static inline int devtmpfs_create_node(struct device *dev) { return 0; }
 static inline int devtmpfs_delete_node(struct device *dev) { return 0; }
 #endif
+<<<<<<< HEAD
 
 void software_node_notify(struct device *dev);
 void software_node_notify_remove(struct device *dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

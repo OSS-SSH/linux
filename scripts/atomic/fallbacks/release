@@ -1,8 +1,15 @@
 cat <<EOF
 static __always_inline ${ret}
+<<<<<<< HEAD
 arch_${atomic}_${pfx}${name}${sfx}_release(${params})
 {
 	__atomic_release_fence();
 	${retstmt}arch_${atomic}_${pfx}${name}${sfx}_relaxed(${args});
+=======
+${arch}${atomic}_${pfx}${name}${sfx}_release(${params})
+{
+	__atomic_release_fence();
+	${retstmt}${arch}${atomic}_${pfx}${name}${sfx}_relaxed(${args});
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EOF

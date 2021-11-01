@@ -315,7 +315,11 @@ static int drm_of_lvds_get_remote_pixels_type(
 
 		remote_port = of_graph_get_remote_port(endpoint);
 		if (!remote_port) {
+<<<<<<< HEAD
 			of_node_put(endpoint);
+=======
+			of_node_put(remote_port);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EPIPE;
 		}
 
@@ -331,10 +335,15 @@ static int drm_of_lvds_get_remote_pixels_type(
 		 * configurations by passing the endpoints explicitly to
 		 * drm_of_lvds_get_dual_link_pixel_order().
 		 */
+<<<<<<< HEAD
 		if (!current_pt || pixels_type != current_pt) {
 			of_node_put(endpoint);
 			return -EINVAL;
 		}
+=======
+		if (!current_pt || pixels_type != current_pt)
+			return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return pixels_type;

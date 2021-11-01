@@ -9,11 +9,19 @@
 
 #include <linux/kernel.h>
 #include <linux/module.h>
+<<<<<<< HEAD
+=======
+#include <linux/slab.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/iio/iio.h>
 #include <linux/iio/trigger.h>
 #include <linux/interrupt.h>
 #include <linux/iio/buffer.h>
 #include <linux/iio/trigger_consumer.h>
+<<<<<<< HEAD
+=======
+#include <linux/iio/triggered_buffer.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/irqreturn.h>
 #include <linux/regmap.h>
 

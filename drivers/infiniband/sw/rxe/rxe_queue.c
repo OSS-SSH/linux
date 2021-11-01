@@ -63,7 +63,11 @@ struct rxe_queue *rxe_queue_init(struct rxe_dev *rxe, int *num_elem,
 	if (*num_elem < 0)
 		goto err1;
 
+<<<<<<< HEAD
 	q = kzalloc(sizeof(*q), GFP_KERNEL);
+=======
+	q = kmalloc(sizeof(*q), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!q)
 		goto err1;
 

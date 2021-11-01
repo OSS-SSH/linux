@@ -24,8 +24,14 @@ static void adf_iov_send_resp(struct work_struct *work)
 	kfree(pf2vf_resp);
 }
 
+<<<<<<< HEAD
 void adf_schedule_vf2pf_handler(struct adf_accel_vf_info *vf_info)
 {
+=======
+static void adf_vf2pf_bh_handler(void *data)
+{
+	struct adf_accel_vf_info *vf_info = (struct adf_accel_vf_info *)data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct adf_pf2vf_resp *pf2vf_resp;
 
 	pf2vf_resp = kzalloc(sizeof(*pf2vf_resp), GFP_ATOMIC);
@@ -51,6 +57,12 @@ static int adf_enable_sriov(struct adf_accel_dev *accel_dev)
 		vf_info->accel_dev = accel_dev;
 		vf_info->vf_nr = i;
 
+<<<<<<< HEAD
+=======
+		tasklet_init(&vf_info->vf2pf_bh_tasklet,
+			     (void *)adf_vf2pf_bh_handler,
+			     (unsigned long)vf_info);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mutex_init(&vf_info->pf2vf_lock);
 		ratelimit_state_init(&vf_info->vf2pf_ratelimit,
 				     DEFAULT_RATELIMIT_INTERVAL,
@@ -106,6 +118,11 @@ void adf_disable_sriov(struct adf_accel_dev *accel_dev)
 		hw_data->configure_iov_threads(accel_dev, false);
 
 	for (i = 0, vf = accel_dev->pf.vf_info; i < totalvfs; i++, vf++) {
+<<<<<<< HEAD
+=======
+		tasklet_disable(&vf->vf2pf_bh_tasklet);
+		tasklet_kill(&vf->vf2pf_bh_tasklet);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mutex_destroy(&vf->pf2vf_lock);
 	}
 

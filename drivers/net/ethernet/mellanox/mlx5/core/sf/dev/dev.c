@@ -39,7 +39,11 @@ static ssize_t sfnum_show(struct device *dev, struct device_attribute *attr, cha
 	struct auxiliary_device *adev = container_of(dev, struct auxiliary_device, dev);
 	struct mlx5_sf_dev *sf_dev = container_of(adev, struct mlx5_sf_dev, adev);
 
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%u\n", sf_dev->sfnum);
+=======
+	return scnprintf(buf, PAGE_SIZE, "%u\n", sf_dev->sfnum);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 static DEVICE_ATTR_RO(sfnum);
 

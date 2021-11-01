@@ -144,7 +144,11 @@ struct st21nfca_se_info {
 };
 
 struct st21nfca_hci_info {
+<<<<<<< HEAD
 	const struct nfc_phy_ops *phy_ops;
+=======
+	struct nfc_phy_ops *phy_ops;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void *phy_id;
 
 	struct nfc_hci_dev *hdev;
@@ -163,7 +167,11 @@ struct st21nfca_hci_info {
 	struct st21nfca_vendor_info vendor_info;
 };
 
+<<<<<<< HEAD
 int st21nfca_hci_probe(void *phy_id, const struct nfc_phy_ops *phy_ops,
+=======
+int st21nfca_hci_probe(void *phy_id, struct nfc_phy_ops *phy_ops,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       char *llc_name, int phy_headroom, int phy_tailroom,
 		       int phy_payload, struct nfc_hci_dev **hdev,
 		       struct st21nfca_se_status *se_status);

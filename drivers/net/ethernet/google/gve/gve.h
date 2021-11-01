@@ -780,7 +780,11 @@ struct gve_queue_page_list *gve_assign_rx_qpl(struct gve_priv *priv)
 				    gve_num_tx_qpls(priv));
 
 	/* we are out of rx qpls */
+<<<<<<< HEAD
 	if (id == gve_num_tx_qpls(priv) + gve_num_rx_qpls(priv))
+=======
+	if (id == priv->qpl_cfg.qpl_map_size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return NULL;
 
 	set_bit(id, priv->qpl_cfg.qpl_id_map);

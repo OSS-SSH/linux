@@ -45,7 +45,11 @@ static void configfs_d_iput(struct dentry * dentry,
 		/*
 		 * Set sd->s_dentry to null only when this dentry is the one
 		 * that is going to be killed.  Otherwise configfs_d_iput may
+<<<<<<< HEAD
 		 * run just after configfs_lookup and set sd->s_dentry to
+=======
+		 * run just after configfs_attach_attr and set sd->s_dentry to
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * NULL even it's still in use.
 		 */
 		if (sd->s_dentry == dentry)
@@ -417,16 +421,54 @@ static void configfs_remove_dir(struct config_item * item)
 	dput(dentry);
 }
 
+<<<<<<< HEAD
+=======
+
+/* attaches attribute's configfs_dirent to the dentry corresponding to the
+ * attribute file
+ */
+static int configfs_attach_attr(struct configfs_dirent * sd, struct dentry * dentry)
+{
+	struct configfs_attribute * attr = sd->s_element;
+	struct inode *inode;
+
+	spin_lock(&configfs_dirent_lock);
+	dentry->d_fsdata = configfs_get(sd);
+	sd->s_dentry = dentry;
+	spin_unlock(&configfs_dirent_lock);
+
+	inode = configfs_create(dentry, (attr->ca_mode & S_IALLUGO) | S_IFREG);
+	if (IS_ERR(inode)) {
+		configfs_put(sd);
+		return PTR_ERR(inode);
+	}
+	if (sd->s_type & CONFIGFS_ITEM_BIN_ATTR) {
+		inode->i_size = 0;
+		inode->i_fop = &configfs_bin_file_operations;
+	} else {
+		inode->i_size = PAGE_SIZE;
+		inode->i_fop = &configfs_file_operations;
+	}
+	d_add(dentry, inode);
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct dentry * configfs_lookup(struct inode *dir,
 				       struct dentry *dentry,
 				       unsigned int flags)
 {
 	struct configfs_dirent * parent_sd = dentry->d_parent->d_fsdata;
 	struct configfs_dirent * sd;
+<<<<<<< HEAD
 	struct inode *inode = NULL;
 
 	if (dentry->d_name.len > NAME_MAX)
 		return ERR_PTR(-ENAMETOOLONG);
+=======
+	int found = 0;
+	int err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Fake invisibility if dir belongs to a group/default groups hierarchy
@@ -436,6 +478,7 @@ static struct dentry * configfs_lookup(struct inode *dir,
 	 * not complete their initialization, since the dentries of the
 	 * attributes won't be instantiated.
 	 */
+<<<<<<< HEAD
 	if (!configfs_dirent_is_ready(parent_sd))
 		return ERR_PTR(-ENOENT);
 
@@ -469,6 +512,38 @@ static struct dentry * configfs_lookup(struct inode *dir,
 done:
 	d_add(dentry, inode);
 	return NULL;
+=======
+	err = -ENOENT;
+	if (!configfs_dirent_is_ready(parent_sd))
+		goto out;
+
+	list_for_each_entry(sd, &parent_sd->s_children, s_sibling) {
+		if (sd->s_type & CONFIGFS_NOT_PINNED) {
+			const unsigned char * name = configfs_get_name(sd);
+
+			if (strcmp(name, dentry->d_name.name))
+				continue;
+
+			found = 1;
+			err = configfs_attach_attr(sd, dentry);
+			break;
+		}
+	}
+
+	if (!found) {
+		/*
+		 * If it doesn't exist and it isn't a NOT_PINNED item,
+		 * it must be negative.
+		 */
+		if (dentry->d_name.len > NAME_MAX)
+			return ERR_PTR(-ENAMETOOLONG);
+		d_add(dentry, NULL);
+		return NULL;
+	}
+
+out:
+	return ERR_PTR(err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

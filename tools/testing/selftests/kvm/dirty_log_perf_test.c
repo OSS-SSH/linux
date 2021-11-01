@@ -44,6 +44,10 @@ static void *vcpu_worker(void *data)
 	struct perf_test_vcpu_args *vcpu_args = (struct perf_test_vcpu_args *)data;
 	int vcpu_id = vcpu_args->vcpu_id;
 
+<<<<<<< HEAD
+=======
+	vcpu_args_set(vm, vcpu_id, 1, vcpu_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	run = vcpu_state(vm, vcpu_id);
 
 	while (!READ_ONCE(host_quit)) {
@@ -93,6 +97,7 @@ struct test_params {
 	int wr_fract;
 	bool partition_vcpu_memory_access;
 	enum vm_mem_backing_src_type backing_src;
+<<<<<<< HEAD
 	int slots;
 };
 
@@ -167,15 +172,25 @@ static void free_bitmaps(unsigned long *bitmaps[], int slots)
 	free(bitmaps);
 }
 
+=======
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void run_test(enum vm_guest_mode mode, void *arg)
 {
 	struct test_params *p = arg;
 	pthread_t *vcpu_threads;
 	struct kvm_vm *vm;
+<<<<<<< HEAD
 	unsigned long **bitmaps;
 	uint64_t guest_num_pages;
 	uint64_t host_num_pages;
 	uint64_t pages_per_slot;
+=======
+	unsigned long *bmap;
+	uint64_t guest_num_pages;
+	uint64_t host_num_pages;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int vcpu_id;
 	struct timespec start;
 	struct timespec ts_diff;
@@ -186,16 +201,24 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 	struct timespec clear_dirty_log_total = (struct timespec){0};
 
 	vm = perf_test_create_vm(mode, nr_vcpus, guest_percpu_mem_size,
+<<<<<<< HEAD
 				 p->slots, p->backing_src);
+=======
+				 p->backing_src);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	perf_test_args.wr_fract = p->wr_fract;
 
 	guest_num_pages = (nr_vcpus * guest_percpu_mem_size) >> vm_get_page_shift(vm);
 	guest_num_pages = vm_adjust_num_guest_pages(mode, guest_num_pages);
 	host_num_pages = vm_num_host_pages(mode, guest_num_pages);
+<<<<<<< HEAD
 	pages_per_slot = host_num_pages / p->slots;
 
 	bitmaps = alloc_bitmaps(p->slots, pages_per_slot);
+=======
+	bmap = bitmap_alloc(host_num_pages);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (dirty_log_manual_caps) {
 		cap.cap = KVM_CAP_MANUAL_DIRTY_LOG_PROTECT2;
@@ -237,7 +260,12 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 
 	/* Enable dirty logging */
 	clock_gettime(CLOCK_MONOTONIC, &start);
+<<<<<<< HEAD
 	enable_dirty_logging(vm, p->slots);
+=======
+	vm_mem_region_set_flags(vm, PERF_TEST_MEM_SLOT_INDEX,
+				KVM_MEM_LOG_DIRTY_PAGES);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ts_diff = timespec_elapsed(start);
 	pr_info("Enabling dirty logging time: %ld.%.9lds\n\n",
 		ts_diff.tv_sec, ts_diff.tv_nsec);
@@ -263,7 +291,12 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 			iteration, ts_diff.tv_sec, ts_diff.tv_nsec);
 
 		clock_gettime(CLOCK_MONOTONIC, &start);
+<<<<<<< HEAD
 		get_dirty_log(vm, bitmaps, p->slots);
+=======
+		kvm_vm_get_dirty_log(vm, PERF_TEST_MEM_SLOT_INDEX, bmap);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ts_diff = timespec_elapsed(start);
 		get_dirty_log_total = timespec_add(get_dirty_log_total,
 						   ts_diff);
@@ -272,7 +305,13 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 
 		if (dirty_log_manual_caps) {
 			clock_gettime(CLOCK_MONOTONIC, &start);
+<<<<<<< HEAD
 			clear_dirty_log(vm, bitmaps, p->slots, pages_per_slot);
+=======
+			kvm_vm_clear_dirty_log(vm, PERF_TEST_MEM_SLOT_INDEX, bmap, 0,
+					       host_num_pages);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ts_diff = timespec_elapsed(start);
 			clear_dirty_log_total = timespec_add(clear_dirty_log_total,
 							     ts_diff);
@@ -283,7 +322,11 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 
 	/* Disable dirty logging */
 	clock_gettime(CLOCK_MONOTONIC, &start);
+<<<<<<< HEAD
 	disable_dirty_logging(vm, p->slots);
+=======
+	vm_mem_region_set_flags(vm, PERF_TEST_MEM_SLOT_INDEX, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ts_diff = timespec_elapsed(start);
 	pr_info("Disabling dirty logging time: %ld.%.9lds\n",
 		ts_diff.tv_sec, ts_diff.tv_nsec);
@@ -305,7 +348,11 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 			clear_dirty_log_total.tv_nsec, avg.tv_sec, avg.tv_nsec);
 	}
 
+<<<<<<< HEAD
 	free_bitmaps(bitmaps, p->slots);
+=======
+	free(bmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	free(vcpu_threads);
 	perf_test_destroy_vm(vm);
 }
@@ -314,8 +361,12 @@ static void help(char *name)
 {
 	puts("");
 	printf("usage: %s [-h] [-i iterations] [-p offset] "
+<<<<<<< HEAD
 	       "[-m mode] [-b vcpu bytes] [-v vcpus] [-o] [-s mem type]"
 	       "[-x memslots]\n", name);
+=======
+	       "[-m mode] [-b vcpu bytes] [-v vcpus] [-o] [-s mem type]\n", name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	puts("");
 	printf(" -i: specify iteration counts (default: %"PRIu64")\n",
 	       TEST_HOST_LOOP_N);
@@ -332,9 +383,15 @@ static void help(char *name)
 	printf(" -v: specify the number of vCPUs to run.\n");
 	printf(" -o: Overlap guest memory accesses instead of partitioning\n"
 	       "     them into a separate region of memory for each vCPU.\n");
+<<<<<<< HEAD
 	backing_src_help("-s");
 	printf(" -x: Split the memory region into this number of memslots.\n"
 	       "     (default: 1)\n");
+=======
+	printf(" -s: specify the type of memory that should be used to\n"
+	       "     back the guest data region.\n\n");
+	backing_src_help();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	puts("");
 	exit(0);
 }
@@ -346,8 +403,12 @@ int main(int argc, char *argv[])
 		.iterations = TEST_HOST_LOOP_N,
 		.wr_fract = 1,
 		.partition_vcpu_memory_access = true,
+<<<<<<< HEAD
 		.backing_src = DEFAULT_VM_MEM_SRC,
 		.slots = 1,
+=======
+		.backing_src = VM_MEM_SRC_ANONYMOUS,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 	int opt;
 
@@ -358,7 +419,11 @@ int main(int argc, char *argv[])
 
 	guest_modes_append_default();
 
+<<<<<<< HEAD
 	while ((opt = getopt(argc, argv, "hi:p:m:b:f:v:os:x:")) != -1) {
+=======
+	while ((opt = getopt(argc, argv, "hi:p:m:b:f:v:os:")) != -1) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		switch (opt) {
 		case 'i':
 			p.iterations = atoi(optarg);
@@ -384,6 +449,7 @@ int main(int argc, char *argv[])
 			break;
 		case 'o':
 			p.partition_vcpu_memory_access = false;
+<<<<<<< HEAD
 			break;
 		case 's':
 			p.backing_src = parse_backing_src_type(optarg);
@@ -391,6 +457,11 @@ int main(int argc, char *argv[])
 		case 'x':
 			p.slots = atoi(optarg);
 			break;
+=======
+		case 's':
+			p.backing_src = parse_backing_src_type(optarg);
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		case 'h':
 		default:
 			help(argv[0]);

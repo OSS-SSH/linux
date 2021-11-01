@@ -18,6 +18,7 @@ SYNOPSIS
 
 	*OBJECT* := { **map** | **program** | **cgroup** | **perf** | **net** | **feature** }
 
+<<<<<<< HEAD
 	*OPTIONS* := { { **-V** | **--version** } |
 		{ **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } }
 
@@ -27,6 +28,17 @@ SYNOPSIS
 
 	*PROG-COMMANDS* := { **show** | **list** | **dump jited** | **dump xlated** | **pin** |
 		**load** | **attach** | **detach** | **help** }
+=======
+	*OPTIONS* := { { **-V** | **--version** } | { **-h** | **--help** }
+	| { **-j** | **--json** } [{ **-p** | **--pretty** }] }
+
+	*MAP-COMMANDS* :=
+	{ **show** | **list** | **create** | **dump** | **update** | **lookup** | **getnext**
+	| **delete** | **pin** | **event_pipe** | **help** }
+
+	*PROG-COMMANDS* := { **show** | **list** | **dump jited** | **dump xlated** | **pin**
+	| **load** | **attach** | **detach** | **help** }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*CGROUP-COMMANDS* := { **show** | **list** | **attach** | **detach** | **help** }
 

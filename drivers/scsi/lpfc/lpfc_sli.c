@@ -1439,7 +1439,11 @@ out:
 	memset((char *)iocbq + start_clean, 0, sizeof(*iocbq) - start_clean);
 	iocbq->sli4_lxritag = NO_XRI;
 	iocbq->sli4_xritag = NO_XRI;
+<<<<<<< HEAD
 	iocbq->iocb_flag &= ~(LPFC_IO_NVME | LPFC_IO_NVMET | LPFC_IO_CMF |
+=======
+	iocbq->iocb_flag &= ~(LPFC_IO_NVME | LPFC_IO_NVMET |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			      LPFC_IO_NVME_LS);
 	list_add_tail(&iocbq->list, &phba->lpfc_iocb_list);
 }
@@ -1769,6 +1773,7 @@ lpfc_sli_ringtx_get(struct lpfc_hba *phba, struct lpfc_sli_ring *pring)
 }
 
 /**
+<<<<<<< HEAD
  * lpfc_cmf_sync_cmpl - Process a CMF_SYNC_WQE cmpl
  * @phba: Pointer to HBA context object.
  * @cmdiocb: Pointer to driver command iocb object.
@@ -2017,6 +2022,8 @@ out_unlock:
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * lpfc_sli_next_iocb_slot - Get next iocb slot in the ring
  * @phba: Pointer to HBA context object.
  * @pring: Pointer to driver SLI ring object.
@@ -4715,7 +4722,10 @@ lpfc_sli_brdready_s4(struct lpfc_hba *phba, uint32_t mask)
 	} else
 		phba->sli4_hba.intr_enable = 0;
 
+<<<<<<< HEAD
 	phba->hba_flag &= ~HBA_SETUP;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return retval;
 }
 
@@ -5036,7 +5046,10 @@ lpfc_sli4_brdreset(struct lpfc_hba *phba)
 	phba->link_events = 0;
 	phba->pport->fc_myDID = 0;
 	phba->pport->fc_prevDID = 0;
+<<<<<<< HEAD
 	phba->hba_flag &= ~HBA_SETUP;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock_irq(&phba->hbalock);
 	psli->sli_flag &= ~(LPFC_PROCESS_LA);
@@ -5924,20 +5937,30 @@ lpfc_sli4_get_ctl_attr(struct lpfc_hba *phba)
 		bf_get(lpfc_cntl_attr_lnk_type, cntl_attr);
 	phba->sli4_hba.lnk_info.lnk_no =
 		bf_get(lpfc_cntl_attr_lnk_numb, cntl_attr);
+<<<<<<< HEAD
 	phba->sli4_hba.flash_id = bf_get(lpfc_cntl_attr_flash_id, cntl_attr);
 	phba->sli4_hba.asic_rev = bf_get(lpfc_cntl_attr_asic_rev, cntl_attr);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	memset(phba->BIOSVersion, 0, sizeof(phba->BIOSVersion));
 	strlcat(phba->BIOSVersion, (char *)cntl_attr->bios_ver_str,
 		sizeof(phba->BIOSVersion));
 
 	lpfc_printf_log(phba, KERN_INFO, LOG_SLI,
+<<<<<<< HEAD
 			"3086 lnk_type:%d, lnk_numb:%d, bios_ver:%s, "
 			"flash_id: x%02x, asic_rev: x%02x\n",
 			phba->sli4_hba.lnk_info.lnk_tp,
 			phba->sli4_hba.lnk_info.lnk_no,
 			phba->BIOSVersion, phba->sli4_hba.flash_id,
 			phba->sli4_hba.asic_rev);
+=======
+			"3086 lnk_type:%d, lnk_numb:%d, bios_ver:%s\n",
+			phba->sli4_hba.lnk_info.lnk_tp,
+			phba->sli4_hba.lnk_info.lnk_no,
+			phba->BIOSVersion);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_free_mboxq:
 	if (bf_get(lpfc_mqe_command, &mboxq->u.mqe) == MBX_SLI4_CONFIG)
 		lpfc_sli4_mbox_cmd_free(phba, mboxq);
@@ -6667,7 +6690,10 @@ lpfc_set_features(struct lpfc_hba *phba, LPFC_MBOXQ_t *mbox,
 		  uint32_t feature)
 {
 	uint32_t len;
+<<<<<<< HEAD
 	u32 sig_freq = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	len = sizeof(struct lpfc_mbx_set_feature) -
 		sizeof(struct lpfc_sli4_cfg_mhdr);
@@ -6690,6 +6716,7 @@ lpfc_set_features(struct lpfc_hba *phba, LPFC_MBOXQ_t *mbox,
 		mbox->u.mqe.un.set_feature.feature = LPFC_SET_MDS_DIAGS;
 		mbox->u.mqe.un.set_feature.param_len = 8;
 		break;
+<<<<<<< HEAD
 	case LPFC_SET_CGN_SIGNAL:
 		if (phba->cmf_active_mode == LPFC_CFG_OFF)
 			sig_freq = 0;
@@ -6719,6 +6746,8 @@ lpfc_set_features(struct lpfc_hba *phba, LPFC_MBOXQ_t *mbox,
 		mbox->u.mqe.un.set_feature.feature = LPFC_SET_CGN_SIGNAL;
 		mbox->u.mqe.un.set_feature.param_len = 12;
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case LPFC_SET_DUAL_DUMP:
 		bf_set(lpfc_mbx_set_feature_dd,
 		       &mbox->u.mqe.un.set_feature, LPFC_ENABLE_DUAL_DUMP);
@@ -6727,6 +6756,7 @@ lpfc_set_features(struct lpfc_hba *phba, LPFC_MBOXQ_t *mbox,
 		mbox->u.mqe.un.set_feature.feature = LPFC_SET_DUAL_DUMP;
 		mbox->u.mqe.un.set_feature.param_len = 4;
 		break;
+<<<<<<< HEAD
 	case LPFC_SET_ENABLE_MI:
 		mbox->u.mqe.un.set_feature.feature = LPFC_SET_ENABLE_MI;
 		mbox->u.mqe.un.set_feature.param_len = 4;
@@ -6743,6 +6773,10 @@ lpfc_set_features(struct lpfc_hba *phba, LPFC_MBOXQ_t *mbox,
 		       &mbox->u.mqe.un.set_feature, 1);
 		break;
 	}
+=======
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return;
 }
 
@@ -7663,7 +7697,11 @@ lpfc_set_host_data(struct lpfc_hba *phba, LPFC_MBOXQ_t *mbox)
 	mbox->u.mqe.un.set_host_data.param_id = LPFC_SET_HOST_OS_DRIVER_VERSION;
 	mbox->u.mqe.un.set_host_data.param_len =
 					LPFC_HOST_OS_DRIVER_VERSION_SIZE;
+<<<<<<< HEAD
 	snprintf(mbox->u.mqe.un.set_host_data.un.data,
+=======
+	snprintf(mbox->u.mqe.un.set_host_data.data,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 LPFC_HOST_OS_DRIVER_VERSION_SIZE,
 		 "Linux %s v"LPFC_DRIVER_VERSION,
 		 (phba->hba_flag & HBA_FCOE_MODE) ? "FCoE" : "FC");
@@ -7731,6 +7769,7 @@ lpfc_post_rq_buffer(struct lpfc_hba *phba, struct lpfc_queue *hrq,
 	return 1;
 }
 
+<<<<<<< HEAD
 static void
 lpfc_mbx_cmpl_cgn_set_ftrs(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
 {
@@ -7816,6 +7855,8 @@ out_rdf:
 	return -EIO;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * lpfc_init_idle_stat_hb - Initialize idle_stat tracking
  * @phba: pointer to lpfc hba data structure.
@@ -7847,8 +7888,12 @@ static void lpfc_init_idle_stat_hb(struct lpfc_hba *phba)
 		idle_stat->prev_idle = get_cpu_idle_time(i, &wall, 1);
 		idle_stat->prev_wall = wall;
 
+<<<<<<< HEAD
 		if (phba->nvmet_support ||
 		    phba->cmf_active_mode != LPFC_CFG_OFF)
+=======
+		if (phba->nvmet_support)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			cq->poll_mode = LPFC_QUEUE_WORK;
 		else
 			cq->poll_mode = LPFC_IRQ_POLL;
@@ -7880,6 +7925,7 @@ static void lpfc_sli4_dip(struct lpfc_hba *phba)
 }
 
 /**
+<<<<<<< HEAD
  * lpfc_cmf_setup - Initialize idle_stat tracking
  * @phba: Pointer to HBA context object.
  *
@@ -8132,6 +8178,8 @@ lpfc_set_host_tm(struct lpfc_hba *phba)
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * lpfc_sli4_hba_setup - SLI4 device initialization PCI function
  * @phba: Pointer to HBA context object.
  *
@@ -8220,10 +8268,13 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
 		goto out_free_mbox;
 	}
 
+<<<<<<< HEAD
 	rc = lpfc_set_host_tm(phba);
 	lpfc_printf_log(phba, KERN_ERR, LOG_MBOX | LOG_INIT,
 			"6468 Set host date / time: Status x%x:\n", rc);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Continue initialization with default values even if driver failed
 	 * to read FCoE param config regions, only read parameters if the
@@ -8751,9 +8802,12 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
 	/* Indicate device interrupt mode */
 	phba->sli4_hba.intr_enable = 1;
 
+<<<<<<< HEAD
 	/* Setup CMF after HBA is initialized */
 	lpfc_cmf_setup(phba);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!(phba->hba_flag & HBA_FCOE_MODE) &&
 	    (phba->hba_flag & LINK_DISABLED)) {
 		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
@@ -8775,10 +8829,14 @@ lpfc_sli4_hba_setup(struct lpfc_hba *phba)
 		}
 	}
 	mempool_free(mboxq, phba->mbox_mem_pool);
+<<<<<<< HEAD
 
 	phba->hba_flag |= HBA_SETUP;
 	return rc;
 
+=======
+	return rc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_io_buff_free:
 	/* Free allocated IO Buffers */
 	lpfc_io_free(phba);
@@ -9436,11 +9494,16 @@ static int
 lpfc_sli4_async_mbox_block(struct lpfc_hba *phba)
 {
 	struct lpfc_sli *psli = &phba->sli;
+<<<<<<< HEAD
 	LPFC_MBOXQ_t *mboxq;
 	int rc = 0;
 	unsigned long timeout = 0;
 	u32 sli_flag;
 	u8 cmd, subsys, opcode;
+=======
+	int rc = 0;
+	unsigned long timeout = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Mark the asynchronous mailbox command posting as blocked */
 	spin_lock_irq(&phba->hbalock);
@@ -9458,11 +9521,16 @@ lpfc_sli4_async_mbox_block(struct lpfc_hba *phba)
 	if (timeout)
 		lpfc_sli4_process_missed_mbox_completions(phba);
 
+<<<<<<< HEAD
 	/* Wait for the outstanding mailbox command to complete */
+=======
+	/* Wait for the outstnading mailbox command to complete */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	while (phba->sli.mbox_active) {
 		/* Check active mailbox complete status every 2ms */
 		msleep(2);
 		if (time_after(jiffies, timeout)) {
+<<<<<<< HEAD
 			/* Timeout, mark the outstanding cmd not complete */
 
 			/* Sanity check sli.mbox_active has not completed or
@@ -9489,6 +9557,9 @@ lpfc_sli4_async_mbox_block(struct lpfc_hba *phba)
 				spin_unlock_irq(&phba->hbalock);
 			}
 
+=======
+			/* Timeout, marked the outstanding cmd not complete */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			rc = 1;
 			break;
 		}
@@ -10437,7 +10508,10 @@ lpfc_sli4_iocb2wqe(struct lpfc_hba *phba, struct lpfc_iocbq *iocbq,
 			if (pcmd && (*pcmd == ELS_CMD_FLOGI ||
 				*pcmd == ELS_CMD_SCR ||
 				*pcmd == ELS_CMD_RDF ||
+<<<<<<< HEAD
 				*pcmd == ELS_CMD_EDC ||
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				*pcmd == ELS_CMD_RSCN_XMT ||
 				*pcmd == ELS_CMD_FDISC ||
 				*pcmd == ELS_CMD_LOGO ||
@@ -10772,6 +10846,11 @@ lpfc_sli4_iocb2wqe(struct lpfc_hba *phba, struct lpfc_iocbq *iocbq,
 		bf_set(wqe_ebde_cnt, &wqe->xmit_els_rsp.wqe_com, 0);
 		bf_set(wqe_rsp_temp_rpi, &wqe->xmit_els_rsp,
 		       phba->sli4_hba.rpi_ids[ndlp->nlp_rpi]);
+<<<<<<< HEAD
+=======
+		pcmd = (uint32_t *) (((struct lpfc_dmabuf *)
+					iocbq->context2)->virt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (phba->fc_topology == LPFC_TOPOLOGY_LOOP) {
 				bf_set(els_rsp64_sp, &wqe->xmit_els_rsp, 1);
 				bf_set(els_rsp64_sid, &wqe->xmit_els_rsp,
@@ -12292,11 +12371,15 @@ void
 lpfc_ignore_els_cmpl(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 		     struct lpfc_iocbq *rspiocb)
 {
+<<<<<<< HEAD
 	struct lpfc_nodelist *ndlp = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	IOCB_t *irsp = &rspiocb->iocb;
 
 	/* ELS cmd tag <ulpIoTag> completes */
 	lpfc_printf_log(phba, KERN_INFO, LOG_ELS,
+<<<<<<< HEAD
 			"0139 Ignoring ELS cmd code x%x completion Data: "
 			"x%x x%x x%x\n",
 			irsp->ulpIoTag, irsp->ulpStatus,
@@ -12314,6 +12397,17 @@ lpfc_ignore_els_cmpl(struct lpfc_hba *phba, struct lpfc_iocbq *cmdiocb,
 	}
 
 	lpfc_nlp_put(ndlp);
+=======
+			"0139 Ignoring ELS cmd tag x%x completion Data: "
+			"x%x x%x x%x\n",
+			irsp->ulpIoTag, irsp->ulpStatus,
+			irsp->un.ulpWord[4], irsp->ulpTimeout);
+	lpfc_nlp_put((struct lpfc_nodelist *)cmdiocb->context1);
+	if (cmdiocb->iocb.ulpCommand == CMD_GEN_REQUEST64_CR)
+		lpfc_ct_free_iocb(phba, cmdiocb);
+	else
+		lpfc_els_free_iocb(phba, cmdiocb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -15308,12 +15402,17 @@ static void lpfc_sli4_sched_cq_work(struct lpfc_hba *phba,
 
 	switch (cq->poll_mode) {
 	case LPFC_IRQ_POLL:
+<<<<<<< HEAD
 		/* CGN mgmt is mutually exclusive from softirq processing */
 		if (phba->cmf_active_mode == LPFC_CFG_OFF) {
 			irq_poll_sched(&cq->iop);
 			break;
 		}
 		fallthrough;
+=======
+		irq_poll_sched(&cq->iop);
+		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case LPFC_QUEUE_WORK:
 	default:
 		if (is_kdump_kernel())
@@ -20707,6 +20806,7 @@ out:
 }
 
 /**
+<<<<<<< HEAD
  * lpfc_log_fw_write_cmpl - logs firmware write completion status
  * @phba: pointer to lpfc hba data structure
  * @shdr_status: wr_object rsp's status field
@@ -20792,6 +20892,8 @@ lpfc_log_fw_write_cmpl(struct lpfc_hba *phba, u32 shdr_status,
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * lpfc_wr_object - write an object to the firmware
  * @phba: HBA structure that indicates port to create a queue on.
  * @dmabuf_list: list of dmabufs to write to the port.
@@ -20817,8 +20919,12 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
 	struct lpfc_mbx_wr_object *wr_object;
 	LPFC_MBOXQ_t *mbox;
 	int rc = 0, i = 0;
+<<<<<<< HEAD
 	uint32_t shdr_status, shdr_add_status, shdr_add_status_2;
 	uint32_t shdr_change_status = 0, shdr_csf = 0;
+=======
+	uint32_t shdr_status, shdr_add_status, shdr_change_status, shdr_csf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint32_t mbox_tmo;
 	struct lpfc_dmabuf *dmabuf;
 	uint32_t written = 0;
@@ -20872,6 +20978,7 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
 			     &wr_object->header.cfg_shdr.response);
 	shdr_add_status = bf_get(lpfc_mbox_hdr_add_status,
 				 &wr_object->header.cfg_shdr.response);
+<<<<<<< HEAD
 	shdr_add_status_2 = bf_get(lpfc_mbox_hdr_add_status_2,
 				   &wr_object->header.cfg_shdr.response);
 	if (check_change_status) {
@@ -20881,10 +20988,52 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
 				  &wr_object->u.response);
 	}
 
+=======
+	if (check_change_status) {
+		shdr_change_status = bf_get(lpfc_wr_object_change_status,
+					    &wr_object->u.response);
+
+		if (shdr_change_status == LPFC_CHANGE_STATUS_FW_RESET ||
+		    shdr_change_status == LPFC_CHANGE_STATUS_PORT_MIGRATION) {
+			shdr_csf = bf_get(lpfc_wr_object_csf,
+					  &wr_object->u.response);
+			if (shdr_csf)
+				shdr_change_status =
+						   LPFC_CHANGE_STATUS_PCI_RESET;
+		}
+
+		switch (shdr_change_status) {
+		case (LPFC_CHANGE_STATUS_PHYS_DEV_RESET):
+			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+					"3198 Firmware write complete: System "
+					"reboot required to instantiate\n");
+			break;
+		case (LPFC_CHANGE_STATUS_FW_RESET):
+			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+					"3199 Firmware write complete: Firmware"
+					" reset required to instantiate\n");
+			break;
+		case (LPFC_CHANGE_STATUS_PORT_MIGRATION):
+			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+					"3200 Firmware write complete: Port "
+					"Migration or PCI Reset required to "
+					"instantiate\n");
+			break;
+		case (LPFC_CHANGE_STATUS_PCI_RESET):
+			lpfc_printf_log(phba, KERN_INFO, LOG_INIT,
+					"3201 Firmware write complete: PCI "
+					"Reset required to instantiate\n");
+			break;
+		default:
+			break;
+		}
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!phba->sli4_hba.intr_enable)
 		mempool_free(mbox, phba->mbox_mem_pool);
 	else if (rc != MBX_TIMEOUT)
 		mempool_free(mbox, phba->mbox_mem_pool);
+<<<<<<< HEAD
 	if (shdr_status || shdr_add_status || shdr_add_status_2 || rc) {
 		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
 				"3025 Write Object mailbox failed with "
@@ -20902,6 +21051,17 @@ lpfc_wr_object(struct lpfc_hba *phba, struct list_head *dmabuf_list,
 		lpfc_log_fw_write_cmpl(phba, shdr_status, shdr_add_status,
 				       shdr_add_status_2, shdr_change_status,
 				       shdr_csf);
+=======
+	if (shdr_status || shdr_add_status || rc) {
+		lpfc_printf_log(phba, KERN_ERR, LOG_TRACE_EVENT,
+				"3025 Write Object mailbox failed with "
+				"status x%x add_status x%x, mbx status x%x\n",
+				shdr_status, shdr_add_status, rc);
+		rc = -ENXIO;
+		*offset = shdr_add_status;
+	} else
+		*offset += wr_object->u.response.actual_write_length;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
@@ -21293,7 +21453,12 @@ lpfc_sli4_issue_wqe(struct lpfc_hba *phba, struct lpfc_sli4_hdw_queue *qp,
 	}
 
 	/* NVME_FCREQ and NVME_ABTS requests */
+<<<<<<< HEAD
 	if (pwqe->iocb_flag & (LPFC_IO_NVME | LPFC_IO_FCP | LPFC_IO_CMF)) {
+=======
+	if (pwqe->iocb_flag & LPFC_IO_NVME ||
+	    pwqe->iocb_flag & LPFC_IO_FCP) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Get the IO distribution (hba_wqidx) for WQ assignment. */
 		wq = qp->io_wq;
 		pring = wq->pring;
@@ -22072,6 +22237,7 @@ struct lpfc_io_buf *lpfc_get_io_buf(struct lpfc_hba *phba,
 }
 
 /**
+<<<<<<< HEAD
  * lpfc_read_object - Retrieve object data from HBA
  * @phba: The HBA for which this call is being executed.
  * @rdobject: Pathname of object data we want to read.
@@ -22183,6 +22349,8 @@ lpfc_read_object(struct lpfc_hba *phba, char *rdobject, uint32_t *datap,
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * lpfc_get_sgl_per_hdwq - Get one SGL chunk from hdwq's pool
  * @phba: The HBA for which this call is being executed.
  * @lpfc_buf: IO buf structure to append the SGL chunk

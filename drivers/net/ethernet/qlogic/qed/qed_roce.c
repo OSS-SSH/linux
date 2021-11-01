@@ -77,6 +77,7 @@ void qed_roce_stop(struct qed_hwfn *p_hwfn)
 	 * Beyond the added delay we clear the bitmap anyway.
 	 */
 	while (bitmap_weight(rcid_map->bitmap, rcid_map->max_count)) {
+<<<<<<< HEAD
 		/* If the HW device is during recovery, all resources are
 		 * immediately reset without receiving a per-cid indication
 		 * from HW. In this case we don't expect the cid bitmap to be
@@ -85,6 +86,8 @@ void qed_roce_stop(struct qed_hwfn *p_hwfn)
 		if (p_hwfn->cdev->recov_in_prog)
 			return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		msleep(100);
 		if (wait_count++ > 20) {
 			DP_NOTICE(p_hwfn, "cid bitmap wait timed out\n");

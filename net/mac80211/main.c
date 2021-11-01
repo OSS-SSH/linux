@@ -260,8 +260,11 @@ static void ieee80211_restart_work(struct work_struct *work)
 	flush_work(&local->radar_detected_work);
 
 	rtnl_lock();
+<<<<<<< HEAD
 	/* we might do interface manipulations, so need both */
 	wiphy_lock(local->hw.wiphy);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	WARN(test_bit(SCAN_HW_SCANNING, &local->scanning),
 	     "%s called with hardware scan in progress\n", __func__);
@@ -1020,7 +1023,11 @@ int ieee80211_register_hw(struct ieee80211_hw *hw)
 
 			iftd = &sband->iftype_data[i];
 
+<<<<<<< HEAD
 			supp_he = supp_he || iftd->he_cap.has_he;
+=======
+			supp_he = supp_he || (iftd && iftd->he_cap.has_he);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		/* HT, VHT, HE require QoS, thus >= 4 queues */

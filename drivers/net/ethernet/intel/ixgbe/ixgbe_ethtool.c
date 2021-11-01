@@ -2358,9 +2358,13 @@ static int ixgbe_set_phys_id(struct net_device *netdev,
 }
 
 static int ixgbe_get_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			      struct ethtool_coalesce *ec,
 			      struct kernel_ethtool_coalesce *kernel_coal,
 			      struct netlink_ext_ack *extack)
+=======
+			      struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ixgbe_adapter *adapter = netdev_priv(netdev);
 
@@ -2414,9 +2418,13 @@ static bool ixgbe_update_rsc(struct ixgbe_adapter *adapter)
 }
 
 static int ixgbe_set_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			      struct ethtool_coalesce *ec,
 			      struct kernel_ethtool_coalesce *kernel_coal,
 			      struct netlink_ext_ack *extack)
+=======
+			      struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ixgbe_adapter *adapter = netdev_priv(netdev);
 	struct ixgbe_q_vector *q_vector;
@@ -3208,7 +3216,11 @@ static unsigned int ixgbe_max_channels(struct ixgbe_adapter *adapter)
 		max_combined = ixgbe_max_rss_indices(adapter);
 	}
 
+<<<<<<< HEAD
 	return min_t(int, max_combined, num_online_cpus());
+=======
+	return max_combined;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ixgbe_get_channels(struct net_device *dev,

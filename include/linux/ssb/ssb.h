@@ -7,7 +7,11 @@
 #include <linux/types.h>
 #include <linux/spinlock.h>
 #include <linux/pci.h>
+<<<<<<< HEAD
 #include <linux/gpio/driver.h>
+=======
+#include <linux/gpio.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/mod_devicetable.h>
 #include <linux/dma-mapping.h>
 #include <linux/platform_device.h>

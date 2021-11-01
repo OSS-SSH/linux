@@ -24,8 +24,12 @@ static int rt715_sdca_rtd_init(struct snd_soc_pcm_runtime *rtd)
 	return 0;
 }
 
+<<<<<<< HEAD
 int sof_sdw_rt715_sdca_init(struct snd_soc_card *card,
 			    const struct snd_soc_acpi_link_adr *link,
+=======
+int sof_sdw_rt715_sdca_init(const struct snd_soc_acpi_link_adr *link,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			    struct snd_soc_dai_link *dai_links,
 			    struct sof_sdw_codec_info *info,
 			    bool playback)

@@ -250,8 +250,13 @@ static DECLARE_TLV_DB_SCALE(tlv_pcm, -6350, 50, 0);
 static DECLARE_TLV_DB_SCALE(tlv_driver_gain, -600, 100, 0);
 /* -12dB min, 0.5dB steps */
 static DECLARE_TLV_DB_SCALE(tlv_adc_vol, -1200, 50, 0);
+<<<<<<< HEAD
 /* -6dB min, 1dB steps */
 static DECLARE_TLV_DB_SCALE(tlv_tas_driver_gain, -5850, 50, 0);
+=======
+
+static DECLARE_TLV_DB_LINEAR(tlv_spk_vol, TLV_DB_GAIN_MUTE, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static DECLARE_TLV_DB_SCALE(tlv_amp_vol, 0, 600, 1);
 
 static const char * const lo_cm_text[] = {
@@ -682,6 +687,7 @@ static int aic32x4_set_dosr(struct snd_soc_component *component, u16 dosr)
 static int aic32x4_set_processing_blocks(struct snd_soc_component *component,
 						u8 r_block, u8 p_block)
 {
+<<<<<<< HEAD
 	struct aic32x4_priv *aic32x4 = snd_soc_component_get_drvdata(component);
 
 	if (aic32x4->type == AIC32X4_TYPE_TAS2505) {
@@ -696,6 +702,13 @@ static int aic32x4_set_processing_blocks(struct snd_soc_component *component,
 		snd_soc_component_write(component, AIC32X4_ADCSPB, r_block);
 		snd_soc_component_write(component, AIC32X4_DACSPB, p_block);
 	}
+=======
+	if (r_block > 18 || p_block > 25)
+		return -EINVAL;
+
+	snd_soc_component_write(component, AIC32X4_ADCSPB, r_block);
+	snd_soc_component_write(component, AIC32X4_DACSPB, p_block);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -704,7 +717,10 @@ static int aic32x4_setup_clocks(struct snd_soc_component *component,
 				unsigned int sample_rate, unsigned int channels,
 				unsigned int bit_depth)
 {
+<<<<<<< HEAD
 	struct aic32x4_priv *aic32x4 = snd_soc_component_get_drvdata(component);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 aosr;
 	u16 dosr;
 	u8 adc_resource_class, dac_resource_class;
@@ -714,7 +730,11 @@ static int aic32x4_setup_clocks(struct snd_soc_component *component,
 	unsigned long adc_clock_rate, dac_clock_rate;
 	int ret;
 
+<<<<<<< HEAD
 	static struct clk_bulk_data clocks[] = {
+=======
+	struct clk_bulk_data clocks[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{ .id = "pll" },
 		{ .id = "nadc" },
 		{ .id = "madc" },
@@ -731,28 +751,40 @@ static int aic32x4_setup_clocks(struct snd_soc_component *component,
 		adc_resource_class = 6;
 		dac_resource_class = 8;
 		dosr_increment = 8;
+<<<<<<< HEAD
 		if (aic32x4->type == AIC32X4_TYPE_TAS2505)
 			aic32x4_set_processing_blocks(component, 0, 1);
 		else
 			aic32x4_set_processing_blocks(component, 1, 1);
+=======
+		aic32x4_set_processing_blocks(component, 1, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (sample_rate <= 96000) {
 		aosr = 64;
 		adc_resource_class = 6;
 		dac_resource_class = 8;
 		dosr_increment = 4;
+<<<<<<< HEAD
 		if (aic32x4->type == AIC32X4_TYPE_TAS2505)
 			aic32x4_set_processing_blocks(component, 0, 1);
 		else
 			aic32x4_set_processing_blocks(component, 1, 9);
+=======
+		aic32x4_set_processing_blocks(component, 1, 9);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (sample_rate == 192000) {
 		aosr = 32;
 		adc_resource_class = 3;
 		dac_resource_class = 4;
 		dosr_increment = 2;
+<<<<<<< HEAD
 		if (aic32x4->type == AIC32X4_TYPE_TAS2505)
 			aic32x4_set_processing_blocks(component, 0, 1);
 		else
 			aic32x4_set_processing_blocks(component, 13, 19);
+=======
+		aic32x4_set_processing_blocks(component, 13, 19);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		dev_err(component->dev, "Sampling rate not supported\n");
 		return -EINVAL;
@@ -878,7 +910,11 @@ static int aic32x4_set_bias_level(struct snd_soc_component *component,
 {
 	int ret;
 
+<<<<<<< HEAD
 	static struct clk_bulk_data clocks[] = {
+=======
+	struct clk_bulk_data clocks[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{ .id = "madc" },
 		{ .id = "mdac" },
 		{ .id = "bdiv" },
@@ -994,7 +1030,11 @@ static int aic32x4_component_probe(struct snd_soc_component *component)
 	u32 tmp_reg;
 	int ret;
 
+<<<<<<< HEAD
 	static struct clk_bulk_data clocks[] = {
+=======
+	struct clk_bulk_data clocks[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{ .id = "codec_clkin" },
 		{ .id = "pll" },
 		{ .id = "bdiv" },
@@ -1082,6 +1122,7 @@ static const struct snd_soc_component_driver soc_component_dev_aic32x4 = {
 };
 
 static const struct snd_kcontrol_new aic32x4_tas2505_snd_controls[] = {
+<<<<<<< HEAD
 	SOC_SINGLE_S8_TLV("PCM Playback Volume",
 			  AIC32X4_LDACVOL, -0x7f, 0x30, tlv_pcm),
 	SOC_ENUM("DAC Playback PowerTune Switch", l_ptm_enum),
@@ -1096,6 +1137,23 @@ static const struct snd_kcontrol_new aic32x4_tas2505_snd_controls[] = {
 			TAS2505_SPKVOL2, 4, 5, 0, tlv_amp_vol),
 
 	SOC_SINGLE("Auto-mute Switch", AIC32X4_DACMUTE, 4, 7, 0),
+=======
+	SOC_DOUBLE_R_S_TLV("PCM Playback Volume", AIC32X4_LDACVOL,
+			AIC32X4_LDACVOL, 0, -0x7f, 0x30, 7, 0, tlv_pcm),
+	SOC_ENUM("DAC Playback PowerTune Switch", l_ptm_enum),
+	SOC_DOUBLE_R_S_TLV("HP Driver Playback Volume", AIC32X4_HPLGAIN,
+			AIC32X4_HPLGAIN, 0, -0x6, 0x1d, 5, 0,
+			tlv_driver_gain),
+	SOC_DOUBLE_R("HP DAC Playback Switch", AIC32X4_HPLGAIN,
+			AIC32X4_HPLGAIN, 6, 0x01, 1),
+
+	SOC_SINGLE("Auto-mute Switch", AIC32X4_DACMUTE, 4, 7, 0),
+
+	SOC_SINGLE_RANGE_TLV("Speaker Driver Playback Volume", TAS2505_SPKVOL1,
+			0, 0, 117, 1, tlv_spk_vol),
+	SOC_SINGLE_TLV("Speaker Amplifier Playback Volume", TAS2505_SPKVOL2,
+			4, 5, 0, tlv_amp_vol),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct snd_kcontrol_new hp_output_mixer_controls[] = {
@@ -1131,7 +1189,11 @@ static struct snd_soc_dai_driver aic32x4_tas2505_dai = {
 	.playback = {
 			 .stream_name = "Playback",
 			 .channels_min = 1,
+<<<<<<< HEAD
 			 .channels_max = 2,
+=======
+			 .channels_max = 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			 .rates = SNDRV_PCM_RATE_8000_96000,
 			 .formats = AIC32X4_FORMATS,},
 	.ops = &aic32x4_ops,
@@ -1144,7 +1206,11 @@ static int aic32x4_tas2505_component_probe(struct snd_soc_component *component)
 	u32 tmp_reg;
 	int ret;
 
+<<<<<<< HEAD
 	static struct clk_bulk_data clocks[] = {
+=======
+	struct clk_bulk_data clocks[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{ .id = "codec_clkin" },
 		{ .id = "pll" },
 		{ .id = "bdiv" },

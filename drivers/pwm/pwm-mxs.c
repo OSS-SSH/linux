@@ -145,18 +145,43 @@ static int mxs_pwm_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	/* FIXME: Only do this if the PWM isn't already running */
 	ret = stmp_reset_block(mxs->base);
 	if (ret)
 		return dev_err_probe(&pdev->dev, ret, "failed to reset PWM\n");
 
 	ret = devm_pwmchip_add(&pdev->dev, &mxs->chip);
+=======
+	ret = pwmchip_add(&mxs->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0) {
 		dev_err(&pdev->dev, "failed to add pwm chip %d\n", ret);
 		return ret;
 	}
 
+<<<<<<< HEAD
 	return 0;
+=======
+	platform_set_drvdata(pdev, mxs);
+
+	ret = stmp_reset_block(mxs->base);
+	if (ret)
+		goto pwm_remove;
+
+	return 0;
+
+pwm_remove:
+	pwmchip_remove(&mxs->chip);
+	return ret;
+}
+
+static int mxs_pwm_remove(struct platform_device *pdev)
+{
+	struct mxs_pwm_chip *mxs = platform_get_drvdata(pdev);
+
+	return pwmchip_remove(&mxs->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct of_device_id mxs_pwm_dt_ids[] = {
@@ -171,6 +196,10 @@ static struct platform_driver mxs_pwm_driver = {
 		.of_match_table = mxs_pwm_dt_ids,
 	},
 	.probe = mxs_pwm_probe,
+<<<<<<< HEAD
+=======
+	.remove = mxs_pwm_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 module_platform_driver(mxs_pwm_driver);
 

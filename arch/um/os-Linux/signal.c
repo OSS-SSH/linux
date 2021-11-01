@@ -67,7 +67,11 @@ int signals_enabled;
 #ifdef UML_CONFIG_UML_TIME_TRAVEL_SUPPORT
 static int signals_blocked;
 #else
+<<<<<<< HEAD
 #define signals_blocked 0
+=======
+#define signals_blocked false
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 static unsigned int signals_pending;
 static unsigned int signals_active = 0;

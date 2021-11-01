@@ -782,7 +782,11 @@ static void init_csrows(struct mem_ctl_info *mci)
 
 		for (j = 0; j < csi->nr_channels; j++) {
 			dimm		= csi->channels[j]->dimm;
+<<<<<<< HEAD
 			dimm->edac_mode	= EDAC_SECDED;
+=======
+			dimm->edac_mode	= EDAC_FLAG_SECDED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dimm->mtype	= p_data->get_mtype(priv->baseaddr);
 			dimm->nr_pages	= (size >> PAGE_SHIFT) / csi->nr_channels;
 			dimm->grain	= SYNPS_EDAC_ERR_GRAIN;

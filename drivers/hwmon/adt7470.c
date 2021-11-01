@@ -18,7 +18,10 @@
 #include <linux/delay.h>
 #include <linux/log2.h>
 #include <linux/kthread.h>
+<<<<<<< HEAD
 #include <linux/regmap.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/slab.h>
 #include <linux/util_macros.h>
 
@@ -36,10 +39,14 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
 #define ADT7470_REG_PWM_MAX_BASE_ADDR		0x38
 #define ADT7470_REG_PWM_MAX_MAX_ADDR		0x3B
 #define ADT7470_REG_CFG				0x40
+<<<<<<< HEAD
 #define		ADT7470_STRT_MASK		0x01
 #define		ADT7470_TEST_MASK		0x02
 #define		ADT7470_FSPD_MASK		0x04
 #define		ADT7470_T05_STB_MASK		0x80
+=======
+#define		ADT7470_FSPD_MASK		0x04
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ADT7470_REG_ALARM1			0x41
 #define		ADT7470_R1T_ALARM		0x01
 #define		ADT7470_R2T_ALARM		0x02
@@ -141,7 +148,11 @@ static const unsigned short normal_i2c[] = { 0x2C, 0x2E, 0x2F, I2C_CLIENT_END };
 #define ADT7470_FREQ_SHIFT	4
 
 struct adt7470_data {
+<<<<<<< HEAD
 	struct regmap		*regmap;
+=======
+	struct i2c_client	*client;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mutex		lock;
 	char			sensors_valid;
 	char			limits_valid;
@@ -175,6 +186,7 @@ struct adt7470_data {
  * 16-bit registers on the ADT7470 are low-byte first.  The data sheet says
  * that the low byte must be read before the high byte.
  */
+<<<<<<< HEAD
 static inline int adt7470_read_word_data(struct adt7470_data *data, unsigned int reg,
 					 unsigned int *val)
 {
@@ -245,6 +257,53 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
 				 ADT7470_T05_STB_MASK, ADT7470_T05_STB_MASK);
 	if (err < 0)
 		return err;
+=======
+static inline int adt7470_read_word_data(struct i2c_client *client, u8 reg)
+{
+	u16 foo;
+	foo = i2c_smbus_read_byte_data(client, reg);
+	foo |= ((u16)i2c_smbus_read_byte_data(client, reg + 1) << 8);
+	return foo;
+}
+
+static inline int adt7470_write_word_data(struct i2c_client *client, u8 reg,
+					  u16 value)
+{
+	return i2c_smbus_write_byte_data(client, reg, value & 0xFF)
+	       || i2c_smbus_write_byte_data(client, reg + 1, value >> 8);
+}
+
+/* Probe for temperature sensors.  Assumes lock is held */
+static int adt7470_read_temperatures(struct i2c_client *client,
+				     struct adt7470_data *data)
+{
+	unsigned long res;
+	int i;
+	u8 cfg, pwm[4], pwm_cfg[2];
+
+	/* save pwm[1-4] config register */
+	pwm_cfg[0] = i2c_smbus_read_byte_data(client, ADT7470_REG_PWM_CFG(0));
+	pwm_cfg[1] = i2c_smbus_read_byte_data(client, ADT7470_REG_PWM_CFG(2));
+
+	/* set manual pwm to whatever it is set to now */
+	for (i = 0; i < ADT7470_FAN_COUNT; i++)
+		pwm[i] = i2c_smbus_read_byte_data(client, ADT7470_REG_PWM(i));
+
+	/* put pwm in manual mode */
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM_CFG(0),
+		pwm_cfg[0] & ~(ADT7470_PWM_AUTO_MASK));
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM_CFG(2),
+		pwm_cfg[1] & ~(ADT7470_PWM_AUTO_MASK));
+
+	/* write pwm control to whatever it was */
+	for (i = 0; i < ADT7470_FAN_COUNT; i++)
+		i2c_smbus_write_byte_data(client, ADT7470_REG_PWM(i), pwm[i]);
+
+	/* start reading temperature sensors */
+	cfg = i2c_smbus_read_byte_data(client, ADT7470_REG_CFG);
+	cfg |= 0x80;
+	i2c_smbus_write_byte_data(client, ADT7470_REG_CFG, cfg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Delay is 200ms * number of temp sensors. */
 	res = msleep_interruptible((data->num_temp_sensors >= 0 ?
@@ -252,6 +311,7 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
 				    TEMP_COLLECTION_TIME));
 
 	/* done reading temperature sensors */
+<<<<<<< HEAD
 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
 				 ADT7470_T05_STB_MASK, 0);
 	if (err < 0)
@@ -267,16 +327,36 @@ static int adt7470_read_temperatures(struct adt7470_data *data)
 
 	if (res)
 		return -EAGAIN;
+=======
+	cfg = i2c_smbus_read_byte_data(client, ADT7470_REG_CFG);
+	cfg &= ~0x80;
+	i2c_smbus_write_byte_data(client, ADT7470_REG_CFG, cfg);
+
+	/* restore pwm[1-4] config registers */
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM_CFG(0), pwm_cfg[0]);
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM_CFG(2), pwm_cfg[1]);
+
+	if (res) {
+		pr_err("ha ha, interrupted\n");
+		return -EAGAIN;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Only count fans if we have to */
 	if (data->num_temp_sensors >= 0)
 		return 0;
 
+<<<<<<< HEAD
 	err = regmap_bulk_read(data->regmap, ADT7470_TEMP_REG(0), &data->temp[0],
 			       ADT7470_TEMP_COUNT);
 	if (err < 0)
 		return err;
 	for (i = 0; i < ADT7470_TEMP_COUNT; i++) {
+=======
+	for (i = 0; i < ADT7470_TEMP_COUNT; i++) {
+		data->temp[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_TEMP_REG(i));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (data->temp[i])
 			data->num_temp_sensors = i + 1;
 	}
@@ -291,7 +371,11 @@ static int adt7470_update_thread(void *p)
 
 	while (!kthread_should_stop()) {
 		mutex_lock(&data->lock);
+<<<<<<< HEAD
 		adt7470_read_temperatures(data);
+=======
+		adt7470_read_temperatures(client, data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mutex_unlock(&data->lock);
 
 		set_current_state(TASK_INTERRUPTIBLE);
@@ -306,6 +390,7 @@ static int adt7470_update_thread(void *p)
 
 static int adt7470_update_sensors(struct adt7470_data *data)
 {
+<<<<<<< HEAD
 	unsigned int val;
 	int err;
 	int i;
@@ -371,12 +456,68 @@ static int adt7470_update_sensors(struct adt7470_data *data)
 	if (err < 0)
 		return err;
 	data->alarms_mask = val;
+=======
+	struct i2c_client *client = data->client;
+	u8 cfg;
+	int i;
+
+	if (!data->temperatures_probed)
+		adt7470_read_temperatures(client, data);
+	else
+		for (i = 0; i < ADT7470_TEMP_COUNT; i++)
+			data->temp[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_TEMP_REG(i));
+
+	for (i = 0; i < ADT7470_FAN_COUNT; i++)
+		data->fan[i] = adt7470_read_word_data(client,
+						ADT7470_REG_FAN(i));
+
+	for (i = 0; i < ADT7470_PWM_COUNT; i++) {
+		int reg;
+		int reg_mask;
+
+		data->pwm[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_REG_PWM(i));
+
+		if (i % 2)
+			reg_mask = ADT7470_PWM2_AUTO_MASK;
+		else
+			reg_mask = ADT7470_PWM1_AUTO_MASK;
+
+		reg = ADT7470_REG_PWM_CFG(i);
+		if (i2c_smbus_read_byte_data(client, reg) & reg_mask)
+			data->pwm_automatic[i] = 1;
+		else
+			data->pwm_automatic[i] = 0;
+
+		reg = ADT7470_REG_PWM_AUTO_TEMP(i);
+		cfg = i2c_smbus_read_byte_data(client, reg);
+		if (!(i % 2))
+			data->pwm_auto_temp[i] = cfg >> 4;
+		else
+			data->pwm_auto_temp[i] = cfg & 0xF;
+	}
+
+	if (i2c_smbus_read_byte_data(client, ADT7470_REG_CFG) &
+	    ADT7470_FSPD_MASK)
+		data->force_pwm_max = 1;
+	else
+		data->force_pwm_max = 0;
+
+	data->alarm = i2c_smbus_read_byte_data(client, ADT7470_REG_ALARM1);
+	if (data->alarm & ADT7470_OOL_ALARM)
+		data->alarm |= ALARM2(i2c_smbus_read_byte_data(client,
+							ADT7470_REG_ALARM2));
+	data->alarms_mask = adt7470_read_word_data(client,
+						   ADT7470_REG_ALARM1_MASK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
 static int adt7470_update_limits(struct adt7470_data *data)
 {
+<<<<<<< HEAD
 	unsigned int val;
 	int err;
 	int i;
@@ -416,6 +557,32 @@ static int adt7470_update_limits(struct adt7470_data *data)
 		if (err < 0)
 			return err;
 		data->pwm_tmin[i] = (s8)val;
+=======
+	struct i2c_client *client = data->client;
+	int i;
+
+	for (i = 0; i < ADT7470_TEMP_COUNT; i++) {
+		data->temp_min[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_TEMP_MIN_REG(i));
+		data->temp_max[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_TEMP_MAX_REG(i));
+	}
+
+	for (i = 0; i < ADT7470_FAN_COUNT; i++) {
+		data->fan_min[i] = adt7470_read_word_data(client,
+						ADT7470_REG_FAN_MIN(i));
+		data->fan_max[i] = adt7470_read_word_data(client,
+						ADT7470_REG_FAN_MAX(i));
+	}
+
+	for (i = 0; i < ADT7470_PWM_COUNT; i++) {
+		data->pwm_max[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_REG_PWM_MAX(i));
+		data->pwm_min[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_REG_PWM_MIN(i));
+		data->pwm_tmin[i] = i2c_smbus_read_byte_data(client,
+						ADT7470_REG_PWM_TMIN(i));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
@@ -533,13 +700,21 @@ static ssize_t num_temp_sensors_store(struct device *dev,
 	return count;
 }
 
+<<<<<<< HEAD
 static int adt7470_temp_read(struct device *dev, u32 attr, int channel, long *val)
 {
+=======
+static ssize_t temp_min_show(struct device *dev,
+			     struct device_attribute *devattr, char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct adt7470_data *data = adt7470_update_device(dev);
 
 	if (IS_ERR(data))
 		return PTR_ERR(data);
 
+<<<<<<< HEAD
 	switch (attr) {
 	case hwmon_temp_input:
 		*val = 1000 * data->temp[channel];
@@ -590,6 +765,86 @@ static int adt7470_temp_write(struct device *dev, u32 attr, int channel, long va
 
 static ssize_t alarm_mask_show(struct device *dev,
 			       struct device_attribute *devattr, char *buf)
+=======
+	return sprintf(buf, "%d\n", 1000 * data->temp_min[attr->index]);
+}
+
+static ssize_t temp_min_store(struct device *dev,
+			      struct device_attribute *devattr,
+			      const char *buf, size_t count)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+	long temp;
+
+	if (kstrtol(buf, 10, &temp))
+		return -EINVAL;
+
+	temp = clamp_val(temp, -128000, 127000);
+	temp = DIV_ROUND_CLOSEST(temp, 1000);
+
+	mutex_lock(&data->lock);
+	data->temp_min[attr->index] = temp;
+	i2c_smbus_write_byte_data(client, ADT7470_TEMP_MIN_REG(attr->index),
+				  temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t temp_max_show(struct device *dev,
+			     struct device_attribute *devattr, char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = adt7470_update_device(dev);
+
+	if (IS_ERR(data))
+		return PTR_ERR(data);
+
+	return sprintf(buf, "%d\n", 1000 * data->temp_max[attr->index]);
+}
+
+static ssize_t temp_max_store(struct device *dev,
+			      struct device_attribute *devattr,
+			      const char *buf, size_t count)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+	long temp;
+
+	if (kstrtol(buf, 10, &temp))
+		return -EINVAL;
+
+	temp = clamp_val(temp, -128000, 127000);
+	temp = DIV_ROUND_CLOSEST(temp, 1000);
+
+	mutex_lock(&data->lock);
+	data->temp_max[attr->index] = temp;
+	i2c_smbus_write_byte_data(client, ADT7470_TEMP_MAX_REG(attr->index),
+				  temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t temp_show(struct device *dev, struct device_attribute *devattr,
+			 char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = adt7470_update_device(dev);
+
+	if (IS_ERR(data))
+		return PTR_ERR(data);
+
+	return sprintf(buf, "%d\n", 1000 * data->temp[attr->index]);
+}
+
+static ssize_t alarm_mask_show(struct device *dev,
+			   struct device_attribute *devattr,
+			   char *buf)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct adt7470_data *data = adt7470_update_device(dev);
 
@@ -605,7 +860,10 @@ static ssize_t alarm_mask_store(struct device *dev,
 {
 	struct adt7470_data *data = dev_get_drvdata(dev);
 	long mask;
+<<<<<<< HEAD
 	int err;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kstrtoul(buf, 0, &mask))
 		return -EINVAL;
@@ -615,6 +873,7 @@ static ssize_t alarm_mask_store(struct device *dev,
 
 	mutex_lock(&data->lock);
 	data->alarms_mask = mask;
+<<<<<<< HEAD
 	err = adt7470_write_word_data(data, ADT7470_REG_ALARM1_MASK, mask);
 	mutex_unlock(&data->lock);
 
@@ -623,11 +882,24 @@ static ssize_t alarm_mask_store(struct device *dev,
 
 static int adt7470_fan_read(struct device *dev, u32 attr, int channel, long *val)
 {
+=======
+	adt7470_write_word_data(data->client, ADT7470_REG_ALARM1_MASK, mask);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t fan_max_show(struct device *dev,
+			    struct device_attribute *devattr, char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct adt7470_data *data = adt7470_update_device(dev);
 
 	if (IS_ERR(data))
 		return PTR_ERR(data);
 
+<<<<<<< HEAD
 	switch (attr) {
 	case hwmon_fan_input:
 		if (FAN_DATA_VALID(data->fan[channel]))
@@ -683,6 +955,91 @@ static int adt7470_fan_write(struct device *dev, u32 attr, int channel, long val
 	}
 
 	return err;
+=======
+	if (FAN_DATA_VALID(data->fan_max[attr->index]))
+		return sprintf(buf, "%d\n",
+			       FAN_PERIOD_TO_RPM(data->fan_max[attr->index]));
+	else
+		return sprintf(buf, "0\n");
+}
+
+static ssize_t fan_max_store(struct device *dev,
+			     struct device_attribute *devattr,
+			     const char *buf, size_t count)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+	long temp;
+
+	if (kstrtol(buf, 10, &temp) || !temp)
+		return -EINVAL;
+
+	temp = FAN_RPM_TO_PERIOD(temp);
+	temp = clamp_val(temp, 1, 65534);
+
+	mutex_lock(&data->lock);
+	data->fan_max[attr->index] = temp;
+	adt7470_write_word_data(client, ADT7470_REG_FAN_MAX(attr->index), temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t fan_min_show(struct device *dev,
+			    struct device_attribute *devattr, char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = adt7470_update_device(dev);
+
+	if (IS_ERR(data))
+		return PTR_ERR(data);
+
+	if (FAN_DATA_VALID(data->fan_min[attr->index]))
+		return sprintf(buf, "%d\n",
+			       FAN_PERIOD_TO_RPM(data->fan_min[attr->index]));
+	else
+		return sprintf(buf, "0\n");
+}
+
+static ssize_t fan_min_store(struct device *dev,
+			     struct device_attribute *devattr,
+			     const char *buf, size_t count)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+	long temp;
+
+	if (kstrtol(buf, 10, &temp) || !temp)
+		return -EINVAL;
+
+	temp = FAN_RPM_TO_PERIOD(temp);
+	temp = clamp_val(temp, 1, 65534);
+
+	mutex_lock(&data->lock);
+	data->fan_min[attr->index] = temp;
+	adt7470_write_word_data(client, ADT7470_REG_FAN_MIN(attr->index), temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t fan_show(struct device *dev, struct device_attribute *devattr,
+			char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = adt7470_update_device(dev);
+
+	if (IS_ERR(data))
+		return PTR_ERR(data);
+
+	if (FAN_DATA_VALID(data->fan[attr->index]))
+		return sprintf(buf, "%d\n",
+			       FAN_PERIOD_TO_RPM(data->fan[attr->index]));
+	else
+		return sprintf(buf, "0\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t force_pwm_max_show(struct device *dev,
@@ -701,20 +1058,71 @@ static ssize_t force_pwm_max_store(struct device *dev,
 				   const char *buf, size_t count)
 {
 	struct adt7470_data *data = dev_get_drvdata(dev);
+<<<<<<< HEAD
 	long temp;
 	int err;
+=======
+	struct i2c_client *client = data->client;
+	long temp;
+	u8 reg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kstrtol(buf, 10, &temp))
 		return -EINVAL;
 
 	mutex_lock(&data->lock);
 	data->force_pwm_max = temp;
+<<<<<<< HEAD
 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
 				 ADT7470_FSPD_MASK,
 				 temp ? ADT7470_FSPD_MASK : 0);
 	mutex_unlock(&data->lock);
 
 	return err < 0 ? err : count;
+=======
+	reg = i2c_smbus_read_byte_data(client, ADT7470_REG_CFG);
+	if (temp)
+		reg |= ADT7470_FSPD_MASK;
+	else
+		reg &= ~ADT7470_FSPD_MASK;
+	i2c_smbus_write_byte_data(client, ADT7470_REG_CFG, reg);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t pwm_show(struct device *dev, struct device_attribute *devattr,
+			char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = adt7470_update_device(dev);
+
+	if (IS_ERR(data))
+		return PTR_ERR(data);
+
+	return sprintf(buf, "%d\n", data->pwm[attr->index]);
+}
+
+static ssize_t pwm_store(struct device *dev, struct device_attribute *devattr,
+			 const char *buf, size_t count)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+	long temp;
+
+	if (kstrtol(buf, 10, &temp))
+		return -EINVAL;
+
+	temp = clamp_val(temp, 0, 255);
+
+	mutex_lock(&data->lock);
+	data->pwm[attr->index] = temp;
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM(attr->index), temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* These are the valid PWM frequencies to the nearest Hz */
@@ -722,6 +1130,7 @@ static const int adt7470_freq_map[] = {
 	11, 15, 22, 29, 35, 44, 59, 88, 1400, 22500
 };
 
+<<<<<<< HEAD
 static int pwm1_freq_get(struct device *dev)
 {
 	struct adt7470_data *data = dev_get_drvdata(dev);
@@ -736,6 +1145,19 @@ static int pwm1_freq_get(struct device *dev)
 	err = regmap_read(data->regmap, ADT7470_REG_CFG_2, &cfg_reg_2);
 	if (err < 0)
 		goto out;
+=======
+static ssize_t pwm1_freq_show(struct device *dev,
+			      struct device_attribute *devattr, char *buf)
+{
+	struct adt7470_data *data = adt7470_update_device(dev);
+	unsigned char cfg_reg_1;
+	unsigned char cfg_reg_2;
+	int index;
+
+	mutex_lock(&data->lock);
+	cfg_reg_1 = i2c_smbus_read_byte_data(data->client, ADT7470_REG_CFG);
+	cfg_reg_2 = i2c_smbus_read_byte_data(data->client, ADT7470_REG_CFG_2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&data->lock);
 
 	index = (cfg_reg_2 & ADT7470_FREQ_MASK) >> ADT7470_FREQ_SHIFT;
@@ -744,6 +1166,7 @@ static int pwm1_freq_get(struct device *dev)
 	if (index >= ARRAY_SIZE(adt7470_freq_map))
 		index = ARRAY_SIZE(adt7470_freq_map) - 1;
 
+<<<<<<< HEAD
 	return adt7470_freq_map[index];
 
 out:
@@ -781,6 +1204,24 @@ static int pwm1_freq_set(struct device *dev, long freq)
 	unsigned int low_freq = ADT7470_CFG_LF;
 	int index;
 	int err;
+=======
+	return scnprintf(buf, PAGE_SIZE, "%d\n", adt7470_freq_map[index]);
+}
+
+static ssize_t pwm1_freq_store(struct device *dev,
+			       struct device_attribute *devattr,
+			       const char *buf, size_t count)
+{
+	struct adt7470_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+	long freq;
+	int index;
+	int low_freq = ADT7470_CFG_LF;
+	unsigned char val;
+
+	if (kstrtol(buf, 10, &freq))
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Round the user value given to the closest available frequency */
 	index = find_closest(freq, adt7470_freq_map,
@@ -793,6 +1234,7 @@ static int pwm1_freq_set(struct device *dev, long freq)
 
 	mutex_lock(&data->lock);
 	/* Configuration Register 1 */
+<<<<<<< HEAD
 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
 				 ADT7470_CFG_LF, low_freq);
 	if (err < 0)
@@ -848,6 +1290,18 @@ static int adt7470_pwm_write(struct device *dev, u32 attr, int channel, long val
 	}
 
 	return err;
+=======
+	val = i2c_smbus_read_byte_data(client, ADT7470_REG_CFG);
+	i2c_smbus_write_byte_data(client, ADT7470_REG_CFG,
+				  (val & ~ADT7470_CFG_LF) | low_freq);
+	/* Configuration Register 2 */
+	val = i2c_smbus_read_byte_data(client, ADT7470_REG_CFG_2);
+	i2c_smbus_write_byte_data(client, ADT7470_REG_CFG_2,
+		(val & ~ADT7470_FREQ_MASK) | (index << ADT7470_FREQ_SHIFT));
+	mutex_unlock(&data->lock);
+
+	return count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t pwm_max_show(struct device *dev,
@@ -868,8 +1322,13 @@ static ssize_t pwm_max_store(struct device *dev,
 {
 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
 	struct adt7470_data *data = dev_get_drvdata(dev);
+<<<<<<< HEAD
 	long temp;
 	int err;
+=======
+	struct i2c_client *client = data->client;
+	long temp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kstrtol(buf, 10, &temp))
 		return -EINVAL;
@@ -878,11 +1337,19 @@ static ssize_t pwm_max_store(struct device *dev,
 
 	mutex_lock(&data->lock);
 	data->pwm_max[attr->index] = temp;
+<<<<<<< HEAD
 	err = regmap_write(data->regmap, ADT7470_REG_PWM_MAX(attr->index),
 			   temp);
 	mutex_unlock(&data->lock);
 
 	return err < 0 ? err : count;
+=======
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM_MAX(attr->index),
+				  temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t pwm_min_show(struct device *dev,
@@ -903,8 +1370,13 @@ static ssize_t pwm_min_store(struct device *dev,
 {
 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
 	struct adt7470_data *data = dev_get_drvdata(dev);
+<<<<<<< HEAD
 	long temp;
 	int err;
+=======
+	struct i2c_client *client = data->client;
+	long temp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kstrtol(buf, 10, &temp))
 		return -EINVAL;
@@ -913,11 +1385,19 @@ static ssize_t pwm_min_store(struct device *dev,
 
 	mutex_lock(&data->lock);
 	data->pwm_min[attr->index] = temp;
+<<<<<<< HEAD
 	err = regmap_write(data->regmap, ADT7470_REG_PWM_MIN(attr->index),
 			   temp);
 	mutex_unlock(&data->lock);
 
 	return err < 0 ? err : count;
+=======
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM_MIN(attr->index),
+				  temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t pwm_tmax_show(struct device *dev,
@@ -951,8 +1431,13 @@ static ssize_t pwm_tmin_store(struct device *dev,
 {
 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
 	struct adt7470_data *data = dev_get_drvdata(dev);
+<<<<<<< HEAD
 	long temp;
 	int err;
+=======
+	struct i2c_client *client = data->client;
+	long temp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kstrtol(buf, 10, &temp))
 		return -EINVAL;
@@ -962,11 +1447,68 @@ static ssize_t pwm_tmin_store(struct device *dev,
 
 	mutex_lock(&data->lock);
 	data->pwm_tmin[attr->index] = temp;
+<<<<<<< HEAD
 	err = regmap_write(data->regmap, ADT7470_REG_PWM_TMIN(attr->index),
 			   temp);
 	mutex_unlock(&data->lock);
 
 	return err < 0 ? err : count;
+=======
+	i2c_smbus_write_byte_data(client, ADT7470_REG_PWM_TMIN(attr->index),
+				  temp);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t pwm_auto_show(struct device *dev,
+			     struct device_attribute *devattr, char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = adt7470_update_device(dev);
+
+	if (IS_ERR(data))
+		return PTR_ERR(data);
+
+	return sprintf(buf, "%d\n", 1 + data->pwm_automatic[attr->index]);
+}
+
+static ssize_t pwm_auto_store(struct device *dev,
+			      struct device_attribute *devattr,
+			      const char *buf, size_t count)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+	int pwm_auto_reg = ADT7470_REG_PWM_CFG(attr->index);
+	int pwm_auto_reg_mask;
+	long temp;
+	u8 reg;
+
+	if (kstrtol(buf, 10, &temp))
+		return -EINVAL;
+
+	if (attr->index % 2)
+		pwm_auto_reg_mask = ADT7470_PWM2_AUTO_MASK;
+	else
+		pwm_auto_reg_mask = ADT7470_PWM1_AUTO_MASK;
+
+	if (temp != 2 && temp != 1)
+		return -EINVAL;
+	temp--;
+
+	mutex_lock(&data->lock);
+	data->pwm_automatic[attr->index] = temp;
+	reg = i2c_smbus_read_byte_data(client, pwm_auto_reg);
+	if (temp)
+		reg |= pwm_auto_reg_mask;
+	else
+		reg &= ~pwm_auto_reg_mask;
+	i2c_smbus_write_byte_data(client, pwm_auto_reg, reg);
+	mutex_unlock(&data->lock);
+
+	return count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t pwm_auto_temp_show(struct device *dev,
@@ -1001,10 +1543,17 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
 {
 	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
 	struct adt7470_data *data = dev_get_drvdata(dev);
+<<<<<<< HEAD
 	int pwm_auto_reg = ADT7470_REG_PWM_AUTO_TEMP(attr->index);
 	unsigned int mask, val;
 	long temp;
 	int err;
+=======
+	struct i2c_client *client = data->client;
+	int pwm_auto_reg = ADT7470_REG_PWM_AUTO_TEMP(attr->index);
+	long temp;
+	u8 reg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kstrtol(buf, 10, &temp))
 		return -EINVAL;
@@ -1015,6 +1564,7 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
 
 	mutex_lock(&data->lock);
 	data->pwm_automatic[attr->index] = temp;
+<<<<<<< HEAD
 
 	if (!(attr->index % 2)) {
 		mask = 0xF0;
@@ -1028,14 +1578,118 @@ static ssize_t pwm_auto_temp_store(struct device *dev,
 	mutex_unlock(&data->lock);
 
 	return err < 0 ? err : count;
+=======
+	reg = i2c_smbus_read_byte_data(client, pwm_auto_reg);
+
+	if (!(attr->index % 2)) {
+		reg &= 0xF;
+		reg |= (temp << 4) & 0xF0;
+	} else {
+		reg &= 0xF0;
+		reg |= temp & 0xF;
+	}
+
+	i2c_smbus_write_byte_data(client, pwm_auto_reg, reg);
+	mutex_unlock(&data->lock);
+
+	return count;
+}
+
+static ssize_t alarm_show(struct device *dev,
+			  struct device_attribute *devattr, char *buf)
+{
+	struct sensor_device_attribute *attr = to_sensor_dev_attr(devattr);
+	struct adt7470_data *data = adt7470_update_device(dev);
+
+	if (data->alarm & attr->index)
+		return sprintf(buf, "1\n");
+	else
+		return sprintf(buf, "0\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static DEVICE_ATTR_RW(alarm_mask);
 static DEVICE_ATTR_RW(num_temp_sensors);
 static DEVICE_ATTR_RW(auto_update_interval);
 
+<<<<<<< HEAD
 static SENSOR_DEVICE_ATTR_RW(force_pwm_max, force_pwm_max, 0);
 
+=======
+static SENSOR_DEVICE_ATTR_RW(temp1_max, temp_max, 0);
+static SENSOR_DEVICE_ATTR_RW(temp2_max, temp_max, 1);
+static SENSOR_DEVICE_ATTR_RW(temp3_max, temp_max, 2);
+static SENSOR_DEVICE_ATTR_RW(temp4_max, temp_max, 3);
+static SENSOR_DEVICE_ATTR_RW(temp5_max, temp_max, 4);
+static SENSOR_DEVICE_ATTR_RW(temp6_max, temp_max, 5);
+static SENSOR_DEVICE_ATTR_RW(temp7_max, temp_max, 6);
+static SENSOR_DEVICE_ATTR_RW(temp8_max, temp_max, 7);
+static SENSOR_DEVICE_ATTR_RW(temp9_max, temp_max, 8);
+static SENSOR_DEVICE_ATTR_RW(temp10_max, temp_max, 9);
+
+static SENSOR_DEVICE_ATTR_RW(temp1_min, temp_min, 0);
+static SENSOR_DEVICE_ATTR_RW(temp2_min, temp_min, 1);
+static SENSOR_DEVICE_ATTR_RW(temp3_min, temp_min, 2);
+static SENSOR_DEVICE_ATTR_RW(temp4_min, temp_min, 3);
+static SENSOR_DEVICE_ATTR_RW(temp5_min, temp_min, 4);
+static SENSOR_DEVICE_ATTR_RW(temp6_min, temp_min, 5);
+static SENSOR_DEVICE_ATTR_RW(temp7_min, temp_min, 6);
+static SENSOR_DEVICE_ATTR_RW(temp8_min, temp_min, 7);
+static SENSOR_DEVICE_ATTR_RW(temp9_min, temp_min, 8);
+static SENSOR_DEVICE_ATTR_RW(temp10_min, temp_min, 9);
+
+static SENSOR_DEVICE_ATTR_RO(temp1_input, temp, 0);
+static SENSOR_DEVICE_ATTR_RO(temp2_input, temp, 1);
+static SENSOR_DEVICE_ATTR_RO(temp3_input, temp, 2);
+static SENSOR_DEVICE_ATTR_RO(temp4_input, temp, 3);
+static SENSOR_DEVICE_ATTR_RO(temp5_input, temp, 4);
+static SENSOR_DEVICE_ATTR_RO(temp6_input, temp, 5);
+static SENSOR_DEVICE_ATTR_RO(temp7_input, temp, 6);
+static SENSOR_DEVICE_ATTR_RO(temp8_input, temp, 7);
+static SENSOR_DEVICE_ATTR_RO(temp9_input, temp, 8);
+static SENSOR_DEVICE_ATTR_RO(temp10_input, temp, 9);
+
+static SENSOR_DEVICE_ATTR_RO(temp1_alarm, alarm, ADT7470_R1T_ALARM);
+static SENSOR_DEVICE_ATTR_RO(temp2_alarm, alarm, ADT7470_R2T_ALARM);
+static SENSOR_DEVICE_ATTR_RO(temp3_alarm, alarm, ADT7470_R3T_ALARM);
+static SENSOR_DEVICE_ATTR_RO(temp4_alarm, alarm, ADT7470_R4T_ALARM);
+static SENSOR_DEVICE_ATTR_RO(temp5_alarm, alarm, ADT7470_R5T_ALARM);
+static SENSOR_DEVICE_ATTR_RO(temp6_alarm, alarm, ADT7470_R6T_ALARM);
+static SENSOR_DEVICE_ATTR_RO(temp7_alarm, alarm, ADT7470_R7T_ALARM);
+static SENSOR_DEVICE_ATTR_RO(temp8_alarm, alarm, ALARM2(ADT7470_R8T_ALARM));
+static SENSOR_DEVICE_ATTR_RO(temp9_alarm, alarm, ALARM2(ADT7470_R9T_ALARM));
+static SENSOR_DEVICE_ATTR_RO(temp10_alarm, alarm, ALARM2(ADT7470_R10T_ALARM));
+
+static SENSOR_DEVICE_ATTR_RW(fan1_max, fan_max, 0);
+static SENSOR_DEVICE_ATTR_RW(fan2_max, fan_max, 1);
+static SENSOR_DEVICE_ATTR_RW(fan3_max, fan_max, 2);
+static SENSOR_DEVICE_ATTR_RW(fan4_max, fan_max, 3);
+
+static SENSOR_DEVICE_ATTR_RW(fan1_min, fan_min, 0);
+static SENSOR_DEVICE_ATTR_RW(fan2_min, fan_min, 1);
+static SENSOR_DEVICE_ATTR_RW(fan3_min, fan_min, 2);
+static SENSOR_DEVICE_ATTR_RW(fan4_min, fan_min, 3);
+
+static SENSOR_DEVICE_ATTR_RO(fan1_input, fan, 0);
+static SENSOR_DEVICE_ATTR_RO(fan2_input, fan, 1);
+static SENSOR_DEVICE_ATTR_RO(fan3_input, fan, 2);
+static SENSOR_DEVICE_ATTR_RO(fan4_input, fan, 3);
+
+static SENSOR_DEVICE_ATTR_RO(fan1_alarm, alarm, ALARM2(ADT7470_FAN1_ALARM));
+static SENSOR_DEVICE_ATTR_RO(fan2_alarm, alarm, ALARM2(ADT7470_FAN2_ALARM));
+static SENSOR_DEVICE_ATTR_RO(fan3_alarm, alarm, ALARM2(ADT7470_FAN3_ALARM));
+static SENSOR_DEVICE_ATTR_RO(fan4_alarm, alarm, ALARM2(ADT7470_FAN4_ALARM));
+
+static SENSOR_DEVICE_ATTR_RW(force_pwm_max, force_pwm_max, 0);
+
+static SENSOR_DEVICE_ATTR_RW(pwm1, pwm, 0);
+static SENSOR_DEVICE_ATTR_RW(pwm2, pwm, 1);
+static SENSOR_DEVICE_ATTR_RW(pwm3, pwm, 2);
+static SENSOR_DEVICE_ATTR_RW(pwm4, pwm, 3);
+
+static DEVICE_ATTR_RW(pwm1_freq);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static SENSOR_DEVICE_ATTR_RW(pwm1_auto_point1_pwm, pwm_min, 0);
 static SENSOR_DEVICE_ATTR_RW(pwm2_auto_point1_pwm, pwm_min, 1);
 static SENSOR_DEVICE_ATTR_RW(pwm3_auto_point1_pwm, pwm_min, 2);
@@ -1056,6 +1710,14 @@ static SENSOR_DEVICE_ATTR_RO(pwm2_auto_point2_temp, pwm_tmax, 1);
 static SENSOR_DEVICE_ATTR_RO(pwm3_auto_point2_temp, pwm_tmax, 2);
 static SENSOR_DEVICE_ATTR_RO(pwm4_auto_point2_temp, pwm_tmax, 3);
 
+<<<<<<< HEAD
+=======
+static SENSOR_DEVICE_ATTR_RW(pwm1_enable, pwm_auto, 0);
+static SENSOR_DEVICE_ATTR_RW(pwm2_enable, pwm_auto, 1);
+static SENSOR_DEVICE_ATTR_RW(pwm3_enable, pwm_auto, 2);
+static SENSOR_DEVICE_ATTR_RW(pwm4_enable, pwm_auto, 3);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static SENSOR_DEVICE_ATTR_RW(pwm1_auto_channels_temp, pwm_auto_temp, 0);
 static SENSOR_DEVICE_ATTR_RW(pwm2_auto_channels_temp, pwm_auto_temp, 1);
 static SENSOR_DEVICE_ATTR_RW(pwm3_auto_channels_temp, pwm_auto_temp, 2);
@@ -1065,7 +1727,72 @@ static struct attribute *adt7470_attrs[] = {
 	&dev_attr_alarm_mask.attr,
 	&dev_attr_num_temp_sensors.attr,
 	&dev_attr_auto_update_interval.attr,
+<<<<<<< HEAD
 	&sensor_dev_attr_force_pwm_max.dev_attr.attr,
+=======
+	&sensor_dev_attr_temp1_max.dev_attr.attr,
+	&sensor_dev_attr_temp2_max.dev_attr.attr,
+	&sensor_dev_attr_temp3_max.dev_attr.attr,
+	&sensor_dev_attr_temp4_max.dev_attr.attr,
+	&sensor_dev_attr_temp5_max.dev_attr.attr,
+	&sensor_dev_attr_temp6_max.dev_attr.attr,
+	&sensor_dev_attr_temp7_max.dev_attr.attr,
+	&sensor_dev_attr_temp8_max.dev_attr.attr,
+	&sensor_dev_attr_temp9_max.dev_attr.attr,
+	&sensor_dev_attr_temp10_max.dev_attr.attr,
+	&sensor_dev_attr_temp1_min.dev_attr.attr,
+	&sensor_dev_attr_temp2_min.dev_attr.attr,
+	&sensor_dev_attr_temp3_min.dev_attr.attr,
+	&sensor_dev_attr_temp4_min.dev_attr.attr,
+	&sensor_dev_attr_temp5_min.dev_attr.attr,
+	&sensor_dev_attr_temp6_min.dev_attr.attr,
+	&sensor_dev_attr_temp7_min.dev_attr.attr,
+	&sensor_dev_attr_temp8_min.dev_attr.attr,
+	&sensor_dev_attr_temp9_min.dev_attr.attr,
+	&sensor_dev_attr_temp10_min.dev_attr.attr,
+	&sensor_dev_attr_temp1_input.dev_attr.attr,
+	&sensor_dev_attr_temp2_input.dev_attr.attr,
+	&sensor_dev_attr_temp3_input.dev_attr.attr,
+	&sensor_dev_attr_temp4_input.dev_attr.attr,
+	&sensor_dev_attr_temp5_input.dev_attr.attr,
+	&sensor_dev_attr_temp6_input.dev_attr.attr,
+	&sensor_dev_attr_temp7_input.dev_attr.attr,
+	&sensor_dev_attr_temp8_input.dev_attr.attr,
+	&sensor_dev_attr_temp9_input.dev_attr.attr,
+	&sensor_dev_attr_temp10_input.dev_attr.attr,
+	&sensor_dev_attr_temp1_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp2_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp3_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp4_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp5_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp6_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp7_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp8_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp9_alarm.dev_attr.attr,
+	&sensor_dev_attr_temp10_alarm.dev_attr.attr,
+	&sensor_dev_attr_fan1_max.dev_attr.attr,
+	&sensor_dev_attr_fan2_max.dev_attr.attr,
+	&sensor_dev_attr_fan3_max.dev_attr.attr,
+	&sensor_dev_attr_fan4_max.dev_attr.attr,
+	&sensor_dev_attr_fan1_min.dev_attr.attr,
+	&sensor_dev_attr_fan2_min.dev_attr.attr,
+	&sensor_dev_attr_fan3_min.dev_attr.attr,
+	&sensor_dev_attr_fan4_min.dev_attr.attr,
+	&sensor_dev_attr_fan1_input.dev_attr.attr,
+	&sensor_dev_attr_fan2_input.dev_attr.attr,
+	&sensor_dev_attr_fan3_input.dev_attr.attr,
+	&sensor_dev_attr_fan4_input.dev_attr.attr,
+	&sensor_dev_attr_fan1_alarm.dev_attr.attr,
+	&sensor_dev_attr_fan2_alarm.dev_attr.attr,
+	&sensor_dev_attr_fan3_alarm.dev_attr.attr,
+	&sensor_dev_attr_fan4_alarm.dev_attr.attr,
+	&sensor_dev_attr_force_pwm_max.dev_attr.attr,
+	&sensor_dev_attr_pwm1.dev_attr.attr,
+	&dev_attr_pwm1_freq.attr,
+	&sensor_dev_attr_pwm2.dev_attr.attr,
+	&sensor_dev_attr_pwm3.dev_attr.attr,
+	&sensor_dev_attr_pwm4.dev_attr.attr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	&sensor_dev_attr_pwm1_auto_point1_pwm.dev_attr.attr,
 	&sensor_dev_attr_pwm2_auto_point1_pwm.dev_attr.attr,
 	&sensor_dev_attr_pwm3_auto_point1_pwm.dev_attr.attr,
@@ -1082,6 +1809,13 @@ static struct attribute *adt7470_attrs[] = {
 	&sensor_dev_attr_pwm2_auto_point2_temp.dev_attr.attr,
 	&sensor_dev_attr_pwm3_auto_point2_temp.dev_attr.attr,
 	&sensor_dev_attr_pwm4_auto_point2_temp.dev_attr.attr,
+<<<<<<< HEAD
+=======
+	&sensor_dev_attr_pwm1_enable.dev_attr.attr,
+	&sensor_dev_attr_pwm2_enable.dev_attr.attr,
+	&sensor_dev_attr_pwm3_enable.dev_attr.attr,
+	&sensor_dev_attr_pwm4_enable.dev_attr.attr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	&sensor_dev_attr_pwm1_auto_channels_temp.dev_attr.attr,
 	&sensor_dev_attr_pwm2_auto_channels_temp.dev_attr.attr,
 	&sensor_dev_attr_pwm3_auto_channels_temp.dev_attr.attr,
@@ -1091,6 +1825,7 @@ static struct attribute *adt7470_attrs[] = {
 
 ATTRIBUTE_GROUPS(adt7470);
 
+<<<<<<< HEAD
 static int adt7470_read(struct device *dev, enum hwmon_sensor_types type, u32 attr,
 			int channel, long *val)
 {
@@ -1214,6 +1949,8 @@ static const struct hwmon_chip_info adt7470_chip_info = {
 	.info = adt7470_info,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Return 0 if detection is successful, -ENODEV otherwise */
 static int adt7470_detect(struct i2c_client *client,
 			  struct i2c_board_info *info)
@@ -1236,24 +1973,45 @@ static int adt7470_detect(struct i2c_client *client,
 	if (revision != ADT7470_REVISION)
 		return -ENODEV;
 
+<<<<<<< HEAD
 	strscpy(info->type, "adt7470", I2C_NAME_SIZE);
+=======
+	strlcpy(info->type, "adt7470", I2C_NAME_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct regmap_config adt7470_regmap_config = {
 	.reg_bits = 8,
 	.val_bits = 8,
 	.use_single_read = true,
 	.use_single_write = true,
 };
+=======
+static void adt7470_init_client(struct i2c_client *client)
+{
+	int reg = i2c_smbus_read_byte_data(client, ADT7470_REG_CFG);
+
+	if (reg < 0) {
+		dev_err(&client->dev, "cannot read configuration register\n");
+	} else {
+		/* start monitoring (and do a self-test) */
+		i2c_smbus_write_byte_data(client, ADT7470_REG_CFG, reg | 3);
+	}
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int adt7470_probe(struct i2c_client *client)
 {
 	struct device *dev = &client->dev;
 	struct adt7470_data *data;
 	struct device *hwmon_dev;
+<<<<<<< HEAD
 	int err;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	data = devm_kzalloc(dev, sizeof(struct adt7470_data), GFP_KERNEL);
 	if (!data)
@@ -1261,16 +2019,23 @@ static int adt7470_probe(struct i2c_client *client)
 
 	data->num_temp_sensors = -1;
 	data->auto_update_interval = AUTO_UPDATE_INTERVAL;
+<<<<<<< HEAD
 	data->regmap = devm_regmap_init_i2c(client, &adt7470_regmap_config);
 	if (IS_ERR(data->regmap))
 		return PTR_ERR(data->regmap);
 
 	i2c_set_clientdata(client, data);
+=======
+
+	i2c_set_clientdata(client, data);
+	data->client = client;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_init(&data->lock);
 
 	dev_info(&client->dev, "%s chip found\n", client->name);
 
 	/* Initialize the ADT7470 chip */
+<<<<<<< HEAD
 	err = regmap_update_bits(data->regmap, ADT7470_REG_CFG,
 				 ADT7470_STRT_MASK | ADT7470_TEST_MASK,
 				 ADT7470_STRT_MASK | ADT7470_TEST_MASK);
@@ -1281,14 +2046,28 @@ static int adt7470_probe(struct i2c_client *client)
 	hwmon_dev = devm_hwmon_device_register_with_info(dev, client->name, data,
 							 &adt7470_chip_info,
 							 adt7470_groups);
+=======
+	adt7470_init_client(client);
+
+	/* Register sysfs hooks */
+	hwmon_dev = devm_hwmon_device_register_with_groups(dev, client->name,
+							   data,
+							   adt7470_groups);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (IS_ERR(hwmon_dev))
 		return PTR_ERR(hwmon_dev);
 
 	data->auto_update = kthread_run(adt7470_update_thread, client, "%s",
 					dev_name(hwmon_dev));
+<<<<<<< HEAD
 	if (IS_ERR(data->auto_update))
 		return PTR_ERR(data->auto_update);
+=======
+	if (IS_ERR(data->auto_update)) {
+		return PTR_ERR(data->auto_update);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <test_progs.h>
+<<<<<<< HEAD
 #include <sys/time.h>
 #include <sys/resource.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "test_send_signal_kern.skel.h"
 
 int sigusr1_received = 0;
@@ -12,11 +15,17 @@ static void sigusr1_handler(int signum)
 }
 
 static void test_send_signal_common(struct perf_event_attr *attr,
+<<<<<<< HEAD
 				    bool signal_thread)
+=======
+				    bool signal_thread,
+				    const char *test_name)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct test_send_signal_kern *skel;
 	int pipe_c2p[2], pipe_p2c[2];
 	int err = -1, pmu_fd = -1;
+<<<<<<< HEAD
 	char buf[256];
 	pid_t pid;
 
@@ -24,13 +33,29 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 		return;
 
 	if (!ASSERT_OK(pipe(pipe_p2c), "pipe_p2c")) {
+=======
+	__u32 duration = 0;
+	char buf[256];
+	pid_t pid;
+
+	if (CHECK(pipe(pipe_c2p), test_name,
+		  "pipe pipe_c2p error: %s\n", strerror(errno)))
+		return;
+
+	if (CHECK(pipe(pipe_p2c), test_name,
+		  "pipe pipe_p2c error: %s\n", strerror(errno))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		close(pipe_c2p[0]);
 		close(pipe_c2p[1]);
 		return;
 	}
 
 	pid = fork();
+<<<<<<< HEAD
 	if (!ASSERT_GE(pid, 0, "fork")) {
+=======
+	if (CHECK(pid < 0, test_name, "fork error: %s\n", strerror(errno))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		close(pipe_c2p[0]);
 		close(pipe_c2p[1]);
 		close(pipe_p2c[0]);
@@ -39,14 +64,18 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 	}
 
 	if (pid == 0) {
+<<<<<<< HEAD
 		int old_prio;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* install signal handler and notify parent */
 		signal(SIGUSR1, sigusr1_handler);
 
 		close(pipe_c2p[0]); /* close read */
 		close(pipe_p2c[1]); /* close write */
 
+<<<<<<< HEAD
 		/* boost with a high priority so we got a higher chance
 		 * that if an interrupt happens, the underlying task
 		 * is this process.
@@ -61,11 +90,19 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 
 		/* make sure parent enabled bpf program to send_signal */
 		ASSERT_EQ(read(pipe_p2c[0], buf, 1), 1, "pipe_read");
+=======
+		/* notify parent signal handler is installed */
+		CHECK(write(pipe_c2p[1], buf, 1) != 1, "pipe_write", "err %d\n", -errno);
+
+		/* make sure parent enabled bpf program to send_signal */
+		CHECK(read(pipe_p2c[0], buf, 1) != 1, "pipe_read", "err %d\n", -errno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* wait a little for signal handler */
 		sleep(1);
 
 		buf[0] = sigusr1_received ? '2' : '0';
+<<<<<<< HEAD
 		ASSERT_EQ(write(pipe_c2p[1], buf, 1), 1, "pipe_write");
 
 		/* wait for parent notification and exit */
@@ -73,6 +110,12 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 
 		/* restore the old priority */
 		ASSERT_OK(setpriority(PRIO_PROCESS, 0, old_prio), "setpriority");
+=======
+		CHECK(write(pipe_c2p[1], buf, 1) != 1, "pipe_write", "err %d\n", -errno);
+
+		/* wait for parent notification and exit */
+		CHECK(read(pipe_p2c[0], buf, 1) != 1, "pipe_read", "err %d\n", -errno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		close(pipe_c2p[1]);
 		close(pipe_p2c[0]);
@@ -83,19 +126,32 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 	close(pipe_p2c[0]); /* close read */
 
 	skel = test_send_signal_kern__open_and_load();
+<<<<<<< HEAD
 	if (!ASSERT_OK_PTR(skel, "skel_open_and_load"))
+=======
+	if (CHECK(!skel, "skel_open_and_load", "skeleton open_and_load failed\n"))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto skel_open_load_failure;
 
 	if (!attr) {
 		err = test_send_signal_kern__attach(skel);
+<<<<<<< HEAD
 		if (!ASSERT_OK(err, "skel_attach")) {
+=======
+		if (CHECK(err, "skel_attach", "skeleton attach failed\n")) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = -1;
 			goto destroy_skel;
 		}
 	} else {
 		pmu_fd = syscall(__NR_perf_event_open, attr, pid, -1,
 				 -1 /* group id */, 0 /* flags */);
+<<<<<<< HEAD
 		if (!ASSERT_GE(pmu_fd, 0, "perf_event_open")) {
+=======
+		if (CHECK(pmu_fd < 0, test_name, "perf_event_open error: %s\n",
+			strerror(errno))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = -1;
 			goto destroy_skel;
 		}
@@ -107,7 +163,11 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 	}
 
 	/* wait until child signal handler installed */
+<<<<<<< HEAD
 	ASSERT_EQ(read(pipe_c2p[0], buf, 1), 1, "pipe_read");
+=======
+	CHECK(read(pipe_c2p[0], buf, 1) != 1, "pipe_read", "err %d\n", -errno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* trigger the bpf send_signal */
 	skel->bss->pid = pid;
@@ -115,6 +175,7 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 	skel->bss->signal_thread = signal_thread;
 
 	/* notify child that bpf program can send_signal now */
+<<<<<<< HEAD
 	ASSERT_EQ(write(pipe_p2c[1], buf, 1), 1, "pipe_write");
 
 	/* wait for result */
@@ -122,14 +183,30 @@ static void test_send_signal_common(struct perf_event_attr *attr,
 	if (!ASSERT_GE(err, 0, "reading pipe"))
 		goto disable_pmu;
 	if (!ASSERT_GT(err, 0, "reading pipe error: size 0")) {
+=======
+	CHECK(write(pipe_p2c[1], buf, 1) != 1, "pipe_write", "err %d\n", -errno);
+
+	/* wait for result */
+	err = read(pipe_c2p[0], buf, 1);
+	if (CHECK(err < 0, test_name, "reading pipe error: %s\n", strerror(errno)))
+		goto disable_pmu;
+	if (CHECK(err == 0, test_name, "reading pipe error: size 0\n")) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = -1;
 		goto disable_pmu;
 	}
 
+<<<<<<< HEAD
 	ASSERT_EQ(buf[0], '2', "incorrect result");
 
 	/* notify child safe to exit */
 	ASSERT_EQ(write(pipe_p2c[1], buf, 1), 1, "pipe_write");
+=======
+	CHECK(buf[0] != '2', test_name, "incorrect result\n");
+
+	/* notify child safe to exit */
+	CHECK(write(pipe_p2c[1], buf, 1) != 1, "pipe_write", "err %d\n", -errno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 disable_pmu:
 	close(pmu_fd);
@@ -143,7 +220,11 @@ skel_open_load_failure:
 
 static void test_send_signal_tracepoint(bool signal_thread)
 {
+<<<<<<< HEAD
 	test_send_signal_common(NULL, signal_thread);
+=======
+	test_send_signal_common(NULL, signal_thread, "tracepoint");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void test_send_signal_perf(bool signal_thread)
@@ -154,7 +235,11 @@ static void test_send_signal_perf(bool signal_thread)
 		.config = PERF_COUNT_SW_CPU_CLOCK,
 	};
 
+<<<<<<< HEAD
 	test_send_signal_common(&attr, signal_thread);
+=======
+	test_send_signal_common(&attr, signal_thread, "perf_sw_event");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void test_send_signal_nmi(bool signal_thread)
@@ -183,7 +268,11 @@ static void test_send_signal_nmi(bool signal_thread)
 		close(pmu_fd);
 	}
 
+<<<<<<< HEAD
 	test_send_signal_common(&attr, signal_thread);
+=======
+	test_send_signal_common(&attr, signal_thread, "perf_hw_event");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void test_send_signal(void)

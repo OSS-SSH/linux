@@ -549,6 +549,12 @@ int saa7164_cmd_send(struct saa7164_dev *dev, u8 id, enum tmComResCmd command,
 		/* See of other commands are on the bus */
 		if (saa7164_cmd_dequeue(dev) != SAA_OK)
 			printk(KERN_ERR "dequeue(3) failed\n");
+<<<<<<< HEAD
+=======
+
+		continue;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} /* (loop) */
 
 	/* Release the sequence number allocation */

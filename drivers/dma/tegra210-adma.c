@@ -655,8 +655,14 @@ static int tegra_adma_alloc_chan_resources(struct dma_chan *dc)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	ret = pm_runtime_resume_and_get(tdc2dev(tdc));
 	if (ret < 0) {
+=======
+	ret = pm_runtime_get_sync(tdc2dev(tdc));
+	if (ret < 0) {
+		pm_runtime_put_noidle(tdc2dev(tdc));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		free_irq(tdc->irq, tdc);
 		return ret;
 	}
@@ -868,8 +874,15 @@ static int tegra_adma_probe(struct platform_device *pdev)
 	pm_runtime_enable(&pdev->dev);
 
 	ret = pm_runtime_get_sync(&pdev->dev);
+<<<<<<< HEAD
 	if (ret < 0)
 		goto rpm_disable;
+=======
+	if (ret < 0) {
+		pm_runtime_put_noidle(&pdev->dev);
+		goto rpm_disable;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = tegra_adma_init(tdma);
 	if (ret)

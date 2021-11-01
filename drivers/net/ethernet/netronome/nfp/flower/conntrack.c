@@ -2,7 +2,10 @@
 /* Copyright (C) 2021 Corigine, Inc. */
 
 #include "conntrack.h"
+<<<<<<< HEAD
 #include "../nfp_port.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 const struct rhashtable_params nfp_tc_ct_merge_params = {
 	.head_offset		= offsetof(struct nfp_fl_ct_tc_merge,
@@ -408,6 +411,7 @@ static int nfp_ct_check_meta(struct nfp_fl_ct_flow_entry *post_ct_entry,
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int
 nfp_fl_calc_key_layers_sz(struct nfp_fl_key_ls in_key_ls, uint16_t *map)
 {
@@ -846,11 +850,17 @@ ct_offload_err:
 	kfree(flow_pay->unmasked_data);
 	kfree(flow_pay);
 	return err;
+=======
+static int nfp_fl_ct_add_offload(struct nfp_fl_nft_tc_merge *m_entry)
+{
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int nfp_fl_ct_del_offload(struct nfp_app *app, unsigned long cookie,
 				 struct net_device *netdev)
 {
+<<<<<<< HEAD
 	struct nfp_flower_priv *priv = app->priv;
 	struct nfp_fl_payload *flow_pay;
 	struct nfp_port *port = NULL;
@@ -893,6 +903,9 @@ err_free_merge_flow:
 					    nfp_flower_table_params));
 	kfree_rcu(flow_pay, rcu);
 	return err;
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int nfp_ct_do_nft_merge(struct nfp_fl_ct_zone_entry *zt,
@@ -1525,6 +1538,7 @@ int nfp_fl_ct_handle_post_ct(struct nfp_flower_priv *priv,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void
 nfp_fl_ct_sub_stats(struct nfp_fl_nft_tc_merge *nft_merge,
 		    enum ct_entry_type type, u64 *m_pkts,
@@ -1658,6 +1672,8 @@ int nfp_fl_ct_stats(struct flow_cls_offload *flow,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 nfp_fl_ct_offload_nft_flow(struct nfp_fl_ct_zone_entry *zt, struct flow_cls_offload *flow)
 {
@@ -1690,11 +1706,15 @@ nfp_fl_ct_offload_nft_flow(struct nfp_fl_ct_zone_entry *zt, struct flow_cls_offl
 						    nfp_ct_map_params);
 		return nfp_fl_ct_del_flow(ct_map_ent);
 	case FLOW_CLS_STATS:
+<<<<<<< HEAD
 		ct_map_ent = rhashtable_lookup_fast(&zt->priv->ct_map_table, &flow->cookie,
 						    nfp_ct_map_params);
 		if (ct_map_ent)
 			return nfp_fl_ct_stats(flow, ct_map_ent);
 		break;
+=======
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}
@@ -1755,7 +1775,24 @@ int nfp_fl_ct_del_flow(struct nfp_fl_ct_map_entry *ct_map_ent)
 		nfp_fl_ct_clean_flow_entry(ct_entry);
 		kfree(ct_map_ent);
 
+<<<<<<< HEAD
 		if (!zt->pre_ct_count) {
+=======
+		/* If this is the last pre_ct_rule it means that it is
+		 * very likely that the nft table will be cleaned up next,
+		 * as this happens on the removal of the last act_ct flow.
+		 * However we cannot deregister the callback on the removal
+		 * of the last nft flow as this runs into a deadlock situation.
+		 * So deregister the callback on removal of the last pre_ct flow
+		 * and remove any remaining nft flow entries. We also cannot
+		 * save this state and delete the callback later since the
+		 * nft table would already have been freed at that time.
+		 */
+		if (!zt->pre_ct_count) {
+			nf_flow_table_offload_del_cb(zt->nft,
+						     nfp_fl_ct_handle_nft_flow,
+						     zt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			zt->nft = NULL;
 			nfp_fl_ct_clean_nft_entries(zt);
 		}
@@ -1773,7 +1810,10 @@ int nfp_fl_ct_del_flow(struct nfp_fl_ct_map_entry *ct_map_ent)
 				       nfp_ct_map_params);
 		nfp_fl_ct_clean_flow_entry(ct_map_ent->ct_entry);
 		kfree(ct_map_ent);
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}

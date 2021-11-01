@@ -8,7 +8,10 @@
 
 #define pr_fmt(fmt)	"OF: fdt: " fmt
 
+<<<<<<< HEAD
 #include <linux/crash_dump.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/crc32.h>
 #include <linux/kernel.h>
 #include <linux/initrd.h>
@@ -194,12 +197,22 @@ static void populate_properties(const void *blob,
 			pp->length = len;
 			pp->value  = pp + 1;
 			*pprev     = pp;
+<<<<<<< HEAD
+=======
+			pprev      = &pp->next;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			memcpy(pp->value, ps, len - 1);
 			((char *)pp->value)[len - 1] = 0;
 			pr_debug("fixed up name for %s -> %s\n",
 				 nodename, (char *)pp->value);
 		}
 	}
+<<<<<<< HEAD
+=======
+
+	if (!dryrun)
+		*pprev = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int populate_node(const void *blob,
@@ -476,6 +489,7 @@ void *initial_boot_params __ro_after_init;
 
 static u32 of_fdt_crc32;
 
+<<<<<<< HEAD
 static int __init early_init_dt_reserve_memory_arch(phys_addr_t base,
 					phys_addr_t size, bool nomap)
 {
@@ -492,6 +506,8 @@ static int __init early_init_dt_reserve_memory_arch(phys_addr_t base,
 	return memblock_reserve(base, size);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * __reserved_mem_reserve_reg() - reserve all memory described in 'reg' property
  */
@@ -598,6 +614,7 @@ static int __init __fdt_scan_reserved_mem(unsigned long node, const char *uname,
 	return 0;
 }
 
+<<<<<<< HEAD
 /*
  * fdt_reserve_elfcorehdr() - reserves memory for elf core header
  *
@@ -622,6 +639,8 @@ static void __init fdt_reserve_elfcorehdr(void)
 		elfcorehdr_size >> 10, elfcorehdr_addr);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * early_init_fdt_scan_reserved_mem() - create reserved memory regions
  *
@@ -647,7 +666,10 @@ void __init early_init_fdt_scan_reserved_mem(void)
 
 	of_scan_flat_dt(__fdt_scan_reserved_mem, NULL);
 	fdt_init_reserved_mem();
+<<<<<<< HEAD
 	fdt_reserve_elfcorehdr();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -896,6 +918,10 @@ const void * __init of_flat_dt_match_machine(const void *default_match,
 	return best_data;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_BLK_DEV_INITRD
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __early_init_dt_declare_initrd(unsigned long start,
 					   unsigned long end)
 {
@@ -921,9 +947,12 @@ static void __init early_init_dt_check_for_initrd(unsigned long node)
 	int len;
 	const __be32 *prop;
 
+<<<<<<< HEAD
 	if (!IS_ENABLED(CONFIG_BLK_DEV_INITRD))
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_debug("Looking for initrd properties... ");
 
 	prop = of_get_flat_dt_prop(node, "linux,initrd-start", &len);
@@ -942,6 +971,7 @@ static void __init early_init_dt_check_for_initrd(unsigned long node)
 
 	pr_debug("initrd_start=0x%llx  initrd_end=0x%llx\n", start, end);
 }
+<<<<<<< HEAD
 
 /**
  * early_init_dt_check_for_elfcorehdr - Decode elfcorehdr location from flat
@@ -994,6 +1024,13 @@ static void __init early_init_dt_check_for_usable_mem_range(unsigned long node)
 	pr_debug("cap_mem_start=%pa cap_mem_size=%pa\n", &cap_mem_addr,
 		 &cap_mem_size);
 }
+=======
+#else
+static inline void early_init_dt_check_for_initrd(unsigned long node)
+{
+}
+#endif /* CONFIG_BLK_DEV_INITRD */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_SERIAL_EARLYCON
 
@@ -1120,7 +1157,11 @@ int __init early_init_dt_scan_memory(unsigned long node, const char *uname,
 		if (!hotpluggable)
 			continue;
 
+<<<<<<< HEAD
 		if (memblock_mark_hotplug(base, size))
+=======
+		if (early_init_dt_mark_hotplug_memory_arch(base, size))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pr_warn("failed to mark hotplug range 0x%llx - 0x%llx\n",
 				base, base + size);
 	}
@@ -1142,8 +1183,11 @@ int __init early_init_dt_scan_chosen(unsigned long node, const char *uname,
 		return 0;
 
 	early_init_dt_check_for_initrd(node);
+<<<<<<< HEAD
 	early_init_dt_check_for_elfcorehdr(node);
 	early_init_dt_check_for_usable_mem_range(node);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Retrieve command line */
 	p = of_get_flat_dt_prop(node, "bootargs", &l);
@@ -1235,6 +1279,30 @@ void __init __weak early_init_dt_add_memory_arch(u64 base, u64 size)
 	memblock_add(base, size);
 }
 
+<<<<<<< HEAD
+=======
+int __init __weak early_init_dt_mark_hotplug_memory_arch(u64 base, u64 size)
+{
+	return memblock_mark_hotplug(base, size);
+}
+
+int __init __weak early_init_dt_reserve_memory_arch(phys_addr_t base,
+					phys_addr_t size, bool nomap)
+{
+	if (nomap) {
+		/*
+		 * If the memory is already reserved (by another region), we
+		 * should not allow it to be marked nomap.
+		 */
+		if (memblock_is_region_reserved(base, size))
+			return -EBUSY;
+
+		return memblock_mark_nomap(base, size);
+	}
+	return memblock_reserve(base, size);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void * __init early_init_dt_alloc_memory_arch(u64 size, u64 align)
 {
 	void *ptr = memblock_alloc(size, align);
@@ -1267,19 +1335,30 @@ void __init early_init_dt_scan_nodes(void)
 {
 	int rc = 0;
 
+<<<<<<< HEAD
 	/* Initialize {size,address}-cells info */
 	of_scan_flat_dt(early_init_dt_scan_root, NULL);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Retrieve various information from the /chosen node */
 	rc = of_scan_flat_dt(early_init_dt_scan_chosen, boot_command_line);
 	if (!rc)
 		pr_warn("No chosen node found, continuing without\n");
 
+<<<<<<< HEAD
 	/* Setup memory, calling early_init_dt_add_memory_arch */
 	of_scan_flat_dt(early_init_dt_scan_memory, NULL);
 
 	/* Handle linux,usable-memory-range property */
 	memblock_cap_memory_range(cap_mem_addr, cap_mem_size);
+=======
+	/* Initialize {size,address}-cells info */
+	of_scan_flat_dt(early_init_dt_scan_root, NULL);
+
+	/* Setup memory, calling early_init_dt_add_memory_arch */
+	of_scan_flat_dt(early_init_dt_scan_memory, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 bool __init early_init_dt_scan(void *params)

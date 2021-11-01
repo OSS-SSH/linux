@@ -8,6 +8,7 @@
 #include <linux/string.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 static volatile int fortify_scratch_space;
 
 void lkdtm_FORTIFIED_OBJECT(void)
@@ -61,6 +62,8 @@ void lkdtm_FORTIFIED_SUBOBJECT(void)
 
 	kfree(src);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Calls fortified strscpy to test that it returns the same result as vanilla

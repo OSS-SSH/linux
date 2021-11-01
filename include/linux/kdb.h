@@ -13,8 +13,11 @@
  * Copyright (C) 2009 Jason Wessel <jason.wessel@windriver.com>
  */
 
+<<<<<<< HEAD
 #include <linux/list.h>
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Shifted versions of the command enable bits are be used if the command
  * has no arguments (see kdb_check_flags). This allows commands, such as
  * go, to have different permissions depending upon whether it is called
@@ -66,6 +69,7 @@ typedef enum {
 
 typedef int (*kdb_func_t)(int, const char **);
 
+<<<<<<< HEAD
 /* The KDB shell command table */
 typedef struct _kdbtab {
 	char    *name;			/* Command name */
@@ -77,6 +81,8 @@ typedef struct _kdbtab {
 	struct list_head list_node;	/* Command list */
 } kdbtab_t;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef	CONFIG_KGDB_KDB
 #include <linux/init.h>
 #include <linux/sched.h>
@@ -206,6 +212,7 @@ static inline const char *kdb_walk_kallsyms(loff_t *pos)
 #endif /* ! CONFIG_KALLSYMS */
 
 /* Dynamic kdb shell command registration */
+<<<<<<< HEAD
 extern int kdb_register(kdbtab_t *cmd);
 extern void kdb_unregister(kdbtab_t *cmd);
 #else /* ! CONFIG_KGDB_KDB */
@@ -213,6 +220,21 @@ static inline __printf(1, 2) int kdb_printf(const char *fmt, ...) { return 0; }
 static inline void kdb_init(int level) {}
 static inline int kdb_register(kdbtab_t *cmd) { return 0; }
 static inline void kdb_unregister(kdbtab_t *cmd) {}
+=======
+extern int kdb_register(char *, kdb_func_t, char *, char *, short);
+extern int kdb_register_flags(char *, kdb_func_t, char *, char *,
+			      short, kdb_cmdflags_t);
+extern int kdb_unregister(char *);
+#else /* ! CONFIG_KGDB_KDB */
+static inline __printf(1, 2) int kdb_printf(const char *fmt, ...) { return 0; }
+static inline void kdb_init(int level) {}
+static inline int kdb_register(char *cmd, kdb_func_t func, char *usage,
+			       char *help, short minlen) { return 0; }
+static inline int kdb_register_flags(char *cmd, kdb_func_t func, char *usage,
+				     char *help, short minlen,
+				     kdb_cmdflags_t flags) { return 0; }
+static inline int kdb_unregister(char *cmd) { return 0; }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif	/* CONFIG_KGDB_KDB */
 enum {
 	KDB_NOT_INITIALIZED,

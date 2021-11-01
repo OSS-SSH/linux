@@ -51,9 +51,30 @@ void __init setup_uv(void)
 {
 	unsigned long uv_stor_base;
 
+<<<<<<< HEAD
 	if (!is_prot_virt_host())
 		return;
 
+=======
+	/*
+	 * keep these conditions in line with has_uv_sec_stor_limit()
+	 */
+	if (!is_prot_virt_host())
+		return;
+
+	if (is_prot_virt_guest()) {
+		prot_virt_host = 0;
+		pr_warn("Protected virtualization not available in protected guests.");
+		return;
+	}
+
+	if (!test_facility(158)) {
+		prot_virt_host = 0;
+		pr_warn("Protected virtualization not supported by the hardware.");
+		return;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uv_stor_base = (unsigned long)memblock_alloc_try_nid(
 		uv_info.uv_base_stor_len, SZ_1M, SZ_2G,
 		MEMBLOCK_ALLOC_ACCESSIBLE, NUMA_NO_NODE);

@@ -18,6 +18,7 @@ struct host1x_job_gather {
 	bool handled;
 };
 
+<<<<<<< HEAD
 struct host1x_job_wait {
 	u32 id;
 	u32 threshold;
@@ -34,6 +35,8 @@ struct host1x_job_cmd {
 	};
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct host1x_job_unpin_data {
 	struct host1x_bo *bo;
 	struct sg_table *sgt;

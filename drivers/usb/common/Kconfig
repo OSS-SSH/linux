@@ -6,7 +6,12 @@ config USB_COMMON
 
 config USB_LED_TRIG
 	bool "USB LED Triggers"
+<<<<<<< HEAD
 	depends on LEDS_CLASS && USB_COMMON && LEDS_TRIGGERS
+=======
+	depends on LEDS_CLASS && LEDS_TRIGGERS
+	select USB_COMMON
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This option adds LED triggers for USB host and/or gadget activity.
 

@@ -5,6 +5,9 @@
 #define _IGC_TSN_H_
 
 int igc_tsn_offload_apply(struct igc_adapter *adapter);
+<<<<<<< HEAD
 int igc_tsn_reset(struct igc_adapter *adapter);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* _IGC_BASE_H */

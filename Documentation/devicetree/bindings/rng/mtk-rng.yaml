@@ -21,7 +21,10 @@ properties:
           - enum:
               - mediatek,mt7622-rng
               - mediatek,mt7629-rng
+<<<<<<< HEAD
               - mediatek,mt7986-rng
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - mediatek,mt8365-rng
               - mediatek,mt8516-rng
           - const: mediatek,mt7623-rng

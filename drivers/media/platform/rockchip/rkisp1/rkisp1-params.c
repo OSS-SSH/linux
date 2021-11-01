@@ -1143,7 +1143,11 @@ static void rkisp1_params_apply_params_cfg(struct rkisp1_params *params,
 	cur_buf = list_first_entry(&params->params,
 				   struct rkisp1_buffer, queue);
 
+<<<<<<< HEAD
 	new_params = (struct rkisp1_params_cfg *)vb2_plane_vaddr(&cur_buf->vb.vb2_buf, 0);
+=======
+	new_params = (struct rkisp1_params_cfg *)(cur_buf->vaddr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rkisp1_isp_isr_other_config(params, new_params);
 	rkisp1_isp_isr_meas_config(params, new_params);
@@ -1382,6 +1386,10 @@ static void rkisp1_params_vb2_buf_queue(struct vb2_buffer *vb)
 	struct vb2_queue *vq = vb->vb2_queue;
 	struct rkisp1_params *params = vq->drv_priv;
 
+<<<<<<< HEAD
+=======
+	params_buf->vaddr = vb2_plane_vaddr(vb, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_irq(&params->config_lock);
 	list_add_tail(&params_buf->queue, &params->params);
 	spin_unlock_irq(&params->config_lock);

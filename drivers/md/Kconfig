@@ -15,7 +15,10 @@ if MD
 
 config BLK_DEV_MD
 	tristate "RAID support"
+<<<<<<< HEAD
 	select BLOCK_HOLDER_DEPRECATED if SYSFS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This driver lets you combine several hard disk partitions into one
 	  logical block device. This can be used to simply append one
@@ -202,7 +205,10 @@ config BLK_DEV_DM_BUILTIN
 
 config BLK_DEV_DM
 	tristate "Device mapper support"
+<<<<<<< HEAD
 	select BLOCK_HOLDER_DEPRECATED if SYSFS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select BLK_DEV_DM_BUILTIN
 	depends on DAX || DAX=n
 	help
@@ -342,7 +348,11 @@ config DM_WRITECACHE
 
 config DM_EBS
 	tristate "Emulated block size target (EXPERIMENTAL)"
+<<<<<<< HEAD
 	depends on BLK_DEV_DM && !HIGHMEM
+=======
+	depends on BLK_DEV_DM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select DM_BUFIO
 	help
 	  dm-ebs emulates smaller logical block size on backing devices

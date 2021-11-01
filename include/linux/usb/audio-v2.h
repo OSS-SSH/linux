@@ -156,6 +156,7 @@ struct uac2_feature_unit_descriptor {
 	__u8 bmaControls[]; /* variable length */
 } __attribute__((packed));
 
+<<<<<<< HEAD
 #define UAC2_DT_FEATURE_UNIT_SIZE(ch)		(6 + ((ch) + 1) * 4)
 
 /* As above, but more useful for defining your own descriptors: */
@@ -170,6 +171,8 @@ struct uac2_feature_unit_descriptor_##ch {			\
 	__u8  iFeature;						\
 } __packed
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* 4.7.2.10 Effect Unit Descriptor */
 
 struct uac2_effect_unit_descriptor {

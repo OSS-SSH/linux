@@ -305,7 +305,11 @@ struct link_encoder *link_enc_cfg_get_next_avail_link_enc(
 	const struct dc_state *state)
 {
 	struct link_encoder *link_enc = NULL;
+<<<<<<< HEAD
 	enum engine_id eng_id;
+=======
+	enum engine_id eng_id = ENGINE_ID_UNKNOWN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	eng_id = find_first_avail_link_enc(dc->ctx, state);
 	if (eng_id != ENGINE_ID_UNKNOWN)

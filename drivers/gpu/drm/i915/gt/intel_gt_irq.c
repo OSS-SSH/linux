@@ -184,6 +184,7 @@ void gen11_gt_irq_reset(struct intel_gt *gt)
 	intel_uncore_write(uncore, GEN11_BCS_RSVD_INTR_MASK,	~0);
 	intel_uncore_write(uncore, GEN11_VCS0_VCS1_INTR_MASK,	~0);
 	intel_uncore_write(uncore, GEN11_VCS2_VCS3_INTR_MASK,	~0);
+<<<<<<< HEAD
 	if (HAS_ENGINE(gt, VCS4) || HAS_ENGINE(gt, VCS5))
 		intel_uncore_write(uncore, GEN12_VCS4_VCS5_INTR_MASK,   ~0);
 	if (HAS_ENGINE(gt, VCS6) || HAS_ENGINE(gt, VCS7))
@@ -191,6 +192,9 @@ void gen11_gt_irq_reset(struct intel_gt *gt)
 	intel_uncore_write(uncore, GEN11_VECS0_VECS1_INTR_MASK,	~0);
 	if (HAS_ENGINE(gt, VECS2) || HAS_ENGINE(gt, VECS3))
 		intel_uncore_write(uncore, GEN12_VECS2_VECS3_INTR_MASK, ~0);
+=======
+	intel_uncore_write(uncore, GEN11_VECS0_VECS1_INTR_MASK,	~0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	intel_uncore_write(uncore, GEN11_GPM_WGBOXPERF_INTR_ENABLE, 0);
 	intel_uncore_write(uncore, GEN11_GPM_WGBOXPERF_INTR_MASK,  ~0);
@@ -224,6 +228,7 @@ void gen11_gt_irq_postinstall(struct intel_gt *gt)
 	intel_uncore_write(uncore, GEN11_BCS_RSVD_INTR_MASK, ~smask);
 	intel_uncore_write(uncore, GEN11_VCS0_VCS1_INTR_MASK, ~dmask);
 	intel_uncore_write(uncore, GEN11_VCS2_VCS3_INTR_MASK, ~dmask);
+<<<<<<< HEAD
 	if (HAS_ENGINE(gt, VCS4) || HAS_ENGINE(gt, VCS5))
 		intel_uncore_write(uncore, GEN12_VCS4_VCS5_INTR_MASK, ~dmask);
 	if (HAS_ENGINE(gt, VCS6) || HAS_ENGINE(gt, VCS7))
@@ -231,6 +236,10 @@ void gen11_gt_irq_postinstall(struct intel_gt *gt)
 	intel_uncore_write(uncore, GEN11_VECS0_VECS1_INTR_MASK, ~dmask);
 	if (HAS_ENGINE(gt, VECS2) || HAS_ENGINE(gt, VECS3))
 		intel_uncore_write(uncore, GEN12_VECS2_VECS3_INTR_MASK, ~dmask);
+=======
+	intel_uncore_write(uncore, GEN11_VECS0_VECS1_INTR_MASK, ~dmask);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * RPS interrupts will get enabled/disabled on demand when RPS itself
 	 * is enabled/disabled.

@@ -1725,7 +1725,11 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
 	dev->interrupt_count = 0;
 
 	dev->net = net;
+<<<<<<< HEAD
 	strscpy(net->name, "usb%d", sizeof(net->name));
+=======
+	strcpy (net->name, "usb%d");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memcpy (net->dev_addr, node_id, sizeof node_id);
 
 	/* rx and tx sides can use different message sizes;
@@ -1752,6 +1756,7 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
 		if ((dev->driver_info->flags & FLAG_ETHER) != 0 &&
 		    ((dev->driver_info->flags & FLAG_POINTTOPOINT) == 0 ||
 		     (net->dev_addr [0] & 0x02) == 0))
+<<<<<<< HEAD
 			strscpy(net->name, "eth%d", sizeof(net->name));
 		/* WLAN devices should always be named "wlan%d" */
 		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
@@ -1759,6 +1764,15 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
 		/* WWAN devices should always be named "wwan%d" */
 		if ((dev->driver_info->flags & FLAG_WWAN) != 0)
 			strscpy(net->name, "wwan%d", sizeof(net->name));
+=======
+			strcpy (net->name, "eth%d");
+		/* WLAN devices should always be named "wlan%d" */
+		if ((dev->driver_info->flags & FLAG_WLAN) != 0)
+			strcpy(net->name, "wlan%d");
+		/* WWAN devices should always be named "wwan%d" */
+		if ((dev->driver_info->flags & FLAG_WWAN) != 0)
+			strcpy(net->name, "wwan%d");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* devices that cannot do ARP */
 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
@@ -1788,6 +1802,13 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
 	if (!dev->rx_urb_size)
 		dev->rx_urb_size = dev->hard_mtu;
 	dev->maxpacket = usb_maxpacket (dev->udev, dev->out, 1);
+<<<<<<< HEAD
+=======
+	if (dev->maxpacket == 0) {
+		/* that is a broken device */
+		goto out4;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* let userspace know we have a random address */
 	if (ether_addr_equal(net->dev_addr, node_id))

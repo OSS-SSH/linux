@@ -892,7 +892,11 @@ static void pd_probe_drive(struct pd_unit *disk)
 		return;
 
 	p = blk_mq_alloc_disk(&disk->tag_set, disk);
+<<<<<<< HEAD
 	if (IS_ERR(p)) {
+=======
+	if (!p) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		blk_mq_free_tag_set(&disk->tag_set);
 		return;
 	}
@@ -1014,8 +1018,13 @@ static void __exit pd_exit(void)
 		if (p) {
 			disk->gd = NULL;
 			del_gendisk(p);
+<<<<<<< HEAD
 			blk_cleanup_disk(p);
 			blk_mq_free_tag_set(&disk->tag_set);
+=======
+			blk_mq_free_tag_set(&disk->tag_set);
+			blk_cleanup_disk(p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pi_release(disk->pi);
 		}
 	}

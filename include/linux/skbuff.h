@@ -689,7 +689,10 @@ typedef unsigned char *sk_buff_data_t;
  *		CHECKSUM_UNNECESSARY (max 3)
  *	@dst_pending_confirm: need to confirm neighbour
  *	@decrypted: Decrypted SKB
+<<<<<<< HEAD
  *	@slow_gro: state present at GRO time, slower prepare step required
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *	@napi_id: id of the NAPI struct this skb came from
  *	@sender_cpu: (aka @napi_id) source CPU in XPS
  *	@secmark: security marking
@@ -864,14 +867,22 @@ struct sk_buff {
 	__u8			tc_skip_classify:1;
 	__u8			tc_at_ingress:1;
 #endif
+<<<<<<< HEAD
 	__u8			redirected:1;
 #ifdef CONFIG_NET_REDIRECT
+=======
+#ifdef CONFIG_NET_REDIRECT
+	__u8			redirected:1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u8			from_ingress:1;
 #endif
 #ifdef CONFIG_TLS_DEVICE
 	__u8			decrypted:1;
 #endif
+<<<<<<< HEAD
 	__u8			slow_gro:1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_NET_SCHED
 	__u16			tc_index;	/* traffic control index */
@@ -992,7 +1003,10 @@ static inline struct dst_entry *skb_dst(const struct sk_buff *skb)
  */
 static inline void skb_dst_set(struct sk_buff *skb, struct dst_entry *dst)
 {
+<<<<<<< HEAD
 	skb->slow_gro |= !!dst;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	skb->_skb_refdst = (unsigned long)dst;
 }
 
@@ -1009,7 +1023,10 @@ static inline void skb_dst_set(struct sk_buff *skb, struct dst_entry *dst)
 static inline void skb_dst_set_noref(struct sk_buff *skb, struct dst_entry *dst)
 {
 	WARN_ON(!rcu_read_lock_held() && !rcu_read_lock_bh_held());
+<<<<<<< HEAD
 	skb->slow_gro |= !!dst;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	skb->_skb_refdst = (unsigned long)dst | SKB_DST_NOREF;
 }
 
@@ -1183,7 +1200,10 @@ static inline struct sk_buff *__pskb_copy(struct sk_buff *skb, int headroom,
 int pskb_expand_head(struct sk_buff *skb, int nhead, int ntail, gfp_t gfp_mask);
 struct sk_buff *skb_realloc_headroom(struct sk_buff *skb,
 				     unsigned int headroom);
+<<<<<<< HEAD
 struct sk_buff *skb_expand_head(struct sk_buff *skb, unsigned int headroom);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct sk_buff *skb_copy_expand(const struct sk_buff *skb, int newheadroom,
 				int newtailroom, gfp_t priority);
 int __must_check skb_to_sgvec_nomark(struct sk_buff *skb, struct scatterlist *sg,
@@ -1940,7 +1960,11 @@ static inline void __skb_insert(struct sk_buff *newsk,
 	WRITE_ONCE(newsk->prev, prev);
 	WRITE_ONCE(next->prev, newsk);
 	WRITE_ONCE(prev->next, newsk);
+<<<<<<< HEAD
 	WRITE_ONCE(list->qlen, list->qlen + 1);
+=======
+	list->qlen++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void __skb_queue_splice(const struct sk_buff_head *list,
@@ -4221,7 +4245,10 @@ static inline unsigned long skb_get_nfct(const struct sk_buff *skb)
 static inline void skb_set_nfct(struct sk_buff *skb, unsigned long nfct)
 {
 #if IS_ENABLED(CONFIG_NF_CONNTRACK)
+<<<<<<< HEAD
 	skb->slow_gro |= !!nfct;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	skb->_nfct = nfct;
 #endif
 }
@@ -4381,7 +4408,10 @@ static inline void nf_copy(struct sk_buff *dst, const struct sk_buff *src)
 #if defined(CONFIG_NF_CONNTRACK) || defined(CONFIG_NF_CONNTRACK_MODULE)
 	nf_conntrack_put(skb_nfct(dst));
 #endif
+<<<<<<< HEAD
 	dst->slow_gro = src->slow_gro;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__nf_copy(dst, src, true);
 }
 
@@ -4671,13 +4701,26 @@ static inline __wsum lco_csum(struct sk_buff *skb)
 
 static inline bool skb_is_redirected(const struct sk_buff *skb)
 {
+<<<<<<< HEAD
 	return skb->redirected;
+=======
+#ifdef CONFIG_NET_REDIRECT
+	return skb->redirected;
+#else
+	return false;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void skb_set_redirected(struct sk_buff *skb, bool from_ingress)
 {
+<<<<<<< HEAD
 	skb->redirected = 1;
 #ifdef CONFIG_NET_REDIRECT
+=======
+#ifdef CONFIG_NET_REDIRECT
+	skb->redirected = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	skb->from_ingress = from_ingress;
 	if (skb->from_ingress)
 		skb->tstamp = 0;
@@ -4686,7 +4729,13 @@ static inline void skb_set_redirected(struct sk_buff *skb, bool from_ingress)
 
 static inline void skb_reset_redirect(struct sk_buff *skb)
 {
+<<<<<<< HEAD
 	skb->redirected = 0;
+=======
+#ifdef CONFIG_NET_REDIRECT
+	skb->redirected = 0;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline bool skb_csum_is_sctp(struct sk_buff *skb)
@@ -4712,9 +4761,17 @@ static inline u64 skb_get_kcov_handle(struct sk_buff *skb)
 }
 
 #ifdef CONFIG_PAGE_POOL
+<<<<<<< HEAD
 static inline void skb_mark_for_recycle(struct sk_buff *skb)
 {
 	skb->pp_recycle = 1;
+=======
+static inline void skb_mark_for_recycle(struct sk_buff *skb, struct page *page,
+					struct page_pool *pp)
+{
+	skb->pp_recycle = 1;
+	page_pool_store_mem_info(page, pp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif
 

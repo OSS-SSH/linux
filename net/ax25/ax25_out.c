@@ -325,6 +325,10 @@ void ax25_kick(ax25_cb *ax25)
 
 void ax25_transmit_buffer(ax25_cb *ax25, struct sk_buff *skb, int type)
 {
+<<<<<<< HEAD
+=======
+	struct sk_buff *skbn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned char *ptr;
 	int headroom;
 
@@ -335,12 +339,27 @@ void ax25_transmit_buffer(ax25_cb *ax25, struct sk_buff *skb, int type)
 
 	headroom = ax25_addr_size(ax25->digipeat);
 
+<<<<<<< HEAD
 	if (unlikely(skb_headroom(skb) < headroom)) {
 		skb = skb_expand_head(skb, headroom);
 		if (!skb) {
 			printk(KERN_CRIT "AX.25: ax25_transmit_buffer - out of memory\n");
 			return;
 		}
+=======
+	if (skb_headroom(skb) < headroom) {
+		if ((skbn = skb_realloc_headroom(skb, headroom)) == NULL) {
+			printk(KERN_CRIT "AX.25: ax25_transmit_buffer - out of memory\n");
+			kfree_skb(skb);
+			return;
+		}
+
+		if (skb->sk != NULL)
+			skb_set_owner_w(skbn, skb->sk);
+
+		consume_skb(skb);
+		skb = skbn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ptr = skb_push(skb, headroom);

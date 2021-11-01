@@ -41,7 +41,11 @@ struct in_device {
 	unsigned long		mr_qri;		/* Query Response Interval */
 	unsigned char		mr_qrv;		/* Query Robustness Variable */
 	unsigned char		mr_gq_running;
+<<<<<<< HEAD
 	u32			mr_ifc_count;
+=======
+	unsigned char		mr_ifc_count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct timer_list	mr_gq_timer;	/* general query timer */
 	struct timer_list	mr_ifc_timer;	/* interface change timer */
 
@@ -178,6 +182,7 @@ static inline struct net_device *ip_dev_find(struct net *net, __be32 addr)
 
 int inet_addr_onlink(struct in_device *in_dev, __be32 a, __be32 b);
 int devinet_ioctl(struct net *net, unsigned int cmd, struct ifreq *);
+<<<<<<< HEAD
 #ifdef CONFIG_INET
 int inet_gifconf(struct net_device *dev, char __user *buf, int len, int size);
 #else
@@ -187,6 +192,8 @@ static inline int inet_gifconf(struct net_device *dev, char __user *buf,
 	return 0;
 }
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void devinet_init(void);
 struct in_device *inetdev_by_index(struct net *, int);
 __be32 inet_select_addr(const struct net_device *dev, __be32 dst, int scope);

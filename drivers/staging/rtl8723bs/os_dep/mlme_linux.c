@@ -48,6 +48,10 @@ void rtw_os_indicate_connect(struct adapter *adapter)
 		rtw_cfg80211_indicate_connect(adapter);
 	}
 
+<<<<<<< HEAD
+=======
+	rtw_indicate_wx_assoc_event(adapter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netif_carrier_on(adapter->pnetdev);
 
 	if (adapter->pid[2] != 0)
@@ -57,6 +61,10 @@ void rtw_os_indicate_connect(struct adapter *adapter)
 void rtw_os_indicate_scan_done(struct adapter *padapter, bool aborted)
 {
 	rtw_cfg80211_indicate_scan_done(padapter, aborted);
+<<<<<<< HEAD
+=======
+	indicate_wx_scan_complete_event(padapter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct rt_pmkid_list   backupPMKIDList[NUM_PMKID_CACHE];
@@ -127,6 +135,11 @@ void rtw_os_indicate_disconnect(struct adapter *adapter)
 
 	rtw_cfg80211_indicate_disconnect(adapter);
 
+<<<<<<< HEAD
+=======
+	rtw_indicate_wx_disassoc_event(adapter);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* modify for CONFIG_IEEE80211W, none 11w also can use the same command */
 	rtw_reset_securitypriv_cmd(adapter);
 }

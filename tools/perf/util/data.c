@@ -20,7 +20,11 @@
 
 static void close_dir(struct perf_data_file *files, int nr)
 {
+<<<<<<< HEAD
 	while (--nr >= 0) {
+=======
+	while (--nr >= 1) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		close(files[nr].fd);
 		zfree(&files[nr].path);
 	}

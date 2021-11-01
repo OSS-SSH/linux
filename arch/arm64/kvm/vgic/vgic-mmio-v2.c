@@ -282,7 +282,11 @@ static unsigned long vgic_mmio_read_vcpuif(struct kvm_vcpu *vcpu,
 	case GIC_CPU_PRIMASK:
 		/*
 		 * Our KVM_DEV_TYPE_ARM_VGIC_V2 device ABI exports the
+<<<<<<< HEAD
 		 * PMR field as GICH_VMCR.VMPriMask rather than
+=======
+		 * the PMR field as GICH_VMCR.VMPriMask rather than
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * GICC_PMR.Priority, so we expose the upper five bits of
 		 * priority mask to userspace using the lower bits in the
 		 * unsigned long.
@@ -329,7 +333,11 @@ static void vgic_mmio_write_vcpuif(struct kvm_vcpu *vcpu,
 	case GIC_CPU_PRIMASK:
 		/*
 		 * Our KVM_DEV_TYPE_ARM_VGIC_V2 device ABI exports the
+<<<<<<< HEAD
 		 * PMR field as GICH_VMCR.VMPriMask rather than
+=======
+		 * the PMR field as GICH_VMCR.VMPriMask rather than
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * GICC_PMR.Priority, so we expose the upper five bits of
 		 * priority mask to userspace using the lower bits in the
 		 * unsigned long.

@@ -1202,7 +1202,11 @@ struct nft_object *nft_obj_lookup(const struct net *net,
 
 void nft_obj_notify(struct net *net, const struct nft_table *table,
 		    struct nft_object *obj, u32 portid, u32 seq,
+<<<<<<< HEAD
 		    int event, u16 flags, int family, int report, gfp_t gfp);
+=======
+		    int event, int family, int report, gfp_t gfp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  *	struct nft_object_type - stateful object type

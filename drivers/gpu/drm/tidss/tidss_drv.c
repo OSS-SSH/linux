@@ -16,6 +16,10 @@
 #include <drm/drm_drv.h>
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_gem_cma_helper.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_managed.h>
 #include <drm/drm_probe_helper.h>
 
@@ -117,6 +121,14 @@ static const struct drm_driver tidss_driver = {
 	.date			= "20180215",
 	.major			= 1,
 	.minor			= 0,
+<<<<<<< HEAD
+=======
+
+	.irq_preinstall		= tidss_irq_preinstall,
+	.irq_postinstall	= tidss_irq_postinstall,
+	.irq_handler		= tidss_irq_handler,
+	.irq_uninstall		= tidss_irq_uninstall,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int tidss_probe(struct platform_device *pdev)
@@ -166,11 +178,18 @@ static int tidss_probe(struct platform_device *pdev)
 		ret = irq;
 		goto err_runtime_suspend;
 	}
+<<<<<<< HEAD
 	tidss->irq = irq;
 
 	ret = tidss_irq_install(ddev, irq);
 	if (ret) {
 		dev_err(dev, "tidss_irq_install failed: %d\n", ret);
+=======
+
+	ret = drm_irq_install(ddev, irq);
+	if (ret) {
+		dev_err(dev, "drm_irq_install failed: %d\n", ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto err_runtime_suspend;
 	}
 
@@ -191,7 +210,11 @@ static int tidss_probe(struct platform_device *pdev)
 	return 0;
 
 err_irq_uninstall:
+<<<<<<< HEAD
 	tidss_irq_uninstall(ddev);
+=======
+	drm_irq_uninstall(ddev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err_runtime_suspend:
 #ifndef CONFIG_PM
@@ -214,7 +237,11 @@ static int tidss_remove(struct platform_device *pdev)
 
 	drm_atomic_helper_shutdown(ddev);
 
+<<<<<<< HEAD
 	tidss_irq_uninstall(ddev);
+=======
+	drm_irq_uninstall(ddev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifndef CONFIG_PM
 	/* If we don't have PM, we need to call suspend manually */

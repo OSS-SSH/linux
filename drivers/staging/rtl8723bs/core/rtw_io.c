@@ -28,6 +28,14 @@ jackson@realtek.com.tw
 #include <drv_types.h>
 #include <rtw_debug.h>
 
+<<<<<<< HEAD
+=======
+#define rtw_le16_to_cpu(val)		val
+#define rtw_le32_to_cpu(val)		val
+#define rtw_cpu_to_le16(val)		val
+#define rtw_cpu_to_le32(val)		val
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 u8 rtw_read8(struct adapter *adapter, u32 addr)
 {
 	/* struct	io_queue	*pio_queue = (struct io_queue *)adapter->pio_queue; */
@@ -42,6 +50,10 @@ u8 rtw_read8(struct adapter *adapter, u32 addr)
 
 u16 rtw_read16(struct adapter *adapter, u32 addr)
 {
+<<<<<<< HEAD
+=======
+	u16 r_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* struct	io_queue	*pio_queue = (struct io_queue *)adapter->pio_queue; */
 	struct io_priv *pio_priv = &adapter->iopriv;
 	struct	intf_hdl		*pintfhdl = &(pio_priv->intf);
@@ -49,11 +61,20 @@ u16 rtw_read16(struct adapter *adapter, u32 addr)
 
 	_read16 = pintfhdl->io_ops._read16;
 
+<<<<<<< HEAD
 	return _read16(pintfhdl, addr);
+=======
+	r_val = _read16(pintfhdl, addr);
+	return rtw_le16_to_cpu(r_val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 u32 rtw_read32(struct adapter *adapter, u32 addr)
 {
+<<<<<<< HEAD
+=======
+	u32 r_val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* struct	io_queue	*pio_queue = (struct io_queue *)adapter->pio_queue; */
 	struct io_priv *pio_priv = &adapter->iopriv;
 	struct	intf_hdl		*pintfhdl = &(pio_priv->intf);
@@ -61,7 +82,12 @@ u32 rtw_read32(struct adapter *adapter, u32 addr)
 
 	_read32 = pintfhdl->io_ops._read32;
 
+<<<<<<< HEAD
 	return _read32(pintfhdl, addr);
+=======
+	r_val = _read32(pintfhdl, addr);
+	return rtw_le32_to_cpu(r_val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 }
 

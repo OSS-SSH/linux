@@ -480,8 +480,12 @@ err_port_flood_set:
 }
 
 int prestera_bridge_port_join(struct net_device *br_dev,
+<<<<<<< HEAD
 			      struct prestera_port *port,
 			      struct netlink_ext_ack *extack)
+=======
+			      struct prestera_port *port)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct prestera_switchdev *swdev = port->sw->swdev;
 	struct prestera_bridge_port *br_port;
@@ -501,11 +505,14 @@ int prestera_bridge_port_join(struct net_device *br_dev,
 		goto err_brport_create;
 	}
 
+<<<<<<< HEAD
 	err = switchdev_bridge_port_offload(br_port->dev, port->dev, NULL,
 					    NULL, NULL, false, extack);
 	if (err)
 		goto err_switchdev_offload;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (bridge->vlan_enabled)
 		return 0;
 
@@ -516,8 +523,11 @@ int prestera_bridge_port_join(struct net_device *br_dev,
 	return 0;
 
 err_port_join:
+<<<<<<< HEAD
 	switchdev_bridge_port_unoffload(br_port->dev, NULL, NULL, NULL);
 err_switchdev_offload:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	prestera_bridge_port_put(br_port);
 err_brport_create:
 	prestera_bridge_put(bridge);
@@ -592,8 +602,11 @@ void prestera_bridge_port_leave(struct net_device *br_dev,
 	else
 		prestera_bridge_1d_port_leave(br_port);
 
+<<<<<<< HEAD
 	switchdev_bridge_port_unoffload(br_port->dev, NULL, NULL, NULL);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	prestera_hw_port_learning_set(port, false);
 	prestera_hw_port_flood_set(port, BR_FLOOD | BR_MCAST_FLOOD, 0);
 	prestera_port_vid_stp_set(port, PRESTERA_VID_ALL, BR_STATE_FORWARDING);
@@ -758,7 +771,11 @@ static void
 prestera_fdb_offload_notify(struct prestera_port *port,
 			    struct switchdev_notifier_fdb_info *info)
 {
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info send_info = {};
+=======
+	struct switchdev_notifier_fdb_info send_info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	send_info.addr = info->addr;
 	send_info.vid = info->vid;
@@ -1133,7 +1150,11 @@ static int prestera_switchdev_blk_event(struct notifier_block *unused,
 static void prestera_fdb_event(struct prestera_switch *sw,
 			       struct prestera_event *evt, void *arg)
 {
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info info = {};
+=======
+	struct switchdev_notifier_fdb_info info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct net_device *dev = NULL;
 	struct prestera_port *port;
 	struct prestera_lag *lag;

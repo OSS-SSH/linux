@@ -615,21 +615,40 @@ static inline int dma_resv_test_signaled_single(struct dma_fence *passed_fence)
  */
 bool dma_resv_test_signaled(struct dma_resv *obj, bool test_all)
 {
+<<<<<<< HEAD
 	struct dma_fence *fence;
 	unsigned int seq;
+=======
+	unsigned int seq, shared_count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	rcu_read_lock();
 retry:
 	ret = true;
+<<<<<<< HEAD
+=======
+	shared_count = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	seq = read_seqcount_begin(&obj->seq);
 
 	if (test_all) {
 		struct dma_resv_list *fobj = dma_resv_shared_list(obj);
+<<<<<<< HEAD
 		unsigned int i, shared_count;
 
 		shared_count = fobj ? fobj->shared_count : 0;
 		for (i = 0; i < shared_count; ++i) {
+=======
+		unsigned int i;
+
+		if (fobj)
+			shared_count = fobj->shared_count;
+
+		for (i = 0; i < shared_count; ++i) {
+			struct dma_fence *fence;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			fence = rcu_dereference(fobj->shared[i]);
 			ret = dma_resv_test_signaled_single(fence);
 			if (ret < 0)
@@ -637,6 +656,7 @@ retry:
 			else if (!ret)
 				break;
 		}
+<<<<<<< HEAD
 	}
 
 	fence = dma_resv_excl_fence(obj);
@@ -649,6 +669,25 @@ retry:
 
 	if (read_seqcount_retry(&obj->seq, seq))
 		goto retry;
+=======
+
+		if (read_seqcount_retry(&obj->seq, seq))
+			goto retry;
+	}
+
+	if (!shared_count) {
+		struct dma_fence *fence_excl = dma_resv_excl_fence(obj);
+
+		if (fence_excl) {
+			ret = dma_resv_test_signaled_single(fence_excl);
+			if (ret < 0)
+				goto retry;
+
+			if (read_seqcount_retry(&obj->seq, seq))
+				goto retry;
+		}
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rcu_read_unlock();
 	return ret;

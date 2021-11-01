@@ -92,6 +92,7 @@ TRACE_EVENT(kvm_hv_hypercall,
 		  __entry->outgpa)
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(kvm_hv_hypercall_done,
 	TP_PROTO(u64 result),
 	TP_ARGS(result),
@@ -107,6 +108,8 @@ TRACE_EVENT(kvm_hv_hypercall_done,
 	TP_printk("result 0x%llx", __entry->result)
 );
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Tracepoint for Xen hypercall.
  */

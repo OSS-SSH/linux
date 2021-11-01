@@ -38,6 +38,14 @@ static int adxl345_i2c_probe(struct i2c_client *client,
 				  id->name);
 }
 
+<<<<<<< HEAD
+=======
+static int adxl345_i2c_remove(struct i2c_client *client)
+{
+	return adxl345_core_remove(&client->dev);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct i2c_device_id adxl345_i2c_id[] = {
 	{ "adxl345", ADXL345 },
 	{ "adxl375", ADXL375 },
@@ -60,6 +68,10 @@ static struct i2c_driver adxl345_i2c_driver = {
 		.of_match_table = adxl345_of_match,
 	},
 	.probe		= adxl345_i2c_probe,
+<<<<<<< HEAD
+=======
+	.remove		= adxl345_i2c_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.id_table	= adxl345_i2c_id,
 };
 

@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0-only
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Kernel Debug Core
  *
@@ -23,6 +26,13 @@
  *
  * Original KGDB stub: David Grothe <dave@gcom.com>,
  * Tigran Aivazian <tigran@sco.com>
+<<<<<<< HEAD
+=======
+ *
+ * This file is licensed under the terms of the GNU General Public License
+ * version 2. This program is licensed "as is" without any warranty of any
+ * kind, whether express or implied.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #define pr_fmt(fmt) "KGDB: " fmt

@@ -101,6 +101,13 @@ DECLARE_PER_CPU(struct cpuinfo_parisc, cpu_data);
 
 #define CPU_HVERSION ((boot_cpu_data.hversion >> 4) & 0x0FFF)
 
+<<<<<<< HEAD
+=======
+typedef struct {
+	int seg;  
+} mm_segment_t;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ARCH_MIN_TASKALIGN	8
 
 struct thread_struct {

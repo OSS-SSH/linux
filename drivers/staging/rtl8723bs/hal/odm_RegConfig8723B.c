@@ -11,7 +11,11 @@ void odm_ConfigRFReg_8723B(
 	struct dm_odm_t *pDM_Odm,
 	u32 Addr,
 	u32 Data,
+<<<<<<< HEAD
 	enum rf_path RF_PATH,
+=======
+	enum odm_rf_radio_path_e RF_PATH,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 RegAddr
 )
 {
@@ -93,7 +97,11 @@ void odm_ConfigRF_RadioA_8723B(struct dm_odm_t *pDM_Odm, u32 Addr, u32 Data)
 		pDM_Odm,
 		Addr,
 		Data,
+<<<<<<< HEAD
 		RF_PATH_A,
+=======
+		ODM_RF_PATH_A,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		Addr|maskforPhySet
 	);
 }
@@ -118,6 +126,10 @@ void odm_ConfigBB_AGC_8723B(
 void odm_ConfigBB_PHY_REG_PG_8723B(
 	struct dm_odm_t *pDM_Odm,
 	u32 RfPath,
+<<<<<<< HEAD
+=======
+	u32 TxNum,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 Addr,
 	u32 Bitmask,
 	u32 Data
@@ -126,7 +138,11 @@ void odm_ConfigBB_PHY_REG_PG_8723B(
 	if (Addr == 0xfe || Addr == 0xffe)
 		msleep(50);
 	else {
+<<<<<<< HEAD
 		PHY_StoreTxPowerByRate(pDM_Odm->Adapter, RfPath, Addr, Bitmask, Data);
+=======
+		PHY_StoreTxPowerByRate(pDM_Odm->Adapter, RfPath, TxNum, Addr, Bitmask, Data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

@@ -100,10 +100,17 @@ static const struct ts_dmi_data chuwi_hi10_air_data = {
 };
 
 static const struct property_entry chuwi_hi10_plus_props[] = {
+<<<<<<< HEAD
 	PROPERTY_ENTRY_U32("touchscreen-min-x", 12),
 	PROPERTY_ENTRY_U32("touchscreen-min-y", 10),
 	PROPERTY_ENTRY_U32("touchscreen-size-x", 1908),
 	PROPERTY_ENTRY_U32("touchscreen-size-y", 1270),
+=======
+	PROPERTY_ENTRY_U32("touchscreen-min-x", 0),
+	PROPERTY_ENTRY_U32("touchscreen-min-y", 5),
+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1914),
+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1283),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-chuwi-hi10plus.fw"),
 	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
 	PROPERTY_ENTRY_BOOL("silead,home-button"),
@@ -111,6 +118,7 @@ static const struct property_entry chuwi_hi10_plus_props[] = {
 };
 
 static const struct ts_dmi_data chuwi_hi10_plus_data = {
+<<<<<<< HEAD
 	.embedded_fw = {
 		.name	= "silead/gsl1680-chuwi-hi10plus.fw",
 		.prefix = { 0xf0, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00, 0x00 },
@@ -120,6 +128,8 @@ static const struct ts_dmi_data chuwi_hi10_plus_data = {
 			    0x10, 0x68, 0xb5, 0xbd, 0xb7, 0x2a, 0x63, 0xb5,
 			    0x67, 0x0b, 0x96, 0xbd, 0x89, 0x67, 0x85, 0x09 },
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.acpi_name      = "MSSL0017:00",
 	.properties     = chuwi_hi10_plus_props,
 };
@@ -150,6 +160,7 @@ static const struct ts_dmi_data chuwi_hi10_pro_data = {
 	.properties     = chuwi_hi10_pro_props,
 };
 
+<<<<<<< HEAD
 static const struct property_entry chuwi_hibook_props[] = {
 	PROPERTY_ENTRY_U32("touchscreen-min-x", 30),
 	PROPERTY_ENTRY_U32("touchscreen-min-y", 4),
@@ -177,6 +188,8 @@ static const struct ts_dmi_data chuwi_hibook_data = {
 	.properties     = chuwi_hibook_props,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct property_entry chuwi_vi8_props[] = {
 	PROPERTY_ENTRY_U32("touchscreen-min-x", 4),
 	PROPERTY_ENTRY_U32("touchscreen-min-y", 6),
@@ -1016,6 +1029,7 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
 		},
 	},
 	{
+<<<<<<< HEAD
 		/* Chuwi HiBook (CWI514) */
 		.driver_data = (void *)&chuwi_hibook_data,
 		.matches = {
@@ -1026,6 +1040,8 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
 		},
 	},
 	{
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Chuwi Vi8 (CWI506) */
 		.driver_data = (void *)&chuwi_vi8_data,
 		.matches = {

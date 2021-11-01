@@ -383,6 +383,16 @@ bool dpp3_get_optimal_number_of_taps(
 	int min_taps_y, min_taps_c;
 	enum lb_memory_config lb_config;
 
+<<<<<<< HEAD
+=======
+	/* Some ASICs does not support  FP16 scaling, so we reject modes require this*/
+	if (scl_data->viewport.width  != scl_data->h_active &&
+		scl_data->viewport.height != scl_data->v_active &&
+		dpp->caps->dscl_data_proc_format == DSCL_DATA_PRCESSING_FIXED_FORMAT &&
+		scl_data->format == PIXEL_FORMAT_FP16)
+		return false;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (scl_data->viewport.width > scl_data->h_active &&
 		dpp->ctx->dc->debug.max_downscale_src_width != 0 &&
 		scl_data->viewport.width > dpp->ctx->dc->debug.max_downscale_src_width)
@@ -1433,6 +1443,18 @@ bool dpp3_construct(
 	dpp->tf_shift = tf_shift;
 	dpp->tf_mask = tf_mask;
 
+<<<<<<< HEAD
+=======
+	dpp->lb_pixel_depth_supported =
+		LB_PIXEL_DEPTH_18BPP |
+		LB_PIXEL_DEPTH_24BPP |
+		LB_PIXEL_DEPTH_30BPP |
+		LB_PIXEL_DEPTH_36BPP;
+
+	dpp->lb_bits_per_entry = LB_BITS_PER_ENTRY;
+	dpp->lb_memory_size = LB_TOTAL_NUMBER_OF_ENTRIES; /*0x1404*/
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return true;
 }
 

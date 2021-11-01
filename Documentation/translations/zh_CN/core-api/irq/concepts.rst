@@ -1,5 +1,6 @@
 .. include:: ../../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/core-api/irq/concepts.rst
 
 :翻译:
@@ -8,6 +9,14 @@
 
 .. _cn_concepts.rst:
 
+=======
+:Original: :doc:`../../../../core-api/irq/concepts`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_concepts.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ===========
 什么是IRQ？
 ===========

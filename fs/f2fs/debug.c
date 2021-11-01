@@ -323,6 +323,7 @@ get_cache:
 #endif
 }
 
+<<<<<<< HEAD
 static char *s_flag[] = {
 	[SBI_IS_DIRTY]		= " fs_dirty",
 	[SBI_IS_CLOSE]		= " closing",
@@ -344,6 +345,13 @@ static int stat_show(struct seq_file *s, void *v)
 {
 	struct f2fs_stat_info *si;
 	int i = 0, j = 0;
+=======
+static int stat_show(struct seq_file *s, void *v)
+{
+	struct f2fs_stat_info *si;
+	int i = 0;
+	int j;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_lock(&f2fs_stat_mutex);
 	list_for_each_entry(si, &f2fs_stat_list, stat_list) {
@@ -353,6 +361,7 @@ static int stat_show(struct seq_file *s, void *v)
 			si->sbi->sb->s_bdev, i++,
 			f2fs_readonly(si->sbi->sb) ? "RO": "RW",
 			is_set_ckpt_flags(si->sbi, CP_DISABLED_FLAG) ?
+<<<<<<< HEAD
 			"Disabled" : (f2fs_cp_error(si->sbi) ? "Error" : "Good"));
 		if (si->sbi->s_flag) {
 			seq_puts(s, "[SBI:");
@@ -360,6 +369,9 @@ static int stat_show(struct seq_file *s, void *v)
 				seq_puts(s, s_flag[j]);
 			seq_puts(s, "]\n");
 		}
+=======
+			"Disabled": (f2fs_cp_error(si->sbi) ? "Error": "Good"));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		seq_printf(s, "[SB: 1] [CP: 2] [SIT: %d] [NAT: %d] ",
 			   si->sit_area_segs, si->nat_area_segs);
 		seq_printf(s, "[SSA: %d] [MAIN: %d",
@@ -472,6 +484,7 @@ static int stat_show(struct seq_file *s, void *v)
 				si->data_segs, si->bg_data_segs);
 		seq_printf(s, "  - node segments : %d (%d)\n",
 				si->node_segs, si->bg_node_segs);
+<<<<<<< HEAD
 		seq_printf(s, "  - Reclaimed segs : Normal (%d), Idle CB (%d), "
 				"Idle Greedy (%d), Idle AT (%d), "
 				"Urgent High (%d), Urgent Low (%d)\n",
@@ -481,6 +494,8 @@ static int stat_show(struct seq_file *s, void *v)
 				si->sbi->gc_reclaimed_segs[GC_IDLE_AT],
 				si->sbi->gc_reclaimed_segs[GC_URGENT_HIGH],
 				si->sbi->gc_reclaimed_segs[GC_URGENT_LOW]);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		seq_printf(s, "Try to move %d blocks (BG: %d)\n", si->tot_blks,
 				si->bg_data_blks + si->bg_node_blks);
 		seq_printf(s, "  - data blocks : %d (%d)\n", si->data_blks,
@@ -642,7 +657,11 @@ void __init f2fs_create_root_stats(void)
 #ifdef CONFIG_DEBUG_FS
 	f2fs_debugfs_root = debugfs_create_dir("f2fs", NULL);
 
+<<<<<<< HEAD
 	debugfs_create_file("status", 0444, f2fs_debugfs_root, NULL,
+=======
+	debugfs_create_file("status", S_IRUGO, f2fs_debugfs_root, NULL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			    &stat_fops);
 #endif
 }

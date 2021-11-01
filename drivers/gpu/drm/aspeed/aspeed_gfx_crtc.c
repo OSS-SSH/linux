@@ -220,6 +220,10 @@ static const struct drm_simple_display_pipe_funcs aspeed_gfx_funcs = {
 	.enable		= aspeed_gfx_pipe_enable,
 	.disable	= aspeed_gfx_pipe_disable,
 	.update		= aspeed_gfx_pipe_update,
+<<<<<<< HEAD
+=======
+	.prepare_fb	= drm_gem_simple_display_pipe_prepare_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.enable_vblank	= aspeed_gfx_enable_vblank,
 	.disable_vblank	= aspeed_gfx_disable_vblank,
 };

@@ -168,6 +168,34 @@ static int snd_sbdsp_probe(struct snd_sb * chip)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static int snd_sbdsp_free(struct snd_sb *chip)
+{
+	release_and_free_resource(chip->res_port);
+	if (chip->irq >= 0)
+		free_irq(chip->irq, (void *) chip);
+#ifdef CONFIG_ISA
+	if (chip->dma8 >= 0) {
+		disable_dma(chip->dma8);
+		free_dma(chip->dma8);
+	}
+	if (chip->dma16 >= 0 && chip->dma16 != chip->dma8) {
+		disable_dma(chip->dma16);
+		free_dma(chip->dma16);
+	}
+#endif
+	kfree(chip);
+	return 0;
+}
+
+static int snd_sbdsp_dev_free(struct snd_device *device)
+{
+	struct snd_sb *chip = device->device_data;
+	return snd_sbdsp_free(chip);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int snd_sbdsp_create(struct snd_card *card,
 		     unsigned long port,
 		     int irq,
@@ -179,12 +207,23 @@ int snd_sbdsp_create(struct snd_card *card,
 {
 	struct snd_sb *chip;
 	int err;
+<<<<<<< HEAD
+=======
+	static const struct snd_device_ops ops = {
+		.dev_free =	snd_sbdsp_dev_free,
+	};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (snd_BUG_ON(!r_chip))
 		return -EINVAL;
 	*r_chip = NULL;
+<<<<<<< HEAD
 	chip = devm_kzalloc(card->dev, sizeof(*chip), GFP_KERNEL);
 	if (!chip)
+=======
+	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+	if (chip == NULL)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 	spin_lock_init(&chip->reg_lock);
 	spin_lock_init(&chip->open_lock);
@@ -195,12 +234,22 @@ int snd_sbdsp_create(struct snd_card *card,
 	chip->dma16 = -1;
 	chip->port = port;
 	
+<<<<<<< HEAD
 	if (devm_request_irq(card->dev, irq, irq_handler,
 			     (hardware == SB_HW_ALS4000 ||
 			      hardware == SB_HW_CS5530) ?
 			     IRQF_SHARED : 0,
 			     "SoundBlaster", (void *) chip)) {
 		snd_printk(KERN_ERR "sb: can't grab irq %d\n", irq);
+=======
+	if (request_irq(irq, irq_handler,
+			(hardware == SB_HW_ALS4000 ||
+			 hardware == SB_HW_CS5530) ?
+			IRQF_SHARED : 0,
+			"SoundBlaster", (void *) chip)) {
+		snd_printk(KERN_ERR "sb: can't grab irq %d\n", irq);
+		snd_sbdsp_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 	chip->irq = irq;
@@ -209,17 +258,30 @@ int snd_sbdsp_create(struct snd_card *card,
 	if (hardware == SB_HW_ALS4000)
 		goto __skip_allocation;
 	
+<<<<<<< HEAD
 	chip->res_port = devm_request_region(card->dev, port, 16,
 					     "SoundBlaster");
 	if (!chip->res_port) {
 		snd_printk(KERN_ERR "sb: can't grab port 0x%lx\n", port);
+=======
+	chip->res_port = request_region(port, 16, "SoundBlaster");
+	if (!chip->res_port) {
+		snd_printk(KERN_ERR "sb: can't grab port 0x%lx\n", port);
+		snd_sbdsp_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 
 #ifdef CONFIG_ISA
+<<<<<<< HEAD
 	if (dma8 >= 0 && snd_devm_request_dma(card->dev, dma8,
 					      "SoundBlaster - 8bit")) {
 		snd_printk(KERN_ERR "sb: can't grab DMA8 %d\n", dma8);
+=======
+	if (dma8 >= 0 && request_dma(dma8, "SoundBlaster - 8bit")) {
+		snd_printk(KERN_ERR "sb: can't grab DMA8 %d\n", dma8);
+		snd_sbdsp_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 	chip->dma8 = dma8;
@@ -227,9 +289,15 @@ int snd_sbdsp_create(struct snd_card *card,
 		if (hardware != SB_HW_ALS100 && (dma16 < 5 || dma16 > 7)) {
 			/* no duplex */
 			dma16 = -1;
+<<<<<<< HEAD
 		} else if (snd_devm_request_dma(card->dev, dma16,
 						"SoundBlaster - 16bit")) {
 			snd_printk(KERN_ERR "sb: can't grab DMA16 %d\n", dma16);
+=======
+		} else if (request_dma(dma16, "SoundBlaster - 16bit")) {
+			snd_printk(KERN_ERR "sb: can't grab DMA16 %d\n", dma16);
+			snd_sbdsp_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EBUSY;
 		}
 	}
@@ -240,8 +308,20 @@ int snd_sbdsp_create(struct snd_card *card,
 	chip->card = card;
 	chip->hardware = hardware;
 	err = snd_sbdsp_probe(chip);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
+=======
+	if (err < 0) {
+		snd_sbdsp_free(chip);
+		return err;
+	}
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+	if (err < 0) {
+		snd_sbdsp_free(chip);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	*r_chip = chip;
 	return 0;
 }

@@ -29,6 +29,10 @@ struct rsvd_region {
 };
 
 extern struct rsvd_region rsvd_region[IA64_MAX_RSVD_REGIONS + 1];
+<<<<<<< HEAD
+=======
+extern int num_rsvd_regions;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 extern void find_memory (void);
 extern void reserve_memory (void);
@@ -39,6 +43,10 @@ extern unsigned long efi_memmap_init(u64 *s, u64 *e);
 extern int find_max_min_low_pfn (u64, u64, void *);
 
 extern unsigned long vmcore_find_descriptor_size(unsigned long address);
+<<<<<<< HEAD
+=======
+extern int reserve_elfcorehdr(u64 *start, u64 *end);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * For rounding an address to the next IA64_GRANULE_SIZE or order

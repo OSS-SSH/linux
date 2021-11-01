@@ -105,7 +105,13 @@ long vfs_truncate(const struct path *path, loff_t length)
 	if (error)
 		goto put_write_and_out;
 
+<<<<<<< HEAD
 	error = security_path_truncate(path);
+=======
+	error = locks_verify_truncate(inode, NULL, length);
+	if (!error)
+		error = security_path_truncate(path);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!error)
 		error = do_truncate(mnt_userns, path->dentry, length, 0, NULL);
 
@@ -187,7 +193,13 @@ long do_sys_ftruncate(unsigned int fd, loff_t length, int small)
 	if (IS_APPEND(file_inode(f.file)))
 		goto out_putf;
 	sb_start_write(inode->i_sb);
+<<<<<<< HEAD
 	error = security_path_truncate(&f.file->f_path);
+=======
+	error = locks_verify_truncate(inode, f.file, length);
+	if (!error)
+		error = security_path_truncate(&f.file->f_path);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!error)
 		error = do_truncate(file_mnt_user_ns(f.file), dentry, length,
 				    ATTR_MTIME | ATTR_CTIME, f.file);

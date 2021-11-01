@@ -19,6 +19,7 @@ struct a6xx_gpu {
 	uint64_t sqe_iova;
 
 	struct msm_ringbuffer *cur_ring;
+<<<<<<< HEAD
 
 	/**
 	 * cur_ctx_seqno:
@@ -29,6 +30,9 @@ struct a6xx_gpu {
 	 * and a new one created with the same address.
 	 */
 	int cur_ctx_seqno;
+=======
+	struct msm_file_private *cur_ctx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct a6xx_gmu gmu;
 

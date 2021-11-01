@@ -10,7 +10,11 @@
 #include <scsi/scsi_host.h>
 #include <scsi/scsi_transport.h>
 #include <scsi/scsi_transport_sas.h>
+<<<<<<< HEAD
 #include "scsi_sas_internal.h"
+=======
+#include "../scsi_sas_internal.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* ---------- Phy events ---------- */
 

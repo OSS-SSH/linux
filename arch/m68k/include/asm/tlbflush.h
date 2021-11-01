@@ -13,12 +13,21 @@ static inline void flush_tlb_kernel_page(void *addr)
 	if (CPU_IS_COLDFIRE) {
 		mmu_write(MMUOR, MMUOR_CNL);
 	} else if (CPU_IS_040_OR_060) {
+<<<<<<< HEAD
 		set_fc(SUPER_DATA);
+=======
+		mm_segment_t old_fs = get_fs();
+		set_fs(KERNEL_DS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		__asm__ __volatile__(".chip 68040\n\t"
 				     "pflush (%0)\n\t"
 				     ".chip 68k"
 				     : : "a" (addr));
+<<<<<<< HEAD
 		set_fc(USER_DATA);
+=======
+		set_fs(old_fs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (CPU_IS_020_OR_030)
 		__asm__ __volatile__("pflush #4,#4,(%0)" : : "a" (addr));
 }
@@ -83,8 +92,17 @@ static inline void flush_tlb_mm(struct mm_struct *mm)
 
 static inline void flush_tlb_page(struct vm_area_struct *vma, unsigned long addr)
 {
+<<<<<<< HEAD
 	if (vma->vm_mm == current->active_mm)
 		__flush_tlb_one(addr);
+=======
+	if (vma->vm_mm == current->active_mm) {
+		mm_segment_t old_fs = force_uaccess_begin();
+
+		__flush_tlb_one(addr);
+		force_uaccess_end(old_fs);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void flush_tlb_range(struct vm_area_struct *vma,

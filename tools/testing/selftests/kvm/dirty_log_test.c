@@ -749,8 +749,13 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 
 	pr_info("guest physical test memory offset: 0x%lx\n", guest_test_phys_mem);
 
+<<<<<<< HEAD
 	bmap = bitmap_zalloc(host_num_pages);
 	host_bmap_track = bitmap_zalloc(host_num_pages);
+=======
+	bmap = bitmap_alloc(host_num_pages);
+	host_bmap_track = bitmap_alloc(host_num_pages);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Add an extra memory slot for testing dirty logging */
 	vm_userspace_mem_region_add(vm, VM_MEM_SRC_ANONYMOUS,

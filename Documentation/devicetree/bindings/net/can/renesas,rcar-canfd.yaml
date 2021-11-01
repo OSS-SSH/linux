@@ -30,6 +30,7 @@ properties:
               - renesas,r8a77995-canfd     # R-Car D3
           - const: renesas,rcar-gen3-canfd # R-Car Gen3 and RZ/G2
 
+<<<<<<< HEAD
       - items:
           - enum:
               - renesas,r9a07g044-canfd    # RZ/G2{L,LC}
@@ -39,6 +40,15 @@ properties:
     maxItems: 1
 
   interrupts: true
+=======
+  reg:
+    maxItems: 1
+
+  interrupts:
+    items:
+      - description: Channel interrupt
+      - description: Global interrupt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   clocks:
     maxItems: 3
@@ -52,7 +62,12 @@ properties:
   power-domains:
     maxItems: 1
 
+<<<<<<< HEAD
   resets: true
+=======
+  resets:
+    maxItems: 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   renesas,no-can-fd:
     $ref: /schemas/types.yaml#/definitions/flag
@@ -92,6 +107,7 @@ required:
   - channel0
   - channel1
 
+<<<<<<< HEAD
 if:
   properties:
     compatible:
@@ -148,6 +164,8 @@ else:
     resets:
       maxItems: 1
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 unevaluatedProperties: false
 
 examples:

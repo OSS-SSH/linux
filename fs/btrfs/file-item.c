@@ -233,6 +233,10 @@ int btrfs_lookup_file_extent(struct btrfs_trans_handle *trans,
 			     struct btrfs_path *path, u64 objectid,
 			     u64 offset, int mod)
 {
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct btrfs_key file_key;
 	int ins_len = mod < 0 ? -1 : 0;
 	int cow = mod != 0;
@@ -240,8 +244,13 @@ int btrfs_lookup_file_extent(struct btrfs_trans_handle *trans,
 	file_key.objectid = objectid;
 	file_key.offset = offset;
 	file_key.type = BTRFS_EXTENT_DATA_KEY;
+<<<<<<< HEAD
 
 	return btrfs_search_slot(trans, root, &file_key, path, ins_len, cow);
+=======
+	ret = btrfs_search_slot(trans, root, &file_key, path, ins_len, cow);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -665,6 +674,7 @@ blk_status_t btrfs_csum_one_bio(struct btrfs_inode *inode, struct bio *bio,
 
 		if (!ordered) {
 			ordered = btrfs_lookup_ordered_extent(inode, offset);
+<<<<<<< HEAD
 			/*
 			 * The bio range is not covered by any ordered extent,
 			 * must be a code logic error.
@@ -677,6 +687,9 @@ blk_status_t btrfs_csum_one_bio(struct btrfs_inode *inode, struct bio *bio,
 				kvfree(sums);
 				return BLK_STS_IOERR;
 			}
+=======
+			BUG_ON(!ordered); /* Logic error */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		nr_sectors = BTRFS_BYTES_TO_BLKS(fs_info,

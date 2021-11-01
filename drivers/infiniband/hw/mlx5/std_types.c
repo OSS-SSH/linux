@@ -114,18 +114,26 @@ out:
 static int fill_switchdev_info(struct mlx5_ib_dev *dev, u32 port_num,
 			       struct mlx5_ib_uapi_query_port *info)
 {
+<<<<<<< HEAD
 	struct mlx5_eswitch_rep *rep;
 	struct mlx5_core_dev *mdev;
+=======
+	struct mlx5_core_dev *mdev = dev->mdev;
+	struct mlx5_eswitch_rep *rep;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	rep = dev->port[port_num - 1].rep;
 	if (!rep)
 		return -EOPNOTSUPP;
 
+<<<<<<< HEAD
 	mdev = mlx5_eswitch_get_core_dev(rep->esw);
 	if (!mdev)
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	info->vport = rep->vport;
 	info->flags |= MLX5_IB_UAPI_QUERY_PORT_VPORT;
 
@@ -142,9 +150,15 @@ static int fill_switchdev_info(struct mlx5_ib_dev *dev, u32 port_num,
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 	if (mlx5_eswitch_vport_match_metadata_enabled(rep->esw)) {
 		info->reg_c0.value = mlx5_eswitch_get_vport_metadata_for_match(
 			rep->esw, rep->vport);
+=======
+	if (mlx5_eswitch_vport_match_metadata_enabled(mdev->priv.eswitch)) {
+		info->reg_c0.value = mlx5_eswitch_get_vport_metadata_for_match(
+			mdev->priv.eswitch, rep->vport);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		info->reg_c0.mask = mlx5_eswitch_get_vport_metadata_mask();
 		info->flags |= MLX5_IB_UAPI_QUERY_PORT_VPORT_REG_C0;
 	}

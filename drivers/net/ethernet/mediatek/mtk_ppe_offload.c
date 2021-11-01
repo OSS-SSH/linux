@@ -186,9 +186,12 @@ mtk_flow_offload_replace(struct mtk_eth *eth, struct flow_cls_offload *f)
 	int hash;
 	int i;
 
+<<<<<<< HEAD
 	if (rhashtable_lookup(&eth->flow_table, &f->cookie, mtk_flow_ht_params))
 		return -EEXIST;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_META)) {
 		struct flow_match_meta match;
 

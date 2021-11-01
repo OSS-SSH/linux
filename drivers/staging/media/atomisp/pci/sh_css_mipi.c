@@ -91,8 +91,12 @@ ia_css_mipi_frame_calculate_size(const unsigned int width,
 				 const enum atomisp_input_format format,
 				 const bool hasSOLandEOL,
 				 const unsigned int embedded_data_size_words,
+<<<<<<< HEAD
 				 unsigned int *size_mem_words)
 {
+=======
+				 unsigned int *size_mem_words) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 
 	unsigned int bits_per_pixel = 0;
@@ -119,7 +123,12 @@ ia_css_mipi_frame_calculate_size(const unsigned int width,
 	IA_CSS_ENTER("padded_width=%d, height=%d, format=%d, hasSOLandEOL=%d, embedded_data_size_words=%d\n",
 		     width_padded, height, format, hasSOLandEOL, embedded_data_size_words);
 
+<<<<<<< HEAD
 	switch (format) {
+=======
+	switch (format)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case ATOMISP_INPUT_FORMAT_RAW_6:		/* 4p, 3B, 24bits */
 		bits_per_pixel = 6;
 		break;
@@ -178,10 +187,19 @@ ia_css_mipi_frame_calculate_size(const unsigned int width,
 	/* Even lines for YUV420 formats are double in bits_per_pixel. */
 	if (format == ATOMISP_INPUT_FORMAT_YUV420_8
 	    || format == ATOMISP_INPUT_FORMAT_YUV420_10
+<<<<<<< HEAD
 	    || format == ATOMISP_INPUT_FORMAT_YUV420_16) {
 		even_line_bytes = (width_padded * 2 * bits_per_pixel + 7) >>
 			3; /* ceil ( bits per line / 8) */
 	} else {
+=======
+	    || format == ATOMISP_INPUT_FORMAT_YUV420_16)
+	{
+		even_line_bytes = (width_padded * 2 * bits_per_pixel + 7) >>
+			3; /* ceil ( bits per line / 8) */
+	} else
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		even_line_bytes = odd_line_bytes;
 	}
 
@@ -234,8 +252,12 @@ ia_css_mipi_frame_calculate_size(const unsigned int width,
 #if !defined(ISP2401)
 int
 ia_css_mipi_frame_enable_check_on_size(const enum mipi_port_id port,
+<<<<<<< HEAD
 				       const unsigned int	size_mem_words)
 {
+=======
+				       const unsigned int	size_mem_words) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 idx;
 
 	int err = -EBUSY;
@@ -245,9 +267,17 @@ ia_css_mipi_frame_enable_check_on_size(const enum mipi_port_id port,
 
 	for (idx = 0; idx < IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT &&
 	     my_css.mipi_sizes_for_check[port][idx] != 0;
+<<<<<<< HEAD
 	     idx++) { /* do nothing */
 	}
 	if (idx < IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT) {
+=======
+	     idx++)   /* do nothing */
+	{
+	}
+	if (idx < IA_CSS_MIPI_SIZE_CHECK_MAX_NOF_ENTRIES_PER_PORT)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		my_css.mipi_sizes_for_check[port][idx] = size_mem_words;
 		err = 0;
 	}
@@ -268,8 +298,12 @@ mipi_init(void)
 int
 calculate_mipi_buff_size(
     struct ia_css_stream_config *stream_cfg,
+<<<<<<< HEAD
     unsigned int *size_mem_words)
 {
+=======
+    unsigned int *size_mem_words) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if !defined(ISP2401)
 	int err = -EINVAL;
 	(void)stream_cfg;
@@ -344,10 +378,19 @@ calculate_mipi_buff_size(
 
 	/* Even lines for YUV420 formats are double in bits_per_pixel. */
 	if (format == ATOMISP_INPUT_FORMAT_YUV420_8
+<<<<<<< HEAD
 	    || format == ATOMISP_INPUT_FORMAT_YUV420_10) {
 		even_line_bytes = (width_padded * 2 * bits_per_pixel + 7) >>
 			3; /* ceil ( bits per line / 8) */
 	} else {
+=======
+	    || format == ATOMISP_INPUT_FORMAT_YUV420_10)
+	{
+		even_line_bytes = (width_padded * 2 * bits_per_pixel + 7) >>
+			3; /* ceil ( bits per line / 8) */
+	} else
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		even_line_bytes = odd_line_bytes;
 	}
 
@@ -389,8 +432,12 @@ static bool buffers_needed(struct ia_css_pipe *pipe)
 
 int
 allocate_mipi_frames(struct ia_css_pipe *pipe,
+<<<<<<< HEAD
 		     struct ia_css_stream_info *info)
 {
+=======
+		     struct ia_css_stream_info *info) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = -EINVAL;
 	unsigned int port;
 
@@ -399,7 +446,12 @@ allocate_mipi_frames(struct ia_css_pipe *pipe,
 
 	assert(pipe);
 	assert(pipe->stream);
+<<<<<<< HEAD
 	if ((!pipe) || (!pipe->stream)) {
+=======
+	if ((!pipe) || (!pipe->stream))
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ia_css_debug_dtrace(IA_CSS_DEBUG_TRACE_PRIVATE,
 				    "allocate_mipi_frames(%p) exit: pipe or stream is null.\n",
 				    pipe);
@@ -407,7 +459,12 @@ allocate_mipi_frames(struct ia_css_pipe *pipe,
 	}
 
 #ifdef ISP2401
+<<<<<<< HEAD
 	if (pipe->stream->config.online) {
+=======
+	if (pipe->stream->config.online)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ia_css_debug_dtrace(IA_CSS_DEBUG_TRACE_PRIVATE,
 				    "allocate_mipi_frames(%p) exit: no buffers needed for 2401 pipe mode.\n",
 				    pipe);
@@ -444,7 +501,12 @@ allocate_mipi_frames(struct ia_css_pipe *pipe,
 #endif
 
 #if !defined(ISP2401)
+<<<<<<< HEAD
 	if (ref_count_mipi_allocation[port] != 0) {
+=======
+	if (ref_count_mipi_allocation[port] != 0)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ia_css_debug_dtrace(IA_CSS_DEBUG_TRACE_PRIVATE,
 				    "allocate_mipi_frames(%p) exit: already allocated for this port (port=%d).\n",
 				    pipe, port);
@@ -456,7 +518,12 @@ allocate_mipi_frames(struct ia_css_pipe *pipe,
 	 * TODO AM: Once that is changed (removed) this code should be removed as well.
 	 * In that case only 2400 related code should remain.
 	 */
+<<<<<<< HEAD
 	if (ref_count_mipi_allocation[port] != 0) {
+=======
+	if (ref_count_mipi_allocation[port] != 0)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ref_count_mipi_allocation[port]++;
 		ia_css_debug_dtrace(IA_CSS_DEBUG_TRACE_PRIVATE,
 				    "allocate_mipi_frames(%p) leave: nothing to do, already allocated for this port (port=%d).\n",
@@ -474,7 +541,12 @@ allocate_mipi_frames(struct ia_css_pipe *pipe,
 	{ /* limit the scope of i,j */
 		unsigned int i, j;
 
+<<<<<<< HEAD
 		for (i = 0; i < my_css.num_mipi_frames[port]; i++) {
+=======
+		for (i = 0; i < my_css.num_mipi_frames[port]; i++)
+		{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* free previous frame */
 			if (my_css.mipi_frames[port][i]) {
 				ia_css_frame_free(my_css.mipi_frames[port][i]);
@@ -527,8 +599,12 @@ allocate_mipi_frames(struct ia_css_pipe *pipe,
 }
 
 int
+<<<<<<< HEAD
 free_mipi_frames(struct ia_css_pipe *pipe)
 {
+=======
+free_mipi_frames(struct ia_css_pipe *pipe) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = -EINVAL;
 	unsigned int port;
 
@@ -536,7 +612,12 @@ free_mipi_frames(struct ia_css_pipe *pipe)
 			    "free_mipi_frames(%p) enter:\n", pipe);
 
 	/* assert(pipe != NULL); TEMP: TODO: Should be assert only. */
+<<<<<<< HEAD
 	if (pipe) {
+=======
+	if (pipe)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		assert(pipe->stream);
 		if ((!pipe) || (!pipe->stream)) {
 			ia_css_debug_dtrace(IA_CSS_DEBUG_TRACE_PRIVATE,
@@ -612,7 +693,12 @@ free_mipi_frames(struct ia_css_pipe *pipe)
 			}
 #endif
 		}
+<<<<<<< HEAD
 	} else { /* pipe ==NULL */
+=======
+	} else   /* pipe ==NULL */
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* AM TEMP: free-ing all mipi buffers just like a legacy code. */
 		for (port = CSI_PORT0_ID; port < N_CSI_PORTS; port++) {
 			unsigned int i;
@@ -636,8 +722,12 @@ free_mipi_frames(struct ia_css_pipe *pipe)
 }
 
 int
+<<<<<<< HEAD
 send_mipi_frames(struct ia_css_pipe *pipe)
 {
+=======
+send_mipi_frames(struct ia_css_pipe *pipe) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = -EINVAL;
 	unsigned int i;
 #ifndef ISP2401
@@ -650,7 +740,12 @@ send_mipi_frames(struct ia_css_pipe *pipe)
 
 	assert(pipe);
 	assert(pipe->stream);
+<<<<<<< HEAD
 	if (!pipe || !pipe->stream) {
+=======
+	if (!pipe || !pipe->stream)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		IA_CSS_ERROR("pipe or stream is null");
 		return -EINVAL;
 	}
@@ -677,7 +772,12 @@ send_mipi_frames(struct ia_css_pipe *pipe)
 	}
 
 	/* Hand-over the SP-internal mipi buffers */
+<<<<<<< HEAD
 	for (i = 0; i < my_css.num_mipi_frames[port]; i++) {
+=======
+	for (i = 0; i < my_css.num_mipi_frames[port]; i++)
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Need to include the ofset for port. */
 		sh_css_update_host2sp_mipi_frame(port * NUM_MIPI_FRAMES_PER_STREAM + i,
 						 my_css.mipi_frames[port][i]);
@@ -690,7 +790,12 @@ send_mipi_frames(struct ia_css_pipe *pipe)
 	 * Send an event to inform the SP
 	 * that all MIPI frames are passed.
 	 **********************************/
+<<<<<<< HEAD
 	if (!sh_css_sp_is_running()) {
+=======
+	if (!sh_css_sp_is_running())
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* SP is not running. The queues are not valid */
 		IA_CSS_ERROR("sp is not running");
 		return err;

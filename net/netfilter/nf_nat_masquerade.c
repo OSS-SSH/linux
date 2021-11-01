@@ -9,6 +9,7 @@
 
 #include <net/netfilter/nf_nat_masquerade.h>
 
+<<<<<<< HEAD
 struct masq_dev_work {
 	struct work_struct work;
 	struct net *net;
@@ -22,6 +23,10 @@ struct masq_dev_work {
 static DEFINE_MUTEX(masq_mutex);
 static unsigned int masq_refcnt __read_mostly;
 static atomic_t masq_worker_count __read_mostly;
+=======
+static DEFINE_MUTEX(masq_mutex);
+static unsigned int masq_refcnt __read_mostly;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 unsigned int
 nf_nat_masquerade_ipv4(struct sk_buff *skb, unsigned int hooknum,
@@ -74,6 +79,7 @@ nf_nat_masquerade_ipv4(struct sk_buff *skb, unsigned int hooknum,
 }
 EXPORT_SYMBOL_GPL(nf_nat_masquerade_ipv4);
 
+<<<<<<< HEAD
 static void iterate_cleanup_work(struct work_struct *work)
 {
 	struct masq_dev_work *w;
@@ -139,6 +145,15 @@ static int device_cmp(struct nf_conn *i, void *arg)
 	if (!nat)
 		return 0;
 	return nat->masq_index == w->ifindex;
+=======
+static int device_cmp(struct nf_conn *i, void *ifindex)
+{
+	const struct nf_conn_nat *nat = nfct_nat(i);
+
+	if (!nat)
+		return 0;
+	return nat->masq_index == (int)(long)ifindex;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int masq_device_event(struct notifier_block *this,
@@ -154,8 +169,13 @@ static int masq_device_event(struct notifier_block *this,
 		 * and forget them.
 		 */
 
+<<<<<<< HEAD
 		nf_nat_masq_schedule(net, NULL, dev->ifindex,
 				     device_cmp, GFP_KERNEL);
+=======
+		nf_ct_iterate_cleanup_net(net, device_cmp,
+					  (void *)(long)dev->ifindex, 0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return NOTIFY_DONE;
@@ -163,21 +183,34 @@ static int masq_device_event(struct notifier_block *this,
 
 static int inet_cmp(struct nf_conn *ct, void *ptr)
 {
+<<<<<<< HEAD
 	struct nf_conntrack_tuple *tuple;
 	struct masq_dev_work *w = ptr;
 
 	if (!device_cmp(ct, ptr))
+=======
+	struct in_ifaddr *ifa = (struct in_ifaddr *)ptr;
+	struct net_device *dev = ifa->ifa_dev->dev;
+	struct nf_conntrack_tuple *tuple;
+
+	if (!device_cmp(ct, (void *)(long)dev->ifindex))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	tuple = &ct->tuplehash[IP_CT_DIR_REPLY].tuple;
 
+<<<<<<< HEAD
 	return nf_inet_addr_cmp(&w->addr, &tuple->dst.u3);
+=======
+	return ifa->ifa_address == tuple->dst.u3.ip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int masq_inet_event(struct notifier_block *this,
 			   unsigned long event,
 			   void *ptr)
 {
+<<<<<<< HEAD
 	const struct in_ifaddr *ifa = ptr;
 	const struct in_device *idev;
 	const struct net_device *dev;
@@ -185,12 +218,17 @@ static int masq_inet_event(struct notifier_block *this,
 
 	if (event != NETDEV_DOWN)
 		return NOTIFY_DONE;
+=======
+	struct in_device *idev = ((struct in_ifaddr *)ptr)->ifa_dev;
+	struct net *net = dev_net(idev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The masq_dev_notifier will catch the case of the device going
 	 * down.  So if the inetdev is dead and being destroyed we have
 	 * no work to do.  Otherwise this is an individual address removal
 	 * and we have to perform the flush.
 	 */
+<<<<<<< HEAD
 	idev = ifa->ifa_dev;
 	if (idev->dead)
 		return NOTIFY_DONE;
@@ -202,6 +240,13 @@ static int masq_inet_event(struct notifier_block *this,
 	dev = idev->dev;
 	nf_nat_masq_schedule(dev_net(idev->dev), &addr, dev->ifindex,
 			     inet_cmp, GFP_KERNEL);
+=======
+	if (idev->dead)
+		return NOTIFY_DONE;
+
+	if (event == NETDEV_DOWN)
+		nf_ct_iterate_cleanup_net(net, inet_cmp, ptr, 0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return NOTIFY_DONE;
 }
@@ -215,6 +260,11 @@ static struct notifier_block masq_inet_notifier = {
 };
 
 #if IS_ENABLED(CONFIG_IPV6)
+<<<<<<< HEAD
+=======
+static atomic_t v6_worker_count __read_mostly;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 nat_ipv6_dev_get_saddr(struct net *net, const struct net_device *dev,
 		       const struct in6_addr *daddr, unsigned int srcprefs,
@@ -264,6 +314,43 @@ nf_nat_masquerade_ipv6(struct sk_buff *skb, const struct nf_nat_range2 *range,
 }
 EXPORT_SYMBOL_GPL(nf_nat_masquerade_ipv6);
 
+<<<<<<< HEAD
+=======
+struct masq_dev_work {
+	struct work_struct work;
+	struct net *net;
+	struct in6_addr addr;
+	int ifindex;
+};
+
+static int inet6_cmp(struct nf_conn *ct, void *work)
+{
+	struct masq_dev_work *w = (struct masq_dev_work *)work;
+	struct nf_conntrack_tuple *tuple;
+
+	if (!device_cmp(ct, (void *)(long)w->ifindex))
+		return 0;
+
+	tuple = &ct->tuplehash[IP_CT_DIR_REPLY].tuple;
+
+	return ipv6_addr_equal(&w->addr, &tuple->dst.u3.in6);
+}
+
+static void iterate_cleanup_work(struct work_struct *work)
+{
+	struct masq_dev_work *w;
+
+	w = container_of(work, struct masq_dev_work, work);
+
+	nf_ct_iterate_cleanup_net(w->net, inet6_cmp, (void *)w, 0, 0);
+
+	put_net(w->net);
+	kfree(w);
+	atomic_dec(&v6_worker_count);
+	module_put(THIS_MODULE);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* atomic notifier; can't call nf_ct_iterate_cleanup_net (it can sleep).
  *
  * Defer it to the system workqueue.
@@ -276,6 +363,7 @@ static int masq_inet6_event(struct notifier_block *this,
 {
 	struct inet6_ifaddr *ifa = ptr;
 	const struct net_device *dev;
+<<<<<<< HEAD
 	union nf_inet_addr addr;
 
 	if (event != NETDEV_DOWN)
@@ -289,6 +377,38 @@ static int masq_inet6_event(struct notifier_block *this,
 
 	nf_nat_masq_schedule(dev_net(dev), &addr, dev->ifindex, inet_cmp,
 			     GFP_ATOMIC);
+=======
+	struct masq_dev_work *w;
+	struct net *net;
+
+	if (event != NETDEV_DOWN || atomic_read(&v6_worker_count) >= 16)
+		return NOTIFY_DONE;
+
+	dev = ifa->idev->dev;
+	net = maybe_get_net(dev_net(dev));
+	if (!net)
+		return NOTIFY_DONE;
+
+	if (!try_module_get(THIS_MODULE))
+		goto err_module;
+
+	w = kmalloc(sizeof(*w), GFP_ATOMIC);
+	if (w) {
+		atomic_inc(&v6_worker_count);
+
+		INIT_WORK(&w->work, iterate_cleanup_work);
+		w->ifindex = dev->ifindex;
+		w->net = net;
+		w->addr = ifa->addr;
+		schedule_work(&w->work);
+
+		return NOTIFY_DONE;
+	}
+
+	module_put(THIS_MODULE);
+ err_module:
+	put_net(net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return NOTIFY_DONE;
 }
 

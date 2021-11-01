@@ -169,6 +169,7 @@ static void fsnotify_connector_destroy_workfn(struct work_struct *work)
 	}
 }
 
+<<<<<<< HEAD
 static void fsnotify_get_inode_ref(struct inode *inode)
 {
 	ihold(inode);
@@ -200,6 +201,8 @@ static void fsnotify_put_sb_connectors(struct fsnotify_mark_connector *conn)
 		wake_up_var(&sb->s_fsnotify_connectors);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void *fsnotify_detach_connector_from_object(
 					struct fsnotify_mark_connector *conn,
 					unsigned int *type)
@@ -213,13 +216,20 @@ static void *fsnotify_detach_connector_from_object(
 	if (conn->type == FSNOTIFY_OBJ_TYPE_INODE) {
 		inode = fsnotify_conn_inode(conn);
 		inode->i_fsnotify_mask = 0;
+<<<<<<< HEAD
+=======
+		atomic_long_inc(&inode->i_sb->s_fsnotify_inode_refs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (conn->type == FSNOTIFY_OBJ_TYPE_VFSMOUNT) {
 		fsnotify_conn_mount(conn)->mnt_fsnotify_mask = 0;
 	} else if (conn->type == FSNOTIFY_OBJ_TYPE_SB) {
 		fsnotify_conn_sb(conn)->s_fsnotify_mask = 0;
 	}
 
+<<<<<<< HEAD
 	fsnotify_put_sb_connectors(conn);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rcu_assign_pointer(*(conn->obj), NULL);
 	conn->obj = NULL;
 	conn->type = FSNOTIFY_OBJ_TYPE_DETACHED;
@@ -240,12 +250,26 @@ static void fsnotify_final_mark_destroy(struct fsnotify_mark *mark)
 /* Drop object reference originally held by a connector */
 static void fsnotify_drop_object(unsigned int type, void *objp)
 {
+<<<<<<< HEAD
+=======
+	struct inode *inode;
+	struct super_block *sb;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!objp)
 		return;
 	/* Currently only inode references are passed to be dropped */
 	if (WARN_ON_ONCE(type != FSNOTIFY_OBJ_TYPE_INODE))
 		return;
+<<<<<<< HEAD
 	fsnotify_put_inode_ref(objp);
+=======
+	inode = objp;
+	sb = inode->i_sb;
+	iput(inode);
+	if (atomic_long_dec_and_test(&sb->s_fsnotify_inode_refs))
+		wake_up_var(&sb->s_fsnotify_inode_refs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void fsnotify_put_mark(struct fsnotify_mark *mark)
@@ -517,12 +541,17 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
 		conn->fsid.val[0] = conn->fsid.val[1] = 0;
 		conn->flags = 0;
 	}
+<<<<<<< HEAD
 	if (conn->type == FSNOTIFY_OBJ_TYPE_INODE) {
 		inode = fsnotify_conn_inode(conn);
 		fsnotify_get_inode_ref(inode);
 	}
 	fsnotify_get_sb_connectors(conn);
 
+=======
+	if (conn->type == FSNOTIFY_OBJ_TYPE_INODE)
+		inode = igrab(fsnotify_conn_inode(conn));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * cmpxchg() provides the barrier so that readers of *connp can see
 	 * only initialized structure
@@ -530,8 +559,12 @@ static int fsnotify_attach_connector_to_object(fsnotify_connp_t *connp,
 	if (cmpxchg(connp, NULL, conn)) {
 		/* Someone else created list structure for us */
 		if (inode)
+<<<<<<< HEAD
 			fsnotify_put_inode_ref(inode);
 		fsnotify_put_sb_connectors(conn);
+=======
+			iput(inode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kmem_cache_free(fsnotify_mark_connector_cachep, conn);
 	}
 

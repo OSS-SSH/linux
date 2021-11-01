@@ -44,7 +44,11 @@ enum siginfo_layout {
 	SIL_FAULT_MCEERR,
 	SIL_FAULT_BNDERR,
 	SIL_FAULT_PKUERR,
+<<<<<<< HEAD
 	SIL_FAULT_PERF_EVENT,
+=======
+	SIL_PERF_EVENT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SIL_CHLD,
 	SIL_RT,
 	SIL_SYS,

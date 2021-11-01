@@ -3,14 +3,20 @@
 #define __MM_KASAN_KASAN_H
 
 #include <linux/kasan.h>
+<<<<<<< HEAD
 #include <linux/kasan-tags.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/kfence.h>
 #include <linux/stackdepot.h>
 
 #ifdef CONFIG_KASAN_HW_TAGS
 
 #include <linux/static_key.h>
+<<<<<<< HEAD
 #include "../slab.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 DECLARE_STATIC_KEY_FALSE(kasan_flag_stacktrace);
 extern bool kasan_flag_async __ro_after_init;
@@ -38,6 +44,10 @@ static inline bool kasan_async_mode_enabled(void)
 
 #endif
 
+<<<<<<< HEAD
+=======
+extern bool kasan_flag_panic __ro_after_init;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern bool kasan_flag_async __ro_after_init;
 
 #if defined(CONFIG_KASAN_GENERIC) || defined(CONFIG_KASAN_SW_TAGS)
@@ -51,6 +61,19 @@ extern bool kasan_flag_async __ro_after_init;
 
 #define KASAN_MEMORY_PER_SHADOW_PAGE	(KASAN_GRANULE_SIZE << PAGE_SHIFT)
 
+<<<<<<< HEAD
+=======
+#define KASAN_TAG_KERNEL	0xFF /* native kernel pointers tag */
+#define KASAN_TAG_INVALID	0xFE /* inaccessible memory tag */
+#define KASAN_TAG_MAX		0xFD /* maximum value for random tags */
+
+#ifdef CONFIG_KASAN_HW_TAGS
+#define KASAN_TAG_MIN		0xF0 /* minimum value for random tags */
+#else
+#define KASAN_TAG_MIN		0x00 /* minimum value for random tags */
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_KASAN_GENERIC
 #define KASAN_FREE_PAGE         0xFF  /* page was freed */
 #define KASAN_PAGE_REDZONE      0xFE  /* redzone for kmalloc_large allocations */
@@ -289,6 +312,15 @@ static inline const void *arch_kasan_set_tag(const void *addr, u8 tag)
 #ifndef arch_enable_tagging_async
 #define arch_enable_tagging_async()
 #endif
+<<<<<<< HEAD
+=======
+#ifndef arch_init_tags
+#define arch_init_tags(max_tag)
+#endif
+#ifndef arch_set_tagging_report_once
+#define arch_set_tagging_report_once(state)
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef arch_force_async_tag_fault
 #define arch_force_async_tag_fault()
 #endif
@@ -304,6 +336,11 @@ static inline const void *arch_kasan_set_tag(const void *addr, u8 tag)
 
 #define hw_enable_tagging_sync()		arch_enable_tagging_sync()
 #define hw_enable_tagging_async()		arch_enable_tagging_async()
+<<<<<<< HEAD
+=======
+#define hw_init_tags(max_tag)			arch_init_tags(max_tag)
+#define hw_set_tagging_report_once(state)	arch_set_tagging_report_once(state)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define hw_force_async_tag_fault()		arch_force_async_tag_fault()
 #define hw_get_random_tag()			arch_get_random_tag()
 #define hw_get_mem_tag(addr)			arch_get_mem_tag(addr)
@@ -314,16 +351,28 @@ static inline const void *arch_kasan_set_tag(const void *addr, u8 tag)
 
 #define hw_enable_tagging_sync()
 #define hw_enable_tagging_async()
+<<<<<<< HEAD
+=======
+#define hw_set_tagging_report_once(state)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* CONFIG_KASAN_HW_TAGS */
 
 #if defined(CONFIG_KASAN_HW_TAGS) && IS_ENABLED(CONFIG_KASAN_KUNIT_TEST)
 
+<<<<<<< HEAD
+=======
+void kasan_set_tagging_report_once(bool state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void kasan_enable_tagging_sync(void);
 void kasan_force_async_fault(void);
 
 #else /* CONFIG_KASAN_HW_TAGS || CONFIG_KASAN_KUNIT_TEST */
 
+<<<<<<< HEAD
+=======
+static inline void kasan_set_tagging_report_once(bool state) { }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void kasan_enable_tagging_sync(void) { }
 static inline void kasan_force_async_fault(void) { }
 
@@ -367,6 +416,7 @@ static inline void kasan_unpoison(const void *addr, size_t size, bool init)
 
 	if (WARN_ON((unsigned long)addr & KASAN_GRANULE_MASK))
 		return;
+<<<<<<< HEAD
 	/*
 	 * Explicitly initialize the memory with the precise object size to
 	 * avoid overwriting the SLAB redzone. This disables initialization in
@@ -378,6 +428,8 @@ static inline void kasan_unpoison(const void *addr, size_t size, bool init)
 		init = false;
 		memzero_explicit((void *)addr, size);
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size = round_up(size, KASAN_GRANULE_SIZE);
 
 	hw_set_mem_tag_range((void *)addr, size, tag, init);

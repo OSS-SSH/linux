@@ -10,4 +10,7 @@ obj-$(CONFIG_SND_SOC_AMD_CZ_RT5645_MACH) += snd-soc-acp-rt5645-mach.o
 obj-$(CONFIG_SND_SOC_AMD_ACP3x) += raven/
 obj-$(CONFIG_SND_SOC_AMD_RV_RT5682_MACH) += snd-soc-acp-rt5682-mach.o
 obj-$(CONFIG_SND_SOC_AMD_RENOIR) += renoir/
+<<<<<<< HEAD
 obj-$(CONFIG_SND_SOC_AMD_ACP5x) += vangogh/
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

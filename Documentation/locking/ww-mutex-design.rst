@@ -2,7 +2,11 @@
 Wound/Wait Deadlock-Proof Mutex Design
 ======================================
 
+<<<<<<< HEAD
 Please read mutex-design.rst first, as it applies to wait/wound mutexes too.
+=======
+Please read mutex-design.txt first, as it applies to wait/wound mutexes too.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Motivation for WW-Mutexes
 -------------------------

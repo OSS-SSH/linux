@@ -77,7 +77,11 @@ config VFAT_FS
 
 config FAT_DEFAULT_CODEPAGE
 	int "Default codepage for FAT"
+<<<<<<< HEAD
 	depends on FAT_FS
+=======
+	depends on MSDOS_FS || VFAT_FS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default 437
 	help
 	  This option should be set to the codepage of your FAT filesystems.
@@ -115,6 +119,7 @@ config FAT_DEFAULT_UTF8
 	  Say Y if you use UTF-8 encoding for file names, N otherwise.
 
 	  See <file:Documentation/filesystems/vfat.rst> for more information.
+<<<<<<< HEAD
 
 config FAT_KUNIT_TEST
 	tristate "Unit Tests for FAT filesystems" if !KUNIT_ALL_TESTS
@@ -127,3 +132,5 @@ config FAT_KUNIT_TEST
 	  to the KUnit documentation in Documentation/dev-tools/kunit
 
 	  If unsure, say N
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

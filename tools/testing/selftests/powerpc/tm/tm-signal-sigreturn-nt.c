@@ -32,7 +32,10 @@ int tm_signal_sigreturn_nt(void)
 	struct sigaction trap_sa;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	trap_sa.sa_flags = SA_SIGINFO;
 	trap_sa.sa_sigaction = trap_signal_handler;

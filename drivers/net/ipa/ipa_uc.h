@@ -9,6 +9,7 @@
 struct ipa;
 
 /**
+<<<<<<< HEAD
  * ipa_uc_config() - Configure the IPA microcontroller subsystem
  * @ipa:	IPA pointer
  */
@@ -33,6 +34,18 @@ void ipa_uc_deconfig(struct ipa *ipa);
  * message (in ipa_uc_response_hdlr()) we drop this power reference.
  */
 void ipa_uc_power(struct ipa *ipa);
+=======
+ * ipa_uc_setup() - set up the IPA microcontroller subsystem
+ * @ipa:	IPA pointer
+ */
+void ipa_uc_setup(struct ipa *ipa);
+
+/**
+ * ipa_uc_teardown() - inverse of ipa_uc_setup()
+ * @ipa:	IPA pointer
+ */
+void ipa_uc_teardown(struct ipa *ipa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * ipa_uc_panic_notifier()

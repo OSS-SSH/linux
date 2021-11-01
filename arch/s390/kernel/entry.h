@@ -28,8 +28,15 @@ void do_non_secure_storage_access(struct pt_regs *regs);
 void do_secure_storage_violation(struct pt_regs *regs);
 void do_report_trap(struct pt_regs *regs, int si_signo, int si_code, char *str);
 void kernel_stack_overflow(struct pt_regs * regs);
+<<<<<<< HEAD
 void handle_signal32(struct ksignal *ksig, sigset_t *oldset,
 		     struct pt_regs *regs);
+=======
+void do_signal(struct pt_regs *regs);
+void handle_signal32(struct ksignal *ksig, sigset_t *oldset,
+		     struct pt_regs *regs);
+void do_notify_resume(struct pt_regs *regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void __init init_IRQ(void);
 void do_io_irq(struct pt_regs *regs);
@@ -62,6 +69,7 @@ void stack_free(unsigned long stack);
 
 extern char kprobes_insn_page[];
 
+<<<<<<< HEAD
 extern char _samode31[], _eamode31[];
 extern char _stext_amode31[], _etext_amode31[];
 extern struct exception_table_entry _start_amode31_ex_table[];
@@ -71,4 +79,6 @@ extern struct exception_table_entry _stop_amode31_ex_table[];
 #define __amode31_ref __section(".amode31.refs")
 extern long _start_amode31_refs[], _end_amode31_refs[];
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _ENTRY_H */

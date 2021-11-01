@@ -269,6 +269,7 @@ static bool lmk04832_regmap_rd_regs(struct device *dev, unsigned int reg)
 {
 	switch (reg) {
 	case LMK04832_REG_RST3W ... LMK04832_REG_ID_MASKREV:
+<<<<<<< HEAD
 	case LMK04832_REG_ID_VNDR_MSB:
 	case LMK04832_REG_ID_VNDR_LSB:
 	case LMK04832_REG_CLKOUT_CTRL0(0) ... LMK04832_REG_PLL2_DLD_CNT_LSB:
@@ -277,6 +278,25 @@ static bool lmk04832_regmap_rd_regs(struct device *dev, unsigned int reg)
 	case LMK04832_REG_PLL1R_RST:
 	case LMK04832_REG_CLR_PLL_LOST ... LMK04832_REG_RB_DAC_VAL_LSB:
 	case LMK04832_REG_RB_HOLDOVER:
+=======
+		fallthrough;
+	case LMK04832_REG_ID_VNDR_MSB:
+		fallthrough;
+	case LMK04832_REG_ID_VNDR_LSB:
+		fallthrough;
+	case LMK04832_REG_CLKOUT_CTRL0(0) ... LMK04832_REG_PLL2_DLD_CNT_LSB:
+		fallthrough;
+	case LMK04832_REG_PLL2_LD:
+		fallthrough;
+	case LMK04832_REG_PLL2_PD:
+		fallthrough;
+	case LMK04832_REG_PLL1R_RST:
+		fallthrough;
+	case LMK04832_REG_CLR_PLL_LOST ... LMK04832_REG_RB_DAC_VAL_LSB:
+		fallthrough;
+	case LMK04832_REG_RB_HOLDOVER:
+		fallthrough;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case LMK04832_REG_SPI_LOCK:
 		return true;
 	default:
@@ -288,6 +308,7 @@ static bool lmk04832_regmap_wr_regs(struct device *dev, unsigned int reg)
 {
 	switch (reg) {
 	case LMK04832_REG_RST3W:
+<<<<<<< HEAD
 	case LMK04832_REG_POWERDOWN:
 		return true;
 	case LMK04832_REG_ID_DEV_TYPE ... LMK04832_REG_ID_MASKREV:
@@ -300,6 +321,29 @@ static bool lmk04832_regmap_wr_regs(struct device *dev, unsigned int reg)
 	case LMK04832_REG_PLL1R_RST:
 	case LMK04832_REG_CLR_PLL_LOST ... LMK04832_REG_RB_DAC_VAL_LSB:
 	case LMK04832_REG_RB_HOLDOVER:
+=======
+		fallthrough;
+	case LMK04832_REG_POWERDOWN:
+		return true;
+	case LMK04832_REG_ID_DEV_TYPE ... LMK04832_REG_ID_MASKREV:
+		fallthrough;
+	case LMK04832_REG_ID_VNDR_MSB:
+		fallthrough;
+	case LMK04832_REG_ID_VNDR_LSB:
+		return false;
+	case LMK04832_REG_CLKOUT_CTRL0(0) ... LMK04832_REG_PLL2_DLD_CNT_LSB:
+		fallthrough;
+	case LMK04832_REG_PLL2_LD:
+		fallthrough;
+	case LMK04832_REG_PLL2_PD:
+		fallthrough;
+	case LMK04832_REG_PLL1R_RST:
+		fallthrough;
+	case LMK04832_REG_CLR_PLL_LOST ... LMK04832_REG_RB_DAC_VAL_LSB:
+		fallthrough;
+	case LMK04832_REG_RB_HOLDOVER:
+		fallthrough;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case LMK04832_REG_SPI_LOCK:
 		return true;
 	default:

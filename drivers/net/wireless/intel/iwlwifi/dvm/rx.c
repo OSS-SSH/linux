@@ -318,7 +318,11 @@ iwlagn_accumulative_statistics(struct iwl_priv *priv,
 		    (__le32 *)&priv->delta_stats._name,		\
 		    (__le32 *)&priv->max_delta_stats._name,	\
 		    (__le32 *)&priv->accum_stats._name,		\
+<<<<<<< HEAD
 		    sizeof(*_name))
+=======
+		    sizeof(*_name));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ACCUM(common);
 	ACCUM(rx_non_phy);

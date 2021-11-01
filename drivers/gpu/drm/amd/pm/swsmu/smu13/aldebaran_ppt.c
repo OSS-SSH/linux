@@ -90,8 +90,13 @@ static const struct cmn2asic_msg_mapping aldebaran_message_map[SMU_MSG_MAX_COUNT
 	MSG_MAP(GetDriverIfVersion,		     PPSMC_MSG_GetDriverIfVersion,		1),
 	MSG_MAP(EnableAllSmuFeatures,		     PPSMC_MSG_EnableAllSmuFeatures,		0),
 	MSG_MAP(DisableAllSmuFeatures,		     PPSMC_MSG_DisableAllSmuFeatures,		0),
+<<<<<<< HEAD
 	MSG_MAP(GetEnabledSmuFeaturesLow,	     PPSMC_MSG_GetEnabledSmuFeaturesLow,	1),
 	MSG_MAP(GetEnabledSmuFeaturesHigh,	     PPSMC_MSG_GetEnabledSmuFeaturesHigh,	1),
+=======
+	MSG_MAP(GetEnabledSmuFeaturesLow,	     PPSMC_MSG_GetEnabledSmuFeaturesLow,	0),
+	MSG_MAP(GetEnabledSmuFeaturesHigh,	     PPSMC_MSG_GetEnabledSmuFeaturesHigh,	0),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	MSG_MAP(SetDriverDramAddrHigh,		     PPSMC_MSG_SetDriverDramAddrHigh,		1),
 	MSG_MAP(SetDriverDramAddrLow,		     PPSMC_MSG_SetDriverDramAddrLow,		1),
 	MSG_MAP(SetToolsDramAddrHigh,		     PPSMC_MSG_SetToolsDramAddrHigh,		0),
@@ -134,7 +139,10 @@ static const struct cmn2asic_msg_mapping aldebaran_message_map[SMU_MSG_MAX_COUNT
 	MSG_MAP(DisableDeterminism,		     PPSMC_MSG_DisableDeterminism,		0),
 	MSG_MAP(SetUclkDpmMode,			     PPSMC_MSG_SetUclkDpmMode,			0),
 	MSG_MAP(GfxDriverResetRecovery,		     PPSMC_MSG_GfxDriverResetRecovery,		0),
+<<<<<<< HEAD
 	MSG_MAP(BoardPowerCalibration,		     PPSMC_MSG_BoardPowerCalibration,		0),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct cmn2asic_mapping aldebaran_clk_map[SMU_CLK_COUNT] = {
@@ -150,20 +158,32 @@ static const struct cmn2asic_mapping aldebaran_clk_map[SMU_CLK_COUNT] = {
 };
 
 static const struct cmn2asic_mapping aldebaran_feature_mask_map[SMU_FEATURE_COUNT] = {
+<<<<<<< HEAD
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DATA_CALCULATIONS_BIT, 		FEATURE_DATA_CALCULATIONS),
+=======
+	ALDEBARAN_FEA_MAP(SMU_FEATURE_DPM_PREFETCHER_BIT, 		FEATURE_DATA_CALCULATIONS),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DPM_GFXCLK_BIT, 			FEATURE_DPM_GFXCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DPM_UCLK_BIT, 			FEATURE_DPM_UCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DPM_SOCCLK_BIT, 			FEATURE_DPM_SOCCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DPM_FCLK_BIT, 			FEATURE_DPM_FCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DPM_LCLK_BIT, 			FEATURE_DPM_LCLK_BIT),
+<<<<<<< HEAD
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DPM_XGMI_BIT, 				FEATURE_DPM_XGMI_BIT),
+=======
+	ALDEBARAN_FEA_MAP(SMU_FEATURE_XGMI_BIT, 				FEATURE_DPM_XGMI_BIT),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DS_GFXCLK_BIT, 			FEATURE_DS_GFXCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DS_SOCCLK_BIT, 			FEATURE_DS_SOCCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DS_LCLK_BIT, 				FEATURE_DS_LCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DS_FCLK_BIT, 				FEATURE_DS_FCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_DS_UCLK_BIT,				FEATURE_DS_UCLK_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_GFX_SS_BIT, 				FEATURE_GFX_SS_BIT),
+<<<<<<< HEAD
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_VCN_DPM_BIT, 				FEATURE_DPM_VCN_BIT),
+=======
+	ALDEBARAN_FEA_MAP(SMU_FEATURE_VCN_PG_BIT, 				FEATURE_DPM_VCN_BIT),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_RSMU_SMN_CG_BIT, 			FEATURE_RSMU_SMN_CG_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_WAFL_CG_BIT, 				FEATURE_WAFL_CG_BIT),
 	ALDEBARAN_FEA_MAP(SMU_FEATURE_PPT_BIT, 					FEATURE_PPT_BIT),
@@ -409,8 +429,14 @@ static int aldebaran_append_powerplay_table(struct smu_context *smu)
 
 	if ((smc_dpm_table->table_header.format_revision == 4) &&
 	    (smc_dpm_table->table_header.content_revision == 10))
+<<<<<<< HEAD
 		smu_memcpy_trailing(smc_pptable, GfxMaxCurrent, reserved,
 				    smc_dpm_table, GfxMaxCurrent);
+=======
+		memcpy(&smc_pptable->GfxMaxCurrent,
+		       &smc_dpm_table->GfxMaxCurrent,
+		       sizeof(*smc_dpm_table) - offsetof(struct atom_smc_dpm_info_v4_10, GfxMaxCurrent));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -440,6 +466,7 @@ static int aldebaran_setup_pptable(struct smu_context *smu)
 	return ret;
 }
 
+<<<<<<< HEAD
 static bool aldebaran_is_primary(struct smu_context *smu)
 {
 	struct amdgpu_device *adev = smu->adev;
@@ -473,6 +500,8 @@ static int aldebaran_run_board_btc(struct smu_context *smu)
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int aldebaran_run_btc(struct smu_context *smu)
 {
 	int ret;
@@ -480,8 +509,11 @@ static int aldebaran_run_btc(struct smu_context *smu)
 	ret = smu_cmn_send_smc_msg(smu, SMU_MSG_RunDcBtc, NULL);
 	if (ret)
 		dev_err(smu->adev->dev, "RunDcBtc failed!\n");
+<<<<<<< HEAD
 	else
 		ret = aldebaran_run_board_btc(smu);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -559,6 +591,19 @@ static int aldebaran_freqs_in_same_level(int32_t frequency1,
 	return (abs(frequency1 - frequency2) <= EPSILON);
 }
 
+<<<<<<< HEAD
+=======
+static bool aldebaran_is_primary(struct smu_context *smu)
+{
+	struct amdgpu_device *adev = smu->adev;
+
+	if (adev->smuio.funcs && adev->smuio.funcs->get_die_id)
+		return adev->smuio.funcs->get_die_id(adev) == 0;
+
+	return true;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int aldebaran_get_smu_metrics_data(struct smu_context *smu,
 					  MetricsMember_t member,
 					  uint32_t *value)
@@ -733,19 +778,28 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 	uint32_t freq_values[3] = {0};
 	uint32_t min_clk, max_clk;
 
+<<<<<<< HEAD
 	smu_cmn_get_sysfs_buf(&buf, &size);
 
 	if (amdgpu_ras_intr_triggered()) {
 		size += sysfs_emit_at(buf, size, "unavailable\n");
 		return size;
 	}
+=======
+	if (amdgpu_ras_intr_triggered())
+		return snprintf(buf, PAGE_SIZE, "unavailable\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dpm_context = smu_dpm->dpm_context;
 
 	switch (type) {
 
 	case SMU_OD_SCLK:
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%s:\n", "GFXCLK");
+=======
+		size = sprintf(buf, "%s:\n", "GFXCLK");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fallthrough;
 	case SMU_SCLK:
 		ret = aldebaran_get_current_clk_freq_by_table(smu, SMU_GFXCLK, &now);
@@ -782,7 +836,12 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 		 */
 		if (display_levels == clocks.num_levels) {
 			for (i = 0; i < clocks.num_levels; i++)
+<<<<<<< HEAD
 				size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n", i,
+=======
+				size += sprintf(
+					buf + size, "%d: %uMhz %s\n", i,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					freq_values[i],
 					(clocks.num_levels == 1) ?
 						"*" :
@@ -792,14 +851,22 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 							 ""));
 		} else {
 			for (i = 0; i < display_levels; i++)
+<<<<<<< HEAD
 				size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n", i,
+=======
+				size += sprintf(buf + size, "%d: %uMhz %s\n", i,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						freq_values[i], i == 1 ? "*" : "");
 		}
 
 		break;
 
 	case SMU_OD_MCLK:
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%s:\n", "MCLK");
+=======
+		size = sprintf(buf, "%s:\n", "MCLK");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fallthrough;
 	case SMU_MCLK:
 		ret = aldebaran_get_current_clk_freq_by_table(smu, SMU_UCLK, &now);
@@ -816,7 +883,11 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 		}
 
 		for (i = 0; i < clocks.num_levels; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					i, clocks.data[i].clocks_in_khz / 1000,
 					(clocks.num_levels == 1) ? "*" :
 					(aldebaran_freqs_in_same_level(
@@ -839,7 +910,11 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 		}
 
 		for (i = 0; i < clocks.num_levels; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					i, clocks.data[i].clocks_in_khz / 1000,
 					(clocks.num_levels == 1) ? "*" :
 					(aldebaran_freqs_in_same_level(
@@ -862,7 +937,11 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 		}
 
 		for (i = 0; i < single_dpm_table->count; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					i, single_dpm_table->dpm_levels[i].value,
 					(clocks.num_levels == 1) ? "*" :
 					(aldebaran_freqs_in_same_level(
@@ -885,7 +964,11 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 		}
 
 		for (i = 0; i < single_dpm_table->count; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					i, single_dpm_table->dpm_levels[i].value,
 					(clocks.num_levels == 1) ? "*" :
 					(aldebaran_freqs_in_same_level(
@@ -908,7 +991,11 @@ static int aldebaran_print_clk_levels(struct smu_context *smu,
 		}
 
 		for (i = 0; i < single_dpm_table->count; i++)
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n",
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					i, single_dpm_table->dpm_levels[i].value,
 					(clocks.num_levels == 1) ? "*" :
 					(aldebaran_freqs_in_same_level(
@@ -1196,6 +1283,7 @@ static int aldebaran_get_power_limit(struct smu_context *smu,
 	uint32_t power_limit = 0;
 	int ret;
 
+<<<<<<< HEAD
 	if (!smu_cmn_feature_is_enabled(smu, SMU_FEATURE_PPT_BIT)) {
 		if (current_power_limit)
 			*current_power_limit = 0;
@@ -1209,6 +1297,10 @@ static int aldebaran_get_power_limit(struct smu_context *smu,
 
 		return 0;
 	}
+=======
+	if (!smu_cmn_feature_is_enabled(smu, SMU_FEATURE_PPT_BIT))
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Valid power data is available only from primary die.
 	 * For secondary die show the value as 0.
@@ -1464,6 +1556,7 @@ static bool aldebaran_is_dpm_running(struct smu_context *smu)
 	return !!(feature_enabled & SMC_DPM_FEATURE);
 }
 
+<<<<<<< HEAD
 static int aldebaran_i2c_xfer(struct i2c_adapter *i2c_adap,
 			      struct i2c_msg *msg, int num_msgs)
 {
@@ -1535,6 +1628,199 @@ static int aldebaran_i2c_xfer(struct i2c_adapter *i2c_adap,
 fail:
 	kfree(req);
 	return r;
+=======
+static void aldebaran_fill_i2c_req(SwI2cRequest_t  *req, bool write,
+				  uint8_t address, uint32_t numbytes,
+				  uint8_t *data)
+{
+	int i;
+
+	req->I2CcontrollerPort = 0;
+	req->I2CSpeed = 2;
+	req->SlaveAddress = address;
+	req->NumCmds = numbytes;
+
+	for (i = 0; i < numbytes; i++) {
+		SwI2cCmd_t *cmd =  &req->SwI2cCmds[i];
+
+		/* First 2 bytes are always write for lower 2b EEPROM address */
+		if (i < 2)
+			cmd->CmdConfig = CMDCONFIG_READWRITE_MASK;
+		else
+			cmd->CmdConfig = write ? CMDCONFIG_READWRITE_MASK : 0;
+
+
+		/* Add RESTART for read  after address filled */
+		cmd->CmdConfig |= (i == 2 && !write) ? CMDCONFIG_RESTART_MASK : 0;
+
+		/* Add STOP in the end */
+		cmd->CmdConfig |= (i == (numbytes - 1)) ? CMDCONFIG_STOP_MASK : 0;
+
+		/* Fill with data regardless if read or write to simplify code */
+		cmd->ReadWriteData = data[i];
+	}
+}
+
+static int aldebaran_i2c_read_data(struct i2c_adapter *control,
+					       uint8_t address,
+					       uint8_t *data,
+					       uint32_t numbytes)
+{
+	uint32_t  i, ret = 0;
+	SwI2cRequest_t req;
+	struct amdgpu_device *adev = to_amdgpu_device(control);
+	struct smu_table_context *smu_table = &adev->smu.smu_table;
+	struct smu_table *table = &smu_table->driver_table;
+
+	if (numbytes > MAX_SW_I2C_COMMANDS) {
+		dev_err(adev->dev, "numbytes requested %d is over max allowed %d\n",
+			numbytes, MAX_SW_I2C_COMMANDS);
+		return -EINVAL;
+	}
+
+	memset(&req, 0, sizeof(req));
+	aldebaran_fill_i2c_req(&req, false, address, numbytes, data);
+
+	mutex_lock(&adev->smu.mutex);
+	/* Now read data starting with that address */
+	ret = smu_cmn_update_table(&adev->smu, SMU_TABLE_I2C_COMMANDS, 0, &req,
+					true);
+	mutex_unlock(&adev->smu.mutex);
+
+	if (!ret) {
+		SwI2cRequest_t *res = (SwI2cRequest_t *)table->cpu_addr;
+
+		/* Assume SMU  fills res.SwI2cCmds[i].Data with read bytes */
+		for (i = 0; i < numbytes; i++)
+			data[i] = res->SwI2cCmds[i].ReadWriteData;
+
+		dev_dbg(adev->dev, "aldebaran_i2c_read_data, address = %x, bytes = %d, data :",
+				  (uint16_t)address, numbytes);
+
+		print_hex_dump(KERN_DEBUG, "data: ", DUMP_PREFIX_NONE,
+			       8, 1, data, numbytes, false);
+	} else
+		dev_err(adev->dev, "aldebaran_i2c_read_data - error occurred :%x", ret);
+
+	return ret;
+}
+
+static int aldebaran_i2c_write_data(struct i2c_adapter *control,
+						uint8_t address,
+						uint8_t *data,
+						uint32_t numbytes)
+{
+	uint32_t ret;
+	SwI2cRequest_t req;
+	struct amdgpu_device *adev = to_amdgpu_device(control);
+
+	if (numbytes > MAX_SW_I2C_COMMANDS) {
+		dev_err(adev->dev, "numbytes requested %d is over max allowed %d\n",
+			numbytes, MAX_SW_I2C_COMMANDS);
+		return -EINVAL;
+	}
+
+	memset(&req, 0, sizeof(req));
+	aldebaran_fill_i2c_req(&req, true, address, numbytes, data);
+
+	mutex_lock(&adev->smu.mutex);
+	ret = smu_cmn_update_table(&adev->smu, SMU_TABLE_I2C_COMMANDS, 0, &req, true);
+	mutex_unlock(&adev->smu.mutex);
+
+	if (!ret) {
+		dev_dbg(adev->dev, "aldebaran_i2c_write(), address = %x, bytes = %d , data: ",
+					 (uint16_t)address, numbytes);
+
+		print_hex_dump(KERN_DEBUG, "data: ", DUMP_PREFIX_NONE,
+			       8, 1, data, numbytes, false);
+		/*
+		 * According to EEPROM spec there is a MAX of 10 ms required for
+		 * EEPROM to flush internal RX buffer after STOP was issued at the
+		 * end of write transaction. During this time the EEPROM will not be
+		 * responsive to any more commands - so wait a bit more.
+		 */
+		msleep(10);
+
+	} else
+		dev_err(adev->dev, "aldebaran_i2c_write- error occurred :%x", ret);
+
+	return ret;
+}
+
+static int aldebaran_i2c_xfer(struct i2c_adapter *i2c_adap,
+			      struct i2c_msg *msgs, int num)
+{
+	uint32_t  i, j, ret, data_size, data_chunk_size, next_eeprom_addr = 0;
+	uint8_t *data_ptr, data_chunk[MAX_SW_I2C_COMMANDS] = { 0 };
+
+	for (i = 0; i < num; i++) {
+		/*
+		 * SMU interface allows at most MAX_SW_I2C_COMMANDS bytes of data at
+		 * once and hence the data needs to be spliced into chunks and sent each
+		 * chunk separately
+		 */
+		data_size = msgs[i].len - 2;
+		data_chunk_size = MAX_SW_I2C_COMMANDS - 2;
+		next_eeprom_addr = (msgs[i].buf[0] << 8 & 0xff00) | (msgs[i].buf[1] & 0xff);
+		data_ptr = msgs[i].buf + 2;
+
+		for (j = 0; j < data_size / data_chunk_size; j++) {
+			/* Insert the EEPROM dest addess, bits 0-15 */
+			data_chunk[0] = ((next_eeprom_addr >> 8) & 0xff);
+			data_chunk[1] = (next_eeprom_addr & 0xff);
+
+			if (msgs[i].flags & I2C_M_RD) {
+				ret = aldebaran_i2c_read_data(i2c_adap,
+							     (uint8_t)msgs[i].addr,
+							     data_chunk, MAX_SW_I2C_COMMANDS);
+
+				memcpy(data_ptr, data_chunk + 2, data_chunk_size);
+			} else {
+
+				memcpy(data_chunk + 2, data_ptr, data_chunk_size);
+
+				ret = aldebaran_i2c_write_data(i2c_adap,
+							      (uint8_t)msgs[i].addr,
+							      data_chunk, MAX_SW_I2C_COMMANDS);
+			}
+
+			if (ret) {
+				num = -EIO;
+				goto fail;
+			}
+
+			next_eeprom_addr += data_chunk_size;
+			data_ptr += data_chunk_size;
+		}
+
+		if (data_size % data_chunk_size) {
+			data_chunk[0] = ((next_eeprom_addr >> 8) & 0xff);
+			data_chunk[1] = (next_eeprom_addr & 0xff);
+
+			if (msgs[i].flags & I2C_M_RD) {
+				ret = aldebaran_i2c_read_data(i2c_adap,
+							     (uint8_t)msgs[i].addr,
+							     data_chunk, (data_size % data_chunk_size) + 2);
+
+				memcpy(data_ptr, data_chunk + 2, data_size % data_chunk_size);
+			} else {
+				memcpy(data_chunk + 2, data_ptr, data_size % data_chunk_size);
+
+				ret = aldebaran_i2c_write_data(i2c_adap,
+							      (uint8_t)msgs[i].addr,
+							      data_chunk, (data_size % data_chunk_size) + 2);
+			}
+
+			if (ret) {
+				num = -EIO;
+				goto fail;
+			}
+		}
+	}
+
+fail:
+	return num;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static u32 aldebaran_i2c_func(struct i2c_adapter *adap)
@@ -1548,6 +1834,7 @@ static const struct i2c_algorithm aldebaran_i2c_algo = {
 	.functionality = aldebaran_i2c_func,
 };
 
+<<<<<<< HEAD
 static const struct i2c_adapter_quirks aldebaran_i2c_control_quirks = {
 	.flags = I2C_AQ_COMB | I2C_AQ_COMB_SAME_ADDR | I2C_AQ_NO_ZERO_LEN,
 	.max_read_len  = MAX_SW_I2C_COMMANDS,
@@ -1556,6 +1843,8 @@ static const struct i2c_adapter_quirks aldebaran_i2c_control_quirks = {
 	.max_comb_2nd_msg_len = MAX_SW_I2C_COMMANDS - 2,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int aldebaran_i2c_control_init(struct smu_context *smu, struct i2c_adapter *control)
 {
 	struct amdgpu_device *adev = to_amdgpu_device(control);
@@ -1566,7 +1855,10 @@ static int aldebaran_i2c_control_init(struct smu_context *smu, struct i2c_adapte
 	control->dev.parent = &adev->pdev->dev;
 	control->algo = &aldebaran_i2c_algo;
 	snprintf(control->name, sizeof(control->name), "AMDGPU SMU");
+<<<<<<< HEAD
 	control->quirks = &aldebaran_i2c_control_quirks;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	res = i2c_add_adapter(control);
 	if (res)
@@ -1666,9 +1958,13 @@ static void aldebaran_log_thermal_throttling_event(struct smu_context *smu)
 
 	dev_warn(adev->dev, "WARN: GPU thermal throttling temperature reached, expect performance decrease. %s.\n",
 		 log_buf);
+<<<<<<< HEAD
 	kgd2kfd_smi_event_throttle(smu->adev->kfd.dev,
 		smu_cmn_get_indep_throttler_status(throttler_status,
 						   aldebaran_throttler_map));
+=======
+	kgd2kfd_smi_event_throttle(smu->adev->kfd.dev, throttler_status);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int aldebaran_get_current_pcie_link_speed(struct smu_context *smu)

@@ -1031,7 +1031,17 @@ static void pch_gbe_watchdog(struct timer_list *t)
 		struct ethtool_cmd cmd = { .cmd = ETHTOOL_GSET };
 		netdev->tx_queue_len = adapter->tx_queue_len;
 		/* mii library handles link maintenance tasks */
+<<<<<<< HEAD
 		mii_ethtool_gset(&adapter->mii, &cmd);
+=======
+		if (mii_ethtool_gset(&adapter->mii, &cmd)) {
+			netdev_err(netdev, "ethtool get setting Error\n");
+			mod_timer(&adapter->watchdog_timer,
+				  round_jiffies(jiffies +
+						PCH_GBE_WATCHDOG_PERIOD));
+			return;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hw->mac.link_speed = ethtool_cmd_speed(&cmd);
 		hw->mac.link_duplex = cmd.duplex;
 		/* Set the RGMII control. */
@@ -2327,7 +2337,11 @@ static const struct net_device_ops pch_gbe_netdev_ops = {
 	.ndo_tx_timeout = pch_gbe_tx_timeout,
 	.ndo_change_mtu = pch_gbe_change_mtu,
 	.ndo_set_features = pch_gbe_set_features,
+<<<<<<< HEAD
 	.ndo_eth_ioctl = pch_gbe_ioctl,
+=======
+	.ndo_do_ioctl = pch_gbe_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_rx_mode = pch_gbe_set_multi,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller = pch_gbe_netpoll,

@@ -4,6 +4,10 @@ menuconfig FSL_DPAA_ETH
 	depends on FSL_DPAA && FSL_FMAN
 	select PHYLIB
 	select FIXED_PHY
+<<<<<<< HEAD
+=======
+	select FSL_FMAN_MAC
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Data Path Acceleration Architecture Ethernet driver,
 	  supporting the Freescale QorIQ chips.

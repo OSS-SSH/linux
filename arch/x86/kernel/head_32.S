@@ -432,7 +432,11 @@ SYM_FUNC_START(early_ignore_irq)
 	pushl 32(%esp)
 	pushl 40(%esp)
 	pushl $int_msg
+<<<<<<< HEAD
 	call _printk
+=======
+	call printk
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	call dump_stack
 

@@ -1621,6 +1621,10 @@ static void ath9k_hw_apply_gpio_override(struct ath_hw *ah)
 		ath9k_hw_gpio_request_out(ah, i, NULL,
 					  AR_GPIO_OUTPUT_MUX_AS_OUTPUT);
 		ath9k_hw_set_gpio(ah, i, !!(ah->gpio_val & BIT(i)));
+<<<<<<< HEAD
+=======
+		ath9k_hw_gpio_free(ah, i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -2727,6 +2731,7 @@ static void ath9k_hw_gpio_cfg_output_mux(struct ath_hw *ah, u32 gpio, u32 type)
 static void ath9k_hw_gpio_cfg_soc(struct ath_hw *ah, u32 gpio, bool out,
 				  const char *label)
 {
+<<<<<<< HEAD
 	int err;
 
 	if (ah->caps.gpio_requested & BIT(gpio))
@@ -2738,6 +2743,16 @@ static void ath9k_hw_gpio_cfg_soc(struct ath_hw *ah, u32 gpio, bool out,
 			gpio, err);
 		return;
 	}
+=======
+	if (ah->caps.gpio_requested & BIT(gpio))
+		return;
+
+	/* may be requested by BSP, free anyway */
+	gpio_free(gpio);
+
+	if (gpio_request_one(gpio, out ? GPIOF_OUT_INIT_LOW : GPIOF_IN, label))
+		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ah->caps.gpio_requested |= BIT(gpio);
 }

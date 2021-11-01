@@ -6,6 +6,7 @@
 
 #include <linux/kernel.h>
 
+<<<<<<< HEAD
 extern char *lkdtm_kernel_info;
 
 #define pr_expected_config(kconfig)				\
@@ -16,6 +17,14 @@ extern char *lkdtm_kernel_info;
 	else							\
 		pr_warn("This is probably expected, since this %s was built *without* " #kconfig "=y\n", \
 			lkdtm_kernel_info);			\
+=======
+#define pr_expected_config(kconfig)				\
+{								\
+	if (IS_ENABLED(kconfig)) 				\
+		pr_err("Unexpected! This kernel was built with " #kconfig "=y\n"); \
+	else							\
+		pr_warn("This is probably expected, since this kernel was built *without* " #kconfig "=y\n"); \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifndef MODULE
@@ -25,6 +34,7 @@ int lkdtm_check_bool_cmdline(const char *param);
 	if (IS_ENABLED(kconfig)) {				\
 		switch (lkdtm_check_bool_cmdline(param)) {	\
 		case 0:						\
+<<<<<<< HEAD
 			pr_warn("This is probably expected, since this %s was built with " #kconfig "=y but booted with '" param "=N'\n", \
 				lkdtm_kernel_info);		\
 			break;					\
@@ -35,10 +45,20 @@ int lkdtm_check_bool_cmdline(const char *param);
 		default:					\
 			pr_err("Unexpected! This %s was built with " #kconfig "=y (and booted without '" param "' specified)\n", \
 				lkdtm_kernel_info);		\
+=======
+			pr_warn("This is probably expected, since this kernel was built with " #kconfig "=y but booted with '" param "=N'\n"); \
+			break;					\
+		case 1:						\
+			pr_err("Unexpected! This kernel was built with " #kconfig "=y and booted with '" param "=Y'\n"); \
+			break;					\
+		default:					\
+			pr_err("Unexpected! This kernel was built with " #kconfig "=y (and booted without '" param "' specified)\n"); \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}						\
 	} else {						\
 		switch (lkdtm_check_bool_cmdline(param)) {	\
 		case 0:						\
+<<<<<<< HEAD
 			pr_warn("This is probably expected, as this %s was built *without* " #kconfig "=y and booted with '" param "=N'\n", \
 				lkdtm_kernel_info);		\
 			break;					\
@@ -49,6 +69,15 @@ int lkdtm_check_bool_cmdline(const char *param);
 		default:					\
 			pr_err("This is probably expected, since this %s was built *without* " #kconfig "=y (and booted without '" param "' specified)\n", \
 				lkdtm_kernel_info);		\
+=======
+			pr_warn("This is probably expected, as kernel was built *without* " #kconfig "=y and booted with '" param "=N'\n"); \
+			break;					\
+		case 1:						\
+			pr_err("Unexpected! This kernel was built *without* " #kconfig "=y but booted with '" param "=Y'\n"); \
+			break;					\
+		default:					\
+			pr_err("This is probably expected, since this kernel was built *without* " #kconfig "=y (and booted without '" param "' specified)\n"); \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;					\
 		}						\
 	}							\
@@ -84,6 +113,11 @@ void lkdtm_STACK_GUARD_PAGE_TRAILING(void);
 void lkdtm_UNSET_SMEP(void);
 void lkdtm_DOUBLE_FAULT(void);
 void lkdtm_CORRUPT_PAC(void);
+<<<<<<< HEAD
+=======
+void lkdtm_FORTIFY_OBJECT(void);
+void lkdtm_FORTIFY_SUBOBJECT(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* heap.c */
 void __init lkdtm_heap_init(void);
@@ -158,8 +192,11 @@ void lkdtm_STACKLEAK_ERASING(void);
 void lkdtm_CFI_FORWARD_PROTO(void);
 
 /* fortify.c */
+<<<<<<< HEAD
 void lkdtm_FORTIFIED_OBJECT(void);
 void lkdtm_FORTIFIED_SUBOBJECT(void);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void lkdtm_FORTIFIED_STRSCPY(void);
 
 /* powerpc.c */

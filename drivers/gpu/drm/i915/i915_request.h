@@ -285,6 +285,7 @@ struct i915_request {
 		struct hrtimer timer;
 	} watchdog;
 
+<<<<<<< HEAD
 	/*
 	 * Requests may need to be stalled when using GuC submission waiting for
 	 * certain GuC operations to complete. If that is the case, stalled
@@ -302,6 +303,8 @@ struct i915_request {
 #define	GUC_PRIO_FINI	0xfe
 	u8 guc_prio;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	I915_SELFTEST_DECLARE(struct {
 		struct list_head link;
 		unsigned long delay;
@@ -369,7 +372,13 @@ int i915_request_await_object(struct i915_request *to,
 int i915_request_await_dma_fence(struct i915_request *rq,
 				 struct dma_fence *fence);
 int i915_request_await_execution(struct i915_request *rq,
+<<<<<<< HEAD
 				 struct dma_fence *fence);
+=======
+				 struct dma_fence *fence,
+				 void (*hook)(struct i915_request *rq,
+					      struct dma_fence *signal));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void i915_request_add(struct i915_request *rq);
 
@@ -628,7 +637,11 @@ i915_request_active_timeline(const struct i915_request *rq)
 	 * this submission.
 	 */
 	return rcu_dereference_protected(rq->timeline,
+<<<<<<< HEAD
 					 lockdep_is_held(&rq->engine->sched_engine->lock));
+=======
+					 lockdep_is_held(&rq->engine->active.lock));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline u32
@@ -656,6 +669,7 @@ bool
 i915_request_active_engine(struct i915_request *rq,
 			   struct intel_engine_cs **active);
 
+<<<<<<< HEAD
 void i915_request_notify_execute_cb_imm(struct i915_request *rq);
 
 enum i915_request_state {
@@ -671,4 +685,6 @@ enum i915_request_state i915_test_request_state(struct i915_request *rq);
 void i915_request_module_exit(void);
 int i915_request_module_init(void);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* I915_REQUEST_H */

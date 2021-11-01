@@ -69,24 +69,42 @@ static void ar2315_misc_irq_handler(struct irq_desc *desc)
 {
 	u32 pending = ar2315_rst_reg_read(AR2315_ISR) &
 		      ar2315_rst_reg_read(AR2315_IMR);
+<<<<<<< HEAD
 	unsigned nr;
 	int ret = 0;
+=======
+	unsigned nr, misc_irq = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (pending) {
 		struct irq_domain *domain = irq_desc_get_handler_data(desc);
 
 		nr = __ffs(pending);
+<<<<<<< HEAD
 
+=======
+		misc_irq = irq_find_mapping(domain, nr);
+	}
+
+	if (misc_irq) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (nr == AR2315_MISC_IRQ_GPIO)
 			ar2315_rst_reg_write(AR2315_ISR, AR2315_ISR_GPIO);
 		else if (nr == AR2315_MISC_IRQ_WATCHDOG)
 			ar2315_rst_reg_write(AR2315_ISR, AR2315_ISR_WD);
+<<<<<<< HEAD
 
 		ret = generic_handle_domain_irq(domain, nr);
 	}
 
 	if (!pending || ret)
 		spurious_interrupt();
+=======
+		generic_handle_irq(misc_irq);
+	} else {
+		spurious_interrupt();
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ar2315_misc_irq_unmask(struct irq_data *d)

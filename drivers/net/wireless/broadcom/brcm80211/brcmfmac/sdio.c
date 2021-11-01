@@ -617,7 +617,10 @@ BRCMF_FW_DEF(4339, "brcmfmac4339-sdio");
 BRCMF_FW_DEF(43430A0, "brcmfmac43430a0-sdio");
 /* Note the names are not postfixed with a1 for backward compatibility */
 BRCMF_FW_CLM_DEF(43430A1, "brcmfmac43430-sdio");
+<<<<<<< HEAD
 BRCMF_FW_DEF(43430B0, "brcmfmac43430b0-sdio");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 BRCMF_FW_CLM_DEF(43455, "brcmfmac43455-sdio");
 BRCMF_FW_DEF(43456, "brcmfmac43456-sdio");
 BRCMF_FW_CLM_DEF(4354, "brcmfmac4354-sdio");
@@ -625,15 +628,21 @@ BRCMF_FW_CLM_DEF(4356, "brcmfmac4356-sdio");
 BRCMF_FW_DEF(4359, "brcmfmac4359-sdio");
 BRCMF_FW_CLM_DEF(4373, "brcmfmac4373-sdio");
 BRCMF_FW_CLM_DEF(43012, "brcmfmac43012-sdio");
+<<<<<<< HEAD
 BRCMF_FW_CLM_DEF(43752, "brcmfmac43752-sdio");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* firmware config files */
 MODULE_FIRMWARE(BRCMF_FW_DEFAULT_PATH "brcmfmac*-sdio.*.txt");
 MODULE_FIRMWARE(BRCMF_FW_DEFAULT_PATH "brcmfmac*-pcie.*.txt");
 
+<<<<<<< HEAD
 /* per-board firmware binaries */
 MODULE_FIRMWARE(BRCMF_FW_DEFAULT_PATH "brcmfmac*-sdio.*.bin");
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct brcmf_firmware_mapping brcmf_sdio_fwnames[] = {
 	BRCMF_FW_ENTRY(BRCM_CC_43143_CHIP_ID, 0xFFFFFFFF, 43143),
 	BRCMF_FW_ENTRY(BRCM_CC_43241_CHIP_ID, 0x0000001F, 43241B0),
@@ -648,16 +657,24 @@ static const struct brcmf_firmware_mapping brcmf_sdio_fwnames[] = {
 	BRCMF_FW_ENTRY(BRCM_CC_43362_CHIP_ID, 0xFFFFFFFE, 43362),
 	BRCMF_FW_ENTRY(BRCM_CC_4339_CHIP_ID, 0xFFFFFFFF, 4339),
 	BRCMF_FW_ENTRY(BRCM_CC_43430_CHIP_ID, 0x00000001, 43430A0),
+<<<<<<< HEAD
 	BRCMF_FW_ENTRY(BRCM_CC_43430_CHIP_ID, 0x00000002, 43430A1),
 	BRCMF_FW_ENTRY(BRCM_CC_43430_CHIP_ID, 0xFFFFFFFC, 43430B0),
+=======
+	BRCMF_FW_ENTRY(BRCM_CC_43430_CHIP_ID, 0xFFFFFFFE, 43430A1),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BRCMF_FW_ENTRY(BRCM_CC_4345_CHIP_ID, 0x00000200, 43456),
 	BRCMF_FW_ENTRY(BRCM_CC_4345_CHIP_ID, 0xFFFFFDC0, 43455),
 	BRCMF_FW_ENTRY(BRCM_CC_4354_CHIP_ID, 0xFFFFFFFF, 4354),
 	BRCMF_FW_ENTRY(BRCM_CC_4356_CHIP_ID, 0xFFFFFFFF, 4356),
 	BRCMF_FW_ENTRY(BRCM_CC_4359_CHIP_ID, 0xFFFFFFFF, 4359),
 	BRCMF_FW_ENTRY(CY_CC_4373_CHIP_ID, 0xFFFFFFFF, 4373),
+<<<<<<< HEAD
 	BRCMF_FW_ENTRY(CY_CC_43012_CHIP_ID, 0xFFFFFFFF, 43012),
 	BRCMF_FW_ENTRY(CY_CC_43752_CHIP_ID, 0xFFFFFFFF, 43752)
+=======
+	BRCMF_FW_ENTRY(CY_CC_43012_CHIP_ID, 0xFFFFFFFF, 43012)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define TXCTL_CREDITS	2
@@ -3423,8 +3440,12 @@ err:
 
 static bool brcmf_sdio_aos_no_decode(struct brcmf_sdio *bus)
 {
+<<<<<<< HEAD
 	if (bus->ci->chip == CY_CC_43012_CHIP_ID ||
 	    bus->ci->chip == CY_CC_43752_CHIP_ID)
+=======
+	if (bus->ci->chip == CY_CC_43012_CHIP_ID)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 	else
 		return false;
@@ -3915,7 +3936,11 @@ static u32 brcmf_sdio_buscore_read32(void *ctx, u32 addr)
 	 * It can be identified as 4339 by looking at the chip revision. It
 	 * is corrected here so the chip.c module has the right info.
 	 */
+<<<<<<< HEAD
 	if (addr == CORE_CC_REG(SI_ENUM_BASE_DEFAULT, chipid) &&
+=======
+	if (addr == CORE_CC_REG(SI_ENUM_BASE, chipid) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    (sdiodev->func1->device == SDIO_DEVICE_ID_BROADCOM_4339 ||
 	     sdiodev->func1->device == SDIO_DEVICE_ID_BROADCOM_4335_4339)) {
 		rev = (val & CID_REV_MASK) >> CID_REV_SHIFT;
@@ -3951,15 +3976,23 @@ brcmf_sdio_probe_attach(struct brcmf_sdio *bus)
 	int reg_addr;
 	u32 reg_val;
 	u32 drivestrength;
+<<<<<<< HEAD
 	u32 enum_base;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sdiodev = bus->sdiodev;
 	sdio_claim_host(sdiodev->func1);
 
+<<<<<<< HEAD
 	enum_base = brcmf_chip_enum_base(sdiodev->func1->device);
 
 	pr_debug("F1 signature read @0x%08x=0x%4x\n", enum_base,
 		 brcmf_sdiod_readl(sdiodev, enum_base, NULL));
+=======
+	pr_debug("F1 signature read @0x18000000=0x%4x\n",
+		 brcmf_sdiod_readl(sdiodev, SI_ENUM_BASE, NULL));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Force PLL off until brcmf_chip_attach()
@@ -3978,8 +4011,12 @@ brcmf_sdio_probe_attach(struct brcmf_sdio *bus)
 		goto fail;
 	}
 
+<<<<<<< HEAD
 	bus->ci = brcmf_chip_attach(sdiodev, sdiodev->func1->device,
 				    &brcmf_sdio_buscore_ops);
+=======
+	bus->ci = brcmf_chip_attach(sdiodev, &brcmf_sdio_buscore_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(bus->ci)) {
 		brcmf_err("brcmf_chip_attach failed!\n");
 		bus->ci = NULL;
@@ -4269,7 +4306,10 @@ static void brcmf_sdio_firmware_callback(struct device *dev, int err,
 
 		switch (sdiod->func1->device) {
 		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373:
+<<<<<<< HEAD
 		case SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			brcmf_dbg(INFO, "set F2 watermark to 0x%x*4 bytes\n",
 				  CY_4373_F2_WATERMARK);
 			brcmf_sdiod_writeb(sdiod, SBSDIO_WATERMARK,
@@ -4455,7 +4495,11 @@ struct brcmf_sdio *brcmf_sdio_probe(struct brcmf_sdio_dev *sdiodev)
 	bus->tx_seq = SDPCM_SEQ_WRAP - 1;
 
 	/* single-threaded workqueue */
+<<<<<<< HEAD
 	wq = alloc_ordered_workqueue("brcmf_wq/%s", WQ_MEM_RECLAIM | WQ_HIGHPRI,
+=======
+	wq = alloc_ordered_workqueue("brcmf_wq/%s", WQ_MEM_RECLAIM,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				     dev_name(&sdiodev->func1->dev));
 	if (!wq) {
 		brcmf_err("insufficient memory to create txworkqueue\n");
@@ -4629,3 +4673,7 @@ int brcmf_sdio_sleep(struct brcmf_sdio *bus, bool sleep)
 
 	return ret;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -422,6 +422,7 @@ Batchbuffer Parsing
 User Batchbuffer Execution
 --------------------------
 
+<<<<<<< HEAD
 .. kernel-doc:: drivers/gpu/drm/i915/gem/i915_gem_context_types.h
 
 .. kernel-doc:: drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
@@ -432,6 +433,11 @@ Scheduling
 .. kernel-doc:: drivers/gpu/drm/i915/i915_scheduler_types.h
    :functions: i915_sched_engine
 
+=======
+.. kernel-doc:: drivers/gpu/drm/i915/gem/i915_gem_execbuffer.c
+   :doc: User command execution
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Logical Rings, Logical Ring Contexts and Execlists
 --------------------------------------------------
 
@@ -525,6 +531,7 @@ GuC-based command submission
 .. kernel-doc:: drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
    :doc: GuC-based command submission
 
+<<<<<<< HEAD
 GuC ABI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -533,6 +540,8 @@ GuC ABI
 .. kernel-doc:: drivers/gpu/drm/i915/gt/uc/abi/guc_communication_ctb_abi.h
 .. kernel-doc:: drivers/gpu/drm/i915/gt/uc/abi/guc_actions_abi.h
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 HuC
 ---
 .. kernel-doc:: drivers/gpu/drm/i915/gt/uc/intel_huc.c

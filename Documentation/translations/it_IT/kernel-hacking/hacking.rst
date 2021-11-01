@@ -90,7 +90,11 @@ i gestori d'interruzioni devono essere veloci: spesso si limitano
 esclusivamente a notificare la presa in carico dell'interruzione,
 programmare una 'interruzione software' per l'esecuzione e quindi terminare.
 
+<<<<<<< HEAD
 Potete dire d'essere in una interruzione hardware perché in_hardirq()
+=======
+Potete dire d'essere in una interruzione hardware perché :c:func:`in_irq()`
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ritorna vero.
 
 .. warning::
@@ -634,7 +638,11 @@ Definita in ``include/linux/export.h``
 
 Questa è una variate di `EXPORT_SYMBOL()` che permette di specificare uno
 spazio dei nomi. Lo spazio dei nomi è documentato in
+<<<<<<< HEAD
 Documentation/translations/it_IT/core-api/symbol-namespaces.rst.
+=======
+:doc:`../core-api/symbol-namespaces`
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 :c:func:`EXPORT_SYMBOL_NS_GPL()`
 --------------------------------
@@ -643,7 +651,11 @@ Definita in ``include/linux/export.h``
 
 Questa è una variate di `EXPORT_SYMBOL_GPL()` che permette di specificare uno
 spazio dei nomi. Lo spazio dei nomi è documentato in
+<<<<<<< HEAD
 Documentation/translations/it_IT/core-api/symbol-namespaces.rst.
+=======
+:doc:`../core-api/symbol-namespaces`
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Procedure e convenzioni
 =======================

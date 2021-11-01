@@ -78,7 +78,11 @@ struct iwl_cfg;
  *	there are Tx packets pending in the transport layer.
  *	Must be atomic
  * @nic_error: error notification. Must be atomic and must be called with BH
+<<<<<<< HEAD
  *	disabled, unless the sync parameter is true.
+=======
+ *	disabled.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @cmd_queue_full: Called when the command queue gets full. Must be atomic and
  *	called with BH disabled.
  * @nic_config: configure NIC, called before firmware is started.
@@ -102,7 +106,11 @@ struct iwl_op_mode_ops {
 	void (*queue_not_full)(struct iwl_op_mode *op_mode, int queue);
 	bool (*hw_rf_kill)(struct iwl_op_mode *op_mode, bool state);
 	void (*free_skb)(struct iwl_op_mode *op_mode, struct sk_buff *skb);
+<<<<<<< HEAD
 	void (*nic_error)(struct iwl_op_mode *op_mode, bool sync);
+=======
+	void (*nic_error)(struct iwl_op_mode *op_mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*cmd_queue_full)(struct iwl_op_mode *op_mode);
 	void (*nic_config)(struct iwl_op_mode *op_mode);
 	void (*wimax_active)(struct iwl_op_mode *op_mode);
@@ -181,9 +189,15 @@ static inline void iwl_op_mode_free_skb(struct iwl_op_mode *op_mode,
 	op_mode->ops->free_skb(op_mode, skb);
 }
 
+<<<<<<< HEAD
 static inline void iwl_op_mode_nic_error(struct iwl_op_mode *op_mode, bool sync)
 {
 	op_mode->ops->nic_error(op_mode, sync);
+=======
+static inline void iwl_op_mode_nic_error(struct iwl_op_mode *op_mode)
+{
+	op_mode->ops->nic_error(op_mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void iwl_op_mode_cmd_queue_full(struct iwl_op_mode *op_mode)

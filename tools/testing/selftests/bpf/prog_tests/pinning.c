@@ -125,10 +125,13 @@ void test_pinning(void)
 	if (CHECK(err, "pin maps", "err %d errno %d\n", err, errno))
 		goto out;
 
+<<<<<<< HEAD
 	/* get pinning path */
 	if (!ASSERT_STREQ(bpf_map__pin_path(map), pinpath, "get pin path"))
 		goto out;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* set pinning path of other map and re-pin all */
 	map = bpf_object__find_map_by_name(obj, "nopinmap");
 	if (CHECK(!map, "find map", "NULL map"))
@@ -138,11 +141,14 @@ void test_pinning(void)
 	if (CHECK(err, "set pin path", "err %d errno %d\n", err, errno))
 		goto out;
 
+<<<<<<< HEAD
 	/* get pinning path after set */
 	if (!ASSERT_STREQ(bpf_map__pin_path(map), custpinpath,
 			  "get pin path after set"))
 		goto out;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* should only pin the one unpinned map */
 	err = bpf_object__pin_maps(obj, NULL);
 	if (CHECK(err, "pin maps", "err %d errno %d\n", err, errno))

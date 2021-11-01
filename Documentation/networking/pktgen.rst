@@ -248,6 +248,7 @@ Usage:::
 
   -i : ($DEV)       output interface/device (required)
   -s : ($PKT_SIZE)  packet size
+<<<<<<< HEAD
   -d : ($DEST_IP)   destination IP. CIDR (e.g. 198.18.0.0/15) is also allowed
   -m : ($DST_MAC)   destination MAC-addr
   -p : ($DST_PORT)  destination PORT range (e.g. 433-444) is also allowed
@@ -261,11 +262,31 @@ Usage:::
   -6 : ($IP6)       IPv6
   -w : ($DELAY)     Tx Delay value (ns)
   -a : ($APPEND)    Script will not reset generator's state, but will append its config
+=======
+  -d : ($DEST_IP)   destination IP
+  -m : ($DST_MAC)   destination MAC-addr
+  -t : ($THREADS)   threads to start
+  -c : ($SKB_CLONE) SKB clones send before alloc new SKB
+  -b : ($BURST)     HW level bursting of SKBs
+  -v : ($VERBOSE)   verbose
+  -x : ($DEBUG)     debug
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 The global variables being set are also listed.  E.g. the required
 interface/device parameter "-i" sets variable $DEV.  Copy the
 pktgen_sampleXX scripts and modify them to fit your own needs.
 
+<<<<<<< HEAD
+=======
+The old scripts::
+
+    pktgen.conf-1-2                  # 1 CPU 2 dev
+    pktgen.conf-1-1-rdos             # 1 CPU 1 dev w. route DoS
+    pktgen.conf-1-1-ip6              # 1 CPU 1 dev ipv6
+    pktgen.conf-1-1-ip6-rdos         # 1 CPU 1 dev ipv6  w. route DoS
+    pktgen.conf-1-1-flows            # 1 CPU 1 dev multiple flows.
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Interrupt affinity
 ===================
@@ -396,7 +417,11 @@ Current commands and configuration options
 References:
 
 - ftp://robur.slu.se/pub/Linux/net-development/pktgen-testing/
+<<<<<<< HEAD
 - ftp://robur.slu.se/pub/Linux/net-development/pktgen-testing/examples/
+=======
+- tp://robur.slu.se/pub/Linux/net-development/pktgen-testing/examples/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Paper from Linux-Kongress in Erlangen 2004.
 - ftp://robur.slu.se/pub/Linux/net-development/pktgen-testing/pktgen_paper.pdf

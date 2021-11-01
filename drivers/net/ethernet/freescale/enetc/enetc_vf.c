@@ -99,7 +99,11 @@ static const struct net_device_ops enetc_ndev_ops = {
 	.ndo_get_stats		= enetc_get_stats,
 	.ndo_set_mac_address	= enetc_vf_set_mac_addr,
 	.ndo_set_features	= enetc_vf_set_features,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= enetc_ioctl,
+=======
+	.ndo_do_ioctl		= enetc_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_setup_tc		= enetc_setup_tc,
 };
 

@@ -168,6 +168,13 @@ static struct drm_driver vc4_drm_driver = {
 			    DRIVER_SYNCOBJ),
 	.open = vc4_open,
 	.postclose = vc4_close,
+<<<<<<< HEAD
+=======
+	.irq_handler = vc4_irq,
+	.irq_preinstall = vc4_irq_preinstall,
+	.irq_postinstall = vc4_irq_postinstall,
+	.irq_uninstall = vc4_irq_uninstall,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #if defined(CONFIG_DEBUG_FS)
 	.debugfs_init = vc4_debugfs_init,
@@ -261,7 +268,11 @@ static int vc4_drm_bind(struct device *dev)
 	if (ret)
 		goto unbind_all;
 
+<<<<<<< HEAD
 	ret = drm_aperture_remove_framebuffers(false, &vc4_drm_driver);
+=======
+	ret = drm_aperture_remove_framebuffers(false, "vc4drmfb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		goto unbind_all;
 

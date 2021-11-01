@@ -252,8 +252,11 @@ DECLARE_STATIC_KEY_FALSE(switch_mm_always_ibpb);
 DECLARE_STATIC_KEY_FALSE(mds_user_clear);
 DECLARE_STATIC_KEY_FALSE(mds_idle_clear);
 
+<<<<<<< HEAD
 DECLARE_STATIC_KEY_FALSE(switch_mm_cond_l1d_flush);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/segment.h>
 
 /**

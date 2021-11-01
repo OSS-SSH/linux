@@ -136,6 +136,12 @@ obj-$(CONFIG_X86_CHECK_BIOS_CORRUPTION) += check.o
 obj-$(CONFIG_SWIOTLB)			+= pci-swiotlb.o
 obj-$(CONFIG_OF)			+= devicetree.o
 obj-$(CONFIG_UPROBES)			+= uprobes.o
+<<<<<<< HEAD
+=======
+obj-y					+= sysfb.o
+obj-$(CONFIG_X86_SYSFB)			+= sysfb_simplefb.o
+obj-$(CONFIG_EFI)			+= sysfb_efi.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 obj-$(CONFIG_PERF_EVENTS)		+= perf_regs.o
 obj-$(CONFIG_TRACING)			+= tracepoint.o

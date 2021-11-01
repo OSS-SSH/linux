@@ -2,8 +2,11 @@
 #ifndef _RESCTRL_H
 #define _RESCTRL_H
 
+<<<<<<< HEAD
 #include <linux/kernel.h>
 #include <linux/list.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/pid.h>
 
 #ifdef CONFIG_PROC_CPU_RESCTRL
@@ -15,6 +18,7 @@ int proc_resctrl_show(struct seq_file *m,
 
 #endif
 
+<<<<<<< HEAD
 /**
  * enum resctrl_conf_type - The type of configuration.
  * @CDP_NONE:	No prioritisation, both code and data are controlled or monitored.
@@ -197,4 +201,6 @@ int resctrl_arch_update_domains(struct rdt_resource *r, u32 closid);
 u32 resctrl_arch_get_config(struct rdt_resource *r, struct rdt_domain *d,
 			    u32 closid, enum resctrl_conf_type type);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _RESCTRL_H */

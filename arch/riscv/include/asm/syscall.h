@@ -82,5 +82,8 @@ static inline int syscall_get_arch(struct task_struct *task)
 #endif
 }
 
+<<<<<<< HEAD
 asmlinkage long sys_riscv_flush_icache(uintptr_t, uintptr_t, uintptr_t);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif	/* _ASM_RISCV_SYSCALL_H */

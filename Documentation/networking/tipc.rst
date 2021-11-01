@@ -4,6 +4,7 @@
 Linux Kernel TIPC
 =================
 
+<<<<<<< HEAD
 Introduction
 ============
 
@@ -123,6 +124,12 @@ Implementation
 ==============
 
 TIPC is implemented as a kernel module in net/tipc/ directory.
+=======
+TIPC (Transparent Inter Process Communication) is a protocol that is
+specially designed for intra-cluster communication.
+
+For more information about TIPC, see http://tipc.sourceforge.net.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 TIPC Base Types
 ---------------

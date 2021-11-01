@@ -1137,7 +1137,11 @@ static int s3c24xx_i2c_probe(struct platform_device *pdev)
 	 */
 	if (!(i2c->quirks & QUIRK_POLL)) {
 		i2c->irq = ret = platform_get_irq(pdev, 0);
+<<<<<<< HEAD
 		if (ret < 0) {
+=======
+		if (ret <= 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dev_err(&pdev->dev, "cannot find IRQ\n");
 			clk_unprepare(i2c->clk);
 			return ret;

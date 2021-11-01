@@ -260,7 +260,11 @@ static void init_unwind_hdr(struct unwind_table *table,
 {
 	const u8 *ptr;
 	unsigned long tableSize = table->size, hdrSize;
+<<<<<<< HEAD
 	unsigned int n;
+=======
+	unsigned n;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const u32 *fde;
 	struct {
 		u8 version;
@@ -462,7 +466,11 @@ static uleb128_t get_uleb128(const u8 **pcur, const u8 *end)
 {
 	const u8 *cur = *pcur;
 	uleb128_t value;
+<<<<<<< HEAD
 	unsigned int shift;
+=======
+	unsigned shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (shift = 0, value = 0; cur < end; shift += 7) {
 		if (shift + 7 > 8 * sizeof(value)
@@ -483,7 +491,11 @@ static sleb128_t get_sleb128(const u8 **pcur, const u8 *end)
 {
 	const u8 *cur = *pcur;
 	sleb128_t value;
+<<<<<<< HEAD
 	unsigned int shift;
+=======
+	unsigned shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (shift = 0, value = 0; cur < end; shift += 7) {
 		if (shift + 7 > 8 * sizeof(value)
@@ -609,7 +621,11 @@ static unsigned long read_pointer(const u8 **pLoc, const void *end,
 static signed fde_pointer_type(const u32 *cie)
 {
 	const u8 *ptr = (const u8 *)(cie + 2);
+<<<<<<< HEAD
 	unsigned int version = *ptr;
+=======
+	unsigned version = *ptr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (*++ptr) {
 		const char *aug;
@@ -904,7 +920,11 @@ int arc_unwind(struct unwind_frame_info *frame)
 	const u8 *ptr = NULL, *end = NULL;
 	unsigned long pc = UNW_PC(frame) - frame->call_frame;
 	unsigned long startLoc = 0, endLoc = 0, cfa;
+<<<<<<< HEAD
 	unsigned int i;
+=======
+	unsigned i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	signed ptrType = -1;
 	uleb128_t retAddrReg = 0;
 	const struct unwind_table *table;

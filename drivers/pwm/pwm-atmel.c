@@ -84,6 +84,7 @@ struct atmel_pwm_chip {
 	void __iomem *base;
 	const struct atmel_pwm_data *data;
 
+<<<<<<< HEAD
 	/*
 	 * The hardware supports a mechanism to update a channel's duty cycle at
 	 * the end of the currently running period. When such an update is
@@ -97,6 +98,11 @@ struct atmel_pwm_chip {
 
 	/* Protects .update_pending */
 	spinlock_t lock;
+=======
+	unsigned int updated_pwms;
+	/* ISR is cleared when read, ensure only one thread does that */
+	struct mutex isr_lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline struct atmel_pwm_chip *to_atmel_pwm_chip(struct pwm_chip *chip)
@@ -133,6 +139,7 @@ static inline void atmel_pwm_ch_writel(struct atmel_pwm_chip *chip,
 	atmel_pwm_writel(chip, base + offset, val);
 }
 
+<<<<<<< HEAD
 static void atmel_pwm_update_pending(struct atmel_pwm_chip *chip)
 {
 	/*
@@ -191,6 +198,8 @@ static int atmel_pwm_wait_nonpending(struct atmel_pwm_chip *chip, unsigned int c
 	return ret ? -ETIMEDOUT : 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int atmel_pwm_calculate_cprd_and_pres(struct pwm_chip *chip,
 					     unsigned long clkrate,
 					     const struct pwm_state *state,
@@ -253,7 +262,10 @@ static void atmel_pwm_update_cdty(struct pwm_chip *chip, struct pwm_device *pwm,
 
 	atmel_pwm_ch_writel(atmel_pwm, pwm->hwpwm,
 			    atmel_pwm->data->regs.duty_upd, cdty);
+<<<<<<< HEAD
 	atmel_pwm_set_pending(atmel_pwm, pwm->hwpwm);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void atmel_pwm_set_cprd_cdty(struct pwm_chip *chip,
@@ -274,8 +286,25 @@ static void atmel_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm,
 	struct atmel_pwm_chip *atmel_pwm = to_atmel_pwm_chip(chip);
 	unsigned long timeout = jiffies + 2 * HZ;
 
+<<<<<<< HEAD
 	atmel_pwm_wait_nonpending(atmel_pwm, pwm->hwpwm);
 
+=======
+	/*
+	 * Wait for at least a complete period to have passed before disabling a
+	 * channel to be sure that CDTY has been updated
+	 */
+	mutex_lock(&atmel_pwm->isr_lock);
+	atmel_pwm->updated_pwms |= atmel_pwm_readl(atmel_pwm, PWM_ISR);
+
+	while (!(atmel_pwm->updated_pwms & (1 << pwm->hwpwm)) &&
+	       time_before(jiffies, timeout)) {
+		usleep_range(10, 100);
+		atmel_pwm->updated_pwms |= atmel_pwm_readl(atmel_pwm, PWM_ISR);
+	}
+
+	mutex_unlock(&atmel_pwm->isr_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	atmel_pwm_writel(atmel_pwm, PWM_DIS, 1 << pwm->hwpwm);
 
 	/*
@@ -349,6 +378,13 @@ static int atmel_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 			val |= PWM_CMR_CPOL;
 		atmel_pwm_ch_writel(atmel_pwm, pwm->hwpwm, PWM_CMR, val);
 		atmel_pwm_set_cprd_cdty(chip, pwm, cprd, cdty);
+<<<<<<< HEAD
+=======
+		mutex_lock(&atmel_pwm->isr_lock);
+		atmel_pwm->updated_pwms |= atmel_pwm_readl(atmel_pwm, PWM_ISR);
+		atmel_pwm->updated_pwms &= ~(1 << pwm->hwpwm);
+		mutex_unlock(&atmel_pwm->isr_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		atmel_pwm_writel(atmel_pwm, PWM_ENA, 1 << pwm->hwpwm);
 	} else if (cstate.enabled) {
 		atmel_pwm_disable(chip, pwm, true);
@@ -379,9 +415,12 @@ static void atmel_pwm_get_state(struct pwm_chip *chip, struct pwm_device *pwm,
 		tmp <<= pres;
 		state->period = DIV64_U64_ROUND_UP(tmp, rate);
 
+<<<<<<< HEAD
 		/* Wait for an updated duty_cycle queued in hardware */
 		atmel_pwm_wait_nonpending(atmel_pwm, pwm->hwpwm);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cdty = atmel_pwm_ch_readl(atmel_pwm, pwm->hwpwm,
 					  atmel_pwm->data->regs.duty);
 		tmp = (u64)(cprd - cdty) * NSEC_PER_SEC;
@@ -472,10 +511,16 @@ static int atmel_pwm_probe(struct platform_device *pdev)
 	if (!atmel_pwm)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	atmel_pwm->data = of_device_get_match_data(&pdev->dev);
 
 	atmel_pwm->update_pending = 0;
 	spin_lock_init(&atmel_pwm->lock);
+=======
+	mutex_init(&atmel_pwm->isr_lock);
+	atmel_pwm->data = of_device_get_match_data(&pdev->dev);
+	atmel_pwm->updated_pwms = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	atmel_pwm->base = devm_platform_ioremap_resource(pdev, 0);
 	if (IS_ERR(atmel_pwm->base))
@@ -517,6 +562,10 @@ static int atmel_pwm_remove(struct platform_device *pdev)
 	pwmchip_remove(&atmel_pwm->chip);
 
 	clk_unprepare(atmel_pwm->clk);
+<<<<<<< HEAD
+=======
+	mutex_destroy(&atmel_pwm->isr_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

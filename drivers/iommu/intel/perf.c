@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * perf.c - performance monitor
  *
  * Copyright (C) 2021 Intel Corporation

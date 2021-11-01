@@ -57,14 +57,20 @@ properties:
     maxItems: 1
 
   power-domains:
+<<<<<<< HEAD
     deprecated: true
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     description:
       Power domain to use for enable control. This binding is only
       available if the compatible is chosen to regulator-fixed-domain.
     maxItems: 1
 
   required-opps:
+<<<<<<< HEAD
     deprecated: true
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     description:
       Performance state to use for enable control. This binding is only
       available if the compatible is chosen to regulator-fixed-domain. The

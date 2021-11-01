@@ -45,7 +45,10 @@ config ENCX24J600
 config LAN743X
 	tristate "LAN743x support"
 	depends on PCI
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select PHYLIB
 	select CRC16
 	select CRC32

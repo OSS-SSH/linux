@@ -126,8 +126,11 @@ static const struct nlmsg_perm nlmsg_xfrm_perms[] =
 	{ XFRM_MSG_NEWSPDINFO,	NETLINK_XFRM_SOCKET__NLMSG_WRITE },
 	{ XFRM_MSG_GETSPDINFO,	NETLINK_XFRM_SOCKET__NLMSG_READ  },
 	{ XFRM_MSG_MAPPING,	NETLINK_XFRM_SOCKET__NLMSG_READ  },
+<<<<<<< HEAD
 	{ XFRM_MSG_SETDEFAULT,	NETLINK_XFRM_SOCKET__NLMSG_WRITE },
 	{ XFRM_MSG_GETDEFAULT,	NETLINK_XFRM_SOCKET__NLMSG_READ  },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct nlmsg_perm nlmsg_audit_perms[] =
@@ -191,7 +194,11 @@ int selinux_nlmsg_lookup(u16 sclass, u16 nlmsg_type, u32 *perm)
 		 * structures at the top of this file with the new mappings
 		 * before updating the BUILD_BUG_ON() macro!
 		 */
+<<<<<<< HEAD
 		BUILD_BUG_ON(XFRM_MSG_MAX != XFRM_MSG_GETDEFAULT);
+=======
+		BUILD_BUG_ON(XFRM_MSG_MAX != XFRM_MSG_MAPPING);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = nlmsg_perm(nlmsg_type, perm, nlmsg_xfrm_perms,
 				 sizeof(nlmsg_xfrm_perms));
 		break;

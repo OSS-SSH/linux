@@ -9,6 +9,7 @@
 #include <linux/delay.h>
 #include <linux/export.h>
 #include <linux/sched/signal.h>
+<<<<<<< HEAD
 #include <asm/unaligned.h>
 #include "pci.h"
 
@@ -47,10 +48,68 @@ static struct pci_dev *pci_get_func0_dev(struct pci_dev *dev)
 
 #define PCI_VPD_MAX_SIZE	(PCI_VPD_ADDR_MASK + 1)
 #define PCI_VPD_SZ_INVALID	UINT_MAX
+=======
+#include "pci.h"
+
+/* VPD access through PCI 2.2+ VPD capability */
+
+struct pci_vpd_ops {
+	ssize_t (*read)(struct pci_dev *dev, loff_t pos, size_t count, void *buf);
+	ssize_t (*write)(struct pci_dev *dev, loff_t pos, size_t count, const void *buf);
+};
+
+struct pci_vpd {
+	const struct pci_vpd_ops *ops;
+	struct mutex	lock;
+	unsigned int	len;
+	u16		flag;
+	u8		cap;
+	unsigned int	busy:1;
+	unsigned int	valid:1;
+};
+
+static struct pci_dev *pci_get_func0_dev(struct pci_dev *dev)
+{
+	return pci_get_slot(dev->bus, PCI_DEVFN(PCI_SLOT(dev->devfn), 0));
+}
+
+/**
+ * pci_read_vpd - Read one entry from Vital Product Data
+ * @dev:	pci device struct
+ * @pos:	offset in vpd space
+ * @count:	number of bytes to read
+ * @buf:	pointer to where to store result
+ */
+ssize_t pci_read_vpd(struct pci_dev *dev, loff_t pos, size_t count, void *buf)
+{
+	if (!dev->vpd || !dev->vpd->ops)
+		return -ENODEV;
+	return dev->vpd->ops->read(dev, pos, count, buf);
+}
+EXPORT_SYMBOL(pci_read_vpd);
+
+/**
+ * pci_write_vpd - Write entry to Vital Product Data
+ * @dev:	pci device struct
+ * @pos:	offset in vpd space
+ * @count:	number of bytes to write
+ * @buf:	buffer containing write data
+ */
+ssize_t pci_write_vpd(struct pci_dev *dev, loff_t pos, size_t count, const void *buf)
+{
+	if (!dev->vpd || !dev->vpd->ops)
+		return -ENODEV;
+	return dev->vpd->ops->write(dev, pos, count, buf);
+}
+EXPORT_SYMBOL(pci_write_vpd);
+
+#define PCI_VPD_MAX_SIZE (PCI_VPD_ADDR_MASK + 1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * pci_vpd_size - determine actual size of Vital Product Data
  * @dev:	pci device struct
+<<<<<<< HEAD
  */
 static size_t pci_vpd_size(struct pci_dev *dev)
 {
@@ -115,6 +174,59 @@ static bool pci_vpd_available(struct pci_dev *dev)
 	}
 
 	return true;
+=======
+ * @old_size:	current assumed size, also maximum allowed size
+ */
+static size_t pci_vpd_size(struct pci_dev *dev, size_t old_size)
+{
+	size_t off = 0;
+	unsigned char header[1+2];	/* 1 byte tag, 2 bytes length */
+
+	while (off < old_size && pci_read_vpd(dev, off, 1, header) == 1) {
+		unsigned char tag;
+
+		if (!header[0] && !off) {
+			pci_info(dev, "Invalid VPD tag 00, assume missing optional VPD EPROM\n");
+			return 0;
+		}
+
+		if (header[0] & PCI_VPD_LRDT) {
+			/* Large Resource Data Type Tag */
+			tag = pci_vpd_lrdt_tag(header);
+			/* Only read length from known tag items */
+			if ((tag == PCI_VPD_LTIN_ID_STRING) ||
+			    (tag == PCI_VPD_LTIN_RO_DATA) ||
+			    (tag == PCI_VPD_LTIN_RW_DATA)) {
+				if (pci_read_vpd(dev, off+1, 2,
+						 &header[1]) != 2) {
+					pci_warn(dev, "invalid large VPD tag %02x size at offset %zu",
+						 tag, off + 1);
+					return 0;
+				}
+				off += PCI_VPD_LRDT_TAG_SIZE +
+					pci_vpd_lrdt_size(header);
+			}
+		} else {
+			/* Short Resource Data Type Tag */
+			off += PCI_VPD_SRDT_TAG_SIZE +
+				pci_vpd_srdt_size(header);
+			tag = pci_vpd_srdt_tag(header);
+		}
+
+		if (tag == PCI_VPD_STIN_END)	/* End tag descriptor */
+			return off;
+
+		if ((tag != PCI_VPD_LTIN_ID_STRING) &&
+		    (tag != PCI_VPD_LTIN_RO_DATA) &&
+		    (tag != PCI_VPD_LTIN_RW_DATA)) {
+			pci_warn(dev, "invalid %s VPD tag %02x at offset %zu",
+				 (header[0] & PCI_VPD_LRDT) ? "large" : "short",
+				 tag, off);
+			return 0;
+		}
+	}
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -122,6 +234,7 @@ static bool pci_vpd_available(struct pci_dev *dev)
  * This code has to spin since there is no other notification from the PCI
  * hardware. Since the VPD is often implemented by serial attachment to an
  * EEPROM, it may take many milliseconds to complete.
+<<<<<<< HEAD
  * @set: if true wait for flag to be set, else wait for it to be cleared
  *
  * Returns 0 on success, negative values indicate error.
@@ -129,19 +242,43 @@ static bool pci_vpd_available(struct pci_dev *dev)
 static int pci_vpd_wait(struct pci_dev *dev, bool set)
 {
 	struct pci_vpd *vpd = &dev->vpd;
+=======
+ *
+ * Returns 0 on success, negative values indicate error.
+ */
+static int pci_vpd_wait(struct pci_dev *dev)
+{
+	struct pci_vpd *vpd = dev->vpd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long timeout = jiffies + msecs_to_jiffies(125);
 	unsigned long max_sleep = 16;
 	u16 status;
 	int ret;
 
+<<<<<<< HEAD
+=======
+	if (!vpd->busy)
+		return 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	do {
 		ret = pci_user_read_config_word(dev, vpd->cap + PCI_VPD_ADDR,
 						&status);
 		if (ret < 0)
 			return ret;
 
+<<<<<<< HEAD
 		if (!!(status & PCI_VPD_ADDR_F) == set)
 			return 0;
+=======
+		if ((status & PCI_VPD_ADDR_F) == vpd->flag) {
+			vpd->busy = 0;
+			return 0;
+		}
+
+		if (fatal_signal_pending(current))
+			return -EINTR;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (time_after(jiffies, timeout))
 			break;
@@ -158,6 +295,7 @@ static int pci_vpd_wait(struct pci_dev *dev, bool set)
 static ssize_t pci_vpd_read(struct pci_dev *dev, loff_t pos, size_t count,
 			    void *arg)
 {
+<<<<<<< HEAD
 	struct pci_vpd *vpd = &dev->vpd;
 	int ret = 0;
 	loff_t end = pos + count;
@@ -169,6 +307,24 @@ static ssize_t pci_vpd_read(struct pci_dev *dev, loff_t pos, size_t count,
 	if (pos < 0)
 		return -EINVAL;
 
+=======
+	struct pci_vpd *vpd = dev->vpd;
+	int ret;
+	loff_t end = pos + count;
+	u8 *buf = arg;
+
+	if (pos < 0)
+		return -EINVAL;
+
+	if (!vpd->valid) {
+		vpd->valid = 1;
+		vpd->len = pci_vpd_size(dev, vpd->len);
+	}
+
+	if (vpd->len == 0)
+		return -EIO;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (pos > vpd->len)
 		return 0;
 
@@ -180,20 +336,36 @@ static ssize_t pci_vpd_read(struct pci_dev *dev, loff_t pos, size_t count,
 	if (mutex_lock_killable(&vpd->lock))
 		return -EINTR;
 
+<<<<<<< HEAD
+=======
+	ret = pci_vpd_wait(dev);
+	if (ret < 0)
+		goto out;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	while (pos < end) {
 		u32 val;
 		unsigned int i, skip;
 
+<<<<<<< HEAD
 		if (fatal_signal_pending(current)) {
 			ret = -EINTR;
 			break;
 		}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = pci_user_write_config_word(dev, vpd->cap + PCI_VPD_ADDR,
 						 pos & ~3);
 		if (ret < 0)
 			break;
+<<<<<<< HEAD
 		ret = pci_vpd_wait(dev, true);
+=======
+		vpd->busy = 1;
+		vpd->flag = PCI_VPD_ADDR_F;
+		ret = pci_vpd_wait(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret < 0)
 			break;
 
@@ -211,7 +383,11 @@ static ssize_t pci_vpd_read(struct pci_dev *dev, loff_t pos, size_t count,
 			val >>= 8;
 		}
 	}
+<<<<<<< HEAD
 
+=======
+out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&vpd->lock);
 	return ret ? ret : count;
 }
@@ -219,26 +395,60 @@ static ssize_t pci_vpd_read(struct pci_dev *dev, loff_t pos, size_t count,
 static ssize_t pci_vpd_write(struct pci_dev *dev, loff_t pos, size_t count,
 			     const void *arg)
 {
+<<<<<<< HEAD
 	struct pci_vpd *vpd = &dev->vpd;
+=======
+	struct pci_vpd *vpd = dev->vpd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const u8 *buf = arg;
 	loff_t end = pos + count;
 	int ret = 0;
 
+<<<<<<< HEAD
 	if (!pci_vpd_available(dev))
 		return -ENODEV;
 
 	if (pos < 0 || (pos & 3) || (count & 3))
 		return -EINVAL;
 
+=======
+	if (pos < 0 || (pos & 3) || (count & 3))
+		return -EINVAL;
+
+	if (!vpd->valid) {
+		vpd->valid = 1;
+		vpd->len = pci_vpd_size(dev, vpd->len);
+	}
+
+	if (vpd->len == 0)
+		return -EIO;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (end > vpd->len)
 		return -EINVAL;
 
 	if (mutex_lock_killable(&vpd->lock))
 		return -EINTR;
 
+<<<<<<< HEAD
 	while (pos < end) {
 		ret = pci_user_write_config_dword(dev, vpd->cap + PCI_VPD_DATA,
 						  get_unaligned_le32(buf));
+=======
+	ret = pci_vpd_wait(dev);
+	if (ret < 0)
+		goto out;
+
+	while (pos < end) {
+		u32 val;
+
+		val = *buf++;
+		val |= *buf++ << 8;
+		val |= *buf++ << 16;
+		val |= *buf++ << 24;
+
+		ret = pci_user_write_config_dword(dev, vpd->cap + PCI_VPD_DATA, val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret < 0)
 			break;
 		ret = pci_user_write_config_word(dev, vpd->cap + PCI_VPD_ADDR,
@@ -246,6 +456,7 @@ static ssize_t pci_vpd_write(struct pci_dev *dev, loff_t pos, size_t count,
 		if (ret < 0)
 			break;
 
+<<<<<<< HEAD
 		ret = pci_vpd_wait(dev, false);
 		if (ret < 0)
 			break;
@@ -254,10 +465,22 @@ static ssize_t pci_vpd_write(struct pci_dev *dev, loff_t pos, size_t count,
 		pos += sizeof(u32);
 	}
 
+=======
+		vpd->busy = 1;
+		vpd->flag = 0;
+		ret = pci_vpd_wait(dev);
+		if (ret < 0)
+			break;
+
+		pos += sizeof(u32);
+	}
+out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&vpd->lock);
 	return ret ? ret : count;
 }
 
+<<<<<<< HEAD
 void pci_vpd_init(struct pci_dev *dev)
 {
 	if (dev->vpd.len == PCI_VPD_SZ_INVALID)
@@ -265,6 +488,74 @@ void pci_vpd_init(struct pci_dev *dev)
 
 	dev->vpd.cap = pci_find_capability(dev, PCI_CAP_ID_VPD);
 	mutex_init(&dev->vpd.lock);
+=======
+static const struct pci_vpd_ops pci_vpd_ops = {
+	.read = pci_vpd_read,
+	.write = pci_vpd_write,
+};
+
+static ssize_t pci_vpd_f0_read(struct pci_dev *dev, loff_t pos, size_t count,
+			       void *arg)
+{
+	struct pci_dev *tdev = pci_get_func0_dev(dev);
+	ssize_t ret;
+
+	if (!tdev)
+		return -ENODEV;
+
+	ret = pci_read_vpd(tdev, pos, count, arg);
+	pci_dev_put(tdev);
+	return ret;
+}
+
+static ssize_t pci_vpd_f0_write(struct pci_dev *dev, loff_t pos, size_t count,
+				const void *arg)
+{
+	struct pci_dev *tdev = pci_get_func0_dev(dev);
+	ssize_t ret;
+
+	if (!tdev)
+		return -ENODEV;
+
+	ret = pci_write_vpd(tdev, pos, count, arg);
+	pci_dev_put(tdev);
+	return ret;
+}
+
+static const struct pci_vpd_ops pci_vpd_f0_ops = {
+	.read = pci_vpd_f0_read,
+	.write = pci_vpd_f0_write,
+};
+
+void pci_vpd_init(struct pci_dev *dev)
+{
+	struct pci_vpd *vpd;
+	u8 cap;
+
+	cap = pci_find_capability(dev, PCI_CAP_ID_VPD);
+	if (!cap)
+		return;
+
+	vpd = kzalloc(sizeof(*vpd), GFP_ATOMIC);
+	if (!vpd)
+		return;
+
+	vpd->len = PCI_VPD_MAX_SIZE;
+	if (dev->dev_flags & PCI_DEV_FLAGS_VPD_REF_F0)
+		vpd->ops = &pci_vpd_f0_ops;
+	else
+		vpd->ops = &pci_vpd_ops;
+	mutex_init(&vpd->lock);
+	vpd->cap = cap;
+	vpd->busy = 0;
+	vpd->valid = 0;
+	dev->vpd = vpd;
+}
+
+void pci_vpd_release(struct pci_dev *dev)
+{
+	kfree(dev->vpd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t vpd_read(struct file *filp, struct kobject *kobj,
@@ -296,7 +587,11 @@ static umode_t vpd_attr_is_visible(struct kobject *kobj,
 {
 	struct pci_dev *pdev = to_pci_dev(kobj_to_dev(kobj));
 
+<<<<<<< HEAD
 	if (!pdev->vpd.cap)
+=======
+	if (!pdev->vpd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	return a->attr.mode;
@@ -307,6 +602,7 @@ const struct attribute_group pci_dev_vpd_attr_group = {
 	.is_bin_visible = vpd_attr_is_visible,
 };
 
+<<<<<<< HEAD
 void *pci_vpd_alloc(struct pci_dev *dev, unsigned int *size)
 {
 	unsigned int len;
@@ -335,11 +631,15 @@ void *pci_vpd_alloc(struct pci_dev *dev, unsigned int *size)
 EXPORT_SYMBOL_GPL(pci_vpd_alloc);
 
 static int pci_vpd_find_tag(const u8 *buf, unsigned int len, u8 rdt, unsigned int *size)
+=======
+int pci_vpd_find_tag(const u8 *buf, unsigned int len, u8 rdt)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i = 0;
 
 	/* look for LRDT tags only, end tag is the only SRDT tag */
 	while (i + PCI_VPD_LRDT_TAG_SIZE <= len && buf[i] & PCI_VPD_LRDT) {
+<<<<<<< HEAD
 		unsigned int lrdt_len = pci_vpd_lrdt_size(buf + i);
 		u8 tag = buf[i];
 
@@ -353,10 +653,17 @@ static int pci_vpd_find_tag(const u8 *buf, unsigned int len, u8 rdt, unsigned in
 		}
 
 		i += lrdt_len;
+=======
+		if (buf[i] == rdt)
+			return i;
+
+		i += PCI_VPD_LRDT_TAG_SIZE + pci_vpd_lrdt_size(buf + i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return -ENOENT;
 }
+<<<<<<< HEAD
 
 int pci_vpd_find_id_string(const u8 *buf, unsigned int len, unsigned int *size)
 {
@@ -365,6 +672,11 @@ int pci_vpd_find_id_string(const u8 *buf, unsigned int len, unsigned int *size)
 EXPORT_SYMBOL_GPL(pci_vpd_find_id_string);
 
 static int pci_vpd_find_info_keyword(const u8 *buf, unsigned int off,
+=======
+EXPORT_SYMBOL_GPL(pci_vpd_find_tag);
+
+int pci_vpd_find_info_keyword(const u8 *buf, unsigned int off,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			      unsigned int len, const char *kw)
 {
 	int i;
@@ -380,6 +692,7 @@ static int pci_vpd_find_info_keyword(const u8 *buf, unsigned int off,
 
 	return -ENOENT;
 }
+<<<<<<< HEAD
 
 /**
  * pci_read_vpd - Read one entry from Vital Product Data
@@ -480,6 +793,9 @@ int pci_vpd_check_csum(const void *buf, unsigned int len)
 	return csum ? -EILSEQ : 0;
 }
 EXPORT_SYMBOL_GPL(pci_vpd_check_csum);
+=======
+EXPORT_SYMBOL_GPL(pci_vpd_find_info_keyword);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_PCI_QUIRKS
 /*
@@ -498,7 +814,11 @@ static void quirk_f0_vpd_link(struct pci_dev *dev)
 	if (!f0)
 		return;
 
+<<<<<<< HEAD
 	if (f0->vpd.cap && dev->class == f0->class &&
+=======
+	if (f0->vpd && dev->class == f0->class &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    dev->vendor == f0->vendor && dev->device == f0->device)
 		dev->dev_flags |= PCI_DEV_FLAGS_VPD_REF_F0;
 
@@ -516,6 +836,7 @@ DECLARE_PCI_FIXUP_CLASS_EARLY(PCI_VENDOR_ID_INTEL, PCI_ANY_ID,
  */
 static void quirk_blacklist_vpd(struct pci_dev *dev)
 {
+<<<<<<< HEAD
 	dev->vpd.len = PCI_VPD_SZ_INVALID;
 	pci_warn(dev, FW_BUG "disabling VPD access (can't determine size of non-standard VPD format)\n");
 }
@@ -531,12 +852,48 @@ DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_LSI_LOGIC, 0x002f, quirk_blacklist_vpd);
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_LSI_LOGIC, 0x005d, quirk_blacklist_vpd);
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_LSI_LOGIC, 0x005f, quirk_blacklist_vpd);
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_ATTANSIC, PCI_ANY_ID, quirk_blacklist_vpd);
+=======
+	if (dev->vpd) {
+		dev->vpd->len = 0;
+		pci_warn(dev, FW_BUG "disabling VPD access (can't determine size of non-standard VPD format)\n");
+	}
+}
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x0060, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x007c, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x0413, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x0078, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x0079, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x0073, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x0071, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x005b, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x002f, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x005d, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_LSI_LOGIC, 0x005f, quirk_blacklist_vpd);
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_ATTANSIC, PCI_ANY_ID,
+		quirk_blacklist_vpd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * The Amazon Annapurna Labs 0x0031 device id is reused for other non Root Port
  * device types, so the quirk is registered for the PCI_CLASS_BRIDGE_PCI class.
  */
+<<<<<<< HEAD
 DECLARE_PCI_FIXUP_CLASS_HEADER(PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031,
 			       PCI_CLASS_BRIDGE_PCI, 8, quirk_blacklist_vpd);
+=======
+DECLARE_PCI_FIXUP_CLASS_FINAL(PCI_VENDOR_ID_AMAZON_ANNAPURNA_LABS, 0x0031,
+			      PCI_CLASS_BRIDGE_PCI, 8, quirk_blacklist_vpd);
+
+static void pci_vpd_set_size(struct pci_dev *dev, size_t len)
+{
+	struct pci_vpd *vpd = dev->vpd;
+
+	if (!vpd || len == 0 || len > PCI_VPD_MAX_SIZE)
+		return;
+
+	vpd->valid = 1;
+	vpd->len = len;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void quirk_chelsio_extend_vpd(struct pci_dev *dev)
 {
@@ -556,6 +913,7 @@ static void quirk_chelsio_extend_vpd(struct pci_dev *dev)
 	 * limits.
 	 */
 	if (chip == 0x0 && prod >= 0x20)
+<<<<<<< HEAD
 		dev->vpd.len = 8192;
 	else if (chip >= 0x4 && func < 0x8)
 		dev->vpd.len = 2048;
@@ -563,5 +921,14 @@ static void quirk_chelsio_extend_vpd(struct pci_dev *dev)
 
 DECLARE_PCI_FIXUP_HEADER(PCI_VENDOR_ID_CHELSIO, PCI_ANY_ID,
 			 quirk_chelsio_extend_vpd);
+=======
+		pci_vpd_set_size(dev, 8192);
+	else if (chip >= 0x4 && func < 0x8)
+		pci_vpd_set_size(dev, 2048);
+}
+
+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_CHELSIO, PCI_ANY_ID,
+			quirk_chelsio_extend_vpd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

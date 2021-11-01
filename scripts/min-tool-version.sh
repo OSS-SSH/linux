@@ -17,7 +17,17 @@ binutils)
 	echo 2.23.0
 	;;
 gcc)
+<<<<<<< HEAD
 	echo 5.1.0
+=======
+	# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=63293
+	# https://lore.kernel.org/r/20210107111841.GN1551@shell.armlinux.org.uk
+	if [ "$SRCARCH" = arm64 ]; then
+		echo 5.1.0
+	else
+		echo 4.9.0
+	fi
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	;;
 icc)
 	# temporary

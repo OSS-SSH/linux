@@ -9,10 +9,23 @@
 #include <rtw_debug.h>
 #include "odm_precomp.h"
 
+<<<<<<< HEAD
+=======
+
+
+/*---------------------------Define Local Constant---------------------------*/
+/*  2010/04/25 MH Define the max tx power tracking tx agc power. */
+#define		ODM_TXPWRTRACK_MAX_IDX8723B	6
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*  MACRO definition for pRFCalibrateInfo->TxIQC_8723B[0] */
 #define		PATH_S0							1 /*  RF_PATH_B */
 #define		IDX_0xC94						0
 #define		IDX_0xC80						1
+<<<<<<< HEAD
+=======
+#define		IDX_0xC4C						2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define		IDX_0xC14						0
 #define		IDX_0xCA0						1
 #define		KEY							0
@@ -20,7 +33,16 @@
 
 /*  MACRO definition for pRFCalibrateInfo->TxIQC_8723B[1] */
 #define		PATH_S1							0 /*  RF_PATH_A */
+<<<<<<< HEAD
 #define		IDX_0xC4C						2
+=======
+#define		IDX_0xC9C						0
+#define		IDX_0xC88						1
+#define		IDX_0xC4C						2
+#define		IDX_0xC1C						0
+#define		IDX_0xC78						1
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*---------------------------Define Local Constant---------------------------*/
 
@@ -67,9 +89,15 @@ static void setIqkMatrix_8723B(
 			IqkResult_Y = IqkResult_Y | 0xFFFFFC00;
 		ele_C = ((IqkResult_Y * ele_D)>>8)&0x000003FF;
 
+<<<<<<< HEAD
 		/* if (RFPath == RF_PATH_A) */
 		switch (RFPath) {
 		case RF_PATH_A:
+=======
+		/* if (RFPath == ODM_RF_PATH_A) */
+		switch (RFPath) {
+		case ODM_RF_PATH_A:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* write new elements A, C, D to regC80 and regC94,
 			 * element B is always 0
 			 */
@@ -82,7 +110,11 @@ static void setIqkMatrix_8723B(
 			value32 = ((IqkResult_X * ele_D)>>7)&0x01;
 			PHY_SetBBReg(pDM_Odm->Adapter, rOFDM0_ECCAThreshold, BIT24, value32);
 			break;
+<<<<<<< HEAD
 		case RF_PATH_B:
+=======
+		case ODM_RF_PATH_B:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* write new elements A, C, D to regC88 and regC9C,
 			 * element B is always 0
 			 */
@@ -101,13 +133,21 @@ static void setIqkMatrix_8723B(
 		}
 	} else {
 		switch (RFPath) {
+<<<<<<< HEAD
 		case RF_PATH_A:
+=======
+		case ODM_RF_PATH_A:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			PHY_SetBBReg(pDM_Odm->Adapter, rOFDM0_XATxIQImbalance, bMaskDWord, OFDMSwingTable_New[OFDM_index]);
 			PHY_SetBBReg(pDM_Odm->Adapter, rOFDM0_XCTxAFE, bMaskH4Bits, 0x00);
 			PHY_SetBBReg(pDM_Odm->Adapter, rOFDM0_ECCAThreshold, BIT24, 0x00);
 			break;
 
+<<<<<<< HEAD
 		case RF_PATH_B:
+=======
+		case ODM_RF_PATH_B:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			PHY_SetBBReg(pDM_Odm->Adapter, rOFDM0_XBTxIQImbalance, bMaskDWord, OFDMSwingTable_New[OFDM_index]);
 			PHY_SetBBReg(pDM_Odm->Adapter, rOFDM0_XDTxAFE, bMaskH4Bits, 0x00);
 			PHY_SetBBReg(pDM_Odm->Adapter, rOFDM0_ECCAThreshold, BIT28, 0x00);
@@ -361,6 +401,10 @@ void ConfigureTxpowerTrack_8723B(struct txpwrtrack_cfg *pConfig)
 
 /* 1 7. IQK */
 #define MAX_TOLERANCE		5
+<<<<<<< HEAD
+=======
+#define IQK_DELAY_TIME		1		/* ms */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* bit0 = 1 => Tx OK, bit1 = 1 => Rx OK */
 static u8 phy_PathA_IQK_8723B(
@@ -380,6 +424,7 @@ static u8 phy_PathA_IQK_8723B(
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
 
 	/* 	enable path A PA in TXIQK mode */
+<<<<<<< HEAD
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0003f);
@@ -387,6 +432,15 @@ static u8 phy_PathA_IQK_8723B(
 	/* 	disable path B PA in TXIQK mode */
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xed, bRFRegOffsetMask, 0x00020); */
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x43, bRFRegOffsetMask, 0x40ec1); */
+=======
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0003f);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xc7f87);
+	/* 	disable path B PA in TXIQK mode */
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xed, bRFRegOffsetMask, 0x00020); */
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x43, bRFRegOffsetMask, 0x40ec1); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* 1 Tx IQK */
 	/* IQK setting */
@@ -480,12 +534,21 @@ static u8 phy_PathA_RxIQK8723B(
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
 	/* 1 Get TXIMR setting */
 	/* modify RXIQK mode table */
+<<<<<<< HEAD
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
 	/* LNA2 off, PA on for Dcut */
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xf7fb7);
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x0); */
+=======
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
+	/* LNA2 off, PA on for Dcut */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xf7fb7);
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x808000);
 
 	/* IQK setting */
@@ -564,6 +627,7 @@ static u8 phy_PathA_RxIQK8723B(
 
 	/* modify RXIQK mode table */
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
+<<<<<<< HEAD
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
@@ -574,6 +638,18 @@ static u8 phy_PathA_RxIQK8723B(
 	/* PA, PAD setting */
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xdf, bRFRegOffsetMask, 0xf80);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x55, bRFRegOffsetMask, 0x4021f);
+=======
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
+	/* LAN2 on, PA off for Dcut */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xf7d77);
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x0); */
+
+	/* PA, PAD setting */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xdf, bRFRegOffsetMask, 0xf80);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x55, bRFRegOffsetMask, 0x4021f);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 	/* IQK setting */
@@ -631,7 +707,11 @@ static u8 phy_PathA_RxIQK8723B(
 	/* 	PA/PAD controlled by 0x0 */
 	/* leave IQK mode */
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
+<<<<<<< HEAD
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xdf, bRFRegOffsetMask, 0x780);
+=======
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xdf, bRFRegOffsetMask, 0x780);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Allen 20131125 */
 	tmp = (regEAC & 0x03FF0000)>>16;
@@ -666,6 +746,7 @@ static u8 phy_PathB_IQK_8723B(struct adapter *padapter)
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
 
 	/* 	in TXIQK mode */
+<<<<<<< HEAD
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x1); */
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x20000); */
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0003f); */
@@ -673,6 +754,15 @@ static u8 phy_PathB_IQK_8723B(struct adapter *padapter)
 	/* 	enable path B PA in TXIQK mode */
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xed, 0x20, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x43, bRFRegOffsetMask, 0x30fc1);
+=======
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1); */
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x20000); */
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0003f); */
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xc7f87); */
+	/* 	enable path B PA in TXIQK mode */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xed, 0x20, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x43, bRFRegOffsetMask, 0x30fc1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 
@@ -700,7 +790,11 @@ static u8 phy_PathB_IQK_8723B(struct adapter *padapter)
 
 	/* switch to path B */
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord, 0x00000280);
+<<<<<<< HEAD
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xb0, bRFRegOffsetMask, 0xeffe0); */
+=======
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xb0, bRFRegOffsetMask, 0xeffe0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* GNT_BT = 0 */
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x764, bMaskDWord, 0x00000800);
@@ -760,6 +854,7 @@ static u8 phy_PathB_RxIQK8723B(struct adapter *padapter, bool configPathB)
 	/* switch to path B */
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord, 0x00000280);
 	/* modify RXIQK mode table */
+<<<<<<< HEAD
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
@@ -767,6 +862,15 @@ static u8 phy_PathB_RxIQK8723B(struct adapter *padapter, bool configPathB)
 	/* open PA S1 & SMIXER */
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xed, 0x20, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x43, bRFRegOffsetMask, 0x30fcd);
+=======
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xf7fb7);
+	/* open PA S1 & SMIXER */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xed, 0x20, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x43, bRFRegOffsetMask, 0x30fcd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 	/* IQK setting */
@@ -794,7 +898,11 @@ static u8 phy_PathB_RxIQK8723B(struct adapter *padapter, bool configPathB)
 
 	/* switch to path B */
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord, 0x00000280);
+<<<<<<< HEAD
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xb0, bRFRegOffsetMask, 0xeffe0); */
+=======
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xb0, bRFRegOffsetMask, 0xeffe0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* GNT_BT = 0 */
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x764, bMaskDWord, 0x00000800);
@@ -844,6 +952,7 @@ static u8 phy_PathB_RxIQK8723B(struct adapter *padapter, bool configPathB)
 	/* modify RXIQK mode table */
 	/* 20121009, Kordan> RF Mode = 3 */
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
+<<<<<<< HEAD
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
@@ -857,6 +966,21 @@ static u8 phy_PathB_RxIQK8723B(struct adapter *padapter, bool configPathB)
 	/* PA, PAD setting */
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xdf, bRFRegOffsetMask, 0xf80); */
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x56, bRFRegOffsetMask, 0x51000); */
+=======
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xf7d77);
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x0); */
+
+	/* open PA S1 & close SMIXER */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xed, 0x20, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x43, bRFRegOffsetMask, 0x30ebd);
+
+	/* PA, PAD setting */
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xdf, bRFRegOffsetMask, 0xf80); */
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x56, bRFRegOffsetMask, 0x51000); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* IQK setting */
 	PHY_SetBBReg(pDM_Odm->Adapter, rRx_IQK, bMaskDWord, 0x01004800);
@@ -881,7 +1005,11 @@ static u8 phy_PathB_RxIQK8723B(struct adapter *padapter, bool configPathB)
 
 	/* switch to path B */
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord, 0x00000280);
+<<<<<<< HEAD
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xb0, bRFRegOffsetMask, 0xeffe0); */
+=======
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xb0, bRFRegOffsetMask, 0xeffe0); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* GNT_BT = 0 */
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x764, bMaskDWord, 0x00000800);
@@ -909,7 +1037,11 @@ static u8 phy_PathB_RxIQK8723B(struct adapter *padapter, bool configPathB)
 	/* 	PA/PAD controlled by 0x0 */
 	/* leave IQK mode */
 /* 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, 0xffffff00, 0x00000000); */
+<<<<<<< HEAD
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_B, 0xdf, bRFRegOffsetMask, 0x180); */
+=======
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_B, 0xdf, bRFRegOffsetMask, 0x180); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 
@@ -1384,7 +1516,11 @@ static void phy_IQCalibrate_8723B(
 
 	/* save RF path for 8723B */
 /* 	Path_SEL_BB = PHY_QueryBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord); */
+<<<<<<< HEAD
 /* 	Path_SEL_RF = PHY_QueryRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xb0, 0xfffff); */
+=======
+/* 	Path_SEL_RF = PHY_QueryRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xb0, 0xfffff); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* MAC settings */
 	_PHY_MACSettingCalibration8723B(padapter, IQK_MAC_REG, pDM_Odm->RFCalibrateInfo.IQK_MAC_backup);
@@ -1406,12 +1542,21 @@ static void phy_IQCalibrate_8723B(
 /* RX IQ calibration setting for 8723B D cut large current issue when leaving IPS */
 
 	PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
+<<<<<<< HEAD
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x30000);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xf7fb7);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xed, 0x20, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x43, bRFRegOffsetMask, 0x60fbd);
+=======
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x30000);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xf7fb7);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xed, 0x20, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x43, bRFRegOffsetMask, 0x60fbd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* path A TX IQK */
 	for (i = 0 ; i < retryCount ; i++) {
@@ -1420,7 +1565,11 @@ static void phy_IQCalibrate_8723B(
 		if (PathAOK == 0x01) {
 			/*  Path A Tx IQK Success */
 			PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
+<<<<<<< HEAD
 			pDM_Odm->RFCalibrateInfo.TxLOK[RF_PATH_A] = PHY_QueryRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x8, bRFRegOffsetMask);
+=======
+			pDM_Odm->RFCalibrateInfo.TxLOK[ODM_RF_PATH_A] = PHY_QueryRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x8, bRFRegOffsetMask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				result[t][0] = (PHY_QueryBBReg(pDM_Odm->Adapter, rTx_Power_Before_IQK_A, bMaskDWord)&0x3FF0000)>>16;
 				result[t][1] = (PHY_QueryBBReg(pDM_Odm->Adapter, rTx_Power_After_IQK_A, bMaskDWord)&0x3FF0000)>>16;
@@ -1452,7 +1601,11 @@ static void phy_IQCalibrate_8723B(
 			if (PathBOK == 0x01) {
 				/*  Path B Tx IQK Success */
 				PHY_SetBBReg(pDM_Odm->Adapter, rFPGA0_IQK, bMaskH3Bytes, 0x000000);
+<<<<<<< HEAD
 				pDM_Odm->RFCalibrateInfo.TxLOK[RF_PATH_B] = PHY_QueryRFReg(pDM_Odm->Adapter, RF_PATH_B, 0x8, bRFRegOffsetMask);
+=======
+				pDM_Odm->RFCalibrateInfo.TxLOK[ODM_RF_PATH_B] = PHY_QueryRFReg(pDM_Odm->Adapter, ODM_RF_PATH_B, 0x8, bRFRegOffsetMask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				result[t][4] = (PHY_QueryBBReg(pDM_Odm->Adapter, rTx_Power_Before_IQK_A, bMaskDWord)&0x3FF0000)>>16;
 				result[t][5] = (PHY_QueryBBReg(pDM_Odm->Adapter, rTx_Power_After_IQK_A, bMaskDWord)&0x3FF0000)>>16;
@@ -1489,7 +1642,11 @@ static void phy_IQCalibrate_8723B(
 
 		/* Reload RF path */
 /* 		PHY_SetBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord, Path_SEL_BB); */
+<<<<<<< HEAD
 /* 		PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xb0, 0xfffff, Path_SEL_RF); */
+=======
+/* 		PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xb0, 0xfffff, Path_SEL_RF); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* Allen initial gain 0xc50 */
 		/*  Restore RX initial gain */
@@ -1526,6 +1683,7 @@ static void phy_LCCalibrate_8723B(struct dm_odm_t *pDM_Odm, bool is2T)
 	if ((tmpReg&0x70) != 0) {
 		/* 1. Read original RF mode */
 		/* Path-A */
+<<<<<<< HEAD
 		RF_Amode = PHY_QueryRFReg(padapter, RF_PATH_A, RF_AC, bMask12Bits);
 
 		/* Path-B */
@@ -1555,21 +1713,77 @@ static void phy_LCCalibrate_8723B(struct dm_odm_t *pDM_Odm, bool is2T)
 	/*  Channel 10 LC calibration issue for 8723bs with 26M xtal */
 	if (pDM_Odm->SupportInterface == ODM_ITRF_SDIO && pDM_Odm->PackageType >= 0x2) {
 		PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_CHNLBW, bMask12Bits, LC_Cal);
+=======
+		RF_Amode = PHY_QueryRFReg(padapter, ODM_RF_PATH_A, RF_AC, bMask12Bits);
+
+		/* Path-B */
+		if (is2T)
+			RF_Bmode = PHY_QueryRFReg(padapter, ODM_RF_PATH_B, RF_AC, bMask12Bits);
+
+		/* 2. Set RF mode = standby mode */
+		/* Path-A */
+		PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_AC, bMask12Bits, (RF_Amode&0x8FFFF)|0x10000);
+
+		/* Path-B */
+		if (is2T)
+			PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_B, RF_AC, bMask12Bits, (RF_Bmode&0x8FFFF)|0x10000);
+	}
+
+	/* 3. Read RF reg18 */
+	LC_Cal = PHY_QueryRFReg(padapter, ODM_RF_PATH_A, RF_CHNLBW, bMask12Bits);
+
+	/* 4. Set LC calibration begin	bit15 */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xB0, bRFRegOffsetMask, 0xDFBE0); /*  LDO ON */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_CHNLBW, bMask12Bits, LC_Cal|0x08000);
+
+	mdelay(100);
+
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xB0, bRFRegOffsetMask, 0xDFFE0); /*  LDO OFF */
+
+	/*  Channel 10 LC calibration issue for 8723bs with 26M xtal */
+	if (pDM_Odm->SupportInterface == ODM_ITRF_SDIO && pDM_Odm->PackageType >= 0x2) {
+		PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_CHNLBW, bMask12Bits, LC_Cal);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* Restore original situation */
 	if ((tmpReg&0x70) != 0) { /* Deal with contisuous TX case */
 		/* Path-A */
 		rtw_write8(pDM_Odm->Adapter, 0xd03, tmpReg);
+<<<<<<< HEAD
 		PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_AC, bMask12Bits, RF_Amode);
 
 		/* Path-B */
 		if (is2T)
 			PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_B, RF_AC, bMask12Bits, RF_Bmode);
+=======
+		PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_AC, bMask12Bits, RF_Amode);
+
+		/* Path-B */
+		if (is2T)
+			PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_B, RF_AC, bMask12Bits, RF_Bmode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else /*  Deal with Packet TX case */
 		rtw_write8(pDM_Odm->Adapter, REG_TXPAUSE, 0x00);
 }
 
+<<<<<<< HEAD
+=======
+/* Analog Pre-distortion calibration */
+#define		APK_BB_REG_NUM	8
+#define		APK_CURVE_REG_NUM 4
+#define		PATH_NUM		2
+
+#define		DP_BB_REG_NUM		7
+#define		DP_RF_REG_NUM		1
+#define		DP_RETRY_LIMIT		10
+#define		DP_PATH_NUM	2
+#define		DP_DPK_NUM			3
+#define		DP_DPK_VALUE_NUM	2
+
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* IQK version:V2.5    20140123 */
 /* IQK is controlled by Is2ant, RF path */
 void PHY_IQCalibrate_8723B(
@@ -1625,7 +1839,11 @@ void PHY_IQCalibrate_8723B(
 		u8 path, bResult = SUCCESS;
 		struct odm_rf_cal_t *pRFCalibrateInfo = &pDM_Odm->RFCalibrateInfo;
 
+<<<<<<< HEAD
 		path = (PHY_QueryBBReg(pDM_Odm->Adapter, rS0S1_PathSwitch, bMaskByte0) == 0x00) ? RF_PATH_A : RF_PATH_B;
+=======
+		path = (PHY_QueryBBReg(pDM_Odm->Adapter, rS0S1_PathSwitch, bMaskByte0) == 0x00) ? ODM_RF_PATH_A : ODM_RF_PATH_B;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*  Restore TX IQK */
 		for (i = 0; i < 3; ++i) {
@@ -1649,11 +1867,19 @@ void PHY_IQCalibrate_8723B(
 			PHY_SetBBReg(pDM_Odm->Adapter, offset, bMaskDWord, data);
 		}
 
+<<<<<<< HEAD
 		if (pDM_Odm->RFCalibrateInfo.TxLOK[RF_PATH_A] == 0) {
 			bResult = FAIL;
 		} else {
 			PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXM_IDAC, bRFRegOffsetMask, pDM_Odm->RFCalibrateInfo.TxLOK[RF_PATH_A]);
 			PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_B, RF_TXM_IDAC, bRFRegOffsetMask, pDM_Odm->RFCalibrateInfo.TxLOK[RF_PATH_B]);
+=======
+		if (pDM_Odm->RFCalibrateInfo.TxLOK[ODM_RF_PATH_A] == 0) {
+			bResult = FAIL;
+		} else {
+			PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXM_IDAC, bRFRegOffsetMask, pDM_Odm->RFCalibrateInfo.TxLOK[ODM_RF_PATH_A]);
+			PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_B, RF_TXM_IDAC, bRFRegOffsetMask, pDM_Odm->RFCalibrateInfo.TxLOK[ODM_RF_PATH_B]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		if (bResult == SUCCESS)
@@ -1669,7 +1895,11 @@ void PHY_IQCalibrate_8723B(
 	GNT_BT_default = PHY_QueryBBReg(pDM_Odm->Adapter, 0x764, bMaskDWord);
 	/*  Save RF Path */
 /* 	Path_SEL_BB = PHY_QueryBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord); */
+<<<<<<< HEAD
 /* 	Path_SEL_RF = PHY_QueryRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xb0, 0xfffff); */
+=======
+/* 	Path_SEL_RF = PHY_QueryRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xb0, 0xfffff); */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
     /* set GNT_BT = 0, pause BT traffic */
 /* 	PHY_SetBBReg(pDM_Odm->Adapter, 0x764, BIT12, 0x0); */
@@ -1770,6 +2000,7 @@ void PHY_IQCalibrate_8723B(
 	PHY_SetBBReg(pDM_Odm->Adapter, 0x764, bMaskDWord, GNT_BT_default);
 	/*  Restore RF Path */
 /* 	PHY_SetBBReg(pDM_Odm->Adapter, 0x948, bMaskDWord, Path_SEL_BB); */
+<<<<<<< HEAD
 /* 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xb0, 0xfffff, Path_SEL_RF); */
 
 	/* Resotr RX mode table parameter */
@@ -1779,6 +2010,17 @@ void PHY_IQCalibrate_8723B(
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xe6177);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0xed, 0x20, 0x1);
 	PHY_SetRFReg(pDM_Odm->Adapter, RF_PATH_A, 0x43, bRFRegOffsetMask, 0x300bd);
+=======
+/* 	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xb0, 0xfffff, Path_SEL_RF); */
+
+	/* Resotr RX mode table parameter */
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_WE_LUT, 0x80000, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_RCK_OS, bRFRegOffsetMask, 0x18000);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G1, bRFRegOffsetMask, 0x0001f);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, RF_TXPA_G2, bRFRegOffsetMask, 0xe6177);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0xed, 0x20, 0x1);
+	PHY_SetRFReg(pDM_Odm->Adapter, ODM_RF_PATH_A, 0x43, bRFRegOffsetMask, 0x300bd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* set GNT_BT = HW control */
 /* 	PHY_SetBBReg(pDM_Odm->Adapter, 0x764, BIT12, 0x0); */

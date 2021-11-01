@@ -9,6 +9,10 @@
 #include <linux/component.h>
 #include <linux/device.h>
 #include <linux/dma-direct.h>
+<<<<<<< HEAD
+=======
+#include <linux/dma-iommu.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/err.h>
 #include <linux/interrupt.h>
 #include <linux/io.h>
@@ -440,11 +444,23 @@ static struct iommu_domain *mtk_iommu_domain_alloc(unsigned type)
 	if (!dom)
 		return NULL;
 
+<<<<<<< HEAD
+=======
+	if (iommu_get_dma_cookie(&dom->domain)) {
+		kfree(dom);
+		return NULL;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return &dom->domain;
 }
 
 static void mtk_iommu_domain_free(struct iommu_domain *domain)
 {
+<<<<<<< HEAD
+=======
+	iommu_put_dma_cookie(domain);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(to_mtk_domain(domain));
 }
 
@@ -513,8 +529,17 @@ static size_t mtk_iommu_unmap(struct iommu_domain *domain,
 			      struct iommu_iotlb_gather *gather)
 {
 	struct mtk_iommu_domain *dom = to_mtk_domain(domain);
+<<<<<<< HEAD
 
 	iommu_iotlb_gather_add_range(gather, iova, size);
+=======
+	unsigned long end = iova + size - 1;
+
+	if (gather->start > iova)
+		gather->start = iova;
+	if (gather->end < end)
+		gather->end = end;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return dom->iop->unmap(dom->iop, iova, size, gather);
 }
 

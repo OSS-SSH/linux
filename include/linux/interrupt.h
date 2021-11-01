@@ -13,7 +13,10 @@
 #include <linux/hrtimer.h>
 #include <linux/kref.h>
 #include <linux/workqueue.h>
+<<<<<<< HEAD
 #include <linux/jump_label.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <linux/atomic.h>
 #include <asm/ptrace.h>
@@ -475,6 +478,7 @@ extern int irq_set_irqchip_state(unsigned int irq, enum irqchip_irq_state which,
 
 #ifdef CONFIG_IRQ_FORCED_THREADING
 # ifdef CONFIG_PREEMPT_RT
+<<<<<<< HEAD
 #  define force_irqthreads()	(true)
 # else
 DECLARE_STATIC_KEY_FALSE(force_irqthreads_key);
@@ -482,6 +486,14 @@ DECLARE_STATIC_KEY_FALSE(force_irqthreads_key);
 # endif
 #else
 #define force_irqthreads()	(false)
+=======
+#  define force_irqthreads	(true)
+# else
+extern bool force_irqthreads;
+# endif
+#else
+#define force_irqthreads	(0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifndef local_softirq_pending

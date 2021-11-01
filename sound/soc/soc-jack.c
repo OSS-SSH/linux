@@ -17,6 +17,15 @@
 #include <linux/suspend.h>
 #include <trace/events/asoc.h>
 
+<<<<<<< HEAD
+=======
+struct jack_gpio_tbl {
+	int count;
+	struct snd_soc_jack *jack;
+	struct snd_soc_jack_gpio *gpios;
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * snd_soc_jack_report - Report the current status for a jack
  *
@@ -36,6 +45,10 @@ void snd_soc_jack_report(struct snd_soc_jack *jack, int status, int mask)
 	struct snd_soc_dapm_context *dapm;
 	struct snd_soc_jack_pin *pin;
 	unsigned int sync = 0;
+<<<<<<< HEAD
+=======
+	int enable;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!jack)
 		return;
@@ -51,7 +64,11 @@ void snd_soc_jack_report(struct snd_soc_jack *jack, int status, int mask)
 	trace_snd_soc_jack_notify(jack, status);
 
 	list_for_each_entry(pin, &jack->pins, list) {
+<<<<<<< HEAD
 		int enable = pin->mask & jack->status;
+=======
+		enable = pin->mask & jack->status;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (pin->invert)
 			enable = !enable;
@@ -201,12 +218,15 @@ void snd_soc_jack_notifier_unregister(struct snd_soc_jack *jack,
 EXPORT_SYMBOL_GPL(snd_soc_jack_notifier_unregister);
 
 #ifdef CONFIG_GPIOLIB
+<<<<<<< HEAD
 struct jack_gpio_tbl {
 	int count;
 	struct snd_soc_jack *jack;
 	struct snd_soc_jack_gpio *gpios;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* gpio detect */
 static void snd_soc_jack_gpio_detect(struct snd_soc_jack_gpio *gpio)
 {

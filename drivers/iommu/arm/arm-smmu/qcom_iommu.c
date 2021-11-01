@@ -10,6 +10,10 @@
 #include <linux/bitfield.h>
 #include <linux/clk.h>
 #include <linux/delay.h>
+<<<<<<< HEAD
+=======
+#include <linux/dma-iommu.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/dma-mapping.h>
 #include <linux/err.h>
 #include <linux/interrupt.h>
@@ -334,6 +338,15 @@ static struct iommu_domain *qcom_iommu_domain_alloc(unsigned type)
 	if (!qcom_domain)
 		return NULL;
 
+<<<<<<< HEAD
+=======
+	if (type == IOMMU_DOMAIN_DMA &&
+	    iommu_get_dma_cookie(&qcom_domain->domain)) {
+		kfree(qcom_domain);
+		return NULL;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_init(&qcom_domain->init_mutex);
 	spin_lock_init(&qcom_domain->pgtbl_lock);
 
@@ -344,6 +357,11 @@ static void qcom_iommu_domain_free(struct iommu_domain *domain)
 {
 	struct qcom_iommu_domain *qcom_domain = to_qcom_iommu_domain(domain);
 
+<<<<<<< HEAD
+=======
+	iommu_put_dma_cookie(domain);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (qcom_domain->iommu) {
 		/*
 		 * NOTE: unmap can be called after client device is powered
@@ -840,10 +858,19 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
 	ret = iommu_device_register(&qcom_iommu->iommu, &qcom_iommu_ops, dev);
 	if (ret) {
 		dev_err(dev, "Failed to register iommu\n");
+<<<<<<< HEAD
 		return ret;
 	}
 
 	bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
+=======
+		goto err_sysfs_remove;
+	}
+
+	ret = bus_set_iommu(&platform_bus_type, &qcom_iommu_ops);
+	if (ret)
+		goto err_unregister_device;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (qcom_iommu->local_base) {
 		pm_runtime_get_sync(dev);
@@ -852,6 +879,16 @@ static int qcom_iommu_device_probe(struct platform_device *pdev)
 	}
 
 	return 0;
+<<<<<<< HEAD
+=======
+
+err_unregister_device:
+	iommu_device_unregister(&qcom_iommu->iommu);
+
+err_sysfs_remove:
+	iommu_device_sysfs_remove(&qcom_iommu->iommu);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int qcom_iommu_device_remove(struct platform_device *pdev)

@@ -17,7 +17,10 @@
 #include <ctype.h>
 #include <string.h>
 #include <limits.h>
+<<<<<<< HEAD
 #include <stdbool.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <errno.h>
 #include "modpost.h"
 #include "../../include/linux/license.h"
@@ -90,6 +93,7 @@ modpost_log(enum loglevel loglevel, const char *fmt, ...)
 		error_occurred = true;
 }
 
+<<<<<<< HEAD
 static inline bool strends(const char *str, const char *postfix)
 {
 	if (strlen(str) < strlen(postfix))
@@ -98,6 +102,8 @@ static inline bool strends(const char *str, const char *postfix)
 	return strcmp(str + strlen(str) - strlen(postfix), postfix) == 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void *do_nofail(void *ptr, const char *expr)
 {
 	if (!ptr)
@@ -940,7 +946,11 @@ static void check_section(const char *modname, struct elf_info *elf,
 		".kprobes.text", ".cpuidle.text", ".noinstr.text"
 #define OTHER_TEXT_SECTIONS ".ref.text", ".head.text", ".spinlock.text", \
 		".fixup", ".entry.text", ".exception.text", ".text.*", \
+<<<<<<< HEAD
 		".coldtext", ".softirqentry.text"
+=======
+		".coldtext"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define INIT_SECTIONS      ".init.*"
 #define MEM_INIT_SECTIONS  ".meminit.*"
@@ -2069,7 +2079,11 @@ static void read_symbols(const char *modname)
 	if (!mod->is_vmlinux) {
 		version = get_modinfo(&info, "version");
 		if (version || all_versions)
+<<<<<<< HEAD
 			get_src_version(mod->name, mod->srcversion,
+=======
+			get_src_version(modname, mod->srcversion,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					sizeof(mod->srcversion) - 1);
 	}
 

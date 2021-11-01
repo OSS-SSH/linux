@@ -27,6 +27,7 @@ typedef struct {
 } mm_context_t;
 
 /*
+<<<<<<< HEAD
  * We use atomic64_read() here because the ASID for an 'mm_struct' can
  * be reallocated when scheduling one of its threads following a
  * rollover event (see new_context() and flush_context()). In this case,
@@ -53,6 +54,13 @@ typedef struct {
  * written by CPU 0.
  */
 #define ASID(mm)	(atomic64_read(&(mm)->context.id) & 0xffff)
+=======
+ * This macro is only used by the TLBI and low-level switch_mm() code,
+ * neither of which can race with an ASID change. We therefore don't
+ * need to reload the counter using atomic64_read().
+ */
+#define ASID(mm)	((mm)->context.id.counter & 0xffff)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline bool arm64_kernel_unmapped_at_el0(void)
 {

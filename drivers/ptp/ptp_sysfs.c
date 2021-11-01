@@ -3,7 +3,10 @@
  * PTP 1588 clock support - sysfs interface.
  *
  * Copyright (C) 2010 OMICRON electronics GmbH
+<<<<<<< HEAD
  * Copyright 2021 NXP
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #include <linux/capability.h>
 #include <linux/slab.h>
@@ -149,6 +152,7 @@ out:
 }
 static DEVICE_ATTR(pps_enable, 0220, NULL, pps_enable_store);
 
+<<<<<<< HEAD
 static int unregister_vclock(struct device *dev, void *data)
 {
 	struct ptp_clock *ptp = dev_get_drvdata(dev);
@@ -302,6 +306,8 @@ out:
 }
 static DEVICE_ATTR_RW(max_vclocks);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct attribute *ptp_attrs[] = {
 	&dev_attr_clock_name.attr,
 
@@ -316,8 +322,11 @@ static struct attribute *ptp_attrs[] = {
 	&dev_attr_fifo.attr,
 	&dev_attr_period.attr,
 	&dev_attr_pps_enable.attr,
+<<<<<<< HEAD
 	&dev_attr_n_vclocks.attr,
 	&dev_attr_max_vclocks.attr,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NULL
 };
 
@@ -339,10 +348,13 @@ static umode_t ptp_is_attribute_visible(struct kobject *kobj,
 	} else if (attr == &dev_attr_pps_enable.attr) {
 		if (!info->pps)
 			mode = 0;
+<<<<<<< HEAD
 	} else if (attr == &dev_attr_n_vclocks.attr ||
 		   attr == &dev_attr_max_vclocks.attr) {
 		if (ptp->is_virtual_clock)
 			mode = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return mode;

@@ -141,6 +141,7 @@
  *         In most cases, the __assign_str() macro will take the same
  *         parameters as the __string() macro had to declare the string.
  *
+<<<<<<< HEAD
  *   __string_len: This is a helper to a __dynamic_array, but it understands
  *	   that the array has characters in it, and with the combined
  *         use of __assign_str_len(), it will allocate 'len' + 1 bytes
@@ -168,6 +169,8 @@
  *        for the '\0' terminating byte, and __get_str(foo) can be used
  *        in the TP_printk().
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *   __bitmask: This is another kind of __dynamic_array, but it expects
  *         an array of longs, and the number of bits to parse. It takes
  *         two parameters (name, nr_bits), where name is the name of the

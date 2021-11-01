@@ -1,8 +1,18 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /* Marvell RVU Admin Function driver
  *
  * Copyright (C) 2019 Marvell.
  *
+=======
+/* Marvell OcteonTx2 RVU Admin Function driver
+ *
+ * Copyright (C) 2019 Marvell International Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #ifdef CONFIG_DEBUG_FS
@@ -1968,9 +1978,16 @@ static int cgx_print_stats(struct seq_file *s, int lmac_id)
 	return err;
 }
 
+<<<<<<< HEAD
 static int rvu_dbg_derive_lmacid(struct seq_file *filp, int *lmac_id)
 {
 	struct dentry *current_dir;
+=======
+static int rvu_dbg_cgx_stat_display(struct seq_file *filp, void *unused)
+{
+	struct dentry *current_dir;
+	int err, lmac_id;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	char *buf;
 
 	current_dir = filp->file->f_path.dentry->d_parent;
@@ -1978,6 +1995,7 @@ static int rvu_dbg_derive_lmacid(struct seq_file *filp, int *lmac_id)
 	if (!buf)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	return kstrtoint(buf + 1, 10, lmac_id);
 }
 
@@ -2058,6 +2076,18 @@ static int rvu_dbg_cgx_dmac_flt_display(struct seq_file *filp, void *unused)
 }
 
 RVU_DEBUG_SEQ_FOPS(cgx_dmac_flt, cgx_dmac_flt_display, NULL);
+=======
+	err = kstrtoint(buf + 1, 10, &lmac_id);
+	if (!err) {
+		err = cgx_print_stats(filp, lmac_id);
+		if (err)
+			return err;
+	}
+	return err;
+}
+
+RVU_DEBUG_SEQ_FOPS(cgx_stat, cgx_stat_display, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void rvu_dbg_cgx_init(struct rvu *rvu)
 {
@@ -2095,9 +2125,12 @@ static void rvu_dbg_cgx_init(struct rvu *rvu)
 
 			debugfs_create_file("stats", 0600, rvu->rvu_dbg.lmac,
 					    cgx, &rvu_dbg_cgx_stat_fops);
+<<<<<<< HEAD
 			debugfs_create_file("mac_filter", 0600,
 					    rvu->rvu_dbg.lmac, cgx,
 					    &rvu_dbg_cgx_dmac_flt_fops);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 }
@@ -2110,6 +2143,12 @@ static void rvu_print_npc_mcam_info(struct seq_file *s,
 	int entry_acnt, entry_ecnt;
 	int cntr_acnt, cntr_ecnt;
 
+<<<<<<< HEAD
+=======
+	/* Skip PF0 */
+	if (!pcifunc)
+		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rvu_npc_get_mcam_entry_alloc_info(rvu, pcifunc, blkaddr,
 					  &entry_acnt, &entry_ecnt);
 	rvu_npc_get_mcam_counter_alloc_info(rvu, pcifunc, blkaddr,
@@ -2292,7 +2331,11 @@ static void rvu_dbg_npc_mcam_show_flows(struct seq_file *s,
 static void rvu_dbg_npc_mcam_show_action(struct seq_file *s,
 					 struct rvu_npc_mcam_rule *rule)
 {
+<<<<<<< HEAD
 	if (is_npc_intf_tx(rule->intf)) {
+=======
+	if (rule->intf == NIX_INTF_TX) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		switch (rule->tx_action.op) {
 		case NIX_TX_ACTIONOP_DROP:
 			seq_puts(s, "\taction: Drop\n");

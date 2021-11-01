@@ -336,7 +336,11 @@
 };
 
 &shutdown_controller {
+<<<<<<< HEAD
 	debounce-delay-us = <976>;
+=======
+	atmel,shdwc-debouncer = <976>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	atmel,wakeup-rtc-timer;
 
 	input@0 {

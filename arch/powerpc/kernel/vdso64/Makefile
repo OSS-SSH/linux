@@ -27,6 +27,7 @@ KASAN_SANITIZE := n
 
 ccflags-y := -shared -fno-common -fno-builtin -nostdlib \
 	-Wl,-soname=linux-vdso64.so.1 -Wl,--hash-style=both
+<<<<<<< HEAD
 
 # Go prior to 1.16.x assumes r30 is not clobbered by any VDSO code. That used to be true
 # by accident when the VDSO was hand-written asm code, but may not be now that the VDSO is
@@ -34,6 +35,8 @@ ccflags-y := -shared -fno-common -fno-builtin -nostdlib \
 # generation is minimal, it will just use r29 instead.
 ccflags-y += $(call cc-option, -ffixed-r30)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 asflags-y := -D__VDSO64__ -s
 
 targets += vdso64.lds

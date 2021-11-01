@@ -142,7 +142,11 @@ enum {
 };
 
 /*
+<<<<<<< HEAD
  * In the victim_sel_policy->alloc_mode, there are three block allocation modes.
+=======
+ * In the victim_sel_policy->alloc_mode, there are two block allocation modes.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * LFS writes data sequentially with cleaning operations.
  * SSR (Slack Space Recycle) reuses obsolete space without cleaning operations.
  * AT_SSR (Age Threshold based Slack Space Recycle) merges fragments into
@@ -155,7 +159,11 @@ enum {
 };
 
 /*
+<<<<<<< HEAD
  * In the victim_sel_policy->gc_mode, there are three gc, aka cleaning, modes.
+=======
+ * In the victim_sel_policy->gc_mode, there are two gc, aka cleaning, modes.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * GC_CB is based on cost-benefit algorithm.
  * GC_GREEDY is based on greedy algorithm.
  * GC_AT is based on age-threshold algorithm.

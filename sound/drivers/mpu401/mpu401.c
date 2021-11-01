@@ -59,8 +59,13 @@ static int snd_mpu401_create(struct device *devptr, int dev,
 		snd_printk(KERN_ERR "the uart_enter option is obsolete; remove it\n");
 
 	*rcard = NULL;
+<<<<<<< HEAD
 	err = snd_devm_card_new(devptr, index[dev], id[dev], THIS_MODULE,
 				0, &card);
+=======
+	err = snd_card_new(devptr, index[dev], id[dev], THIS_MODULE,
+			   0, &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 	strcpy(card->driver, "MPU-401 UART");
@@ -76,11 +81,22 @@ static int snd_mpu401_create(struct device *devptr, int dev,
 				  irq[dev], NULL);
 	if (err < 0) {
 		printk(KERN_ERR "MPU401 not detected at 0x%lx\n", port[dev]);
+<<<<<<< HEAD
 		return err;
+=======
+		goto _err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	*rcard = card;
 	return 0;
+<<<<<<< HEAD
+=======
+
+ _err:
+	snd_card_free(card);
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int snd_mpu401_probe(struct platform_device *devptr)
@@ -101,16 +117,36 @@ static int snd_mpu401_probe(struct platform_device *devptr)
 	if (err < 0)
 		return err;
 	err = snd_card_register(card);
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
+=======
+	if (err < 0) {
+		snd_card_free(card);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	platform_set_drvdata(devptr, card);
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static int snd_mpu401_remove(struct platform_device *devptr)
+{
+	snd_card_free(platform_get_drvdata(devptr));
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define SND_MPU401_DRIVER	"snd_mpu401"
 
 static struct platform_driver snd_mpu401_driver = {
 	.probe		= snd_mpu401_probe,
+<<<<<<< HEAD
+=======
+	.remove		= snd_mpu401_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver		= {
 		.name	= SND_MPU401_DRIVER,
 	},
@@ -171,8 +207,15 @@ static int snd_mpu401_pnp_probe(struct pnp_dev *pnp_dev,
 		if (err < 0)
 			return err;
 		err = snd_card_register(card);
+<<<<<<< HEAD
 		if (err < 0)
 			return err;
+=======
+		if (err < 0) {
+			snd_card_free(card);
+			return err;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pnp_set_drvdata(pnp_dev, card);
 		snd_mpu401_devices++;
 		++dev;
@@ -181,10 +224,25 @@ static int snd_mpu401_pnp_probe(struct pnp_dev *pnp_dev,
 	return -ENODEV;
 }
 
+<<<<<<< HEAD
+=======
+static void snd_mpu401_pnp_remove(struct pnp_dev *dev)
+{
+	struct snd_card *card = (struct snd_card *) pnp_get_drvdata(dev);
+
+	snd_card_disconnect(card);
+	snd_card_free_when_closed(card);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct pnp_driver snd_mpu401_pnp_driver = {
 	.name = "mpu401",
 	.id_table = snd_mpu401_pnpids,
 	.probe = snd_mpu401_pnp_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_mpu401_pnp_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 #else
 static struct pnp_driver snd_mpu401_pnp_driver;

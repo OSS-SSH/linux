@@ -96,7 +96,11 @@ static void s2idle_enter(void)
 	s2idle_state = S2IDLE_STATE_ENTER;
 	raw_spin_unlock_irq(&s2idle_lock);
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cpuidle_resume();
 
 	/* Push all the CPUs into the idle loop. */
@@ -106,7 +110,11 @@ static void s2idle_enter(void)
 		    s2idle_state == S2IDLE_STATE_WAKE);
 
 	cpuidle_pause();
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	raw_spin_lock_irq(&s2idle_lock);
 

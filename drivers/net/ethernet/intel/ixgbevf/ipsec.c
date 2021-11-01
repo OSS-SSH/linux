@@ -211,7 +211,11 @@ struct xfrm_state *ixgbevf_ipsec_find_rx_state(struct ixgbevf_ipsec *ipsec,
 static int ixgbevf_ipsec_parse_proto_keys(struct xfrm_state *xs,
 					  u32 *mykey, u32 *mysalt)
 {
+<<<<<<< HEAD
 	struct net_device *dev = xs->xso.real_dev;
+=======
+	struct net_device *dev = xs->xso.dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned char *key_data;
 	char *alg_name = NULL;
 	int key_len;
@@ -260,6 +264,7 @@ static int ixgbevf_ipsec_parse_proto_keys(struct xfrm_state *xs,
  **/
 static int ixgbevf_ipsec_add_sa(struct xfrm_state *xs)
 {
+<<<<<<< HEAD
 	struct net_device *dev = xs->xso.real_dev;
 	struct ixgbevf_adapter *adapter;
 	struct ixgbevf_ipsec *ipsec;
@@ -269,6 +274,14 @@ static int ixgbevf_ipsec_add_sa(struct xfrm_state *xs)
 	adapter = netdev_priv(dev);
 	ipsec = adapter->ipsec;
 
+=======
+	struct net_device *dev = xs->xso.dev;
+	struct ixgbevf_adapter *adapter = netdev_priv(dev);
+	struct ixgbevf_ipsec *ipsec = adapter->ipsec;
+	u16 sa_idx;
+	int ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (xs->id.proto != IPPROTO_ESP && xs->id.proto != IPPROTO_AH) {
 		netdev_err(dev, "Unsupported protocol 0x%04x for IPsec offload\n",
 			   xs->id.proto);
@@ -386,6 +399,7 @@ static int ixgbevf_ipsec_add_sa(struct xfrm_state *xs)
  **/
 static void ixgbevf_ipsec_del_sa(struct xfrm_state *xs)
 {
+<<<<<<< HEAD
 	struct net_device *dev = xs->xso.real_dev;
 	struct ixgbevf_adapter *adapter;
 	struct ixgbevf_ipsec *ipsec;
@@ -394,6 +408,13 @@ static void ixgbevf_ipsec_del_sa(struct xfrm_state *xs)
 	adapter = netdev_priv(dev);
 	ipsec = adapter->ipsec;
 
+=======
+	struct net_device *dev = xs->xso.dev;
+	struct ixgbevf_adapter *adapter = netdev_priv(dev);
+	struct ixgbevf_ipsec *ipsec = adapter->ipsec;
+	u16 sa_idx;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (xs->xso.flags & XFRM_OFFLOAD_INBOUND) {
 		sa_idx = xs->xso.offload_handle - IXGBE_IPSEC_BASE_RX_INDEX;
 

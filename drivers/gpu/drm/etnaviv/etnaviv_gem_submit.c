@@ -532,7 +532,12 @@ int etnaviv_ioctl_gem_submit(struct drm_device *dev, void *data,
 		goto err_submit_objects;
 
 	submit->ctx = file->driver_priv;
+<<<<<<< HEAD
 	submit->mmu_context = etnaviv_iommu_context_get(submit->ctx->mmu);
+=======
+	etnaviv_iommu_context_get(submit->ctx->mmu);
+	submit->mmu_context = submit->ctx->mmu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	submit->exec_state = args->exec_state;
 	submit->flags = args->flags;
 

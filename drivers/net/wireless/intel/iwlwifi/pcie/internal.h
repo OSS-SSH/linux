@@ -42,7 +42,10 @@ struct iwl_host_cmd;
  * struct iwl_rx_mem_buffer
  * @page_dma: bus address of rxb page
  * @page: driver's pointer to the rxb page
+<<<<<<< HEAD
  * @list: list entry for the membuffer
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @invalid: rxb is in driver ownership - not owned by HW
  * @vid: index of this rxb in the global table
  * @offset: indicates which offset of the page (in bytes)
@@ -51,10 +54,17 @@ struct iwl_host_cmd;
 struct iwl_rx_mem_buffer {
 	dma_addr_t page_dma;
 	struct page *page;
+<<<<<<< HEAD
 	struct list_head list;
 	u32 offset;
 	u16 vid;
 	bool invalid;
+=======
+	u16 vid;
+	bool invalid;
+	struct list_head list;
+	u32 offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**
@@ -254,6 +264,7 @@ struct cont_rec {
 };
 #endif
 
+<<<<<<< HEAD
 enum iwl_pcie_fw_reset_state {
 	FW_RESET_IDLE,
 	FW_RESET_REQUESTED,
@@ -261,6 +272,8 @@ enum iwl_pcie_fw_reset_state {
 	FW_RESET_ERROR,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * struct iwl_trans_pcie - PCIe transport specific data
  * @rxq: all the RX queue data
@@ -412,7 +425,11 @@ struct iwl_trans_pcie {
 	dma_addr_t base_rb_stts_dma;
 
 	bool fw_reset_handshake;
+<<<<<<< HEAD
 	enum iwl_pcie_fw_reset_state fw_reset_state;
+=======
+	bool fw_reset_done;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	wait_queue_head_t fw_reset_waitq;
 
 	char rf_name[32];
@@ -678,6 +695,7 @@ static inline const char *queue_name(struct device *dev,
 			  IWL_SHARED_IRQ_FIRST_RSS ? 1 : 0;
 
 		if (i == 0)
+<<<<<<< HEAD
 			return DRV_NAME ":shared_IRQ";
 
 		return devm_kasprintf(dev, GFP_KERNEL,
@@ -691,6 +709,21 @@ static inline const char *queue_name(struct device *dev,
 
 	return devm_kasprintf(dev, GFP_KERNEL,
 			      DRV_NAME  ":queue_%d", i);
+=======
+			return DRV_NAME ": shared IRQ";
+
+		return devm_kasprintf(dev, GFP_KERNEL,
+				      DRV_NAME ": queue %d", i + vec);
+	}
+	if (i == 0)
+		return DRV_NAME ": default queue";
+
+	if (i == trans_p->alloc_vecs - 1)
+		return DRV_NAME ": exception";
+
+	return devm_kasprintf(dev, GFP_KERNEL,
+			      DRV_NAME  ": queue %d", i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void iwl_enable_rfkill_int(struct iwl_trans *trans)

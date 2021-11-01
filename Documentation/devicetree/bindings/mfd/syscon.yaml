@@ -45,12 +45,18 @@ properties:
               - microchip,sparx5-cpu-syscon
               - mstar,msc313-pmsleep
               - rockchip,px30-qos
+<<<<<<< HEAD
               - rockchip,rk3036-qos
               - rockchip,rk3066-qos
               - rockchip,rk3228-qos
               - rockchip,rk3288-qos
               - rockchip,rk3399-qos
               - rockchip,rk3568-qos
+=======
+              - rockchip,rk3066-qos
+              - rockchip,rk3288-qos
+              - rockchip,rk3399-qos
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - samsung,exynos3-sysreg
               - samsung,exynos4-sysreg
               - samsung,exynos5-sysreg

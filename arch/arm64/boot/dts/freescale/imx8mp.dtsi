@@ -135,6 +135,7 @@
 		clock-output-names = "clk_ext4";
 	};
 
+<<<<<<< HEAD
 	reserved-memory {
 		#address-cells = <2>;
 		#size-cells = <2>;
@@ -146,10 +147,16 @@
 		};
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pmu {
 		compatible = "arm,cortex-a53-pmu";
 		interrupts = <GIC_PPI 7
 			     (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_HIGH)>;
+<<<<<<< HEAD
+=======
+		interrupt-affinity = <&A53_0>, <&A53_1>, <&A53_2>, <&A53_3>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	psci {
@@ -589,7 +596,11 @@
 			};
 
 			flexcan1: can@308c0000 {
+<<<<<<< HEAD
 				compatible = "fsl,imx8mp-flexcan";
+=======
+				compatible = "fsl,imx8mp-flexcan", "fsl,imx6q-flexcan";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				reg = <0x308c0000 0x10000>;
 				interrupts = <GIC_SPI 142 IRQ_TYPE_LEVEL_HIGH>;
 				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
@@ -604,7 +615,11 @@
 			};
 
 			flexcan2: can@308d0000 {
+<<<<<<< HEAD
 				compatible = "fsl,imx8mp-flexcan";
+=======
+				compatible = "fsl,imx8mp-flexcan", "fsl,imx6q-flexcan";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				reg = <0x308d0000 0x10000>;
 				interrupts = <GIC_SPI 144 IRQ_TYPE_LEVEL_HIGH>;
 				clocks = <&clk IMX8MP_CLK_IPG_ROOT>,
@@ -708,6 +723,7 @@
 				#mbox-cells = <2>;
 			};
 
+<<<<<<< HEAD
 			mu2: mailbox@30e60000 {
 				compatible = "fsl,imx8mp-mu", "fsl,imx6sx-mu";
 				reg = <0x30e60000 0x10000>;
@@ -716,6 +732,8 @@
 				status = "disabled";
 			};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			i2c5: i2c@30ad0000 {
 				compatible = "fsl,imx8mp-i2c", "fsl,imx21-i2c";
 				#address-cells = <1>;
@@ -839,9 +857,15 @@
 			eqos: ethernet@30bf0000 {
 				compatible = "nxp,imx8mp-dwmac-eqos", "snps,dwmac-5.10a";
 				reg = <0x30bf0000 0x10000>;
+<<<<<<< HEAD
 				interrupts = <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>,
 					     <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>;
 				interrupt-names = "macirq", "eth_wake_irq";
+=======
+				interrupts = <GIC_SPI 134 IRQ_TYPE_LEVEL_HIGH>,
+					     <GIC_SPI 135 IRQ_TYPE_LEVEL_HIGH>;
+				interrupt-names = "eth_wake_irq", "macirq";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				clocks = <&clk IMX8MP_CLK_ENET_QOS_ROOT>,
 					 <&clk IMX8MP_CLK_QOS_ENET_ROOT>,
 					 <&clk IMX8MP_CLK_ENET_QOS_TIMER>,
@@ -956,6 +980,7 @@
 				snps,dis-u2-freeclk-exists-quirk;
 			};
 		};
+<<<<<<< HEAD
 
 		dsp: dsp@3b6e8000 {
 			compatible = "fsl,imx8mp-dsp";
@@ -967,5 +992,7 @@
 			memory-region = <&dsp_reserved>;
 			status = "disabled";
 		};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 };

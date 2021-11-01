@@ -97,7 +97,11 @@ xfs_end_ioend(
 	/*
 	 * Just clean up the in-memory structures if the fs has been shut down.
 	 */
+<<<<<<< HEAD
 	if (xfs_is_shutdown(ip->i_mount)) {
+=======
+	if (XFS_FORCED_SHUTDOWN(ip->i_mount)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		error = -EIO;
 		goto done;
 	}
@@ -260,7 +264,11 @@ xfs_map_blocks(
 	int			retries = 0;
 	int			error = 0;
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	/*
@@ -440,7 +448,11 @@ xfs_discard_page(
 	xfs_fileoff_t		pageoff_fsb = XFS_B_TO_FSBT(mp, pageoff);
 	int			error;
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out_invalidate;
 
 	xfs_alert_ratelimited(mp,
@@ -449,7 +461,11 @@ xfs_discard_page(
 
 	error = xfs_bmap_punch_delalloc_range(ip, start_fsb,
 			i_blocks_per_page(inode, page) - pageoff_fsb);
+<<<<<<< HEAD
 	if (error && !xfs_is_shutdown(mp))
+=======
+	if (error && !XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_alert(mp, "page discard unable to remove delalloc mapping.");
 out_invalidate:
 	iomap_invalidatepage(page, pageoff, PAGE_SIZE - pageoff);
@@ -462,6 +478,25 @@ static const struct iomap_writeback_ops xfs_writeback_ops = {
 };
 
 STATIC int
+<<<<<<< HEAD
+=======
+xfs_vm_writepage(
+	struct page		*page,
+	struct writeback_control *wbc)
+{
+	struct xfs_writepage_ctx wpc = { };
+
+	if (WARN_ON_ONCE(current->journal_info)) {
+		redirty_page_for_writepage(wbc, page);
+		unlock_page(page);
+		return 0;
+	}
+
+	return iomap_writepage(page, wbc, &wpc.ctx, &xfs_writeback_ops);
+}
+
+STATIC int
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 xfs_vm_writepages(
 	struct address_space	*mapping,
 	struct writeback_control *wbc)
@@ -543,6 +578,10 @@ xfs_iomap_swapfile_activate(
 const struct address_space_operations xfs_address_space_operations = {
 	.readpage		= xfs_vm_readpage,
 	.readahead		= xfs_vm_readahead,
+<<<<<<< HEAD
+=======
+	.writepage		= xfs_vm_writepage,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.writepages		= xfs_vm_writepages,
 	.set_page_dirty		= __set_page_dirty_nobuffers,
 	.releasepage		= iomap_releasepage,

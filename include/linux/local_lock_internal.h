@@ -6,8 +6,11 @@
 #include <linux/percpu-defs.h>
 #include <linux/lockdep.h>
 
+<<<<<<< HEAD
 #ifndef CONFIG_PREEMPT_RT
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 typedef struct {
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 	struct lockdep_map	dep_map;
@@ -16,6 +19,7 @@ typedef struct {
 } local_lock_t;
 
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
+<<<<<<< HEAD
 # define LOCAL_LOCK_DEBUG_INIT(lockname)		\
 	.dep_map = {					\
 		.name = #lockname,			\
@@ -24,6 +28,31 @@ typedef struct {
 	},						\
 	.owner = NULL,
 
+=======
+# define LL_DEP_MAP_INIT(lockname)			\
+	.dep_map = {					\
+		.name = #lockname,			\
+		.wait_type_inner = LD_WAIT_CONFIG,	\
+		.lock_type = LD_LOCK_PERCPU,			\
+	}
+#else
+# define LL_DEP_MAP_INIT(lockname)
+#endif
+
+#define INIT_LOCAL_LOCK(lockname)	{ LL_DEP_MAP_INIT(lockname) }
+
+#define __local_lock_init(lock)					\
+do {								\
+	static struct lock_class_key __key;			\
+								\
+	debug_check_no_locks_freed((void *)lock, sizeof(*lock));\
+	lockdep_init_map_type(&(lock)->dep_map, #lock, &__key, 0, \
+			      LD_WAIT_CONFIG, LD_WAIT_INV,	\
+			      LD_LOCK_PERCPU);			\
+} while (0)
+
+#ifdef CONFIG_DEBUG_LOCK_ALLOC
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void local_lock_acquire(local_lock_t *l)
 {
 	lock_map_acquire(&l->dep_map);
@@ -38,6 +67,7 @@ static inline void local_lock_release(local_lock_t *l)
 	lock_map_release(&l->dep_map);
 }
 
+<<<<<<< HEAD
 static inline void local_lock_debug_init(local_lock_t *l)
 {
 	l->owner = NULL;
@@ -62,6 +92,13 @@ do {								\
 	local_lock_debug_init(lock);				\
 } while (0)
 
+=======
+#else /* CONFIG_DEBUG_LOCK_ALLOC */
+static inline void local_lock_acquire(local_lock_t *l) { }
+static inline void local_lock_release(local_lock_t *l) { }
+#endif /* !CONFIG_DEBUG_LOCK_ALLOC */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define __local_lock(lock)					\
 	do {							\
 		preempt_disable();				\
@@ -97,6 +134,7 @@ do {								\
 		local_lock_release(this_cpu_ptr(lock));		\
 		local_irq_restore(flags);			\
 	} while (0)
+<<<<<<< HEAD
 
 #else /* !CONFIG_PREEMPT_RT */
 
@@ -139,3 +177,5 @@ typedef spinlock_t local_lock_t;
 #define __local_unlock_irqrestore(lock, flags)	__local_unlock(lock)
 
 #endif /* CONFIG_PREEMPT_RT */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

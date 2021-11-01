@@ -1982,8 +1982,11 @@ static int replace_nexthop_grp(struct net *net, struct nexthop *old,
 	rcu_assign_pointer(old->nh_grp, newg);
 
 	if (newg->resilient) {
+<<<<<<< HEAD
 		/* Make sure concurrent readers are not using 'oldg' anymore. */
 		synchronize_net();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rcu_assign_pointer(oldg->res_table, tmp_table);
 		rcu_assign_pointer(oldg->spare->res_table, tmp_table);
 	}
@@ -2492,7 +2495,10 @@ static int nh_create_ipv4(struct net *net, struct nexthop *nh,
 		.fc_gw4   = cfg->gw.ipv4,
 		.fc_gw_family = cfg->gw.ipv4 ? AF_INET : 0,
 		.fc_flags = cfg->nh_flags,
+<<<<<<< HEAD
 		.fc_nlinfo = cfg->nlinfo,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.fc_encap = cfg->nh_encap,
 		.fc_encap_type = cfg->nh_encap_type,
 	};
@@ -2531,7 +2537,10 @@ static int nh_create_ipv6(struct net *net,  struct nexthop *nh,
 		.fc_ifindex = cfg->nh_ifindex,
 		.fc_gateway = cfg->gw.ipv6,
 		.fc_flags = cfg->nh_flags,
+<<<<<<< HEAD
 		.fc_nlinfo = cfg->nlinfo,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.fc_encap = cfg->nh_encap,
 		.fc_encap_type = cfg->nh_encap_type,
 		.fc_is_fdb = cfg->nh_fdb,
@@ -3567,7 +3576,10 @@ static struct notifier_block nh_netdev_notifier = {
 };
 
 static int nexthops_dump(struct net *net, struct notifier_block *nb,
+<<<<<<< HEAD
 			 enum nexthop_event_type event_type,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			 struct netlink_ext_ack *extack)
 {
 	struct rb_root *root = &net->nexthop.rb_root;
@@ -3578,7 +3590,12 @@ static int nexthops_dump(struct net *net, struct notifier_block *nb,
 		struct nexthop *nh;
 
 		nh = rb_entry(node, struct nexthop, rb_node);
+<<<<<<< HEAD
 		err = call_nexthop_notifier(nb, net, event_type, nh, extack);
+=======
+		err = call_nexthop_notifier(nb, net, NEXTHOP_EVENT_REPLACE, nh,
+					    extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			break;
 	}
@@ -3592,7 +3609,11 @@ int register_nexthop_notifier(struct net *net, struct notifier_block *nb,
 	int err;
 
 	rtnl_lock();
+<<<<<<< HEAD
 	err = nexthops_dump(net, nb, NEXTHOP_EVENT_REPLACE, extack);
+=======
+	err = nexthops_dump(net, nb, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto unlock;
 	err = blocking_notifier_chain_register(&net->nexthop.notifier_chain,
@@ -3605,6 +3626,7 @@ EXPORT_SYMBOL(register_nexthop_notifier);
 
 int unregister_nexthop_notifier(struct net *net, struct notifier_block *nb)
 {
+<<<<<<< HEAD
 	int err;
 
 	rtnl_lock();
@@ -3616,6 +3638,10 @@ int unregister_nexthop_notifier(struct net *net, struct notifier_block *nb)
 unlock:
 	rtnl_unlock();
 	return err;
+=======
+	return blocking_notifier_chain_unregister(&net->nexthop.notifier_chain,
+						  nb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(unregister_nexthop_notifier);
 

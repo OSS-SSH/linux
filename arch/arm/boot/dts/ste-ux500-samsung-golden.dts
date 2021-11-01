@@ -145,8 +145,11 @@
 			non-removable;
 			cap-mmc-highspeed;
 			mmc-ddr-1_8v;
+<<<<<<< HEAD
 			no-sdio;
 			no-sd;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			vmmc-supply = <&vmem_3v3>;
 

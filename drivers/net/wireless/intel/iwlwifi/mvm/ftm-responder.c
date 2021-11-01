@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: GPL-2.0 OR BSD-3-Clause
 /*
  * Copyright (C) 2015-2017 Intel Deutschland GmbH
+<<<<<<< HEAD
  * Copyright (C) 2018-2021 Intel Corporation
+=======
+ * Copyright (C) 2018-2020 Intel Corporation
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #include <net/cfg80211.h>
 #include <linux/etherdevice.h>
@@ -77,7 +81,11 @@ static int iwl_mvm_ftm_responder_set_bw_v2(struct cfg80211_chan_def *chandef,
 
 static void
 iwl_mvm_ftm_responder_set_ndp(struct iwl_mvm *mvm,
+<<<<<<< HEAD
 			      struct iwl_tof_responder_config_cmd_v9 *cmd)
+=======
+			      struct iwl_tof_responder_config_cmd_v8 *cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	/* Up to 2 R2I STS are allowed on the responder */
 	u32 r2i_max_sts = IWL_MVM_FTM_R2I_MAX_STS < 2 ?
@@ -104,7 +112,11 @@ iwl_mvm_ftm_responder_cmd(struct iwl_mvm *mvm,
 	 * field interpretation is different), so the same struct can be use
 	 * for all cases.
 	 */
+<<<<<<< HEAD
 	struct iwl_tof_responder_config_cmd_v9 cmd = {
+=======
+	struct iwl_tof_responder_config_cmd_v8 cmd = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.channel_num = chandef->chan->hw_value,
 		.cmd_valid_fields =
 			cpu_to_le32(IWL_TOF_RESPONDER_CMD_VALID_CHAN_INFO |
@@ -115,6 +127,7 @@ iwl_mvm_ftm_responder_cmd(struct iwl_mvm *mvm,
 	u8 cmd_ver = iwl_fw_lookup_cmd_ver(mvm->fw, LOCATION_GROUP,
 					   TOF_RESPONDER_CONFIG_CMD, 6);
 	int err;
+<<<<<<< HEAD
 	int cmd_size;
 
 	lockdep_assert_held(&mvm->mutex);
@@ -136,6 +149,12 @@ iwl_mvm_ftm_responder_cmd(struct iwl_mvm *mvm,
 	}
 
 	if (cmd_ver >= 8)
+=======
+
+	lockdep_assert_held(&mvm->mutex);
+
+if (cmd_ver == 8)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		iwl_mvm_ftm_responder_set_ndp(mvm, &cmd);
 
 	if (cmd_ver >= 7)
@@ -154,7 +173,11 @@ iwl_mvm_ftm_responder_cmd(struct iwl_mvm *mvm,
 
 	return iwl_mvm_send_cmd_pdu(mvm, iwl_cmd_id(TOF_RESPONDER_CONFIG_CMD,
 						    LOCATION_GROUP, 0),
+<<<<<<< HEAD
 				    0, cmd_size, &cmd);
+=======
+				    0, sizeof(cmd), &cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int

@@ -11,7 +11,11 @@ endif
 CFLAGS_syscall_table.o	+= $(call cc-option,-Wno-override-init,)
 
 ifdef CONFIG_KEXEC
+<<<<<<< HEAD
 AFLAGS_kexec_relocate.o := -mcmodel=medany $(call cc-option,-mno-relax)
+=======
+AFLAGS_kexec_relocate.o := -mcmodel=medany -mno-relax
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endif
 
 extra-y += head.o

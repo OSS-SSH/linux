@@ -975,7 +975,12 @@ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
 	}
 #endif
 
+<<<<<<< HEAD
 	dev_put(wdev->netdev);
+=======
+	if (wdev->netdev)
+		dev_put(wdev->netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kfree(rdev->int_scan_req);
 	rdev->int_scan_req = NULL;
@@ -1753,14 +1758,24 @@ cfg80211_bss_update(struct cfg80211_registered_device *rdev,
 			 * be grouped with this beacon for updates ...
 			 */
 			if (!cfg80211_combine_bsses(rdev, new)) {
+<<<<<<< HEAD
 				bss_ref_put(rdev, new);
+=======
+				kfree(new);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				goto drop;
 			}
 		}
 
 		if (rdev->bss_entries >= bss_entries_limit &&
 		    !cfg80211_bss_expire_oldest(rdev)) {
+<<<<<<< HEAD
 			bss_ref_put(rdev, new);
+=======
+			if (!list_empty(&new->hidden_list))
+				list_del(&new->hidden_list);
+			kfree(new);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto drop;
 		}
 

@@ -39,6 +39,7 @@ static const struct etnaviv_chip_identity etnaviv_chip_identities[] = {
 	},
 	{
 		.model = 0x7000,
+<<<<<<< HEAD
 		.revision = 0x6202,
 		.product_id = 0x70003,
 		.customer_id = 0,
@@ -70,6 +71,8 @@ static const struct etnaviv_chip_identity etnaviv_chip_identities[] = {
 	},
 	{
 		.model = 0x7000,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.revision = 0x6204,
 		.product_id = ~0U,
 		.customer_id = ~0U,

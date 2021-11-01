@@ -662,6 +662,11 @@ static const struct hid_device_id hid_have_special_driver[] = {
 	{ HID_USB_DEVICE(USB_VENDOR_ID_THRUSTMASTER, 0xb653) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_THRUSTMASTER, 0xb654) },
 	{ HID_USB_DEVICE(USB_VENDOR_ID_THRUSTMASTER, 0xb65a) },
+<<<<<<< HEAD
+=======
+#endif
+#if IS_ENABLED(CONFIG_HID_TMINIT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ HID_USB_DEVICE(USB_VENDOR_ID_THRUSTMASTER, 0xb65d) },
 #endif
 #if IS_ENABLED(CONFIG_HID_TIVO)

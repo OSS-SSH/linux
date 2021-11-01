@@ -11,7 +11,10 @@
 
 	aliases {
 		serial0 = &blsp1_uart2;
+<<<<<<< HEAD
 		serial1 = &blsp2_uart7;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	chosen {
@@ -337,6 +340,7 @@
 		pinctrl-0 = <&blsp1_uart2_pin_a>;
 	};
 
+<<<<<<< HEAD
 	serial@f995d000 {
 		status = "ok";
 
@@ -358,6 +362,8 @@
 		};
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	usb@f9a55000 {
 		status = "okay";
 
@@ -402,6 +408,7 @@
 			};
 		};
 
+<<<<<<< HEAD
 		blsp2_uart7_pin_a: blsp2-uart7-pin-active {
 			tx {
 				pins = "gpio41";
@@ -436,6 +443,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		i2c8_pins: i2c8 {
 			mux {
 				pins = "gpio47", "gpio48";
@@ -535,6 +544,7 @@
 				input-enable;
 			};
 		};
+<<<<<<< HEAD
 
 		bt_host_wake_pin: bt-host-wake {
 			pins = "gpio95";
@@ -552,6 +562,8 @@
 			drive-strength = <2>;
 			bias-disable;
 		};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	i2c@f9964000 {
@@ -679,6 +691,7 @@
 				power-source = <PM8941_GPIO_S3>;
 			};
 
+<<<<<<< HEAD
 			bt_reg_on_pin: bt-reg-on {
 				pins = "gpio16";
 				function = "normal";
@@ -687,6 +700,8 @@
 				power-source = <PM8941_GPIO_S3>;
 			};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			wlan_sleep_clk_pin: wl-sleep-clk {
 				pins = "gpio17";
 				function = "func2";

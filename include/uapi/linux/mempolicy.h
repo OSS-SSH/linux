@@ -22,7 +22,10 @@ enum {
 	MPOL_BIND,
 	MPOL_INTERLEAVE,
 	MPOL_LOCAL,
+<<<<<<< HEAD
 	MPOL_PREFERRED_MANY,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	MPOL_MAX,	/* always last member of enum */
 };
 

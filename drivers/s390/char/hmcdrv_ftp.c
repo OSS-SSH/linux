@@ -26,7 +26,11 @@
  * struct hmcdrv_ftp_ops - HMC drive FTP operations
  * @startup: startup function
  * @shutdown: shutdown function
+<<<<<<< HEAD
  * @transfer: FTP transfer function
+=======
+ * @cmd: FTP transfer function
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct hmcdrv_ftp_ops {
 	int (*startup)(void);

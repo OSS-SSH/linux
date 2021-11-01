@@ -707,6 +707,14 @@ acpi_dev_get_first_match_dev(const char *hid, const char *uid, s64 hrv);
  * @hrv: Hardware Revision of the device, pass -1 to not check _HRV
  *
  * The caller is responsible for invoking acpi_dev_put() on the returned device.
+<<<<<<< HEAD
+=======
+ *
+ * FIXME: Due to above requirement there is a window that may invalidate @adev
+ * and next iteration will use a dangling pointer, e.g. in the case of a
+ * hotplug event. That said, the caller should ensure that this will never
+ * happen.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #define for_each_acpi_dev_match(adev, hid, uid, hrv)			\
 	for (adev = acpi_dev_get_first_match_dev(hid, uid, hrv);	\
@@ -720,8 +728,12 @@ static inline struct acpi_device *acpi_dev_get(struct acpi_device *adev)
 
 static inline void acpi_dev_put(struct acpi_device *adev)
 {
+<<<<<<< HEAD
 	if (adev)
 		put_device(&adev->dev);
+=======
+	put_device(&adev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct acpi_device *acpi_bus_get_acpi_device(acpi_handle handle);

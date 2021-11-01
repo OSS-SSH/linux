@@ -32,9 +32,12 @@
 #include <nvif/event.h>
 #include <nvif/ioctl.h>
 
+<<<<<<< HEAD
 #include <nvif/class.h>
 #include <nvif/cl0080.h>
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct usif_notify_p {
 	struct drm_pending_event base;
 	struct {
@@ -264,7 +267,11 @@ usif_object_dtor(struct usif_object *object)
 }
 
 static int
+<<<<<<< HEAD
 usif_object_new(struct drm_file *f, void *data, u32 size, void *argv, u32 argc, bool parent_abi16)
+=======
+usif_object_new(struct drm_file *f, void *data, u32 size, void *argv, u32 argc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct nouveau_cli *cli = nouveau_cli(f);
 	struct nvif_client *client = &cli->base;
@@ -274,6 +281,7 @@ usif_object_new(struct drm_file *f, void *data, u32 size, void *argv, u32 argc, 
 	struct usif_object *object;
 	int ret = -ENOSYS;
 
+<<<<<<< HEAD
 	if ((ret = nvif_unpack(ret, &data, &size, args->v0, 0, 0, true)))
 		return ret;
 
@@ -299,10 +307,13 @@ usif_object_new(struct drm_file *f, void *data, u32 size, void *argv, u32 argc, 
 		break;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!(object = kmalloc(sizeof(*object), GFP_KERNEL)))
 		return -ENOMEM;
 	list_add(&object->head, &cli->objects);
 
+<<<<<<< HEAD
 	object->route = args->v0.route;
 	object->token = args->v0.token;
 	args->v0.route = NVDRM_OBJECT_USIF;
@@ -316,6 +327,21 @@ usif_object_new(struct drm_file *f, void *data, u32 size, void *argv, u32 argc, 
 	args->v0.token = object->token;
 	args->v0.route = object->route;
 	return 0;
+=======
+	if (!(ret = nvif_unpack(ret, &data, &size, args->v0, 0, 0, true))) {
+		object->route = args->v0.route;
+		object->token = args->v0.token;
+		args->v0.route = NVDRM_OBJECT_USIF;
+		args->v0.token = (unsigned long)(void *)object;
+		ret = nvif_client_ioctl(client, argv, argc);
+		args->v0.token = object->token;
+		args->v0.route = object->route;
+	}
+
+	if (ret)
+		usif_object_dtor(object);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int
@@ -329,7 +355,10 @@ usif_ioctl(struct drm_file *filp, void __user *user, u32 argc)
 		struct nvif_ioctl_v0 v0;
 	} *argv = data;
 	struct usif_object *object;
+<<<<<<< HEAD
 	bool abi16 = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 owner;
 	int ret;
 
@@ -360,13 +389,20 @@ usif_ioctl(struct drm_file *filp, void __user *user, u32 argc)
 			mutex_unlock(&cli->mutex);
 			goto done;
 		}
+<<<<<<< HEAD
 
 		abi16 = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	switch (argv->v0.type) {
 	case NVIF_IOCTL_V0_NEW:
+<<<<<<< HEAD
 		ret = usif_object_new(filp, data, size, argv, argc, abi16);
+=======
+		ret = usif_object_new(filp, data, size, argv, argc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case NVIF_IOCTL_V0_NTFY_NEW:
 		ret = usif_notify_new(filp, data, size, argv, argc);

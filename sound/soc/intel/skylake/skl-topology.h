@@ -81,8 +81,11 @@ enum skl_s_freq {
 	SKL_FS_INVALID
 };
 
+<<<<<<< HEAD
 #define SKL_MAX_PARAMS_TYPES	4
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum skl_widget_type {
 	SKL_WIDGET_VMIXER = 1,
 	SKL_WIDGET_MIXER = 2,
@@ -152,6 +155,7 @@ struct skl_up_down_mixer_cfg {
 	u32 ch_map;
 } __packed;
 
+<<<<<<< HEAD
 struct skl_pin_format {
 	u32 pin_idx;
 	u32 buf_size;
@@ -167,6 +171,8 @@ struct skl_base_cfg_ext {
 	struct skl_pin_format pins_fmt[0];
 } __packed;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct skl_algo_cfg {
 	struct skl_base_cfg  base_cfg;
 	char params[];
@@ -328,8 +334,15 @@ struct skl_pipe {
 
 enum skl_module_state {
 	SKL_MODULE_UNINIT = 0,
+<<<<<<< HEAD
 	SKL_MODULE_INIT_DONE = 1,
 	SKL_MODULE_BIND_DONE = 2,
+=======
+	SKL_MODULE_LOADED = 1,
+	SKL_MODULE_INIT_DONE = 2,
+	SKL_MODULE_BIND_DONE = 3,
+	SKL_MODULE_UNLOADED = 4,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum d0i3_capability {
@@ -388,7 +401,10 @@ struct skl_module_cfg {
 	struct skl_module *module;
 	int res_idx;
 	int fmt_idx;
+<<<<<<< HEAD
 	int fmt_cfg_idx;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 domain;
 	bool homogenous_inputs;
 	bool homogenous_outputs;
@@ -419,7 +435,11 @@ struct skl_module_cfg {
 	enum skl_hw_conn_type  hw_conn_type;
 	enum skl_module_state m_state;
 	struct skl_pipe *pipe;
+<<<<<<< HEAD
 	struct skl_specific_cfg formats_config[SKL_MAX_PARAMS_TYPES];
+=======
+	struct skl_specific_cfg formats_config;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct skl_pipe_mcfg mod_cfg[SKL_MAX_MODULES_IN_PIPE];
 };
 

@@ -7,6 +7,7 @@
 #include "msm_ringbuffer.h"
 #include "msm_gpu.h"
 
+<<<<<<< HEAD
 static uint num_hw_submissions = 8;
 MODULE_PARM_DESC(num_hw_submissions, "The max # of jobs to write into ringbuffer (default 8)");
 module_param(num_hw_submissions, uint, 0600);
@@ -57,11 +58,16 @@ const struct drm_sched_backend_ops msm_sched_ops = {
 	.free_job = msm_job_free
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 		void *memptrs, uint64_t memptrs_iova)
 {
 	struct msm_ringbuffer *ring;
+<<<<<<< HEAD
 	long sched_timeout;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	char name[32];
 	int ret;
 
@@ -83,7 +89,11 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 
 	if (IS_ERR(ring->start)) {
 		ret = PTR_ERR(ring->start);
+<<<<<<< HEAD
 		ring->start = NULL;
+=======
+		ring->start = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fail;
 	}
 
@@ -96,6 +106,7 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 	ring->memptrs = memptrs;
 	ring->memptrs_iova = memptrs_iova;
 
+<<<<<<< HEAD
 	 /* currently managing hangcheck ourselves: */
 	sched_timeout = MAX_SCHEDULE_TIMEOUT;
 
@@ -106,13 +117,19 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
 		goto fail;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INIT_LIST_HEAD(&ring->submits);
 	spin_lock_init(&ring->submit_lock);
 	spin_lock_init(&ring->preempt_lock);
 
 	snprintf(name, sizeof(name), "gpu-ring-%d", ring->id);
 
+<<<<<<< HEAD
 	ring->fctx = msm_fence_context_alloc(gpu->dev, &ring->memptrs->fence, name);
+=======
+	ring->fctx = msm_fence_context_alloc(gpu->dev, name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ring;
 
@@ -126,11 +143,17 @@ void msm_ringbuffer_destroy(struct msm_ringbuffer *ring)
 	if (IS_ERR_OR_NULL(ring))
 		return;
 
+<<<<<<< HEAD
 	drm_sched_fini(&ring->sched);
 
 	msm_fence_context_free(ring->fctx);
 
 	msm_gem_kernel_put(ring->bo, ring->gpu->aspace);
+=======
+	msm_fence_context_free(ring->fctx);
+
+	msm_gem_kernel_put(ring->bo, ring->gpu->aspace, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kfree(ring);
 }

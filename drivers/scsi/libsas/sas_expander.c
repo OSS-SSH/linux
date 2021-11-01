@@ -18,7 +18,11 @@
 #include <scsi/sas_ata.h>
 #include <scsi/scsi_transport.h>
 #include <scsi/scsi_transport_sas.h>
+<<<<<<< HEAD
 #include "scsi_sas_internal.h"
+=======
+#include "../scsi_sas_internal.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int sas_discover_expander(struct domain_device *dev);
 static int sas_configure_routing(struct domain_device *dev, u8 *sas_addr);

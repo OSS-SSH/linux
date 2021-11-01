@@ -1482,8 +1482,11 @@ int				sched_max_numa_distance;
 static int			*sched_domains_numa_distance;
 static struct cpumask		***sched_domains_numa_masks;
 int __read_mostly		node_reclaim_distance = RECLAIM_DISTANCE;
+<<<<<<< HEAD
 
 static unsigned long __read_mostly *sched_numa_onlined_nodes;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 /*
@@ -1835,6 +1838,7 @@ void sched_init_numa(void)
 			sched_domains_numa_masks[i][j] = mask;
 
 			for_each_node(k) {
+<<<<<<< HEAD
 				/*
 				 * Distance information can be unreliable for
 				 * offline nodes, defer building the node
@@ -1845,6 +1849,8 @@ void sched_init_numa(void)
 				if (!node_online(j))
 					continue;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (sched_debug() && (node_distance(j, k) != node_distance(k, j)))
 					sched_numa_warn("Node-distance not symmetric");
 
@@ -1898,6 +1904,7 @@ void sched_init_numa(void)
 	sched_max_numa_distance = sched_domains_numa_distance[nr_levels - 1];
 
 	init_numa_topology_type();
+<<<<<<< HEAD
 
 	sched_numa_onlined_nodes = bitmap_alloc(nr_node_ids, GFP_KERNEL);
 	if (!sched_numa_onlined_nodes)
@@ -1945,6 +1952,8 @@ static void __sched_domains_numa_masks_set(unsigned int node)
 	 * Note that this is racy vs any use of sched_numa_topology_type :/
 	 */
 	init_numa_topology_type();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void sched_domains_numa_masks_set(unsigned int cpu)
@@ -1952,6 +1961,7 @@ void sched_domains_numa_masks_set(unsigned int cpu)
 	int node = cpu_to_node(cpu);
 	int i, j;
 
+<<<<<<< HEAD
 	__sched_domains_numa_masks_set(node);
 
 	for (i = 0; i < sched_domains_numa_levels; i++) {
@@ -1960,6 +1970,10 @@ void sched_domains_numa_masks_set(unsigned int cpu)
 				continue;
 
 			/* Set ourselves in the remote node's masks */
+=======
+	for (i = 0; i < sched_domains_numa_levels; i++) {
+		for (j = 0; j < nr_node_ids; j++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (node_distance(j, node) <= sched_domains_numa_distance[i])
 				cpumask_set_cpu(cpu, sched_domains_numa_masks[i][j]);
 		}

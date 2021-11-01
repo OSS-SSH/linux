@@ -253,8 +253,13 @@ static int hid_prox_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	indio_dev->channels = devm_kmemdup(&pdev->dev, prox_channels,
 					   sizeof(prox_channels), GFP_KERNEL);
+=======
+	indio_dev->channels = kmemdup(prox_channels, sizeof(prox_channels),
+				      GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!indio_dev->channels) {
 		dev_err(&pdev->dev, "failed to duplicate channels\n");
 		return -ENOMEM;
@@ -265,7 +270,11 @@ static int hid_prox_probe(struct platform_device *pdev)
 				HID_USAGE_SENSOR_PROX, prox_state);
 	if (ret) {
 		dev_err(&pdev->dev, "failed to setup attributes\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto error_free_dev_mem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	indio_dev->num_channels = ARRAY_SIZE(prox_channels);
@@ -279,7 +288,11 @@ static int hid_prox_probe(struct platform_device *pdev)
 				&prox_state->common_attributes);
 	if (ret) {
 		dev_err(&pdev->dev, "trigger setup failed\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto error_free_dev_mem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = iio_device_register(indio_dev);
@@ -304,6 +317,11 @@ error_iio_unreg:
 	iio_device_unregister(indio_dev);
 error_remove_trigger:
 	hid_sensor_remove_trigger(indio_dev, &prox_state->common_attributes);
+<<<<<<< HEAD
+=======
+error_free_dev_mem:
+	kfree(indio_dev->channels);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -317,6 +335,10 @@ static int hid_prox_remove(struct platform_device *pdev)
 	sensor_hub_remove_callback(hsdev, HID_USAGE_SENSOR_PROX);
 	iio_device_unregister(indio_dev);
 	hid_sensor_remove_trigger(indio_dev, &prox_state->common_attributes);
+<<<<<<< HEAD
+=======
+	kfree(indio_dev->channels);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

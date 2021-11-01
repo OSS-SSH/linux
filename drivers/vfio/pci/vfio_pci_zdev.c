@@ -1,10 +1,22 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: GPL-2.0-only
+=======
+// SPDX-License-Identifier: GPL-2.0+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * VFIO ZPCI devices support
  *
  * Copyright (C) IBM Corp. 2020.  All rights reserved.
  *	Author(s): Pierre Morel <pmorel@linux.ibm.com>
  *                 Matthew Rosato <mjrosato@linux.ibm.com>
+<<<<<<< HEAD
+=======
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #include <linux/io.h>
 #include <linux/pci.h>
@@ -14,7 +26,11 @@
 #include <asm/pci_clp.h>
 #include <asm/pci_io.h>
 
+<<<<<<< HEAD
 #include <linux/vfio_pci_core.h>
+=======
+#include "vfio_pci_private.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Add the Base PCI Function information to the device info region.
@@ -109,7 +125,11 @@ static int zpci_pfip_cap(struct zpci_dev *zdev, struct vfio_info_cap *caps)
 /*
  * Add all supported capabilities to the VFIO_DEVICE_GET_INFO capability chain.
  */
+<<<<<<< HEAD
 int vfio_pci_info_zdev_add_caps(struct vfio_pci_core_device *vdev,
+=======
+int vfio_pci_info_zdev_add_caps(struct vfio_pci_device *vdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				struct vfio_info_cap *caps)
 {
 	struct zpci_dev *zdev = to_zpci(vdev->pdev);

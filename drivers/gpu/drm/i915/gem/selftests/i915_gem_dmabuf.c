@@ -35,7 +35,11 @@ static int igt_dmabuf_export(void *arg)
 static int igt_dmabuf_import_self(void *arg)
 {
 	struct drm_i915_private *i915 = arg;
+<<<<<<< HEAD
 	struct drm_i915_gem_object *obj, *import_obj;
+=======
+	struct drm_i915_gem_object *obj;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct drm_gem_object *import;
 	struct dma_buf *dmabuf;
 	int err;
@@ -59,7 +63,10 @@ static int igt_dmabuf_import_self(void *arg)
 		err = PTR_ERR(import);
 		goto out_dmabuf;
 	}
+<<<<<<< HEAD
 	import_obj = to_intel_bo(import);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (import != &obj->base) {
 		pr_err("i915_gem_prime_import created a new object!\n");
@@ -67,6 +74,7 @@ static int igt_dmabuf_import_self(void *arg)
 		goto out_import;
 	}
 
+<<<<<<< HEAD
 	i915_gem_object_lock(import_obj, NULL);
 	err = __i915_gem_object_get_pages(import_obj);
 	i915_gem_object_unlock(import_obj);
@@ -230,10 +238,16 @@ out_detach:
 	dma_buf_detach(dmabuf, import_attach);
 out_import:
 	i915_gem_object_put(import_obj);
+=======
+	err = 0;
+out_import:
+	i915_gem_object_put(to_intel_bo(import));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_dmabuf:
 	dma_buf_put(dmabuf);
 out:
 	i915_gem_object_put(obj);
+<<<<<<< HEAD
 out_ret:
 	force_different_devices = false;
 	return err;
@@ -260,6 +274,11 @@ static int igt_dmabuf_import_same_driver_lmem_smem(void *arg)
 	return igt_dmabuf_import_same_driver(i915, regions, 2);
 }
 
+=======
+	return err;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int igt_dmabuf_import(void *arg)
 {
 	struct drm_i915_private *i915 = arg;
@@ -470,9 +489,12 @@ int i915_gem_dmabuf_live_selftests(struct drm_i915_private *i915)
 {
 	static const struct i915_subtest tests[] = {
 		SUBTEST(igt_dmabuf_export),
+<<<<<<< HEAD
 		SUBTEST(igt_dmabuf_import_same_driver_lmem),
 		SUBTEST(igt_dmabuf_import_same_driver_smem),
 		SUBTEST(igt_dmabuf_import_same_driver_lmem_smem),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	return i915_subtests(tests, i915);

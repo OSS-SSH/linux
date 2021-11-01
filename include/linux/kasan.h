@@ -3,7 +3,10 @@
 #define _LINUX_KASAN_H
 
 #include <linux/bug.h>
+<<<<<<< HEAD
 #include <linux/kernel.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/static_key.h>
 #include <linux/types.h>
 

@@ -73,6 +73,7 @@ enum sparx5_vlan_port_type {
 #define XTR_QUEUE     0
 #define INJ_QUEUE     0
 
+<<<<<<< HEAD
 #define FDMA_DCB_MAX			64
 #define FDMA_RX_DCB_MAX_DBS		15
 #define FDMA_TX_DCB_MAX_DBS		1
@@ -128,6 +129,10 @@ struct sparx5_tx {
 	u64 dropped;
 };
 
+=======
+struct sparx5;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct sparx5_port_config {
 	phy_interface_t portmode;
 	u32 bandwidth;
@@ -220,10 +225,13 @@ struct sparx5 {
 	bool sd_sgpio_remapping;
 	/* Register based inj/xtr */
 	int xtr_irq;
+<<<<<<< HEAD
 	/* Frame DMA */
 	int fdma_irq;
 	struct sparx5_rx rx;
 	struct sparx5_tx tx;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* sparx5_switchdev.c */
@@ -231,23 +239,29 @@ int sparx5_register_notifier_blocks(struct sparx5 *sparx5);
 void sparx5_unregister_notifier_blocks(struct sparx5 *sparx5);
 
 /* sparx5_packet.c */
+<<<<<<< HEAD
 struct frame_info {
 	int src_port;
 };
 
 void sparx5_xtr_flush(struct sparx5 *sparx5, u8 grp);
 void sparx5_ifh_parse(u32 *ifh, struct frame_info *info);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 irqreturn_t sparx5_xtr_handler(int irq, void *_priv);
 int sparx5_port_xmit_impl(struct sk_buff *skb, struct net_device *dev);
 int sparx5_manual_injection_mode(struct sparx5 *sparx5);
 void sparx5_port_inj_timer_setup(struct sparx5_port *port);
 
+<<<<<<< HEAD
 /* sparx5_fdma.c */
 int sparx5_fdma_start(struct sparx5 *sparx5);
 int sparx5_fdma_stop(struct sparx5 *sparx5);
 int sparx5_fdma_xmit(struct sparx5 *sparx5, u32 *ifh, struct sk_buff *skb);
 irqreturn_t sparx5_fdma_handler(int irq, void *args);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* sparx5_mactable.c */
 void sparx5_mact_pull_work(struct work_struct *work);
 int sparx5_mact_learn(struct sparx5 *sparx5, int port,

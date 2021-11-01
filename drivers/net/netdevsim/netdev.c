@@ -347,8 +347,12 @@ nsim_create(struct nsim_dev *nsim_dev, struct nsim_dev_port *nsim_dev_port)
 	struct netdevsim *ns;
 	int err;
 
+<<<<<<< HEAD
 	dev = alloc_netdev_mq(sizeof(*ns), "eth%d", NET_NAME_UNKNOWN, nsim_setup,
 			      nsim_dev->nsim_bus_dev->num_queues);
+=======
+	dev = alloc_netdev(sizeof(*ns), "eth%d", NET_NAME_UNKNOWN, nsim_setup);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!dev)
 		return ERR_PTR(-ENOMEM);
 
@@ -393,8 +397,12 @@ void nsim_destroy(struct netdevsim *ns)
 static int nsim_validate(struct nlattr *tb[], struct nlattr *data[],
 			 struct netlink_ext_ack *extack)
 {
+<<<<<<< HEAD
 	NL_SET_ERR_MSG_MOD(extack,
 			   "Please use: echo \"[ID] [PORT_COUNT] [NUM_QUEUES]\" > /sys/bus/netdevsim/new_device");
+=======
+	NL_SET_ERR_MSG_MOD(extack, "Please use: echo \"[ID] [PORT_COUNT]\" > /sys/bus/netdevsim/new_device");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return -EOPNOTSUPP;
 }
 

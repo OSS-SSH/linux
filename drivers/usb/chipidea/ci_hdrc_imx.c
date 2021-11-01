@@ -420,6 +420,7 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
 	data->phy = devm_usb_get_phy_by_phandle(dev, "fsl,usbphy", 0);
 	if (IS_ERR(data->phy)) {
 		ret = PTR_ERR(data->phy);
+<<<<<<< HEAD
 		if (ret == -ENODEV) {
 			data->phy = devm_usb_get_phy_by_phandle(dev, "phys", 0);
 			if (IS_ERR(data->phy)) {
@@ -430,6 +431,13 @@ static int ci_hdrc_imx_probe(struct platform_device *pdev)
 					goto err_clk;
 			}
 		}
+=======
+		/* Return -EINVAL if no usbphy is available */
+		if (ret == -ENODEV)
+			data->phy = NULL;
+		else
+			goto err_clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	pdata.usb_phy = data->phy;

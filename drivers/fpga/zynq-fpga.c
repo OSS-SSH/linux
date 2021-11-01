@@ -192,7 +192,11 @@ static void zynq_step_dma(struct zynq_fpga_priv *priv)
 
 	/* Once the first transfer is queued we can turn on the ISR, future
 	 * calls to zynq_step_dma will happen from the ISR context. The
+<<<<<<< HEAD
 	 * dma_lock spinlock guarantees this handover is done coherently, the
+=======
+	 * dma_lock spinlock guarentees this handover is done coherently, the
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * ISR enable is put at the end to avoid another CPU spinning in the
 	 * ISR on this lock.
 	 */
@@ -267,7 +271,11 @@ static int zynq_fpga_ops_write_init(struct fpga_manager *mgr,
 		ctrl = zynq_fpga_read(priv, CTRL_OFFSET);
 		if (!(ctrl & CTRL_SEC_EN_MASK)) {
 			dev_err(&mgr->dev,
+<<<<<<< HEAD
 				"System not secure, can't use encrypted bitstreams\n");
+=======
+				"System not secure, can't use crypted bitstreams\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = -EINVAL;
 			goto out_err;
 		}
@@ -344,7 +352,11 @@ static int zynq_fpga_ops_write_init(struct fpga_manager *mgr,
 
 	/* set configuration register with following options:
 	 * - enable PCAP interface
+<<<<<<< HEAD
 	 * - set throughput for maximum speed (if bistream not encrypted)
+=======
+	 * - set throughput for maximum speed (if bistream not crypted)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * - set CPU in user mode
 	 */
 	ctrl = zynq_fpga_read(priv, CTRL_OFFSET);

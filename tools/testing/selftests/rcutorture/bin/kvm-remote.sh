@@ -124,12 +124,19 @@ awk < "$rundir"/scenarios -v dest="$T/bin" -v rundir="$rundir" '
 	n = $1;
 	sub(/\./, "", n);
 	fn = dest "/kvm-remote-" n ".sh"
+<<<<<<< HEAD
 	print "kvm-remote-noreap.sh " rundir " &" > fn;
 	scenarios = "";
 	for (i = 2; i <= NF; i++)
 		scenarios = scenarios " " $i;
 	print "kvm-test-1-run-batch.sh" scenarios >> fn;
 	print "sync" >> fn;
+=======
+	scenarios = "";
+	for (i = 2; i <= NF; i++)
+		scenarios = scenarios " " $i;
+	print "kvm-test-1-run-batch.sh" scenarios > fn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	print "rm " rundir "/remote.run" >> fn;
 }'
 chmod +x $T/bin/kvm-remote-*.sh
@@ -174,6 +181,7 @@ checkremotefile () {
 	do
 		ssh $1 "test -f \"$2\""
 		ret=$?
+<<<<<<< HEAD
 		if test "$ret" -eq 255
 		then
 			echo " ---" ssh failure to $1 checking for file $2, retry after $sleeptime seconds. `date`
@@ -188,6 +196,13 @@ checkremotefile () {
 			echo " ---" Exit code $ret: ssh $1 test -f \"$2\", retry after $sleeptime seconds. `date`
 			return $ret
 		fi
+=======
+		if test "$ret" -ne 255
+		then
+			return $ret
+		fi
+		echo " ---" ssh failure to $1 checking for file $2, retry after $sleeptime seconds. `date`
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sleep $sleeptime
 	done
 }
@@ -253,8 +268,12 @@ do
 	do
 		sleep 30
 	done
+<<<<<<< HEAD
 	echo " ---" Collecting results from $i `date`
 	( cd "$oldrun"; ssh $i "cd $rundir; tar -czf - kvm-remote-*.sh.out */console.log */kvm-test-1-run*.sh.out */qemu[_-]pid */qemu-retval */qemu-affinity; rm -rf $T > /dev/null 2>&1" | tar -xzf - )
+=======
+	( cd "$oldrun"; ssh $i "cd $rundir; tar -czf - kvm-remote-*.sh.out */console.log */kvm-test-1-run*.sh.out */qemu_pid */qemu-retval; rm -rf $T > /dev/null 2>&1" | tar -xzf - )
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 done
 
 ( kvm-end-run-stats.sh "$oldrun" "$starttime"; echo $? > $T/exitcode ) | tee -a "$oldrun/remote-log"

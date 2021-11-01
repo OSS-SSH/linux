@@ -80,12 +80,18 @@
 #include <linux/socket.h>
 #include <linux/net.h>
 #include <linux/ipc.h>
+<<<<<<< HEAD
 #include <linux/ipc_namespace.h>
 #include <linux/uaccess.h>
 #include <linux/slab.h>
 
 #include <asm/syscall.h>
 
+=======
+#include <linux/uaccess.h>
+#include <linux/slab.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct oldabi_stat64 {
 	unsigned long long st_dev;
 	unsigned int	__pad1;
@@ -194,13 +200,24 @@ struct oabi_flock64 {
 	pid_t	l_pid;
 } __attribute__ ((packed,aligned(4)));
 
+<<<<<<< HEAD
 static int get_oabi_flock(struct flock64 *kernel, struct oabi_flock64 __user *arg)
 {
 	struct oabi_flock64 user;
+=======
+static long do_locks(unsigned int fd, unsigned int cmd,
+				 unsigned long arg)
+{
+	struct flock64 kernel;
+	struct oabi_flock64 user;
+	mm_segment_t fs;
+	long ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (copy_from_user(&user, (struct oabi_flock64 __user *)arg,
 			   sizeof(user)))
 		return -EFAULT;
+<<<<<<< HEAD
 
 	kernel->l_type	 = user.l_type;
 	kernel->l_whence = user.l_whence;
@@ -226,11 +243,36 @@ static int put_oabi_flock(struct flock64 *kernel, struct oabi_flock64 __user *ar
 		return -EFAULT;
 
 	return 0;
+=======
+	kernel.l_type	= user.l_type;
+	kernel.l_whence	= user.l_whence;
+	kernel.l_start	= user.l_start;
+	kernel.l_len	= user.l_len;
+	kernel.l_pid	= user.l_pid;
+
+	fs = get_fs();
+	set_fs(KERNEL_DS);
+	ret = sys_fcntl64(fd, cmd, (unsigned long)&kernel);
+	set_fs(fs);
+
+	if (!ret && (cmd == F_GETLK64 || cmd == F_OFD_GETLK)) {
+		user.l_type	= kernel.l_type;
+		user.l_whence	= kernel.l_whence;
+		user.l_start	= kernel.l_start;
+		user.l_len	= kernel.l_len;
+		user.l_pid	= kernel.l_pid;
+		if (copy_to_user((struct oabi_flock64 __user *)arg,
+				 &user, sizeof(user)))
+			ret = -EFAULT;
+	}
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 asmlinkage long sys_oabi_fcntl64(unsigned int fd, unsigned int cmd,
 				 unsigned long arg)
 {
+<<<<<<< HEAD
 	void __user *argp = (void __user *)arg;
 	struct fd f = fdget_raw(fd);
 	struct flock64 flock;
@@ -275,6 +317,24 @@ out:
 
 struct oabi_epoll_event {
 	__poll_t events;
+=======
+	switch (cmd) {
+	case F_OFD_GETLK:
+	case F_OFD_SETLK:
+	case F_OFD_SETLKW:
+	case F_GETLK64:
+	case F_SETLK64:
+	case F_SETLKW64:
+		return do_locks(fd, cmd, arg);
+
+	default:
+		return sys_fcntl64(fd, cmd, arg);
+	}
+}
+
+struct oabi_epoll_event {
+	__u32 events;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u64 data;
 } __attribute__ ((packed,aligned(4)));
 
@@ -294,12 +354,51 @@ asmlinkage long sys_oabi_epoll_ctl(int epfd, int op, int fd,
 
 	return do_epoll_ctl(epfd, op, fd, &kernel, false);
 }
+<<<<<<< HEAD
+=======
+
+asmlinkage long sys_oabi_epoll_wait(int epfd,
+				    struct oabi_epoll_event __user *events,
+				    int maxevents, int timeout)
+{
+	struct epoll_event *kbuf;
+	struct oabi_epoll_event e;
+	mm_segment_t fs;
+	long ret, err, i;
+
+	if (maxevents <= 0 ||
+			maxevents > (INT_MAX/sizeof(*kbuf)) ||
+			maxevents > (INT_MAX/sizeof(*events)))
+		return -EINVAL;
+	if (!access_ok(events, sizeof(*events) * maxevents))
+		return -EFAULT;
+	kbuf = kmalloc_array(maxevents, sizeof(*kbuf), GFP_KERNEL);
+	if (!kbuf)
+		return -ENOMEM;
+	fs = get_fs();
+	set_fs(KERNEL_DS);
+	ret = sys_epoll_wait(epfd, kbuf, maxevents, timeout);
+	set_fs(fs);
+	err = 0;
+	for (i = 0; i < ret; i++) {
+		e.events = kbuf[i].events;
+		e.data = kbuf[i].data;
+		err = __copy_to_user(events, &e, sizeof(e));
+		if (err)
+			break;
+		events++;
+	}
+	kfree(kbuf);
+	return err ? -EFAULT : ret;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 asmlinkage long sys_oabi_epoll_ctl(int epfd, int op, int fd,
 				   struct oabi_epoll_event __user *event)
 {
 	return -EINVAL;
 }
+<<<<<<< HEAD
 #endif
 
 struct epoll_event __user *
@@ -322,6 +421,16 @@ epoll_put_uevent(__poll_t revents, __u64 data,
 
 	return uevent+1;
 }
+=======
+
+asmlinkage long sys_oabi_epoll_wait(int epfd,
+				    struct oabi_epoll_event __user *events,
+				    int maxevents, int timeout)
+{
+	return -EINVAL;
+}
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct oabi_sembuf {
 	unsigned short	sem_num;
@@ -330,14 +439,18 @@ struct oabi_sembuf {
 	unsigned short	__pad;
 };
 
+<<<<<<< HEAD
 #define sc_semopm     sem_ctls[2]
 
 #ifdef CONFIG_SYSVIPC
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 asmlinkage long sys_oabi_semtimedop(int semid,
 				    struct oabi_sembuf __user *tsops,
 				    unsigned nsops,
 				    const struct old_timespec32 __user *timeout)
 {
+<<<<<<< HEAD
 	struct ipc_namespace *ns;
 	struct sembuf *sops;
 	long err;
@@ -349,17 +462,34 @@ asmlinkage long sys_oabi_semtimedop(int semid,
 	if (nsops < 1 || nsops > SEMOPM)
 		return -EINVAL;
 	sops = kvmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
+=======
+	struct sembuf *sops;
+	struct old_timespec32 local_timeout;
+	long err;
+	int i;
+
+	if (nsops < 1 || nsops > SEMOPM)
+		return -EINVAL;
+	if (!access_ok(tsops, sizeof(*tsops) * nsops))
+		return -EFAULT;
+	sops = kmalloc_array(nsops, sizeof(*sops), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!sops)
 		return -ENOMEM;
 	err = 0;
 	for (i = 0; i < nsops; i++) {
 		struct oabi_sembuf osb;
+<<<<<<< HEAD
 		err |= copy_from_user(&osb, tsops, sizeof(osb));
+=======
+		err |= __copy_from_user(&osb, tsops, sizeof(osb));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sops[i].sem_num = osb.sem_num;
 		sops[i].sem_op = osb.sem_op;
 		sops[i].sem_flg = osb.sem_flg;
 		tsops++;
 	}
+<<<<<<< HEAD
 	if (err) {
 		err = -EFAULT;
 		goto out;
@@ -376,6 +506,22 @@ asmlinkage long sys_oabi_semtimedop(int semid,
 	err = __do_semtimedop(semid, sops, nsops, NULL, ns);
 out:
 	kvfree(sops);
+=======
+	if (timeout) {
+		/* copy this as well before changing domain protection */
+		err |= copy_from_user(&local_timeout, timeout, sizeof(*timeout));
+		timeout = &local_timeout;
+	}
+	if (err) {
+		err = -EFAULT;
+	} else {
+		mm_segment_t fs = get_fs();
+		set_fs(KERNEL_DS);
+		err = sys_semtimedop_time32(semid, sops, nsops, timeout);
+		set_fs(fs);
+	}
+	kfree(sops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -402,6 +548,7 @@ asmlinkage int sys_oabi_ipc(uint call, int first, int second, int third,
 		return sys_ipc(call, first, second, third, ptr, fifth);
 	}
 }
+<<<<<<< HEAD
 #else
 asmlinkage long sys_oabi_semtimedop(int semid,
 				    struct oabi_sembuf __user *tsops,
@@ -423,6 +570,8 @@ asmlinkage int sys_oabi_ipc(uint call, int first, int second, int third,
 	return -ENOSYS;
 }
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 asmlinkage long sys_oabi_bind(int fd, struct sockaddr __user *addr, int addrlen)
 {

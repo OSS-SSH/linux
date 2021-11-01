@@ -64,11 +64,14 @@ static int ep93xx_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 	int ret;
 	struct ep93xx_pwm *ep93xx_pwm = to_ep93xx_pwm(chip);
 	bool enabled = state->enabled;
+<<<<<<< HEAD
 	void __iomem *base = ep93xx_pwm->base;
 	unsigned long long c;
 	unsigned long period_cycles;
 	unsigned long duty_cycles;
 	unsigned long term;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (state->polarity != pwm->state.polarity) {
 		if (enabled) {
@@ -102,6 +105,7 @@ static int ep93xx_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * The clock needs to be enabled to access the PWM registers.
 	 * Configuration can be changed at any time.
@@ -143,6 +147,59 @@ static int ep93xx_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 
 	if (ret)
 		return ret;
+=======
+	if (state->period != pwm->state.period ||
+	    state->duty_cycle != pwm->state.duty_cycle) {
+		struct ep93xx_pwm *ep93xx_pwm = to_ep93xx_pwm(chip);
+		void __iomem *base = ep93xx_pwm->base;
+		unsigned long long c;
+		unsigned long period_cycles;
+		unsigned long duty_cycles;
+		unsigned long term;
+
+		/*
+		 * The clock needs to be enabled to access the PWM registers.
+		 * Configuration can be changed at any time.
+		 */
+		if (!pwm_is_enabled(pwm)) {
+			ret = clk_prepare_enable(ep93xx_pwm->clk);
+			if (ret)
+				return ret;
+		}
+
+		c = clk_get_rate(ep93xx_pwm->clk);
+		c *= state->period;
+		do_div(c, 1000000000);
+		period_cycles = c;
+
+		c = period_cycles;
+		c *= state->duty_cycle;
+		do_div(c, state->period);
+		duty_cycles = c;
+
+		if (period_cycles < 0x10000 && duty_cycles < 0x10000) {
+			term = readw(base + EP93XX_PWMx_TERM_COUNT);
+
+			/* Order is important if PWM is running */
+			if (period_cycles > term) {
+				writew(period_cycles, base + EP93XX_PWMx_TERM_COUNT);
+				writew(duty_cycles, base + EP93XX_PWMx_DUTY_CYCLE);
+			} else {
+				writew(duty_cycles, base + EP93XX_PWMx_DUTY_CYCLE);
+				writew(period_cycles, base + EP93XX_PWMx_TERM_COUNT);
+			}
+			ret = 0;
+		} else {
+			ret = -EINVAL;
+		}
+
+		if (!pwm_is_enabled(pwm))
+			clk_disable_unprepare(ep93xx_pwm->clk);
+
+		if (ret)
+			return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!enabled) {
 		ret = clk_prepare_enable(ep93xx_pwm->clk);
@@ -183,6 +240,7 @@ static int ep93xx_pwm_probe(struct platform_device *pdev)
 	ep93xx_pwm->chip.ops = &ep93xx_pwm_ops;
 	ep93xx_pwm->chip.npwm = 1;
 
+<<<<<<< HEAD
 	ret = devm_pwmchip_add(&pdev->dev, &ep93xx_pwm->chip);
 	if (ret < 0)
 		return ret;
@@ -190,11 +248,32 @@ static int ep93xx_pwm_probe(struct platform_device *pdev)
 	return 0;
 }
 
+=======
+	ret = pwmchip_add(&ep93xx_pwm->chip);
+	if (ret < 0)
+		return ret;
+
+	platform_set_drvdata(pdev, ep93xx_pwm);
+	return 0;
+}
+
+static int ep93xx_pwm_remove(struct platform_device *pdev)
+{
+	struct ep93xx_pwm *ep93xx_pwm = platform_get_drvdata(pdev);
+
+	return pwmchip_remove(&ep93xx_pwm->chip);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct platform_driver ep93xx_pwm_driver = {
 	.driver = {
 		.name = "ep93xx-pwm",
 	},
 	.probe = ep93xx_pwm_probe,
+<<<<<<< HEAD
+=======
+	.remove = ep93xx_pwm_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 module_platform_driver(ep93xx_pwm_driver);
 

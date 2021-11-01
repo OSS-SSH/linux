@@ -14,6 +14,13 @@
 
 #include <osdep_service_linux.h>
 
+<<<<<<< HEAD
+=======
+#ifndef BIT
+	#define BIT(x)	(1 << (x))
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define BIT0	0x00000001
 #define BIT1	0x00000002
 #define BIT2	0x00000004

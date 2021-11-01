@@ -77,7 +77,10 @@
 #include <net/transp_v6.h>
 #include <linux/btf_ids.h>
 #include <net/tls.h>
+<<<<<<< HEAD
 #include <net/xdp.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct bpf_func_proto *
 bpf_sk_base_func_proto(enum bpf_func_id func_id);
@@ -114,7 +117,11 @@ EXPORT_SYMBOL_GPL(copy_bpf_fprog_from_user);
  * Run the eBPF program and then cut skb->data to correct size returned by
  * the program. If pkt_len is 0 we toss packet. If skb->len is smaller
  * than pkt_len we keep whole skb->data. This is the socket level
+<<<<<<< HEAD
  * wrapper to bpf_prog_run. It returns 0 if the packet should
+=======
+ * wrapper to BPF_PROG_RUN. It returns 0 if the packet should
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * be accepted or -EPERM if the packet should be tossed.
  *
  */
@@ -2180,9 +2187,23 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
 	skb->tstamp = 0;
 
 	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
+<<<<<<< HEAD
 		skb = skb_expand_head(skb, hh_len);
 		if (!skb)
 			return -ENOMEM;
+=======
+		struct sk_buff *skb2;
+
+		skb2 = skb_realloc_headroom(skb, hh_len);
+		if (unlikely(!skb2)) {
+			kfree_skb(skb);
+			return -ENOMEM;
+		}
+		if (skb->sk)
+			skb_set_owner_w(skb2, skb->sk);
+		consume_skb(skb);
+		skb = skb2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	rcu_read_lock_bh();
@@ -2206,7 +2227,12 @@ static int bpf_out_neigh_v6(struct net *net, struct sk_buff *skb,
 	}
 	rcu_read_unlock_bh();
 	if (dst)
+<<<<<<< HEAD
 		IP6_INC_STATS(net, ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
+=======
+		IP6_INC_STATS(dev_net(dst->dev),
+			      ip6_dst_idev(dst), IPSTATS_MIB_OUTNOROUTES);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_drop:
 	kfree_skb(skb);
 	return -ENETDOWN;
@@ -2278,9 +2304,23 @@ static int bpf_out_neigh_v4(struct net *net, struct sk_buff *skb,
 	skb->tstamp = 0;
 
 	if (unlikely(skb_headroom(skb) < hh_len && dev->header_ops)) {
+<<<<<<< HEAD
 		skb = skb_expand_head(skb, hh_len);
 		if (!skb)
 			return -ENOMEM;
+=======
+		struct sk_buff *skb2;
+
+		skb2 = skb_realloc_headroom(skb, hh_len);
+		if (unlikely(!skb2)) {
+			kfree_skb(skb);
+			return -ENOMEM;
+		}
+		if (skb->sk)
+			skb_set_owner_w(skb2, skb->sk);
+		consume_skb(skb);
+		skb = skb2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	rcu_read_lock_bh();
@@ -3864,7 +3904,12 @@ BPF_CALL_2(bpf_xdp_adjust_meta, struct xdp_buff *, xdp, int, offset)
 	if (unlikely(meta < xdp_frame_end ||
 		     meta > xdp->data))
 		return -EINVAL;
+<<<<<<< HEAD
 	if (unlikely(xdp_metalen_invalid(metalen)))
+=======
+	if (unlikely((metalen & (sizeof(__u32) - 1)) ||
+		     (metalen > 32)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EACCES;
 
 	xdp->data_meta = meta;
@@ -3933,6 +3978,7 @@ void bpf_clear_redirect_map(struct bpf_map *map)
 	}
 }
 
+<<<<<<< HEAD
 DEFINE_STATIC_KEY_FALSE(bpf_master_redirect_enabled_key);
 EXPORT_SYMBOL_GPL(bpf_master_redirect_enabled_key);
 
@@ -3958,6 +4004,8 @@ u32 xdp_master_redirect(struct xdp_buff *xdp)
 }
 EXPORT_SYMBOL_GPL(xdp_master_redirect);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int xdp_do_redirect(struct net_device *dev, struct xdp_buff *xdp,
 		    struct bpf_prog *xdp_prog)
 {
@@ -4048,12 +4096,17 @@ static int xdp_do_generic_redirect_map(struct net_device *dev,
 			goto err;
 		consume_skb(skb);
 		break;
+<<<<<<< HEAD
 	case BPF_MAP_TYPE_CPUMAP:
 		err = cpu_map_generic_redirect(fwd, skb);
 		if (unlikely(err))
 			goto err;
 		break;
 	default:
+=======
+	default:
+		/* TODO: Handle BPF_MAP_TYPE_CPUMAP */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = -EBADRQC;
 		goto err;
 	}
@@ -4676,6 +4729,7 @@ static const struct bpf_func_proto bpf_get_netns_cookie_sock_addr_proto = {
 	.arg1_type	= ARG_PTR_TO_CTX_OR_NULL,
 };
 
+<<<<<<< HEAD
 BPF_CALL_1(bpf_get_netns_cookie_sock_ops, struct bpf_sock_ops_kern *, ctx)
 {
 	return __bpf_get_netns_cookie(ctx ? ctx->sk : NULL);
@@ -4700,6 +4754,8 @@ static const struct bpf_func_proto bpf_get_netns_cookie_sk_msg_proto = {
 	.arg1_type	= ARG_PTR_TO_CTX_OR_NULL,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 BPF_CALL_1(bpf_get_socket_uid, struct sk_buff *, skb)
 {
 	struct sock *sk = sk_to_full_sk(skb->sk);
@@ -5048,6 +5104,7 @@ err_clear:
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 BPF_CALL_5(bpf_sk_setsockopt, struct sock *, sk, int, level,
 	   int, optname, char *, optval, int, optlen)
 {
@@ -5088,6 +5145,8 @@ const struct bpf_func_proto bpf_sk_getsockopt_proto = {
 	.arg5_type	= ARG_CONST_SIZE,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 BPF_CALL_5(bpf_sock_addr_setsockopt, struct bpf_sock_addr_kern *, ctx,
 	   int, level, int, optname, char *, optval, int, optlen)
 {
@@ -7521,8 +7580,11 @@ sock_ops_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
 		return &bpf_sk_storage_get_proto;
 	case BPF_FUNC_sk_storage_delete:
 		return &bpf_sk_storage_delete_proto;
+<<<<<<< HEAD
 	case BPF_FUNC_get_netns_cookie:
 		return &bpf_get_netns_cookie_sock_ops_proto;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_INET
 	case BPF_FUNC_load_hdr_opt:
 		return &bpf_sock_ops_load_hdr_opt_proto;
@@ -7569,8 +7631,11 @@ sk_msg_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
 		return &bpf_sk_storage_get_proto;
 	case BPF_FUNC_sk_storage_delete:
 		return &bpf_sk_storage_delete_proto;
+<<<<<<< HEAD
 	case BPF_FUNC_get_netns_cookie:
 		return &bpf_get_netns_cookie_sk_msg_proto;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_CGROUPS
 	case BPF_FUNC_get_current_cgroup_id:
 		return &bpf_get_current_cgroup_id_proto;
@@ -10149,7 +10214,11 @@ struct sock *bpf_run_sk_reuseport(struct sock_reuseport *reuse, struct sock *sk,
 	enum sk_action action;
 
 	bpf_init_reuseport_kern(&reuse_kern, reuse, sk, skb, migrating_sk, hash);
+<<<<<<< HEAD
 	action = bpf_prog_run(prog, &reuse_kern);
+=======
+	action = BPF_PROG_RUN(prog, &reuse_kern);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (action == SK_PASS)
 		return reuse_kern.selected_sk;

@@ -61,6 +61,7 @@ patternProperties:
     type: object
     properties:
       compatible:
+<<<<<<< HEAD
         contains:
           enum:
             - cfi-flash
@@ -78,6 +79,14 @@ required:
   - '#address-cells'
   - '#size-cells'
 
+=======
+        enum:
+          - cfi-flash
+          - jedec,spi-nor
+
+unevaluatedProperties: false
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 examples:
   - |
     #include <dt-bindings/clock/renesas-cpg-mssr.h>

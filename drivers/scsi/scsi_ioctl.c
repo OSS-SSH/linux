@@ -14,7 +14,10 @@
 #include <linux/mm.h>
 #include <linux/string.h>
 #include <linux/uaccess.h>
+<<<<<<< HEAD
 #include <linux/cdrom.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <scsi/scsi.h>
 #include <scsi/scsi_cmnd.h>
@@ -64,6 +67,32 @@ static int ioctl_probe(struct Scsi_Host *host, void __user *buffer)
 	return 1;
 }
 
+<<<<<<< HEAD
+=======
+/*
+
+ * The SCSI_IOCTL_SEND_COMMAND ioctl sends a command out to the SCSI host.
+ * The IOCTL_NORMAL_TIMEOUT and NORMAL_RETRIES  variables are used.  
+ * 
+ * dev is the SCSI device struct ptr, *(int *) arg is the length of the
+ * input data, if any, not including the command string & counts, 
+ * *((int *)arg + 1) is the output buffer size in bytes.
+ * 
+ * *(char *) ((int *) arg)[2] the actual command byte.   
+ * 
+ * Note that if more than MAX_BUF bytes are requested to be transferred,
+ * the ioctl will fail with error EINVAL.
+ * 
+ * This size *does not* include the initial lengths that were passed.
+ * 
+ * The SCSI command is read from the memory location immediately after the
+ * length words, and the input data is right after the command.  The SCSI
+ * routines know the command size based on the opcode decode.  
+ * 
+ * The output area is then filled in starting from the command byte. 
+ */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ioctl_internal_command(struct scsi_device *sdev, char *cmd,
 				  int timeout, int retries)
 {
@@ -167,6 +196,7 @@ static int scsi_ioctl_get_pci(struct scsi_device *sdev, void __user *arg)
 		? -EFAULT: 0;
 }
 
+<<<<<<< HEAD
 static int sg_get_version(int __user *p)
 {
 	static const int sg_version_num = 30527;
@@ -893,6 +923,12 @@ int scsi_ioctl(struct scsi_device *sdev, struct gendisk *disk, fmode_t mode,
 		int cmd, void __user *arg)
 {
 	struct request_queue *q = sdev->request_queue;
+=======
+
+static int scsi_ioctl_common(struct scsi_device *sdev, int cmd, void __user *arg)
+{
+	char scsi_cmd[MAX_COMMAND_SIZE];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_sense_hdr sense_hdr;
 
 	/* Check for deprecated ioctls ... all the ioctls which don't
@@ -912,6 +948,7 @@ int scsi_ioctl(struct scsi_device *sdev, struct gendisk *disk, fmode_t mode,
 	}
 
 	switch (cmd) {
+<<<<<<< HEAD
 	case SG_GET_VERSION_NUM:
 		return sg_get_version(arg);
 	case SG_SET_TIMEOUT:
@@ -936,10 +973,31 @@ int scsi_ioctl(struct scsi_device *sdev, struct gendisk *disk, fmode_t mode,
 		return scsi_send_start_stop(sdev, 2);
 	case SCSI_IOCTL_GET_IDLUN:
 		return scsi_get_idlun(sdev, arg);
+=======
+	case SCSI_IOCTL_GET_IDLUN: {
+		struct scsi_idlun v = {
+			.dev_id = (sdev->id & 0xff)
+				 + ((sdev->lun & 0xff) << 8)
+				 + ((sdev->channel & 0xff) << 16)
+				 + ((sdev->host->host_no & 0xff) << 24),
+			.host_unique_id = sdev->host->unique_id
+		};
+		if (copy_to_user(arg, &v, sizeof(struct scsi_idlun)))
+			return -EFAULT;
+		return 0;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case SCSI_IOCTL_GET_BUS_NUMBER:
 		return put_user(sdev->host->host_no, (int __user *)arg);
 	case SCSI_IOCTL_PROBE_HOST:
 		return ioctl_probe(sdev->host, arg);
+<<<<<<< HEAD
+=======
+	case SCSI_IOCTL_SEND_COMMAND:
+		if (!capable(CAP_SYS_ADMIN) || !capable(CAP_SYS_RAWIO))
+			return -EACCES;
+		return sg_scsi_ioctl(sdev->request_queue, NULL, 0, arg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case SCSI_IOCTL_DOORLOCK:
 		return scsi_set_medium_removal(sdev, SCSI_REMOVAL_PREVENT);
 	case SCSI_IOCTL_DOORUNLOCK:
@@ -948,14 +1006,31 @@ int scsi_ioctl(struct scsi_device *sdev, struct gendisk *disk, fmode_t mode,
 		return scsi_test_unit_ready(sdev, IOCTL_NORMAL_TIMEOUT,
 					    NORMAL_RETRIES, &sense_hdr);
 	case SCSI_IOCTL_START_UNIT:
+<<<<<<< HEAD
 		return scsi_send_start_stop(sdev, 1);
 	case SCSI_IOCTL_STOP_UNIT:
 		return scsi_send_start_stop(sdev, 0);
+=======
+		scsi_cmd[0] = START_STOP;
+		scsi_cmd[1] = 0;
+		scsi_cmd[2] = scsi_cmd[3] = scsi_cmd[5] = 0;
+		scsi_cmd[4] = 1;
+		return ioctl_internal_command(sdev, scsi_cmd,
+				     START_STOP_TIMEOUT, NORMAL_RETRIES);
+	case SCSI_IOCTL_STOP_UNIT:
+		scsi_cmd[0] = START_STOP;
+		scsi_cmd[1] = 0;
+		scsi_cmd[2] = scsi_cmd[3] = scsi_cmd[5] = 0;
+		scsi_cmd[4] = 0;
+		return ioctl_internal_command(sdev, scsi_cmd,
+				     START_STOP_TIMEOUT, NORMAL_RETRIES);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         case SCSI_IOCTL_GET_PCI:
                 return scsi_ioctl_get_pci(sdev, arg);
 	case SG_SCSI_RESET:
 		return scsi_ioctl_reset(sdev, arg);
 	}
+<<<<<<< HEAD
 
 #ifdef CONFIG_COMPAT
 	if (in_compat_syscall()) {
@@ -969,6 +1044,50 @@ int scsi_ioctl(struct scsi_device *sdev, struct gendisk *disk, fmode_t mode,
 	return sdev->host->hostt->ioctl(sdev, cmd, arg);
 }
 EXPORT_SYMBOL(scsi_ioctl);
+=======
+	return -ENOIOCTLCMD;
+}
+
+/**
+ * scsi_ioctl - Dispatch ioctl to scsi device
+ * @sdev: scsi device receiving ioctl
+ * @cmd: which ioctl is it
+ * @arg: data associated with ioctl
+ *
+ * Description: The scsi_ioctl() function differs from most ioctls in that it
+ * does not take a major/minor number as the dev field.  Rather, it takes
+ * a pointer to a &struct scsi_device.
+ */
+int scsi_ioctl(struct scsi_device *sdev, int cmd, void __user *arg)
+{
+	int ret = scsi_ioctl_common(sdev, cmd, arg);
+
+	if (ret != -ENOIOCTLCMD)
+		return ret;
+
+	if (sdev->host->hostt->ioctl)
+		return sdev->host->hostt->ioctl(sdev, cmd, arg);
+
+	return -EINVAL;
+}
+EXPORT_SYMBOL(scsi_ioctl);
+
+#ifdef CONFIG_COMPAT
+int scsi_compat_ioctl(struct scsi_device *sdev, int cmd, void __user *arg)
+{
+	int ret = scsi_ioctl_common(sdev, cmd, arg);
+
+	if (ret != -ENOIOCTLCMD)
+		return ret;
+
+	if (sdev->host->hostt->compat_ioctl)
+		return sdev->host->hostt->compat_ioctl(sdev, cmd, arg);
+
+	return ret;
+}
+EXPORT_SYMBOL(scsi_compat_ioctl);
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * We can process a reset even when a device isn't fully operable.

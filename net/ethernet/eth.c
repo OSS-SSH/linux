@@ -62,6 +62,11 @@
 #include <linux/uaccess.h>
 #include <net/pkt_sched.h>
 
+<<<<<<< HEAD
+=======
+__setup("ether=", netdev_boot_setup);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * eth_header - create the Ethernet header
  * @skb:	buffer to alter
@@ -180,8 +185,17 @@ __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev)
 	 * at all, so we check here whether one of those tagging
 	 * variants has been configured on the receiving interface,
 	 * and if so, set skb->protocol without looking at the packet.
+<<<<<<< HEAD
 	 */
 	if (unlikely(netdev_uses_dsa(dev)))
+=======
+	 * The DSA tagging protocol may be able to decode some but not all
+	 * traffic (for example only for management). In that case give it the
+	 * option to filter the packets from which it can decode source port
+	 * information.
+	 */
+	if (unlikely(netdev_uses_dsa(dev)) && dsa_can_decode(skb, dev))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return htons(ETH_P_XDSA);
 
 	if (likely(eth_proto_is_802_3(eth->h_proto)))

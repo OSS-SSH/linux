@@ -16,6 +16,10 @@
 #include <linux/signal.h>
 #include <linux/kthread.h>
 #include <linux/dmi.h>
+<<<<<<< HEAD
+=======
+#include <linux/nls.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/dma-map-ops.h>
 #include <linux/platform_data/x86/apple.h>
 #include <linux/pgtable.h>

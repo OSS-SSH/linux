@@ -974,6 +974,10 @@ static void __init imx6q_clocks_init(struct device_node *ccm_node)
 			       hws[IMX6QDL_CLK_PLL3_USB_OTG]->clk);
 	}
 
+<<<<<<< HEAD
 	imx_register_uart_clocks(2);
+=======
+	imx_register_uart_clocks(1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 CLK_OF_DECLARE(imx6q, "fsl,imx6q-ccm", imx6q_clocks_init);

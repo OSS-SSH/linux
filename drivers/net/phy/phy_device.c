@@ -969,6 +969,7 @@ void phy_device_remove(struct phy_device *phydev)
 EXPORT_SYMBOL(phy_device_remove);
 
 /**
+<<<<<<< HEAD
  * phy_get_c45_ids - Read 802.3-c45 IDs for phy device.
  * @phydev: phy_device structure to read 802.3-c45 IDs
  *
@@ -983,6 +984,8 @@ int phy_get_c45_ids(struct phy_device *phydev)
 EXPORT_SYMBOL(phy_get_c45_ids);
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * phy_find_first - finds the first PHY device on the bus
  * @bus: the target MII bus
  */
@@ -1821,10 +1824,18 @@ EXPORT_SYMBOL(phy_resume);
 
 int phy_loopback(struct phy_device *phydev, bool enable)
 {
+<<<<<<< HEAD
 	int ret = 0;
 
 	if (!phydev->drv)
 		return -EIO;
+=======
+	struct phy_driver *phydrv = to_phy_driver(phydev->mdio.dev.driver);
+	int ret = 0;
+
+	if (!phydrv)
+		return -ENODEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_lock(&phydev->lock);
 
@@ -1838,8 +1849,13 @@ int phy_loopback(struct phy_device *phydev, bool enable)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (phydev->drv->set_loopback)
 		ret = phydev->drv->set_loopback(phydev, enable);
+=======
+	if (phydrv->set_loopback)
+		ret = phydrv->set_loopback(phydev, enable);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else
 		ret = genphy_loopback(phydev, enable);
 
@@ -3125,9 +3141,12 @@ static void phy_shutdown(struct device *dev)
 {
 	struct phy_device *phydev = to_phy_device(dev);
 
+<<<<<<< HEAD
 	if (phydev->state == PHY_READY || !phydev->attached_dev)
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy_disable_interrupts(phydev);
 }
 

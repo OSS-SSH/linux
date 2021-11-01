@@ -932,7 +932,11 @@ static const struct net_device_ops rtl8139_netdev_ops = {
 	.ndo_set_mac_address 	= rtl8139_set_mac_address,
 	.ndo_start_xmit		= rtl8139_start_xmit,
 	.ndo_set_rx_mode	= rtl8139_set_rx_mode,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= netdev_ioctl,
+=======
+	.ndo_do_ioctl		= netdev_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout		= rtl8139_tx_timeout,
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	= rtl8139_poll_controller,

@@ -30,7 +30,10 @@
 #include <net/seg6_local.h>
 #include <linux/etherdevice.h>
 #include <linux/bpf.h>
+<<<<<<< HEAD
 #include <linux/netfilter.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define SEG6_F_ATTR(i)		BIT(i)
 
@@ -414,6 +417,7 @@ drop:
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int input_action_end_dx6_finish(struct net *net, struct sock *sk,
 				       struct sk_buff *skb)
 {
@@ -437,10 +441,17 @@ static int input_action_end_dx6_finish(struct net *net, struct sock *sk,
 	return dst_input(skb);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* decapsulate and forward to specified nexthop */
 static int input_action_end_dx6(struct sk_buff *skb,
 				struct seg6_local_lwt *slwt)
 {
+<<<<<<< HEAD
+=======
+	struct in6_addr *nhaddr = NULL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* this function accepts IPv6 encapsulated packets, with either
 	 * an SRH with SL=0, or no SRH.
 	 */
@@ -451,6 +462,7 @@ static int input_action_end_dx6(struct sk_buff *skb,
 	if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
 		goto drop;
 
+<<<<<<< HEAD
 	skb_set_transport_header(skb, sizeof(struct ipv6hdr));
 	nf_reset_ct(skb);
 
@@ -460,21 +472,54 @@ static int input_action_end_dx6(struct sk_buff *skb,
 			       skb_dst(skb)->dev, input_action_end_dx6_finish);
 
 	return input_action_end_dx6_finish(dev_net(skb->dev), NULL, skb);
+=======
+	/* The inner packet is not associated to any local interface,
+	 * so we do not call netif_rx().
+	 *
+	 * If slwt->nh6 is set to ::, then lookup the nexthop for the
+	 * inner packet's DA. Otherwise, use the specified nexthop.
+	 */
+
+	if (!ipv6_addr_any(&slwt->nh6))
+		nhaddr = &slwt->nh6;
+
+	skb_set_transport_header(skb, sizeof(struct ipv6hdr));
+
+	seg6_lookup_nexthop(skb, nhaddr, 0);
+
+	return dst_input(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 drop:
 	kfree_skb(skb);
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
 				       struct sk_buff *skb)
 {
 	struct dst_entry *orig_dst = skb_dst(skb);
 	struct seg6_local_lwt *slwt;
+=======
+static int input_action_end_dx4(struct sk_buff *skb,
+				struct seg6_local_lwt *slwt)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct iphdr *iph;
 	__be32 nhaddr;
 	int err;
 
+<<<<<<< HEAD
 	slwt = seg6_local_lwtunnel(orig_dst->lwtstate);
+=======
+	if (!decap_and_validate(skb, IPPROTO_IPIP))
+		goto drop;
+
+	if (!pskb_may_pull(skb, sizeof(struct iphdr)))
+		goto drop;
+
+	skb->protocol = htons(ETH_P_IP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	iph = ip_hdr(skb);
 
@@ -482,6 +527,7 @@ static int input_action_end_dx4_finish(struct net *net, struct sock *sk,
 
 	skb_dst_drop(skb);
 
+<<<<<<< HEAD
 	err = ip_route_input(skb, nhaddr, iph->saddr, 0, skb->dev);
 	if (err) {
 		kfree_skb(skb);
@@ -510,6 +556,16 @@ static int input_action_end_dx4(struct sk_buff *skb,
 			       skb_dst(skb)->dev, input_action_end_dx4_finish);
 
 	return input_action_end_dx4_finish(dev_net(skb->dev), NULL, skb);
+=======
+	skb_set_transport_header(skb, sizeof(struct iphdr));
+
+	err = ip_route_input(skb, nhaddr, iph->saddr, 0, skb->dev);
+	if (err)
+		goto drop;
+
+	return dst_input(skb);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 drop:
 	kfree_skb(skb);
 	return -EINVAL;
@@ -677,7 +733,10 @@ static struct sk_buff *end_dt_vrf_core(struct sk_buff *skb,
 	skb_dst_drop(skb);
 
 	skb_set_transport_header(skb, hdrlen);
+<<<<<<< HEAD
 	nf_reset_ct(skb);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return end_dt_vrf_rcv(skb, family, vrf);
 
@@ -1111,8 +1170,12 @@ static void seg6_local_update_counters(struct seg6_local_lwt *slwt,
 	u64_stats_update_end(&pcounters->syncp);
 }
 
+<<<<<<< HEAD
 static int seg6_local_input_core(struct net *net, struct sock *sk,
 				 struct sk_buff *skb)
+=======
+static int seg6_local_input(struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct dst_entry *orig_dst = skb_dst(skb);
 	struct seg6_action_desc *desc;
@@ -1120,6 +1183,14 @@ static int seg6_local_input_core(struct net *net, struct sock *sk,
 	unsigned int len = skb->len;
 	int rc;
 
+<<<<<<< HEAD
+=======
+	if (skb->protocol != htons(ETH_P_IPV6)) {
+		kfree_skb(skb);
+		return -EINVAL;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	slwt = seg6_local_lwtunnel(orig_dst->lwtstate);
 	desc = slwt->desc;
 
@@ -1133,6 +1204,7 @@ static int seg6_local_input_core(struct net *net, struct sock *sk,
 	return rc;
 }
 
+<<<<<<< HEAD
 static int seg6_local_input(struct sk_buff *skb)
 {
 	if (skb->protocol != htons(ETH_P_IPV6)) {
@@ -1148,6 +1220,8 @@ static int seg6_local_input(struct sk_buff *skb)
 	return seg6_local_input_core(dev_net(skb->dev), NULL, skb);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct nla_policy seg6_local_policy[SEG6_LOCAL_MAX + 1] = {
 	[SEG6_LOCAL_ACTION]	= { .type = NLA_U32 },
 	[SEG6_LOCAL_SRH]	= { .type = NLA_BINARY },

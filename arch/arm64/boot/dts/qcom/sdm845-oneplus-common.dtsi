@@ -19,6 +19,7 @@
 
 / {
 	aliases {
+<<<<<<< HEAD
 		serial0 = &uart9;
 		hsuart0 = &uart6;
 	};
@@ -27,6 +28,11 @@
 		stdout-path = "serial0:115200n8";
 	};
 
+=======
+		hsuart0 = &uart6;
+	};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	gpio-keys {
 		compatible = "gpio-keys";
 		label = "Volume keys";
@@ -74,7 +80,11 @@
 		};
 		rmtfs_upper_guard: memory@f5d01000 {
 			no-map;
+<<<<<<< HEAD
 			reg = <0 0xf5d01000 0 0x1000>;
+=======
+			reg = <0 0xf5d01000 0 0x2000>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		/*
@@ -83,7 +93,11 @@
 		 */
 		removed_region: memory@88f00000 {
 			no-map;
+<<<<<<< HEAD
 			reg = <0 0x88f00000 0 0x1c00000>;
+=======
+			reg = <0 0x88f00000 0 0x200000>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		ramoops: ramoops@ac300000 {
@@ -408,7 +422,10 @@
 	status = "okay";
 
 	memory-region = <&ipa_fw_mem>;
+<<<<<<< HEAD
 	firmware-name = "qcom/sdm845/oneplus6/ipa_fws.mbn";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &mdss {
@@ -532,11 +549,14 @@
 	};
 };
 
+<<<<<<< HEAD
 &uart9 {
 	label = "LS-UART1";
 	status = "okay";
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &ufs_mem_hc {
 	status = "okay";
 

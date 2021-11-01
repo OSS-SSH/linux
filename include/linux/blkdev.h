@@ -11,12 +11,20 @@
 #include <linux/minmax.h>
 #include <linux/timer.h>
 #include <linux/workqueue.h>
+<<<<<<< HEAD
+=======
+#include <linux/backing-dev-defs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/wait.h>
 #include <linux/mempool.h>
 #include <linux/pfn.h>
 #include <linux/bio.h>
 #include <linux/stringify.h>
 #include <linux/gfp.h>
+<<<<<<< HEAD
+=======
+#include <linux/bsg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/smp.h>
 #include <linux/rcupdate.h>
 #include <linux/percpu-refcount.h>
@@ -26,11 +34,20 @@
 #include <linux/sbitmap.h>
 
 struct module;
+<<<<<<< HEAD
+=======
+struct scsi_ioctl_command;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct request_queue;
 struct elevator_queue;
 struct blk_trace;
 struct request;
 struct sg_io_hdr;
+<<<<<<< HEAD
+=======
+struct bsg_job;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct blkcg_gq;
 struct blk_flush_queue;
 struct pr_ops;
@@ -52,7 +69,11 @@ struct blk_keyslot_manager;
  * Maximum number of blkcg policies allowed to be registered concurrently.
  * Defined here to simplify include dependency.
  */
+<<<<<<< HEAD
 #define BLKCG_MAX_POLS		6
+=======
+#define BLKCG_MAX_POLS		5
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 typedef void (rq_end_io_fn)(struct request *, blk_status_t);
 
@@ -270,6 +291,12 @@ enum blk_queue_state {
 #define BLK_TAG_ALLOC_FIFO 0 /* allocate starting from 0 */
 #define BLK_TAG_ALLOC_RR 1 /* allocate starting from last allocated tag */
 
+<<<<<<< HEAD
+=======
+#define BLK_SCSI_MAX_CMDS	(256)
+#define BLK_SCSI_CMD_PER_LONG	(BLK_SCSI_MAX_CMDS / (sizeof(long) * 8))
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Zoned block device models (zoned limit).
  *
@@ -390,6 +417,11 @@ struct request_queue {
 	struct blk_mq_hw_ctx	**queue_hw_ctx;
 	unsigned int		nr_hw_queues;
 
+<<<<<<< HEAD
+=======
+	struct backing_dev_info	*backing_dev_info;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * The queue owner gets to use this for whatever they like.
 	 * ll_rw_blk doesn't touch it.
@@ -414,8 +446,11 @@ struct request_queue {
 
 	spinlock_t		queue_lock;
 
+<<<<<<< HEAD
 	struct gendisk		*disk;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * queue kobject
 	 */
@@ -498,6 +533,14 @@ struct request_queue {
 	unsigned int		max_active_zones;
 #endif /* CONFIG_BLK_DEV_ZONED */
 
+<<<<<<< HEAD
+=======
+	/*
+	 * sg stuff
+	 */
+	unsigned int		sg_timeout;
+	unsigned int		sg_reserved_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int			node;
 	struct mutex		debugfs_mutex;
 #ifdef CONFIG_BLK_DEV_IO_TRACE
@@ -524,6 +567,13 @@ struct request_queue {
 
 	int			mq_freeze_depth;
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_BLK_DEV_BSG)
+	struct bsg_class_device bsg_dev;
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_BLK_DEV_THROTTLING
 	/* Throttle data */
 	struct throtl_data *td;
@@ -647,6 +697,11 @@ extern void blk_clear_pm_only(struct request_queue *q);
 	dma_map_page_attrs(dev, (bv)->bv_page, (bv)->bv_offset, (bv)->bv_len, \
 	(dir), (attrs))
 
+<<<<<<< HEAD
+=======
+#define queue_to_disk(q)	(dev_to_disk(kobj_to_dev((q)->kobj.parent)))
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool queue_is_mq(struct request_queue *q)
 {
 	return q->mq_ops;
@@ -869,6 +924,19 @@ extern blk_status_t blk_insert_cloned_request(struct request_queue *q,
 				     struct request *rq);
 int blk_rq_append_bio(struct request *rq, struct bio *bio);
 extern void blk_queue_split(struct bio **);
+<<<<<<< HEAD
+=======
+extern int scsi_verify_blk_ioctl(struct block_device *, unsigned int);
+extern int scsi_cmd_blk_ioctl(struct block_device *, fmode_t,
+			      unsigned int, void __user *);
+extern int scsi_cmd_ioctl(struct request_queue *, struct gendisk *, fmode_t,
+			  unsigned int, void __user *);
+extern int sg_scsi_ioctl(struct request_queue *, struct gendisk *, fmode_t,
+			 struct scsi_ioctl_command __user *);
+extern int get_sg_io_hdr(struct sg_io_hdr *hdr, const void __user *argp);
+extern int put_sg_io_hdr(const struct sg_io_hdr *hdr, void __user *argp);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern int blk_queue_enter(struct request_queue *q, blk_mq_req_flags_t flags);
 extern void blk_queue_exit(struct request_queue *q);
 extern void blk_sync_queue(struct request_queue *q);
@@ -912,10 +980,13 @@ static inline struct request_queue *bdev_get_queue(struct block_device *bdev)
 #define SECTOR_SIZE (1 << SECTOR_SHIFT)
 #endif
 
+<<<<<<< HEAD
 #define PAGE_SECTORS_SHIFT	(PAGE_SHIFT - SECTOR_SHIFT)
 #define PAGE_SECTORS		(1 << PAGE_SECTORS_SHIFT)
 #define SECTOR_MASK		(PAGE_SECTORS - 1)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * blk_rq_pos()			: the current sector
  * blk_rq_bytes()		: bytes left in the entire request
@@ -1114,7 +1185,11 @@ void blk_queue_zone_write_granularity(struct request_queue *q,
 				      unsigned int size);
 extern void blk_queue_alignment_offset(struct request_queue *q,
 				       unsigned int alignment);
+<<<<<<< HEAD
 void disk_update_readahead(struct gendisk *disk);
+=======
+void blk_queue_update_readahead(struct request_queue *q);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern void blk_limits_io_min(struct queue_limits *limits, unsigned int min);
 extern void blk_queue_io_min(struct request_queue *q, unsigned int min);
 extern void blk_limits_io_opt(struct queue_limits *limits, unsigned int opt);
@@ -1321,6 +1396,11 @@ static inline int sb_issue_zeroout(struct super_block *sb, sector_t block,
 				    gfp_mask, 0);
 }
 
+<<<<<<< HEAD
+=======
+extern int blk_verify_command(unsigned char *cmd, fmode_t mode);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool bdev_is_partition(struct block_device *bdev)
 {
 	return bdev->bd_partno;
@@ -1349,11 +1429,14 @@ static inline unsigned int queue_max_sectors(const struct request_queue *q)
 	return q->limits.max_sectors;
 }
 
+<<<<<<< HEAD
 static inline unsigned int queue_max_bytes(struct request_queue *q)
 {
 	return min_t(unsigned int, queue_max_sectors(q), INT_MAX >> 9) << 9;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline unsigned int queue_max_hw_sectors(const struct request_queue *q)
 {
 	return q->limits.max_hw_sectors;
@@ -1499,6 +1582,7 @@ static inline int queue_limit_discard_alignment(struct queue_limits *lim, sector
 	return offset << SECTOR_SHIFT;
 }
 
+<<<<<<< HEAD
 /*
  * Two cases of handling DISCARD merge:
  * If max_discard_segments > 1, the driver takes every bio
@@ -1515,6 +1599,8 @@ static inline bool blk_discard_mergable(struct request *req)
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int bdev_discard_alignment(struct block_device *bdev)
 {
 	struct request_queue *q = bdev_get_queue(bdev);
@@ -1849,6 +1935,7 @@ struct block_device_operations {
 	char *(*devnode)(struct gendisk *disk, umode_t *mode);
 	struct module *owner;
 	const struct pr_ops *pr_ops;
+<<<<<<< HEAD
 
 	/*
 	 * Special callback for probing GPT entry at a given sector.
@@ -1856,6 +1943,8 @@ struct block_device_operations {
 	 * driver.
 	 */
 	int (*alternative_gpt_sector)(struct gendisk *disk, sector_t *sector);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #ifdef CONFIG_COMPAT
@@ -1985,6 +2074,11 @@ void blkdev_put_no_open(struct block_device *bdev);
 struct block_device *bdev_alloc(struct gendisk *disk, u8 partno);
 void bdev_add(struct block_device *bdev, dev_t dev);
 struct block_device *I_BDEV(struct inode *inode);
+<<<<<<< HEAD
+=======
+struct block_device *bdgrab(struct block_device *bdev);
+void bdput(struct block_device *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int truncate_bdev_range(struct block_device *bdev, fmode_t mode, loff_t lstart,
 		loff_t lend);
 

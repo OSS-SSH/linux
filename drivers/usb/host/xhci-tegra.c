@@ -1787,6 +1787,10 @@ static int tegra_xusb_remove(struct platform_device *pdev)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+#if IS_ENABLED(CONFIG_PM) || IS_ENABLED(CONFIG_PM_SLEEP)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool xhci_hub_ports_suspended(struct xhci_hub *hub)
 {
 	struct device *dev = hub->hcd->self.controller;
@@ -2101,7 +2105,11 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 static __maybe_unused int tegra_xusb_suspend(struct device *dev)
+=======
+static int tegra_xusb_suspend(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int err;
@@ -2143,7 +2151,11 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 static __maybe_unused int tegra_xusb_resume(struct device *dev)
+=======
+static int tegra_xusb_resume(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int err;
@@ -2173,8 +2185,15 @@ static __maybe_unused int tegra_xusb_resume(struct device *dev)
 
 	return 0;
 }
+<<<<<<< HEAD
 
 static __maybe_unused int tegra_xusb_runtime_suspend(struct device *dev)
+=======
+#endif
+
+#ifdef CONFIG_PM
+static int tegra_xusb_runtime_suspend(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int ret;
@@ -2187,7 +2206,11 @@ static __maybe_unused int tegra_xusb_runtime_suspend(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static __maybe_unused int tegra_xusb_runtime_resume(struct device *dev)
+=======
+static int tegra_xusb_runtime_resume(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tegra_xusb *tegra = dev_get_drvdata(dev);
 	int err;
@@ -2198,6 +2221,10 @@ static __maybe_unused int tegra_xusb_runtime_resume(struct device *dev)
 
 	return err;
 }
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct dev_pm_ops tegra_xusb_pm_ops = {
 	SET_RUNTIME_PM_OPS(tegra_xusb_runtime_suspend,

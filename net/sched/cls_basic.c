@@ -145,12 +145,20 @@ static const struct nla_policy basic_policy[TCA_BASIC_MAX + 1] = {
 static int basic_set_parms(struct net *net, struct tcf_proto *tp,
 			   struct basic_filter *f, unsigned long base,
 			   struct nlattr **tb,
+<<<<<<< HEAD
 			   struct nlattr *est, u32 flags,
+=======
+			   struct nlattr *est, bool ovr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   struct netlink_ext_ack *extack)
 {
 	int err;
 
+<<<<<<< HEAD
 	err = tcf_exts_validate(net, tp, tb, est, &f->exts, flags, extack);
+=======
+	err = tcf_exts_validate(net, tp, tb, est, &f->exts, ovr, true, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -169,8 +177,13 @@ static int basic_set_parms(struct net *net, struct tcf_proto *tp,
 
 static int basic_change(struct net *net, struct sk_buff *in_skb,
 			struct tcf_proto *tp, unsigned long base, u32 handle,
+<<<<<<< HEAD
 			struct nlattr **tca, void **arg,
 			u32 flags, struct netlink_ext_ack *extack)
+=======
+			struct nlattr **tca, void **arg, bool ovr,
+			bool rtnl_held, struct netlink_ext_ack *extack)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err;
 	struct basic_head *head = rtnl_dereference(tp->root);
@@ -216,7 +229,11 @@ static int basic_change(struct net *net, struct sk_buff *in_skb,
 		goto errout;
 	}
 
+<<<<<<< HEAD
 	err = basic_set_parms(net, tp, fnew, base, tb, tca[TCA_RATE], flags,
+=======
+	err = basic_set_parms(net, tp, fnew, base, tb, tca[TCA_RATE], ovr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			      extack);
 	if (err < 0) {
 		if (!fold)

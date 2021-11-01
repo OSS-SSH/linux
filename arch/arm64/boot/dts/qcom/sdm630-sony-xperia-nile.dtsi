@@ -1,10 +1,19 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
+<<<<<<< HEAD
  * Copyright (c) 2020, Konrad Dybcio <konrad.dybcio@somainline.org>
  * Copyright (c) 2020, AngeloGioacchino Del Regno
  *                     <angelogioacchino.delregno@somainline.org>
  */
 
+=======
+ * Copyright (c) 2020, Konrad Dybcio
+ */
+
+/dts-v1/;
+
+#include "sdm630.dtsi"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "pm660.dtsi"
 #include "pm660l.dtsi"
 #include <dt-bindings/gpio/gpio.h>
@@ -38,6 +47,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	board_vbat: vbat-regulator {
 		compatible = "regulator-fixed";
 		regulator-name = "VBAT";
@@ -87,12 +97,18 @@
 		pinctrl-0 = <&imx300_vana_default>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	gpio_keys {
 		status = "okay";
 		compatible = "gpio-keys";
 		input-name = "gpio-keys";
 		#address-cells = <1>;
 		#size-cells = <0>;
+<<<<<<< HEAD
+=======
+		autorepeat;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		camera_focus {
 			label = "Camera Focus";
@@ -147,6 +163,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	/*
 	 * Until we hook up type-c detection, we
 	 * have to stick with this. But it works.
@@ -615,3 +632,39 @@
 	dr_mode = "peripheral";
 	extcon = <&extcon_usb>;
 };
+=======
+	soc {
+		sdhci@c0c4000 {
+			status = "okay";
+
+			mmc-ddr-1_8v;
+			/* SoMC Nile platform's eMMC doesn't support HS200 mode */
+			mmc-hs400-1_8v;
+		};
+
+		i2c@c175000 {
+			status = "okay";
+
+			/* Synaptics touchscreen */
+		};
+
+		i2c@c176000 {
+			status = "okay";
+
+			/* SMB1351 charger */
+		};
+
+		serial@c1af000 {
+			status = "okay";
+		};
+
+		/* I2C3, 4, 5, 7 and 8 are disabled on this board. */
+
+		i2c@c1b6000 {
+			status = "okay";
+
+			/* NXP NFC */
+		};
+	};
+};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -453,11 +453,14 @@ static __always_inline void __irq_timings_store(int irq, struct irqt_stat *irqs,
 	 */
 	index = irq_timings_interval_index(interval);
 
+<<<<<<< HEAD
 	if (index > PREDICTION_BUFFER_SIZE - 1) {
 		irqs->count = 0;
 		return;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Store the index as an element of the pattern in another
 	 * circular array.
@@ -799,14 +802,20 @@ static int __init irq_timings_test_irqs(struct timings_intervals *ti)
 
 		__irq_timings_store(irq, irqs, ti->intervals[i]);
 		if (irqs->circ_timings[i & IRQ_TIMINGS_MASK] != index) {
+<<<<<<< HEAD
 			ret = -EBADSLT;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pr_err("Failed to store in the circular buffer\n");
 			goto out;
 		}
 	}
 
 	if (irqs->count != ti->count) {
+<<<<<<< HEAD
 		ret = -ERANGE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pr_err("Count differs\n");
 		goto out;
 	}

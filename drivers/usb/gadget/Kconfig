@@ -450,7 +450,10 @@ config USB_CONFIGFS_F_UVC
 	depends on USB_CONFIGFS
 	depends on VIDEO_V4L2
 	depends on VIDEO_DEV
+<<<<<<< HEAD
 	select VIDEOBUF2_DMA_SG
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select VIDEOBUF2_VMALLOC
 	select USB_F_UVC
 	help

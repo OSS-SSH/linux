@@ -23,6 +23,10 @@
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_file.h>
 #include <drm/drm_ioctl.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_pciids.h>
 #include <drm/drm_vblank.h>
 
@@ -32,7 +36,10 @@
 #include "power.h"
 #include "psb_drv.h"
 #include "psb_intel_reg.h"
+<<<<<<< HEAD
 #include "psb_irq.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "psb_reg.h"
 
 static const struct drm_driver driver;
@@ -380,7 +387,11 @@ static int psb_driver_load(struct drm_device *dev, unsigned long flags)
 	PSB_WVDC32(0xFFFFFFFF, PSB_INT_MASK_R);
 	spin_unlock_irqrestore(&dev_priv->irqmask_lock, irqflags);
 
+<<<<<<< HEAD
 	psb_irq_install(dev, pdev->irq);
+=======
+	drm_irq_install(dev, pdev->irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev->max_vblank_count = 0xffffff; /* only 24 bits of frame count */
 
@@ -515,6 +526,13 @@ static const struct drm_driver driver = {
 	.lastclose = drm_fb_helper_lastclose,
 
 	.num_ioctls = ARRAY_SIZE(psb_ioctls),
+<<<<<<< HEAD
+=======
+	.irq_preinstall = psb_irq_preinstall,
+	.irq_postinstall = psb_irq_postinstall,
+	.irq_uninstall = psb_irq_uninstall,
+	.irq_handler = psb_irq_handler,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	.dumb_create = psb_gem_dumb_create,
 	.ioctls = psb_ioctls,

@@ -1,12 +1,18 @@
 #!/bin/sh
 # SPDX-License-Identifier: GPL-2.0
 
+<<<<<<< HEAD
 # Kselftest framework requirement - SKIP code is 4.
 ksft_skip=4
 
 if [ $(id -u) != 0 ]; then
 	echo $msg must be run as root >&2
 	exit $ksft_skip
+=======
+if [ $(id -u) != 0 ]; then
+	echo $msg must be run as root >&2
+	exit 0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 fi
 
 ret=0

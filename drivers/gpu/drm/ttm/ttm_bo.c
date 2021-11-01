@@ -102,9 +102,12 @@ void ttm_bo_move_to_lru_tail(struct ttm_buffer_object *bo,
 		return;
 	}
 
+<<<<<<< HEAD
 	if (!mem)
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	man = ttm_manager_type(bdev, mem->mem_type);
 	list_move_tail(&bo->lru, &man->lru[bo->priority]);
 
@@ -488,6 +491,7 @@ void ttm_bo_unlock_delayed_workqueue(struct ttm_device *bdev, int resched)
 }
 EXPORT_SYMBOL(ttm_bo_unlock_delayed_workqueue);
 
+<<<<<<< HEAD
 static int ttm_bo_bounce_temp_buffer(struct ttm_buffer_object *bo,
 				     struct ttm_resource **mem,
 				     struct ttm_operation_ctx *ctx,
@@ -513,6 +517,8 @@ static int ttm_bo_bounce_temp_buffer(struct ttm_buffer_object *bo,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ttm_bo_evict(struct ttm_buffer_object *bo,
 			struct ttm_operation_ctx *ctx)
 {
@@ -552,6 +558,7 @@ static int ttm_bo_evict(struct ttm_buffer_object *bo,
 		goto out;
 	}
 
+<<<<<<< HEAD
 bounce:
 	ret = ttm_bo_handle_move_mem(bo, evict_mem, true, ctx, &hop);
 	if (ret == -EMULTIHOP) {
@@ -563,6 +570,14 @@ bounce:
 		}
 		/* try and move to final place now. */
 		goto bounce;
+=======
+	ret = ttm_bo_handle_move_mem(bo, evict_mem, true, ctx, &hop);
+	if (unlikely(ret)) {
+		WARN(ret == -EMULTIHOP, "Unexpected multihop in eviction - likely driver bug\n");
+		if (ret != -ERESTARTSYS)
+			pr_err("Buffer eviction failed\n");
+		ttm_resource_free(bo, &evict_mem);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 out:
 	return ret;
@@ -877,6 +892,34 @@ error:
 }
 EXPORT_SYMBOL(ttm_bo_mem_space);
 
+<<<<<<< HEAD
+=======
+static int ttm_bo_bounce_temp_buffer(struct ttm_buffer_object *bo,
+				     struct ttm_resource **mem,
+				     struct ttm_operation_ctx *ctx,
+				     struct ttm_place *hop)
+{
+	struct ttm_placement hop_placement;
+	struct ttm_resource *hop_mem;
+	int ret;
+
+	hop_placement.num_placement = hop_placement.num_busy_placement = 1;
+	hop_placement.placement = hop_placement.busy_placement = hop;
+
+	/* find space in the bounce domain */
+	ret = ttm_bo_mem_space(bo, &hop_placement, &hop_mem, ctx);
+	if (ret)
+		return ret;
+	/* move to the bounce domain */
+	ret = ttm_bo_handle_move_mem(bo, hop_mem, false, ctx, NULL);
+	if (ret) {
+		ttm_resource_free(bo, &hop_mem);
+		return ret;
+	}
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ttm_bo_move_buffer(struct ttm_buffer_object *bo,
 			      struct ttm_placement *placement,
 			      struct ttm_operation_ctx *ctx)
@@ -921,9 +964,12 @@ static bool ttm_bo_places_compat(const struct ttm_place *places,
 {
 	unsigned i;
 
+<<<<<<< HEAD
 	if (mem->placement & TTM_PL_FLAG_TEMPORARY)
 		return false;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < num_placement; i++) {
 		const struct ttm_place *heap = &places[i];
 
@@ -1160,9 +1206,15 @@ int ttm_bo_swapout(struct ttm_buffer_object *bo, struct ttm_operation_ctx *ctx,
 	}
 
 	if (bo->deleted) {
+<<<<<<< HEAD
 		ret = ttm_bo_cleanup_refs(bo, false, false, locked);
 		ttm_bo_put(bo);
 		return ret == -EBUSY ? -ENOSPC : ret;
+=======
+		ttm_bo_cleanup_refs(bo, false, false, locked);
+		ttm_bo_put(bo);
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ttm_bo_del_from_lru(bo);
@@ -1216,7 +1268,11 @@ out:
 	if (locked)
 		dma_resv_unlock(bo->base.resv);
 	ttm_bo_put(bo);
+<<<<<<< HEAD
 	return ret == -EBUSY ? -ENOSPC : ret;
+=======
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void ttm_bo_tt_destroy(struct ttm_buffer_object *bo)

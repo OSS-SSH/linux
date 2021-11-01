@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
  * Device Tree Source for the Ebisu board with R-Car E3
+=======
+ * Device Tree Source for the ebisu board
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (C) 2018 Renesas Electronics Corp.
  */
@@ -8,7 +12,10 @@
 /dts-v1/;
 #include "r8a77990.dtsi"
 #include <dt-bindings/gpio/gpio.h>
+<<<<<<< HEAD
 #include <dt-bindings/input/input.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 / {
 	model = "Renesas Ebisu board based on r8a77990";
@@ -81,6 +88,7 @@
 		};
 	};
 
+<<<<<<< HEAD
 	keys {
 		compatible = "gpio-keys";
 
@@ -117,6 +125,8 @@
 		};
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lvds-decoder {
 		compatible = "thine,thc63lvd1024";
 		vcc-supply = <&reg_3p3v>;
@@ -510,12 +520,15 @@
 		rohm,ddr-backup-power = <0x1>;
 		rohm,rstbmode-level;
 	};
+<<<<<<< HEAD
 
 	eeprom@50 {
 		compatible = "rohm,br24t01", "atmel,24c01";
 		reg = <0x50>;
 		pagesize = <8>;
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &lvds0 {
@@ -583,11 +596,14 @@
 		function = "intc_ex";
 	};
 
+<<<<<<< HEAD
 	keys_pins: keys {
 		pins = "GP_5_10", "GP_5_11", "GP_5_12", "GP_5_13";
 		bias-pull-up;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pwm3_pins: pwm3 {
 		groups = "pwm3_b";
 		function = "pwm3";

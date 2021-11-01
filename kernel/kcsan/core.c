@@ -20,9 +20,15 @@
 #include <linux/sched.h>
 #include <linux/uaccess.h>
 
+<<<<<<< HEAD
 #include "encoding.h"
 #include "kcsan.h"
 #include "permissive.h"
+=======
+#include "atomic.h"
+#include "encoding.h"
+#include "kcsan.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static bool kcsan_early_enable = IS_ENABLED(CONFIG_KCSAN_EARLY_ENABLE);
 unsigned int kcsan_udelay_task = CONFIG_KCSAN_UDELAY_TASK;
@@ -301,9 +307,15 @@ static inline void reset_kcsan_skip(void)
 	this_cpu_write(kcsan_skip, skip_count);
 }
 
+<<<<<<< HEAD
 static __always_inline bool kcsan_is_enabled(struct kcsan_ctx *ctx)
 {
 	return READ_ONCE(kcsan_enabled) && !ctx->disable_count;
+=======
+static __always_inline bool kcsan_is_enabled(void)
+{
+	return READ_ONCE(kcsan_enabled) && get_ctx()->disable_count == 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Introduce delay depending on context and configuration. */
@@ -353,6 +365,7 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 					    atomic_long_t *watchpoint,
 					    long encoded_watchpoint)
 {
+<<<<<<< HEAD
 	const bool is_assert = (type & KCSAN_ACCESS_ASSERT) != 0;
 	struct kcsan_ctx *ctx = get_ctx();
 	unsigned long flags;
@@ -365,6 +378,12 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 	 */
 
 	if (!kcsan_is_enabled(ctx))
+=======
+	unsigned long flags;
+	bool consumed;
+
+	if (!kcsan_is_enabled())
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	/*
@@ -372,6 +391,7 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 	 * reporting a race where e.g. the writer set up the watchpoint, but the
 	 * reader has access_mask!=0, we have to ignore the found watchpoint.
 	 */
+<<<<<<< HEAD
 	if (ctx->access_mask)
 		return;
 
@@ -388,6 +408,16 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 	/*
 	 * Consuming the watchpoint must be guarded by kcsan_is_enabled() to
 	 * avoid erroneously triggering reports if the context is disabled.
+=======
+	if (get_ctx()->access_mask != 0)
+		return;
+
+	/*
+	 * Consume the watchpoint as soon as possible, to minimize the chances
+	 * of !consumed. Consuming the watchpoint must always be guarded by
+	 * kcsan_is_enabled() check, as otherwise we might erroneously
+	 * triggering reports when disabled.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	consumed = try_consume_watchpoint(watchpoint, encoded_watchpoint);
 
@@ -407,7 +437,11 @@ static noinline void kcsan_found_watchpoint(const volatile void *ptr,
 		atomic_long_inc(&kcsan_counters[KCSAN_COUNTER_REPORT_RACES]);
 	}
 
+<<<<<<< HEAD
 	if (is_assert)
+=======
+	if ((type & KCSAN_ACCESS_ASSERT) != 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		atomic_long_inc(&kcsan_counters[KCSAN_COUNTER_ASSERT_FAILURES]);
 	else
 		atomic_long_inc(&kcsan_counters[KCSAN_COUNTER_DATA_RACES]);
@@ -425,7 +459,10 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	unsigned long access_mask;
 	enum kcsan_value_change value_change = KCSAN_VALUE_CHANGE_MAYBE;
 	unsigned long ua_flags = user_access_save();
+<<<<<<< HEAD
 	struct kcsan_ctx *ctx = get_ctx();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long irq_flags = 0;
 
 	/*
@@ -434,6 +471,7 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	 */
 	reset_kcsan_skip();
 
+<<<<<<< HEAD
 	if (!kcsan_is_enabled(ctx))
 		goto out;
 
@@ -442,6 +480,18 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	 * memory that is not yet initialized during early boot.
 	 */
 	if (!is_assert && kcsan_ignore_address(ptr))
+=======
+	if (!kcsan_is_enabled())
+		goto out;
+
+	/*
+	 * Special atomic rules: unlikely to be true, so we check them here in
+	 * the slow-path, and not in the fast-path in is_atomic(). Call after
+	 * kcsan_is_enabled(), as we may access memory that is not yet
+	 * initialized during early boot.
+	 */
+	if (!is_assert && kcsan_is_atomic_special(ptr))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 
 	if (!check_encodable((unsigned long)ptr, size)) {
@@ -494,6 +544,18 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 		break; /* ignore; we do not diff the values */
 	}
 
+<<<<<<< HEAD
+=======
+	if (IS_ENABLED(CONFIG_KCSAN_DEBUG)) {
+		kcsan_disable_current();
+		pr_err("watching %s, size: %zu, addr: %px [slot: %d, encoded: %lx]\n",
+		       is_write ? "write" : "read", size, ptr,
+		       watchpoint_slot((unsigned long)ptr),
+		       encode_watchpoint((unsigned long)ptr, size, is_write));
+		kcsan_enable_current();
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Delay this thread, to increase probability of observing a racy
 	 * conflicting access.
@@ -504,7 +566,11 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	 * Re-read value, and check if it is as expected; if not, we infer a
 	 * racy access.
 	 */
+<<<<<<< HEAD
 	access_mask = ctx->access_mask;
+=======
+	access_mask = get_ctx()->access_mask;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	new = 0;
 	switch (size) {
 	case 1:
@@ -527,6 +593,7 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	if (access_mask)
 		diff &= access_mask;
 
+<<<<<<< HEAD
 	/*
 	 * Check if we observed a value change.
 	 *
@@ -535,6 +602,10 @@ kcsan_setup_watchpoint(const volatile void *ptr, size_t size, int type)
 	 * KCSAN_VALUE_CHANGE_MAYBE apply.
 	 */
 	if (diff && !kcsan_ignore_data_race(size, type, old, new, diff))
+=======
+	/* Were we able to observe a value-change? */
+	if (diff != 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		value_change = KCSAN_VALUE_CHANGE_TRUE;
 
 	/* Check if this access raced with another. */
@@ -656,6 +727,7 @@ void __init kcsan_init(void)
 		pr_info("enabled early\n");
 		WRITE_ONCE(kcsan_enabled, true);
 	}
+<<<<<<< HEAD
 
 	if (IS_ENABLED(CONFIG_KCSAN_REPORT_VALUE_CHANGE_ONLY) ||
 	    IS_ENABLED(CONFIG_KCSAN_ASSUME_PLAIN_WRITES_ATOMIC) ||
@@ -665,6 +737,8 @@ void __init kcsan_init(void)
 	} else {
 		pr_info("strict mode configured\n");
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* === Exported interface =================================================== */

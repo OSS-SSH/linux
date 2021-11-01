@@ -225,10 +225,15 @@ static int machxo2_write_init(struct fpga_manager *mgr,
 		goto fail;
 
 	get_status(spi, &status);
+<<<<<<< HEAD
 	if (test_bit(FAIL, &status)) {
 		ret = -EINVAL;
 		goto fail;
 	}
+=======
+	if (test_bit(FAIL, &status))
+		goto fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dump_status_reg(&status);
 
 	spi_message_init(&msg);
@@ -315,7 +320,10 @@ static int machxo2_write_complete(struct fpga_manager *mgr,
 	dump_status_reg(&status);
 	if (!test_bit(DONE, &status)) {
 		machxo2_cleanup(mgr);
+<<<<<<< HEAD
 		ret = -EINVAL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fail;
 	}
 
@@ -338,7 +346,10 @@ static int machxo2_write_complete(struct fpga_manager *mgr,
 			break;
 		if (++refreshloop == MACHXO2_MAX_REFRESH_LOOP) {
 			machxo2_cleanup(mgr);
+<<<<<<< HEAD
 			ret = -EINVAL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto fail;
 		}
 	} while (1);

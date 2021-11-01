@@ -295,8 +295,15 @@ again:
 
 		goto again;
 	}
+<<<<<<< HEAD
 	err = nlmsg_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid);
 
+=======
+	err = netlink_unicast(net->diag_nlsk, rep, NETLINK_CB(in_skb).portid,
+			      MSG_DONTWAIT);
+	if (err > 0)
+		err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	if (sk)
 		sock_put(sk);

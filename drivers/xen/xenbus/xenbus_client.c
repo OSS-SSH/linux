@@ -542,7 +542,12 @@ static int __xenbus_map_ring(struct xenbus_device *dev,
 		}
 	}
 
+<<<<<<< HEAD
 	BUG_ON(HYPERVISOR_grant_table_op(GNTTABOP_unmap_grant_ref, info->unmap, j));
+=======
+	if (HYPERVISOR_grant_table_op(GNTTABOP_unmap_grant_ref, info->unmap, j))
+		BUG();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*leaked = false;
 	for (i = 0; i < j; i++) {
@@ -580,7 +585,12 @@ static int xenbus_unmap_ring(struct xenbus_device *dev, grant_handle_t *handles,
 		gnttab_set_unmap_op(&unmap[i], vaddrs[i],
 				    GNTMAP_host_map, handles[i]);
 
+<<<<<<< HEAD
 	BUG_ON(HYPERVISOR_grant_table_op(GNTTABOP_unmap_grant_ref, unmap, i));
+=======
+	if (HYPERVISOR_grant_table_op(GNTTABOP_unmap_grant_ref, unmap, i))
+		BUG();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = GNTST_okay;
 	for (i = 0; i < nr_handles; i++) {
@@ -776,7 +786,12 @@ static int xenbus_unmap_ring_pv(struct xenbus_device *dev, void *vaddr)
 		unmap[i].handle = node->handles[i];
 	}
 
+<<<<<<< HEAD
 	BUG_ON(HYPERVISOR_grant_table_op(GNTTABOP_unmap_grant_ref, unmap, i));
+=======
+	if (HYPERVISOR_grant_table_op(GNTTABOP_unmap_grant_ref, unmap, i))
+		BUG();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = GNTST_okay;
 	leaked = false;

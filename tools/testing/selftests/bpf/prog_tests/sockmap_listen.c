@@ -351,11 +351,17 @@ static void test_insert_opened(int family, int sotype, int mapfd)
 	errno = 0;
 	value = s;
 	err = bpf_map_update_elem(mapfd, &key, &value, BPF_NOEXIST);
+<<<<<<< HEAD
 	if (sotype == SOCK_STREAM) {
 		if (!err || errno != EOPNOTSUPP)
 			FAIL_ERRNO("map_update: expected EOPNOTSUPP");
 	} else if (err)
 		FAIL_ERRNO("map_update: expected success");
+=======
+	if (!err || errno != EOPNOTSUPP)
+		FAIL_ERRNO("map_update: expected EOPNOTSUPP");
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xclose(s);
 }
 
@@ -921,6 +927,7 @@ static const char *redir_mode_str(enum redir_mode mode)
 	}
 }
 
+<<<<<<< HEAD
 static int add_to_sockmap(int sock_mapfd, int fd1, int fd2)
 {
 	u64 value;
@@ -938,6 +945,8 @@ static int add_to_sockmap(int sock_mapfd, int fd1, int fd2)
 	return xbpf_map_update_elem(sock_mapfd, &key, &value, BPF_NOEXIST);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void redir_to_connected(int family, int sotype, int sock_mapfd,
 			       int verd_mapfd, enum redir_mode mode)
 {
@@ -947,9 +956,15 @@ static void redir_to_connected(int family, int sotype, int sock_mapfd,
 	unsigned int pass;
 	socklen_t len;
 	int err, n;
+<<<<<<< HEAD
 	u32 key;
 	char b;
 	int retries = 100;
+=======
+	u64 value;
+	u32 key;
+	char b;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	zero_verdict_count(verd_mapfd);
 
@@ -984,7 +999,19 @@ static void redir_to_connected(int family, int sotype, int sock_mapfd,
 	if (p1 < 0)
 		goto close_cli1;
 
+<<<<<<< HEAD
 	err = add_to_sockmap(sock_mapfd, p0, p1);
+=======
+	key = 0;
+	value = p0;
+	err = xbpf_map_update_elem(sock_mapfd, &key, &value, BPF_NOEXIST);
+	if (err)
+		goto close_peer1;
+
+	key = 1;
+	value = p1;
+	err = xbpf_map_update_elem(sock_mapfd, &key, &value, BPF_NOEXIST);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto close_peer1;
 
@@ -1002,6 +1029,7 @@ static void redir_to_connected(int family, int sotype, int sock_mapfd,
 		goto close_peer1;
 	if (pass != 1)
 		FAIL("%s: want pass count 1, have %d", log_prefix, pass);
+<<<<<<< HEAD
 again:
 	n = read(c0, &b, 1);
 	if (n < 0) {
@@ -1011,6 +1039,12 @@ again:
 		}
 		FAIL_ERRNO("%s: read", log_prefix);
 	}
+=======
+
+	n = read(c0, &b, 1);
+	if (n < 0)
+		FAIL_ERRNO("%s: read", log_prefix);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (n == 0)
 		FAIL("%s: incomplete read", log_prefix);
 
@@ -1077,6 +1111,10 @@ static void redir_to_listening(int family, int sotype, int sock_mapfd,
 	int s, c, p, err, n;
 	unsigned int drop;
 	socklen_t len;
+<<<<<<< HEAD
+=======
+	u64 value;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 key;
 
 	zero_verdict_count(verd_mapfd);
@@ -1101,7 +1139,19 @@ static void redir_to_listening(int family, int sotype, int sock_mapfd,
 	if (p < 0)
 		goto close_cli;
 
+<<<<<<< HEAD
 	err = add_to_sockmap(sock_mapfd, s, p);
+=======
+	key = 0;
+	value = s;
+	err = xbpf_map_update_elem(sock_mapfd, &key, &value, BPF_NOEXIST);
+	if (err)
+		goto close_peer;
+
+	key = 1;
+	value = p;
+	err = xbpf_map_update_elem(sock_mapfd, &key, &value, BPF_NOEXIST);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto close_peer;
 
@@ -1353,6 +1403,10 @@ static void test_reuseport_mixed_groups(int family, int sotype, int sock_map,
 	int s1, s2, c, err;
 	unsigned int drop;
 	socklen_t len;
+<<<<<<< HEAD
+=======
+	u64 value;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 key;
 
 	zero_verdict_count(verd_map);
@@ -1366,10 +1420,23 @@ static void test_reuseport_mixed_groups(int family, int sotype, int sock_map,
 	if (s2 < 0)
 		goto close_srv1;
 
+<<<<<<< HEAD
 	err = add_to_sockmap(sock_map, s1, s2);
 	if (err)
 		goto close_srv2;
 
+=======
+	key = 0;
+	value = s1;
+	err = xbpf_map_update_elem(sock_map, &key, &value, BPF_NOEXIST);
+	if (err)
+		goto close_srv2;
+
+	key = 1;
+	value = s2;
+	err = xbpf_map_update_elem(sock_map, &key, &value, BPF_NOEXIST);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Connect to s2, reuseport BPF selects s1 via sock_map[0] */
 	len = sizeof(addr);
 	err = xgetsockname(s2, sockaddr(&addr), &len);
@@ -1441,8 +1508,11 @@ static const char *family_str(sa_family_t family)
 		return "IPv4";
 	case AF_INET6:
 		return "IPv6";
+<<<<<<< HEAD
 	case AF_UNIX:
 		return "Unix";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return "unknown";
 	}
@@ -1565,6 +1635,7 @@ static void test_redir(struct test_sockmap_listen *skel, struct bpf_map *map,
 	}
 }
 
+<<<<<<< HEAD
 static void unix_redir_to_connected(int sotype, int sock_mapfd,
 			       int verd_mapfd, enum redir_mode mode)
 {
@@ -1660,6 +1731,8 @@ static void test_unix_redir(struct test_sockmap_listen *skel, struct bpf_map *ma
 	unix_skb_redir_to_connected(skel, map, sotype);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void test_reuseport(struct test_sockmap_listen *skel,
 			   struct bpf_map *map, int family, int sotype)
 {
@@ -1700,6 +1773,7 @@ static void test_reuseport(struct test_sockmap_listen *skel,
 	}
 }
 
+<<<<<<< HEAD
 static int inet_socketpair(int family, int type, int *s, int *c)
 {
 	struct sockaddr_storage addr;
@@ -1711,16 +1785,43 @@ static int inet_socketpair(int family, int type, int *s, int *c)
 	if (p0 < 0)
 		return p0;
 
+=======
+static void udp_redir_to_connected(int family, int sotype, int sock_mapfd,
+				   int verd_mapfd, enum redir_mode mode)
+{
+	const char *log_prefix = redir_mode_str(mode);
+	struct sockaddr_storage addr;
+	int c0, c1, p0, p1;
+	unsigned int pass;
+	int retries = 100;
+	socklen_t len;
+	int err, n;
+	u64 value;
+	u32 key;
+	char b;
+
+	zero_verdict_count(verd_mapfd);
+
+	p0 = socket_loopback(family, sotype | SOCK_NONBLOCK);
+	if (p0 < 0)
+		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	len = sizeof(addr);
 	err = xgetsockname(p0, sockaddr(&addr), &len);
 	if (err)
 		goto close_peer0;
 
+<<<<<<< HEAD
 	c0 = xsocket(family, type | SOCK_NONBLOCK, 0);
 	if (c0 < 0) {
 		err = c0;
 		goto close_peer0;
 	}
+=======
+	c0 = xsocket(family, sotype | SOCK_NONBLOCK, 0);
+	if (c0 < 0)
+		goto close_peer0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = xconnect(c0, sockaddr(&addr), len);
 	if (err)
 		goto close_cli0;
@@ -1731,6 +1832,7 @@ static int inet_socketpair(int family, int type, int *s, int *c)
 	if (err)
 		goto close_cli0;
 
+<<<<<<< HEAD
 	*s = p0;
 	*c = c0;
 	return 0;
@@ -1858,6 +1960,37 @@ static void inet_unix_redir_to_connected(int family, int type, int sock_mapfd,
 		goto close;
 
 	err = add_to_sockmap(sock_mapfd, p0, p1);
+=======
+	p1 = socket_loopback(family, sotype | SOCK_NONBLOCK);
+	if (p1 < 0)
+		goto close_cli0;
+	err = xgetsockname(p1, sockaddr(&addr), &len);
+	if (err)
+		goto close_cli0;
+
+	c1 = xsocket(family, sotype | SOCK_NONBLOCK, 0);
+	if (c1 < 0)
+		goto close_peer1;
+	err = xconnect(c1, sockaddr(&addr), len);
+	if (err)
+		goto close_cli1;
+	err = xgetsockname(c1, sockaddr(&addr), &len);
+	if (err)
+		goto close_cli1;
+	err = xconnect(p1, sockaddr(&addr), len);
+	if (err)
+		goto close_cli1;
+
+	key = 0;
+	value = p0;
+	err = xbpf_map_update_elem(sock_mapfd, &key, &value, BPF_NOEXIST);
+	if (err)
+		goto close_cli1;
+
+	key = 1;
+	value = p1;
+	err = xbpf_map_update_elem(sock_mapfd, &key, &value, BPF_NOEXIST);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto close_cli1;
 
@@ -1879,10 +2012,15 @@ static void inet_unix_redir_to_connected(int family, int type, int sock_mapfd,
 again:
 	n = read(mode == REDIR_INGRESS ? p0 : c0, &b, 1);
 	if (n < 0) {
+<<<<<<< HEAD
 		if (errno == EAGAIN && retries--) {
 			usleep(1000);
 			goto again;
 		}
+=======
+		if (errno == EAGAIN && retries--)
+			goto again;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		FAIL_ERRNO("%s: read", log_prefix);
 	}
 	if (n == 0)
@@ -1890,6 +2028,7 @@ again:
 
 close_cli1:
 	xclose(c1);
+<<<<<<< HEAD
 	xclose(p1);
 close:
 	xclose(c0);
@@ -1986,6 +2125,18 @@ close_cli0:
 
 static void unix_inet_skb_redir_to_connected(struct test_sockmap_listen *skel,
 					    struct bpf_map *inner_map, int family)
+=======
+close_peer1:
+	xclose(p1);
+close_cli0:
+	xclose(c0);
+close_peer0:
+	xclose(p0);
+}
+
+static void udp_skb_redir_to_connected(struct test_sockmap_listen *skel,
+				       struct bpf_map *inner_map, int family)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int verdict = bpf_program__fd(skel->progs.prog_skb_verdict);
 	int verdict_map = bpf_map__fd(skel->maps.verdict_map);
@@ -1997,6 +2148,7 @@ static void unix_inet_skb_redir_to_connected(struct test_sockmap_listen *skel,
 		return;
 
 	skel->bss->test_ingress = false;
+<<<<<<< HEAD
 	unix_inet_redir_to_connected(family, SOCK_DGRAM, sock_map, verdict_map,
 				     REDIR_EGRESS);
 	unix_inet_redir_to_connected(family, SOCK_STREAM, sock_map, verdict_map,
@@ -2006,12 +2158,24 @@ static void unix_inet_skb_redir_to_connected(struct test_sockmap_listen *skel,
 				     REDIR_INGRESS);
 	unix_inet_redir_to_connected(family, SOCK_STREAM, sock_map, verdict_map,
 				     REDIR_INGRESS);
+=======
+	udp_redir_to_connected(family, SOCK_DGRAM, sock_map, verdict_map,
+			       REDIR_EGRESS);
+	skel->bss->test_ingress = true;
+	udp_redir_to_connected(family, SOCK_DGRAM, sock_map, verdict_map,
+			       REDIR_INGRESS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	xbpf_prog_detach2(verdict, sock_map, BPF_SK_SKB_VERDICT);
 }
 
+<<<<<<< HEAD
 static void test_udp_unix_redir(struct test_sockmap_listen *skel, struct bpf_map *map,
 				int family)
+=======
+static void test_udp_redir(struct test_sockmap_listen *skel, struct bpf_map *map,
+			   int family)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const char *family_name, *map_name;
 	char s[MAX_TEST_NAME];
@@ -2021,8 +2185,12 @@ static void test_udp_unix_redir(struct test_sockmap_listen *skel, struct bpf_map
 	snprintf(s, sizeof(s), "%s %s %s", map_name, family_name, __func__);
 	if (!test__start_subtest(s))
 		return;
+<<<<<<< HEAD
 	inet_unix_skb_redir_to_connected(skel, map, family);
 	unix_inet_skb_redir_to_connected(skel, map, family);
+=======
+	udp_skb_redir_to_connected(skel, map, family);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void run_tests(struct test_sockmap_listen *skel, struct bpf_map *map,
@@ -2034,7 +2202,10 @@ static void run_tests(struct test_sockmap_listen *skel, struct bpf_map *map,
 	test_reuseport(skel, map, family, SOCK_STREAM);
 	test_reuseport(skel, map, family, SOCK_DGRAM);
 	test_udp_redir(skel, map, family);
+<<<<<<< HEAD
 	test_udp_unix_redir(skel, map, family);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void test_sockmap_listen(void)
@@ -2050,14 +2221,20 @@ void test_sockmap_listen(void)
 	skel->bss->test_sockmap = true;
 	run_tests(skel, skel->maps.sock_map, AF_INET);
 	run_tests(skel, skel->maps.sock_map, AF_INET6);
+<<<<<<< HEAD
 	test_unix_redir(skel, skel->maps.sock_map, SOCK_DGRAM);
 	test_unix_redir(skel, skel->maps.sock_map, SOCK_STREAM);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	skel->bss->test_sockmap = false;
 	run_tests(skel, skel->maps.sock_hash, AF_INET);
 	run_tests(skel, skel->maps.sock_hash, AF_INET6);
+<<<<<<< HEAD
 	test_unix_redir(skel, skel->maps.sock_hash, SOCK_DGRAM);
 	test_unix_redir(skel, skel->maps.sock_hash, SOCK_STREAM);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	test_sockmap_listen__destroy(skel);
 }

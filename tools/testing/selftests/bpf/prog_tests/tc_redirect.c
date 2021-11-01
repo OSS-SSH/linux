@@ -13,6 +13,7 @@
 #define _GNU_SOURCE
 
 #include <arpa/inet.h>
+<<<<<<< HEAD
 #include <linux/if.h>
 #include <linux/if_tun.h>
 #include <linux/limits.h>
@@ -23,6 +24,17 @@
 #include <sys/mount.h>
 #include <sys/stat.h>
 #include <unistd.h>
+=======
+#include <linux/limits.h>
+#include <linux/sysctl.h>
+#include <linux/if_tun.h>
+#include <linux/if.h>
+#include <sched.h>
+#include <stdbool.h>
+#include <stdio.h>
+#include <sys/stat.h>
+#include <sys/mount.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "test_progs.h"
 #include "network_helpers.h"
@@ -392,7 +404,13 @@ done:
 
 static int test_ping(int family, const char *addr)
 {
+<<<<<<< HEAD
 	SYS("ip netns exec " NS_SRC " %s " PING_ARGS " %s > /dev/null", ping_command(family), addr);
+=======
+	const char *ping = family == AF_INET6 ? "ping6" : "ping";
+
+	SYS("ip netns exec " NS_SRC " %s " PING_ARGS " %s > /dev/null", ping, addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 fail:
 	return -1;

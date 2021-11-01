@@ -29,7 +29,11 @@ struct x25_state {
 	struct tasklet_struct rx_tasklet;
 };
 
+<<<<<<< HEAD
 static int x25_ioctl(struct net_device *dev, struct if_settings *ifs);
+=======
+static int x25_ioctl(struct net_device *dev, struct ifreq *ifr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct x25_state *state(hdlc_device *hdlc)
 {
@@ -274,14 +278,21 @@ static struct hdlc_proto proto = {
 	.module		= THIS_MODULE,
 };
 
+<<<<<<< HEAD
 static int x25_ioctl(struct net_device *dev, struct if_settings *ifs)
 {
 	x25_hdlc_proto __user *x25_s = ifs->ifs_ifsu.x25;
+=======
+static int x25_ioctl(struct net_device *dev, struct ifreq *ifr)
+{
+	x25_hdlc_proto __user *x25_s = ifr->ifr_settings.ifs_ifsu.x25;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const size_t size = sizeof(x25_hdlc_proto);
 	hdlc_device *hdlc = dev_to_hdlc(dev);
 	x25_hdlc_proto new_settings;
 	int result;
 
+<<<<<<< HEAD
 	switch (ifs->type) {
 	case IF_GET_PROTO:
 		if (dev_to_hdlc(dev)->proto != &proto)
@@ -289,6 +300,15 @@ static int x25_ioctl(struct net_device *dev, struct if_settings *ifs)
 		ifs->type = IF_PROTO_X25;
 		if (ifs->size < size) {
 			ifs->size = size; /* data size wanted */
+=======
+	switch (ifr->ifr_settings.type) {
+	case IF_GET_PROTO:
+		if (dev_to_hdlc(dev)->proto != &proto)
+			return -EINVAL;
+		ifr->ifr_settings.type = IF_PROTO_X25;
+		if (ifr->ifr_settings.size < size) {
+			ifr->ifr_settings.size = size; /* data size wanted */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENOBUFS;
 		}
 		if (copy_to_user(x25_s, &state(hdlc)->settings, size))
@@ -303,7 +323,11 @@ static int x25_ioctl(struct net_device *dev, struct if_settings *ifs)
 			return -EBUSY;
 
 		/* backward compatibility */
+<<<<<<< HEAD
 		if (ifs->size == 0) {
+=======
+		if (ifr->ifr_settings.size == 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			new_settings.dce = 0;
 			new_settings.modulo = 8;
 			new_settings.window = 7;
@@ -365,19 +389,32 @@ static int x25_ioctl(struct net_device *dev, struct if_settings *ifs)
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int __init hdlc_x25_init(void)
+=======
+static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	register_hdlc_protocol(&proto);
 	return 0;
 }
 
+<<<<<<< HEAD
 static void __exit hdlc_x25_exit(void)
+=======
+static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unregister_hdlc_protocol(&proto);
 }
 
+<<<<<<< HEAD
 module_init(hdlc_x25_init);
 module_exit(hdlc_x25_exit);
+=======
+module_init(mod_init);
+module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_AUTHOR("Krzysztof Halasa <khc@pm.waw.pl>");
 MODULE_DESCRIPTION("X.25 protocol support for generic HDLC");

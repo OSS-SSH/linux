@@ -652,6 +652,7 @@ int ext4_should_retry_alloc(struct super_block *sb, int *retries)
 	 * possible we just missed a transaction commit that did so
 	 */
 	smp_mb();
+<<<<<<< HEAD
 	if (sbi->s_mb_free_pending == 0) {
 		if (test_opt(sb, DISCARD)) {
 			atomic_inc(&sbi->s_retry_alloc_pending);
@@ -660,6 +661,10 @@ int ext4_should_retry_alloc(struct super_block *sb, int *retries)
 		}
 		return ext4_has_free_clusters(sbi, 1, 0);
 	}
+=======
+	if (sbi->s_mb_free_pending == 0)
+		return ext4_has_free_clusters(sbi, 1, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * it's possible we've just missed a transaction commit here,

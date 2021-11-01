@@ -325,7 +325,11 @@ PFX "RNG, try using the 'no_fwh_detect' option.\n";
 }
 
 
+<<<<<<< HEAD
 static int __init intel_rng_mod_init(void)
+=======
+static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err = -ENODEV;
 	int i;
@@ -403,7 +407,11 @@ out:
 
 }
 
+<<<<<<< HEAD
 static void __exit intel_rng_mod_exit(void)
+=======
+static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	void __iomem *mem = (void __iomem *)intel_rng.priv;
 
@@ -411,8 +419,13 @@ static void __exit intel_rng_mod_exit(void)
 	iounmap(mem);
 }
 
+<<<<<<< HEAD
 module_init(intel_rng_mod_init);
 module_exit(intel_rng_mod_exit);
+=======
+module_init(mod_init);
+module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_DESCRIPTION("H/W RNG driver for Intel chipsets");
 MODULE_LICENSE("GPL");

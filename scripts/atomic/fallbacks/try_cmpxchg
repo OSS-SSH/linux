@@ -1,9 +1,16 @@
 cat <<EOF
 static __always_inline bool
+<<<<<<< HEAD
 arch_${atomic}_try_cmpxchg${order}(${atomic}_t *v, ${int} *old, ${int} new)
 {
 	${int} r, o = *old;
 	r = arch_${atomic}_cmpxchg${order}(v, o, new);
+=======
+${arch}${atomic}_try_cmpxchg${order}(${atomic}_t *v, ${int} *old, ${int} new)
+{
+	${int} r, o = *old;
+	r = ${arch}${atomic}_cmpxchg${order}(v, o, new);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (unlikely(r != o))
 		*old = r;
 	return likely(r == o);

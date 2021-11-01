@@ -106,7 +106,11 @@ enum orangefs_vfs_op_states {
 extern int orangefs_init_acl(struct inode *inode, struct inode *dir);
 extern const struct xattr_handler *orangefs_xattr_handlers[];
 
+<<<<<<< HEAD
 extern struct posix_acl *orangefs_get_acl(struct inode *inode, int type, bool rcu);
+=======
+extern struct posix_acl *orangefs_get_acl(struct inode *inode, int type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern int orangefs_set_acl(struct user_namespace *mnt_userns,
 			    struct inode *inode, struct posix_acl *acl,
 			    int type);

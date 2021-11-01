@@ -3597,6 +3597,7 @@ TRACE_EVENT(rdev_set_sar_specs,
 		  WIPHY_PR_ARG, __entry->type, __entry->num)
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(rdev_color_change,
 	TP_PROTO(struct wiphy *wiphy, struct net_device *netdev,
 		 struct cfg80211_color_change_settings *params),
@@ -3643,6 +3644,8 @@ TRACE_EVENT(cfg80211_bss_color_notify,
 		  __entry->color_bitmap)
 );
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* !__RDEV_OPS_TRACE || TRACE_HEADER_MULTI_READ */
 
 #undef TRACE_INCLUDE_PATH

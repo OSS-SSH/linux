@@ -1,10 +1,15 @@
 /* SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
  * Copyright 2019-2021 NXP
+=======
+ * Copyright 2019-2021 NXP Semiconductors
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #ifndef _NET_DSA_TAG_OCELOT_H
 #define _NET_DSA_TAG_OCELOT_H
 
+<<<<<<< HEAD
 #include <linux/kthread.h>
 #include <linux/packing.h>
 #include <linux/skbuff.h>
@@ -27,6 +32,9 @@ struct ocelot_skb_cb {
 #define IFH_REW_OP_ONE_STEP_PTP		0x2
 #define IFH_REW_OP_TWO_STEP_PTP		0x3
 #define IFH_REW_OP_ORIGIN_PTP		0x5
+=======
+#include <linux/packing.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define OCELOT_TAG_LEN			16
 #define OCELOT_SHORT_PREFIX_LEN		4
@@ -161,6 +169,7 @@ struct ocelot_skb_cb {
  *         +------+------+------+------+------+------+------+------+
  */
 
+<<<<<<< HEAD
 struct felix_deferred_xmit_work {
 	struct dsa_port *dp;
 	struct sk_buff *skb;
@@ -172,6 +181,8 @@ struct felix_port {
 	struct kthread_worker *xmit_worker;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void ocelot_xfh_get_rew_val(void *extraction, u64 *rew_val)
 {
 	packing(extraction, rew_val, 116, 85, OCELOT_TAG_LEN, UNPACK, 0);
@@ -247,6 +258,7 @@ static inline void ocelot_ifh_set_vid(void *injection, u64 vid)
 	packing(injection, &vid, 11, 0, OCELOT_TAG_LEN, PACK, 0);
 }
 
+<<<<<<< HEAD
 /* Determine the PTP REW_OP to use for injecting the given skb */
 static inline u32 ocelot_ptp_rew_op(struct sk_buff *skb)
 {
@@ -264,4 +276,6 @@ static inline u32 ocelot_ptp_rew_op(struct sk_buff *skb)
 	return rew_op;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

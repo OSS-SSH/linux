@@ -253,7 +253,11 @@
 	/*O0-O7*/	"","","","","","","","",
 	/*P0-P7*/	"","","","","led-pcieslot-power","","","",
 	/*Q0-Q7*/	"","","","","","","","",
+<<<<<<< HEAD
 	/*R0-R7*/	"bmc-tpm-reset","power-chassis-control","power-chassis-good","","","I2C_FLASH_MICRO_N","","",
+=======
+	/*R0-R7*/	"","","","","","I2C_FLASH_MICRO_N","","",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*S0-S7*/	"","","","","","","","",
 	/*T0-T7*/	"","","","","","","","",
 	/*U0-U7*/	"","","","","","","","",
@@ -303,7 +307,11 @@
 			type = <PCA955X_TYPE_GPIO>;
 		};
 
+<<<<<<< HEAD
 		gpio@1 {
+=======
+		gpio@01 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			reg = <1>;
 			type = <PCA955X_TYPE_GPIO>;
 		};
@@ -406,6 +414,7 @@
 		reg = <0x69>;
 	};
 
+<<<<<<< HEAD
 	power-supply@6b {
 		compatible = "ibm,cffps";
 		reg = <0x6b>;
@@ -414,6 +423,16 @@
 	power-supply@6d {
 		compatible = "ibm,cffps";
 		reg = <0x6d>;
+=======
+	power-supply@6a {
+		compatible = "ibm,cffps";
+		reg = <0x6a>;
+	};
+
+	power-supply@6b {
+		compatible = "ibm,cffps";
+		reg = <0x6b>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 };
 
@@ -2832,7 +2851,10 @@
 
 &emmc {
 	status = "okay";
+<<<<<<< HEAD
 	clk-phase-mmc-hs200 = <210>, <228>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &fsim0 {

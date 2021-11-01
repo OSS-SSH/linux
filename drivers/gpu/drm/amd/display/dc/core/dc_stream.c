@@ -221,9 +221,12 @@ struct dc_stream_status *dc_stream_get_status_from_state(
 {
 	uint8_t i;
 
+<<<<<<< HEAD
 	if (state == NULL)
 		return NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < state->stream_count; i++) {
 		if (stream == state->streams[i])
 			return &state->stream_status[i];
@@ -246,6 +249,7 @@ struct dc_stream_status *dc_stream_get_status(
 	return dc_stream_get_status_from_state(dc->current_state, stream);
 }
 
+<<<<<<< HEAD
 static void program_cursor_attributes(
 	struct dc *dc,
 	struct dc_stream_state *stream,
@@ -280,6 +284,8 @@ static void program_cursor_attributes(
 		dc->hwss.cursor_lock(dc, pipe_to_program, false);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef TRIM_FSFT
 /*
  * dc_optimize_timing_for_fsft() - dc to optimize timing
@@ -304,7 +310,14 @@ bool dc_stream_set_cursor_attributes(
 	struct dc_stream_state *stream,
 	const struct dc_cursor_attributes *attributes)
 {
+<<<<<<< HEAD
 	struct dc  *dc;
+=======
+	int i;
+	struct dc  *dc;
+	struct resource_context *res_ctx;
+	struct pipe_ctx *pipe_to_program = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	bool reset_idle_optimizations = false;
 #endif
@@ -324,6 +337,10 @@ bool dc_stream_set_cursor_attributes(
 	}
 
 	dc = stream->ctx->dc;
+<<<<<<< HEAD
+=======
+	res_ctx = &dc->current_state->res_ctx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	stream->cursor_attributes = *attributes;
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
@@ -335,6 +352,7 @@ bool dc_stream_set_cursor_attributes(
 	}
 
 #endif
+<<<<<<< HEAD
 	program_cursor_attributes(dc, stream, attributes);
 
 #if defined(CONFIG_DRM_AMD_DC_DCN)
@@ -359,7 +377,98 @@ static void program_cursor_position(
 		return;
 
 	res_ctx = &dc->current_state->res_ctx;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
+	for (i = 0; i < MAX_PIPES; i++) {
+		struct pipe_ctx *pipe_ctx = &res_ctx->pipe_ctx[i];
+
+<<<<<<< HEAD
+		if (pipe_ctx->stream != stream ||
+				(!pipe_ctx->plane_res.mi  && !pipe_ctx->plane_res.hubp) ||
+				!pipe_ctx->plane_state ||
+				(!pipe_ctx->plane_res.xfm && !pipe_ctx->plane_res.dpp) ||
+				(!pipe_ctx->plane_res.ipp && !pipe_ctx->plane_res.dpp))
+=======
+		if (pipe_ctx->stream != stream)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+			continue;
+
+		if (!pipe_to_program) {
+			pipe_to_program = pipe_ctx;
+			dc->hwss.cursor_lock(dc, pipe_to_program, true);
+		}
+
+<<<<<<< HEAD
+		dc->hwss.set_cursor_position(pipe_ctx);
+=======
+		dc->hwss.set_cursor_attribute(pipe_ctx);
+		if (dc->hwss.set_cursor_sdr_white_level)
+			dc->hwss.set_cursor_sdr_white_level(pipe_ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+	}
+
+	if (pipe_to_program)
+		dc->hwss.cursor_lock(dc, pipe_to_program, false);
+<<<<<<< HEAD
+=======
+
+#if defined(CONFIG_DRM_AMD_DC_DCN)
+	/* re-enable idle optimizations if necessary */
+	if (reset_idle_optimizations)
+		dc_allow_idle_optimizations(dc, true);
+
+#endif
+	return true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+}
+
+bool dc_stream_set_cursor_position(
+	struct dc_stream_state *stream,
+	const struct dc_cursor_position *position)
+{
+<<<<<<< HEAD
+	struct dc  *dc;
+=======
+	int i;
+	struct dc  *dc;
+	struct resource_context *res_ctx;
+	struct pipe_ctx *pipe_to_program = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+#if defined(CONFIG_DRM_AMD_DC_DCN)
+	bool reset_idle_optimizations = false;
+#endif
+
+	if (NULL == stream) {
+		dm_error("DC: dc_stream is NULL!\n");
+		return false;
+	}
+
+	if (NULL == position) {
+		dm_error("DC: cursor position is NULL!\n");
+		return false;
+	}
+
+	dc = stream->ctx->dc;
+<<<<<<< HEAD
+=======
+	res_ctx = &dc->current_state->res_ctx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+#if defined(CONFIG_DRM_AMD_DC_DCN)
+	dc_z10_restore(dc);
+
+	/* disable idle optimizations if enabling cursor */
+	if (dc->idle_optimizations_allowed && !stream->cursor_position.enable && position->enable) {
+		dc_allow_idle_optimizations(dc, false);
+		reset_idle_optimizations = true;
+	}
+
+#endif
+	stream->cursor_position = *position;
+
+<<<<<<< HEAD
+	program_cursor_position(dc, stream, position);
+=======
 	for (i = 0; i < MAX_PIPES; i++) {
 		struct pipe_ctx *pipe_ctx = &res_ctx->pipe_ctx[i];
 
@@ -380,41 +489,8 @@ static void program_cursor_position(
 
 	if (pipe_to_program)
 		dc->hwss.cursor_lock(dc, pipe_to_program, false);
-}
 
-bool dc_stream_set_cursor_position(
-	struct dc_stream_state *stream,
-	const struct dc_cursor_position *position)
-{
-	struct dc  *dc;
-#if defined(CONFIG_DRM_AMD_DC_DCN)
-	bool reset_idle_optimizations = false;
-#endif
-
-	if (NULL == stream) {
-		dm_error("DC: dc_stream is NULL!\n");
-		return false;
-	}
-
-	if (NULL == position) {
-		dm_error("DC: cursor position is NULL!\n");
-		return false;
-	}
-
-	dc = stream->ctx->dc;
-#if defined(CONFIG_DRM_AMD_DC_DCN)
-	dc_z10_restore(dc);
-
-	/* disable idle optimizations if enabling cursor */
-	if (dc->idle_optimizations_allowed && !stream->cursor_position.enable && position->enable) {
-		dc_allow_idle_optimizations(dc, false);
-		reset_idle_optimizations = true;
-	}
-
-#endif
-	stream->cursor_position = *position;
-
-	program_cursor_position(dc, stream, position);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if defined(CONFIG_DRM_AMD_DC_DCN)
 	/* re-enable idle optimizations if necessary */
 	if (reset_idle_optimizations)

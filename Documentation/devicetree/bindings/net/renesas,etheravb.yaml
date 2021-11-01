@@ -43,20 +43,37 @@ properties:
               - renesas,etheravb-r8a779a0     # R-Car V3U
           - const: renesas,etheravb-rcar-gen3 # R-Car Gen3 and RZ/G2
 
+<<<<<<< HEAD
       - items:
           - enum:
               - renesas,r9a07g044-gbeth # RZ/G2{L,LC}
           - const: renesas,rzg2l-gbeth  # RZ/G2L
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   reg: true
 
   interrupts: true
 
   interrupt-names: true
 
+<<<<<<< HEAD
   clocks: true
 
   clock-names: true
+=======
+  clocks:
+    minItems: 1
+    items:
+      - description: AVB functional clock
+      - description: Optional TXC reference clock
+
+  clock-names:
+    minItems: 1
+    items:
+      - const: fck
+      - const: refclk
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   iommus:
     maxItems: 1
@@ -142,6 +159,7 @@ allOf:
       properties:
         compatible:
           contains:
+<<<<<<< HEAD
             enum:
               - renesas,etheravb-rcar-gen2
               - renesas,rzg2l-gbeth
@@ -156,6 +174,16 @@ allOf:
             - const: mux
             - const: fil
             - const: arp_ns
+=======
+            const: renesas,etheravb-rcar-gen2
+    then:
+      properties:
+        interrupts:
+          maxItems: 1
+        interrupt-names:
+          items:
+            - const: mux
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         rx-internal-delay-ps: false
     else:
       properties:
@@ -211,6 +239,7 @@ allOf:
         tx-internal-delay-ps:
           const: 2000
 
+<<<<<<< HEAD
   - if:
       properties:
         compatible:
@@ -241,6 +270,8 @@ allOf:
             - const: fck
             - const: refclk
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 additionalProperties: false
 
 examples:

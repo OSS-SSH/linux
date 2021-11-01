@@ -341,7 +341,10 @@ static int set_mtkaif_rx(struct mtk_base_afe *afe)
 	case MT8183_MTKAIF_PROTOCOL_1:
 		regmap_write(afe->regmap, AFE_AUD_PAD_TOP, 0x31);
 		regmap_write(afe->regmap, AFE_ADDA_MTKAIF_CFG0, 0x0);
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}

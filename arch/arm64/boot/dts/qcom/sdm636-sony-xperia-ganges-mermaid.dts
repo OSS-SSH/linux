@@ -5,13 +5,22 @@
 
 /dts-v1/;
 
+<<<<<<< HEAD
 #include "sdm630-sony-xperia-ganges-kirin.dts"
 #include "sdm636.dtsi"
+=======
+/* Mermaid uses sdm636, but it's different ever so slightly
+ * that we can ignore it for the time being. Sony also commonizes
+ * the Ganges platform as a whole in downstream kernels.
+ */
+#include "sdm630-sony-xperia-ganges.dtsi"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 / {
 	model = "Sony Xperia 10 Plus";
 	compatible = "sony,mermaid-row", "qcom,sdm636";
 
+<<<<<<< HEAD
 	/* SDM636 v1 */
 	qcom,msm-id = <345 0>;
 	qcom,pmic-id = <0x1001b 0x101011a 0x00 0x00 0x1001b 0x201011a 0x00 0x00 0x1001b 0x102001a 0x00 0x00>;
@@ -22,3 +31,8 @@
 		drive-strength = <14>;
 	};
 };
+=======
+	qcom,msm-id = <345 0>;
+	qcom,pmic-id = <0x1001b 0x101011a 0x00 0x00 0x1001b 0x201011a 0x00 0x00 0x1001b 0x102001a 0x00 0x00>;
+};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

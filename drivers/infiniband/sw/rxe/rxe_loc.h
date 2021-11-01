@@ -77,9 +77,16 @@ int rxe_mr_init_user(struct rxe_pd *pd, u64 start, u64 length, u64 iova,
 		     int access, struct rxe_mr *mr);
 int rxe_mr_init_fast(struct rxe_pd *pd, int max_pages, struct rxe_mr *mr);
 int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr, int length,
+<<<<<<< HEAD
 		enum rxe_mr_copy_dir dir);
 int copy_data(struct rxe_pd *pd, int access, struct rxe_dma_info *dma,
 	      void *addr, int length, enum rxe_mr_copy_dir dir);
+=======
+		enum rxe_mr_copy_dir dir, u32 *crcp);
+int copy_data(struct rxe_pd *pd, int access,
+	      struct rxe_dma_info *dma, void *addr, int length,
+	      enum rxe_mr_copy_dir dir, u32 *crcp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void *iova_to_vaddr(struct rxe_mr *mr, u64 iova, int length);
 struct rxe_mr *lookup_mr(struct rxe_pd *pd, int access, u32 key,
 			 enum rxe_mr_lookup_type type);
@@ -98,11 +105,19 @@ struct rxe_mw *rxe_lookup_mw(struct rxe_qp *qp, int access, u32 rkey);
 void rxe_mw_cleanup(struct rxe_pool_entry *arg);
 
 /* rxe_net.c */
+<<<<<<< HEAD
 struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
 				int paylen, struct rxe_pkt_info *pkt);
 int rxe_prepare(struct rxe_pkt_info *pkt, struct sk_buff *skb);
 int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
 		    struct sk_buff *skb);
+=======
+void rxe_loopback(struct sk_buff *skb);
+int rxe_send(struct rxe_pkt_info *pkt, struct sk_buff *skb);
+struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,
+				int paylen, struct rxe_pkt_info *pkt);
+int rxe_prepare(struct rxe_pkt_info *pkt, struct sk_buff *skb, u32 *crc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 const char *rxe_parent_name(struct rxe_dev *rxe, unsigned int port_num);
 int rxe_mcast_add(struct rxe_dev *rxe, union ib_gid *mgid);
 int rxe_mcast_delete(struct rxe_dev *rxe, union ib_gid *mgid);
@@ -192,10 +207,14 @@ int rxe_completer(void *arg);
 int rxe_requester(void *arg);
 int rxe_responder(void *arg);
 
+<<<<<<< HEAD
 /* rxe_icrc.c */
 int rxe_icrc_init(struct rxe_dev *rxe);
 int rxe_icrc_check(struct sk_buff *skb, struct rxe_pkt_info *pkt);
 void rxe_icrc_generate(struct sk_buff *skb, struct rxe_pkt_info *pkt);
+=======
+u32 rxe_icrc_hdr(struct rxe_pkt_info *pkt, struct sk_buff *skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void rxe_resp_queue_pkt(struct rxe_qp *qp, struct sk_buff *skb);
 
@@ -206,4 +225,50 @@ static inline unsigned int wr_opcode_mask(int opcode, struct rxe_qp *qp)
 	return rxe_wr_opcode_info[opcode].mask[qp->ibqp.qp_type];
 }
 
+<<<<<<< HEAD
+=======
+static inline int rxe_xmit_packet(struct rxe_qp *qp, struct rxe_pkt_info *pkt,
+				  struct sk_buff *skb)
+{
+	int err;
+	int is_request = pkt->mask & RXE_REQ_MASK;
+	struct rxe_dev *rxe = to_rdev(qp->ibqp.device);
+
+	if ((is_request && (qp->req.state != QP_STATE_READY)) ||
+	    (!is_request && (qp->resp.state != QP_STATE_READY))) {
+		pr_info("Packet dropped. QP is not in ready state\n");
+		goto drop;
+	}
+
+	if (pkt->mask & RXE_LOOPBACK_MASK) {
+		memcpy(SKB_TO_PKT(skb), pkt, sizeof(*pkt));
+		rxe_loopback(skb);
+		err = 0;
+	} else {
+		err = rxe_send(pkt, skb);
+	}
+
+	if (err) {
+		rxe->xmit_errors++;
+		rxe_counter_inc(rxe, RXE_CNT_SEND_ERR);
+		return err;
+	}
+
+	if ((qp_type(qp) != IB_QPT_RC) &&
+	    (pkt->mask & RXE_END_MASK)) {
+		pkt->wqe->state = wqe_state_done;
+		rxe_run_task(&qp->comp.task, 1);
+	}
+
+	rxe_counter_inc(rxe, RXE_CNT_SENT_PKTS);
+	goto done;
+
+drop:
+	kfree_skb(skb);
+	err = 0;
+done:
+	return err;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* RXE_LOC_H */

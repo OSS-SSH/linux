@@ -19,7 +19,10 @@
 KSTM_MODULE_GLOBALS();
 
 static char pbl_buffer[PAGE_SIZE] __initdata;
+<<<<<<< HEAD
 static char print_buf[PAGE_SIZE * 2] __initdata;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const unsigned long exp1[] __initconst = {
 	BITMAP_FROM_U64(1),
@@ -157,6 +160,7 @@ static bool __init __check_eq_clump8(const char *srcfile, unsigned int line,
 	return true;
 }
 
+<<<<<<< HEAD
 static bool __init
 __check_eq_str(const char *srcfile, unsigned int line,
 		const char *exp_str, const char *str,
@@ -171,6 +175,8 @@ __check_eq_str(const char *srcfile, unsigned int line,
 	return eq;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define __expect_eq(suffix, ...)					\
 	({								\
 		int result = 0;						\
@@ -188,7 +194,10 @@ __check_eq_str(const char *srcfile, unsigned int line,
 #define expect_eq_pbl(...)		__expect_eq(pbl, ##__VA_ARGS__)
 #define expect_eq_u32_array(...)	__expect_eq(u32_array, ##__VA_ARGS__)
 #define expect_eq_clump8(...)		__expect_eq(clump8, ##__VA_ARGS__)
+<<<<<<< HEAD
 #define expect_eq_str(...)		__expect_eq(str, ##__VA_ARGS__)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void __init test_zero_clear(void)
 {
@@ -676,6 +685,7 @@ static void __init test_bitmap_cut(void)
 	}
 }
 
+<<<<<<< HEAD
 struct test_bitmap_print {
 	const unsigned long *bitmap;
 	unsigned long nbits;
@@ -809,6 +819,8 @@ static void __init test_bitmap_print_buf(void)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __init selftest(void)
 {
 	test_zero_clear();
@@ -821,7 +833,10 @@ static void __init selftest(void)
 	test_mem_optimisations();
 	test_for_each_set_clump8();
 	test_bitmap_cut();
+<<<<<<< HEAD
 	test_bitmap_print_buf();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 KSTM_MODULE_LOADERS(test_bitmap);

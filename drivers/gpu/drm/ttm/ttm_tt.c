@@ -32,6 +32,10 @@
 #define pr_fmt(fmt) "[TTM] " fmt
 
 #include <linux/sched.h>
+<<<<<<< HEAD
+=======
+#include <linux/pagemap.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/shmem_fs.h>
 #include <linux/file.h>
 #include <drm/drm_cache.h>

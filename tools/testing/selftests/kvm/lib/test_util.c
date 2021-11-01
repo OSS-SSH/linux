@@ -11,7 +11,10 @@
 #include <stdlib.h>
 #include <time.h>
 #include <sys/stat.h>
+<<<<<<< HEAD
 #include <sys/syscall.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/mman.h>
 #include "linux/kernel.h"
 
@@ -130,16 +133,23 @@ size_t get_trans_hugepagesz(void)
 {
 	size_t size;
 	FILE *f;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	TEST_ASSERT(thp_configured(), "THP is not configured in host kernel");
 
 	f = fopen("/sys/kernel/mm/transparent_hugepage/hpage_pmd_size", "r");
 	TEST_ASSERT(f != NULL, "Error in opening transparent_hugepage/hpage_pmd_size");
 
+<<<<<<< HEAD
 	ret = fscanf(f, "%ld", &size);
 	ret = fscanf(f, "%ld", &size);
 	TEST_ASSERT(ret < 1, "Error reading transparent_hugepage/hpage_pmd_size");
+=======
+	fscanf(f, "%ld", &size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fclose(f);
 
 	return size;
@@ -283,6 +293,7 @@ size_t get_backing_src_pagesz(uint32_t i)
 	}
 }
 
+<<<<<<< HEAD
 static void print_available_backing_src_types(const char *prefix)
 {
 	int i;
@@ -299,6 +310,15 @@ void backing_src_help(const char *flag)
 	       "     back the guest data region. (default: %s)\n",
 	       flag, vm_mem_backing_src_alias(DEFAULT_VM_MEM_SRC)->name);
 	print_available_backing_src_types("     ");
+=======
+void backing_src_help(void)
+{
+	int i;
+
+	printf("Available backing src types:\n");
+	for (i = 0; i < NUM_SRC_TYPES; i++)
+		printf("\t%s\n", vm_mem_backing_src_alias(i)->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 enum vm_mem_backing_src_type parse_backing_src_type(const char *type_name)
@@ -309,6 +329,7 @@ enum vm_mem_backing_src_type parse_backing_src_type(const char *type_name)
 		if (!strcmp(type_name, vm_mem_backing_src_alias(i)->name))
 			return i;
 
+<<<<<<< HEAD
 	print_available_backing_src_types("");
 	TEST_FAIL("Unknown backing src type: %s", type_name);
 	return -1;
@@ -329,3 +350,9 @@ long get_run_delay(void)
 
 	return val[1];
 }
+=======
+	backing_src_help();
+	TEST_FAIL("Unknown backing src type: %s", type_name);
+	return -1;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

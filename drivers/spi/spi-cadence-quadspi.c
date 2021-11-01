@@ -309,9 +309,12 @@ static unsigned int cqspi_calc_dummy(const struct spi_mem_op *op, bool dtr)
 {
 	unsigned int dummy_clk;
 
+<<<<<<< HEAD
 	if (!op->dummy.nbytes)
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dummy_clk = op->dummy.nbytes * (8 / op->dummy.buswidth);
 	if (dtr)
 		dummy_clk /= 2;
@@ -325,6 +328,7 @@ static int cqspi_set_protocol(struct cqspi_flash_pdata *f_pdata,
 	f_pdata->inst_width = CQSPI_INST_TYPE_SINGLE;
 	f_pdata->addr_width = CQSPI_INST_TYPE_SINGLE;
 	f_pdata->data_width = CQSPI_INST_TYPE_SINGLE;
+<<<<<<< HEAD
 
 	/*
 	 * For an op to be DTR, cmd phase along with every other non-empty
@@ -334,6 +338,9 @@ static int cqspi_set_protocol(struct cqspi_flash_pdata *f_pdata,
 	f_pdata->dtr = op->cmd.dtr &&
 		       (!op->addr.nbytes || op->addr.dtr) &&
 		       (!op->data.nbytes || op->data.dtr);
+=======
+	f_pdata->dtr = op->data.dtr && op->cmd.dtr && op->addr.dtr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (op->data.buswidth) {
 	case 0:
@@ -808,6 +815,7 @@ static int cqspi_write_setup(struct cqspi_flash_pdata *f_pdata,
 	reg = cqspi_calc_rdreg(f_pdata);
 	writel(reg, reg_base + CQSPI_REG_RD_INSTR);
 
+<<<<<<< HEAD
 	/*
 	 * SPI NAND flashes require the address of the status register to be
 	 * passed in the Read SR command. Also, some SPI NOR flashes like the
@@ -822,6 +830,21 @@ static int cqspi_write_setup(struct cqspi_flash_pdata *f_pdata,
 	reg = readl(reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
 	reg |= CQSPI_REG_WR_DISABLE_AUTO_POLL;
 	writel(reg, reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
+=======
+	if (f_pdata->dtr) {
+		/*
+		 * Some flashes like the cypress Semper flash expect a 4-byte
+		 * dummy address with the Read SR command in DTR mode, but this
+		 * controller does not support sending address with the Read SR
+		 * command. So, disable write completion polling on the
+		 * controller's side. spi-nor will take care of polling the
+		 * status register.
+		 */
+		reg = readl(reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
+		reg |= CQSPI_REG_WR_DISABLE_AUTO_POLL;
+		writel(reg, reg_base + CQSPI_REG_WR_COMPLETION_CTRL);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	reg = readl(reg_base + CQSPI_REG_SIZE);
 	reg &= ~CQSPI_REG_SIZE_ADDRESS_MASK;
@@ -1236,6 +1259,7 @@ static bool cqspi_supports_mem_op(struct spi_mem *mem,
 {
 	bool all_true, all_false;
 
+<<<<<<< HEAD
 	/*
 	 * op->dummy.dtr is required for converting nbytes into ncycles.
 	 * Also, don't check the dtr field of the op phase having zero nbytes.
@@ -1245,6 +1269,10 @@ static bool cqspi_supports_mem_op(struct spi_mem *mem,
 		   (!op->dummy.nbytes || op->dummy.dtr) &&
 		   (!op->data.nbytes || op->data.dtr);
 
+=======
+	all_true = op->cmd.dtr && op->addr.dtr && op->dummy.dtr &&
+		   op->data.dtr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	all_false = !op->cmd.dtr && !op->addr.dtr && !op->dummy.dtr &&
 		    !op->data.dtr;
 

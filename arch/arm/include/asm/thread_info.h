@@ -31,6 +31,11 @@ struct task_struct;
 
 #include <asm/types.h>
 
+<<<<<<< HEAD
+=======
+typedef unsigned long mm_segment_t;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct cpu_context_save {
 	__u32	r4;
 	__u32	r5;
@@ -52,6 +57,10 @@ struct cpu_context_save {
 struct thread_info {
 	unsigned long		flags;		/* low level flags */
 	int			preempt_count;	/* 0 => preemptable, <0 => bug */
+<<<<<<< HEAD
+=======
+	mm_segment_t		addr_limit;	/* address limit */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct task_struct	*task;		/* main task structure */
 	__u32			cpu;		/* cpu */
 	__u32			cpu_domain;	/* cpu domain */
@@ -59,9 +68,18 @@ struct thread_info {
 	unsigned long		stack_canary;
 #endif
 	struct cpu_context_save	cpu_context;	/* cpu context */
+<<<<<<< HEAD
 	__u32			abi_syscall;	/* ABI type and syscall nr */
 	__u8			used_cp[16];	/* thread used copro */
 	unsigned long		tp_value[2];	/* TLS registers */
+=======
+	__u32			syscall;	/* syscall number */
+	__u8			used_cp[16];	/* thread used copro */
+	unsigned long		tp_value[2];	/* TLS registers */
+#ifdef CONFIG_CRUNCH
+	struct crunch_state	crunchstate;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	union fp_state		fpstate __attribute__((aligned(8)));
 	union vfp_state		vfpstate;
 #ifdef CONFIG_ARM_THUMBEE
@@ -74,6 +92,10 @@ struct thread_info {
 	.task		= &tsk,						\
 	.flags		= 0,						\
 	.preempt_count	= INIT_PREEMPT_COUNT,				\
+<<<<<<< HEAD
+=======
+	.addr_limit	= KERNEL_DS,					\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -100,6 +122,14 @@ static inline struct thread_info *current_thread_info(void)
 	((unsigned long)(task_thread_info(tsk)->cpu_context.r7))
 #endif
 
+<<<<<<< HEAD
+=======
+extern void crunch_task_disable(struct thread_info *);
+extern void crunch_task_copy(struct thread_info *, void *);
+extern void crunch_task_restore(struct thread_info *, void *);
+extern void crunch_task_release(struct thread_info *);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern void iwmmxt_task_disable(struct thread_info *);
 extern void iwmmxt_task_copy(struct thread_info *, void *);
 extern void iwmmxt_task_restore(struct thread_info *, void *);

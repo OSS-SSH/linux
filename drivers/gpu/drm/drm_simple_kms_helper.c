@@ -9,8 +9,11 @@
 #include <drm/drm_atomic.h>
 #include <drm/drm_atomic_helper.h>
 #include <drm/drm_bridge.h>
+<<<<<<< HEAD
 #include <drm/drm_drv.h>
 #include <drm/drm_gem_atomic_helper.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_managed.h>
 #include <drm/drm_plane_helper.h>
 #include <drm/drm_probe_helper.h>
@@ -145,6 +148,7 @@ static const struct drm_crtc_helper_funcs drm_simple_kms_crtc_helper_funcs = {
 	.atomic_disable = drm_simple_kms_crtc_disable,
 };
 
+<<<<<<< HEAD
 static void drm_simple_kms_crtc_reset(struct drm_crtc *crtc)
 {
 	struct drm_simple_display_pipe *pipe;
@@ -178,6 +182,8 @@ static void drm_simple_kms_crtc_destroy_state(struct drm_crtc *crtc, struct drm_
 		pipe->funcs->destroy_crtc_state(pipe, state);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int drm_simple_kms_crtc_enable_vblank(struct drm_crtc *crtc)
 {
 	struct drm_simple_display_pipe *pipe;
@@ -201,12 +207,21 @@ static void drm_simple_kms_crtc_disable_vblank(struct drm_crtc *crtc)
 }
 
 static const struct drm_crtc_funcs drm_simple_kms_crtc_funcs = {
+<<<<<<< HEAD
 	.reset = drm_simple_kms_crtc_reset,
 	.destroy = drm_crtc_cleanup,
 	.set_config = drm_atomic_helper_set_config,
 	.page_flip = drm_atomic_helper_page_flip,
 	.atomic_duplicate_state = drm_simple_kms_crtc_duplicate_state,
 	.atomic_destroy_state = drm_simple_kms_crtc_destroy_state,
+=======
+	.reset = drm_atomic_helper_crtc_reset,
+	.destroy = drm_crtc_cleanup,
+	.set_config = drm_atomic_helper_set_config,
+	.page_flip = drm_atomic_helper_page_flip,
+	.atomic_duplicate_state = drm_atomic_helper_crtc_duplicate_state,
+	.atomic_destroy_state = drm_atomic_helper_crtc_destroy_state,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.enable_vblank = drm_simple_kms_crtc_enable_vblank,
 	.disable_vblank = drm_simple_kms_crtc_disable_vblank,
 };
@@ -260,6 +275,7 @@ static int drm_simple_kms_plane_prepare_fb(struct drm_plane *plane,
 	struct drm_simple_display_pipe *pipe;
 
 	pipe = container_of(plane, struct drm_simple_display_pipe, plane);
+<<<<<<< HEAD
 	if (!pipe->funcs || !pipe->funcs->prepare_fb) {
 		if (WARN_ON_ONCE(!drm_core_check_feature(plane->dev, DRIVER_GEM)))
 			return 0;
@@ -268,6 +284,10 @@ static int drm_simple_kms_plane_prepare_fb(struct drm_plane *plane,
 
 		return drm_gem_simple_display_pipe_prepare_fb(pipe, state);
 	}
+=======
+	if (!pipe->funcs || !pipe->funcs->prepare_fb)
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return pipe->funcs->prepare_fb(pipe, state);
 }

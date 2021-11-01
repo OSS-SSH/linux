@@ -86,6 +86,15 @@ nouveau_channel_del(struct nouveau_channel **pchan)
 	struct nouveau_channel *chan = *pchan;
 	if (chan) {
 		struct nouveau_cli *cli = (void *)chan->user.client;
+<<<<<<< HEAD
+=======
+		bool super;
+
+		if (cli) {
+			super = cli->base.super;
+			cli->base.super = true;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (chan->fence)
 			nouveau_fence(chan->drm)->context_del(chan);
@@ -105,6 +114,12 @@ nouveau_channel_del(struct nouveau_channel **pchan)
 			nouveau_bo_unpin(chan->push.buffer);
 		nouveau_bo_ref(NULL, &chan->push.buffer);
 		kfree(chan);
+<<<<<<< HEAD
+=======
+
+		if (cli)
+			cli->base.super = super;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	*pchan = NULL;
 }
@@ -250,8 +265,12 @@ static int
 nouveau_channel_ind(struct nouveau_drm *drm, struct nvif_device *device,
 		    u64 runlist, bool priv, struct nouveau_channel **pchan)
 {
+<<<<<<< HEAD
 	static const u16 oclasses[] = { AMPERE_CHANNEL_GPFIFO_B,
 					TURING_CHANNEL_GPFIFO_A,
+=======
+	static const u16 oclasses[] = { TURING_CHANNEL_GPFIFO_A,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					VOLTA_CHANNEL_GPFIFO_A,
 					PASCAL_CHANNEL_GPFIFO_A,
 					MAXWELL_CHANNEL_GPFIFO_A,
@@ -387,8 +406,12 @@ nouveau_channel_init(struct nouveau_channel *chan, u32 vram, u32 gart)
 
 	nvif_object_map(&chan->user, NULL, 0);
 
+<<<<<<< HEAD
 	if (chan->user.oclass >= FERMI_CHANNEL_GPFIFO &&
 	    chan->user.oclass < AMPERE_CHANNEL_GPFIFO_B) {
+=======
+	if (chan->user.oclass >= FERMI_CHANNEL_GPFIFO) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = nvif_notify_ctor(&chan->user, "abi16ChanKilled",
 				       nouveau_channel_killed,
 				       true, NV906F_V0_NTFY_KILLED,
@@ -505,16 +528,30 @@ nouveau_channel_new(struct nouveau_drm *drm, struct nvif_device *device,
 		    struct nouveau_channel **pchan)
 {
 	struct nouveau_cli *cli = (void *)device->object.client;
+<<<<<<< HEAD
 	int ret;
 
 	/* hack until fencenv50 is fixed, and agp access relaxed */
+=======
+	bool super;
+	int ret;
+
+	/* hack until fencenv50 is fixed, and agp access relaxed */
+	super = cli->base.super;
+	cli->base.super = true;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = nouveau_channel_ind(drm, device, arg0, priv, pchan);
 	if (ret) {
 		NV_PRINTK(dbg, cli, "ib channel create, %d\n", ret);
 		ret = nouveau_channel_dma(drm, device, pchan);
 		if (ret) {
 			NV_PRINTK(dbg, cli, "dma channel create, %d\n", ret);
+<<<<<<< HEAD
 			return ret;
+=======
+			goto done;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -522,13 +559,22 @@ nouveau_channel_new(struct nouveau_drm *drm, struct nvif_device *device,
 	if (ret) {
 		NV_PRINTK(err, cli, "channel failed to initialise, %d\n", ret);
 		nouveau_channel_del(pchan);
+<<<<<<< HEAD
 		return ret;
+=======
+		goto done;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = nouveau_svmm_join((*pchan)->vmm->svmm, (*pchan)->inst);
 	if (ret)
 		nouveau_channel_del(pchan);
 
+<<<<<<< HEAD
+=======
+done:
+	cli->base.super = super;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 

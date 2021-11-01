@@ -17,6 +17,12 @@
  *    Copyright (C) 2001-2014 Helge Deller <deller@gmx.de>
  *    Copyright (C) 2002 Randolph Chung <tausq with parisc-linux.org>
  */
+<<<<<<< HEAD
+=======
+
+#include <stdarg.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/elf.h>
 #include <linux/errno.h>
 #include <linux/kernel.h>

@@ -631,9 +631,15 @@ static void usdhi6_dma_kill(struct usdhi6_host *host)
 		__func__, data->sg_len, data->blocks, data->blksz);
 	/* Abort DMA */
 	if (data->flags & MMC_DATA_READ)
+<<<<<<< HEAD
 		dmaengine_terminate_sync(host->chan_rx);
 	else
 		dmaengine_terminate_sync(host->chan_tx);
+=======
+		dmaengine_terminate_all(host->chan_rx);
+	else
+		dmaengine_terminate_all(host->chan_tx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void usdhi6_dma_check_error(struct usdhi6_host *host)
@@ -1186,6 +1192,7 @@ static int usdhi6_sig_volt_switch(struct mmc_host *mmc, struct mmc_ios *ios)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int usdhi6_card_busy(struct mmc_host *mmc)
 {
 	struct usdhi6_host *host = mmc_priv(mmc);
@@ -1195,6 +1202,8 @@ static int usdhi6_card_busy(struct mmc_host *mmc)
 	return !(tmp & USDHI6_SD_INFO2_SDDAT0);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct mmc_host_ops usdhi6_ops = {
 	.request	= usdhi6_request,
 	.set_ios	= usdhi6_set_ios,
@@ -1202,7 +1211,10 @@ static const struct mmc_host_ops usdhi6_ops = {
 	.get_ro		= usdhi6_get_ro,
 	.enable_sdio_irq = usdhi6_enable_sdio_irq,
 	.start_signal_voltage_switch = usdhi6_sig_volt_switch,
+<<<<<<< HEAD
 	.card_busy = usdhi6_card_busy,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*			State machine handlers				*/

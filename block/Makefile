@@ -3,7 +3,11 @@
 # Makefile for the kernel block layer
 #
 
+<<<<<<< HEAD
 obj-$(CONFIG_BLOCK) := bdev.o fops.o bio.o elevator.o blk-core.o blk-sysfs.o \
+=======
+obj-$(CONFIG_BLOCK) := bio.o elevator.o blk-core.o blk-sysfs.o \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			blk-flush.o blk-settings.o blk-ioc.o blk-map.o \
 			blk-exec.o blk-merge.o blk-timeout.o \
 			blk-lib.o blk-mq.o blk-mq-tag.o blk-stat.o \
@@ -12,7 +16,12 @@ obj-$(CONFIG_BLOCK) := bdev.o fops.o bio.o elevator.o blk-core.o blk-sysfs.o \
 			disk-events.o
 
 obj-$(CONFIG_BOUNCE)		+= bounce.o
+<<<<<<< HEAD
 obj-$(CONFIG_BLK_DEV_BSG_COMMON) += bsg.o
+=======
+obj-$(CONFIG_BLK_SCSI_REQUEST)	+= scsi_ioctl.o
+obj-$(CONFIG_BLK_DEV_BSG)	+= bsg.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_BLK_DEV_BSGLIB)	+= bsg-lib.o
 obj-$(CONFIG_BLK_CGROUP)	+= blk-cgroup.o
 obj-$(CONFIG_BLK_CGROUP_RWSTAT)	+= blk-cgroup-rwstat.o
@@ -21,10 +30,19 @@ obj-$(CONFIG_BLK_CGROUP_IOPRIO)	+= blk-ioprio.o
 obj-$(CONFIG_BLK_CGROUP_IOLATENCY)	+= blk-iolatency.o
 obj-$(CONFIG_BLK_CGROUP_IOCOST)	+= blk-iocost.o
 obj-$(CONFIG_MQ_IOSCHED_DEADLINE)	+= mq-deadline.o
+<<<<<<< HEAD
+=======
+mq-deadline-y += mq-deadline-main.o
+mq-deadline-$(CONFIG_MQ_IOSCHED_DEADLINE_CGROUP)+= mq-deadline-cgroup.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_MQ_IOSCHED_KYBER)	+= kyber-iosched.o
 bfq-y				:= bfq-iosched.o bfq-wf2q.o bfq-cgroup.o
 obj-$(CONFIG_IOSCHED_BFQ)	+= bfq.o
 
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_BLK_CMDLINE_PARSER)	+= cmdline-parser.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_BLK_DEV_INTEGRITY) += bio-integrity.o blk-integrity.o
 obj-$(CONFIG_BLK_DEV_INTEGRITY_T10)	+= t10-pi.o
 obj-$(CONFIG_BLK_MQ_PCI)	+= blk-mq-pci.o
@@ -38,4 +56,7 @@ obj-$(CONFIG_BLK_SED_OPAL)	+= sed-opal.o
 obj-$(CONFIG_BLK_PM)		+= blk-pm.o
 obj-$(CONFIG_BLK_INLINE_ENCRYPTION)	+= keyslot-manager.o blk-crypto.o
 obj-$(CONFIG_BLK_INLINE_ENCRYPTION_FALLBACK)	+= blk-crypto-fallback.o
+<<<<<<< HEAD
 obj-$(CONFIG_BLOCK_HOLDER_DEPRECATED)	+= holder.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

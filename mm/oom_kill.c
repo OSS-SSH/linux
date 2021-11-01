@@ -28,7 +28,10 @@
 #include <linux/sched/task.h>
 #include <linux/sched/debug.h>
 #include <linux/swap.h>
+<<<<<<< HEAD
 #include <linux/syscalls.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/timex.h>
 #include <linux/jiffies.h>
 #include <linux/cpuset.h>
@@ -1142,6 +1145,7 @@ void pagefault_out_of_memory(void)
 	out_of_memory(&oc);
 	mutex_unlock(&oom_lock);
 }
+<<<<<<< HEAD
 
 SYSCALL_DEFINE2(process_mrelease, int, pidfd, unsigned int, flags)
 {
@@ -1211,3 +1215,5 @@ put_pid:
 	return -ENOSYS;
 #endif /* CONFIG_MMU */
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

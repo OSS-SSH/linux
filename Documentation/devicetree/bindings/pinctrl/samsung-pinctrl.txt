@@ -22,7 +22,10 @@ Required Properties:
   - "samsung,exynos5420-pinctrl": for Exynos5420 compatible pin-controller.
   - "samsung,exynos5433-pinctrl": for Exynos5433 compatible pin-controller.
   - "samsung,exynos7-pinctrl": for Exynos7 compatible pin-controller.
+<<<<<<< HEAD
   - "samsung,exynos850-pinctrl": for Exynos850 compatible pin-controller.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 - reg: Base address of the pin controller hardware module and length of
   the address space it occupies.

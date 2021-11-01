@@ -1820,6 +1820,7 @@ void LedControl871x(struct _adapter *padapter, enum LED_CTL_MODE LedAction)
 		break;
 	}
 }
+<<<<<<< HEAD
 
 void r8712_flush_led_works(struct _adapter *padapter)
 {
@@ -1828,3 +1829,5 @@ void r8712_flush_led_works(struct _adapter *padapter)
 	flush_work(&pledpriv->SwLed0.BlinkWorkItem);
 	flush_work(&pledpriv->SwLed1.BlinkWorkItem);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

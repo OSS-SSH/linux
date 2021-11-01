@@ -864,7 +864,11 @@ enum GECMR_BIT {
 
 /* The Ethernet AVB descriptor definitions. */
 struct ravb_desc {
+<<<<<<< HEAD
 	__le16 ds;	/* Descriptor size */
+=======
+	__le16 ds;		/* Descriptor size */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 cc;		/* Content control MSBs (reserved) */
 	u8 die_dt;	/* Descriptor interrupt enable and type */
 	__le32 dptr;	/* Descriptor pointer */
@@ -956,6 +960,13 @@ enum RAVB_QUEUE {
 
 #define RX_BUF_SZ	(2048 - ETH_FCS_LEN + sizeof(__sum16))
 
+<<<<<<< HEAD
+=======
+/* TX descriptors per packet */
+#define NUM_TX_DESC_GEN2	2
+#define NUM_TX_DESC_GEN3	1
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct ravb_tstamp_skb {
 	struct list_head list;
 	struct sk_buff *skb;
@@ -979,6 +990,7 @@ struct ravb_ptp {
 	struct ravb_ptp_perout perout[N_PER_OUT];
 };
 
+<<<<<<< HEAD
 struct ravb_hw_info {
 	void (*rx_ring_free)(struct net_device *ndev, int q);
 	void (*rx_ring_format)(struct net_device *ndev, int q);
@@ -1002,6 +1014,11 @@ struct ravb_hw_info {
 	unsigned multi_irqs:1;		/* AVB-DMAC and E-MAC has multiple irqs */
 	unsigned no_ptp_cfg_active:1;	/* AVB-DMAC does not support gPTP active in config mode */
 	unsigned ptp_cfg_active:1;	/* AVB-DMAC has gPTP support active in config mode */
+=======
+enum ravb_chip_id {
+	RCAR_GEN2,
+	RCAR_GEN3,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct ravb_private {
@@ -1045,6 +1062,10 @@ struct ravb_private {
 	int msg_enable;
 	int speed;
 	int emac_irq;
+<<<<<<< HEAD
+=======
+	enum ravb_chip_id chip_id;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rx_irqs[NUM_RX_QUEUE];
 	int tx_irqs[NUM_TX_QUEUE];
 
@@ -1054,10 +1075,14 @@ struct ravb_private {
 	unsigned rxcidm:1;		/* RX Clock Internal Delay Mode */
 	unsigned txcidm:1;		/* TX Clock Internal Delay Mode */
 	unsigned rgmii_override:1;	/* Deprecated rgmii-*id behavior */
+<<<<<<< HEAD
 	unsigned int num_tx_desc;	/* TX descriptors per packet */
 
 	const struct ravb_hw_info *info;
 	struct reset_control *rstc;
+=======
+	int num_tx_desc;		/* TX descriptors per packet */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline u32 ravb_read(struct net_device *ndev, enum ravb_reg reg)

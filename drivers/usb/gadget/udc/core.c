@@ -1003,6 +1003,7 @@ int usb_gadget_ep_match_desc(struct usb_gadget *gadget,
 }
 EXPORT_SYMBOL_GPL(usb_gadget_ep_match_desc);
 
+<<<<<<< HEAD
 /**
  * usb_gadget_check_config - checks if the UDC can support the binded
  *	configuration
@@ -1022,6 +1023,8 @@ int usb_gadget_check_config(struct usb_gadget *gadget)
 }
 EXPORT_SYMBOL_GPL(usb_gadget_check_config);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* ------------------------------------------------------------------------- */
 
 static void usb_gadget_state_work(struct work_struct *work)

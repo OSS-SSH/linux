@@ -12,7 +12,10 @@
 #include "selftests/igt_flush_test.h"
 #include "selftests/igt_reset.h"
 #include "selftests/igt_spinner.h"
+<<<<<<< HEAD
 #include "selftests/intel_scheduler_helpers.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "selftests/mock_drm.h"
 
 #include "gem/selftests/igt_gem_utils.h"
@@ -262,6 +265,7 @@ static int do_engine_reset(struct intel_engine_cs *engine)
 	return intel_engine_reset(engine, "live_workarounds");
 }
 
+<<<<<<< HEAD
 static int do_guc_reset(struct intel_engine_cs *engine)
 {
 	/* Currently a no-op as the reset is handled by GuC */
@@ -274,12 +278,21 @@ switch_to_scratch_context(struct intel_engine_cs *engine,
 			  struct i915_request **rq)
 {
 	struct intel_context *ce;
+=======
+static int
+switch_to_scratch_context(struct intel_engine_cs *engine,
+			  struct igt_spinner *spin)
+{
+	struct intel_context *ce;
+	struct i915_request *rq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 
 	ce = intel_context_create(engine);
 	if (IS_ERR(ce))
 		return PTR_ERR(ce);
 
+<<<<<<< HEAD
 	*rq = igt_spinner_create_request(spin, ce, MI_NOOP);
 	intel_context_put(ce);
 
@@ -290,6 +303,18 @@ switch_to_scratch_context(struct intel_engine_cs *engine,
 	}
 
 	err = request_add_spin(*rq, spin);
+=======
+	rq = igt_spinner_create_request(spin, ce, MI_NOOP);
+	intel_context_put(ce);
+
+	if (IS_ERR(rq)) {
+		spin = NULL;
+		err = PTR_ERR(rq);
+		goto err;
+	}
+
+	err = request_add_spin(rq, spin);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err:
 	if (err && spin)
 		igt_spinner_end(spin);
@@ -303,7 +328,10 @@ static int check_whitelist_across_reset(struct intel_engine_cs *engine,
 {
 	struct intel_context *ce, *tmp;
 	struct igt_spinner spin;
+<<<<<<< HEAD
 	struct i915_request *rq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	intel_wakeref_t wakeref;
 	int err;
 
@@ -324,6 +352,7 @@ static int check_whitelist_across_reset(struct intel_engine_cs *engine,
 		goto out_spin;
 	}
 
+<<<<<<< HEAD
 	err = switch_to_scratch_context(engine, &spin, &rq);
 	if (err)
 		goto out_spin;
@@ -342,6 +371,15 @@ static int check_whitelist_across_reset(struct intel_engine_cs *engine,
 	if (err == 0)
 		err = intel_selftest_wait_for_rq(rq);
 
+=======
+	err = switch_to_scratch_context(engine, &spin);
+	if (err)
+		goto out_spin;
+
+	with_intel_runtime_pm(engine->uncore->rpm, wakeref)
+		err = reset(engine);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	igt_spinner_end(&spin);
 
 	if (err) {
@@ -806,6 +844,7 @@ static int live_reset_whitelist(void *arg)
 			continue;
 
 		if (intel_has_reset_engine(gt)) {
+<<<<<<< HEAD
 			if (intel_engine_uses_guc(engine)) {
 				struct intel_selftest_saved_policy saved;
 				int err2;
@@ -828,6 +867,11 @@ static int live_reset_whitelist(void *arg)
 								   "engine");
 			}
 
+=======
+			err = check_whitelist_across_reset(engine,
+							   do_engine_reset,
+							   "engine");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (err)
 				goto out;
 		}
@@ -1185,7 +1229,11 @@ verify_wa_lists(struct intel_gt *gt, struct wa_lists *lists,
 	enum intel_engine_id id;
 	bool ok = true;
 
+<<<<<<< HEAD
 	ok &= wa_list_verify(gt, &lists->gt_wa_list, str);
+=======
+	ok &= wa_list_verify(gt->uncore, &lists->gt_wa_list, str);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for_each_engine(engine, gt, id) {
 		struct intel_context *ce;
@@ -1213,29 +1261,43 @@ live_gpu_reset_workarounds(void *arg)
 {
 	struct intel_gt *gt = arg;
 	intel_wakeref_t wakeref;
+<<<<<<< HEAD
 	struct wa_lists *lists;
+=======
+	struct wa_lists lists;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool ok;
 
 	if (!intel_has_gpu_reset(gt))
 		return 0;
 
+<<<<<<< HEAD
 	lists = kzalloc(sizeof(*lists), GFP_KERNEL);
 	if (!lists)
 		return -ENOMEM;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_info("Verifying after GPU reset...\n");
 
 	igt_global_reset_lock(gt);
 	wakeref = intel_runtime_pm_get(gt->uncore->rpm);
 
+<<<<<<< HEAD
 	reference_lists_init(gt, lists);
 
 	ok = verify_wa_lists(gt, lists, "before reset");
+=======
+	reference_lists_init(gt, &lists);
+
+	ok = verify_wa_lists(gt, &lists, "before reset");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!ok)
 		goto out;
 
 	intel_gt_reset(gt, ALL_ENGINES, "live_workarounds");
 
+<<<<<<< HEAD
 	ok = verify_wa_lists(gt, lists, "after reset");
 
 out:
@@ -1243,6 +1305,14 @@ out:
 	intel_runtime_pm_put(gt->uncore->rpm, wakeref);
 	igt_global_reset_unlock(gt);
 	kfree(lists);
+=======
+	ok = verify_wa_lists(gt, &lists, "after reset");
+
+out:
+	reference_lists_fini(gt, &lists);
+	intel_runtime_pm_put(gt->uncore->rpm, wakeref);
+	igt_global_reset_unlock(gt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ok ? 0 : -ESRCH;
 }
@@ -1257,12 +1327,17 @@ live_engine_reset_workarounds(void *arg)
 	struct igt_spinner spin;
 	struct i915_request *rq;
 	intel_wakeref_t wakeref;
+<<<<<<< HEAD
 	struct wa_lists *lists;
+=======
+	struct wa_lists lists;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret = 0;
 
 	if (!intel_has_reset_engine(gt))
 		return 0;
 
+<<<<<<< HEAD
 	lists = kzalloc(sizeof(*lists), GFP_KERNEL);
 	if (!lists)
 		return -ENOMEM;
@@ -1308,6 +1383,39 @@ live_engine_reset_workarounds(void *arg)
 				ret = -ESRCH;
 				goto err;
 			}
+=======
+	igt_global_reset_lock(gt);
+	wakeref = intel_runtime_pm_get(gt->uncore->rpm);
+
+	reference_lists_init(gt, &lists);
+
+	for_each_engine(engine, gt, id) {
+		bool ok;
+
+		pr_info("Verifying after %s reset...\n", engine->name);
+		ce = intel_context_create(engine);
+		if (IS_ERR(ce)) {
+			ret = PTR_ERR(ce);
+			break;
+		}
+
+		ok = verify_wa_lists(gt, &lists, "before reset");
+		if (!ok) {
+			ret = -ESRCH;
+			goto err;
+		}
+
+		ret = intel_engine_reset(engine, "live_workarounds:idle");
+		if (ret) {
+			pr_err("%s: Reset failed while idle\n", engine->name);
+			goto err;
+		}
+
+		ok = verify_wa_lists(gt, &lists, "after idle reset");
+		if (!ok) {
+			ret = -ESRCH;
+			goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		ret = igt_spinner_init(&spin, engine->gt);
@@ -1328,6 +1436,7 @@ live_engine_reset_workarounds(void *arg)
 			goto err;
 		}
 
+<<<<<<< HEAD
 		/* Ensure the spinner hasn't aborted */
 		if (i915_request_completed(rq)) {
 			ret = -ETIMEDOUT;
@@ -1363,14 +1472,41 @@ restore:
 		ret2 = intel_selftest_restore_policy(engine, &saved);
 		if (ret == 0)
 			ret = ret2;
+=======
+		ret = intel_engine_reset(engine, "live_workarounds:active");
+		if (ret) {
+			pr_err("%s: Reset failed on an active spinner\n",
+			       engine->name);
+			igt_spinner_fini(&spin);
+			goto err;
+		}
+
+		igt_spinner_end(&spin);
+		igt_spinner_fini(&spin);
+
+		ok = verify_wa_lists(gt, &lists, "after busy reset");
+		if (!ok) {
+			ret = -ESRCH;
+			goto err;
+		}
+
+err:
+		intel_context_put(ce);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			break;
 	}
 
+<<<<<<< HEAD
 	reference_lists_fini(gt, lists);
 	intel_runtime_pm_put(gt->uncore->rpm, wakeref);
 	igt_global_reset_unlock(gt);
 	kfree(lists);
+=======
+	reference_lists_fini(gt, &lists);
+	intel_runtime_pm_put(gt->uncore->rpm, wakeref);
+	igt_global_reset_unlock(gt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	igt_flush_test(gt->i915);
 

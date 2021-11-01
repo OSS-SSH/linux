@@ -944,6 +944,10 @@ int qed_mcp_load_req(struct qed_hwfn *p_hwfn,
 
 	memset(&in_params, 0, sizeof(in_params));
 	in_params.hsi_ver = QED_LOAD_REQ_HSI_VER_DEFAULT;
+<<<<<<< HEAD
+=======
+	in_params.drv_ver_0 = QED_VERSION;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	in_params.drv_ver_1 = qed_get_config_bitmap();
 	in_params.fw_ver = STORM_FW_VERSION;
 	rc = eocre_get_mfw_drv_role(p_hwfn, p_params->drv_role, &mfw_drv_role);
@@ -3367,7 +3371,10 @@ qed_mcp_get_nvm_image_att(struct qed_hwfn *p_hwfn,
 			  struct qed_nvm_image_att *p_image_att)
 {
 	enum nvm_image_type type;
+<<<<<<< HEAD
 	int rc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 i;
 
 	/* Translate image_id into MFW definitions */
@@ -3396,10 +3403,14 @@ qed_mcp_get_nvm_image_att(struct qed_hwfn *p_hwfn,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	rc = qed_mcp_nvm_info_populate(p_hwfn);
 	if (rc)
 		return rc;
 
+=======
+	qed_mcp_nvm_info_populate(p_hwfn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < p_hwfn->nvm_info.num_images; i++)
 		if (type == p_hwfn->nvm_info.image_att[i].image_type)
 			break;

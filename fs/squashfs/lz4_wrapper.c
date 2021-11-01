@@ -101,7 +101,11 @@ static int lz4_uncompress(struct squashfs_sb_info *msblk, void *strm,
 	while (bio_next_segment(bio, &iter_all)) {
 		int avail = min(bytes, ((int)bvec->bv_len) - offset);
 
+<<<<<<< HEAD
 		data = bvec_virt(bvec);
+=======
+		data = page_address(bvec->bv_page) + bvec->bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		memcpy(buff, data + offset, avail);
 		buff += avail;
 		bytes -= avail;

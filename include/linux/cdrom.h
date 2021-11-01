@@ -86,6 +86,7 @@ struct cdrom_device_ops {
 	/* play stuff */
 	int (*audio_ioctl) (struct cdrom_device_info *,unsigned int, void *);
 
+<<<<<<< HEAD
 	/* handle uniform packets for scsi type devices (scsi,atapi) */
 	int (*generic_packet) (struct cdrom_device_info *,
 			       struct packet_command *);
@@ -93,6 +94,13 @@ struct cdrom_device_ops {
 			       u32 lba, u32 nframes, u8 *last_sense);
 /* driver specifications */
 	const int capability;   /* capability flags */
+=======
+/* driver specifications */
+	const int capability;   /* capability flags */
+	/* handle uniform packets for scsi type devices (scsi,atapi) */
+	int (*generic_packet) (struct cdrom_device_info *,
+			       struct packet_command *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 int cdrom_multisession(struct cdrom_device_info *cdi,

@@ -33,7 +33,11 @@
 // Number of registers
 #define CAPT_NOF_REGS                             16
 
+<<<<<<< HEAD
 // Register id's of MMIO slave accessible registers
+=======
+// Register id's of MMIO slave accesible registers
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CAPT_START_MODE_REG_ID                    0
 #define CAPT_START_ADDR_REG_ID                    1
 #define CAPT_MEM_REGION_SIZE_REG_ID               2

@@ -922,7 +922,11 @@ static int vmbus_probe(struct device *child_device)
 /*
  * vmbus_remove - Remove a vmbus device
  */
+<<<<<<< HEAD
 static void vmbus_remove(struct device *child_device)
+=======
+static int vmbus_remove(struct device *child_device)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct hv_driver *drv;
 	struct hv_device *dev = device_to_hv_device(child_device);
@@ -932,8 +936,16 @@ static void vmbus_remove(struct device *child_device)
 		if (drv->remove)
 			drv->remove(dev);
 	}
+<<<<<<< HEAD
 }
 
+=======
+
+	return 0;
+}
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * vmbus_shutdown - Shutdown a vmbus device
  */

@@ -203,7 +203,11 @@ disable_runtimepm:
 	return ret;
 }
 
+<<<<<<< HEAD
 static void sdio_bus_remove(struct device *dev)
+=======
+static int sdio_bus_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sdio_driver *drv = to_sdio_driver(dev->driver);
 	struct sdio_func *func = dev_to_sdio_func(dev);
@@ -232,6 +236,11 @@ static void sdio_bus_remove(struct device *dev)
 		pm_runtime_put_sync(dev);
 
 	dev_pm_domain_detach(dev, false);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct dev_pm_ops sdio_bus_pm_ops = {

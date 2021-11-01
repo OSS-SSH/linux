@@ -580,7 +580,11 @@ static int meson_nfc_rw_cmd_prepare_and_execute(struct nand_chip *nand,
 	u32 *addrs = nfc->cmdfifo.rw.addrs;
 	u32 cs = nfc->param.chip_select;
 	u32 cmd0, cmd_num, row_start;
+<<<<<<< HEAD
 	int i;
+=======
+	int ret = 0, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cmd_num = sizeof(struct nand_rw_cmd) / sizeof(int);
 
@@ -620,7 +624,11 @@ static int meson_nfc_rw_cmd_prepare_and_execute(struct nand_chip *nand,
 		meson_nfc_cmd_idle(nfc, nfc->timing.tadl);
 	}
 
+<<<<<<< HEAD
 	return 0;
+=======
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int meson_nfc_write_page_sub(struct nand_chip *nand,

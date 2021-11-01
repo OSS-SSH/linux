@@ -390,7 +390,12 @@ struct buffer_head *udf_expand_dir_adinicb(struct inode *inode,
 		dfibh.eoffset += (sfibh.eoffset - sfibh.soffset);
 		dfi = (struct fileIdentDesc *)(dbh->b_data + dfibh.soffset);
 		if (udf_write_fi(inode, sfi, dfi, &dfibh, sfi->impUse,
+<<<<<<< HEAD
 				 udf_get_fi_ident(sfi))) {
+=======
+				 sfi->fileIdent +
+					le16_to_cpu(sfi->lengthOfImpUse))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			iinfo->i_alloc_type = ICBTAG_FLAG_AD_IN_ICB;
 			brelse(dbh);
 			return NULL;

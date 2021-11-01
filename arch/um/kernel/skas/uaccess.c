@@ -189,14 +189,21 @@ static int strncpy_chunk_from_user(unsigned long from, int len, void *arg)
 	return 0;
 }
 
+<<<<<<< HEAD
 long strncpy_from_user(char *dst, const char __user *src, long count)
+=======
+long __strncpy_from_user(char *dst, const char __user *src, long count)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	long n;
 	char *ptr = dst;
 
+<<<<<<< HEAD
 	if (!access_ok(src, 1))
 		return -EFAULT;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (uaccess_kernel()) {
 		strncpy(dst, (__force void *) src, count);
 		return strnlen(dst, count);
@@ -208,7 +215,11 @@ long strncpy_from_user(char *dst, const char __user *src, long count)
 		return -EFAULT;
 	return strnlen(dst, count);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(strncpy_from_user);
+=======
+EXPORT_SYMBOL(__strncpy_from_user);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int clear_chunk(unsigned long addr, int len, void *unused)
 {
@@ -239,6 +250,7 @@ static int strnlen_chunk(unsigned long str, int len, void *arg)
 	return 0;
 }
 
+<<<<<<< HEAD
 long strnlen_user(const char __user *str, long len)
 {
 	int count = 0, n;
@@ -246,6 +258,12 @@ long strnlen_user(const char __user *str, long len)
 	if (!access_ok(str, 1))
 		return -EFAULT;
 
+=======
+long __strnlen_user(const void __user *str, long len)
+{
+	int count = 0, n;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (uaccess_kernel())
 		return strnlen((__force char*)str, len) + 1;
 
@@ -254,7 +272,11 @@ long strnlen_user(const char __user *str, long len)
 		return count + 1;
 	return 0;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(strnlen_user);
+=======
+EXPORT_SYMBOL(__strnlen_user);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * arch_futex_atomic_op_inuser() - Atomic arithmetic operation with constant

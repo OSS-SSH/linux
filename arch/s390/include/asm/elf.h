@@ -91,6 +91,7 @@
 /* Keep this the last entry.  */
 #define R_390_NUM	61
 
+<<<<<<< HEAD
 enum {
 	HWCAP_NR_ESAN3		= 0,
 	HWCAP_NR_ZARCH		= 1,
@@ -142,6 +143,31 @@ enum {
 #define HWCAP_NNPA		BIT(HWCAP_NR_NNPA)
 #define HWCAP_PCI_MIO		BIT(HWCAP_NR_PCI_MIO)
 #define HWCAP_SIE		BIT(HWCAP_NR_SIE)
+=======
+/* Bits present in AT_HWCAP. */
+#define HWCAP_S390_ESAN3	1
+#define HWCAP_S390_ZARCH	2
+#define HWCAP_S390_STFLE	4
+#define HWCAP_S390_MSA		8
+#define HWCAP_S390_LDISP	16
+#define HWCAP_S390_EIMM		32
+#define HWCAP_S390_DFP		64
+#define HWCAP_S390_HPAGE	128
+#define HWCAP_S390_ETF3EH	256
+#define HWCAP_S390_HIGH_GPRS	512
+#define HWCAP_S390_TE		1024
+#define HWCAP_S390_VXRS		2048
+#define HWCAP_S390_VXRS_BCD	4096
+#define HWCAP_S390_VXRS_EXT	8192
+#define HWCAP_S390_GS		16384
+#define HWCAP_S390_VXRS_EXT2	32768
+#define HWCAP_S390_VXRS_PDE	65536
+#define HWCAP_S390_SORT		131072
+#define HWCAP_S390_DFLT		262144
+
+/* Internal bits, not exposed via elf */
+#define HWCAP_INT_SIE		1UL
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * These are used to set parameters in the core dumps.
@@ -237,6 +263,13 @@ struct arch_elf_state {
 extern unsigned long elf_hwcap;
 #define ELF_HWCAP (elf_hwcap)
 
+<<<<<<< HEAD
+=======
+/* Internal hardware capabilities, not exposed via elf */
+
+extern unsigned long int_hwcap;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* This yields a string that ld.so will use to load implementation
    specific libraries for optimization.  This is more specific in
    intent than poking at uname or /proc/cpuinfo.

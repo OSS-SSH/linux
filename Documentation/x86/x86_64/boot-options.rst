@@ -126,7 +126,11 @@ Idle loop
 Rebooting
 =========
 
+<<<<<<< HEAD
    reboot=b[ios] | t[riple] | k[bd] | a[cpi] | e[fi] | p[ci] [, [w]arm | [c]old]
+=======
+   reboot=b[ios] | t[riple] | k[bd] | a[cpi] | e[fi] [, [w]arm | [c]old]
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       bios
         Use the CPU reboot vector for warm reset
       warm
@@ -145,8 +149,11 @@ Rebooting
         Use efi reset_system runtime service. If EFI is not configured or
         the EFI reset does not work, the reboot path attempts the reset using
         the keyboard controller.
+<<<<<<< HEAD
       pci
         Use a write to the PCI config space register 0xcf9 to trigger reboot.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
    Using warm reset will be much faster especially on big memory
    systems because the BIOS will not go through the memory check.
@@ -157,6 +164,7 @@ Rebooting
      Don't stop other CPUs on reboot. This can make reboot more reliable
      in some cases.
 
+<<<<<<< HEAD
    reboot=default
      There are some built-in platform specific "quirks" - you may see:
      "reboot: <name> series board detected. Selecting <type> for reboots."
@@ -164,6 +172,8 @@ Rebooting
      newer BIOS, or newer board) using this option will ignore the built-in
      quirk table, and use the generic default reboot actions.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Non Executable Mappings
 =======================
 

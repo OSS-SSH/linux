@@ -49,8 +49,15 @@ static u32 mii_get_an(struct mii_if_info *mii, u16 addr)
  *
  * The @ecmd parameter is expected to have been cleared before calling
  * mii_ethtool_gset().
+<<<<<<< HEAD
  */
 void mii_ethtool_gset(struct mii_if_info *mii, struct ethtool_cmd *ecmd)
+=======
+ *
+ * Returns 0 for success, negative on error.
+ */
+int mii_ethtool_gset(struct mii_if_info *mii, struct ethtool_cmd *ecmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *dev = mii->dev;
 	u16 bmcr, bmsr, ctrl1000 = 0, stat1000 = 0;
@@ -129,6 +136,11 @@ void mii_ethtool_gset(struct mii_if_info *mii, struct ethtool_cmd *ecmd)
 	mii->full_duplex = ecmd->duplex;
 
 	/* ignore maxtxpkt, maxrxpkt for now */
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

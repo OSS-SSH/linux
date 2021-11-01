@@ -37,7 +37,11 @@ void ipc_uevent_send(struct device *dev, char *uevent)
 
 	/* Store the device and event information */
 	info->dev = dev;
+<<<<<<< HEAD
 	snprintf(info->uevent, MAX_UEVENT_LEN, "IOSM_EVENT=%s", uevent);
+=======
+	snprintf(info->uevent, MAX_UEVENT_LEN, "%s: %s", dev_name(dev), uevent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Schedule uevent in process context using work queue */
 	schedule_work(&info->work);

@@ -552,6 +552,10 @@ struct mlx4_en_priv {
 
 	struct mlx4_hwq_resources res;
 	int link_state;
+<<<<<<< HEAD
+=======
+	int last_link_state;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool port_up;
 	int port;
 	int registered;

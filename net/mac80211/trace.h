@@ -2825,6 +2825,7 @@ DEFINE_EVENT(sta_flag_evt, drv_sta_set_decap_offload,
 	TP_ARGS(local, sdata, sta, enabled)
 );
 
+<<<<<<< HEAD
 TRACE_EVENT(drv_add_twt_setup,
 	TP_PROTO(struct ieee80211_local *local,
 		 struct ieee80211_sta *sta,
@@ -2892,6 +2893,8 @@ TRACE_EVENT(drv_twt_teardown_request,
 	)
 );
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* !__MAC80211_DRIVER_TRACE || TRACE_HEADER_MULTI_READ */
 
 #undef TRACE_INCLUDE_PATH

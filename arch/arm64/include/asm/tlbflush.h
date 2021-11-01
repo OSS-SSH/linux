@@ -245,10 +245,16 @@ static inline void flush_tlb_all(void)
 
 static inline void flush_tlb_mm(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 	unsigned long asid;
 
 	dsb(ishst);
 	asid = __TLBI_VADDR(0, ASID(mm));
+=======
+	unsigned long asid = __TLBI_VADDR(0, ASID(mm));
+
+	dsb(ishst);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__tlbi(aside1is, asid);
 	__tlbi_user(aside1is, asid);
 	dsb(ish);
@@ -257,10 +263,16 @@ static inline void flush_tlb_mm(struct mm_struct *mm)
 static inline void flush_tlb_page_nosync(struct vm_area_struct *vma,
 					 unsigned long uaddr)
 {
+<<<<<<< HEAD
 	unsigned long addr;
 
 	dsb(ishst);
 	addr = __TLBI_VADDR(uaddr, ASID(vma->vm_mm));
+=======
+	unsigned long addr = __TLBI_VADDR(uaddr, ASID(vma->vm_mm));
+
+	dsb(ishst);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__tlbi(vale1is, addr);
 	__tlbi_user(vale1is, addr);
 }
@@ -285,7 +297,13 @@ static inline void __flush_tlb_range(struct vm_area_struct *vma,
 {
 	int num = 0;
 	int scale = 0;
+<<<<<<< HEAD
 	unsigned long asid, addr, pages;
+=======
+	unsigned long asid = ASID(vma->vm_mm);
+	unsigned long addr;
+	unsigned long pages;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	start = round_down(start, stride);
 	end = round_up(end, stride);
@@ -305,11 +323,18 @@ static inline void __flush_tlb_range(struct vm_area_struct *vma,
 	}
 
 	dsb(ishst);
+<<<<<<< HEAD
 	asid = ASID(vma->vm_mm);
 
 	/*
 	 * When the CPU does not support TLB range operations, flush the TLB
 	 * entries one by one at the granularity of 'stride'. If the TLB
+=======
+
+	/*
+	 * When the CPU does not support TLB range operations, flush the TLB
+	 * entries one by one at the granularity of 'stride'. If the the TLB
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * range ops are supported, then:
 	 *
 	 * 1. If 'pages' is odd, flush the first page through non-range

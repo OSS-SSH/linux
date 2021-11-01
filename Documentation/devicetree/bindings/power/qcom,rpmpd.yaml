@@ -30,7 +30,10 @@ properties:
       - qcom,sc8180x-rpmhpd
       - qcom,sdm845-rpmhpd
       - qcom,sdx55-rpmhpd
+<<<<<<< HEAD
       - qcom,sm6115-rpmpd
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - qcom,sm8150-rpmhpd
       - qcom,sm8250-rpmhpd
       - qcom,sm8350-rpmhpd

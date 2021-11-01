@@ -980,7 +980,11 @@ int arm_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 {
 	const struct dma_map_ops *ops = get_dma_ops(dev);
 	struct scatterlist *s;
+<<<<<<< HEAD
 	int i, j, ret;
+=======
+	int i, j;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for_each_sg(sg, s, nents, i) {
 #ifdef CONFIG_NEED_SG_DMA_LENGTH
@@ -988,17 +992,26 @@ int arm_dma_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 #endif
 		s->dma_address = ops->map_page(dev, sg_page(s), s->offset,
 						s->length, dir, attrs);
+<<<<<<< HEAD
 		if (dma_mapping_error(dev, s->dma_address)) {
 			ret = -EIO;
 			goto bad_mapping;
 		}
+=======
+		if (dma_mapping_error(dev, s->dma_address))
+			goto bad_mapping;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return nents;
 
  bad_mapping:
 	for_each_sg(sg, s, i, j)
 		ops->unmap_page(dev, sg_dma_address(s), sg_dma_len(s), dir, attrs);
+<<<<<<< HEAD
 	return ret;
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1624,7 +1637,11 @@ static int __iommu_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 		     bool is_coherent)
 {
 	struct scatterlist *s = sg, *dma = sg, *start = sg;
+<<<<<<< HEAD
 	int i, count = 0, ret;
+=======
+	int i, count = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int offset = s->offset;
 	unsigned int size = s->offset + s->length;
 	unsigned int max = dma_get_max_seg_size(dev);
@@ -1632,6 +1649,7 @@ static int __iommu_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 	for (i = 1; i < nents; i++) {
 		s = sg_next(s);
 
+<<<<<<< HEAD
 		s->dma_length = 0;
 
 		if (s->offset || (size & ~PAGE_MASK) || size + s->length > max) {
@@ -1639,6 +1657,14 @@ static int __iommu_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 					     &dma->dma_address, dir, attrs,
 					     is_coherent);
 			if (ret < 0)
+=======
+		s->dma_address = DMA_MAPPING_ERROR;
+		s->dma_length = 0;
+
+		if (s->offset || (size & ~PAGE_MASK) || size + s->length > max) {
+			if (__map_sg_chunk(dev, start, size, &dma->dma_address,
+			    dir, attrs, is_coherent) < 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				goto bad_mapping;
 
 			dma->dma_address += offset;
@@ -1651,9 +1677,14 @@ static int __iommu_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 		}
 		size += s->length;
 	}
+<<<<<<< HEAD
 	ret = __map_sg_chunk(dev, start, size, &dma->dma_address, dir, attrs,
 			     is_coherent);
 	if (ret < 0)
+=======
+	if (__map_sg_chunk(dev, start, size, &dma->dma_address, dir, attrs,
+		is_coherent) < 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto bad_mapping;
 
 	dma->dma_address += offset;
@@ -1664,9 +1695,13 @@ static int __iommu_map_sg(struct device *dev, struct scatterlist *sg, int nents,
 bad_mapping:
 	for_each_sg(sg, s, count, i)
 		__iommu_remove_mapping(dev, sg_dma_address(s), sg_dma_len(s));
+<<<<<<< HEAD
 	if (ret == -ENOMEM)
 		return ret;
 	return -EINVAL;
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

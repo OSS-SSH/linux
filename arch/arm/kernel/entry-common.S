@@ -49,6 +49,13 @@ __ret_fast_syscall:
  UNWIND(.fnstart	)
  UNWIND(.cantunwind	)
 	disable_irq_notrace			@ disable interrupts
+<<<<<<< HEAD
+=======
+	ldr	r2, [tsk, #TI_ADDR_LIMIT]
+	ldr	r1, =TASK_SIZE
+	cmp	r2, r1
+	blne	addr_limit_check_failed
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ldr	r1, [tsk, #TI_FLAGS]		@ re-check for syscall tracing
 	movs	r1, r1, lsl #16
 	bne	fast_work_pending
@@ -83,6 +90,13 @@ __ret_fast_syscall:
 	bl	do_rseq_syscall
 #endif
 	disable_irq_notrace			@ disable interrupts
+<<<<<<< HEAD
+=======
+	ldr	r2, [tsk, #TI_ADDR_LIMIT]
+	ldr     r1, =TASK_SIZE
+	cmp     r2, r1
+	blne	addr_limit_check_failed
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ldr	r1, [tsk, #TI_FLAGS]		@ re-check for syscall tracing
 	movs	r1, r1, lsl #16
 	beq	no_work_pending
@@ -121,6 +135,13 @@ ret_slow_syscall:
 #endif
 	disable_irq_notrace			@ disable interrupts
 ENTRY(ret_to_user_from_irq)
+<<<<<<< HEAD
+=======
+	ldr	r2, [tsk, #TI_ADDR_LIMIT]
+	ldr     r1, =TASK_SIZE
+	cmp	r2, r1
+	blne	addr_limit_check_failed
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ldr	r1, [tsk, #TI_FLAGS]
 	movs	r1, r1, lsl #16
 	bne	slow_work_pending
@@ -214,7 +235,10 @@ ENTRY(vector_swi)
 	/* saved_psr and saved_pc are now dead */
 
 	uaccess_disable tbl
+<<<<<<< HEAD
 	get_thread_info tsk
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	adr	tbl, sys_call_table		@ load syscall table pointer
 
@@ -226,17 +250,26 @@ ENTRY(vector_swi)
 	 * get the old ABI syscall table address.
 	 */
 	bics	r10, r10, #0xff000000
+<<<<<<< HEAD
 	strne	r10, [tsk, #TI_ABI_SYSCALL]
 	streq	scno, [tsk, #TI_ABI_SYSCALL]
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	eorne	scno, r10, #__NR_OABI_SYSCALL_BASE
 	ldrne	tbl, =sys_oabi_call_table
 #elif !defined(CONFIG_AEABI)
 	bic	scno, scno, #0xff000000		@ mask off SWI op-code
+<<<<<<< HEAD
 	str	scno, [tsk, #TI_ABI_SYSCALL]
 	eor	scno, scno, #__NR_SYSCALL_BASE	@ check OS number
 #else
 	str	scno, [tsk, #TI_ABI_SYSCALL]
 #endif
+=======
+	eor	scno, scno, #__NR_SYSCALL_BASE	@ check OS number
+#endif
+	get_thread_info tsk
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Reload the registers that may have been corrupted on entry to
 	 * the syscall assembly (by tracing or context tracking.)
@@ -281,6 +314,10 @@ ENDPROC(vector_swi)
 	 * context switches, and waiting for our parent to respond.
 	 */
 __sys_trace:
+<<<<<<< HEAD
+=======
+	mov	r1, scno
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	add	r0, sp, #S_OFF
 	bl	syscall_trace_enter
 	mov	scno, r0

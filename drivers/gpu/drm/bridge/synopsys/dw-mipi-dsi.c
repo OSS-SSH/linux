@@ -246,7 +246,10 @@ struct dw_mipi_dsi {
 
 	struct clk *pclk;
 
+<<<<<<< HEAD
 	bool device_found;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int lane_mbps; /* per lane */
 	u32 channel;
 	u32 lanes;
@@ -310,6 +313,7 @@ static inline u32 dsi_read(struct dw_mipi_dsi *dsi, u32 reg)
 	return readl(dsi->base + reg);
 }
 
+<<<<<<< HEAD
 static int dw_mipi_dsi_panel_or_bridge(struct dw_mipi_dsi *dsi,
 				       struct device_node *node)
 {
@@ -336,11 +340,18 @@ static int dw_mipi_dsi_panel_or_bridge(struct dw_mipi_dsi *dsi,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int dw_mipi_dsi_host_attach(struct mipi_dsi_host *host,
 				   struct mipi_dsi_device *device)
 {
 	struct dw_mipi_dsi *dsi = host_to_dsi(host);
 	const struct dw_mipi_dsi_plat_data *pdata = dsi->plat_data;
+<<<<<<< HEAD
+=======
+	struct drm_bridge *bridge;
+	struct drm_panel *panel;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	if (device->lanes > dsi->plat_data->max_data_lanes) {
@@ -354,6 +365,7 @@ static int dw_mipi_dsi_host_attach(struct mipi_dsi_host *host,
 	dsi->format = device->format;
 	dsi->mode_flags = device->mode_flags;
 
+<<<<<<< HEAD
 	if (!dsi->device_found) {
 		ret = dw_mipi_dsi_panel_or_bridge(dsi, host->dev->of_node);
 		if (ret)
@@ -362,6 +374,24 @@ static int dw_mipi_dsi_host_attach(struct mipi_dsi_host *host,
 		dsi->device_found = true;
 	}
 
+=======
+	ret = drm_of_find_panel_or_bridge(host->dev->of_node, 1, 0,
+					  &panel, &bridge);
+	if (ret)
+		return ret;
+
+	if (panel) {
+		bridge = drm_panel_bridge_add_typed(panel,
+						    DRM_MODE_CONNECTOR_DSI);
+		if (IS_ERR(bridge))
+			return PTR_ERR(bridge);
+	}
+
+	dsi->panel_bridge = bridge;
+
+	drm_bridge_add(&dsi->bridge);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (pdata->host_ops && pdata->host_ops->attach) {
 		ret = pdata->host_ops->attach(pdata->priv_data, device);
 		if (ret < 0)
@@ -1016,6 +1046,7 @@ static int dw_mipi_dsi_bridge_attach(struct drm_bridge *bridge,
 	/* Set the encoder type as caller does not know it */
 	bridge->encoder->encoder_type = DRM_MODE_ENCODER_DSI;
 
+<<<<<<< HEAD
 	if (!dsi->device_found) {
 		int ret;
 
@@ -1026,6 +1057,8 @@ static int dw_mipi_dsi_bridge_attach(struct drm_bridge *bridge,
 		dsi->device_found = true;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Attach the panel-bridge to the dsi bridge */
 	return drm_bridge_attach(bridge->encoder, dsi->panel_bridge, bridge,
 				 flags);
@@ -1208,7 +1241,10 @@ __dw_mipi_dsi_probe(struct platform_device *pdev,
 #ifdef CONFIG_OF
 	dsi->bridge.of_node = pdev->dev.of_node;
 #endif
+<<<<<<< HEAD
 	drm_bridge_add(&dsi->bridge);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return dsi;
 }
@@ -1257,7 +1293,19 @@ EXPORT_SYMBOL_GPL(dw_mipi_dsi_remove);
  */
 int dw_mipi_dsi_bind(struct dw_mipi_dsi *dsi, struct drm_encoder *encoder)
 {
+<<<<<<< HEAD
 	return drm_bridge_attach(encoder, &dsi->bridge, NULL, 0);
+=======
+	int ret;
+
+	ret = drm_bridge_attach(encoder, &dsi->bridge, NULL, 0);
+	if (ret) {
+		DRM_ERROR("Failed to initialize bridge with drm\n");
+		return ret;
+	}
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(dw_mipi_dsi_bind);
 

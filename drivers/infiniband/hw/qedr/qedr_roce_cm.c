@@ -319,19 +319,33 @@ err1:
 	return rc;
 }
 
+<<<<<<< HEAD
 int qedr_create_gsi_qp(struct qedr_dev *dev, struct ib_qp_init_attr *attrs,
 		       struct qedr_qp *qp)
+=======
+struct ib_qp *qedr_create_gsi_qp(struct qedr_dev *dev,
+				 struct ib_qp_init_attr *attrs,
+				 struct qedr_qp *qp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int rc;
 
 	rc = qedr_check_gsi_qp_attrs(dev, attrs);
 	if (rc)
+<<<<<<< HEAD
 		return rc;
+=======
+		return ERR_PTR(rc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rc = qedr_ll2_start(dev, attrs, qp);
 	if (rc) {
 		DP_ERR(dev, "create gsi qp: failed on ll2 start. rc=%d\n", rc);
+<<<<<<< HEAD
 		return rc;
+=======
+		return ERR_PTR(rc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* create QP */
@@ -358,7 +372,11 @@ int qedr_create_gsi_qp(struct qedr_dev *dev, struct ib_qp_init_attr *attrs,
 
 	DP_DEBUG(dev, QEDR_MSG_GSI, "created GSI QP %p\n", qp);
 
+<<<<<<< HEAD
 	return 0;
+=======
+	return &qp->ibqp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err:
 	kfree(qp->rqe_wr_id);
@@ -367,7 +385,11 @@ err:
 	if (rc)
 		DP_ERR(dev, "create gsi qp: failed destroy on create\n");
 
+<<<<<<< HEAD
 	return -ENOMEM;
+=======
+	return ERR_PTR(-ENOMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int qedr_destroy_gsi_qp(struct qedr_dev *dev)

@@ -38,6 +38,10 @@
 #include <drm/drm_drv.h>
 #include <drm/drm_file.h>
 #include <drm/drm_ioctl.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_print.h>
 #include <drm/i810_drm.h>
 
@@ -208,7 +212,11 @@ static int i810_dma_cleanup(struct drm_device *dev)
 	 * is freed, it's too late.
 	 */
 	if (drm_core_check_feature(dev, DRIVER_HAVE_IRQ) && dev->irq_enabled)
+<<<<<<< HEAD
 		drm_legacy_irq_uninstall(dev);
+=======
+		drm_irq_uninstall(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (dev->dev_private) {
 		int i;

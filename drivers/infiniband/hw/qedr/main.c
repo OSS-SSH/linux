@@ -233,7 +233,10 @@ static const struct ib_device_ops qedr_dev_ops = {
 	INIT_RDMA_OBJ_SIZE(ib_ah, qedr_ah, ibah),
 	INIT_RDMA_OBJ_SIZE(ib_cq, qedr_cq, ibcq),
 	INIT_RDMA_OBJ_SIZE(ib_pd, qedr_pd, ibpd),
+<<<<<<< HEAD
 	INIT_RDMA_OBJ_SIZE(ib_qp, qedr_qp, ibqp),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INIT_RDMA_OBJ_SIZE(ib_srq, qedr_srq, ibsrq),
 	INIT_RDMA_OBJ_SIZE(ib_xrcd, qedr_xrcd, ibxrcd),
 	INIT_RDMA_OBJ_SIZE(ib_ucontext, qedr_ucontext, ibucontext),

@@ -12,7 +12,11 @@ SYNOPSIS
 
 	**bpftool** [*OPTIONS*] **perf** *COMMAND*
 
+<<<<<<< HEAD
 	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | { **-d** | **--debug** } }
+=======
+	*OPTIONS* := { [{ **-j** | **--json** }] [{ **-p** | **--pretty** }] }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*COMMANDS* :=
 	{ **show** | **list** | **help** }

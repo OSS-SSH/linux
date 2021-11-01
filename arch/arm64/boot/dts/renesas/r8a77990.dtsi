@@ -290,10 +290,15 @@
 		i2c_dvfs: i2c@e60b0000 {
 			#address-cells = <1>;
 			#size-cells = <0>;
+<<<<<<< HEAD
 			compatible = "renesas,iic-r8a77990",
 				     "renesas,rcar-gen3-iic",
 				     "renesas,rmobile-iic";
 			reg = <0 0xe60b0000 0 0x425>;
+=======
+			compatible = "renesas,iic-r8a77990";
+			reg = <0 0xe60b0000 0 0x15>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			interrupts = <GIC_SPI 173 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&cpg CPG_MOD 926>;
 			power-domains = <&sysc R8A77990_PD_ALWAYS_ON>;

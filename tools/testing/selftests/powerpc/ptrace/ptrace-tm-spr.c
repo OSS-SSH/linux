@@ -114,7 +114,10 @@ int ptrace_tm_spr(void)
 	int ret, status;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	shm_id = shmget(IPC_PRIVATE, sizeof(struct shared), 0777|IPC_CREAT);
 	shm_id1 = shmget(IPC_PRIVATE, sizeof(int), 0777|IPC_CREAT);
 	pid = fork();

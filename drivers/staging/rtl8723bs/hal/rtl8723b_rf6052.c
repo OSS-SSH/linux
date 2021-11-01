@@ -63,14 +63,24 @@ void PHY_RF6052SetBandwidth8723B(
 	switch (Bandwidth) {
 	case CHANNEL_WIDTH_20:
 		pHalData->RfRegChnlVal[0] = ((pHalData->RfRegChnlVal[0] & 0xfffff3ff) | BIT10 | BIT11);
+<<<<<<< HEAD
 		PHY_SetRFReg(Adapter, RF_PATH_A, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
 		PHY_SetRFReg(Adapter, RF_PATH_B, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
+=======
+		PHY_SetRFReg(Adapter, ODM_RF_PATH_A, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
+		PHY_SetRFReg(Adapter, ODM_RF_PATH_B, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 
 	case CHANNEL_WIDTH_40:
 		pHalData->RfRegChnlVal[0] = ((pHalData->RfRegChnlVal[0] & 0xfffff3ff) | BIT10);
+<<<<<<< HEAD
 		PHY_SetRFReg(Adapter, RF_PATH_A, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
 		PHY_SetRFReg(Adapter, RF_PATH_B, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
+=======
+		PHY_SetRFReg(Adapter, ODM_RF_PATH_A, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
+		PHY_SetRFReg(Adapter, ODM_RF_PATH_B, RF_CHNLBW, bRFRegOffsetMask, pHalData->RfRegChnlVal[0]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 
 	default:
@@ -97,9 +107,17 @@ static int phy_RF6052_Config_ParaFile(struct adapter *Adapter)
 		/*----Store original RFENV control type----*/
 		switch (eRFPath) {
 		case RF_PATH_A:
+<<<<<<< HEAD
 			u4RegValue = PHY_QueryBBReg(Adapter, pPhyReg->rfintfs, bRFSI_RFENV);
 			break;
 		case RF_PATH_B:
+=======
+		case RF_PATH_C:
+			u4RegValue = PHY_QueryBBReg(Adapter, pPhyReg->rfintfs, bRFSI_RFENV);
+			break;
+		case RF_PATH_B:
+		case RF_PATH_D:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			u4RegValue = PHY_QueryBBReg(Adapter, pPhyReg->rfintfs, bRFSI_RFENV << 16);
 			break;
 		}
@@ -126,14 +144,28 @@ static int phy_RF6052_Config_ParaFile(struct adapter *Adapter)
 			ODM_ConfigRFWithHeaderFile(&pHalData->odmpriv,
 						   CONFIG_RF_RADIO, eRFPath);
 			break;
+<<<<<<< HEAD
+=======
+		case RF_PATH_C:
+		case RF_PATH_D:
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		/*----Restore RFENV control type----*/
 		switch (eRFPath) {
 		case RF_PATH_A:
+<<<<<<< HEAD
 			PHY_SetBBReg(Adapter, pPhyReg->rfintfs, bRFSI_RFENV, u4RegValue);
 			break;
 		case RF_PATH_B:
+=======
+		case RF_PATH_C:
+			PHY_SetBBReg(Adapter, pPhyReg->rfintfs, bRFSI_RFENV, u4RegValue);
+			break;
+		case RF_PATH_B:
+		case RF_PATH_D:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			PHY_SetBBReg(Adapter, pPhyReg->rfintfs, bRFSI_RFENV << 16, u4RegValue);
 			break;
 		}
@@ -156,7 +188,15 @@ int PHY_RF6052_Config8723B(struct adapter *Adapter)
 	/*  */
 	/*  Initialize general global value */
 	/*  */
+<<<<<<< HEAD
 	pHalData->NumTotalRFPath = 1;
+=======
+	/*  TODO: Extend RF_PATH_C and RF_PATH_D in the future */
+	if (pHalData->rf_type == RF_1T1R)
+		pHalData->NumTotalRFPath = 1;
+	else
+		pHalData->NumTotalRFPath = 2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*  */
 	/*  Config BB and RF */

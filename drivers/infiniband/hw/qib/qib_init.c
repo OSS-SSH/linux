@@ -1335,8 +1335,13 @@ static void cleanup_device_data(struct qib_devdata *dd)
 			for (i = ctxt_tidbase; i < maxtid; i++) {
 				if (!tmpp[i])
 					continue;
+<<<<<<< HEAD
 				dma_unmap_page(&dd->pcidev->dev, tmpd[i],
 					       PAGE_SIZE, DMA_FROM_DEVICE);
+=======
+				pci_unmap_page(dd->pcidev, tmpd[i],
+					       PAGE_SIZE, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				qib_release_user_pages(&tmpp[i], 1);
 				tmpp[i] = NULL;
 			}

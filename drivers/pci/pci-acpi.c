@@ -17,7 +17,10 @@
 #include <linux/pci-acpi.h>
 #include <linux/pm_runtime.h>
 #include <linux/pm_qos.h>
+<<<<<<< HEAD
 #include <linux/rwsem.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "pci.h"
 
 /*
@@ -935,6 +938,7 @@ static pci_power_t acpi_pci_choose_state(struct pci_dev *pdev)
 
 static struct acpi_device *acpi_pci_find_companion(struct device *dev);
 
+<<<<<<< HEAD
 void pci_set_acpi_fwnode(struct pci_dev *dev)
 {
 	if (!dev_fwnode(&dev->dev) && !pci_dev_is_added(dev))
@@ -979,11 +983,20 @@ static bool acpi_pci_bridge_d3(struct pci_dev *dev)
 	const union acpi_object *obj;
 	struct acpi_device *adev;
 	struct pci_dev *rpdev;
+=======
+static bool acpi_pci_bridge_d3(struct pci_dev *dev)
+{
+	const struct fwnode_handle *fwnode;
+	struct acpi_device *adev;
+	struct pci_dev *root;
+	u8 val;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!dev->is_hotplug_bridge)
 		return false;
 
 	/* Assume D3 support if the bridge is power-manageable by ACPI. */
+<<<<<<< HEAD
 	if (acpi_pci_power_manageable(dev))
 		return true;
 
@@ -1006,6 +1019,49 @@ static bool acpi_pci_bridge_d3(struct pci_dev *dev)
 		return false;
 
 	return obj->integer.value == 1;
+=======
+	adev = ACPI_COMPANION(&dev->dev);
+	if (!adev && !pci_dev_is_added(dev)) {
+		adev = acpi_pci_find_companion(&dev->dev);
+		ACPI_COMPANION_SET(&dev->dev, adev);
+	}
+
+	if (adev && acpi_device_power_manageable(adev))
+		return true;
+
+	/*
+	 * Look for a special _DSD property for the root port and if it
+	 * is set we know the hierarchy behind it supports D3 just fine.
+	 */
+	root = pcie_find_root_port(dev);
+	if (!root)
+		return false;
+
+	adev = ACPI_COMPANION(&root->dev);
+	if (root == dev) {
+		/*
+		 * It is possible that the ACPI companion is not yet bound
+		 * for the root port so look it up manually here.
+		 */
+		if (!adev && !pci_dev_is_added(root))
+			adev = acpi_pci_find_companion(&root->dev);
+	}
+
+	if (!adev)
+		return false;
+
+	fwnode = acpi_fwnode_handle(adev);
+	if (fwnode_property_read_u8(fwnode, "HotPlugSupportInD3", &val))
+		return false;
+
+	return val == 1;
+}
+
+static bool acpi_pci_power_manageable(struct pci_dev *dev)
+{
+	struct acpi_device *adev = ACPI_COMPANION(&dev->dev);
+	return adev ? acpi_device_power_manageable(adev) : false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int acpi_pci_set_power_state(struct pci_dev *dev, pci_power_t state)
@@ -1179,6 +1235,7 @@ void acpi_pci_remove_bus(struct pci_bus *bus)
 }
 
 /* ACPI bus type */
+<<<<<<< HEAD
 
 
 static DECLARE_RWSEM(pci_acpi_companion_lookup_sem);
@@ -1242,6 +1299,8 @@ void pci_acpi_clear_companion_lookup_hook(void)
 }
 EXPORT_SYMBOL_GPL(pci_acpi_clear_companion_lookup_hook);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct acpi_device *acpi_pci_find_companion(struct device *dev)
 {
 	struct pci_dev *pci_dev = to_pci_dev(dev);
@@ -1249,6 +1308,7 @@ static struct acpi_device *acpi_pci_find_companion(struct device *dev)
 	bool check_children;
 	u64 addr;
 
+<<<<<<< HEAD
 	if (!dev->parent)
 		return NULL;
 
@@ -1262,6 +1322,8 @@ static struct acpi_device *acpi_pci_find_companion(struct device *dev)
 	if (adev)
 		return adev;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	check_children = pci_is_bridge(pci_dev);
 	/* Please ref to ACPI spec for the syntax of _ADR */
 	addr = (PCI_SLOT(pci_dev->devfn) << 16) | PCI_FUNC(pci_dev->devfn);

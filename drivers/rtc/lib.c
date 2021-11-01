@@ -6,8 +6,11 @@
  * Author: Alessandro Zummo <a.zummo@towertech.it>
  *
  * based on arch/arm/common/rtctime.c and other bits
+<<<<<<< HEAD
  *
  * Author: Cassio Neri <cassio.neri@gmail.com> (rtc_time64_to_tm)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/export.h>
@@ -24,6 +27,11 @@ static const unsigned short rtc_ydays[2][13] = {
 	{ 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366 }
 };
 
+<<<<<<< HEAD
+=======
+#define LEAPS_THRU_END_OF(y) ((y) / 4 - (y) / 100 + (y) / 400)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * The number of days in the month.
  */
@@ -42,6 +50,7 @@ int rtc_year_days(unsigned int day, unsigned int month, unsigned int year)
 }
 EXPORT_SYMBOL(rtc_year_days);
 
+<<<<<<< HEAD
 /**
  * rtc_time64_to_tm - converts time64_t to rtc_time.
  *
@@ -59,12 +68,24 @@ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 		day_of_year, month, day;
 	bool is_Jan_or_Feb, is_leap_year;
 
+=======
+/*
+ * rtc_time64_to_tm - Converts time64_t to rtc_time.
+ * Convert seconds since 01-01-1970 00:00:00 to Gregorian date.
+ */
+void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
+{
+	unsigned int month, year, secs;
+	int days;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* time must be positive */
 	days = div_s64_rem(time, 86400, &secs);
 
 	/* day of the week, 1970-01-01 was a Thursday */
 	tm->tm_wday = (days + 4) % 7;
 
+<<<<<<< HEAD
 	/*
 	 * The following algorithm is, basically, Proposition 6.3 of Neri
 	 * and Schneider [1]. In a few words: it works on the computational
@@ -131,6 +152,29 @@ void rtc_time64_to_tm(time64_t time, struct rtc_time *tm)
 	tm->tm_mon	= (int) month;
 	tm->tm_mday	= (int) day;
 	tm->tm_yday	= (int) day_of_year + 1;
+=======
+	year = 1970 + days / 365;
+	days -= (year - 1970) * 365
+		+ LEAPS_THRU_END_OF(year - 1)
+		- LEAPS_THRU_END_OF(1970 - 1);
+	while (days < 0) {
+		year -= 1;
+		days += 365 + is_leap_year(year);
+	}
+	tm->tm_year = year - 1900;
+	tm->tm_yday = days + 1;
+
+	for (month = 0; month < 11; month++) {
+		int newdays;
+
+		newdays = days - rtc_month_days(month, year);
+		if (newdays < 0)
+			break;
+		days = newdays;
+	}
+	tm->tm_mon = month;
+	tm->tm_mday = days + 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	tm->tm_hour = secs / 3600;
 	secs -= tm->tm_hour * 3600;

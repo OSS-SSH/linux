@@ -3,6 +3,7 @@
  * Copyright (C) 2014 Intel Corporation
  *
  * Adjustable fractional divider clock implementation.
+<<<<<<< HEAD
  * Uses rational best approximation algorithm.
  *
  * Output is calculated as
@@ -36,6 +37,10 @@
  * we get the denominator to satisfy the desired range (2) and
  * at the same time much much better result of m and n than simple
  * saturated values.
+=======
+ * Output rate = (m / n) * parent_rate.
+ * Uses rational best approximation algorithm.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/clk-provider.h>
@@ -45,8 +50,11 @@
 #include <linux/slab.h>
 #include <linux/rational.h>
 
+<<<<<<< HEAD
 #include "clk-fractional-divider.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline u32 clk_fd_readl(struct clk_fractional_divider *fd)
 {
 	if (fd->flags & CLK_FRAC_DIVIDER_BIG_ENDIAN)
@@ -101,17 +109,27 @@ static unsigned long clk_fd_recalc_rate(struct clk_hw *hw,
 	return ret;
 }
 
+<<<<<<< HEAD
 void clk_fractional_divider_general_approximation(struct clk_hw *hw,
 						  unsigned long rate,
 						  unsigned long *parent_rate,
 						  unsigned long *m, unsigned long *n)
 {
 	struct clk_fractional_divider *fd = to_clk_fd(hw);
+=======
+static void clk_fd_general_approximation(struct clk_hw *hw, unsigned long rate,
+					 unsigned long *parent_rate,
+					 unsigned long *m, unsigned long *n)
+{
+	struct clk_fractional_divider *fd = to_clk_fd(hw);
+	unsigned long scale;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Get rate closer to *parent_rate to guarantee there is no overflow
 	 * for m and n. In the result it will be the nearest rate left shifted
 	 * by (scale - fd->nwidth) bits.
+<<<<<<< HEAD
 	 *
 	 * For the detailed explanation see the top comment in this file.
 	 */
@@ -121,6 +139,12 @@ void clk_fractional_divider_general_approximation(struct clk_hw *hw,
 		if (scale > fd->nwidth)
 			rate <<= scale - fd->nwidth;
 	}
+=======
+	 */
+	scale = fls_long(*parent_rate / rate - 1);
+	if (scale > fd->nwidth)
+		rate <<= scale - fd->nwidth;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rational_best_approximation(rate, *parent_rate,
 			GENMASK(fd->mwidth - 1, 0), GENMASK(fd->nwidth - 1, 0),
@@ -140,7 +164,11 @@ static long clk_fd_round_rate(struct clk_hw *hw, unsigned long rate,
 	if (fd->approximation)
 		fd->approximation(hw, rate, parent_rate, &m, &n);
 	else
+<<<<<<< HEAD
 		clk_fractional_divider_general_approximation(hw, rate, parent_rate, &m, &n);
+=======
+		clk_fd_general_approximation(hw, rate, parent_rate, &m, &n);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = (u64)*parent_rate * m;
 	do_div(ret, n);

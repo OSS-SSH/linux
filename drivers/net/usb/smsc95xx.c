@@ -1044,7 +1044,11 @@ static const struct net_device_ops smsc95xx_netdev_ops = {
 	.ndo_get_stats64	= dev_get_tstats64,
 	.ndo_set_mac_address 	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= smsc95xx_ioctl,
+=======
+	.ndo_do_ioctl 		= smsc95xx_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_rx_mode	= smsc95xx_set_multicast,
 	.ndo_set_features	= smsc95xx_set_features,
 };
@@ -1178,10 +1182,14 @@ static void smsc95xx_unbind(struct usbnet *dev, struct usb_interface *intf)
 
 static void smsc95xx_handle_link_change(struct net_device *net)
 {
+<<<<<<< HEAD
 	struct usbnet *dev = netdev_priv(net);
 
 	phy_print_status(net->phydev);
 	usbnet_defer_kevent(dev, EVENT_LINK_CHANGE);
+=======
+	phy_print_status(net->phydev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int smsc95xx_start_phy(struct usbnet *dev)

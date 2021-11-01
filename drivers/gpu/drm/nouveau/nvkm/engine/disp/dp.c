@@ -440,7 +440,11 @@ nvkm_dp_train(struct nvkm_dp *dp, u32 dataKBps)
 	return ret;
 }
 
+<<<<<<< HEAD
 void
+=======
+static void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nvkm_dp_disable(struct nvkm_outp *outp, struct nvkm_ior *ior)
 {
 	struct nvkm_dp *dp = nvkm_dp(outp);

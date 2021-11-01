@@ -7,6 +7,10 @@
 #if IS_ENABLED(CONFIG_USB_XHCI_PCI_RENESAS)
 int renesas_xhci_check_request_fw(struct pci_dev *dev,
 				  const struct pci_device_id *id);
+<<<<<<< HEAD
+=======
+void renesas_xhci_pci_exit(struct pci_dev *dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #else
 static int renesas_xhci_check_request_fw(struct pci_dev *dev,
@@ -15,6 +19,11 @@ static int renesas_xhci_check_request_fw(struct pci_dev *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void renesas_xhci_pci_exit(struct pci_dev *dev) { };
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 struct xhci_driver_data {

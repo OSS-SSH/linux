@@ -906,6 +906,10 @@ EXPORT_SYMBOL(acpi_unregister_ioapic);
 /*
  * acpi_suspend_lowlevel() - save kernel state and suspend.
  *
+<<<<<<< HEAD
  * TBD when IA64 starts to support suspend...
+=======
+ * TBD when when IA64 starts to support suspend...
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int acpi_suspend_lowlevel(void) { return 0; }

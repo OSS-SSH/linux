@@ -184,6 +184,7 @@ extern bool vma_migratable(struct vm_area_struct *vma);
 extern int mpol_misplaced(struct page *, struct vm_area_struct *, unsigned long);
 extern void mpol_put_task_policy(struct task_struct *);
 
+<<<<<<< HEAD
 extern bool numa_demotion_enabled;
 
 static inline bool mpol_is_preferred_many(struct mempolicy *pol)
@@ -192,6 +193,8 @@ static inline bool mpol_is_preferred_many(struct mempolicy *pol)
 }
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 
 struct mempolicy {};
@@ -300,6 +303,7 @@ static inline nodemask_t *policy_nodemask_current(gfp_t gfp)
 {
 	return NULL;
 }
+<<<<<<< HEAD
 
 #define numa_demotion_enabled	false
 
@@ -308,5 +312,7 @@ static inline bool mpol_is_preferred_many(struct mempolicy *pol)
 	return  false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* CONFIG_NUMA */
 #endif

@@ -107,8 +107,13 @@ void bad_trap(struct pt_regs *regs, long lvl)
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault_trapno(SIGILL, ILL_ILLTRP,
 			       (void __user *)regs->tpc, lvl);
+=======
+	force_sig_fault(SIGILL, ILL_ILLTRP,
+			(void __user *)regs->tpc, lvl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void bad_trap_tl1(struct pt_regs *regs, long lvl)
@@ -201,7 +206,12 @@ void spitfire_insn_access_exception(struct pt_regs *regs, unsigned long sfsr, un
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *)regs->tpc);
+=======
+	force_sig_fault(SIGSEGV, SEGV_MAPERR,
+			(void __user *)regs->tpc, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	exception_exit(prev_state);
 }
@@ -236,7 +246,11 @@ void sun4v_insn_access_exception(struct pt_regs *regs, unsigned long addr, unsig
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *) addr);
+=======
+	force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *) addr, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void sun4v_insn_access_exception_tl1(struct pt_regs *regs, unsigned long addr, unsigned long type_ctx)
@@ -320,7 +334,11 @@ void spitfire_data_access_exception(struct pt_regs *regs, unsigned long sfsr, un
 	if (is_no_fault_exception(regs))
 		return;
 
+<<<<<<< HEAD
 	force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *)sfar);
+=======
+	force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *)sfar, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	exception_exit(prev_state);
 }
@@ -384,6 +402,7 @@ void sun4v_data_access_exception(struct pt_regs *regs, unsigned long addr, unsig
 	 */
 	switch (type) {
 	case HV_FAULT_TYPE_INV_ASI:
+<<<<<<< HEAD
 		force_sig_fault(SIGILL, ILL_ILLADR, (void __user *)addr);
 		break;
 	case HV_FAULT_TYPE_MCD_DIS:
@@ -391,6 +410,15 @@ void sun4v_data_access_exception(struct pt_regs *regs, unsigned long addr, unsig
 		break;
 	default:
 		force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *)addr);
+=======
+		force_sig_fault(SIGILL, ILL_ILLADR, (void __user *)addr, 0);
+		break;
+	case HV_FAULT_TYPE_MCD_DIS:
+		force_sig_fault(SIGSEGV, SEGV_ACCADI, (void __user *)addr, 0);
+		break;
+	default:
+		force_sig_fault(SIGSEGV, SEGV_MAPERR, (void __user *)addr, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	}
 }
@@ -567,7 +595,11 @@ static void spitfire_ue_log(unsigned long afsr, unsigned long afar, unsigned lon
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGBUS, BUS_OBJERR, (void *)0);
+=======
+	force_sig_fault(SIGBUS, BUS_OBJERR, (void *)0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void spitfire_access_error(struct pt_regs *regs, unsigned long status_encoded, unsigned long afar)
@@ -2068,7 +2100,12 @@ void do_mcd_err(struct pt_regs *regs, struct sun4v_error_entry ent)
 	/* Send SIGSEGV to the userspace process with the right signal
 	 * code
 	 */
+<<<<<<< HEAD
 	force_sig_fault(SIGSEGV, SEGV_ADIDERR, (void __user *)ent.err_raddr);
+=======
+	force_sig_fault(SIGSEGV, SEGV_ADIDERR, (void __user *)ent.err_raddr,
+			0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* We run with %pil set to PIL_NORMAL_MAX and PSTATE_IE enabled in %pstate.
@@ -2182,7 +2219,11 @@ bool sun4v_nonresum_error_user_handled(struct pt_regs *regs,
 	}
 	if (attrs & SUN4V_ERR_ATTRS_PIO) {
 		force_sig_fault(SIGBUS, BUS_ADRERR,
+<<<<<<< HEAD
 				(void __user *)sun4v_get_vaddr(regs));
+=======
+				(void __user *)sun4v_get_vaddr(regs), 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 	}
 
@@ -2338,7 +2379,12 @@ static void do_fpe_common(struct pt_regs *regs)
 			else if (fsr & 0x01)
 				code = FPE_FLTRES;
 		}
+<<<<<<< HEAD
 		force_sig_fault(SIGFPE, code, (void __user *)regs->tpc);
+=======
+		force_sig_fault(SIGFPE, code,
+				(void __user *)regs->tpc, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -2392,7 +2438,12 @@ void do_tof(struct pt_regs *regs)
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGEMT, EMT_TAGOVF, (void __user *)regs->tpc);
+=======
+	force_sig_fault(SIGEMT, EMT_TAGOVF,
+			(void __user *)regs->tpc, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	exception_exit(prev_state);
 }
@@ -2411,7 +2462,12 @@ void do_div0(struct pt_regs *regs)
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGFPE, FPE_INTDIV, (void __user *)regs->tpc);
+=======
+	force_sig_fault(SIGFPE, FPE_INTDIV,
+			(void __user *)regs->tpc, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	exception_exit(prev_state);
 }
@@ -2607,7 +2663,11 @@ void do_illegal_instruction(struct pt_regs *regs)
 			}
 		}
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)pc);
+=======
+	force_sig_fault(SIGILL, ILL_ILLOPC, (void __user *)pc, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	exception_exit(prev_state);
 }
@@ -2627,7 +2687,11 @@ void mem_address_unaligned(struct pt_regs *regs, unsigned long sfar, unsigned lo
 	if (is_no_fault_exception(regs))
 		return;
 
+<<<<<<< HEAD
 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)sfar);
+=======
+	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)sfar, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	exception_exit(prev_state);
 }
@@ -2645,7 +2709,11 @@ void sun4v_do_mna(struct pt_regs *regs, unsigned long addr, unsigned long type_c
 	if (is_no_fault_exception(regs))
 		return;
 
+<<<<<<< HEAD
 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *) addr);
+=======
+	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *) addr, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* sun4v_mem_corrupt_detect_precise() - Handle precise exception on an ADI
@@ -2692,7 +2760,11 @@ void sun4v_mem_corrupt_detect_precise(struct pt_regs *regs, unsigned long addr,
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGSEGV, SEGV_ADIPERR, (void __user *)addr);
+=======
+	force_sig_fault(SIGSEGV, SEGV_ADIPERR, (void __user *)addr, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void do_privop(struct pt_regs *regs)
@@ -2707,7 +2779,12 @@ void do_privop(struct pt_regs *regs)
 		regs->tpc &= 0xffffffff;
 		regs->tnpc &= 0xffffffff;
 	}
+<<<<<<< HEAD
 	force_sig_fault(SIGILL, ILL_PRVOPC, (void __user *)regs->tpc);
+=======
+	force_sig_fault(SIGILL, ILL_PRVOPC,
+			(void __user *)regs->tpc, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	exception_exit(prev_state);
 }

@@ -153,7 +153,11 @@ struct mmc_host_ops {
 
 	int	(*start_signal_voltage_switch)(struct mmc_host *host, struct mmc_ios *ios);
 
+<<<<<<< HEAD
 	/* Check if the card is pulling dat[0] low */
+=======
+	/* Check if the card is pulling dat[0:3] low */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int	(*card_busy)(struct mmc_host *host);
 
 	/* The tuning command opcode value is different for SD and eMMC cards */
@@ -398,7 +402,10 @@ struct mmc_host {
 #else
 #define MMC_CAP2_CRYPTO		0
 #endif
+<<<<<<< HEAD
 #define MMC_CAP2_ALT_GPT_TEGRA	(1 << 28)	/* Host with eMMC that has GPT entry at a non-standard location */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	int			fixed_drv_type;	/* fixed driver type for non-removable media */
 

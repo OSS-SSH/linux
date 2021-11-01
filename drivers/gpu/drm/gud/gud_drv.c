@@ -364,6 +364,10 @@ static void gud_debugfs_init(struct drm_minor *minor)
 static const struct drm_simple_display_pipe_funcs gud_pipe_funcs = {
 	.check      = gud_pipe_check,
 	.update	    = gud_pipe_update,
+<<<<<<< HEAD
+=======
+	.prepare_fb = drm_gem_simple_display_pipe_prepare_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct drm_mode_config_funcs gud_mode_config_funcs = {
@@ -393,6 +397,7 @@ static const struct drm_driver gud_drm_driver = {
 	.minor			= 0,
 };
 
+<<<<<<< HEAD
 static int gud_alloc_bulk_buffer(struct gud_device *gdrm)
 {
 	unsigned int i, num_pages;
@@ -429,6 +434,16 @@ static void gud_free_buffers_and_mutex(void *data)
 	vfree(gdrm->bulk_buf);
 	gdrm->bulk_buf = NULL;
 	mutex_destroy(&gdrm->ctrl_lock);
+=======
+static void gud_free_buffers_and_mutex(struct drm_device *drm, void *unused)
+{
+	struct gud_device *gdrm = to_gud_device(drm);
+
+	vfree(gdrm->compress_buf);
+	kfree(gdrm->bulk_buf);
+	mutex_destroy(&gdrm->ctrl_lock);
+	mutex_destroy(&gdrm->damage_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int gud_probe(struct usb_interface *intf, const struct usb_device_id *id)
@@ -482,7 +497,11 @@ static int gud_probe(struct usb_interface *intf, const struct usb_device_id *id)
 	INIT_WORK(&gdrm->work, gud_flush_work);
 	gud_clear_damage(gdrm);
 
+<<<<<<< HEAD
 	ret = devm_add_action(dev, gud_free_buffers_and_mutex, gdrm);
+=======
+	ret = drmm_add_action_or_reset(drm, gud_free_buffers_and_mutex, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 
@@ -563,17 +582,37 @@ static int gud_probe(struct usb_interface *intf, const struct usb_device_id *id)
 
 	if (desc.max_buffer_size)
 		max_buffer_size = le32_to_cpu(desc.max_buffer_size);
+<<<<<<< HEAD
 	/* Prevent a misbehaving device from allocating loads of RAM. 4096x4096@XRGB8888 = 64 MB */
 	if (max_buffer_size > SZ_64M)
 		max_buffer_size = SZ_64M;
+=======
+retry:
+	/*
+	 * Use plain kmalloc here since devm_kmalloc() places struct devres at the beginning
+	 * of the buffer it allocates. This wastes a lot of memory when allocating big buffers.
+	 * Asking for 2M would actually allocate 4M. This would also prevent getting the biggest
+	 * possible buffer potentially leading to split transfers.
+	 */
+	gdrm->bulk_buf = kmalloc(max_buffer_size, GFP_KERNEL | __GFP_NOWARN);
+	if (!gdrm->bulk_buf) {
+		max_buffer_size = roundup_pow_of_two(max_buffer_size) / 2;
+		if (max_buffer_size < SZ_512K)
+			return -ENOMEM;
+		goto retry;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	gdrm->bulk_pipe = usb_sndbulkpipe(interface_to_usbdev(intf), usb_endpoint_num(bulk_out));
 	gdrm->bulk_len = max_buffer_size;
 
+<<<<<<< HEAD
 	ret = gud_alloc_bulk_buffer(gdrm);
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (gdrm->compression & GUD_COMPRESSION_LZ4) {
 		gdrm->lz4_comp_mem = devm_kmalloc(dev, LZ4_MEM_COMPRESS, GFP_KERNEL);
 		if (!gdrm->lz4_comp_mem)
@@ -660,7 +699,10 @@ static int gud_resume(struct usb_interface *intf)
 
 static const struct usb_device_id gud_id_table[] = {
 	{ USB_DEVICE_INTERFACE_CLASS(0x1d50, 0x614d, USB_CLASS_VENDOR_SPEC) },
+<<<<<<< HEAD
 	{ USB_DEVICE_INTERFACE_CLASS(0x16d0, 0x10a9, USB_CLASS_VENDOR_SPEC) },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ }
 };
 

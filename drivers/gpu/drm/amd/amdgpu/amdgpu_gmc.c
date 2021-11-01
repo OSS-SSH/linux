@@ -471,6 +471,7 @@ int amdgpu_gmc_ras_late_init(struct amdgpu_device *adev)
 			return r;
 	}
 
+<<<<<<< HEAD
 	if (adev->mca.mp0.ras_funcs &&
 	    adev->mca.mp0.ras_funcs->ras_late_init) {
 		r = adev->mca.mp0.ras_funcs->ras_late_init(adev);
@@ -492,6 +493,8 @@ int amdgpu_gmc_ras_late_init(struct amdgpu_device *adev)
 			return r;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -598,7 +601,11 @@ void amdgpu_gmc_tmz_set(struct amdgpu_device *adev)
 		break;
 	default:
 		adev->gmc.tmz_enabled = false;
+<<<<<<< HEAD
 		dev_info(adev->dev,
+=======
+		dev_warn(adev->dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			 "Trusted Memory Zone (TMZ) feature not supported\n");
 		break;
 	}

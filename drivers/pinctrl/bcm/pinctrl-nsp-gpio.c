@@ -155,7 +155,12 @@ static irqreturn_t nsp_gpio_irq_handler(int irq, void *data)
 		int_bits = level | event;
 
 		for_each_set_bit(bit, &int_bits, gc->ngpio)
+<<<<<<< HEAD
 			generic_handle_domain_irq(gc->irq.domain, bit);
+=======
+			generic_handle_irq(
+				irq_linear_revmap(gc->irq.domain, bit));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return  int_bits ? IRQ_HANDLED : IRQ_NONE;

@@ -317,7 +317,11 @@ static int ip_tunnel_bind_dev(struct net_device *dev)
 	}
 
 	dev->needed_headroom = t_hlen + hlen;
+<<<<<<< HEAD
 	mtu -= t_hlen + (dev->type == ARPHRD_ETHER ? dev->hard_header_len : 0);
+=======
+	mtu -= t_hlen;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (mtu < IPV4_MIN_MTU)
 		mtu = IPV4_MIN_MTU;
@@ -348,9 +352,12 @@ static struct ip_tunnel *ip_tunnel_create(struct net *net,
 	t_hlen = nt->hlen + sizeof(struct iphdr);
 	dev->min_mtu = ETH_MIN_MTU;
 	dev->max_mtu = IP_MAX_MTU - t_hlen;
+<<<<<<< HEAD
 	if (dev->type == ARPHRD_ETHER)
 		dev->max_mtu -= dev->hard_header_len;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ip_tunnel_add(itn, nt);
 	return nt;
 
@@ -390,7 +397,11 @@ int ip_tunnel_rcv(struct ip_tunnel *tunnel, struct sk_buff *skb,
 		tunnel->i_seqno = ntohl(tpi->seq) + 1;
 	}
 
+<<<<<<< HEAD
 	skb_set_network_header(skb, (tunnel->dev->type == ARPHRD_ETHER) ? ETH_HLEN : 0);
+=======
+	skb_reset_network_header(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = IP_ECN_decapsulate(iph, skb);
 	if (unlikely(err)) {
@@ -492,6 +503,7 @@ static int tnl_update_pmtu(struct net_device *dev, struct sk_buff *skb,
 
 	tunnel_hlen = md ? tunnel_hlen : tunnel->hlen;
 	pkt_size = skb->len - tunnel_hlen;
+<<<<<<< HEAD
 	pkt_size -= dev->type == ARPHRD_ETHER ? dev->hard_header_len : 0;
 
 	if (df) {
@@ -500,6 +512,13 @@ static int tnl_update_pmtu(struct net_device *dev, struct sk_buff *skb,
 	} else {
 		mtu = skb_valid_dst(skb) ? dst_mtu(skb_dst(skb)) : dev->mtu;
 	}
+=======
+
+	if (df)
+		mtu = dst_mtu(&rt->dst) - (sizeof(struct iphdr) + tunnel_hlen);
+	else
+		mtu = skb_valid_dst(skb) ? dst_mtu(skb_dst(skb)) : dev->mtu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (skb_valid_dst(skb))
 		skb_dst_update_pmtu_no_confirm(skb, mtu);
@@ -958,12 +977,17 @@ done:
 }
 EXPORT_SYMBOL_GPL(ip_tunnel_ctl);
 
+<<<<<<< HEAD
 int ip_tunnel_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			     void __user *data, int cmd)
+=======
+int ip_tunnel_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ip_tunnel_parm p;
 	int err;
 
+<<<<<<< HEAD
 	if (copy_from_user(&p, data, sizeof(p)))
 		return -EFAULT;
 	err = dev->netdev_ops->ndo_tunnel_ctl(dev, &p, cmd);
@@ -972,6 +996,16 @@ int ip_tunnel_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 	return err;
 }
 EXPORT_SYMBOL_GPL(ip_tunnel_siocdevprivate);
+=======
+	if (copy_from_user(&p, ifr->ifr_ifru.ifru_data, sizeof(p)))
+		return -EFAULT;
+	err = dev->netdev_ops->ndo_tunnel_ctl(dev, &p, cmd);
+	if (!err && copy_to_user(ifr->ifr_ifru.ifru_data, &p, sizeof(p)))
+		return -EFAULT;
+	return err;
+}
+EXPORT_SYMBOL_GPL(ip_tunnel_ioctl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int __ip_tunnel_change_mtu(struct net_device *dev, int new_mtu, bool strict)
 {
@@ -979,9 +1013,12 @@ int __ip_tunnel_change_mtu(struct net_device *dev, int new_mtu, bool strict)
 	int t_hlen = tunnel->hlen + sizeof(struct iphdr);
 	int max_mtu = IP_MAX_MTU - t_hlen;
 
+<<<<<<< HEAD
 	if (dev->type == ARPHRD_ETHER)
 		max_mtu -= dev->hard_header_len;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (new_mtu < ETH_MIN_MTU)
 		return -EINVAL;
 
@@ -1159,9 +1196,12 @@ int ip_tunnel_newlink(struct net_device *dev, struct nlattr *tb[],
 	if (tb[IFLA_MTU]) {
 		unsigned int max = IP_MAX_MTU - (nt->hlen + sizeof(struct iphdr));
 
+<<<<<<< HEAD
 		if (dev->type == ARPHRD_ETHER)
 			max -= dev->hard_header_len;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mtu = clamp(dev->mtu, (unsigned int)ETH_MIN_MTU, max);
 	}
 

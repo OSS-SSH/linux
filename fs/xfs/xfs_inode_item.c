@@ -396,7 +396,11 @@ xfs_inode_to_log_dinode(
 	/* log a dummy value to ensure log structure is fully initialised */
 	to->di_next_unlinked = NULLAGINO;
 
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(ip->i_mount)) {
+=======
+	if (xfs_sb_version_has_v3inode(&ip->i_mount->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		to->di_version = 3;
 		to->di_changecount = inode_peek_iversion(inode);
 		to->di_crtime = xfs_inode_to_log_dinode_ts(ip, ip->i_crtime);

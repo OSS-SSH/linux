@@ -6,6 +6,7 @@
 #include <linux/kernel.h>
 
 #include "i915_debugfs_params.h"
+<<<<<<< HEAD
 #include "gt/intel_gt.h"
 #include "gt/uc/intel_guc.h"
 #include "i915_drv.h"
@@ -21,6 +22,11 @@
 		(i915) = container_of(params, typeof(*(i915)), params);	\
 	} while (0)
 
+=======
+#include "i915_drv.h"
+#include "i915_params.h"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* int param */
 static int i915_param_int_show(struct seq_file *m, void *data)
 {
@@ -36,6 +42,7 @@ static int i915_param_int_open(struct inode *inode, struct file *file)
 	return single_open(file, i915_param_int_show, inode->i_private);
 }
 
+<<<<<<< HEAD
 static int notify_guc(struct drm_i915_private *i915)
 {
 	int ret = 0;
@@ -46,6 +53,8 @@ static int notify_guc(struct drm_i915_private *i915)
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static ssize_t i915_param_int_write(struct file *file,
 				    const char __user *ubuf, size_t len,
 				    loff_t *offp)
@@ -103,10 +112,15 @@ static ssize_t i915_param_uint_write(struct file *file,
 				     const char __user *ubuf, size_t len,
 				     loff_t *offp)
 {
+<<<<<<< HEAD
 	struct drm_i915_private *i915;
 	struct seq_file *m = file->private_data;
 	unsigned int *value = m->private;
 	unsigned int old = *value;
+=======
+	struct seq_file *m = file->private_data;
+	unsigned int *value = m->private;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	ret = kstrtouint_from_user(ubuf, len, 0, value);
@@ -119,6 +133,7 @@ static ssize_t i915_param_uint_write(struct file *file,
 			*value = b;
 	}
 
+<<<<<<< HEAD
 	if (!ret && MATCH_DEBUGFS_NODE_NAME(file, "reset")) {
 		GET_I915(i915, reset, value);
 
@@ -127,6 +142,8 @@ static ssize_t i915_param_uint_write(struct file *file,
 			*value = old;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret ?: len;
 }
 

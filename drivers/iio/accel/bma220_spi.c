@@ -218,6 +218,7 @@ static int bma220_init(struct spi_device *spi)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int bma220_power(struct spi_device *spi, bool up)
 {
 	int i, ret;
@@ -245,6 +246,22 @@ static int bma220_power(struct spi_device *spi, bool up)
 static void bma220_deinit(void *spi)
 {
 	bma220_power(spi, false);
+=======
+static int bma220_deinit(struct spi_device *spi)
+{
+	int ret;
+
+	/* Make sure the chip is powered off */
+	ret = bma220_read_reg(spi, BMA220_REG_SUSPEND);
+	if (ret == BMA220_SUSPEND_SLEEP)
+		ret = bma220_read_reg(spi, BMA220_REG_SUSPEND);
+	if (ret < 0)
+		return ret;
+	if (ret == BMA220_SUSPEND_SLEEP)
+		return -EBUSY;
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int bma220_probe(struct spi_device *spi)
@@ -261,6 +278,10 @@ static int bma220_probe(struct spi_device *spi)
 
 	data = iio_priv(indio_dev);
 	data->spi_device = spi;
+<<<<<<< HEAD
+=======
+	spi_set_drvdata(spi, indio_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_init(&data->lock);
 
 	indio_dev->info = &bma220_info;
@@ -274,6 +295,7 @@ static int bma220_probe(struct spi_device *spi)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ret = devm_add_action_or_reset(&spi->dev, bma220_deinit, spi);
 	if (ret)
 		return ret;
@@ -287,20 +309,63 @@ static int bma220_probe(struct spi_device *spi)
 	}
 
 	return devm_iio_device_register(&spi->dev, indio_dev);
+=======
+	ret = iio_triggered_buffer_setup(indio_dev, iio_pollfunc_store_time,
+					 bma220_trigger_handler, NULL);
+	if (ret < 0) {
+		dev_err(&spi->dev, "iio triggered buffer setup failed\n");
+		goto err_suspend;
+	}
+
+	ret = iio_device_register(indio_dev);
+	if (ret < 0) {
+		dev_err(&spi->dev, "iio_device_register failed\n");
+		iio_triggered_buffer_cleanup(indio_dev);
+		goto err_suspend;
+	}
+
+	return 0;
+
+err_suspend:
+	return bma220_deinit(spi);
+}
+
+static int bma220_remove(struct spi_device *spi)
+{
+	struct iio_dev *indio_dev = spi_get_drvdata(spi);
+
+	iio_device_unregister(indio_dev);
+	iio_triggered_buffer_cleanup(indio_dev);
+
+	return bma220_deinit(spi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static __maybe_unused int bma220_suspend(struct device *dev)
 {
+<<<<<<< HEAD
 	struct spi_device *spi = to_spi_device(dev);
 
 	return bma220_power(spi, false);
+=======
+	struct bma220_data *data = iio_priv(dev_get_drvdata(dev));
+
+	/* The chip can be suspended/woken up by a simple register read. */
+	return bma220_read_reg(data->spi_device, BMA220_REG_SUSPEND);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static __maybe_unused int bma220_resume(struct device *dev)
 {
+<<<<<<< HEAD
 	struct spi_device *spi = to_spi_device(dev);
 
 	return bma220_power(spi, true);
+=======
+	struct bma220_data *data = iio_priv(dev_get_drvdata(dev));
+
+	return bma220_read_reg(data->spi_device, BMA220_REG_SUSPEND);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 static SIMPLE_DEV_PM_OPS(bma220_pm_ops, bma220_suspend, bma220_resume);
 
@@ -322,6 +387,10 @@ static struct spi_driver bma220_driver = {
 		.acpi_match_table = bma220_acpi_id,
 	},
 	.probe =            bma220_probe,
+<<<<<<< HEAD
+=======
+	.remove =           bma220_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.id_table =         bma220_spi_id,
 };
 module_spi_driver(bma220_driver);

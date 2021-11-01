@@ -9,7 +9,11 @@ SYNOPSIS
 --------
 [verse]
 'perf iostat' list
+<<<<<<< HEAD
 'perf iostat' <ports> \-- <command> [<options>]
+=======
+'perf iostat' <ports> -- <command> [<options>]
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 DESCRIPTION
 -----------
@@ -85,4 +89,8 @@ EXAMPLES
 
 SEE ALSO
 --------
+<<<<<<< HEAD
 linkperf:perf-stat[1]
+=======
+linkperf:perf-stat[1]
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

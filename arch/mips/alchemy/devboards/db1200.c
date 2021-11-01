@@ -835,7 +835,11 @@ int __init db1200_dev_setup(void)
 	if (!IS_ERR(c)) {
 		pfc = clk_round_rate(c, 50000000);
 		if ((pfc < 1) || (abs(50000000 - pfc) > 2500000))
+<<<<<<< HEAD
 			pr_warn("DB1200: can't get I2C close to 50MHz\n");
+=======
+			pr_warn("DB1200: cant get I2C close to 50MHz\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			clk_set_rate(c, pfc);
 		clk_prepare_enable(c);

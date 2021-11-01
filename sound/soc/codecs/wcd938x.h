@@ -658,6 +658,10 @@ struct wcd938x_sdw_priv {
 	struct sdw_port_config port_config[WCD938X_MAX_SWR_PORTS];
 	struct wcd938x_sdw_ch_info *ch_info;
 	bool port_enable[WCD938X_MAX_SWR_CH_IDS];
+<<<<<<< HEAD
+=======
+	int port_map[WCD938X_MAX_SWR_PORTS];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int active_ports;
 	int num_ports;
 	bool is_tx;

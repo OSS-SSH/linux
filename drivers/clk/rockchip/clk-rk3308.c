@@ -911,7 +911,10 @@ static const char *const rk3308_critical_clocks[] __initconst = {
 	"hclk_audio",
 	"pclk_audio",
 	"sclk_ddrc",
+<<<<<<< HEAD
 	"clk_ddrphy4x",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static void __init rk3308_clk_init(struct device_node *np)

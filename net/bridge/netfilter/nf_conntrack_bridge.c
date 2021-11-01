@@ -88,12 +88,15 @@ static int nf_br_ip_fragment(struct net *net, struct sock *sk,
 
 			skb = ip_fraglist_next(&iter);
 		}
+<<<<<<< HEAD
 
 		if (!err)
 			return 0;
 
 		kfree_skb_list(iter.frag);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return err;
 	}
 slow_path:

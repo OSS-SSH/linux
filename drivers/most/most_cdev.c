@@ -486,7 +486,11 @@ static struct cdev_component comp = {
 	},
 };
 
+<<<<<<< HEAD
 static int __init most_cdev_init(void)
+=======
+static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err;
 
@@ -518,7 +522,11 @@ dest_ida:
 	return err;
 }
 
+<<<<<<< HEAD
 static void __exit most_cdev_exit(void)
+=======
+static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct comp_channel *c, *tmp;
 
@@ -534,8 +542,13 @@ static void __exit most_cdev_exit(void)
 	class_destroy(comp.class);
 }
 
+<<<<<<< HEAD
 module_init(most_cdev_init);
 module_exit(most_cdev_exit);
+=======
+module_init(mod_init);
+module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_AUTHOR("Christian Gromm <christian.gromm@microchip.com>");
 MODULE_LICENSE("GPL");
 MODULE_DESCRIPTION("character device component for mostcore");

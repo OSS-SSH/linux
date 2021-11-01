@@ -58,6 +58,7 @@
 #undef FRAME_FILTER_DEBUG
 /* #define FRAME_FILTER_DEBUG */
 
+<<<<<<< HEAD
 struct stmmac_txq_stats {
 	unsigned long tx_pkt_n;
 	unsigned long tx_normal_irq_n;
@@ -68,6 +69,8 @@ struct stmmac_rxq_stats {
 	unsigned long rx_normal_irq_n;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Extra statistic and debug information exposed by ethtool */
 struct stmmac_extra_stats {
 	/* Transmit errors */
@@ -199,9 +202,12 @@ struct stmmac_extra_stats {
 	unsigned long mtl_est_hlbf;
 	unsigned long mtl_est_btre;
 	unsigned long mtl_est_btrlm;
+<<<<<<< HEAD
 	/* per queue statistics */
 	struct stmmac_txq_stats txq_stats[MTL_MAX_TX_QUEUES];
 	struct stmmac_rxq_stats rxq_stats[MTL_MAX_RX_QUEUES];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Safety Feature statistics exposed by ethtool */

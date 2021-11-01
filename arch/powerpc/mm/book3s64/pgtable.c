@@ -6,9 +6,15 @@
 #include <linux/sched.h>
 #include <linux/mm_types.h>
 #include <linux/memblock.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 #include <misc/cxl-base.h>
 
+=======
+#include <misc/cxl-base.h>
+
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/pgalloc.h>
 #include <asm/tlb.h>
 #include <asm/trace.h>
@@ -172,8 +178,13 @@ pmd_t pmd_modify(pmd_t pmd, pgprot_t newprot)
 }
 #endif /* CONFIG_TRANSPARENT_HUGEPAGE */
 
+<<<<<<< HEAD
 /* For use by kexec, called with MMU off */
 notrace void mmu_cleanup_all(void)
+=======
+/* For use by kexec */
+void mmu_cleanup_all(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (radix_enabled())
 		radix__mmu_cleanup_all();
@@ -520,7 +531,11 @@ static int __init pgtable_debugfs_setup(void)
 	 * invalidated as expected.
 	 */
 	debugfs_create_bool("tlbie_enabled", 0600,
+<<<<<<< HEAD
 			arch_debugfs_dir,
+=======
+			powerpc_debugfs_root,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			&tlbie_enabled);
 
 	return 0;

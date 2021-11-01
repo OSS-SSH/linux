@@ -34,6 +34,19 @@ static inline bool on_stack(struct stack_info *info,
 	return addr >= info->begin && addr + len <= info->end;
 }
 
+<<<<<<< HEAD
+=======
+static __always_inline unsigned long get_stack_pointer(struct task_struct *task,
+						       struct pt_regs *regs)
+{
+	if (regs)
+		return (unsigned long) kernel_stack_pointer(regs);
+	if (task == current)
+		return current_stack_pointer();
+	return (unsigned long) task->thread.ksp;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Stack layout of a C stack frame.
  */
@@ -64,6 +77,7 @@ struct stack_frame {
 	((unsigned long)__builtin_frame_address(0) -			\
 	 offsetof(struct stack_frame, back_chain))
 
+<<<<<<< HEAD
 static __always_inline unsigned long get_stack_pointer(struct task_struct *task,
 						       struct pt_regs *regs)
 {
@@ -74,6 +88,8 @@ static __always_inline unsigned long get_stack_pointer(struct task_struct *task,
 	return (unsigned long)task->thread.ksp;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * To keep this simple mark register 2-6 as being changed (volatile)
  * by the called function, even though register 6 is saved/nonvolatile.

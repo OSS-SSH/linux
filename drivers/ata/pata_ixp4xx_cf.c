@@ -13,11 +13,15 @@
  */
 
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/mfd/syscon.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/libata.h>
 #include <linux/irq.h>
 #include <linux/platform_device.h>
+<<<<<<< HEAD
 #include <linux/regmap.h>
 #include <scsi/scsi_host.h>
 
@@ -122,10 +126,35 @@ static void ixp4xx_set_piomode(struct ata_port *ap, struct ata_device *adev)
 
 static unsigned int ixp4xx_mmio_data_xfer(struct ata_queued_cmd *qc,
 					  unsigned char *buf, unsigned int buflen, int rw)
+=======
+#include <linux/platform_data/pata_ixp4xx_cf.h>
+#include <scsi/scsi_host.h>
+
+#define DRV_NAME	"pata_ixp4xx_cf"
+#define DRV_VERSION	"0.2"
+
+static int ixp4xx_set_mode(struct ata_link *link, struct ata_device **error)
+{
+	struct ata_device *dev;
+
+	ata_for_each_dev(dev, link, ENABLED) {
+		ata_dev_info(dev, "configured for PIO0\n");
+		dev->pio_mode = XFER_PIO_0;
+		dev->xfer_mode = XFER_PIO_0;
+		dev->xfer_shift = ATA_SHIFT_PIO;
+		dev->flags |= ATA_DFLAG_PIO;
+	}
+	return 0;
+}
+
+static unsigned int ixp4xx_mmio_data_xfer(struct ata_queued_cmd *qc,
+				unsigned char *buf, unsigned int buflen, int rw)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned int i;
 	unsigned int words = buflen >> 1;
 	u16 *buf16 = (u16 *) buf;
+<<<<<<< HEAD
 	struct ata_device *adev = qc->dev;
 	struct ata_port *ap = qc->dev->link->ap;
 	void __iomem *mmio = ap->ioaddr.data_addr;
@@ -135,12 +164,22 @@ static unsigned int ixp4xx_mmio_data_xfer(struct ata_queued_cmd *qc,
 	ata_dev_printk(adev, KERN_DEBUG, "%s %d bytes\n", (rw == READ) ? "READ" : "WRITE",
 		       buflen);
 	spin_lock_irqsave(ap->lock, flags);
+=======
+	struct ata_port *ap = qc->dev->link->ap;
+	void __iomem *mmio = ap->ioaddr.data_addr;
+	struct ixp4xx_pata_data *data = dev_get_platdata(ap->host->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* set the expansion bus in 16bit mode and restore
 	 * 8 bit mode after the transaction.
 	 */
+<<<<<<< HEAD
 	ixp4xx_set_16bit_timing(ixpp, adev->pio_mode);
 	udelay(5);
+=======
+	*data->cs0_cfg &= ~(0x01);
+	udelay(100);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Transfer multiple of 2 bytes */
 	if (rw == READ)
@@ -165,10 +204,15 @@ static unsigned int ixp4xx_mmio_data_xfer(struct ata_queued_cmd *qc,
 		words++;
 	}
 
+<<<<<<< HEAD
 	ixp4xx_set_8bit_timing(ixpp, adev->pio_mode);
 	udelay(5);
 
 	spin_unlock_irqrestore(ap->lock, flags);
+=======
+	udelay(100);
+	*data->cs0_cfg |= 0x01;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return words << 1;
 }
@@ -181,6 +225,7 @@ static struct ata_port_operations ixp4xx_port_ops = {
 	.inherits		= &ata_sff_port_ops,
 	.sff_data_xfer		= ixp4xx_mmio_data_xfer,
 	.cable_detect		= ata_cable_40wire,
+<<<<<<< HEAD
 	.set_piomode		= ixp4xx_set_piomode,
 };
 
@@ -225,12 +270,55 @@ static void ixp4xx_setup_port(struct ata_port *ap,
 		raw_cmd ^= 0x03;
 		raw_ctl ^= 0x03;
 	}
+=======
+	.set_mode		= ixp4xx_set_mode,
+};
+
+static void ixp4xx_setup_port(struct ata_port *ap,
+			      struct ixp4xx_pata_data *data,
+			      unsigned long raw_cs0, unsigned long raw_cs1)
+{
+	struct ata_ioports *ioaddr = &ap->ioaddr;
+	unsigned long raw_cmd = raw_cs0;
+	unsigned long raw_ctl = raw_cs1 + 0x06;
+
+	ioaddr->cmd_addr	= data->cs0;
+	ioaddr->altstatus_addr	= data->cs1 + 0x06;
+	ioaddr->ctl_addr	= data->cs1 + 0x06;
+
+	ata_sff_std_ports(ioaddr);
+
+#ifndef __ARMEB__
+
+	/* adjust the addresses to handle the address swizzling of the
+	 * ixp4xx in little endian mode.
+	 */
+
+	*(unsigned long *)&ioaddr->data_addr		^= 0x02;
+	*(unsigned long *)&ioaddr->cmd_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->altstatus_addr	^= 0x03;
+	*(unsigned long *)&ioaddr->ctl_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->error_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->feature_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->nsect_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->lbal_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->lbam_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->lbah_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->device_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->status_addr		^= 0x03;
+	*(unsigned long *)&ioaddr->command_addr		^= 0x03;
+
+	raw_cmd ^= 0x03;
+	raw_ctl ^= 0x03;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ata_port_desc(ap, "cmd 0x%lx ctl 0x%lx", raw_cmd, raw_ctl);
 }
 
 static int ixp4xx_pata_probe(struct platform_device *pdev)
 {
+<<<<<<< HEAD
 	struct resource *cmd, *ctl;
 	struct ata_port_info pi = ixp4xx_port_info;
 	const struct ata_port_info *ppi[] = { &pi, NULL };
@@ -273,6 +361,35 @@ static int ixp4xx_pata_probe(struct platform_device *pdev)
 	ixpp->cmd = devm_ioremap_resource(dev, cmd);
 	ixpp->ctl = devm_ioremap_resource(dev, ctl);
 	if (IS_ERR(ixpp->cmd) || IS_ERR(ixpp->ctl))
+=======
+	struct resource *cs0, *cs1;
+	struct ata_host *host;
+	struct ata_port *ap;
+	struct ixp4xx_pata_data *data = dev_get_platdata(&pdev->dev);
+	int ret;
+	int irq;
+
+	cs0 = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	cs1 = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+
+	if (!cs0 || !cs1)
+		return -EINVAL;
+
+	/* allocate host */
+	host = ata_host_alloc(&pdev->dev, 1);
+	if (!host)
+		return -ENOMEM;
+
+	/* acquire resources and fill host */
+	ret = dma_set_coherent_mask(&pdev->dev, DMA_BIT_MASK(32));
+	if (ret)
+		return ret;
+
+	data->cs0 = devm_ioremap(&pdev->dev, cs0->start, 0x1000);
+	data->cs1 = devm_ioremap(&pdev->dev, cs1->start, 0x1000);
+
+	if (!data->cs0 || !data->cs1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 
 	irq = platform_get_irq(pdev, 0);
@@ -283,6 +400,7 @@ static int ixp4xx_pata_probe(struct platform_device *pdev)
 	else
 		return -EINVAL;
 
+<<<<<<< HEAD
 	/* Just one port to set up */
 	ixp4xx_setup_port(ixpp->host->ports[0], ixpp, cmd->start, ctl->start);
 
@@ -295,11 +413,33 @@ static const struct of_device_id ixp4xx_pata_of_match[] = {
 	{ .compatible = "intel,ixp4xx-compact-flash", },
 	{ },
 };
+=======
+	/* Setup expansion bus chip selects */
+	*data->cs0_cfg = data->cs0_bits;
+	*data->cs1_cfg = data->cs1_bits;
+
+	ap = host->ports[0];
+
+	ap->ops	= &ixp4xx_port_ops;
+	ap->pio_mask = ATA_PIO4;
+	ap->flags |= ATA_FLAG_NO_ATAPI;
+
+	ixp4xx_setup_port(ap, data, cs0->start, cs1->start);
+
+	ata_print_version_once(&pdev->dev, DRV_VERSION);
+
+	/* activate host */
+	return ata_host_activate(host, irq, ata_sff_interrupt, 0, &ixp4xx_sht);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct platform_driver ixp4xx_pata_platform_driver = {
 	.driver	 = {
 		.name   = DRV_NAME,
+<<<<<<< HEAD
 		.of_match_table = ixp4xx_pata_of_match,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	.probe		= ixp4xx_pata_probe,
 	.remove		= ata_platform_remove_one,

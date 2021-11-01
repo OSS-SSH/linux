@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0
 /*
+<<<<<<< HEAD
  * Device Tree Source for the M3NULCB Kingfisher board with R-Car M3-N
+=======
+ * Device Tree Source for the M3NULCB Kingfisher board
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (C) 2018 Renesas Electronics Corp.
  * Copyright (C) 2018 Cogent Embedded, Inc.

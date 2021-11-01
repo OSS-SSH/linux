@@ -22,6 +22,11 @@
 #include <linux/parport.h>
 #include <linux/pps_kernel.h>
 
+<<<<<<< HEAD
+=======
+#define DRVDESC "parallel port PPS client"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* module parameters */
 
 #define CLEAR_WAIT_MAX		100
@@ -136,12 +141,15 @@ static void parport_attach(struct parport *port)
 		.dev		= NULL
 	};
 
+<<<<<<< HEAD
 	if (clear_wait > CLEAR_WAIT_MAX) {
 		pr_err("clear_wait value should be not greater then %d\n",
 		       CLEAR_WAIT_MAX);
 		return;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	device = kzalloc(sizeof(struct pps_client_pp), GFP_KERNEL);
 	if (!device) {
 		pr_err("memory allocation failed, not attaching\n");
@@ -218,8 +226,45 @@ static struct parport_driver pps_parport_driver = {
 	.detach = parport_detach,
 	.devmodel = true,
 };
+<<<<<<< HEAD
 module_parport_driver(pps_parport_driver);
 
 MODULE_AUTHOR("Alexander Gordeev <lasaine@lvk.cs.msu.su>");
 MODULE_DESCRIPTION("parallel port PPS client");
+=======
+
+/* module staff */
+
+static int __init pps_parport_init(void)
+{
+	int ret;
+
+	pr_info(DRVDESC "\n");
+
+	if (clear_wait > CLEAR_WAIT_MAX) {
+		pr_err("clear_wait value should be not greater"
+				" then %d\n", CLEAR_WAIT_MAX);
+		return -EINVAL;
+	}
+
+	ret = parport_register_driver(&pps_parport_driver);
+	if (ret) {
+		pr_err("unable to register with parport\n");
+		return ret;
+	}
+
+	return  0;
+}
+
+static void __exit pps_parport_exit(void)
+{
+	parport_unregister_driver(&pps_parport_driver);
+}
+
+module_init(pps_parport_init);
+module_exit(pps_parport_exit);
+
+MODULE_AUTHOR("Alexander Gordeev <lasaine@lvk.cs.msu.su>");
+MODULE_DESCRIPTION(DRVDESC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_LICENSE("GPL");

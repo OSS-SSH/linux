@@ -10,7 +10,10 @@
 #include <asm/irq_remapping.h>
 #include <asm/hpet.h>
 #include <asm/time.h>
+<<<<<<< HEAD
 #include <asm/mwait.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #undef  pr_fmt
 #define pr_fmt(fmt) "hpet: " fmt
@@ -509,7 +512,11 @@ static struct irq_chip hpet_msi_controller __ro_after_init = {
 	.irq_set_affinity = msi_domain_set_affinity,
 	.irq_retrigger = irq_chip_retrigger_hierarchy,
 	.irq_write_msi_msg = hpet_msi_write_msg,
+<<<<<<< HEAD
 	.flags = IRQCHIP_SKIP_SET_WAKE | IRQCHIP_AFFINITY_PRE_STARTUP,
+=======
+	.flags = IRQCHIP_SKIP_SET_WAKE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int hpet_msi_init(struct irq_domain *domain,
@@ -917,6 +924,7 @@ static bool __init hpet_counting(void)
 	return false;
 }
 
+<<<<<<< HEAD
 static bool __init mwait_pc10_supported(void)
 {
 	unsigned int eax, ebx, ecx, mwait_substates;
@@ -994,6 +1002,8 @@ static bool __init hpet_is_pc10_damaged(void)
 	return true;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * hpet_enable - Try to setup the HPET timer. Returns 1 on success.
  */
@@ -1007,9 +1017,12 @@ int __init hpet_enable(void)
 	if (!is_hpet_capable())
 		return 0;
 
+<<<<<<< HEAD
 	if (hpet_is_pc10_damaged())
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hpet_set_mapping();
 	if (!hpet_virt_address)
 		return 0;

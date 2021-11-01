@@ -163,8 +163,11 @@
 			bus-width = <8>;
 			cap-mmc-highspeed;
 			non-removable;
+<<<<<<< HEAD
 			no-sdio;
 			no-sd;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			vmmc-supply = <&db8500_vsmps2_reg>;
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&mc2_a_1_default>;
@@ -180,8 +183,11 @@
 			bus-width = <8>;
 			cap-mmc-highspeed;
 			non-removable;
+<<<<<<< HEAD
 			no-sdio;
 			no-sd;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			vmmc-supply = <&ab8500_ldo_aux2_reg>;
 			pinctrl-names = "default", "sleep";
 			pinctrl-0 = <&mc4_a_1_default>;

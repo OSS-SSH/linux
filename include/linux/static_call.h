@@ -17,17 +17,23 @@
  *   DECLARE_STATIC_CALL(name, func);
  *   DEFINE_STATIC_CALL(name, func);
  *   DEFINE_STATIC_CALL_NULL(name, typename);
+<<<<<<< HEAD
  *   DEFINE_STATIC_CALL_RET0(name, typename);
  *
  *   __static_call_return0;
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *   static_call(name)(args...);
  *   static_call_cond(name)(args...);
  *   static_call_update(name, func);
  *   static_call_query(name);
  *
+<<<<<<< HEAD
  *   EXPORT_STATIC_CALL{,_TRAMP}{,_GPL}()
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Usage example:
  *
  *   # Start with the following functions (with identical prototypes):
@@ -102,6 +108,7 @@
  *   To query which function is currently set to be called, use:
  *
  *   func = static_call_query(name);
+<<<<<<< HEAD
  *
  *
  * DEFINE_STATIC_CALL_RET0 / __static_call_return0:
@@ -129,6 +136,8 @@
  *   trampoline with the result that a module can use static_call{,_cond}() but
  *   not static_call_update().
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/types.h>

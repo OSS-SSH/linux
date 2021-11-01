@@ -7,10 +7,17 @@
  * Author : K. Y. Srinivasan <kys@microsoft.com>
  */
 
+<<<<<<< HEAD
 #include <linux/efi.h>
 #include <linux/types.h>
 #include <linux/bitfield.h>
 #include <linux/io.h>
+=======
+#include <linux/acpi.h>
+#include <linux/efi.h>
+#include <linux/types.h>
+#include <linux/bitfield.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/apic.h>
 #include <asm/desc.h>
 #include <asm/hypervisor.h>
@@ -39,6 +46,7 @@ EXPORT_SYMBOL_GPL(hv_hypercall_pg);
 /* Storage to save the hypercall page temporarily for hibernation */
 static void *hv_hypercall_pg_saved;
 
+<<<<<<< HEAD
 struct hv_vp_assist_page **hv_vp_assist_page;
 EXPORT_SYMBOL_GPL(hv_vp_assist_page);
 
@@ -51,10 +59,55 @@ static int hv_cpu_init(unsigned int cpu)
 	ret = hv_common_cpu_init(cpu);
 	if (ret)
 		return ret;
+=======
+u32 *hv_vp_index;
+EXPORT_SYMBOL_GPL(hv_vp_index);
+
+struct hv_vp_assist_page **hv_vp_assist_page;
+EXPORT_SYMBOL_GPL(hv_vp_assist_page);
+
+void  __percpu **hyperv_pcpu_input_arg;
+EXPORT_SYMBOL_GPL(hyperv_pcpu_input_arg);
+
+void  __percpu **hyperv_pcpu_output_arg;
+EXPORT_SYMBOL_GPL(hyperv_pcpu_output_arg);
+
+u32 hv_max_vp_index;
+EXPORT_SYMBOL_GPL(hv_max_vp_index);
+
+static int hv_cpu_init(unsigned int cpu)
+{
+	u64 msr_vp_index;
+	struct hv_vp_assist_page **hvp = &hv_vp_assist_page[smp_processor_id()];
+	void **input_arg;
+	struct page *pg;
+
+	/* hv_cpu_init() can be called with IRQs disabled from hv_resume() */
+	pg = alloc_pages(irqs_disabled() ? GFP_ATOMIC : GFP_KERNEL, hv_root_partition ? 1 : 0);
+	if (unlikely(!pg))
+		return -ENOMEM;
+
+	input_arg = (void **)this_cpu_ptr(hyperv_pcpu_input_arg);
+	*input_arg = page_address(pg);
+	if (hv_root_partition) {
+		void **output_arg;
+
+		output_arg = (void **)this_cpu_ptr(hyperv_pcpu_output_arg);
+		*output_arg = page_address(pg + 1);
+	}
+
+	msr_vp_index = hv_get_register(HV_REGISTER_VP_INDEX);
+
+	hv_vp_index[smp_processor_id()] = msr_vp_index;
+
+	if (msr_vp_index > hv_max_vp_index)
+		hv_max_vp_index = msr_vp_index;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!hv_vp_assist_page)
 		return 0;
 
+<<<<<<< HEAD
 	if (!*hvp) {
 		if (hv_root_partition) {
 			/*
@@ -83,6 +136,27 @@ static int hv_cpu_init(unsigned int cpu)
 			msr.enable = 1;
 			wrmsrl(HV_X64_MSR_VP_ASSIST_PAGE, msr.as_uint64);
 		}
+=======
+	/*
+	 * The VP ASSIST PAGE is an "overlay" page (see Hyper-V TLFS's Section
+	 * 5.2.1 "GPA Overlay Pages"). Here it must be zeroed out to make sure
+	 * we always write the EOI MSR in hv_apic_eoi_write() *after* the
+	 * EOI optimization is disabled in hv_cpu_die(), otherwise a CPU may
+	 * not be stopped in the case of CPU offlining and the VM will hang.
+	 */
+	if (!*hvp) {
+		*hvp = __vmalloc(PAGE_SIZE, GFP_KERNEL | __GFP_ZERO);
+	}
+
+	if (*hvp) {
+		u64 val;
+
+		val = vmalloc_to_pfn(*hvp);
+		val = (val << HV_X64_MSR_VP_ASSIST_PAGE_ADDRESS_SHIFT) |
+			HV_X64_MSR_VP_ASSIST_PAGE_ENABLE;
+
+		wrmsrl(HV_X64_MSR_VP_ASSIST_PAGE, val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
@@ -177,6 +251,7 @@ static int hv_cpu_die(unsigned int cpu)
 {
 	struct hv_reenlightenment_control re_ctrl;
 	unsigned int new_cpu;
+<<<<<<< HEAD
 
 	hv_common_cpu_die(cpu);
 
@@ -197,6 +272,31 @@ static int hv_cpu_die(unsigned int cpu)
 		wrmsrl(HV_X64_MSR_VP_ASSIST_PAGE, msr.as_uint64);
 	}
 
+=======
+	unsigned long flags;
+	void **input_arg;
+	void *pg;
+
+	local_irq_save(flags);
+	input_arg = (void **)this_cpu_ptr(hyperv_pcpu_input_arg);
+	pg = *input_arg;
+	*input_arg = NULL;
+
+	if (hv_root_partition) {
+		void **output_arg;
+
+		output_arg = (void **)this_cpu_ptr(hyperv_pcpu_output_arg);
+		*output_arg = NULL;
+	}
+
+	local_irq_restore(flags);
+
+	free_pages((unsigned long)pg, hv_root_partition ? 1 : 0);
+
+	if (hv_vp_assist_page && hv_vp_assist_page[cpu])
+		wrmsrl(HV_X64_MSR_VP_ASSIST_PAGE, 0);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (hv_reenlightenment_cb == NULL)
 		return 0;
 
@@ -344,7 +444,11 @@ void __init hyperv_init(void)
 {
 	u64 guest_id, required_msrs;
 	union hv_x64_msr_hypercall_contents hypercall_msr;
+<<<<<<< HEAD
 	int cpuhp;
+=======
+	int cpuhp, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (x86_hyper_type != X86_HYPER_MS_HYPERV)
 		return;
@@ -356,14 +460,46 @@ void __init hyperv_init(void)
 	if ((ms_hyperv.features & required_msrs) != required_msrs)
 		return;
 
+<<<<<<< HEAD
 	if (hv_common_init())
 		return;
 
+=======
+	/*
+	 * Allocate the per-CPU state for the hypercall input arg.
+	 * If this allocation fails, we will not be able to setup
+	 * (per-CPU) hypercall input page and thus this failure is
+	 * fatal on Hyper-V.
+	 */
+	hyperv_pcpu_input_arg = alloc_percpu(void  *);
+
+	BUG_ON(hyperv_pcpu_input_arg == NULL);
+
+	/* Allocate the per-CPU state for output arg for root */
+	if (hv_root_partition) {
+		hyperv_pcpu_output_arg = alloc_percpu(void *);
+		BUG_ON(hyperv_pcpu_output_arg == NULL);
+	}
+
+	/* Allocate percpu VP index */
+	hv_vp_index = kmalloc_array(num_possible_cpus(), sizeof(*hv_vp_index),
+				    GFP_KERNEL);
+	if (!hv_vp_index)
+		return;
+
+	for (i = 0; i < num_possible_cpus(); i++)
+		hv_vp_index[i] = VP_INVAL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hv_vp_assist_page = kcalloc(num_possible_cpus(),
 				    sizeof(*hv_vp_assist_page), GFP_KERNEL);
 	if (!hv_vp_assist_page) {
 		ms_hyperv.hints &= ~HV_X64_ENLIGHTENED_VMCS_RECOMMENDED;
+<<<<<<< HEAD
 		goto common_free;
+=======
+		goto free_vp_index;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	cpuhp = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "x86/hyperv_init:online",
@@ -461,8 +597,14 @@ remove_cpuhp_state:
 free_vp_assist_page:
 	kfree(hv_vp_assist_page);
 	hv_vp_assist_page = NULL;
+<<<<<<< HEAD
 common_free:
 	hv_common_free();
+=======
+free_vp_index:
+	kfree(hv_vp_index);
+	hv_vp_index = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -492,6 +634,10 @@ void hyperv_cleanup(void)
 	hypercall_msr.as_uint64 = 0;
 	wrmsrl(HV_X64_MSR_REFERENCE_TSC, hypercall_msr.as_uint64);
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL_GPL(hyperv_cleanup);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void hyperv_report_panic(struct pt_regs *regs, long err, bool in_die)
 {
@@ -547,6 +693,15 @@ bool hv_is_hyperv_initialized(void)
 }
 EXPORT_SYMBOL_GPL(hv_is_hyperv_initialized);
 
+<<<<<<< HEAD
+=======
+bool hv_is_hibernation_supported(void)
+{
+	return !hv_root_partition && acpi_sleep_state_supported(ACPI_STATE_S4);
+}
+EXPORT_SYMBOL_GPL(hv_is_hibernation_supported);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum hv_isolation_type hv_get_isolation_type(void)
 {
 	if (!(ms_hyperv.priv_high & HV_ISOLATION))
@@ -559,3 +714,7 @@ bool hv_is_isolation_supported(void)
 {
 	return hv_get_isolation_type() != HV_ISOLATION_TYPE_NONE;
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL_GPL(hv_is_isolation_supported);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

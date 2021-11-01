@@ -97,7 +97,11 @@ obj-y					+= mstar/
 obj-y					+= mvebu/
 obj-$(CONFIG_ARCH_MXS)			+= mxs/
 obj-$(CONFIG_COMMON_CLK_NXP)		+= nxp/
+<<<<<<< HEAD
 obj-$(CONFIG_COMMON_CLK_PISTACHIO)	+= pistachio/
+=======
+obj-$(CONFIG_MACH_PISTACHIO)		+= pistachio/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_COMMON_CLK_PXA)		+= pxa/
 obj-$(CONFIG_COMMON_CLK_QCOM)		+= qcom/
 obj-y					+= ralink/

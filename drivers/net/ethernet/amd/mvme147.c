@@ -68,7 +68,11 @@ static const struct net_device_ops lance_netdev_ops = {
 };
 
 /* Initialise the one and only on-board 7990 */
+<<<<<<< HEAD
 static struct net_device * __init mvme147lance_probe(void)
+=======
+struct net_device * __init mvme147lance_probe(int unit)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *dev;
 	static int called;
@@ -86,6 +90,12 @@ static struct net_device * __init mvme147lance_probe(void)
 	if (!dev)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
+=======
+	if (unit >= 0)
+		sprintf(dev->name, "eth%d", unit);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Fill the dev fields */
 	dev->base_addr = (unsigned long)MVME147_LANCE_BASE;
 	dev->netdev_ops = &lance_netdev_ops;
@@ -176,6 +186,7 @@ static int m147lance_close(struct net_device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 MODULE_LICENSE("GPL");
 
 static struct net_device *dev_mvme147_lance;
@@ -187,10 +198,28 @@ static int __init m147lance_init(void)
 module_init(m147lance_init);
 
 static void __exit m147lance_exit(void)
+=======
+#ifdef MODULE
+MODULE_LICENSE("GPL");
+
+static struct net_device *dev_mvme147_lance;
+int __init init_module(void)
+{
+	dev_mvme147_lance = mvme147lance_probe(-1);
+	return PTR_ERR_OR_ZERO(dev_mvme147_lance);
+}
+
+void __exit cleanup_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct m147lance_private *lp = netdev_priv(dev_mvme147_lance);
 	unregister_netdev(dev_mvme147_lance);
 	free_pages(lp->ram, 3);
 	free_netdev(dev_mvme147_lance);
 }
+<<<<<<< HEAD
 module_exit(m147lance_exit);
+=======
+
+#endif /* MODULE */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

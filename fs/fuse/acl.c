@@ -11,7 +11,11 @@
 #include <linux/posix_acl.h>
 #include <linux/posix_acl_xattr.h>
 
+<<<<<<< HEAD
 struct posix_acl *fuse_get_acl(struct inode *inode, int type, bool rcu)
+=======
+struct posix_acl *fuse_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fuse_conn *fc = get_fuse_conn(inode);
 	int size;
@@ -19,9 +23,12 @@ struct posix_acl *fuse_get_acl(struct inode *inode, int type, bool rcu)
 	void *value = NULL;
 	struct posix_acl *acl;
 
+<<<<<<< HEAD
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (fuse_is_bad(inode))
 		return ERR_PTR(-EIO);
 

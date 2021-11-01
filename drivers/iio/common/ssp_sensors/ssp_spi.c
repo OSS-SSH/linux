@@ -137,7 +137,11 @@ static int ssp_print_mcu_debug(char *data_frame, int *data_index,
 	if (length > received_len - *data_index || length <= 0) {
 		ssp_dbg("[SSP]: MSG From MCU-invalid debug length(%d/%d)\n",
 			length, received_len);
+<<<<<<< HEAD
 		return -EPROTO;
+=======
+		return length ? length : -EPROTO;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ssp_dbg("[SSP]: MSG From MCU - %s\n", &data_frame[*data_index]);
@@ -273,8 +277,11 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 	for (idx = 0; idx < len;) {
 		switch (dataframe[idx++]) {
 		case SSP_MSG2AP_INST_BYPASS_DATA:
+<<<<<<< HEAD
 			if (idx >= len)
 				return -EPROTO;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			sd = dataframe[idx++];
 			if (sd < 0 || sd >= SSP_SENSOR_MAX) {
 				dev_err(SSP_DEV,
@@ -284,6 +291,7 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 
 			if (indio_devs[sd]) {
 				spd = iio_priv(indio_devs[sd]);
+<<<<<<< HEAD
 				if (spd->process_data) {
 					if (idx >= len)
 						return -EPROTO;
@@ -291,6 +299,12 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 							  &dataframe[idx],
 							  data->timestamp);
 				}
+=======
+				if (spd->process_data)
+					spd->process_data(indio_devs[sd],
+							  &dataframe[idx],
+							  data->timestamp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			} else {
 				dev_err(SSP_DEV, "no client for frame\n");
 			}
@@ -298,8 +312,11 @@ static int ssp_parse_dataframe(struct ssp_data *data, char *dataframe, int len)
 			idx += ssp_offset_map[sd];
 			break;
 		case SSP_MSG2AP_INST_DEBUG_DATA:
+<<<<<<< HEAD
 			if (idx >= len)
 				return -EPROTO;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			sd = ssp_print_mcu_debug(dataframe, &idx, len);
 			if (sd) {
 				dev_err(SSP_DEV,

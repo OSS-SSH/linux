@@ -48,6 +48,12 @@ void nv50_fifo_chan_object_dtor(struct nvkm_fifo_chan *, int);
 int g84_fifo_chan_ctor(struct nv50_fifo *, u64 vmm, u64 push,
 		       const struct nvkm_oclass *, struct nv50_fifo_chan *);
 
+<<<<<<< HEAD
 extern const struct nvkm_fifo_chan_oclass nv50_fifo_gpfifo_oclass;
+=======
+extern const struct nvkm_fifo_chan_oclass nv50_fifo_dma_oclass;
+extern const struct nvkm_fifo_chan_oclass nv50_fifo_gpfifo_oclass;
+extern const struct nvkm_fifo_chan_oclass g84_fifo_dma_oclass;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern const struct nvkm_fifo_chan_oclass g84_fifo_gpfifo_oclass;
 #endif

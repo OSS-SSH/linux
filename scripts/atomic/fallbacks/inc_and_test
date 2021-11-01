@@ -1,6 +1,10 @@
 cat <<EOF
 /**
+<<<<<<< HEAD
  * arch_${atomic}_inc_and_test - increment and test
+=======
+ * ${arch}${atomic}_inc_and_test - increment and test
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @v: pointer of type ${atomic}_t
  *
  * Atomically increments @v by 1
@@ -8,8 +12,14 @@ cat <<EOF
  * other cases.
  */
 static __always_inline bool
+<<<<<<< HEAD
 arch_${atomic}_inc_and_test(${atomic}_t *v)
 {
 	return arch_${atomic}_inc_return(v) == 0;
+=======
+${arch}${atomic}_inc_and_test(${atomic}_t *v)
+{
+	return ${arch}${atomic}_inc_return(v) == 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EOF

@@ -184,6 +184,7 @@ u64 dma_iommu_get_required_mask(struct device *dev)
 	struct iommu_table *tbl = get_iommu_table_base(dev);
 	u64 mask;
 
+<<<<<<< HEAD
 	if (dev_is_pci(dev)) {
 		u64 bypass_mask = dma_direct_get_required_mask(dev);
 
@@ -193,6 +194,8 @@ u64 dma_iommu_get_required_mask(struct device *dev)
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!tbl)
 		return 0;
 

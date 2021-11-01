@@ -104,6 +104,7 @@ properties:
           maximum: 32
     maxItems: 1
 
+<<<<<<< HEAD
   power-domains:
     description:
       Power domain provider node and an args specifier containing
@@ -116,6 +117,11 @@ properties:
   phys:
     maxItems: 1
 
+=======
+  can-transceiver:
+    $ref: can-transceiver.yaml#
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 required:
   - compatible
   - reg

@@ -384,6 +384,7 @@ err_kfree:
 	return ERR_PTR(err);
 }
 EXPORT_SYMBOL_GPL(fscrypt_get_symlink);
+<<<<<<< HEAD
 
 /**
  * fscrypt_symlink_getattr() - set the correct st_size for encrypted symlinks
@@ -428,3 +429,5 @@ int fscrypt_symlink_getattr(const struct path *path, struct kstat *stat)
 	return 0;
 }
 EXPORT_SYMBOL_GPL(fscrypt_symlink_getattr);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

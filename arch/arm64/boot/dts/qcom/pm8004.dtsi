@@ -9,6 +9,10 @@
 		reg = <0x4 SPMI_USID>;
 		#address-cells = <1>;
 		#size-cells = <0>;
+<<<<<<< HEAD
+=======
+		status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	pm8004_lsid5: pmic@5 {
@@ -16,6 +20,10 @@
 		reg = <0x5 SPMI_USID>;
 		#address-cells = <1>;
 		#size-cells = <0>;
+<<<<<<< HEAD
+=======
+		status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pm8004_spmi_regulators: regulators {
 			compatible = "qcom,pm8004-regulators";

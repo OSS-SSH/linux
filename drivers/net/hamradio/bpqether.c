@@ -314,10 +314,16 @@ static int bpq_set_mac_address(struct net_device *dev, void *addr)
  *					source ethernet address (broadcast
  *					or multicast: accept all)
  */
+<<<<<<< HEAD
 static int bpq_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			      void __user *data, int cmd)
 {
 	struct bpq_ethaddr __user *ethaddr = data;
+=======
+static int bpq_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+{
+	struct bpq_ethaddr __user *ethaddr = ifr->ifr_data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct bpqdev *bpq = netdev_priv(dev);
 	struct bpq_req req;
 
@@ -326,7 +332,11 @@ static int bpq_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 
 	switch (cmd) {
 		case SIOCSBPQETHOPT:
+<<<<<<< HEAD
 			if (copy_from_user(&req, data, sizeof(struct bpq_req)))
+=======
+			if (copy_from_user(&req, ifr->ifr_data, sizeof(struct bpq_req)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				return -EFAULT;
 			switch (req.cmd) {
 				case SIOCGBPQETHPARAM:
@@ -449,7 +459,11 @@ static const struct net_device_ops bpq_netdev_ops = {
 	.ndo_stop	     = bpq_close,
 	.ndo_start_xmit	     = bpq_xmit,
 	.ndo_set_mac_address = bpq_set_mac_address,
+<<<<<<< HEAD
 	.ndo_siocdevprivate  = bpq_siocdevprivate,
+=======
+	.ndo_do_ioctl	     = bpq_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static void bpq_setup(struct net_device *dev)

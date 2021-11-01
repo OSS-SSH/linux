@@ -275,7 +275,11 @@ static inline int enqcmds(void __iomem *dst, const void *src)
 {
 	const struct { char _[64]; } *__src = src;
 	struct { char _[64]; } __iomem *__dst = dst;
+<<<<<<< HEAD
 	bool zf;
+=======
+	int zf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * ENQCMDS %(rdx), rax

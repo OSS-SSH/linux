@@ -692,7 +692,11 @@ static void mcam_dma_sg_done(struct mcam_camera *cam, int frame)
  * Scatter/gather mode requires stopping the controller between
  * frames so we can put in a new DMA descriptor array.  If no new
  * buffer exists at frame completion, the controller is left stopped;
+<<<<<<< HEAD
  * this function is charged with getting things going again.
+=======
+ * this function is charged with gettig things going again.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static void mcam_sg_restart(struct mcam_camera *cam)
 {

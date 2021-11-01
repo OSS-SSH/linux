@@ -34,8 +34,15 @@ struct snd_usb_audio {
 	atomic_t shutdown;
 	atomic_t usage_count;
 	wait_queue_head_t shutdown_wait;
+<<<<<<< HEAD
 	unsigned int quirk_flags;
 	unsigned int need_delayed_register:1; /* warn for delayed registration */
+=======
+	unsigned int txfr_quirk:1; /* Subframe boundaries on transfers */
+	unsigned int tx_length_quirk:1; /* Put length specifier in transfers */
+	unsigned int need_delayed_register:1; /* warn for delayed registration */
+	unsigned int playback_first:1;	/* for implicit fb: don't wait for the first capture URBs */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int num_interfaces;
 	int num_suspended_intf;
 	int sample_rate_read_error;
@@ -55,7 +62,10 @@ struct snd_usb_audio {
 	bool generic_implicit_fb;	/* from the 'implicit_fb' module param */
 	bool autoclock;			/* from the 'autoclock' module param */
 
+<<<<<<< HEAD
 	bool lowlatency;		/* from the 'lowlatency' module param */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct usb_host_interface *ctrl_intf;	/* the audio control interface */
 	struct media_device *media_dev;
 	struct media_intf_devnode *ctl_intf_media_devnode;
@@ -101,7 +111,14 @@ enum quirk_type {
 	QUIRK_AUDIO_STANDARD_INTERFACE,
 	QUIRK_AUDIO_FIXED_ENDPOINT,
 	QUIRK_AUDIO_EDIROL_UAXX,
+<<<<<<< HEAD
 	QUIRK_AUDIO_STANDARD_MIXER,
+=======
+	QUIRK_AUDIO_ALIGN_TRANSFER,
+	QUIRK_AUDIO_STANDARD_MIXER,
+	QUIRK_SETUP_FMT_AFTER_RESUME,
+	QUIRK_SETUP_DISABLE_AUTOSUSPEND,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	QUIRK_TYPE_COUNT
 };
@@ -111,6 +128,10 @@ struct snd_usb_audio_quirk {
 	const char *product_name;
 	int16_t ifnum;
 	uint16_t type;
+<<<<<<< HEAD
+=======
+	bool shares_media_device;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const void *data;
 };
 
@@ -124,6 +145,7 @@ void snd_usb_unlock_shutdown(struct snd_usb_audio *chip);
 extern bool snd_usb_use_vmalloc;
 extern bool snd_usb_skip_validation;
 
+<<<<<<< HEAD
 /*
  * Driver behavior quirk flags, stored in chip->quirk_flags
  *
@@ -184,4 +206,6 @@ extern bool snd_usb_skip_validation;
 #define QUIRK_FLAG_DSD_RAW		(1U << 15)
 #define QUIRK_FLAG_SET_IFACE_FIRST	(1U << 16)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __USBAUDIO_H */

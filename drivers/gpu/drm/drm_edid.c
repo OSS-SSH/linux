@@ -1834,6 +1834,7 @@ static void connector_bad_edid(struct drm_connector *connector,
 			       u8 *edid, int num_blocks)
 {
 	int i;
+<<<<<<< HEAD
 	u8 last_block;
 
 	/*
@@ -1848,6 +1849,13 @@ static void connector_bad_edid(struct drm_connector *connector,
 	if (last_block < num_blocks)
 		connector->real_edid_checksum =
 			drm_edid_block_checksum(edid + last_block * EDID_LENGTH);
+=======
+	u8 num_of_ext = edid[0x7e];
+
+	/* Calculate real checksum for the last edid extension block data */
+	connector->real_edid_checksum =
+		drm_edid_block_checksum(edid + num_of_ext * EDID_LENGTH);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (connector->bad_edid_counter++ && !drm_debug_enabled(DRM_UT_KMS))
 		return;
@@ -1928,7 +1936,11 @@ EXPORT_SYMBOL(drm_add_override_edid_modes);
  * level, drivers must make all reasonable efforts to expose it as an I2C
  * adapter and use drm_get_edid() instead of abusing this function.
  *
+<<<<<<< HEAD
  * The EDID may be overridden using debugfs override_edid or firmware EDID
+=======
+ * The EDID may be overridden using debugfs override_edid or firmare EDID
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * (drm_load_edid_firmware() and drm.edid_firmware parameter), in this priority
  * order. Having either of them bypasses actual EDID reads.
  *
@@ -5915,7 +5927,11 @@ drm_hdmi_vendor_infoframe_from_display_mode(struct hdmi_vendor_infoframe *frame,
 	 * (ie.vic==0 and s3d_struct==0) we will still send it if we
 	 * know that the sink can handle it. This is based on a
 	 * suggestion in HDMI 2.0 Appendix F. Apparently some sinks
+<<<<<<< HEAD
 	 * have trouble realizing that they should switch from 3D to 2D
+=======
+	 * have trouble realizing that they shuld switch from 3D to 2D
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * mode if the source simply stops sending the infoframe when
 	 * it wants to switch from 3D to 2D.
 	 */

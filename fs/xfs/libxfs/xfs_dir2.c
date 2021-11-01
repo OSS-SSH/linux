@@ -115,7 +115,11 @@ xfs_da_mount(
 	dageo->fsblog = mp->m_sb.sb_blocklog;
 	dageo->blksize = xfs_dir2_dirblock_bytes(&mp->m_sb);
 	dageo->fsbcount = 1 << mp->m_sb.sb_dirblklog;
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dageo->node_hdr_size = sizeof(struct xfs_da3_node_hdr);
 		dageo->leaf_hdr_size = sizeof(struct xfs_dir3_leaf_hdr);
 		dageo->free_hdr_size = sizeof(struct xfs_dir3_free_hdr);
@@ -730,7 +734,11 @@ xfs_dir2_hashname(
 	struct xfs_mount	*mp,
 	struct xfs_name		*name)
 {
+<<<<<<< HEAD
 	if (unlikely(xfs_has_asciici(mp)))
+=======
+	if (unlikely(xfs_sb_version_hasasciici(&mp->m_sb)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return xfs_ascii_ci_hashname(name);
 	return xfs_da_hashname(name->name, name->len);
 }
@@ -741,7 +749,11 @@ xfs_dir2_compname(
 	const unsigned char	*name,
 	int			len)
 {
+<<<<<<< HEAD
 	if (unlikely(xfs_has_asciici(args->dp->i_mount)))
+=======
+	if (unlikely(xfs_sb_version_hasasciici(&args->dp->i_mount->m_sb)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return xfs_ascii_ci_compname(args, name, len);
 	return xfs_da_compname(args, name, len);
 }

@@ -12,8 +12,11 @@
 #include <net/pkt_sched.h>
 #include <linux/bpf_trace.h>
 #include <net/xdp_sock_drv.h>
+<<<<<<< HEAD
 #include <linux/pci.h>
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <net/ipv6.h>
 
 #include "igc.h"
@@ -120,7 +123,11 @@ void igc_reset(struct igc_adapter *adapter)
 	igc_ptp_reset(adapter);
 
 	/* Re-enable TSN offloading, where applicable. */
+<<<<<<< HEAD
 	igc_tsn_reset(adapter);
+=======
+	igc_tsn_offload_apply(adapter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	igc_get_phy_info(hw);
 }
@@ -151,9 +158,12 @@ static void igc_release_hw_control(struct igc_adapter *adapter)
 	struct igc_hw *hw = &adapter->hw;
 	u32 ctrl_ext;
 
+<<<<<<< HEAD
 	if (!pci_device_is_present(adapter->pdev))
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Let firmware take over control of h/w */
 	ctrl_ext = rd32(IGC_CTRL_EXT);
 	wr32(IGC_CTRL_EXT,
@@ -237,8 +247,11 @@ static void igc_clean_tx_ring(struct igc_ring *tx_ring)
 				igc_unmap_tx_buffer(tx_ring->dev, tx_buffer);
 		}
 
+<<<<<<< HEAD
 		tx_buffer->next_to_watch = NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* move us one more past the eop_desc for start of next pkt */
 		tx_buffer++;
 		i++;
@@ -3080,6 +3093,7 @@ static void igc_del_etype_filter(struct igc_adapter *adapter, u16 etype)
 		   etype);
 }
 
+<<<<<<< HEAD
 static int igc_flex_filter_select(struct igc_adapter *adapter,
 				  struct igc_flex_filter *input,
 				  u32 *fhft)
@@ -3394,6 +3408,13 @@ static int igc_enable_nfc_rule(struct igc_adapter *adapter,
 		return igc_add_flex_filter(adapter, rule);
 	}
 
+=======
+static int igc_enable_nfc_rule(struct igc_adapter *adapter,
+			       const struct igc_nfc_rule *rule)
+{
+	int err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rule->filter.match_flags & IGC_FILTER_FLAG_ETHER_TYPE) {
 		err = igc_add_etype_filter(adapter, rule->filter.etype,
 					   rule->action);
@@ -3430,11 +3451,14 @@ static int igc_enable_nfc_rule(struct igc_adapter *adapter,
 static void igc_disable_nfc_rule(struct igc_adapter *adapter,
 				 const struct igc_nfc_rule *rule)
 {
+<<<<<<< HEAD
 	if (rule->flex) {
 		igc_del_flex_filter(adapter, rule->filter.flex_index);
 		return;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rule->filter.match_flags & IGC_FILTER_FLAG_ETHER_TYPE)
 		igc_del_etype_filter(adapter, rule->filter.etype);
 
@@ -4768,18 +4792,27 @@ void igc_down(struct igc_adapter *adapter)
 
 	igc_ptp_suspend(adapter);
 
+<<<<<<< HEAD
 	if (pci_device_is_present(adapter->pdev)) {
 		/* disable receives in the hardware */
 		rctl = rd32(IGC_RCTL);
 		wr32(IGC_RCTL, rctl & ~IGC_RCTL_EN);
 		/* flush and sleep below */
 	}
+=======
+	/* disable receives in the hardware */
+	rctl = rd32(IGC_RCTL);
+	wr32(IGC_RCTL, rctl & ~IGC_RCTL_EN);
+	/* flush and sleep below */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* set trans_start so we don't get spurious watchdogs during reset */
 	netif_trans_update(netdev);
 
 	netif_carrier_off(netdev);
 	netif_tx_stop_all_queues(netdev);
 
+<<<<<<< HEAD
 	if (pci_device_is_present(adapter->pdev)) {
 		/* disable transmits in the hardware */
 		tctl = rd32(IGC_TCTL);
@@ -4791,6 +4824,17 @@ void igc_down(struct igc_adapter *adapter)
 
 		igc_irq_disable(adapter);
 	}
+=======
+	/* disable transmits in the hardware */
+	tctl = rd32(IGC_TCTL);
+	tctl &= ~IGC_TCTL_EN;
+	wr32(IGC_TCTL, tctl);
+	/* flush both disables and wait for them to finish */
+	wrfl();
+	usleep_range(10000, 20000);
+
+	igc_irq_disable(adapter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	adapter->flags &= ~IGC_FLAG_NEED_LINK_UPDATE;
 
@@ -5133,7 +5177,10 @@ static irqreturn_t igc_msix_ring(int irq, void *data)
  */
 static int igc_request_msix(struct igc_adapter *adapter)
 {
+<<<<<<< HEAD
 	unsigned int num_q_vectors = adapter->num_q_vectors;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i = 0, err = 0, vector = 0, free_vector = 0;
 	struct net_device *netdev = adapter->netdev;
 
@@ -5142,6 +5189,7 @@ static int igc_request_msix(struct igc_adapter *adapter)
 	if (err)
 		goto err_out;
 
+<<<<<<< HEAD
 	if (num_q_vectors > MAX_Q_VECTORS) {
 		num_q_vectors = MAX_Q_VECTORS;
 		dev_warn(&adapter->pdev->dev,
@@ -5149,6 +5197,9 @@ static int igc_request_msix(struct igc_adapter *adapter)
 			 adapter->num_q_vectors, MAX_Q_VECTORS);
 	}
 	for (i = 0; i < num_q_vectors; i++) {
+=======
+	for (i = 0; i < adapter->num_q_vectors; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct igc_q_vector *q_vector = adapter->q_vector[i];
 
 		vector++;
@@ -5227,12 +5278,29 @@ bool igc_has_link(struct igc_adapter *adapter)
 	 * false until the igc_check_for_link establishes link
 	 * for copper adapters ONLY
 	 */
+<<<<<<< HEAD
 	if (!hw->mac.get_link_status)
 		return true;
 	hw->mac.ops.check_for_link(hw);
 	link_active = !hw->mac.get_link_status;
 
 	if (hw->mac.type == igc_i225) {
+=======
+	switch (hw->phy.media_type) {
+	case igc_media_type_copper:
+		if (!hw->mac.get_link_status)
+			return true;
+		hw->mac.ops.check_for_link(hw);
+		link_active = !hw->mac.get_link_status;
+		break;
+	default:
+	case igc_media_type_unknown:
+		break;
+	}
+
+	if (hw->mac.type == igc_i225 &&
+	    hw->phy.id == I225_I_PHY_ID) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!netif_carrier_ok(adapter->netdev)) {
 			adapter->flags &= ~IGC_FLAG_NEED_LINK_UPDATE;
 		} else if (!(adapter->flags & IGC_FLAG_NEED_LINK_UPDATE)) {
@@ -5320,9 +5388,13 @@ static void igc_watchdog_task(struct work_struct *work)
 				adapter->tx_timeout_factor = 14;
 				break;
 			case SPEED_100:
+<<<<<<< HEAD
 			case SPEED_1000:
 			case SPEED_2500:
 				adapter->tx_timeout_factor = 7;
+=======
+				/* maybe add some timeout factor ? */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				break;
 			}
 
@@ -5749,6 +5821,10 @@ static int igc_save_launchtime_params(struct igc_adapter *adapter, int queue,
 				      bool enable)
 {
 	struct igc_ring *ring;
+<<<<<<< HEAD
+=======
+	int i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (queue < 0 || queue >= adapter->num_tx_queues)
 		return -EINVAL;
@@ -5756,6 +5832,20 @@ static int igc_save_launchtime_params(struct igc_adapter *adapter, int queue,
 	ring = adapter->tx_ring[queue];
 	ring->launchtime_enable = enable;
 
+<<<<<<< HEAD
+=======
+	if (adapter->base_time)
+		return 0;
+
+	adapter->cycle_time = NSEC_PER_SEC;
+
+	for (i = 0; i < adapter->num_tx_queues; i++) {
+		ring = adapter->tx_ring[i];
+		ring->start_time = 0;
+		ring->end_time = NSEC_PER_SEC;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -5800,7 +5890,11 @@ static bool validate_schedule(struct igc_adapter *adapter,
 		if (e->command != TC_TAPRIO_CMD_SET_GATES)
 			return false;
 
+<<<<<<< HEAD
 		for (i = 0; i < adapter->num_tx_queues; i++) {
+=======
+		for (i = 0; i < IGC_MAX_TX_QUEUES; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (e->gate_mask & BIT(i))
 				queue_uses[i]++;
 
@@ -5828,6 +5922,7 @@ static int igc_tsn_enable_launchtime(struct igc_adapter *adapter,
 	return igc_tsn_offload_apply(adapter);
 }
 
+<<<<<<< HEAD
 static int igc_tsn_clear_schedule(struct igc_adapter *adapter)
 {
 	int i;
@@ -5845,14 +5940,23 @@ static int igc_tsn_clear_schedule(struct igc_adapter *adapter)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int igc_save_qbv_schedule(struct igc_adapter *adapter,
 				 struct tc_taprio_qopt_offload *qopt)
 {
 	u32 start_time = 0, end_time = 0;
 	size_t n;
 
+<<<<<<< HEAD
 	if (!qopt->enable)
 		return igc_tsn_clear_schedule(adapter);
+=======
+	if (!qopt->enable) {
+		adapter->base_time = 0;
+		return 0;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (adapter->base_time)
 		return -EALREADY;
@@ -5872,7 +5976,11 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
 
 		end_time += e->interval;
 
+<<<<<<< HEAD
 		for (i = 0; i < adapter->num_tx_queues; i++) {
+=======
+		for (i = 0; i < IGC_MAX_TX_QUEUES; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			struct igc_ring *ring = adapter->tx_ring[i];
 
 			if (!(e->gate_mask & BIT(i)))
@@ -5904,6 +6012,7 @@ static int igc_tsn_enable_qbv_scheduling(struct igc_adapter *adapter,
 	return igc_tsn_offload_apply(adapter);
 }
 
+<<<<<<< HEAD
 static int igc_save_cbs_params(struct igc_adapter *adapter, int queue,
 			       bool enable, int idleslope, int sendslope,
 			       int hicredit, int locredit)
@@ -5972,6 +6081,8 @@ static int igc_tsn_enable_cbs(struct igc_adapter *adapter,
 	return igc_tsn_offload_apply(adapter);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int igc_setup_tc(struct net_device *dev, enum tc_setup_type type,
 			void *type_data)
 {
@@ -5984,9 +6095,12 @@ static int igc_setup_tc(struct net_device *dev, enum tc_setup_type type,
 	case TC_SETUP_QDISC_ETF:
 		return igc_tsn_enable_launchtime(adapter, type_data);
 
+<<<<<<< HEAD
 	case TC_SETUP_QDISC_CBS:
 		return igc_tsn_enable_cbs(adapter, type_data);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return -EOPNOTSUPP;
 	}
@@ -6095,7 +6209,11 @@ static const struct net_device_ops igc_netdev_ops = {
 	.ndo_fix_features	= igc_fix_features,
 	.ndo_set_features	= igc_set_features,
 	.ndo_features_check	= igc_features_check,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= igc_ioctl,
+=======
+	.ndo_do_ioctl		= igc_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_setup_tc		= igc_setup_tc,
 	.ndo_bpf		= igc_bpf,
 	.ndo_xdp_xmit		= igc_xdp_xmit,
@@ -6256,10 +6374,13 @@ static int igc_probe(struct pci_dev *pdev,
 
 	pci_enable_pcie_error_reporting(pdev);
 
+<<<<<<< HEAD
 	err = pci_enable_ptm(pdev, NULL);
 	if (err < 0)
 		dev_info(&pdev->dev, "PCIe PTM not supported by PCIe bus/controller\n");
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pci_set_master(pdev);
 
 	err = -ENOMEM;
@@ -6350,9 +6471,13 @@ static int igc_probe(struct pci_dev *pdev,
 	if (pci_using_dac)
 		netdev->features |= NETIF_F_HIGHDMA;
 
+<<<<<<< HEAD
 	netdev->vlan_features |= netdev->features | NETIF_F_TSO_MANGLEID;
 	netdev->mpls_features |= NETIF_F_HW_CSUM;
 	netdev->hw_enc_features |= netdev->vlan_features;
+=======
+	netdev->vlan_features |= netdev->features;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* MTU range: 68 - 9216 */
 	netdev->min_mtu = ETH_MIN_MTU;
@@ -6415,8 +6540,11 @@ static int igc_probe(struct pci_dev *pdev,
 
 	igc_ptp_init(adapter);
 
+<<<<<<< HEAD
 	igc_tsn_clear_schedule(adapter);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* reset the hardware with the new settings */
 	igc_reset(adapter);
 
@@ -6461,7 +6589,10 @@ err_sw_init:
 err_ioremap:
 	free_netdev(netdev);
 err_alloc_etherdev:
+<<<<<<< HEAD
 	pci_disable_pcie_error_reporting(pdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pci_release_mem_regions(pdev);
 err_pci_reg:
 err_dma:

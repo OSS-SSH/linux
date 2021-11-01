@@ -40,7 +40,10 @@ int test_body(void)
 	uint64_t rv, dscr1 = 1, dscr2, texasr;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	printf("Check DSCR TM context switch: ");
 	fflush(stdout);

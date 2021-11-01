@@ -225,6 +225,7 @@
 			bias-pull-down;
 		};
 	};
+<<<<<<< HEAD
 
 	ethernet_pins: ethernet-pins {
 		eth_rmii-pinmux {
@@ -246,6 +247,8 @@
 		};
 
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* uSD */
@@ -262,6 +265,7 @@
 	vqmmc-supply = <&sd_vcc>;
 };
 
+<<<<<<< HEAD
 &ethernet {
 	pinctrl-names = "default";
 	pinctrl-0 = <&ethernet_pins>;
@@ -286,6 +290,8 @@
 	};
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &twd_timer {
 	status = "okay";
 };

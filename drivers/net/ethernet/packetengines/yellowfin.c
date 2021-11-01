@@ -362,7 +362,11 @@ static const struct net_device_ops netdev_ops = {
 	.ndo_set_rx_mode	= set_rx_mode,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address 	= eth_mac_addr,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= netdev_ioctl,
+=======
+	.ndo_do_ioctl 		= netdev_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout 	= yellowfin_tx_timeout,
 };
 

@@ -376,7 +376,11 @@ int pci_enable_pasid(struct pci_dev *pdev, int features)
 	if (WARN_ON(pdev->pasid_enabled))
 		return -EBUSY;
 
+<<<<<<< HEAD
 	if (!pdev->eetlp_prefix_path && !pdev->pasid_no_tlp)
+=======
+	if (!pdev->eetlp_prefix_path)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	if (!pasid)

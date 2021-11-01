@@ -37,7 +37,11 @@ static void mlx5e_init_trap_rq(struct mlx5e_trap *t, struct mlx5e_params *params
 	struct mlx5e_priv *priv = t->priv;
 
 	rq->wq_type      = params->rq_wq_type;
+<<<<<<< HEAD
 	rq->pdev         = t->pdev;
+=======
+	rq->pdev         = mdev->device;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rq->netdev       = priv->netdev;
 	rq->priv         = priv;
 	rq->clock        = &mdev->clock;
@@ -92,6 +96,7 @@ static void mlx5e_close_trap_rq(struct mlx5e_rq *rq)
 static int mlx5e_create_trap_direct_rq_tir(struct mlx5_core_dev *mdev, struct mlx5e_tir *tir,
 					   u32 rqn)
 {
+<<<<<<< HEAD
 	struct mlx5e_tir_builder *builder;
 	int err;
 
@@ -103,10 +108,37 @@ static int mlx5e_create_trap_direct_rq_tir(struct mlx5_core_dev *mdev, struct ml
 	err = mlx5e_tir_init(tir, builder, mdev, true);
 
 	mlx5e_tir_builder_free(builder);
+=======
+	void *tirc;
+	int inlen;
+	u32 *in;
+	int err;
+
+	inlen = MLX5_ST_SZ_BYTES(create_tir_in);
+	in = kvzalloc(inlen, GFP_KERNEL);
+	if (!in)
+		return -ENOMEM;
+
+	tirc = MLX5_ADDR_OF(create_tir_in, in, ctx);
+	MLX5_SET(tirc, tirc, transport_domain, mdev->mlx5e_res.hw_objs.td.tdn);
+	MLX5_SET(tirc, tirc, rx_hash_fn, MLX5_RX_HASH_FN_NONE);
+	MLX5_SET(tirc, tirc, disp_type, MLX5_TIRC_DISP_TYPE_DIRECT);
+	MLX5_SET(tirc, tirc, inline_rqn, rqn);
+	err = mlx5e_create_tir(mdev, tir, in);
+	kvfree(in);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
 
+<<<<<<< HEAD
+=======
+static void mlx5e_destroy_trap_direct_rq_tir(struct mlx5_core_dev *mdev, struct mlx5e_tir *tir)
+{
+	mlx5e_destroy_tir(mdev, tir);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void mlx5e_build_trap_params(struct mlx5_core_dev *mdev,
 				    int max_mtu, u16 q_counter,
 				    struct mlx5e_trap *t)
@@ -162,7 +194,11 @@ err_napi_del:
 
 void mlx5e_close_trap(struct mlx5e_trap *trap)
 {
+<<<<<<< HEAD
 	mlx5e_tir_destroy(&trap->tir);
+=======
+	mlx5e_destroy_trap_direct_rq_tir(trap->mdev, &trap->tir);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mlx5e_close_trap_rq(&trap->rq);
 	netif_napi_del(&trap->napi);
 	kvfree(trap);

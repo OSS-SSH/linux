@@ -269,7 +269,11 @@ static int __init zcore_init(void)
 
 	if (!is_ipl_type_dump())
 		return -ENODATA;
+<<<<<<< HEAD
 	if (oldmem_data.start)
+=======
+	if (OLDMEM_BASE)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENODATA;
 
 	zcore_dbf = debug_register("zcore", 4, 1, 4 * sizeof(long));

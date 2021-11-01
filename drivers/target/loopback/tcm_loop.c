@@ -81,7 +81,11 @@ static int tcm_loop_show_info(struct seq_file *m, struct Scsi_Host *host)
 }
 
 static int tcm_loop_driver_probe(struct device *);
+<<<<<<< HEAD
 static void tcm_loop_driver_remove(struct device *);
+=======
+static int tcm_loop_driver_remove(struct device *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int pseudo_lld_bus_match(struct device *dev,
 				struct device_driver *dev_driver)
@@ -183,7 +187,11 @@ static int tcm_loop_queuecommand(struct Scsi_Host *sh, struct scsi_cmnd *sc)
 
 	memset(tl_cmd, 0, sizeof(*tl_cmd));
 	tl_cmd->sc = sc;
+<<<<<<< HEAD
 	tl_cmd->sc_cmd_tag = scsi_cmd_to_rq(sc)->tag;
+=======
+	tl_cmd->sc_cmd_tag = sc->request->tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	tcm_loop_target_queue_cmd(tl_cmd);
 	return 0;
@@ -241,7 +249,11 @@ static int tcm_loop_abort_task(struct scsi_cmnd *sc)
 {
 	struct tcm_loop_hba *tl_hba;
 	struct tcm_loop_tpg *tl_tpg;
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret = FAILED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Locate the tcm_loop_hba_t pointer
@@ -249,7 +261,11 @@ static int tcm_loop_abort_task(struct scsi_cmnd *sc)
 	tl_hba = *(struct tcm_loop_hba **)shost_priv(sc->device->host);
 	tl_tpg = &tl_hba->tl_hba_tpgs[sc->device->id];
 	ret = tcm_loop_issue_tmr(tl_tpg, sc->device->lun,
+<<<<<<< HEAD
 				 scsi_cmd_to_rq(sc)->tag, TMR_ABORT_TASK);
+=======
+				 sc->request->tag, TMR_ABORT_TASK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return (ret == TMR_FUNCTION_COMPLETE) ? SUCCESS : FAILED;
 }
 
@@ -261,7 +277,11 @@ static int tcm_loop_device_reset(struct scsi_cmnd *sc)
 {
 	struct tcm_loop_hba *tl_hba;
 	struct tcm_loop_tpg *tl_tpg;
+<<<<<<< HEAD
 	int ret;
+=======
+	int ret = FAILED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Locate the tcm_loop_hba_t pointer
@@ -363,7 +383,11 @@ static int tcm_loop_driver_probe(struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void tcm_loop_driver_remove(struct device *dev)
+=======
+static int tcm_loop_driver_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tcm_loop_hba *tl_hba;
 	struct Scsi_Host *sh;
@@ -373,6 +397,10 @@ static void tcm_loop_driver_remove(struct device *dev)
 
 	scsi_remove_host(sh);
 	scsi_host_put(sh);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void tcm_loop_release_adapter(struct device *dev)

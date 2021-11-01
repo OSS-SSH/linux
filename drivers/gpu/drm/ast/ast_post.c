@@ -2028,6 +2028,7 @@ static bool ast_dram_init_2500(struct ast_private *ast)
 	return true;
 }
 
+<<<<<<< HEAD
 void ast_patch_ahb_2500(struct ast_private *ast)
 {
 	u32	data;
@@ -2062,6 +2063,8 @@ void ast_patch_ahb_2500(struct ast_private *ast)
 	ast_moutdwm(ast, 0x1e6e207c, 0x08000000);	/* clear fast reset */
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void ast_post_chip_2500(struct drm_device *dev)
 {
 	struct ast_private *ast = to_ast_private(dev);
@@ -2069,6 +2072,7 @@ void ast_post_chip_2500(struct drm_device *dev)
 	u8 reg;
 
 	reg = ast_get_index_reg_mask(ast, AST_IO_CRTC_PORT, 0xd0, 0xff);
+<<<<<<< HEAD
 	if ((reg & AST_VRAM_INIT_STATUS_MASK) == 0) {/* vga only */
 		/* Clear bus lock condition */
 		ast_patch_ahb_2500(ast);
@@ -2101,12 +2105,44 @@ void ast_post_chip_2500(struct drm_device *dev)
 		temp = ast_mindwm(ast, 0x1E6E2070);
 		if (temp & 0x02000000)
 			ast_moutdwm(ast, 0x1E6E207C, 0x00004000);
+=======
+	if ((reg & 0x80) == 0) {/* vga only */
+		/* Clear bus lock condition */
+		ast_moutdwm(ast, 0x1e600000, 0xAEED1A03);
+		ast_moutdwm(ast, 0x1e600084, 0x00010000);
+		ast_moutdwm(ast, 0x1e600088, 0x00000000);
+		ast_moutdwm(ast, 0x1e6e2000, 0x1688A8A8);
+		ast_write32(ast, 0xf004, 0x1e6e0000);
+		ast_write32(ast, 0xf000, 0x1);
+		ast_write32(ast, 0x12000, 0x1688a8a8);
+		while (ast_read32(ast, 0x12000) != 0x1)
+			;
+
+		ast_write32(ast, 0x10000, 0xfc600309);
+		while (ast_read32(ast, 0x10000) != 0x1)
+			;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* Slow down CPU/AHB CLK in VGA only mode */
 		temp = ast_read32(ast, 0x12008);
 		temp |= 0x73;
 		ast_write32(ast, 0x12008, temp);
 
+<<<<<<< HEAD
+=======
+		/* Reset USB port to patch USB unknown device issue */
+		ast_moutdwm(ast, 0x1e6e2090, 0x20000000);
+		temp  = ast_mindwm(ast, 0x1e6e2094);
+		temp |= 0x00004000;
+		ast_moutdwm(ast, 0x1e6e2094, temp);
+		temp  = ast_mindwm(ast, 0x1e6e2070);
+		if (temp & 0x00800000) {
+			ast_moutdwm(ast, 0x1e6e207c, 0x00800000);
+			mdelay(100);
+			ast_moutdwm(ast, 0x1e6e2070, 0x00800000);
+		}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!ast_dram_init_2500(ast))
 			drm_err(dev, "DRAM init failed !\n");
 

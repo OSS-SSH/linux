@@ -85,6 +85,7 @@
 #define  LTSMDIS		BIT(31)
 #define  MACCTLR_INIT_VAL	(LTSMDIS | MACCTLR_NFTS_MASK)
 #define PMSR			0x01105c
+<<<<<<< HEAD
 #define  L1FAEG			BIT(31)
 #define  PMEL1RX		BIT(23)
 #define  PMSTATE		GENMASK(18, 16)
@@ -92,6 +93,8 @@
 #define PMCTLR			0x011060
 #define  L1IATN			BIT(31)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MACS2R			0x011078
 #define MACCGSPSETR		0x011084
 #define  SPCNGRSN		BIT(31)

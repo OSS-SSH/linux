@@ -70,9 +70,15 @@ void disable_swap_slots_cache_lock(void)
 	swap_slot_cache_enabled = false;
 	if (swap_slot_cache_initialized) {
 		/* serialize with cpu hotplug operations */
+<<<<<<< HEAD
 		cpus_read_lock();
 		__drain_swap_slots_cache(SLOTS_CACHE|SLOTS_CACHE_RET);
 		cpus_read_unlock();
+=======
+		get_online_cpus();
+		__drain_swap_slots_cache(SLOTS_CACHE|SLOTS_CACHE_RET);
+		put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

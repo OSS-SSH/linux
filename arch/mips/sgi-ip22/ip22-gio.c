@@ -143,13 +143,21 @@ static int gio_device_probe(struct device *dev)
 	return error;
 }
 
+<<<<<<< HEAD
 static void gio_device_remove(struct device *dev)
+=======
+static int gio_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct gio_device *gio_dev = to_gio_device(dev);
 	struct gio_driver *drv = to_gio_driver(dev->driver);
 
 	if (dev->driver && drv->remove)
 		drv->remove(gio_dev);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void gio_device_shutdown(struct device *dev)

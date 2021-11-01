@@ -13,6 +13,7 @@
 #include <sys/types.h>
 #include <linux/futex.h>
 
+<<<<<<< HEAD
 struct bench_futex_parameters {
 	bool silent;
 	bool fshared;
@@ -27,6 +28,8 @@ struct bench_futex_parameters {
 	unsigned int nrequeue;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * futex() - SYS_futex syscall wrapper
  * @uaddr:	address of first futex
@@ -34,7 +37,11 @@ struct bench_futex_parameters {
  * @val:	typically expected value of uaddr, but varies by op
  * @timeout:	typically an absolute struct timespec (except where noted
  *		otherwise). Overloaded by some ops
+<<<<<<< HEAD
  * @uaddr2:	address of second futex for some ops
+=======
+ * @uaddr2:	address of second futex for some ops\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @val3:	varies by op
  * @opflags:	flags to be bitwise OR'd with op, such as FUTEX_PRIVATE_FLAG
  *
@@ -91,7 +98,11 @@ futex_unlock_pi(u_int32_t *uaddr, int opflags)
 /**
 * futex_cmp_requeue() - requeue tasks from uaddr to uaddr2
 * @nr_wake:        wake up to this many tasks
+<<<<<<< HEAD
 * @nr_requeue:     requeue up to this many tasks
+=======
+* @nr_requeue:        requeue up to this many tasks
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 */
 static inline int
 futex_cmp_requeue(u_int32_t *uaddr, u_int32_t val, u_int32_t *uaddr2, int nr_wake,
@@ -100,6 +111,7 @@ futex_cmp_requeue(u_int32_t *uaddr, u_int32_t val, u_int32_t *uaddr2, int nr_wak
 	return futex(uaddr, FUTEX_CMP_REQUEUE, nr_wake, nr_requeue, uaddr2,
 		 val, opflags);
 }
+<<<<<<< HEAD
 
 /**
  * futex_wait_requeue_pi() - block on uaddr and prepare to requeue to uaddr2
@@ -134,4 +146,6 @@ futex_cmp_requeue_pi(u_int32_t *uaddr, u_int32_t val, u_int32_t *uaddr2,
 		     val, opflags);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _FUTEX_H */

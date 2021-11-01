@@ -177,9 +177,18 @@ static int spear_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	err = spear_pwm_config(chip, pwm, state->duty_cycle, state->period);
 	if (err)
 		return err;
+=======
+	if (state->period != pwm->state.period ||
+	    state->duty_cycle != pwm->state.duty_cycle) {
+		err = spear_pwm_config(chip, pwm, state->duty_cycle, state->period);
+		if (err)
+			return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!pwm->state.enabled)
 		return spear_pwm_enable(chip, pwm);

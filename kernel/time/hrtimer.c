@@ -652,10 +652,28 @@ static inline int hrtimer_hres_active(void)
 	return __hrtimer_hres_active(this_cpu_ptr(&hrtimer_bases));
 }
 
+<<<<<<< HEAD
 static void __hrtimer_reprogram(struct hrtimer_cpu_base *cpu_base,
 				struct hrtimer *next_timer,
 				ktime_t expires_next)
 {
+=======
+/*
+ * Reprogram the event source with checking both queues for the
+ * next event
+ * Called with interrupts disabled and base->lock held
+ */
+static void
+hrtimer_force_reprogram(struct hrtimer_cpu_base *cpu_base, int skip_equal)
+{
+	ktime_t expires_next;
+
+	expires_next = hrtimer_update_next_event(cpu_base);
+
+	if (skip_equal && expires_next == cpu_base->expires_next)
+		return;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cpu_base->expires_next = expires_next;
 
 	/*
@@ -678,6 +696,7 @@ static void __hrtimer_reprogram(struct hrtimer_cpu_base *cpu_base,
 	if (!__hrtimer_hres_active(cpu_base) || cpu_base->hang_detected)
 		return;
 
+<<<<<<< HEAD
 	tick_program_event(expires_next, 1);
 }
 
@@ -697,6 +716,9 @@ hrtimer_force_reprogram(struct hrtimer_cpu_base *cpu_base, int skip_equal)
 		return;
 
 	__hrtimer_reprogram(cpu_base, cpu_base->next_timer, expires_next);
+=======
+	tick_program_event(cpu_base->expires_next, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* High resolution timer related functions */
@@ -727,7 +749,27 @@ static inline int hrtimer_is_hres_enabled(void)
 	return hrtimer_hres_enabled;
 }
 
+<<<<<<< HEAD
 static void retrigger_next_event(void *arg);
+=======
+/*
+ * Retrigger next event is called after clock was set
+ *
+ * Called with interrupts disabled via on_each_cpu()
+ */
+static void retrigger_next_event(void *arg)
+{
+	struct hrtimer_cpu_base *base = this_cpu_ptr(&hrtimer_bases);
+
+	if (!__hrtimer_hres_active(base))
+		return;
+
+	raw_spin_lock(&base->lock);
+	hrtimer_update_base(base);
+	hrtimer_force_reprogram(base, 0);
+	raw_spin_unlock(&base->lock);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Switch to high resolution mode
@@ -749,6 +791,7 @@ static void hrtimer_switch_to_hres(void)
 	retrigger_next_event(NULL);
 }
 
+<<<<<<< HEAD
 #else
 
 static inline int hrtimer_is_hres_enabled(void) { return 0; }
@@ -797,6 +840,31 @@ static void retrigger_next_event(void *arg)
 		hrtimer_update_next_event(base);
 	raw_spin_unlock(&base->lock);
 }
+=======
+static void clock_was_set_work(struct work_struct *work)
+{
+	clock_was_set();
+}
+
+static DECLARE_WORK(hrtimer_work, clock_was_set_work);
+
+/*
+ * Called from timekeeping and resume code to reprogram the hrtimer
+ * interrupt device on all cpus.
+ */
+void clock_was_set_delayed(void)
+{
+	schedule_work(&hrtimer_work);
+}
+
+#else
+
+static inline int hrtimer_is_hres_enabled(void) { return 0; }
+static inline void hrtimer_switch_to_hres(void) { }
+static inline void retrigger_next_event(void *arg) { }
+
+#endif /* CONFIG_HIGH_RES_TIMERS */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * When a timer is enqueued and expires earlier than the already enqueued
@@ -851,16 +919,26 @@ static void hrtimer_reprogram(struct hrtimer *timer, bool reprogram)
 	if (base->cpu_base != cpu_base)
 		return;
 
+<<<<<<< HEAD
 	if (expires >= cpu_base->expires_next)
 		return;
 
 	/*
 	 * If the hrtimer interrupt is running, then it will reevaluate the
 	 * clock bases and reprogram the clock event device.
+=======
+	/*
+	 * If the hrtimer interrupt is running, then it will
+	 * reevaluate the clock bases and reprogram the clock event
+	 * device. The callbacks are always executed in hard interrupt
+	 * context so we don't need an extra check for a running
+	 * callback.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	if (cpu_base->in_hrtirq)
 		return;
 
+<<<<<<< HEAD
 	cpu_base->next_timer = timer;
 
 	__hrtimer_reprogram(cpu_base, timer, expires);
@@ -1002,10 +1080,70 @@ void clock_was_set_delayed(void)
  * hrtimers are up to date.
  */
 void hrtimers_resume_local(void)
+=======
+	if (expires >= cpu_base->expires_next)
+		return;
+
+	/* Update the pointer to the next expiring timer */
+	cpu_base->next_timer = timer;
+	cpu_base->expires_next = expires;
+
+	/*
+	 * If hres is not active, hardware does not have to be
+	 * programmed yet.
+	 *
+	 * If a hang was detected in the last timer interrupt then we
+	 * do not schedule a timer which is earlier than the expiry
+	 * which we enforced in the hang detection. We want the system
+	 * to make progress.
+	 */
+	if (!__hrtimer_hres_active(cpu_base) || cpu_base->hang_detected)
+		return;
+
+	/*
+	 * Program the timer hardware. We enforce the expiry for
+	 * events which are already in the past.
+	 */
+	tick_program_event(expires, 1);
+}
+
+/*
+ * Clock realtime was set
+ *
+ * Change the offset of the realtime clock vs. the monotonic
+ * clock.
+ *
+ * We might have to reprogram the high resolution timer interrupt. On
+ * SMP we call the architecture specific code to retrigger _all_ high
+ * resolution timer interrupts. On UP we just disable interrupts and
+ * call the high resolution interrupt code.
+ */
+void clock_was_set(void)
+{
+#ifdef CONFIG_HIGH_RES_TIMERS
+	/* Retrigger the CPU local events everywhere */
+	on_each_cpu(retrigger_next_event, NULL, 1);
+#endif
+	timerfd_clock_was_set();
+}
+
+/*
+ * During resume we might have to reprogram the high resolution timer
+ * interrupt on all online CPUs.  However, all other CPUs will be
+ * stopped with IRQs interrupts disabled so the clock_was_set() call
+ * must be deferred.
+ */
+void hrtimers_resume(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	lockdep_assert_irqs_disabled();
 	/* Retrigger on the local CPU */
 	retrigger_next_event(NULL);
+<<<<<<< HEAD
+=======
+	/* And schedule a retrigger for all others */
+	clock_was_set_delayed();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -1132,13 +1270,21 @@ static void __remove_hrtimer(struct hrtimer *timer,
  * remove hrtimer, called with base lock held
  */
 static inline int
+<<<<<<< HEAD
 remove_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base,
 	       bool restart, bool keep_local)
+=======
+remove_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base, bool restart)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u8 state = timer->state;
 
 	if (state & HRTIMER_STATE_ENQUEUED) {
+<<<<<<< HEAD
 		bool reprogram;
+=======
+		int reprogram;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * Remove the timer and force reprogramming when high
@@ -1151,6 +1297,7 @@ remove_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base,
 		debug_deactivate(timer);
 		reprogram = base->cpu_base == this_cpu_ptr(&hrtimer_bases);
 
+<<<<<<< HEAD
 		/*
 		 * If the timer is not restarted then reprogramming is
 		 * required if the timer is local. If it is local and about
@@ -1161,6 +1308,10 @@ remove_hrtimer(struct hrtimer *timer, struct hrtimer_clock_base *base,
 			state = HRTIMER_STATE_INACTIVE;
 		else
 			reprogram &= !keep_local;
+=======
+		if (!restart)
+			state = HRTIMER_STATE_INACTIVE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		__remove_hrtimer(timer, base, state, reprogram);
 		return 1;
@@ -1214,6 +1365,7 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
 				    struct hrtimer_clock_base *base)
 {
 	struct hrtimer_clock_base *new_base;
+<<<<<<< HEAD
 	bool force_local, first;
 
 	/*
@@ -1239,6 +1391,11 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
 	 * removal and once after enqueue).
 	 */
 	remove_hrtimer(timer, base, true, force_local);
+=======
+
+	/* Remove an active timer from the queue: */
+	remove_hrtimer(timer, base, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (mode & HRTIMER_MODE_REL)
 		tim = ktime_add_safe(tim, base->get_time());
@@ -1248,6 +1405,7 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
 	hrtimer_set_expires_range_ns(timer, tim, delta_ns);
 
 	/* Switch the timer base, if necessary: */
+<<<<<<< HEAD
 	if (!force_local) {
 		new_base = switch_hrtimer_base(timer, base,
 					       mode & HRTIMER_MODE_PINNED);
@@ -1266,6 +1424,11 @@ static int __hrtimer_start_range_ns(struct hrtimer *timer, ktime_t tim,
 	 */
 	hrtimer_force_reprogram(new_base->cpu_base, 1);
 	return 0;
+=======
+	new_base = switch_hrtimer_base(timer, base, mode & HRTIMER_MODE_PINNED);
+
+	return enqueue_hrtimer(timer, new_base, mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1331,7 +1494,11 @@ int hrtimer_try_to_cancel(struct hrtimer *timer)
 	base = lock_hrtimer_base(timer, &flags);
 
 	if (!hrtimer_callback_running(timer))
+<<<<<<< HEAD
 		ret = remove_hrtimer(timer, base, false, false);
+=======
+		ret = remove_hrtimer(timer, base, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	unlock_hrtimer_base(timer, &flags);
 

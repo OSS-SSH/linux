@@ -1225,12 +1225,15 @@ int vsc73xx_remove(struct vsc73xx *vsc)
 }
 EXPORT_SYMBOL(vsc73xx_remove);
 
+<<<<<<< HEAD
 void vsc73xx_shutdown(struct vsc73xx *vsc)
 {
 	dsa_switch_shutdown(vsc->ds);
 }
 EXPORT_SYMBOL(vsc73xx_shutdown);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_AUTHOR("Linus Walleij <linus.walleij@linaro.org>");
 MODULE_DESCRIPTION("Vitesse VSC7385/7388/7395/7398 driver");
 MODULE_LICENSE("GPL v2");

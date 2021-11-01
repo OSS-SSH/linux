@@ -64,22 +64,29 @@ struct tegra_drm {
 	struct tegra_display_hub *hub;
 };
 
+<<<<<<< HEAD
 static inline struct host1x *tegra_drm_to_host1x(struct tegra_drm *tegra)
 {
 	return dev_get_drvdata(tegra->drm->dev->parent);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct tegra_drm_client;
 
 struct tegra_drm_context {
 	struct tegra_drm_client *client;
 	struct host1x_channel *channel;
+<<<<<<< HEAD
 
 	/* Only used by legacy UAPI. */
 	unsigned int id;
 
 	/* Only used by new UAPI. */
 	struct xarray mappings;
+=======
+	unsigned int id;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct tegra_drm_client_ops {
@@ -101,9 +108,13 @@ struct tegra_drm_client {
 	struct host1x_client base;
 	struct list_head list;
 	struct tegra_drm *drm;
+<<<<<<< HEAD
 	struct host1x_channel *shared_channel;
 
 	/* Set by driver */
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int version;
 	const struct tegra_drm_client_ops *ops;
 };

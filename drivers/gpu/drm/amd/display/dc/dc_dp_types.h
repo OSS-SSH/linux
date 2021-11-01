@@ -109,7 +109,10 @@ struct dc_link_settings {
 	enum dc_link_spread link_spread;
 	bool use_link_rate_set;
 	uint8_t link_rate_set;
+<<<<<<< HEAD
 	bool dpcd_source_device_specific_field_support;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct dc_lane_settings {

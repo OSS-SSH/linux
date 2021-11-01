@@ -2852,11 +2852,19 @@ unregister_loop:
 		tty_unregister_driver(fwloop_driver);
 put_loop:
 	if (create_loop_dev)
+<<<<<<< HEAD
 		tty_driver_kref_put(fwloop_driver);
 unregister_driver:
 	tty_unregister_driver(fwtty_driver);
 put_tty:
 	tty_driver_kref_put(fwtty_driver);
+=======
+		put_tty_driver(fwloop_driver);
+unregister_driver:
+	tty_unregister_driver(fwtty_driver);
+put_tty:
+	put_tty_driver(fwtty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 remove_debugfs:
 	debugfs_remove_recursive(fwserial_debugfs);
 
@@ -2871,10 +2879,17 @@ static void __exit fwserial_exit(void)
 	kmem_cache_destroy(fwtty_txn_cache);
 	if (create_loop_dev) {
 		tty_unregister_driver(fwloop_driver);
+<<<<<<< HEAD
 		tty_driver_kref_put(fwloop_driver);
 	}
 	tty_unregister_driver(fwtty_driver);
 	tty_driver_kref_put(fwtty_driver);
+=======
+		put_tty_driver(fwloop_driver);
+	}
+	tty_unregister_driver(fwtty_driver);
+	put_tty_driver(fwtty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	debugfs_remove_recursive(fwserial_debugfs);
 }
 

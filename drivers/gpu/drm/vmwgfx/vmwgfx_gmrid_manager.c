@@ -71,6 +71,7 @@ static int vmw_gmrid_man_get_node(struct ttm_resource_manager *man,
 
 	if (gman->max_gmr_pages > 0) {
 		gman->used_gmr_pages += (*res)->num_pages;
+<<<<<<< HEAD
 		/*
 		 * Because the graphics memory is a soft limit we can try to
 		 * expand it instead of letting the userspace apps crash.
@@ -105,6 +106,10 @@ static int vmw_gmrid_man_get_node(struct ttm_resource_manager *man,
 				goto nospace;
 			}
 		}
+=======
+		if (unlikely(gman->used_gmr_pages > gman->max_gmr_pages))
+			goto nospace;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	(*res)->start = id;

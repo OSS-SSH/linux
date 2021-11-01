@@ -66,7 +66,10 @@ choice
 config KASAN_GENERIC
 	bool "Generic mode"
 	depends on HAVE_ARCH_KASAN && CC_HAS_KASAN_GENERIC
+<<<<<<< HEAD
 	depends on CC_HAS_WORKING_NOSANITIZE_ADDRESS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select SLUB_DEBUG if SLUB
 	select CONSTRUCTORS
 	help
@@ -87,7 +90,10 @@ config KASAN_GENERIC
 config KASAN_SW_TAGS
 	bool "Software tag-based mode"
 	depends on HAVE_ARCH_KASAN_SW_TAGS && CC_HAS_KASAN_SW_TAGS
+<<<<<<< HEAD
 	depends on CC_HAS_WORKING_NOSANITIZE_ADDRESS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select SLUB_DEBUG if SLUB
 	select CONSTRUCTORS
 	help

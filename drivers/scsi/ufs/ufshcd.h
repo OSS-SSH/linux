@@ -476,6 +476,7 @@ struct ufs_stats {
 	struct ufs_event_hist event[UFS_EVT_CNT];
 };
 
+<<<<<<< HEAD
 /**
  * enum ufshcd_state - UFS host controller state
  * @UFSHCD_STATE_RESET: Link is not operational. Postpone SCSI command
@@ -497,6 +498,8 @@ enum ufshcd_state {
 	UFSHCD_STATE_ERROR,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum ufshcd_quirks {
 	/* Interrupt aggregation support is broken */
 	UFSHCD_QUIRK_BROKEN_INTR_AGGR			= 1 << 0,
@@ -662,6 +665,7 @@ struct ufs_hba_variant_params {
 	u32 wb_flush_threshold;
 };
 
+<<<<<<< HEAD
 #ifdef CONFIG_SCSI_UFS_HPB
 /**
  * struct ufshpb_dev_info - UFSHPB device related info
@@ -687,6 +691,8 @@ struct ufshpb_dev_info {
 };
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct ufs_hba_monitor {
 	unsigned long chunk_size;
 
@@ -720,7 +726,10 @@ struct ufs_hba_monitor {
  * @lrb: local reference block
  * @cmd_queue: Used to allocate command tags from hba->host->tag_set.
  * @outstanding_tasks: Bits representing outstanding task requests
+<<<<<<< HEAD
  * @outstanding_lock: Protects @outstanding_reqs.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @outstanding_reqs: Bits representing outstanding transfer requests
  * @capabilities: UFS Controller Capabilities
  * @nutrs: Transfer Request Queue depth supported by controller
@@ -730,11 +739,19 @@ struct ufs_hba_monitor {
  * @priv: pointer to variant specific private data
  * @irq: Irq number of the controller
  * @active_uic_cmd: handle of active UIC command
+<<<<<<< HEAD
  * @uic_cmd_mutex: mutex for UIC command
  * @tmf_tag_set: TMF tag set.
  * @tmf_queue: Used to allocate TMF tags.
  * @pwr_done: completion for power mode change
  * @ufshcd_state: UFSHCD state
+=======
+ * @uic_cmd_mutex: mutex for uic command
+ * @tmf_tag_set: TMF tag set.
+ * @tmf_queue: Used to allocate TMF tags.
+ * @pwr_done: completion for power mode change
+ * @ufshcd_state: UFSHCD states
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @eh_flags: Error handling flags
  * @intr_mask: Interrupt Mask Bits
  * @ee_ctrl_mask: Exception event control mask
@@ -807,7 +824,10 @@ struct ufs_hba {
 	struct ufshcd_lrb *lrb;
 
 	unsigned long outstanding_tasks;
+<<<<<<< HEAD
 	spinlock_t outstanding_lock;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long outstanding_reqs;
 
 	u32 capabilities;
@@ -828,13 +848,20 @@ struct ufs_hba {
 
 	struct blk_mq_tag_set tmf_tag_set;
 	struct request_queue *tmf_queue;
+<<<<<<< HEAD
 	struct request **tmf_rqs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct uic_command *active_uic_cmd;
 	struct mutex uic_cmd_mutex;
 	struct completion *uic_async_done;
 
+<<<<<<< HEAD
 	enum ufshcd_state ufshcd_state;
+=======
+	u32 ufshcd_state;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 eh_flags;
 	u32 intr_mask;
 	u16 ee_ctrl_mask; /* Exception event mask */
@@ -863,7 +890,10 @@ struct ufs_hba {
 	/* Device management request data */
 	struct ufs_dev_cmd dev_cmd;
 	ktime_t last_dme_cmd_tstamp;
+<<<<<<< HEAD
 	int nop_out_timeout;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Keeps information of the UFS device connected to this host */
 	struct ufs_dev_info dev_info;
@@ -901,10 +931,13 @@ struct ufs_hba {
 	struct request_queue	*bsg_queue;
 	struct delayed_work rpm_dev_flush_recheck_work;
 
+<<<<<<< HEAD
 #ifdef CONFIG_SCSI_UFS_HPB
 	struct ufshpb_dev_info ufshpb_dev;
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ufs_hba_monitor	monitor;
 
 #ifdef CONFIG_SCSI_UFS_CRYPTO
@@ -947,8 +980,21 @@ static inline bool ufshcd_is_rpm_autosuspend_allowed(struct ufs_hba *hba)
 
 static inline bool ufshcd_is_intr_aggr_allowed(struct ufs_hba *hba)
 {
+<<<<<<< HEAD
 	return (hba->caps & UFSHCD_CAP_INTR_AGGR) &&
 		!(hba->quirks & UFSHCD_QUIRK_BROKEN_INTR_AGGR);
+=======
+/* DWC UFS Core has the Interrupt aggregation feature but is not detectable*/
+#ifndef CONFIG_SCSI_UFS_DWC
+	if ((hba->caps & UFSHCD_CAP_INTR_AGGR) &&
+	    !(hba->quirks & UFSHCD_QUIRK_BROKEN_INTR_AGGR))
+		return true;
+	else
+		return false;
+#else
+return true;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline bool ufshcd_can_aggressive_pc(struct ufs_hba *hba)
@@ -1055,6 +1101,7 @@ static inline u8 ufshcd_wb_get_query_index(struct ufs_hba *hba)
 	return 0;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_PM
 extern int ufshcd_runtime_suspend(struct device *dev);
 extern int ufshcd_runtime_resume(struct device *dev);
@@ -1063,6 +1110,13 @@ extern int ufshcd_runtime_resume(struct device *dev);
 extern int ufshcd_system_suspend(struct device *dev);
 extern int ufshcd_system_resume(struct device *dev);
 #endif
+=======
+extern int ufshcd_runtime_suspend(struct ufs_hba *hba);
+extern int ufshcd_runtime_resume(struct ufs_hba *hba);
+extern int ufshcd_runtime_idle(struct ufs_hba *hba);
+extern int ufshcd_system_suspend(struct ufs_hba *hba);
+extern int ufshcd_system_resume(struct ufs_hba *hba);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern int ufshcd_shutdown(struct ufs_hba *hba);
 extern int ufshcd_dme_configure_adapt(struct ufs_hba *hba,
 				      int agreed_gear,
@@ -1145,9 +1199,12 @@ int ufshcd_read_desc_param(struct ufs_hba *hba,
 			   u8 param_offset,
 			   u8 *param_read_buf,
 			   u8 param_size);
+<<<<<<< HEAD
 int ufshcd_query_attr_retry(struct ufs_hba *hba, enum query_opcode opcode,
 			    enum attr_idn idn, u8 index, u8 selector,
 			    u32 *attr_val);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int ufshcd_query_attr(struct ufs_hba *hba, enum query_opcode opcode,
 		      enum attr_idn idn, u8 index, u8 selector, u32 *attr_val);
 int ufshcd_query_flag(struct ufs_hba *hba, enum query_opcode opcode,
@@ -1212,6 +1269,14 @@ static inline u32 ufshcd_vops_get_ufs_hci_version(struct ufs_hba *hba)
 	return ufshcd_readl(hba, REG_UFS_VERSION);
 }
 
+<<<<<<< HEAD
+=======
+static inline bool ufshcd_has_utrlcnr(struct ufs_hba *hba)
+{
+	return (hba->ufs_version >= ufshci_version(3, 0));
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int ufshcd_vops_clk_scale_notify(struct ufs_hba *hba,
 			bool up, enum ufs_notify_change_status status)
 {
@@ -1273,6 +1338,16 @@ static inline int ufshcd_vops_pwr_change_notify(struct ufs_hba *hba,
 	return -ENOTSUPP;
 }
 
+<<<<<<< HEAD
+=======
+static inline void ufshcd_vops_setup_xfer_req(struct ufs_hba *hba, int tag,
+					bool is_scsi_cmd)
+{
+	if (hba->vops && hba->vops->setup_xfer_req)
+		return hba->vops->setup_xfer_req(hba, tag, is_scsi_cmd);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void ufshcd_vops_setup_task_mgmt(struct ufs_hba *hba,
 					int tag, u8 tm_function)
 {

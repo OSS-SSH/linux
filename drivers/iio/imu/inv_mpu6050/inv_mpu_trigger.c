@@ -91,11 +91,30 @@ static unsigned int inv_scan_query(struct iio_dev *indio_dev)
 
 static unsigned int inv_compute_skip_samples(const struct inv_mpu6050_state *st)
 {
+<<<<<<< HEAD
 	unsigned int skip_samples = 0;
 
 	/* mag first sample is always not ready, skip it */
 	if (st->chip_config.magn_fifo_enable)
 		skip_samples = 1;
+=======
+	unsigned int gyro_skip = 0;
+	unsigned int magn_skip = 0;
+	unsigned int skip_samples;
+
+	/* gyro first sample is out of specs, skip it */
+	if (st->chip_config.gyro_fifo_enable)
+		gyro_skip = 1;
+
+	/* mag first sample is always not ready, skip it */
+	if (st->chip_config.magn_fifo_enable)
+		magn_skip = 1;
+
+	/* compute first samples to skip */
+	skip_samples = gyro_skip;
+	if (magn_skip > skip_samples)
+		skip_samples = magn_skip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return skip_samples;
 }

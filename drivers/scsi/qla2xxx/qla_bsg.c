@@ -25,10 +25,13 @@ void qla2x00_bsg_job_done(srb_t *sp, int res)
 	struct bsg_job *bsg_job = sp->u.bsg_job;
 	struct fc_bsg_reply *bsg_reply = bsg_job->reply;
 
+<<<<<<< HEAD
 	ql_dbg(ql_dbg_user, sp->vha, 0x7009,
 	    "%s: sp hdl %x, result=%x bsg ptr %p\n",
 	    __func__, sp->handle, res, bsg_job);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sp->free(sp);
 
 	bsg_reply->result = res;
@@ -57,6 +60,7 @@ void qla2x00_bsg_sp_free(srb_t *sp)
 			    bsg_job->reply_payload.sg_list,
 			    bsg_job->reply_payload.sg_cnt, DMA_FROM_DEVICE);
 	} else {
+<<<<<<< HEAD
 
 		if (sp->remap.remapped) {
 			dma_pool_free(ha->purex_dma_pool, sp->remap.rsp.buf,
@@ -70,6 +74,13 @@ void qla2x00_bsg_sp_free(srb_t *sp)
 			dma_unmap_sg(&ha->pdev->dev, bsg_job->reply_payload.sg_list,
 				bsg_job->reply_payload.sg_cnt, DMA_FROM_DEVICE);
 		}
+=======
+		dma_unmap_sg(&ha->pdev->dev, bsg_job->request_payload.sg_list,
+		    bsg_job->request_payload.sg_cnt, DMA_TO_DEVICE);
+
+		dma_unmap_sg(&ha->pdev->dev, bsg_job->reply_payload.sg_list,
+		    bsg_job->reply_payload.sg_cnt, DMA_FROM_DEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (sp->type == SRB_CT_CMD ||
@@ -278,7 +289,10 @@ qla2x00_process_els(struct bsg_job *bsg_job)
 	int req_sg_cnt, rsp_sg_cnt;
 	int rval =  (DID_ERROR << 16);
 	uint16_t nextlid = 0;
+<<<<<<< HEAD
 	uint32_t els_cmd = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (bsg_request->msgcode == FC_BSG_RPT_ELS) {
 		rport = fc_bsg_to_rport(bsg_job);
@@ -292,9 +306,12 @@ qla2x00_process_els(struct bsg_job *bsg_job)
 		vha = shost_priv(host);
 		ha = vha->hw;
 		type = "FC_BSG_HST_ELS_NOLOGIN";
+<<<<<<< HEAD
 		els_cmd = bsg_request->rqst_data.h_els.command_code;
 		if (els_cmd == ELS_AUTH_ELS)
 			return qla_edif_process_els(vha, bsg_job);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (!vha->flags.online) {
@@ -2784,6 +2801,7 @@ qla2x00_manage_host_port(struct bsg_job *bsg_job)
 }
 
 static int
+<<<<<<< HEAD
 qla2x00_process_vendor_specific(struct scsi_qla_host *vha, struct bsg_job *bsg_job)
 {
 	struct fc_bsg_request *bsg_request = bsg_job->request;
@@ -2791,6 +2809,12 @@ qla2x00_process_vendor_specific(struct scsi_qla_host *vha, struct bsg_job *bsg_j
 	ql_dbg(ql_dbg_edif, vha, 0x911b, "%s FC_BSG_HST_VENDOR cmd[0]=0x%x\n",
 	    __func__, bsg_request->rqst_data.h_vendor.vendor_cmd[0]);
 
+=======
+qla2x00_process_vendor_specific(struct bsg_job *bsg_job)
+{
+	struct fc_bsg_request *bsg_request = bsg_job->request;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (bsg_request->rqst_data.h_vendor.vendor_cmd[0]) {
 	case QL_VND_LOOPBACK:
 		return qla2x00_process_loopback(bsg_job);
@@ -2859,9 +2883,12 @@ qla2x00_process_vendor_specific(struct scsi_qla_host *vha, struct bsg_job *bsg_j
 	case QL_VND_DPORT_DIAGNOSTICS:
 		return qla2x00_do_dport_diagnostics(bsg_job);
 
+<<<<<<< HEAD
 	case QL_VND_EDIF_MGMT:
 		return qla_edif_app_mgmt(bsg_job);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case QL_VND_SS_GET_FLASH_IMAGE_STATUS:
 		return qla2x00_get_flash_image_status(bsg_job);
 
@@ -2919,6 +2946,7 @@ qla24xx_bsg_request(struct bsg_job *bsg_job)
 		ql_dbg(ql_dbg_user, vha, 0x709f,
 		    "BSG: ISP abort active/needed -- cmd=%d.\n",
 		    bsg_request->msgcode);
+<<<<<<< HEAD
 		SET_DID_STATUS(bsg_reply->result, DID_ERROR);
 		return -EBUSY;
 	}
@@ -2932,6 +2960,14 @@ skip_chip_chk:
 	ql_dbg(ql_dbg_user + ql_dbg_verbose, vha, 0x7000,
 	    "Entered %s msgcode=0x%x. bsg ptr %px\n",
 	    __func__, bsg_request->msgcode, bsg_job);
+=======
+		return -EBUSY;
+	}
+
+skip_chip_chk:
+	ql_dbg(ql_dbg_user, vha, 0x7000,
+	    "Entered %s msgcode=0x%x.\n", __func__, bsg_request->msgcode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (bsg_request->msgcode) {
 	case FC_BSG_RPT_ELS:
@@ -2942,7 +2978,11 @@ skip_chip_chk:
 		ret = qla2x00_process_ct(bsg_job);
 		break;
 	case FC_BSG_HST_VENDOR:
+<<<<<<< HEAD
 		ret = qla2x00_process_vendor_specific(vha, bsg_job);
+=======
+		ret = qla2x00_process_vendor_specific(bsg_job);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case FC_BSG_HST_ADD_RPORT:
 	case FC_BSG_HST_DEL_RPORT:
@@ -2951,10 +2991,13 @@ skip_chip_chk:
 		ql_log(ql_log_warn, vha, 0x705a, "Unsupported BSG request.\n");
 		break;
 	}
+<<<<<<< HEAD
 
 	ql_dbg(ql_dbg_user + ql_dbg_verbose, vha, 0x7000,
 	    "%s done with return %x\n", __func__, ret);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -2969,8 +3012,11 @@ qla24xx_bsg_timeout(struct bsg_job *bsg_job)
 	unsigned long flags;
 	struct req_que *req;
 
+<<<<<<< HEAD
 	ql_log(ql_log_info, vha, 0x708b, "%s CMD timeout. bsg ptr %p.\n",
 	    __func__, bsg_job);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* find the bsg job from the active list of commands */
 	spin_lock_irqsave(&ha->hardware_lock, flags);
 	for (que = 0; que < ha->max_req_queues; que++) {
@@ -2980,6 +3026,7 @@ qla24xx_bsg_timeout(struct bsg_job *bsg_job)
 
 		for (cnt = 1; cnt < req->num_outstanding_cmds; cnt++) {
 			sp = req->outstanding_cmds[cnt];
+<<<<<<< HEAD
 			if (sp &&
 			    (sp->type == SRB_CT_CMD ||
 			     sp->type == SRB_ELS_CMD_HST ||
@@ -3000,6 +3047,29 @@ qla24xx_bsg_timeout(struct bsg_job *bsg_job)
 				spin_lock_irqsave(&ha->hardware_lock, flags);
 				goto done;
 
+=======
+			if (sp) {
+				if (((sp->type == SRB_CT_CMD) ||
+					(sp->type == SRB_ELS_CMD_HST) ||
+					(sp->type == SRB_FXIOCB_BCMD))
+					&& (sp->u.bsg_job == bsg_job)) {
+					req->outstanding_cmds[cnt] = NULL;
+					spin_unlock_irqrestore(&ha->hardware_lock, flags);
+					if (ha->isp_ops->abort_command(sp)) {
+						ql_log(ql_log_warn, vha, 0x7089,
+						    "mbx abort_command "
+						    "failed.\n");
+						bsg_reply->result = -EIO;
+					} else {
+						ql_dbg(ql_dbg_user, vha, 0x708a,
+						    "mbx abort_command "
+						    "success.\n");
+						bsg_reply->result = 0;
+					}
+					spin_lock_irqsave(&ha->hardware_lock, flags);
+					goto done;
+				}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 	}

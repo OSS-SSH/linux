@@ -5,7 +5,10 @@
 #include <linux/of_device.h>
 #include <linux/of_address.h>
 #include <linux/of_iommu.h>
+<<<<<<< HEAD
 #include <linux/of_reserved_mem.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/dma-direct.h> /* for bus_dma_region */
 #include <linux/dma-map-ops.h>
 #include <linux/init.h>
@@ -53,6 +56,7 @@ int of_device_add(struct platform_device *ofdev)
 	return device_add(&ofdev->dev);
 }
 
+<<<<<<< HEAD
 static void
 of_dma_set_restricted_buffer(struct device *dev, struct device_node *np)
 {
@@ -93,6 +97,8 @@ of_dma_set_restricted_buffer(struct device *dev, struct device_node *np)
 		dev_warn(dev, "failed to initialise \"restricted-dma-pool\" memory node\n");
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * of_dma_configure_id - Setup DMA configuration
  * @dev:	Device to apply DMA configuration
@@ -206,9 +212,12 @@ int of_dma_configure_id(struct device *dev, struct device_node *np,
 
 	arch_setup_dma_ops(dev, dma_start, size, iommu, coherent);
 
+<<<<<<< HEAD
 	if (!iommu)
 		of_dma_set_restricted_buffer(dev, np);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 EXPORT_SYMBOL_GPL(of_dma_configure_id);

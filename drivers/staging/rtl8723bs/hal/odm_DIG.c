@@ -7,6 +7,11 @@
 
 #include "odm_precomp.h"
 
+<<<<<<< HEAD
+=======
+#define ADAPTIVITY_VERSION "5.0"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void odm_NHMCounterStatisticsInit(void *pDM_VOID)
 {
 	struct dm_odm_t	*pDM_Odm = (struct dm_odm_t *)pDM_VOID;
@@ -302,7 +307,12 @@ void ODM_Write_DIG(void *pDM_VOID, u8 CurrentIGI)
 		/* 1 Set IGI value */
 		PHY_SetBBReg(pDM_Odm->Adapter, ODM_REG(IGI_A, pDM_Odm), ODM_BIT(IGI, pDM_Odm), CurrentIGI);
 
+<<<<<<< HEAD
 		PHY_SetBBReg(pDM_Odm->Adapter, ODM_REG(IGI_B, pDM_Odm), ODM_BIT(IGI, pDM_Odm), CurrentIGI);
+=======
+		if (pDM_Odm->RFType > ODM_1T1R)
+			PHY_SetBBReg(pDM_Odm->Adapter, ODM_REG(IGI_B, pDM_Odm), ODM_BIT(IGI, pDM_Odm), CurrentIGI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pDM_DigTable->CurIGValue = CurrentIGI;
 	}

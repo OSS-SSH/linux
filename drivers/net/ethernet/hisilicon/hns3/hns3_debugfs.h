@@ -22,7 +22,10 @@ struct hns3_dbg_item {
 
 struct hns3_dbg_data {
 	struct hnae3_handle *handle;
+<<<<<<< HEAD
 	enum hnae3_dbg_cmd cmd;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u16 qid;
 };
 

@@ -9,7 +9,10 @@
 
 #include "main.h"
 
+<<<<<<< HEAD
 #include <linux/kref.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/netdevice.h>
 #include <linux/netlink.h>
 #include <linux/skbuff.h>
@@ -29,7 +32,11 @@ void batadv_tt_global_del_orig(struct batadv_priv *bat_priv,
 struct batadv_tt_global_entry *
 batadv_tt_global_hash_find(struct batadv_priv *bat_priv, const u8 *addr,
 			   unsigned short vid);
+<<<<<<< HEAD
 void batadv_tt_global_entry_release(struct kref *ref);
+=======
+void batadv_tt_global_entry_put(struct batadv_tt_global_entry *tt_global_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int batadv_tt_global_hash_count(struct batadv_priv *bat_priv,
 				const u8 *addr, unsigned short vid);
 struct batadv_orig_node *batadv_transtable_search(struct batadv_priv *bat_priv,
@@ -56,6 +63,7 @@ bool batadv_tt_global_is_isolated(struct batadv_priv *bat_priv,
 int batadv_tt_cache_init(void);
 void batadv_tt_cache_destroy(void);
 
+<<<<<<< HEAD
 /**
  * batadv_tt_global_entry_put() - decrement the tt_global_entry refcounter and
  *  possibly release it
@@ -71,4 +79,6 @@ batadv_tt_global_entry_put(struct batadv_tt_global_entry *tt_global_entry)
 		 batadv_tt_global_entry_release);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _NET_BATMAN_ADV_TRANSLATION_TABLE_H_ */

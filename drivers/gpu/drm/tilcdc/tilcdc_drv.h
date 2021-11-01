@@ -46,8 +46,11 @@ struct tilcdc_drm_private {
 	struct clk *clk;         /* functional clock */
 	int rev;                 /* IP revision */
 
+<<<<<<< HEAD
 	unsigned int irq;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* don't attempt resolutions w/ higher W * H * Hz: */
 	uint32_t max_bandwidth;
 	/*
@@ -84,7 +87,10 @@ struct tilcdc_drm_private {
 
 	bool is_registered;
 	bool is_componentized;
+<<<<<<< HEAD
 	bool irq_enabled;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Sub-module for display.  Since we don't know at compile time what panels

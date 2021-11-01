@@ -131,9 +131,15 @@ static int rds_ib_post_reg_frmr(struct rds_ib_mr *ibmr)
 		cpu_relax();
 	}
 
+<<<<<<< HEAD
 	ret = ib_map_mr_sg_zbva(frmr->mr, ibmr->sg, ibmr->sg_dma_len,
 				&off, PAGE_SIZE);
 	if (unlikely(ret != ibmr->sg_dma_len))
+=======
+	ret = ib_map_mr_sg_zbva(frmr->mr, ibmr->sg, ibmr->sg_len,
+				&off, PAGE_SIZE);
+	if (unlikely(ret != ibmr->sg_len))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ret < 0 ? ret : -EINVAL;
 
 	if (cmpxchg(&frmr->fr_state,

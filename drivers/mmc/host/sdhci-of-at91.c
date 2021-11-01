@@ -11,7 +11,10 @@
 #include <linux/delay.h>
 #include <linux/err.h>
 #include <linux/io.h>
+<<<<<<< HEAD
 #include <linux/iopoll.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/kernel.h>
 #include <linux/mmc/host.h>
 #include <linux/mmc/slot-gpio.h>
@@ -62,6 +65,10 @@ static void sdhci_at91_set_force_card_detect(struct sdhci_host *host)
 static void sdhci_at91_set_clock(struct sdhci_host *host, unsigned int clock)
 {
 	u16 clk;
+<<<<<<< HEAD
+=======
+	unsigned long timeout;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	host->mmc->actual_clock = 0;
 
@@ -86,11 +93,24 @@ static void sdhci_at91_set_clock(struct sdhci_host *host, unsigned int clock)
 	sdhci_writew(host, clk, SDHCI_CLOCK_CONTROL);
 
 	/* Wait max 20 ms */
+<<<<<<< HEAD
 	if (read_poll_timeout(sdhci_readw, clk, (clk & SDHCI_CLOCK_INT_STABLE),
 			      1000, 20000, false, host, SDHCI_CLOCK_CONTROL)) {
 		pr_err("%s: Internal clock never stabilised.\n",
 		       mmc_hostname(host->mmc));
 		return;
+=======
+	timeout = 20;
+	while (!((clk = sdhci_readw(host, SDHCI_CLOCK_CONTROL))
+		& SDHCI_CLOCK_INT_STABLE)) {
+		if (timeout == 0) {
+			pr_err("%s: Internal clock never stabilised.\n",
+			       mmc_hostname(host->mmc));
+			return;
+		}
+		timeout--;
+		mdelay(1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	clk |= SDHCI_CLOCK_CARD_EN;
@@ -109,7 +129,10 @@ static void sdhci_at91_reset(struct sdhci_host *host, u8 mask)
 {
 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
 	struct sdhci_at91_priv *priv = sdhci_pltfm_priv(pltfm_host);
+<<<<<<< HEAD
 	unsigned int tmp;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sdhci_reset(host, mask);
 
@@ -122,10 +145,13 @@ static void sdhci_at91_reset(struct sdhci_host *host, u8 mask)
 
 		sdhci_writel(host, calcr | SDMMC_CALCR_ALWYSON | SDMMC_CALCR_EN,
 			     SDMMC_CALCR);
+<<<<<<< HEAD
 
 		if (read_poll_timeout(sdhci_readl, tmp, !(tmp & SDMMC_CALCR_EN),
 				      10, 20000, false, host, SDMMC_CALCR))
 			dev_err(mmc_dev(host->mmc), "Failed to calibrate\n");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

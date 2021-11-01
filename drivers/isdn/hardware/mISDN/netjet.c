@@ -949,8 +949,13 @@ nj_release(struct tiger_hw *card)
 		nj_disable_hwirq(card);
 		mode_tiger(&card->bc[0], ISDN_P_NONE);
 		mode_tiger(&card->bc[1], ISDN_P_NONE);
+<<<<<<< HEAD
 		spin_unlock_irqrestore(&card->lock, flags);
 		card->isac.release(&card->isac);
+=======
+		card->isac.release(&card->isac);
+		spin_unlock_irqrestore(&card->lock, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		release_region(card->base, card->base_s);
 		card->base_s = 0;
 	}

@@ -100,7 +100,10 @@ config JME
 config KORINA
 	tristate "Korina (IDT RC32434) Ethernet support"
 	depends on MIKROTIK_RB532 || COMPILE_TEST
+<<<<<<< HEAD
 	select CRC32
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select MII
 	help
 	  If you have a Mikrotik RouterBoard 500 or IDT RC32434
@@ -119,7 +122,10 @@ config LANTIQ_XRX200
 	  Support for the PMAC of the Gigabit switch (GSWIP) inside the
 	  Lantiq / Intel VRX200 VDSL SoC
 
+<<<<<<< HEAD
 source "drivers/net/ethernet/litex/Kconfig"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 source "drivers/net/ethernet/marvell/Kconfig"
 source "drivers/net/ethernet/mediatek/Kconfig"
 source "drivers/net/ethernet/mellanox/Kconfig"

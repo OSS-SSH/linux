@@ -21,6 +21,10 @@
 #include <drm/drm_fb_helper.h>
 #include <drm/drm_gem_cma_helper.h>
 #include <drm/drm_gem_framebuffer_helper.h>
+<<<<<<< HEAD
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_modeset_helper_vtables.h>
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_vblank.h>
@@ -93,6 +97,12 @@ DEFINE_DRM_GEM_CMA_FOPS(fops);
 static const struct drm_driver meson_driver = {
 	.driver_features	= DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
 
+<<<<<<< HEAD
+=======
+	/* IRQ */
+	.irq_handler		= meson_irq,
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* CMA Ops */
 	DRM_GEM_CMA_DRIVER_OPS_WITH_DUMB_CREATE(meson_dumb_create),
 
@@ -281,7 +291,11 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
 	 * Remove early framebuffers (ie. simplefb). The framebuffer can be
 	 * located anywhere in RAM
 	 */
+<<<<<<< HEAD
 	ret = drm_aperture_remove_framebuffers(false, &meson_driver);
+=======
+	ret = drm_aperture_remove_framebuffers(false, "meson-drm-fb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		goto free_drm;
 
@@ -331,7 +345,11 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
 	if (ret)
 		goto free_drm;
 
+<<<<<<< HEAD
 	ret = request_irq(priv->vsync_irq, meson_irq, 0, drm->driver->name, drm);
+=======
+	ret = drm_irq_install(drm, priv->vsync_irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		goto free_drm;
 
@@ -350,7 +368,11 @@ static int meson_drv_bind_master(struct device *dev, bool has_components)
 	return 0;
 
 uninstall_irq:
+<<<<<<< HEAD
 	free_irq(priv->vsync_irq, drm);
+=======
+	drm_irq_uninstall(drm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 free_drm:
 	drm_dev_put(drm);
 
@@ -378,7 +400,11 @@ static void meson_drv_unbind(struct device *dev)
 	drm_kms_helper_poll_fini(drm);
 	drm_atomic_helper_shutdown(drm);
 	component_unbind_all(dev, drm);
+<<<<<<< HEAD
 	free_irq(priv->vsync_irq, drm);
+=======
+	drm_irq_uninstall(drm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_dev_put(drm);
 
 	if (priv->afbcd.ops) {

@@ -195,7 +195,11 @@ static ssize_t unbind_store(struct device_driver *drv, const char *buf,
 	bus_put(bus);
 	return err;
 }
+<<<<<<< HEAD
 static DRIVER_ATTR_IGNORE_LOCKDEP(unbind, 0200, NULL, unbind_store);
+=======
+static DRIVER_ATTR_IGNORE_LOCKDEP(unbind, S_IWUSR, NULL, unbind_store);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Manually attach a device to a driver.
@@ -221,7 +225,11 @@ static ssize_t bind_store(struct device_driver *drv, const char *buf,
 	bus_put(bus);
 	return err;
 }
+<<<<<<< HEAD
 static DRIVER_ATTR_IGNORE_LOCKDEP(bind, 0200, NULL, bind_store);
+=======
+static DRIVER_ATTR_IGNORE_LOCKDEP(bind, S_IWUSR, NULL, bind_store);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static ssize_t drivers_autoprobe_show(struct bus_type *bus, char *buf)
 {
@@ -767,7 +775,11 @@ static ssize_t bus_uevent_store(struct bus_type *bus,
  * DEVICE_ATTR_WO(uevent), which would cause a clash with the with the store
  * function name.
  */
+<<<<<<< HEAD
 static struct bus_attribute bus_attr_uevent = __ATTR(uevent, 0200, NULL,
+=======
+static struct bus_attribute bus_attr_uevent = __ATTR(uevent, S_IWUSR, NULL,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						     bus_uevent_store);
 
 /**

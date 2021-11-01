@@ -133,8 +133,11 @@ static int queue_userspace_packet(struct datapath *dp, struct sk_buff *,
 
 static void ovs_dp_masks_rebalance(struct work_struct *work);
 
+<<<<<<< HEAD
 static int ovs_dp_set_upcall_portids(struct datapath *, const struct nlattr *);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Must be called with rcu_read_lock or ovs_mutex. */
 const char *ovs_dp_name(const struct datapath *dp)
 {
@@ -168,7 +171,10 @@ static void destroy_dp_rcu(struct rcu_head *rcu)
 	free_percpu(dp->stats_percpu);
 	kfree(dp->ports);
 	ovs_meters_exit(dp);
+<<<<<<< HEAD
 	kfree(rcu_dereference_raw(dp->upcall_portids));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(dp);
 }
 
@@ -242,6 +248,7 @@ void ovs_dp_process_packet(struct sk_buff *skb, struct sw_flow_key *key)
 
 		memset(&upcall, 0, sizeof(upcall));
 		upcall.cmd = OVS_PACKET_CMD_MISS;
+<<<<<<< HEAD
 
 		if (dp->user_features & OVS_DP_F_DISPATCH_UPCALL_PER_CPU)
 			upcall.portid =
@@ -249,6 +256,9 @@ void ovs_dp_process_packet(struct sk_buff *skb, struct sw_flow_key *key)
 		else
 			upcall.portid = ovs_vport_find_upcall_portid(p, skb);
 
+=======
+		upcall.portid = ovs_vport_find_upcall_portid(p, skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		upcall.mru = OVS_CB(skb)->mru;
 		error = ovs_dp_upcall(dp, skb, key, &upcall, 0);
 		if (unlikely(error))
@@ -1603,6 +1613,7 @@ static void ovs_dp_reset_user_features(struct sk_buff *skb,
 
 DEFINE_STATIC_KEY_FALSE(tc_recirc_sharing_support);
 
+<<<<<<< HEAD
 static int ovs_dp_set_upcall_portids(struct datapath *dp,
 			      const struct nlattr *ids)
 {
@@ -1659,14 +1670,23 @@ static int ovs_dp_change(struct datapath *dp, struct nlattr *a[])
 {
 	u32 user_features = 0;
 	int err;
+=======
+static int ovs_dp_change(struct datapath *dp, struct nlattr *a[])
+{
+	u32 user_features = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (a[OVS_DP_ATTR_USER_FEATURES]) {
 		user_features = nla_get_u32(a[OVS_DP_ATTR_USER_FEATURES]);
 
 		if (user_features & ~(OVS_DP_F_VPORT_PIDS |
 				      OVS_DP_F_UNALIGNED |
+<<<<<<< HEAD
 				      OVS_DP_F_TC_RECIRC_SHARING |
 				      OVS_DP_F_DISPATCH_UPCALL_PER_CPU))
+=======
+				      OVS_DP_F_TC_RECIRC_SHARING))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EOPNOTSUPP;
 
 #if !IS_ENABLED(CONFIG_NET_TC_SKB_EXT)
@@ -1687,6 +1707,7 @@ static int ovs_dp_change(struct datapath *dp, struct nlattr *a[])
 
 	dp->user_features = user_features;
 
+<<<<<<< HEAD
 	if (dp->user_features & OVS_DP_F_DISPATCH_UPCALL_PER_CPU &&
 	    a[OVS_DP_ATTR_PER_CPU_PIDS]) {
 		/* Upcall Netlink Port IDs have been updated */
@@ -1696,6 +1717,8 @@ static int ovs_dp_change(struct datapath *dp, struct nlattr *a[])
 			return err;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (dp->user_features & OVS_DP_F_TC_RECIRC_SHARING)
 		static_branch_enable(&tc_recirc_sharing_support);
 	else

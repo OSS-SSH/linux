@@ -27,10 +27,13 @@
 	};
 
 	soc {
+<<<<<<< HEAD
 		rng11: rng@8a8a000 {
 			status = "disabled";
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usb2_picophy1: phy2@0 {
 			compatible = "st,stih407-usb2-phy";
 			reg = <0 0>;
@@ -108,6 +111,7 @@
 			assigned-clock-parents = <&clk_s_c0_pll1 0>;
 			assigned-clock-rates = <200000000>;
 		};
+<<<<<<< HEAD
 
 		thermal@91a0000 {
 			compatible = "st,stih407-thermal";
@@ -116,5 +120,7 @@
 			clocks = <&clk_sysin>;
 			interrupts = <GIC_SPI 205 IRQ_TYPE_EDGE_RISING>;
 		};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 };

@@ -3130,7 +3130,10 @@ SYSCALL_DEFINE2(swapon, const char __user *, specialfile, int, swap_flags)
 	struct filename *name;
 	struct file *swap_file = NULL;
 	struct address_space *mapping;
+<<<<<<< HEAD
 	struct dentry *dentry;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int prio;
 	int error;
 	union swap_header *swap_header;
@@ -3174,7 +3177,10 @@ SYSCALL_DEFINE2(swapon, const char __user *, specialfile, int, swap_flags)
 
 	p->swap_file = swap_file;
 	mapping = swap_file->f_mapping;
+<<<<<<< HEAD
 	dentry = swap_file->f_path.dentry;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	inode = mapping->host;
 
 	error = claim_swapfile(p, inode);
@@ -3182,10 +3188,13 @@ SYSCALL_DEFINE2(swapon, const char __user *, specialfile, int, swap_flags)
 		goto bad_swap;
 
 	inode_lock(inode);
+<<<<<<< HEAD
 	if (d_unlinked(dentry) || cant_mount(dentry)) {
 		error = -ENOENT;
 		goto bad_swap_unlock_inode;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_SWAPFILE(inode)) {
 		error = -EBUSY;
 		goto bad_swap_unlock_inode;
@@ -3779,7 +3788,11 @@ static void free_swap_count_continuations(struct swap_info_struct *si)
 }
 
 #if defined(CONFIG_MEMCG) && defined(CONFIG_BLK_CGROUP)
+<<<<<<< HEAD
 void __cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask)
+=======
+void cgroup_throttle_swaprate(struct page *page, gfp_t gfp_mask)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct swap_info_struct *si, *next;
 	int nid = page_to_nid(page);

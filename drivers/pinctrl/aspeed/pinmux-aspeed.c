@@ -59,8 +59,12 @@ int aspeed_sig_desc_eval(const struct aspeed_sig_desc *desc,
 }
 
 /**
+<<<<<<< HEAD
  * aspeed_sig_expr_eval - Query the enabled or disabled state for a
  * mux function's signal on a pin
+=======
+ * Query the enabled or disabled state for a mux function's signal on a pin
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * @ctx: The driver context for the pinctrl IP
  * @expr: An expression controlling the signal for a mux function on a pin

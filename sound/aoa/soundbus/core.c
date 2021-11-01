@@ -104,7 +104,11 @@ static int soundbus_uevent(struct device *dev, struct kobj_uevent_env *env)
 	return retval;
 }
 
+<<<<<<< HEAD
 static void soundbus_device_remove(struct device *dev)
+=======
+static int soundbus_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct soundbus_dev * soundbus_dev = to_soundbus_device(dev);
 	struct soundbus_driver * drv = to_soundbus_driver(dev->driver);
@@ -112,6 +116,11 @@ static void soundbus_device_remove(struct device *dev)
 	if (dev->driver && drv->remove)
 		drv->remove(soundbus_dev);
 	soundbus_dev_put(soundbus_dev);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void soundbus_device_shutdown(struct device *dev)

@@ -11,6 +11,7 @@
 #include <linux/shmem_fs.h>
 #include <linux/slab.h>
 #include <linux/udmabuf.h>
+<<<<<<< HEAD
 #include <linux/hugetlb.h>
 
 static int list_limit = 1024;
@@ -20,6 +21,11 @@ MODULE_PARM_DESC(list_limit, "udmabuf_create_list->count limit. Default is 1024.
 static int size_limit_mb = 64;
 module_param(size_limit_mb, int, 0644);
 MODULE_PARM_DESC(size_limit_mb, "Max size of a dmabuf, in megabytes. Default is 64.");
+=======
+
+static const u32    list_limit = 1024;  /* udmabuf_create_list->count limit */
+static const size_t size_limit_mb = 64; /* total dmabuf size, in megabytes  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct udmabuf {
 	pgoff_t pagecount;
@@ -166,6 +172,7 @@ static long udmabuf_create(struct miscdevice *device,
 {
 	DEFINE_DMA_BUF_EXPORT_INFO(exp_info);
 	struct file *memfd = NULL;
+<<<<<<< HEAD
 	struct address_space *mapping = NULL;
 	struct udmabuf *ubuf;
 	struct dma_buf *buf;
@@ -173,6 +180,12 @@ static long udmabuf_create(struct miscdevice *device,
 	struct page *page, *hpage = NULL;
 	pgoff_t subpgoff, maxsubpgs;
 	struct hstate *hpstate;
+=======
+	struct udmabuf *ubuf;
+	struct dma_buf *buf;
+	pgoff_t pgoff, pgcnt, pgidx, pgbuf = 0, pglimit;
+	struct page *page;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int seals, ret = -EINVAL;
 	u32 i, flags;
 
@@ -203,8 +216,12 @@ static long udmabuf_create(struct miscdevice *device,
 		memfd = fget(list[i].memfd);
 		if (!memfd)
 			goto err;
+<<<<<<< HEAD
 		mapping = file_inode(memfd)->i_mapping;
 		if (!shmem_mapping(mapping) && !is_file_hugepages(memfd))
+=======
+		if (!shmem_mapping(file_inode(memfd)->i_mapping))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto err;
 		seals = memfd_fcntl(memfd, F_GET_SEALS, 0);
 		if (seals == -EINVAL)
@@ -215,6 +232,7 @@ static long udmabuf_create(struct miscdevice *device,
 			goto err;
 		pgoff = list[i].offset >> PAGE_SHIFT;
 		pgcnt = list[i].size   >> PAGE_SHIFT;
+<<<<<<< HEAD
 		if (is_file_hugepages(memfd)) {
 			hpstate = hstate_file(memfd);
 			pgoff = list[i].offset >> huge_page_shift(hpstate);
@@ -248,15 +266,26 @@ static long udmabuf_create(struct miscdevice *device,
 					ret = PTR_ERR(page);
 					goto err;
 				}
+=======
+		for (pgidx = 0; pgidx < pgcnt; pgidx++) {
+			page = shmem_read_mapping_page(
+				file_inode(memfd)->i_mapping, pgoff + pgidx);
+			if (IS_ERR(page)) {
+				ret = PTR_ERR(page);
+				goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 			ubuf->pages[pgbuf++] = page;
 		}
 		fput(memfd);
 		memfd = NULL;
+<<<<<<< HEAD
 		if (hpage) {
 			put_page(hpage);
 			hpage = NULL;
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	exp_info.ops  = &udmabuf_ops;

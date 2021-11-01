@@ -2750,8 +2750,13 @@ void rproc_report_crash(struct rproc *rproc, enum rproc_crash_type type)
 	dev_err(&rproc->dev, "crash detected in %s: type %s\n",
 		rproc->name, rproc_crash_to_string(type));
 
+<<<<<<< HEAD
 	/* Have a worker handle the error; ensure system is not suspended */
 	queue_work(system_freezable_wq, &rproc->crash_handler);
+=======
+	/* create a new task to handle the error */
+	schedule_work(&rproc->crash_handler);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(rproc_report_crash);
 

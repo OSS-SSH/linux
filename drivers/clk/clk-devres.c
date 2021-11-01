@@ -92,6 +92,7 @@ int __must_check devm_clk_bulk_get_optional(struct device *dev, int num_clks,
 }
 EXPORT_SYMBOL_GPL(devm_clk_bulk_get_optional);
 
+<<<<<<< HEAD
 static void devm_clk_bulk_release_all(struct device *dev, void *res)
 {
 	struct clk_bulk_devres *devres = res;
@@ -99,13 +100,19 @@ static void devm_clk_bulk_release_all(struct device *dev, void *res)
 	clk_bulk_put_all(devres->num_clks, devres->clks);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int __must_check devm_clk_bulk_get_all(struct device *dev,
 				       struct clk_bulk_data **clks)
 {
 	struct clk_bulk_devres *devres;
 	int ret;
 
+<<<<<<< HEAD
 	devres = devres_alloc(devm_clk_bulk_release_all,
+=======
+	devres = devres_alloc(devm_clk_bulk_release,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			      sizeof(*devres), GFP_KERNEL);
 	if (!devres)
 		return -ENOMEM;

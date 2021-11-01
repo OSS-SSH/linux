@@ -41,7 +41,10 @@ struct sdw_intel {
 	struct sdw_cdns cdns;
 	int instance;
 	struct sdw_intel_link_res *link_res;
+<<<<<<< HEAD
 	bool startup_done;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DEBUG_FS
 	struct dentry *debugfs;
 #endif

@@ -464,7 +464,11 @@ void optc2_lock_doublebuffer_enable(struct timing_generator *optc)
 
 	REG_UPDATE_2(OTG_GLOBAL_CONTROL1,
 			MASTER_UPDATE_LOCK_DB_X,
+<<<<<<< HEAD
 			(h_blank_start - 200 - 1) / optc1->opp_count,
+=======
+			h_blank_start - 200 - 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			MASTER_UPDATE_LOCK_DB_Y,
 			v_blank_start - 1);
 }

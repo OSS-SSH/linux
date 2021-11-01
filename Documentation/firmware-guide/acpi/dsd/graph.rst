@@ -159,7 +159,11 @@ References
 
 [2] Devicetree. https://www.devicetree.org, referenced 2016-10-03.
 
+<<<<<<< HEAD
 [3] Documentation/devicetree/bindings/graph.txt
+=======
+[3] Documentation/devicetree/bindings/graph.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 [4] Device Properties UUID For _DSD.
     https://www.uefi.org/sites/default/files/resources/_DSD-device-properties-UUID.pdf,

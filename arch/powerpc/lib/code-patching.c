@@ -228,11 +228,14 @@ bool is_offset_in_branch_range(long offset)
 	return (offset >= -0x2000000 && offset <= 0x1fffffc && !(offset & 0x3));
 }
 
+<<<<<<< HEAD
 bool is_offset_in_cond_branch_range(long offset)
 {
 	return offset >= -0x8000 && offset <= 0x7fff && !(offset & 0x3);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Helper to check if a given instruction is a conditional branch
  * Derived from the conditional checks in analyse_instr()
@@ -285,7 +288,11 @@ int create_cond_branch(struct ppc_inst *instr, const u32 *addr,
 		offset = offset - (unsigned long)addr;
 
 	/* Check we can represent the target in the instruction format */
+<<<<<<< HEAD
 	if (!is_offset_in_cond_branch_range(offset))
+=======
+	if (offset < -0x8000 || offset > 0x7FFF || offset & 0x3)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 
 	/* Mask out the flags and target, so they don't step on each other. */

@@ -304,6 +304,7 @@
 					  "pp2", "ppmmu2", "pp4", "ppmmu4",
 					  "pp5", "ppmmu5", "pp6", "ppmmu6";
 			resets = <&reset RESET_MALI>;
+<<<<<<< HEAD
 
 			clocks = <&clkc CLKID_CLK81>, <&clkc CLKID_MALI>;
 			clock-names = "bus", "core";
@@ -311,12 +312,17 @@
 			assigned-clocks = <&clkc CLKID_MALI>;
 			assigned-clock-rates = <318750000>;
 
+=======
+			clocks = <&clkc CLKID_CLK81>, <&clkc CLKID_MALI>;
+			clock-names = "bus", "core";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			operating-points-v2 = <&gpu_opp_table>;
 			#cooling-cells = <2>; /* min followed by max */
 		};
 	};
 }; /* end of / */
 
+<<<<<<< HEAD
 &aiu {
 	compatible = "amlogic,aiu-meson8", "amlogic,aiu";
 	clocks = <&clkc CLKID_AIU_GLUE>,
@@ -340,6 +346,8 @@
 	resets = <&reset RESET_AIU>;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &aobus {
 	pmu: pmu@e0 {
 		compatible = "amlogic,meson8-pmu", "syscon";
@@ -363,6 +371,7 @@
 			gpio-ranges = <&pinctrl_aobus 0 0 16>;
 		};
 
+<<<<<<< HEAD
 		i2s_am_clk_pins: i2s-am-clk-out {
 			mux {
 				groups = "i2s_am_clk_out_ao";
@@ -395,6 +404,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uart_ao_a_pins: uart_ao_a {
 			mux {
 				groups = "uart_tx_ao_a", "uart_rx_ao_a";
@@ -515,6 +526,7 @@
 			};
 		};
 
+<<<<<<< HEAD
 		spdif_out_pins: spdif-out {
 			mux {
 				groups = "spdif_out";
@@ -523,6 +535,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		spi_nor_pins: nor {
 			mux {
 				groups = "nor_d", "nor_q", "nor_c", "nor_cs";

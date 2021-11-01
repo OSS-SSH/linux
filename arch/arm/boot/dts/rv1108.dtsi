@@ -265,11 +265,14 @@
 		#address-cells = <1>;
 		#size-cells = <1>;
 
+<<<<<<< HEAD
 		io_domains: io-domains {
 			compatible = "rockchip,rv1108-io-voltage-domain";
 			status = "disabled";
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		u2phy: usb2phy@100 {
 			compatible = "rockchip,rv1108-usb2phy";
 			reg = <0x100 0x0c>;
@@ -439,6 +442,7 @@
 	};
 
 	pmugrf: syscon@20060000 {
+<<<<<<< HEAD
 		compatible = "rockchip,rv1108-pmugrf", "syscon", "simple-mfd";
 		reg = <0x20060000 0x1000>;
 
@@ -446,6 +450,10 @@
 			compatible = "rockchip,rv1108-pmu-io-voltage-domain";
 			status = "disabled";
 		};
+=======
+		compatible = "rockchip,rv1108-pmugrf", "syscon";
+		reg = <0x20060000 0x1000>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	usbgrf: syscon@202a0000 {
@@ -546,6 +554,7 @@
 		status = "disabled";
 	};
 
+<<<<<<< HEAD
 	sfc: spi@301c0000 {
 		compatible = "rockchip,sfc";
 		reg = <0x301c0000 0x4000>;
@@ -557,6 +566,8 @@
 		status = "disabled";
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	gmac: eth@30200000 {
 		compatible = "rockchip,rv1108-gmac";
 		reg = <0x30200000 0x10000>;
@@ -725,6 +736,7 @@
 			};
 		};
 
+<<<<<<< HEAD
 		sfc {
 			sfc_bus4: sfc-bus4 {
 				rockchip,pins =
@@ -751,6 +763,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		gmac {
 			rmii_pins: rmii-pins {
 				rockchip,pins =	<1 RK_PC5 2 &pcfg_pull_none>,

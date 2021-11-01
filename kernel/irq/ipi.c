@@ -14,11 +14,19 @@
 /**
  * irq_reserve_ipi() - Setup an IPI to destination cpumask
  * @domain:	IPI domain
+<<<<<<< HEAD
  * @dest:	cpumask of CPUs which can receive the IPI
  *
  * Allocate a virq that can be used to send IPI to any CPU in dest mask.
  *
  * Return: Linux IRQ number on success or error code on failure
+=======
+ * @dest:	cpumask of cpus which can receive the IPI
+ *
+ * Allocate a virq that can be used to send IPI to any CPU in dest mask.
+ *
+ * On success it'll return linux irq number and error code on failure
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int irq_reserve_ipi(struct irq_domain *domain,
 			     const struct cpumask *dest)
@@ -104,13 +112,22 @@ free_descs:
 
 /**
  * irq_destroy_ipi() - unreserve an IPI that was previously allocated
+<<<<<<< HEAD
  * @irq:	Linux IRQ number to be destroyed
  * @dest:	cpumask of CPUs which should have the IPI removed
+=======
+ * @irq:	linux irq number to be destroyed
+ * @dest:	cpumask of cpus which should have the IPI removed
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * The IPIs allocated with irq_reserve_ipi() are returned to the system
  * destroying all virqs associated with them.
  *
+<<<<<<< HEAD
  * Return: %0 on success or error code on failure.
+=======
+ * Return 0 on success or error code on failure.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int irq_destroy_ipi(unsigned int irq, const struct cpumask *dest)
 {
@@ -150,14 +167,24 @@ int irq_destroy_ipi(unsigned int irq, const struct cpumask *dest)
 }
 
 /**
+<<<<<<< HEAD
  * ipi_get_hwirq - Get the hwirq associated with an IPI to a CPU
  * @irq:	Linux IRQ number
  * @cpu:	the target CPU
+=======
+ * ipi_get_hwirq - Get the hwirq associated with an IPI to a cpu
+ * @irq:	linux irq number
+ * @cpu:	the target cpu
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * When dealing with coprocessors IPI, we need to inform the coprocessor of
  * the hwirq it needs to use to receive and send IPIs.
  *
+<<<<<<< HEAD
  * Return: hwirq value on success or INVALID_HWIRQ on failure.
+=======
+ * Returns hwirq value on success and INVALID_HWIRQ on failure.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 irq_hw_number_t ipi_get_hwirq(unsigned int irq, unsigned int cpu)
 {
@@ -216,7 +243,11 @@ static int ipi_send_verify(struct irq_chip *chip, struct irq_data *data,
  * This function is for architecture or core code to speed up IPI sending. Not
  * usable from driver code.
  *
+<<<<<<< HEAD
  * Return: %0 on success or negative error number on failure.
+=======
+ * Returns zero on success and negative error number on failure.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int __ipi_send_single(struct irq_desc *desc, unsigned int cpu)
 {
@@ -250,7 +281,11 @@ int __ipi_send_single(struct irq_desc *desc, unsigned int cpu)
 }
 
 /**
+<<<<<<< HEAD
  * __ipi_send_mask - send an IPI to target Linux SMP CPU(s)
+=======
+ * ipi_send_mask - send an IPI to target Linux SMP CPU(s)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @desc:	pointer to irq_desc of the IRQ
  * @dest:	dest CPU(s), must be a subset of the mask passed to
  *		irq_reserve_ipi()
@@ -258,7 +293,11 @@ int __ipi_send_single(struct irq_desc *desc, unsigned int cpu)
  * This function is for architecture or core code to speed up IPI sending. Not
  * usable from driver code.
  *
+<<<<<<< HEAD
  * Return: %0 on success or negative error number on failure.
+=======
+ * Returns zero on success and negative error number on failure.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int __ipi_send_mask(struct irq_desc *desc, const struct cpumask *dest)
 {
@@ -298,11 +337,19 @@ int __ipi_send_mask(struct irq_desc *desc, const struct cpumask *dest)
 
 /**
  * ipi_send_single - Send an IPI to a single CPU
+<<<<<<< HEAD
  * @virq:	Linux IRQ number from irq_reserve_ipi()
  * @cpu:	destination CPU, must in the destination mask passed to
  *		irq_reserve_ipi()
  *
  * Return: %0 on success or negative error number on failure.
+=======
+ * @virq:	linux irq number from irq_reserve_ipi()
+ * @cpu:	destination CPU, must in the destination mask passed to
+ *		irq_reserve_ipi()
+ *
+ * Returns zero on success and negative error number on failure.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int ipi_send_single(unsigned int virq, unsigned int cpu)
 {
@@ -319,11 +366,19 @@ EXPORT_SYMBOL_GPL(ipi_send_single);
 
 /**
  * ipi_send_mask - Send an IPI to target CPU(s)
+<<<<<<< HEAD
  * @virq:	Linux IRQ number from irq_reserve_ipi()
  * @dest:	dest CPU(s), must be a subset of the mask passed to
  *		irq_reserve_ipi()
  *
  * Return: %0 on success or negative error number on failure.
+=======
+ * @virq:	linux irq number from irq_reserve_ipi()
+ * @dest:	dest CPU(s), must be a subset of the mask passed to
+ *		irq_reserve_ipi()
+ *
+ * Returns zero on success and negative error number on failure.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int ipi_send_mask(unsigned int virq, const struct cpumask *dest)
 {

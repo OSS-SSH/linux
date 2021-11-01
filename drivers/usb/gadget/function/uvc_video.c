@@ -27,10 +27,17 @@ static int
 uvc_video_encode_header(struct uvc_video *video, struct uvc_buffer *buf,
 		u8 *data, int len)
 {
+<<<<<<< HEAD
 	data[0] = UVCG_REQUEST_HEADER_LEN;
 	data[1] = UVC_STREAM_EOH | video->fid;
 
 	if (buf->bytesused - video->queue.buf_used <= len - UVCG_REQUEST_HEADER_LEN)
+=======
+	data[0] = 2;
+	data[1] = UVC_STREAM_EOH | video->fid;
+
+	if (buf->bytesused - video->queue.buf_used <= len - 2)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		data[1] |= UVC_STREAM_EOF;
 
 	return 2;
@@ -95,6 +102,7 @@ uvc_video_encode_bulk(struct usb_request *req, struct uvc_video *video,
 }
 
 static void
+<<<<<<< HEAD
 uvc_video_encode_isoc_sg(struct usb_request *req, struct uvc_video *video,
 		struct uvc_buffer *buf)
 {
@@ -160,6 +168,8 @@ uvc_video_encode_isoc_sg(struct usb_request *req, struct uvc_video *video,
 }
 
 static void
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 uvc_video_encode_isoc(struct usb_request *req, struct uvc_video *video,
 		struct uvc_buffer *buf)
 {
@@ -210,8 +220,12 @@ static int uvcg_video_ep_queue(struct uvc_video *video, struct usb_request *req)
 static void
 uvc_video_complete(struct usb_ep *ep, struct usb_request *req)
 {
+<<<<<<< HEAD
 	struct uvc_request *ureq = req->context;
 	struct uvc_video *video = ureq->video;
+=======
+	struct uvc_video *video = req->context;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct uvc_video_queue *queue = &video->queue;
 	unsigned long flags;
 
@@ -243,6 +257,7 @@ uvc_video_free_requests(struct uvc_video *video)
 {
 	unsigned int i;
 
+<<<<<<< HEAD
 	if (video->ureq) {
 		for (i = 0; i < video->uvc_num_requests; ++i) {
 			sg_free_table(&video->ureq[i].sgt);
@@ -260,6 +275,18 @@ uvc_video_free_requests(struct uvc_video *video)
 
 		kfree(video->ureq);
 		video->ureq = NULL;
+=======
+	for (i = 0; i < UVC_NUM_REQUESTS; ++i) {
+		if (video->req[i]) {
+			usb_ep_free_request(video->ep, video->req[i]);
+			video->req[i] = NULL;
+		}
+
+		if (video->req_buffer[i]) {
+			kfree(video->req_buffer[i]);
+			video->req_buffer[i] = NULL;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	INIT_LIST_HEAD(&video->req_free);
@@ -280,6 +307,7 @@ uvc_video_alloc_requests(struct uvc_video *video)
 		 * max_t(unsigned int, video->ep->maxburst, 1)
 		 * (video->ep->mult);
 
+<<<<<<< HEAD
 	video->ureq = kcalloc(video->uvc_num_requests, sizeof(struct uvc_request), GFP_KERNEL);
 	if (video->ureq == NULL)
 		return -ENOMEM;
@@ -304,6 +332,23 @@ uvc_video_alloc_requests(struct uvc_video *video)
 		sg_alloc_table(&video->ureq[i].sgt,
 			       DIV_ROUND_UP(req_size - 2, PAGE_SIZE) + 2,
 			       GFP_KERNEL);
+=======
+	for (i = 0; i < UVC_NUM_REQUESTS; ++i) {
+		video->req_buffer[i] = kmalloc(req_size, GFP_KERNEL);
+		if (video->req_buffer[i] == NULL)
+			goto error;
+
+		video->req[i] = usb_ep_alloc_request(video->ep, GFP_KERNEL);
+		if (video->req[i] == NULL)
+			goto error;
+
+		video->req[i]->buf = video->req_buffer[i];
+		video->req[i]->length = 0;
+		video->req[i]->complete = uvc_video_complete;
+		video->req[i]->context = video;
+
+		list_add_tail(&video->req[i]->list, &video->req_free);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	video->req_size = req_size;
@@ -360,6 +405,7 @@ static void uvcg_video_pump(struct work_struct *work)
 
 		video->encode(req, video, buf);
 
+<<<<<<< HEAD
 		/* With usb3 we have more requests. This will decrease the
 		 * interrupt load to a quarter but also catches the corner
 		 * cases, which needs to be handled */
@@ -373,6 +419,8 @@ static void uvcg_video_pump(struct work_struct *work)
 			req->no_interrupt = 1;
 		}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Queue the USB request */
 		ret = uvcg_video_ep_queue(video, req);
 		spin_unlock_irqrestore(&queue->irqlock, flags);
@@ -381,7 +429,10 @@ static void uvcg_video_pump(struct work_struct *work)
 			uvcg_queue_cancel(queue, 0);
 			break;
 		}
+<<<<<<< HEAD
 		video->req_int_count++;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	spin_lock_irqsave(&video->req_lock, flags);
@@ -408,9 +459,15 @@ int uvcg_video_enable(struct uvc_video *video, int enable)
 		cancel_work_sync(&video->pump);
 		uvcg_queue_cancel(&video->queue, 0);
 
+<<<<<<< HEAD
 		for (i = 0; i < video->uvc_num_requests; ++i)
 			if (video->ureq && video->ureq[i].req)
 				usb_ep_dequeue(video->ep, video->ureq[i].req);
+=======
+		for (i = 0; i < UVC_NUM_REQUESTS; ++i)
+			if (video->req[i])
+				usb_ep_dequeue(video->ep, video->req[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		uvc_video_free_requests(video);
 		uvcg_queue_enable(&video->queue, 0);
@@ -427,10 +484,14 @@ int uvcg_video_enable(struct uvc_video *video, int enable)
 		video->encode = uvc_video_encode_bulk;
 		video->payload_size = 0;
 	} else
+<<<<<<< HEAD
 		video->encode = video->queue.use_sg ?
 			uvc_video_encode_isoc_sg : uvc_video_encode_isoc;
 
 	video->req_int_count = 0;
+=======
+		video->encode = uvc_video_encode_isoc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	schedule_work(&video->pump);
 
@@ -454,8 +515,13 @@ int uvcg_video_init(struct uvc_video *video, struct uvc_device *uvc)
 	video->imagesize = 320 * 240 * 2;
 
 	/* Initialize the video buffers queue. */
+<<<<<<< HEAD
 	uvcg_queue_init(&video->queue, uvc->v4l2_dev.dev->parent,
 			V4L2_BUF_TYPE_VIDEO_OUTPUT, &video->mutex);
+=======
+	uvcg_queue_init(&video->queue, V4L2_BUF_TYPE_VIDEO_OUTPUT,
+			&video->mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

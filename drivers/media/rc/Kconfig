@@ -246,6 +246,7 @@ config IR_MESON
 	   To compile this driver as a module, choose M here: the
 	   module will be called meson-ir.
 
+<<<<<<< HEAD
 config IR_MESON_TX
 	tristate "Amlogic Meson IR TX"
 	depends on ARCH_MESON || COMPILE_TEST
@@ -256,6 +257,8 @@ config IR_MESON_TX
 	   To compile this driver as a module, choose M here: the
 	   module will be called meson-ir-tx.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config IR_MTK
 	tristate "Mediatek IR remote receiver"
 	depends on ARCH_MEDIATEK || COMPILE_TEST

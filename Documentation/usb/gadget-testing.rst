@@ -724,6 +724,7 @@ Function-specific configfs interface
 The function name to use when creating the function directory is "uac2".
 The uac2 function provides these attributes in its function directory:
 
+<<<<<<< HEAD
 	================ ====================================================
 	c_chmask         capture channel mask
 	c_srate          capture sampling rate
@@ -746,6 +747,20 @@ The uac2 function provides these attributes in its function directory:
 	req_number       the number of pre-allocated request for both capture
 	                 and playback
 	================ ====================================================
+=======
+	=============== ====================================================
+	c_chmask	capture channel mask
+	c_srate		capture sampling rate
+	c_ssize		capture sample size (bytes)
+	c_sync		capture synchronization type (async/adaptive)
+	fb_max          maximum extra bandwidth in async mode
+	p_chmask	playback channel mask
+	p_srate		playback sampling rate
+	p_ssize		playback sample size (bytes)
+	req_number	the number of pre-allocated request for both capture
+			and playback
+	=============== ====================================================
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 The attributes have sane default values.
 
@@ -914,6 +929,7 @@ Function-specific configfs interface
 The function name to use when creating the function directory is "uac1".
 The uac1 function provides these attributes in its function directory:
 
+<<<<<<< HEAD
 	================ ====================================================
 	c_chmask         capture channel mask
 	c_srate          capture sampling rate
@@ -934,6 +950,18 @@ The uac1 function provides these attributes in its function directory:
 	req_number       the number of pre-allocated request for both capture
 	                 and playback
 	================ ====================================================
+=======
+	========== ====================================================
+	c_chmask   capture channel mask
+	c_srate    capture sampling rate
+	c_ssize    capture sample size (bytes)
+	p_chmask   playback channel mask
+	p_srate    playback sampling rate
+	p_ssize    playback sample size (bytes)
+	req_number the number of pre-allocated request for both capture
+		   and playback
+	========== ====================================================
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 The attributes have sane default values.
 

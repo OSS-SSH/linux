@@ -120,7 +120,11 @@
 #define PACK_TARGET_INFO(s, r)		\
 	(FIELD_PREP(SENDER_ID_MASK, (s)) | FIELD_PREP(RECEIVER_ID_MASK, (r)))
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * FF-A specification mentions explicitly about '4K pages'. This should
  * not be confused with the kernel PAGE_SIZE, which is the translation
  * granule kernel is configured and may be one among 4K, 16K and 64K.
@@ -149,10 +153,15 @@ static const int ffa_linux_errmap[] = {
 
 static inline int ffa_to_linux_errno(int errno)
 {
+<<<<<<< HEAD
 	int err_idx = -errno;
 
 	if (err_idx >= 0 && err_idx < ARRAY_SIZE(ffa_linux_errmap))
 		return ffa_linux_errmap[err_idx];
+=======
+	if (errno < FFA_RET_SUCCESS && errno >= -ARRAY_SIZE(ffa_linux_errmap))
+		return ffa_linux_errmap[-errno];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return -EINVAL;
 }
 

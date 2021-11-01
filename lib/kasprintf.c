@@ -5,7 +5,11 @@
  *  Copyright (C) 1991, 1992  Linus Torvalds
  */
 
+<<<<<<< HEAD
 #include <linux/stdarg.h>
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/export.h>
 #include <linux/slab.h>
 #include <linux/types.h>

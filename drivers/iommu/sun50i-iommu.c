@@ -7,6 +7,10 @@
 #include <linux/clk.h>
 #include <linux/device.h>
 #include <linux/dma-direction.h>
+<<<<<<< HEAD
+=======
+#include <linux/dma-iommu.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/dma-mapping.h>
 #include <linux/err.h>
 #include <linux/errno.h>
@@ -609,10 +613,21 @@ static struct iommu_domain *sun50i_iommu_domain_alloc(unsigned type)
 	if (!sun50i_domain)
 		return NULL;
 
+<<<<<<< HEAD
 	sun50i_domain->dt = (u32 *)__get_free_pages(GFP_KERNEL | __GFP_ZERO,
 						    get_order(DT_SIZE));
 	if (!sun50i_domain->dt)
 		goto err_free_domain;
+=======
+	if (type == IOMMU_DOMAIN_DMA &&
+	    iommu_get_dma_cookie(&sun50i_domain->domain))
+		goto err_free_domain;
+
+	sun50i_domain->dt = (u32 *)__get_free_pages(GFP_KERNEL | __GFP_ZERO,
+						    get_order(DT_SIZE));
+	if (!sun50i_domain->dt)
+		goto err_put_cookie;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	refcount_set(&sun50i_domain->refcnt, 1);
 
@@ -622,6 +637,13 @@ static struct iommu_domain *sun50i_iommu_domain_alloc(unsigned type)
 
 	return &sun50i_domain->domain;
 
+<<<<<<< HEAD
+=======
+err_put_cookie:
+	if (type == IOMMU_DOMAIN_DMA)
+		iommu_put_dma_cookie(&sun50i_domain->domain);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_free_domain:
 	kfree(sun50i_domain);
 
@@ -635,6 +657,11 @@ static void sun50i_iommu_domain_free(struct iommu_domain *domain)
 	free_pages((unsigned long)sun50i_domain->dt, get_order(DT_SIZE));
 	sun50i_domain->dt = NULL;
 
+<<<<<<< HEAD
+=======
+	iommu_put_dma_cookie(domain);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(sun50i_domain);
 }
 

@@ -8,7 +8,10 @@ menu "PTP clock support"
 config PTP_1588_CLOCK
 	tristate "PTP clock support"
 	depends on NET && POSIX_TIMERS
+<<<<<<< HEAD
 	default ETHERNET
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select PPS
 	select NET_PTP_CLASSIFY
 	help
@@ -27,6 +30,7 @@ config PTP_1588_CLOCK
 	  To compile this driver as a module, choose M here: the module
 	  will be called ptp.
 
+<<<<<<< HEAD
 config PTP_1588_CLOCK_OPTIONAL
 	tristate
 	default y if PTP_1588_CLOCK=n
@@ -39,6 +43,8 @@ config PTP_1588_CLOCK_OPTIONAL
 	  If PTP support is disabled, this dependency will still be
 	  met, and drivers refer to dummy helpers.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config PTP_1588_CLOCK_DTE
 	tristate "Broadcom DTE as PTP clock"
 	depends on PTP_1588_CLOCK
@@ -103,9 +109,14 @@ config PTP_1588_CLOCK_INES
 config PTP_1588_CLOCK_PCH
 	tristate "Intel PCH EG20T as PTP clock"
 	depends on X86_32 || COMPILE_TEST
+<<<<<<< HEAD
 	depends on HAS_IOMEM && PCI
 	depends on NET
 	depends on PTP_1588_CLOCK
+=======
+	depends on HAS_IOMEM && NET
+	imply PTP_1588_CLOCK
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This driver adds support for using the PCH EG20T as a PTP
 	  clock. The hardware supports time stamping of PTP packets
@@ -171,11 +182,15 @@ config PTP_1588_CLOCK_OCP
 	tristate "OpenCompute TimeCard as PTP clock"
 	depends on PTP_1588_CLOCK
 	depends on HAS_IOMEM && PCI
+<<<<<<< HEAD
 	depends on I2C && MTD
 	depends on SERIAL_8250
 	depends on !S390
 	depends on COMMON_CLK
 	select NET_DEVLINK
+=======
+	default n
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This driver adds support for an OpenCompute time card.
 

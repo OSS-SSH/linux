@@ -52,7 +52,11 @@ extern void *mcheckirq_ctx[NR_CPUS];
 extern void *hardirq_ctx[NR_CPUS];
 extern void *softirq_ctx[NR_CPUS];
 
+<<<<<<< HEAD
 void __do_IRQ(struct pt_regs *regs);
+=======
+extern void do_IRQ(struct pt_regs *regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern void __init init_IRQ(void);
 extern void __do_irq(struct pt_regs *regs);
 

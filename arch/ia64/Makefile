@@ -47,6 +47,11 @@ KBUILD_CFLAGS += $(cflags-y)
 head-y := arch/ia64/kernel/head.o
 
 libs-y				+= arch/ia64/lib/
+<<<<<<< HEAD
+=======
+core-y				+= arch/ia64/kernel/ arch/ia64/mm/
+core-$(CONFIG_IA64_SGI_UV)	+= arch/ia64/uv/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 drivers-y			+= arch/ia64/pci/ arch/ia64/hp/common/
 

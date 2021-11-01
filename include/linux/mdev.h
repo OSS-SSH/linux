@@ -72,6 +72,14 @@ struct device *mtype_get_parent_dev(struct mdev_type *mtype);
  *			@mdev: mdev_device device structure which is being
  *			       destroyed
  *			Returns integer: success (0) or error (< 0)
+<<<<<<< HEAD
+=======
+ * @open:		Open mediated device.
+ *			@mdev: mediated device.
+ *			Returns integer: success (0) or error (< 0)
+ * @release:		release mediated device
+ *			@mdev: mediated device.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @read:		Read emulation callback
  *			@mdev: mediated device structure
  *			@buf: read buffer
@@ -106,8 +114,13 @@ struct mdev_parent_ops {
 
 	int     (*create)(struct mdev_device *mdev);
 	int     (*remove)(struct mdev_device *mdev);
+<<<<<<< HEAD
 	int     (*open_device)(struct mdev_device *mdev);
 	void    (*close_device)(struct mdev_device *mdev);
+=======
+	int     (*open)(struct mdev_device *mdev);
+	void    (*release)(struct mdev_device *mdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ssize_t (*read)(struct mdev_device *mdev, char __user *buf,
 			size_t count, loff_t *ppos);
 	ssize_t (*write)(struct mdev_device *mdev, const char __user *buf,

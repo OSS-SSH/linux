@@ -21,8 +21,12 @@
 #include "sh_css_firmware.h"
 
 int
+<<<<<<< HEAD
 ia_css_get_version(char *version, int max_size)
 {
+=======
+ia_css_get_version(char *version, int max_size) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	char *css_version;
 
 	if (!IS_ISP2401)

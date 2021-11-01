@@ -447,6 +447,7 @@ static int scan_block_fast(struct nand_chip *this, struct nand_bbt_descr *bd,
 	return 0;
 }
 
+<<<<<<< HEAD
 /* Check if a potential BBT block is marked as bad */
 static int bbt_block_checkbad(struct nand_chip *this, struct nand_bbt_descr *td,
 			      loff_t offs, uint8_t *buf)
@@ -476,6 +477,8 @@ static int bbt_block_checkbad(struct nand_chip *this, struct nand_bbt_descr *td,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * create_bbt - [GENERIC] Create a bad block table by scanning the device
  * @this: NAND chip object
@@ -589,10 +592,13 @@ static int search_bbt(struct nand_chip *this, uint8_t *buf,
 			int actblock = startblock + dir * block;
 			loff_t offs = (loff_t)actblock << this->bbt_erase_shift;
 
+<<<<<<< HEAD
 			/* Check if block is marked bad */
 			if (bbt_block_checkbad(this, td, offs, buf))
 				continue;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* Read first page */
 			scan_read(this, buf, offs, mtd->writesize, td);
 			if (!check_pattern(buf, scanlen, mtd->writesize, td)) {

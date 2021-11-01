@@ -173,7 +173,11 @@ static int mpc7448_machine_check_exception(struct pt_regs *regs)
 	/* Are we prepared to handle this fault */
 	if ((entry = search_exception_tables(regs->nip)) != NULL) {
 		tsi108_clear_pci_cfg_error();
+<<<<<<< HEAD
 		regs_set_recoverable(regs);
+=======
+		regs_set_return_msr(regs, regs->msr | MSR_RI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		regs_set_return_ip(regs, extable_fixup(entry));
 		return 1;
 	}

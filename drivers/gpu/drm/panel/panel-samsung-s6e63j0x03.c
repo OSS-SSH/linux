@@ -446,7 +446,11 @@ static int s6e63j0x03_probe(struct mipi_dsi_device *dsi)
 
 	dsi->lanes = 1;
 	dsi->format = MIPI_DSI_FMT_RGB888;
+<<<<<<< HEAD
 	dsi->mode_flags = MIPI_DSI_MODE_NO_EOT_PACKET;
+=======
+	dsi->mode_flags = MIPI_DSI_MODE_EOT_PACKET;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ctx->supplies[0].supply = "vdd3";
 	ctx->supplies[1].supply = "vci";

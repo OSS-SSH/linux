@@ -28,6 +28,11 @@
 #include "cpuid.h"
 #include "trace.h"
 
+<<<<<<< HEAD
+=======
+#define __ex(x) __kvm_handle_fault_on_reboot(x)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef CONFIG_KVM_AMD_SEV
 /*
  * When this config is not defined, SEV feature is not supported and APIs in
@@ -62,7 +67,10 @@ static DEFINE_MUTEX(sev_bitmap_lock);
 unsigned int max_sev_asid;
 static unsigned int min_sev_asid;
 static unsigned long sev_me_mask;
+<<<<<<< HEAD
 static unsigned int nr_asids;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static unsigned long *sev_asid_bitmap;
 static unsigned long *sev_reclaim_asid_bitmap;
 
@@ -77,11 +85,19 @@ struct enc_region {
 /* Called with the sev_bitmap_lock held, or on shutdown  */
 static int sev_flush_asids(int min_asid, int max_asid)
 {
+<<<<<<< HEAD
 	int ret, asid, error = 0;
 
 	/* Check if there are any ASIDs to reclaim before performing a flush */
 	asid = find_next_bit(sev_reclaim_asid_bitmap, nr_asids, min_asid);
 	if (asid > max_asid)
+=======
+	int ret, pos, error = 0;
+
+	/* Check if there are any ASIDs to reclaim before performing a flush */
+	pos = find_next_bit(sev_reclaim_asid_bitmap, max_asid, min_asid);
+	if (pos >= max_asid)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 
 	/*
@@ -114,15 +130,24 @@ static bool __sev_recycle_asids(int min_asid, int max_asid)
 
 	/* The flush process will flush all reclaimable SEV and SEV-ES ASIDs */
 	bitmap_xor(sev_asid_bitmap, sev_asid_bitmap, sev_reclaim_asid_bitmap,
+<<<<<<< HEAD
 		   nr_asids);
 	bitmap_zero(sev_reclaim_asid_bitmap, nr_asids);
+=======
+		   max_sev_asid);
+	bitmap_zero(sev_reclaim_asid_bitmap, max_sev_asid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return true;
 }
 
 static int sev_asid_new(struct kvm_sev_info *sev)
 {
+<<<<<<< HEAD
 	int asid, min_asid, max_asid, ret;
+=======
+	int pos, min_asid, max_asid, ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool retry = true;
 	enum misc_res_type type;
 
@@ -142,11 +167,19 @@ static int sev_asid_new(struct kvm_sev_info *sev)
 	 * SEV-enabled guests must use asid from min_sev_asid to max_sev_asid.
 	 * SEV-ES-enabled guest can use from 1 to min_sev_asid - 1.
 	 */
+<<<<<<< HEAD
 	min_asid = sev->es_active ? 1 : min_sev_asid;
 	max_asid = sev->es_active ? min_sev_asid - 1 : max_sev_asid;
 again:
 	asid = find_next_zero_bit(sev_asid_bitmap, max_asid + 1, min_asid);
 	if (asid > max_asid) {
+=======
+	min_asid = sev->es_active ? 0 : min_sev_asid - 1;
+	max_asid = sev->es_active ? min_sev_asid - 1 : max_sev_asid;
+again:
+	pos = find_next_zero_bit(sev_asid_bitmap, max_sev_asid, min_asid);
+	if (pos >= max_asid) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (retry && __sev_recycle_asids(min_asid, max_asid)) {
 			retry = false;
 			goto again;
@@ -156,11 +189,19 @@ again:
 		goto e_uncharge;
 	}
 
+<<<<<<< HEAD
 	__set_bit(asid, sev_asid_bitmap);
 
 	mutex_unlock(&sev_bitmap_lock);
 
 	return asid;
+=======
+	__set_bit(pos, sev_asid_bitmap);
+
+	mutex_unlock(&sev_bitmap_lock);
+
+	return pos + 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 e_uncharge:
 	misc_cg_uncharge(type, sev->misc_cg, 1);
 	put_misc_cg(sev->misc_cg);
@@ -178,16 +219,29 @@ static int sev_get_asid(struct kvm *kvm)
 static void sev_asid_free(struct kvm_sev_info *sev)
 {
 	struct svm_cpu_data *sd;
+<<<<<<< HEAD
 	int cpu;
+=======
+	int cpu, pos;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	enum misc_res_type type;
 
 	mutex_lock(&sev_bitmap_lock);
 
+<<<<<<< HEAD
 	__set_bit(sev->asid, sev_reclaim_asid_bitmap);
 
 	for_each_possible_cpu(cpu) {
 		sd = per_cpu(svm_data, cpu);
 		sd->sev_vmcbs[sev->asid] = NULL;
+=======
+	pos = sev->asid - 1;
+	__set_bit(pos, sev_reclaim_asid_bitmap);
+
+	for_each_possible_cpu(cpu) {
+		sd = per_cpu(svm_data, cpu);
+		sd->sev_vmcbs[pos] = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	mutex_unlock(&sev_bitmap_lock);
@@ -582,7 +636,10 @@ static int sev_es_sync_vmsa(struct vcpu_svm *svm)
 	save->xcr0 = svm->vcpu.arch.xcr0;
 	save->pkru = svm->vcpu.arch.pkru;
 	save->xss  = svm->vcpu.arch.ia32_xss;
+<<<<<<< HEAD
 	save->dr6  = svm->vcpu.arch.dr6;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * SEV-ES will use a VMSA that is pointed to by the VMCB, not
@@ -595,6 +652,7 @@ static int sev_es_sync_vmsa(struct vcpu_svm *svm)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int __sev_launch_update_vmsa(struct kvm *kvm, struct kvm_vcpu *vcpu,
 				    int *error)
 {
@@ -623,12 +681,19 @@ static int __sev_launch_update_vmsa(struct kvm *kvm, struct kvm_vcpu *vcpu,
 
 static int sev_launch_update_vmsa(struct kvm *kvm, struct kvm_sev_cmd *argp)
 {
+=======
+static int sev_launch_update_vmsa(struct kvm *kvm, struct kvm_sev_cmd *argp)
+{
+	struct kvm_sev_info *sev = &to_kvm_svm(kvm)->sev_info;
+	struct sev_data_launch_update_vmsa vmsa;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct kvm_vcpu *vcpu;
 	int i, ret;
 
 	if (!sev_es_guest(kvm))
 		return -ENOTTY;
 
+<<<<<<< HEAD
 	kvm_for_each_vcpu(i, vcpu, kvm) {
 		ret = mutex_lock_killable(&vcpu->mutex);
 		if (ret)
@@ -639,6 +704,35 @@ static int sev_launch_update_vmsa(struct kvm *kvm, struct kvm_sev_cmd *argp)
 		mutex_unlock(&vcpu->mutex);
 		if (ret)
 			return ret;
+=======
+	vmsa.reserved = 0;
+
+	kvm_for_each_vcpu(i, vcpu, kvm) {
+		struct vcpu_svm *svm = to_svm(vcpu);
+
+		/* Perform some pre-encryption checks against the VMSA */
+		ret = sev_es_sync_vmsa(svm);
+		if (ret)
+			return ret;
+
+		/*
+		 * The LAUNCH_UPDATE_VMSA command will perform in-place
+		 * encryption of the VMSA memory content (i.e it will write
+		 * the same memory region with the guest's key), so invalidate
+		 * it first.
+		 */
+		clflush_cache_range(svm->vmsa, PAGE_SIZE);
+
+		vmsa.handle = sev->handle;
+		vmsa.address = __sme_pa(svm->vmsa);
+		vmsa.len = PAGE_SIZE;
+		ret = sev_issue_cmd(kvm, SEV_CMD_LAUNCH_UPDATE_VMSA, &vmsa,
+				    &argp->error);
+		if (ret)
+			return ret;
+
+		svm->vcpu.arch.guest_state_protected = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
@@ -1278,8 +1372,13 @@ static int sev_send_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
 	/* Pin guest memory */
 	guest_page = sev_pin_memory(kvm, params.guest_uaddr & PAGE_MASK,
 				    PAGE_SIZE, &n, 0);
+<<<<<<< HEAD
 	if (IS_ERR(guest_page))
 		return PTR_ERR(guest_page);
+=======
+	if (!guest_page)
+		return -EFAULT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* allocate memory for header and transport buffer */
 	ret = -ENOMEM;
@@ -1316,9 +1415,14 @@ static int sev_send_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
 	}
 
 	/* Copy packet header to userspace. */
+<<<<<<< HEAD
 	if (copy_to_user((void __user *)(uintptr_t)params.hdr_uaddr, hdr,
 			 params.hdr_len))
 		ret = -EFAULT;
+=======
+	ret = copy_to_user((void __user *)(uintptr_t)params.hdr_uaddr, hdr,
+				params.hdr_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 e_free_trans_data:
 	kfree(trans_data);
@@ -1404,10 +1508,15 @@ static int sev_receive_start(struct kvm *kvm, struct kvm_sev_cmd *argp)
 
 	/* Bind ASID to this guest */
 	ret = sev_bind_asid(kvm, start.handle, error);
+<<<<<<< HEAD
 	if (ret) {
 		sev_decommission(start.handle);
 		goto e_free_session;
 	}
+=======
+	if (ret)
+		goto e_free_session;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	params.handle = start.handle;
 	if (copy_to_user((void __user *)(uintptr_t)argp->data,
@@ -1472,12 +1581,20 @@ static int sev_receive_update_data(struct kvm *kvm, struct kvm_sev_cmd *argp)
 	data.trans_len = params.trans_len;
 
 	/* Pin guest memory */
+<<<<<<< HEAD
 	guest_page = sev_pin_memory(kvm, params.guest_uaddr & PAGE_MASK,
 				    PAGE_SIZE, &n, 1);
 	if (IS_ERR(guest_page)) {
 		ret = PTR_ERR(guest_page);
 		goto e_free_trans;
 	}
+=======
+	ret = -EFAULT;
+	guest_page = sev_pin_memory(kvm, params.guest_uaddr & PAGE_MASK,
+				    PAGE_SIZE, &n, 0);
+	if (!guest_page)
+		goto e_free_trans;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The RECEIVE_UPDATE_DATA command requires C-bit to be always set. */
 	data.guest_address = (page_to_pfn(guest_page[0]) << PAGE_SHIFT) + offset;
@@ -1510,6 +1627,7 @@ static int sev_receive_finish(struct kvm *kvm, struct kvm_sev_cmd *argp)
 	return sev_issue_cmd(kvm, SEV_CMD_RECEIVE_FINISH, &data, &argp->error);
 }
 
+<<<<<<< HEAD
 static bool cmd_allowed_from_miror(u32 cmd_id)
 {
 	/*
@@ -1524,6 +1642,8 @@ static bool cmd_allowed_from_miror(u32 cmd_id)
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int svm_mem_enc_op(struct kvm *kvm, void __user *argp)
 {
 	struct kvm_sev_cmd sev_cmd;
@@ -1540,9 +1660,14 @@ int svm_mem_enc_op(struct kvm *kvm, void __user *argp)
 
 	mutex_lock(&kvm->lock);
 
+<<<<<<< HEAD
 	/* Only the enc_context_owner handles some memory enc operations. */
 	if (is_mirroring_enc_context(kvm) &&
 	    !cmd_allowed_from_miror(sev_cmd.id)) {
+=======
+	/* enc_context_owner handles all memory enc operations */
+	if (is_mirroring_enc_context(kvm)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		r = -EINVAL;
 		goto out;
 	}
@@ -1739,7 +1864,12 @@ int svm_vm_copy_asid_from(struct kvm *kvm, unsigned int source_fd)
 {
 	struct file *source_kvm_file;
 	struct kvm *source_kvm;
+<<<<<<< HEAD
 	struct kvm_sev_info source_sev, *mirror_sev;
+=======
+	struct kvm_sev_info *mirror_sev;
+	unsigned int asid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	source_kvm_file = fget(source_fd);
@@ -1762,8 +1892,12 @@ int svm_vm_copy_asid_from(struct kvm *kvm, unsigned int source_fd)
 		goto e_source_unlock;
 	}
 
+<<<<<<< HEAD
 	memcpy(&source_sev, &to_kvm_svm(source_kvm)->sev_info,
 	       sizeof(source_sev));
+=======
+	asid = to_kvm_svm(source_kvm)->sev_info.asid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * The mirror kvm holds an enc_context_owner ref so its asid can't
@@ -1783,6 +1917,7 @@ int svm_vm_copy_asid_from(struct kvm *kvm, unsigned int source_fd)
 	/* Set enc_context_owner and copy its encryption context over */
 	mirror_sev = &to_kvm_svm(kvm)->sev_info;
 	mirror_sev->enc_context_owner = source_kvm;
+<<<<<<< HEAD
 	mirror_sev->active = true;
 	mirror_sev->asid = source_sev.asid;
 	mirror_sev->fd = source_sev.fd;
@@ -1793,6 +1928,10 @@ int svm_vm_copy_asid_from(struct kvm *kvm, unsigned int source_fd)
 	 * KVM contexts as the original, and they may have different
 	 * memory-views.
 	 */
+=======
+	mirror_sev->asid = asid;
+	mirror_sev->active = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_unlock(&kvm->lock);
 	return 0;
@@ -1888,6 +2027,7 @@ void __init sev_hardware_setup(void)
 	min_sev_asid = edx;
 	sev_me_mask = 1UL << (ebx & 0x3f);
 
+<<<<<<< HEAD
 	/*
 	 * Initialize SEV ASID bitmaps. Allocate space for ASID 0 in the bitmap,
 	 * even though it's never used, so that the bitmap is indexed by the
@@ -1899,6 +2039,14 @@ void __init sev_hardware_setup(void)
 		goto out;
 
 	sev_reclaim_asid_bitmap = bitmap_zalloc(nr_asids, GFP_KERNEL);
+=======
+	/* Initialize SEV ASID bitmaps */
+	sev_asid_bitmap = bitmap_zalloc(max_sev_asid, GFP_KERNEL);
+	if (!sev_asid_bitmap)
+		goto out;
+
+	sev_reclaim_asid_bitmap = bitmap_zalloc(max_sev_asid, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!sev_reclaim_asid_bitmap) {
 		bitmap_free(sev_asid_bitmap);
 		sev_asid_bitmap = NULL;
@@ -1943,7 +2091,11 @@ void sev_hardware_teardown(void)
 		return;
 
 	/* No need to take sev_bitmap_lock, all VMs have been destroyed. */
+<<<<<<< HEAD
 	sev_flush_asids(1, max_sev_asid);
+=======
+	sev_flush_asids(0, max_sev_asid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	bitmap_free(sev_asid_bitmap);
 	bitmap_free(sev_reclaim_asid_bitmap);
@@ -1957,7 +2109,11 @@ int sev_cpu_init(struct svm_cpu_data *sd)
 	if (!sev_enabled)
 		return 0;
 
+<<<<<<< HEAD
 	sd->sev_vmcbs = kcalloc(nr_asids, sizeof(void *), GFP_KERNEL);
+=======
+	sd->sev_vmcbs = kcalloc(max_sev_asid + 1, sizeof(void *), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!sd->sev_vmcbs)
 		return -ENOMEM;
 

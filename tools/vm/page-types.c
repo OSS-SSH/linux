@@ -1331,7 +1331,11 @@ int main(int argc, char *argv[])
 	if (opt_list && opt_list_mapcnt)
 		kpagecount_fd = checked_open(PROC_KPAGECOUNT, O_RDONLY);
 
+<<<<<<< HEAD
 	if (opt_mark_idle)
+=======
+	if (opt_mark_idle && opt_file)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		page_idle_fd = checked_open(SYS_KERNEL_MM_PAGE_IDLE, O_RDWR);
 
 	if (opt_list && opt_pid)

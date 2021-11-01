@@ -18,7 +18,11 @@
 void ftrace_caller(void);
 
 extern char ftrace_graph_caller_end;
+<<<<<<< HEAD
 extern void *ftrace_func;
+=======
+extern unsigned long ftrace_plt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct dyn_arch_ftrace { };
 
@@ -30,11 +34,18 @@ struct dyn_arch_ftrace { };
 
 struct module;
 struct dyn_ftrace;
+<<<<<<< HEAD
 
 bool ftrace_need_init_nop(void);
 #define ftrace_need_init_nop ftrace_need_init_nop
 
 int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec);
+=======
+/*
+ * Either -mhotpatch or -mnop-mcount is used - no explicit init is required
+ */
+static inline int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec) { return 0; }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ftrace_init_nop ftrace_init_nop
 
 static inline unsigned long ftrace_call_adjust(unsigned long addr)
@@ -42,6 +53,45 @@ static inline unsigned long ftrace_call_adjust(unsigned long addr)
 	return addr;
 }
 
+<<<<<<< HEAD
+=======
+struct ftrace_insn {
+	u16 opc;
+	s32 disp;
+} __packed;
+
+static inline void ftrace_generate_nop_insn(struct ftrace_insn *insn)
+{
+#ifdef CONFIG_FUNCTION_TRACER
+	/* brcl 0,0 */
+	insn->opc = 0xc004;
+	insn->disp = 0;
+#endif
+}
+
+static inline int is_ftrace_nop(struct ftrace_insn *insn)
+{
+#ifdef CONFIG_FUNCTION_TRACER
+	if (insn->disp == 0)
+		return 1;
+#endif
+	return 0;
+}
+
+static inline void ftrace_generate_call_insn(struct ftrace_insn *insn,
+					     unsigned long ip)
+{
+#ifdef CONFIG_FUNCTION_TRACER
+	unsigned long target;
+
+	/* brasl r0,ftrace_caller */
+	target = is_module_addr((void *) ip) ? ftrace_plt : FTRACE_ADDR;
+	insn->opc = 0xc005;
+	insn->disp = (target - ip) / 2;
+#endif
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Even though the system call numbers are identical for s390/s390x a
  * different system call table is used for compat tasks. This may lead

@@ -43,7 +43,11 @@ EXPORT_SYMBOL(memmove);
 EXPORT_SYMBOL(__memset);
 EXPORT_SYMBOL(__memcpy);
 EXPORT_SYMBOL(__memmove);
+<<<<<<< HEAD
 #ifdef CONFIG_ARCH_HAS_STRNCPY_FROM_USER
+=======
+#ifndef CONFIG_GENERIC_STRNCPY_FROM_USER
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 EXPORT_SYMBOL(__strncpy_user);
 #endif
 EXPORT_SYMBOL(clear_page);

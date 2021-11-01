@@ -253,18 +253,30 @@ static int goldfish_tty_create_driver(void)
 		ret = -ENOMEM;
 		goto err_alloc_goldfish_ttys_failed;
 	}
+<<<<<<< HEAD
 	tty = tty_alloc_driver(goldfish_tty_line_count,
 			TTY_DRIVER_RESET_TERMIOS | TTY_DRIVER_REAL_RAW |
 			TTY_DRIVER_DYNAMIC_DEV);
 	if (IS_ERR(tty)) {
 		ret = PTR_ERR(tty);
 		goto err_tty_alloc_driver_failed;
+=======
+	tty = alloc_tty_driver(goldfish_tty_line_count);
+	if (tty == NULL) {
+		ret = -ENOMEM;
+		goto err_alloc_tty_driver_failed;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	tty->driver_name = "goldfish";
 	tty->name = "ttyGF";
 	tty->type = TTY_DRIVER_TYPE_SERIAL;
 	tty->subtype = SERIAL_TYPE_NORMAL;
 	tty->init_termios = tty_std_termios;
+<<<<<<< HEAD
+=======
+	tty->flags = TTY_DRIVER_RESET_TERMIOS | TTY_DRIVER_REAL_RAW |
+						TTY_DRIVER_DYNAMIC_DEV;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tty_set_operations(tty, &goldfish_tty_ops);
 	ret = tty_register_driver(tty);
 	if (ret)
@@ -274,8 +286,13 @@ static int goldfish_tty_create_driver(void)
 	return 0;
 
 err_tty_register_driver_failed:
+<<<<<<< HEAD
 	tty_driver_kref_put(tty);
 err_tty_alloc_driver_failed:
+=======
+	put_tty_driver(tty);
+err_alloc_tty_driver_failed:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(goldfish_ttys);
 	goldfish_ttys = NULL;
 err_alloc_goldfish_ttys_failed:
@@ -285,7 +302,11 @@ err_alloc_goldfish_ttys_failed:
 static void goldfish_tty_delete_driver(void)
 {
 	tty_unregister_driver(goldfish_tty_driver);
+<<<<<<< HEAD
 	tty_driver_kref_put(goldfish_tty_driver);
+=======
+	put_tty_driver(goldfish_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	goldfish_tty_driver = NULL;
 	kfree(goldfish_ttys);
 	goldfish_ttys = NULL;

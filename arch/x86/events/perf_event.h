@@ -656,10 +656,13 @@ struct x86_hybrid_pmu {
 	struct event_constraint		*event_constraints;
 	struct event_constraint		*pebs_constraints;
 	struct extra_reg		*extra_regs;
+<<<<<<< HEAD
 
 	unsigned int			late_ack	:1,
 					mid_ack		:1,
 					enabled_ack	:1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static __always_inline struct x86_hybrid_pmu *hybrid_pmu(struct pmu *pmu)
@@ -690,6 +693,7 @@ extern struct static_key_false perf_is_hybrid;
 	__Fp;						\
 }))
 
+<<<<<<< HEAD
 #define hybrid_bit(_pmu, _field)			\
 ({							\
 	bool __Fp = x86_pmu._field;			\
@@ -700,6 +704,8 @@ extern struct static_key_false perf_is_hybrid;
 	__Fp;						\
 })
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum hybrid_pmu_type {
 	hybrid_big		= 0x40,
 	hybrid_small		= 0x20,
@@ -769,7 +775,10 @@ struct x86_pmu {
 
 	/* PMI handler bits */
 	unsigned int	late_ack		:1,
+<<<<<<< HEAD
 			mid_ack			:1,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			enabled_ack		:1;
 	/*
 	 * sysfs attrs
@@ -1130,10 +1139,16 @@ void x86_pmu_stop(struct perf_event *event, int flags);
 
 static inline void x86_pmu_disable_event(struct perf_event *event)
 {
+<<<<<<< HEAD
 	u64 disable_mask = __this_cpu_read(cpu_hw_events.perf_ctr_virt_mask);
 	struct hw_perf_event *hwc = &event->hw;
 
 	wrmsrl(hwc->config_base, hwc->config & ~disable_mask);
+=======
+	struct hw_perf_event *hwc = &event->hw;
+
+	wrmsrl(hwc->config_base, hwc->config);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (is_counter_pair(hwc))
 		wrmsrl(x86_pmu_config_addr(hwc->idx + 1), 0);

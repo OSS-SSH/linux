@@ -143,7 +143,10 @@ struct ionic_dev {
 	u32 last_fw_hb;
 	bool fw_hb_ready;
 	bool fw_status_ready;
+<<<<<<< HEAD
 	u8 fw_generation;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	u64 __iomem *db_pages;
 	dma_addr_t phy_db_pages;
@@ -161,6 +164,11 @@ struct ionic_dev {
 struct ionic_cq_info {
 	union {
 		void *cq_desc;
+<<<<<<< HEAD
+=======
+		struct ionic_txq_comp *txcq;
+		struct ionic_rxq_comp *rxcq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct ionic_admin_comp *admincq;
 		struct ionic_notifyq_event *notifyq;
 	};

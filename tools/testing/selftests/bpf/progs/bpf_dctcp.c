@@ -17,11 +17,14 @@
 
 char _license[] SEC("license") = "GPL";
 
+<<<<<<< HEAD
 volatile const char fallback[TCP_CA_NAME_MAX];
 const char bpf_dctcp[] = "bpf_dctcp";
 const char tcp_cdg[] = "cdg";
 char cc_res[TCP_CA_NAME_MAX];
 int tcp_cdg_res = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int stg_result = 0;
 
 struct {
@@ -62,6 +65,7 @@ void BPF_PROG(dctcp_init, struct sock *sk)
 	struct dctcp *ca = inet_csk_ca(sk);
 	int *stg;
 
+<<<<<<< HEAD
 	if (!(tp->ecn_flags & TCP_ECN_OK) && fallback[0]) {
 		/* Switch to fallback */
 		bpf_setsockopt(sk, SOL_TCP, TCP_CONGESTION,
@@ -82,6 +86,8 @@ void BPF_PROG(dctcp_init, struct sock *sk)
 		return;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ca->prior_rcv_nxt = tp->rcv_nxt;
 	ca->dctcp_alpha = min(dctcp_alpha_on_init, DCTCP_MAX_ALPHA);
 	ca->loss_cwnd = 0;

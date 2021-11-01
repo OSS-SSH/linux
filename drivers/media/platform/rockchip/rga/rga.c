@@ -863,12 +863,20 @@ static int rga_probe(struct platform_device *pdev)
 	if (IS_ERR(rga->m2m_dev)) {
 		v4l2_err(&rga->v4l2_dev, "Failed to init mem2mem device\n");
 		ret = PTR_ERR(rga->m2m_dev);
+<<<<<<< HEAD
 		goto rel_vdev;
+=======
+		goto unreg_video_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = pm_runtime_resume_and_get(rga->dev);
 	if (ret < 0)
+<<<<<<< HEAD
 		goto rel_vdev;
+=======
+		goto unreg_video_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rga->version.major = (rga_read(rga, RGA_VERSION_INFO) >> 24) & 0xFF;
 	rga->version.minor = (rga_read(rga, RGA_VERSION_INFO) >> 20) & 0x0F;
@@ -882,6 +890,7 @@ static int rga_probe(struct platform_device *pdev)
 	rga->cmdbuf_virt = dma_alloc_attrs(rga->dev, RGA_CMDBUF_SIZE,
 					   &rga->cmdbuf_phy, GFP_KERNEL,
 					   DMA_ATTR_WRITE_COMBINE);
+<<<<<<< HEAD
 	if (!rga->cmdbuf_virt) {
 		ret = -ENOMEM;
 		goto rel_vdev;
@@ -899,6 +908,13 @@ static int rga_probe(struct platform_device *pdev)
 		ret = -ENOMEM;
 		goto free_src_pages;
 	}
+=======
+
+	rga->src_mmu_pages =
+		(unsigned int *)__get_free_pages(GFP_KERNEL | __GFP_ZERO, 3);
+	rga->dst_mmu_pages =
+		(unsigned int *)__get_free_pages(GFP_KERNEL | __GFP_ZERO, 3);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	def_frame.stride = (def_frame.width * def_frame.fmt->depth) >> 3;
 	def_frame.size = def_frame.stride * def_frame.height;
@@ -906,7 +922,11 @@ static int rga_probe(struct platform_device *pdev)
 	ret = video_register_device(vfd, VFL_TYPE_VIDEO, -1);
 	if (ret) {
 		v4l2_err(&rga->v4l2_dev, "Failed to register video device\n");
+<<<<<<< HEAD
 		goto free_dst_pages;
+=======
+		goto rel_vdev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	v4l2_info(&rga->v4l2_dev, "Registered %s as /dev/%s\n",
@@ -914,6 +934,7 @@ static int rga_probe(struct platform_device *pdev)
 
 	return 0;
 
+<<<<<<< HEAD
 free_dst_pages:
 	free_pages((unsigned long)rga->dst_mmu_pages, 3);
 free_src_pages:
@@ -923,6 +944,12 @@ free_dma:
 		       rga->cmdbuf_phy, DMA_ATTR_WRITE_COMBINE);
 rel_vdev:
 	video_device_release(vfd);
+=======
+rel_vdev:
+	video_device_release(vfd);
+unreg_video_dev:
+	video_unregister_device(rga->vfd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 unreg_v4l2_dev:
 	v4l2_device_unregister(&rga->v4l2_dev);
 err_put_clk:

@@ -817,10 +817,14 @@ log_it:
 		if (mca_cfg.dont_log_ce && !mce_usable_address(&m))
 			goto clear_it;
 
+<<<<<<< HEAD
 		if (flags & MCP_QUEUE_LOG)
 			mce_gen_pool_add(&m);
 		else
 			mce_log(&m);
+=======
+		mce_log(&m);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 clear_it:
 		/*
@@ -1253,9 +1257,12 @@ static void __mc_scan_banks(struct mce *m, struct pt_regs *regs, struct mce *fin
 
 static void kill_me_now(struct callback_head *ch)
 {
+<<<<<<< HEAD
 	struct task_struct *p = container_of(ch, struct task_struct, mce_kill_me);
 
 	p->mce_count = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	force_sig(SIGBUS);
 }
 
@@ -1265,7 +1272,10 @@ static void kill_me_maybe(struct callback_head *cb)
 	int flags = MF_ACTION_REQUIRED;
 	int ret;
 
+<<<<<<< HEAD
 	p->mce_count = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_err("Uncorrected hardware memory error in user-access at %llx", p->mce_addr);
 
 	if (!p->mce_ripv)
@@ -1294,6 +1304,7 @@ static void kill_me_maybe(struct callback_head *cb)
 	}
 }
 
+<<<<<<< HEAD
 static void queue_task_work(struct mce *m, char *msg, int kill_current_task)
 {
 	int count = ++current->mce_count;
@@ -1322,6 +1333,19 @@ static void queue_task_work(struct mce *m, char *msg, int kill_current_task)
 	/* Do not call task_work_add() more than once */
 	if (count > 1)
 		return;
+=======
+static void queue_task_work(struct mce *m, int kill_current_task)
+{
+	current->mce_addr = m->addr;
+	current->mce_kflags = m->kflags;
+	current->mce_ripv = !!(m->mcgstatus & MCG_STATUS_RIPV);
+	current->mce_whole_page = whole_page(m);
+
+	if (kill_current_task)
+		current->mce_kill_me.func = kill_me_now;
+	else
+		current->mce_kill_me.func = kill_me_maybe;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	task_work_add(current, &current->mce_kill_me, TWA_RESUME);
 }
@@ -1459,7 +1483,11 @@ noinstr void do_machine_check(struct pt_regs *regs)
 		/* If this triggers there is no way to recover. Die hard. */
 		BUG_ON(!on_thread_stack() || !user_mode(regs));
 
+<<<<<<< HEAD
 		queue_task_work(&m, msg, kill_current_task);
+=======
+		queue_task_work(&m, kill_current_task);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	} else {
 		/*
@@ -1477,7 +1505,11 @@ noinstr void do_machine_check(struct pt_regs *regs)
 		}
 
 		if (m.kflags & MCE_IN_KERNEL_COPYIN)
+<<<<<<< HEAD
 			queue_task_work(&m, msg, kill_current_task);
+=======
+			queue_task_work(&m, kill_current_task);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 out:
 	mce_wrmsrl(MSR_IA32_MCG_STATUS, 0);
@@ -1663,12 +1695,19 @@ static void __mcheck_cpu_init_generic(void)
 		m_fl = MCP_DONTLOG;
 
 	/*
+<<<<<<< HEAD
 	 * Log the machine checks left over from the previous reset. Log them
 	 * only, do not start processing them. That will happen in mcheck_late_init()
 	 * when all consumers have been registered on the notifier chain.
 	 */
 	bitmap_fill(all_banks, MAX_NR_BANKS);
 	machine_check_poll(MCP_UC | MCP_QUEUE_LOG | m_fl, &all_banks);
+=======
+	 * Log the machine checks left over from the previous reset.
+	 */
+	bitmap_fill(all_banks, MAX_NR_BANKS);
+	machine_check_poll(MCP_UC | m_fl, &all_banks);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cr4_set_bits(X86_CR4_MCE);
 

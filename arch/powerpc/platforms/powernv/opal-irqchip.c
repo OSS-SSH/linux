@@ -46,15 +46,28 @@ void opal_handle_events(void)
 	e = READ_ONCE(last_outstanding_events) & opal_event_irqchip.mask;
 again:
 	while (e) {
+<<<<<<< HEAD
 		int hwirq;
+=======
+		int virq, hwirq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		hwirq = fls64(e) - 1;
 		e &= ~BIT_ULL(hwirq);
 
 		local_irq_disable();
+<<<<<<< HEAD
 		irq_enter();
 		generic_handle_domain_irq(opal_event_irqchip.domain, hwirq);
 		irq_exit();
+=======
+		virq = irq_find_mapping(opal_event_irqchip.domain, hwirq);
+		if (virq) {
+			irq_enter();
+			generic_handle_irq(virq);
+			irq_exit();
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		local_irq_enable();
 
 		cond_resched();

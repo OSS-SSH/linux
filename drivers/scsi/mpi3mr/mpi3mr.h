@@ -183,6 +183,7 @@ enum mpi3mr_iocstate {
 	MRIOC_STATE_UNRECOVERABLE,
 };
 
+<<<<<<< HEAD
 /* Init type definitions */
 enum mpi3mr_init_type {
 	MPI3MR_IT_INIT = 0,
@@ -197,6 +198,8 @@ enum mpi3mr_cleanup_reason {
 	MPI3MR_SUSPEND,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Reset reason code definitions*/
 enum mpi3mr_reset_reason {
 	MPI3MR_RESET_FROM_BRINGUP = 1,
@@ -869,8 +872,13 @@ struct delayed_dev_rmhs_node {
 
 int mpi3mr_setup_resources(struct mpi3mr_ioc *mrioc);
 void mpi3mr_cleanup_resources(struct mpi3mr_ioc *mrioc);
+<<<<<<< HEAD
 int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 init_type);
 void mpi3mr_cleanup_ioc(struct mpi3mr_ioc *mrioc, u8 reason);
+=======
+int mpi3mr_init_ioc(struct mpi3mr_ioc *mrioc, u8 re_init);
+void mpi3mr_cleanup_ioc(struct mpi3mr_ioc *mrioc, u8 re_init);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int mpi3mr_issue_port_enable(struct mpi3mr_ioc *mrioc, u8 async);
 int mpi3mr_admin_request_post(struct mpi3mr_ioc *mrioc, void *admin_req,
 u16 admin_req_sz, u8 ignore_reset);
@@ -886,7 +894,10 @@ void *mpi3mr_get_reply_virt_addr(struct mpi3mr_ioc *mrioc,
 void mpi3mr_repost_sense_buf(struct mpi3mr_ioc *mrioc,
 				     u64 sense_buf_dma);
 
+<<<<<<< HEAD
 void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void mpi3mr_os_handle_events(struct mpi3mr_ioc *mrioc,
 			     struct mpi3_event_notification_reply *event_reply);
 void mpi3mr_process_op_reply_desc(struct mpi3mr_ioc *mrioc,

@@ -414,10 +414,16 @@ static void __btrfs_dump_space_info(struct btrfs_fs_info *fs_info,
 {
 	lockdep_assert_held(&info->lock);
 
+<<<<<<< HEAD
 	/* The free space could be negative in case of overcommit */
 	btrfs_info(fs_info, "space_info %llu has %lld free, is %sfull",
 		   info->flags,
 		   (s64)(info->total_bytes - btrfs_space_info_used(info, true)),
+=======
+	btrfs_info(fs_info, "space_info %llu has %llu free, is %sfull",
+		   info->flags,
+		   info->total_bytes - btrfs_space_info_used(info, true),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   info->full ? "" : "not ");
 	btrfs_info(fs_info,
 		"space_info total=%llu, used=%llu, pinned=%llu, reserved=%llu, may_use=%llu, readonly=%llu zone_unusable=%llu",
@@ -494,11 +500,14 @@ static void shrink_delalloc(struct btrfs_fs_info *fs_info,
 	long time_left;
 	int loops;
 
+<<<<<<< HEAD
 	delalloc_bytes = percpu_counter_sum_positive(&fs_info->delalloc_bytes);
 	ordered_bytes = percpu_counter_sum_positive(&fs_info->ordered_bytes);
 	if (delalloc_bytes == 0 && ordered_bytes == 0)
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Calc the number of the pages we need flush for space reservation */
 	if (to_reclaim == U64_MAX) {
 		items = U64_MAX;
@@ -506,6 +515,7 @@ static void shrink_delalloc(struct btrfs_fs_info *fs_info,
 		/*
 		 * to_reclaim is set to however much metadata we need to
 		 * reclaim, but reclaiming that much data doesn't really track
+<<<<<<< HEAD
 		 * exactly.  What we really want to do is reclaim full inode's
 		 * worth of reservations, however that's not available to us
 		 * here.  We will take a fraction of the delalloc bytes for our
@@ -517,10 +527,27 @@ static void shrink_delalloc(struct btrfs_fs_info *fs_info,
 		 */
 		to_reclaim = max(to_reclaim, delalloc_bytes >> 3);
 		items = calc_reclaim_items_nr(fs_info, to_reclaim) * 2;
+=======
+		 * exactly, so increase the amount to reclaim by 2x in order to
+		 * make sure we're flushing enough delalloc to hopefully reclaim
+		 * some metadata reservations.
+		 */
+		items = calc_reclaim_items_nr(fs_info, to_reclaim) * 2;
+		to_reclaim = items * EXTENT_SIZE_PER_ITEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	trans = (struct btrfs_trans_handle *)current->journal_info;
 
+<<<<<<< HEAD
+=======
+	delalloc_bytes = percpu_counter_sum_positive(
+						&fs_info->delalloc_bytes);
+	ordered_bytes = percpu_counter_sum_positive(&fs_info->ordered_bytes);
+	if (delalloc_bytes == 0 && ordered_bytes == 0)
+		return;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * If we are doing more ordered than delalloc we need to just wait on
 	 * ordered extents, otherwise we'll waste time trying to flush delalloc
@@ -533,6 +560,7 @@ static void shrink_delalloc(struct btrfs_fs_info *fs_info,
 	while ((delalloc_bytes || ordered_bytes) && loops < 3) {
 		u64 temp = min(delalloc_bytes, to_reclaim) >> PAGE_SHIFT;
 		long nr_pages = min_t(u64, temp, LONG_MAX);
+<<<<<<< HEAD
 		int async_pages;
 
 		btrfs_start_delalloc_roots(fs_info, nr_pages, true);
@@ -576,6 +604,11 @@ static void shrink_delalloc(struct btrfs_fs_info *fs_info,
 			   atomic_read(&fs_info->async_delalloc_pages) <=
 			   async_pages);
 skip_async:
+=======
+
+		btrfs_start_delalloc_roots(fs_info, nr_pages, true);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		loops++;
 		if (wait_ordered && !trans) {
 			btrfs_wait_ordered_roots(fs_info, items, 0, (u64)-1);
@@ -640,11 +673,16 @@ static void flush_space(struct btrfs_fs_info *fs_info,
 		break;
 	case FLUSH_DELALLOC:
 	case FLUSH_DELALLOC_WAIT:
+<<<<<<< HEAD
 	case FLUSH_DELALLOC_FULL:
 		if (state == FLUSH_DELALLOC_FULL)
 			num_bytes = U64_MAX;
 		shrink_delalloc(fs_info, space_info, num_bytes,
 				state != FLUSH_DELALLOC, for_preempt);
+=======
+		shrink_delalloc(fs_info, space_info, num_bytes,
+				state == FLUSH_DELALLOC_WAIT, for_preempt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case FLUSH_DELAYED_REFS_NR:
 	case FLUSH_DELAYED_REFS:
@@ -734,7 +772,11 @@ static bool need_preemptive_reclaim(struct btrfs_fs_info *fs_info,
 {
 	u64 global_rsv_size = fs_info->global_block_rsv.reserved;
 	u64 ordered, delalloc;
+<<<<<<< HEAD
 	u64 thresh = div_factor_fine(space_info->total_bytes, 90);
+=======
+	u64 thresh = div_factor_fine(space_info->total_bytes, 98);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 used;
 
 	/* If we're just plain full then async reclaim just slows us down. */
@@ -742,6 +784,7 @@ static bool need_preemptive_reclaim(struct btrfs_fs_info *fs_info,
 	     global_rsv_size) >= thresh)
 		return false;
 
+<<<<<<< HEAD
 	used = space_info->bytes_may_use + space_info->bytes_pinned;
 
 	/* The total flushable belongs to the global rsv, don't flush. */
@@ -756,6 +799,8 @@ static bool need_preemptive_reclaim(struct btrfs_fs_info *fs_info,
 	if (used - global_rsv_size <= SZ_128M)
 		return false;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * We have tickets queued, bail so we don't compete with the async
 	 * flushers.
@@ -886,8 +931,11 @@ static bool maybe_fail_all_tickets(struct btrfs_fs_info *fs_info,
 	struct reserve_ticket *ticket;
 	u64 tickets_id = space_info->tickets_id;
 
+<<<<<<< HEAD
 	trace_btrfs_fail_all_tickets(fs_info, space_info);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (btrfs_test_opt(fs_info, ENOSPC_DEBUG)) {
 		btrfs_info(fs_info, "cannot satisfy tickets, dumping space info");
 		__btrfs_dump_space_info(fs_info, space_info);
@@ -969,6 +1017,7 @@ static void btrfs_async_reclaim_metadata_space(struct work_struct *work)
 		}
 
 		/*
+<<<<<<< HEAD
 		 * We do not want to empty the system of delalloc unless we're
 		 * under heavy pressure, so allow one trip through the flushing
 		 * logic before we start doing a FLUSH_DELALLOC_FULL.
@@ -977,6 +1026,8 @@ static void btrfs_async_reclaim_metadata_space(struct work_struct *work)
 			flush_state++;
 
 		/*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * We don't want to force a chunk allocation until we've tried
 		 * pretty hard to reclaim space.  Think of the case where we
 		 * freed up a bunch of space and so have a lot of pinned space
@@ -1139,7 +1190,11 @@ static void btrfs_preempt_reclaim_metadata_space(struct work_struct *work)
  *   so if we now have space to allocate do the force chunk allocation.
  */
 static const enum btrfs_flush_state data_flush_states[] = {
+<<<<<<< HEAD
 	FLUSH_DELALLOC_FULL,
+=======
+	FLUSH_DELALLOC_WAIT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	RUN_DELAYED_IPUTS,
 	COMMIT_TRANS,
 	ALLOC_CHUNK_FORCE,
@@ -1228,7 +1283,10 @@ static const enum btrfs_flush_state evict_flush_states[] = {
 	FLUSH_DELAYED_REFS,
 	FLUSH_DELALLOC,
 	FLUSH_DELALLOC_WAIT,
+<<<<<<< HEAD
 	FLUSH_DELALLOC_FULL,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ALLOC_CHUNK,
 	COMMIT_TRANS,
 };

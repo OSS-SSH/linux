@@ -21,9 +21,12 @@
 static DEFINE_MUTEX(dsa2_mutex);
 LIST_HEAD(dsa_tree_list);
 
+<<<<<<< HEAD
 /* Track the bridges with forwarding offload enabled */
 static unsigned long dsa_fwd_offloading_bridges;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * dsa_tree_notify - Execute code for all switches in a DSA switch tree.
  * @dst: collection of struct dsa_switch devices to notify.
@@ -52,9 +55,12 @@ int dsa_tree_notify(struct dsa_switch_tree *dst, unsigned long e, void *v)
  * Can be used to notify the switching fabric of events such as cross-chip
  * bridging between disjoint trees (such as islands of tagger-compatible
  * switches bridged by an incompatible middle switch).
+<<<<<<< HEAD
  *
  * WARNING: this function is not reliable during probe time, because probing
  * between trees is asynchronous and not all DSA trees might have probed.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int dsa_broadcast(unsigned long e, void *v)
 {
@@ -129,6 +135,7 @@ void dsa_lag_unmap(struct dsa_switch_tree *dst, struct net_device *lag)
 	}
 }
 
+<<<<<<< HEAD
 static int dsa_bridge_num_find(const struct net_device *bridge_dev)
 {
 	struct dsa_switch_tree *dst;
@@ -174,6 +181,8 @@ void dsa_bridge_num_put(const struct net_device *bridge_dev, int bridge_num)
 		clear_bit(bridge_num, &dsa_fwd_offloading_bridges);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct dsa_switch *dsa_switch_find(int tree_index, int sw_index)
 {
 	struct dsa_switch_tree *dst;
@@ -362,9 +371,12 @@ static struct dsa_port *dsa_tree_find_first_cpu(struct dsa_switch_tree *dst)
 	return NULL;
 }
 
+<<<<<<< HEAD
 /* Assign the default CPU port (the first one in the tree) to all ports of the
  * fabric which don't already have one as part of their own switch.
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int dsa_tree_setup_default_cpu(struct dsa_switch_tree *dst)
 {
 	struct dsa_port *cpu_dp, *dp;
@@ -375,6 +387,7 @@ static int dsa_tree_setup_default_cpu(struct dsa_switch_tree *dst)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	list_for_each_entry(dp, &dst->ports, list) {
 		if (dp->cpu_dp)
 			continue;
@@ -382,10 +395,17 @@ static int dsa_tree_setup_default_cpu(struct dsa_switch_tree *dst)
 		if (dsa_port_is_user(dp) || dsa_port_is_dsa(dp))
 			dp->cpu_dp = cpu_dp;
 	}
+=======
+	/* Assign the default CPU port to all ports of the fabric */
+	list_for_each_entry(dp, &dst->ports, list)
+		if (dsa_port_is_user(dp) || dsa_port_is_dsa(dp))
+			dp->cpu_dp = cpu_dp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
+<<<<<<< HEAD
 /* Perform initial assignment of CPU ports to user ports and DSA links in the
  * fabric, giving preference to CPU ports local to each switch. Default to
  * using the first CPU port in the switch tree if the port does not have a CPU
@@ -417,6 +437,9 @@ static int dsa_tree_setup_cpu_ports(struct dsa_switch_tree *dst)
 }
 
 static void dsa_tree_teardown_cpu_ports(struct dsa_switch_tree *dst)
+=======
+static void dsa_tree_teardown_default_cpu(struct dsa_switch_tree *dst)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct dsa_port *dp;
 
@@ -429,7 +452,10 @@ static int dsa_port_setup(struct dsa_port *dp)
 {
 	struct devlink_port *dlp = &dp->devlink_port;
 	bool dsa_port_link_registered = false;
+<<<<<<< HEAD
 	struct dsa_switch *ds = dp->ds;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool dsa_port_enabled = false;
 	int err = 0;
 
@@ -439,12 +465,15 @@ static int dsa_port_setup(struct dsa_port *dp)
 	INIT_LIST_HEAD(&dp->fdbs);
 	INIT_LIST_HEAD(&dp->mdbs);
 
+<<<<<<< HEAD
 	if (ds->ops->port_setup) {
 		err = ds->ops->port_setup(ds, dp->index);
 		if (err)
 			return err;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (dp->type) {
 	case DSA_PORT_TYPE_UNUSED:
 		dsa_port_disable(dp);
@@ -487,11 +516,16 @@ static int dsa_port_setup(struct dsa_port *dp)
 		dsa_port_disable(dp);
 	if (err && dsa_port_link_registered)
 		dsa_port_link_unregister_of(dp);
+<<<<<<< HEAD
 	if (err) {
 		if (ds->ops->port_teardown)
 			ds->ops->port_teardown(ds, dp->index);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dp->setup = true;
 
@@ -543,15 +577,21 @@ static int dsa_port_devlink_setup(struct dsa_port *dp)
 static void dsa_port_teardown(struct dsa_port *dp)
 {
 	struct devlink_port *dlp = &dp->devlink_port;
+<<<<<<< HEAD
 	struct dsa_switch *ds = dp->ds;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct dsa_mac_addr *a, *tmp;
 
 	if (!dp->setup)
 		return;
 
+<<<<<<< HEAD
 	if (ds->ops->port_teardown)
 		ds->ops->port_teardown(ds, dp->index);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	devlink_port_type_clear(dlp);
 
 	switch (dp->type) {
@@ -595,6 +635,7 @@ static void dsa_port_devlink_teardown(struct dsa_port *dp)
 	dp->devlink_port_setup = false;
 }
 
+<<<<<<< HEAD
 /* Destroy the current devlink port, and create a new one which has the UNUSED
  * flavour. At this point, any call to ds->ops->port_setup has been already
  * balanced out by a call to ds->ops->port_teardown, so we know that any
@@ -625,6 +666,8 @@ static int dsa_port_reinit_as_unused(struct dsa_port *dp)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int dsa_devlink_info_get(struct devlink *dl,
 				struct devlink_info_req *req,
 				struct netlink_ext_ack *extack)
@@ -811,9 +854,13 @@ static int dsa_switch_setup_tag_protocol(struct dsa_switch *ds)
 		if (!dsa_is_cpu_port(ds, port))
 			continue;
 
+<<<<<<< HEAD
 		rtnl_lock();
 		err = ds->ops->change_tag_protocol(ds, port, tag_ops->proto);
 		rtnl_unlock();
+=======
+		err = ds->ops->change_tag_protocol(ds, port, tag_ops->proto);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err) {
 			dev_err(ds->dev, "Unable to use tag protocol \"%s\": %pe\n",
 				tag_ops->name, ERR_PTR(err));
@@ -843,14 +890,22 @@ static int dsa_switch_setup(struct dsa_switch *ds)
 	/* Add the switch to devlink before calling setup, so that setup can
 	 * add dpipe tables
 	 */
+<<<<<<< HEAD
 	ds->devlink =
 		devlink_alloc(&dsa_devlink_ops, sizeof(*dl_priv), ds->dev);
+=======
+	ds->devlink = devlink_alloc(&dsa_devlink_ops, sizeof(*dl_priv));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!ds->devlink)
 		return -ENOMEM;
 	dl_priv = devlink_priv(ds->devlink);
 	dl_priv->ds = ds;
 
+<<<<<<< HEAD
 	err = devlink_register(ds->devlink);
+=======
+	err = devlink_register(ds->devlink, ds->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto free_devlink;
 
@@ -882,7 +937,11 @@ static int dsa_switch_setup(struct dsa_switch *ds)
 	devlink_params_publish(ds->devlink);
 
 	if (!ds->slave_mii_bus && ds->ops->phy_read) {
+<<<<<<< HEAD
 		ds->slave_mii_bus = mdiobus_alloc();
+=======
+		ds->slave_mii_bus = devm_mdiobus_alloc(ds->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!ds->slave_mii_bus) {
 			err = -ENOMEM;
 			goto teardown;
@@ -892,16 +951,23 @@ static int dsa_switch_setup(struct dsa_switch *ds)
 
 		err = mdiobus_register(ds->slave_mii_bus);
 		if (err < 0)
+<<<<<<< HEAD
 			goto free_slave_mii_bus;
+=======
+			goto teardown;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ds->setup = true;
 
 	return 0;
 
+<<<<<<< HEAD
 free_slave_mii_bus:
 	if (ds->slave_mii_bus && ds->ops->phy_read)
 		mdiobus_free(ds->slave_mii_bus);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 teardown:
 	if (ds->ops->teardown)
 		ds->ops->teardown(ds);
@@ -926,11 +992,16 @@ static void dsa_switch_teardown(struct dsa_switch *ds)
 	if (!ds->setup)
 		return;
 
+<<<<<<< HEAD
 	if (ds->slave_mii_bus && ds->ops->phy_read) {
 		mdiobus_unregister(ds->slave_mii_bus);
 		mdiobus_free(ds->slave_mii_bus);
 		ds->slave_mii_bus = NULL;
 	}
+=======
+	if (ds->slave_mii_bus && ds->ops->phy_read)
+		mdiobus_unregister(ds->slave_mii_bus);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dsa_switch_unregister_notifier(ds);
 
@@ -949,6 +1020,7 @@ static void dsa_switch_teardown(struct dsa_switch *ds)
 	ds->setup = false;
 }
 
+<<<<<<< HEAD
 /* First tear down the non-shared, then the shared ports. This ensures that
  * all work items scheduled by our switchdev handlers for user ports have
  * completed before we destroy the refcounting kept on the shared ports.
@@ -976,6 +1048,8 @@ static void dsa_tree_teardown_switches(struct dsa_switch_tree *dst)
 		dsa_switch_teardown(dp->ds);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int dsa_tree_setup_switches(struct dsa_switch_tree *dst)
 {
 	struct dsa_port *dp;
@@ -990,22 +1064,53 @@ static int dsa_tree_setup_switches(struct dsa_switch_tree *dst)
 	list_for_each_entry(dp, &dst->ports, list) {
 		err = dsa_port_setup(dp);
 		if (err) {
+<<<<<<< HEAD
 			err = dsa_port_reinit_as_unused(dp);
 			if (err)
 				goto teardown;
+=======
+			dsa_port_devlink_teardown(dp);
+			dp->type = DSA_PORT_TYPE_UNUSED;
+			err = dsa_port_devlink_setup(dp);
+			if (err)
+				goto teardown;
+			continue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
 	return 0;
 
 teardown:
+<<<<<<< HEAD
 	dsa_tree_teardown_ports(dst);
 
 	dsa_tree_teardown_switches(dst);
+=======
+	list_for_each_entry(dp, &dst->ports, list)
+		dsa_port_teardown(dp);
+
+	list_for_each_entry(dp, &dst->ports, list)
+		dsa_switch_teardown(dp->ds);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
 
+<<<<<<< HEAD
+=======
+static void dsa_tree_teardown_switches(struct dsa_switch_tree *dst)
+{
+	struct dsa_port *dp;
+
+	list_for_each_entry(dp, &dst->ports, list)
+		dsa_port_teardown(dp);
+
+	list_for_each_entry(dp, &dst->ports, list)
+		dsa_switch_teardown(dp->ds);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int dsa_tree_setup_master(struct dsa_switch_tree *dst)
 {
 	struct dsa_port *dp;
@@ -1072,13 +1177,21 @@ static int dsa_tree_setup(struct dsa_switch_tree *dst)
 	if (!complete)
 		return 0;
 
+<<<<<<< HEAD
 	err = dsa_tree_setup_cpu_ports(dst);
+=======
+	err = dsa_tree_setup_default_cpu(dst);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return err;
 
 	err = dsa_tree_setup_switches(dst);
 	if (err)
+<<<<<<< HEAD
 		goto teardown_cpu_ports;
+=======
+		goto teardown_default_cpu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = dsa_tree_setup_master(dst);
 	if (err)
@@ -1097,10 +1210,16 @@ static int dsa_tree_setup(struct dsa_switch_tree *dst)
 teardown_master:
 	dsa_tree_teardown_master(dst);
 teardown_switches:
+<<<<<<< HEAD
 	dsa_tree_teardown_ports(dst);
 	dsa_tree_teardown_switches(dst);
 teardown_cpu_ports:
 	dsa_tree_teardown_cpu_ports(dst);
+=======
+	dsa_tree_teardown_switches(dst);
+teardown_default_cpu:
+	dsa_tree_teardown_default_cpu(dst);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
@@ -1116,11 +1235,17 @@ static void dsa_tree_teardown(struct dsa_switch_tree *dst)
 
 	dsa_tree_teardown_master(dst);
 
+<<<<<<< HEAD
 	dsa_tree_teardown_ports(dst);
 
 	dsa_tree_teardown_switches(dst);
 
 	dsa_tree_teardown_cpu_ports(dst);
+=======
+	dsa_tree_teardown_switches(dst);
+
+	dsa_tree_teardown_default_cpu(dst);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	list_for_each_entry_safe(dl, next, &dst->rtable, list) {
 		list_del(&dl->list);
@@ -1198,7 +1323,10 @@ static struct dsa_port *dsa_port_touch(struct dsa_switch *ds, int index)
 
 	dp->ds = ds;
 	dp->index = index;
+<<<<<<< HEAD
 	dp->bridge_num = -1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	INIT_LIST_HEAD(&dp->list);
 	list_add_tail(&dp->list, &dst->ports);
@@ -1374,12 +1502,23 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 
 	for_each_available_child_of_node(ports, port) {
 		err = of_property_read_u32(port, "reg", &reg);
+<<<<<<< HEAD
 		if (err)
 			goto out_put_node;
+=======
+		if (err) {
+			of_node_put(port);
+			goto out_put_node;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (reg >= ds->num_ports) {
 			dev_err(ds->dev, "port %pOF index %u exceeds num_ports (%zu)\n",
 				port, reg, ds->num_ports);
+<<<<<<< HEAD
+=======
+			of_node_put(port);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = -EINVAL;
 			goto out_put_node;
 		}
@@ -1387,8 +1526,15 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 		dp = dsa_to_port(ds, reg);
 
 		err = dsa_port_parse_of(dp, port);
+<<<<<<< HEAD
 		if (err)
 			goto out_put_node;
+=======
+		if (err) {
+			of_node_put(port);
+			goto out_put_node;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 out_put_node:
@@ -1420,9 +1566,12 @@ static int dsa_switch_parse_member_of(struct dsa_switch *ds,
 		return -EEXIST;
 	}
 
+<<<<<<< HEAD
 	if (ds->dst->last_switch < ds->index)
 		ds->dst->last_switch = ds->index;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1612,6 +1761,7 @@ void dsa_unregister_switch(struct dsa_switch *ds)
 	mutex_unlock(&dsa2_mutex);
 }
 EXPORT_SYMBOL_GPL(dsa_unregister_switch);
+<<<<<<< HEAD
 
 /* If the DSA master chooses to unregister its net_device on .shutdown, DSA is
  * blocking that operation from completion, due to the dev_hold taken inside
@@ -1662,3 +1812,5 @@ void dsa_switch_shutdown(struct dsa_switch *ds)
 	mutex_unlock(&dsa2_mutex);
 }
 EXPORT_SYMBOL_GPL(dsa_switch_shutdown);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

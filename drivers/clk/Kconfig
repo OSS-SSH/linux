@@ -403,7 +403,10 @@ source "drivers/clk/mediatek/Kconfig"
 source "drivers/clk/meson/Kconfig"
 source "drivers/clk/mstar/Kconfig"
 source "drivers/clk/mvebu/Kconfig"
+<<<<<<< HEAD
 source "drivers/clk/pistachio/Kconfig"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 source "drivers/clk/qcom/Kconfig"
 source "drivers/clk/ralink/Kconfig"
 source "drivers/clk/renesas/Kconfig"

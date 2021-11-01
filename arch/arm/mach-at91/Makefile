@@ -8,7 +8,10 @@ obj-$(CONFIG_SOC_AT91RM9200)	+= at91rm9200.o
 obj-$(CONFIG_SOC_AT91SAM9)	+= at91sam9.o
 obj-$(CONFIG_SOC_SAM9X60)	+= sam9x60.o
 obj-$(CONFIG_SOC_SAMA5)		+= sama5.o
+<<<<<<< HEAD
 obj-$(CONFIG_SOC_SAMA7)		+= sama7.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_SOC_SAMV7)		+= samv7.o
 
 # Power Management

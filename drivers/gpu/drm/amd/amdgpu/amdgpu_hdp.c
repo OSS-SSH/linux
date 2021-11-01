@@ -41,6 +41,10 @@ int amdgpu_hdp_ras_late_init(struct amdgpu_device *adev)
 		adev->hdp.ras_if->block = AMDGPU_RAS_BLOCK__HDP;
 		adev->hdp.ras_if->type = AMDGPU_RAS_ERROR__MULTI_UNCORRECTABLE;
 		adev->hdp.ras_if->sub_block_index = 0;
+<<<<<<< HEAD
+=======
+		strcpy(adev->hdp.ras_if->name, "hdp");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	ih_info.head = fs_info.head = *adev->hdp.ras_if;
 	r = amdgpu_ras_late_init(adev, adev->hdp.ras_if,

@@ -91,7 +91,10 @@ struct rdma_id_private {
 	u8			afonly;
 	u8			timeout;
 	u8			min_rnr_timer;
+<<<<<<< HEAD
 	u8 used_resolve_ip;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	enum ib_gid_type	gid_type;
 
 	/*

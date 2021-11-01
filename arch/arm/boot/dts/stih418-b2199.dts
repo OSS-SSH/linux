@@ -11,6 +11,10 @@
 	compatible = "st,stih418-b2199", "st,stih418";
 
 	chosen {
+<<<<<<< HEAD
+=======
+		bootargs = "clk_ignore_unused";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		stdout-path = &sbc_serial0;
 	};
 

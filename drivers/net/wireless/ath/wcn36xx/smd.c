@@ -504,10 +504,17 @@ int wcn36xx_smd_load_nv(struct wcn36xx *wcn)
 	u16 fm_offset = 0;
 
 	if (!wcn->nv) {
+<<<<<<< HEAD
 		ret = request_firmware(&wcn->nv, wcn->nv_file, wcn->dev);
 		if (ret) {
 			wcn36xx_err("Failed to load nv file %s: %d\n",
 				    wcn->nv_file, ret);
+=======
+		ret = request_firmware(&wcn->nv, WLAN_NV_FILE, wcn->dev);
+		if (ret) {
+			wcn36xx_err("Failed to load nv file %s: %d\n",
+				      WLAN_NV_FILE, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto out;
 		}
 	}

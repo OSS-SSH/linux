@@ -34,10 +34,20 @@ struct block_device {
 	void *			bd_holder;
 	int			bd_holders;
 	bool			bd_write_holder;
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SYSFS
+	struct list_head	bd_holder_disks;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct kobject		*bd_holder_dir;
 	u8			bd_partno;
 	spinlock_t		bd_size_lock; /* for bd_inode->i_size updates */
 	struct gendisk *	bd_disk;
+<<<<<<< HEAD
+=======
+	struct backing_dev_info *bd_bdi;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The counter of freeze processes */
 	int			bd_fsfreeze_count;
@@ -277,7 +287,10 @@ struct bio {
 };
 
 #define BIO_RESET_BYTES		offsetof(struct bio, bi_max_vecs)
+<<<<<<< HEAD
 #define BIO_MAX_SECTORS		(UINT_MAX >> SECTOR_SHIFT)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * bio flags
@@ -298,7 +311,10 @@ enum {
 	BIO_TRACKED,		/* set if bio goes through the rq_qos path */
 	BIO_REMAPPED,
 	BIO_ZONE_WRITE_LOCKED,	/* Owns a zoned device zone write lock */
+<<<<<<< HEAD
 	BIO_PERCPU_CACHE,	/* can participate in per-cpu alloc cache */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BIO_FLAG_LAST
 };
 

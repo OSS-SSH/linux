@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /* Marvell RVU Admin Function Devlink
+=======
+/* Marvell OcteonTx2 RVU Devlink
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (C) 2020 Marvell.
  *
@@ -1364,6 +1368,7 @@ static void rvu_health_reporters_destroy(struct rvu *rvu)
 	rvu_nix_health_reporters_destroy(rvu_dl);
 }
 
+<<<<<<< HEAD
 /* Devlink Params APIs */
 static int rvu_af_dl_dwrr_mtu_validate(struct devlink *devlink, u32 id,
 				       union devlink_param_value val,
@@ -1485,6 +1490,8 @@ static int rvu_devlink_eswitch_mode_set(struct devlink *devlink, u16 mode,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int rvu_devlink_info_get(struct devlink *devlink, struct devlink_info_req *req,
 				struct netlink_ext_ack *extack)
 {
@@ -1493,8 +1500,11 @@ static int rvu_devlink_info_get(struct devlink *devlink, struct devlink_info_req
 
 static const struct devlink_ops rvu_devlink_ops = {
 	.info_get = rvu_devlink_info_get,
+<<<<<<< HEAD
 	.eswitch_mode_get = rvu_devlink_eswitch_mode_get,
 	.eswitch_mode_set = rvu_devlink_eswitch_mode_set,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 int rvu_register_dl(struct rvu *rvu)
@@ -1503,6 +1513,7 @@ int rvu_register_dl(struct rvu *rvu)
 	struct devlink *dl;
 	int err;
 
+<<<<<<< HEAD
 	dl = devlink_alloc(&rvu_devlink_ops, sizeof(struct rvu_devlink),
 			   rvu->dev);
 	if (!dl) {
@@ -1518,10 +1529,32 @@ int rvu_register_dl(struct rvu *rvu)
 	}
 
 	rvu_dl = devlink_priv(dl);
+=======
+	rvu_dl = kzalloc(sizeof(*rvu_dl), GFP_KERNEL);
+	if (!rvu_dl)
+		return -ENOMEM;
+
+	dl = devlink_alloc(&rvu_devlink_ops, sizeof(struct rvu_devlink));
+	if (!dl) {
+		dev_warn(rvu->dev, "devlink_alloc failed\n");
+		kfree(rvu_dl);
+		return -ENOMEM;
+	}
+
+	err = devlink_register(dl, rvu->dev);
+	if (err) {
+		dev_err(rvu->dev, "devlink register failed with error %d\n", err);
+		devlink_free(dl);
+		kfree(rvu_dl);
+		return err;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rvu_dl->dl = dl;
 	rvu_dl->rvu = rvu;
 	rvu->rvu_dl = rvu_dl;
 
+<<<<<<< HEAD
 	err = rvu_health_reporters_create(rvu);
 	if (err) {
 		dev_err(rvu->dev,
@@ -1546,6 +1579,9 @@ err_dl_health:
 	devlink_unregister(dl);
 	devlink_free(dl);
 	return err;
+=======
+	return rvu_health_reporters_create(rvu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void rvu_unregister_dl(struct rvu *rvu)
@@ -1556,9 +1592,16 @@ void rvu_unregister_dl(struct rvu *rvu)
 	if (!dl)
 		return;
 
+<<<<<<< HEAD
 	devlink_params_unregister(dl, rvu_af_dl_params,
 				  ARRAY_SIZE(rvu_af_dl_params));
 	rvu_health_reporters_destroy(rvu);
 	devlink_unregister(dl);
 	devlink_free(dl);
+=======
+	rvu_health_reporters_destroy(rvu);
+	devlink_unregister(dl);
+	devlink_free(dl);
+	kfree(rvu_dl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

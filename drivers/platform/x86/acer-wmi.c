@@ -60,11 +60,14 @@ MODULE_LICENSE("GPL");
 #define ACER_WMID_GET_THREEG_METHODID		10
 #define ACER_WMID_SET_THREEG_METHODID		11
 
+<<<<<<< HEAD
 #define ACER_WMID_SET_GAMING_LED_METHODID 2
 #define ACER_WMID_GET_GAMING_LED_METHODID 4
 #define ACER_WMID_SET_GAMING_FAN_BEHAVIOR 14
 #define ACER_WMID_SET_GAMING_MISC_SETTING_METHODID 22
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Acer ACPI method GUIDs
  */
@@ -73,7 +76,10 @@ MODULE_LICENSE("GPL");
 #define WMID_GUID1		"6AF4F258-B401-42FD-BE91-3D4AC2D7C0D3"
 #define WMID_GUID2		"95764E09-FB56-4E83-B31A-37761F60994A"
 #define WMID_GUID3		"61EF69EA-865C-4BC3-A502-A0DEBA0CB531"
+<<<<<<< HEAD
 #define WMID_GUID4		"7A4DDFE7-5B5D-40B4-8595-4408E0CC7F56"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Acer ACPI event GUIDs
@@ -87,7 +93,10 @@ MODULE_ALIAS("wmi:676AA15E-6A47-4D9F-A2CC-1E6D18D14026");
 enum acer_wmi_event_ids {
 	WMID_HOTKEY_EVENT = 0x1,
 	WMID_ACCEL_OR_KBD_DOCK_EVENT = 0x5,
+<<<<<<< HEAD
 	WMID_GAMING_TURBO_KEY_EVENT = 0x7,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct key_entry acer_wmi_keymap[] __initconst = {
@@ -222,9 +231,12 @@ struct hotkey_function_type_aa {
 #define ACER_CAP_THREEG			BIT(4)
 #define ACER_CAP_SET_FUNCTION_MODE	BIT(5)
 #define ACER_CAP_KBD_DOCK		BIT(6)
+<<<<<<< HEAD
 #define ACER_CAP_TURBO_OC     BIT(7)
 #define ACER_CAP_TURBO_LED     BIT(8)
 #define ACER_CAP_TURBO_FAN     BIT(9)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Interface type flags
@@ -311,9 +323,12 @@ struct quirk_entry {
 	u8 mailled;
 	s8 brightness;
 	u8 bluetooth;
+<<<<<<< HEAD
 	u8 turbo;
 	u8 cpu_fans;
 	u8 gpu_fans;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct quirk_entry *quirks;
@@ -325,10 +340,13 @@ static void __init set_quirks(void)
 
 	if (quirks->brightness)
 		interface->capability |= ACER_CAP_BRIGHTNESS;
+<<<<<<< HEAD
 
 	if (quirks->turbo)
 		interface->capability |= ACER_CAP_TURBO_OC | ACER_CAP_TURBO_LED
 					 | ACER_CAP_TURBO_FAN;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __init dmi_matched(const struct dmi_system_id *dmi)
@@ -357,12 +375,15 @@ static struct quirk_entry quirk_acer_travelmate_2490 = {
 	.mailled = 1,
 };
 
+<<<<<<< HEAD
 static struct quirk_entry quirk_acer_predator_ph315_53 = {
 	.turbo = 1,
 	.cpu_fans = 1,
 	.gpu_fans = 1,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* This AMW0 laptop has no bluetooth */
 static struct quirk_entry quirk_medion_md_98300 = {
 	.wireless = 1,
@@ -531,6 +552,7 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
 		.driver_data = &quirk_acer_travelmate_2490,
 	},
 	{
+<<<<<<< HEAD
 		.callback = dmi_matched,
 		.ident = "Acer Predator PH315-53",
 		.matches = {
@@ -540,6 +562,8 @@ static const struct dmi_system_id acer_quirks[] __initconst = {
 		.driver_data = &quirk_acer_predator_ph315_53,
 	},
 	{
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.callback = set_force_caps,
 		.ident = "Acer Aspire Switch 10E SW3-016",
 		.matches = {
@@ -1377,6 +1401,7 @@ static struct wmi_interface wmid_v2_interface = {
 };
 
 /*
+<<<<<<< HEAD
  * WMID Gaming interface
  */
 
@@ -1485,6 +1510,8 @@ static void WMID_gaming_set_fan_mode(u8 fan_mode)
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Generic Device (interface-independent)
  */
 
@@ -1716,6 +1743,7 @@ static int acer_gsensor_event(void)
 }
 
 /*
+<<<<<<< HEAD
  *  Predator series turbo button
  */
 static int acer_toggle_turbo(void)
@@ -1751,6 +1779,8 @@ static int acer_toggle_turbo(void)
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Switch series keyboard dock status
  */
 static int acer_kbd_dock_state_to_sw_tablet_mode(u8 kbd_dock_state)
@@ -2047,10 +2077,13 @@ static void acer_wmi_notify(u32 value, void *context)
 		acer_gsensor_event();
 		acer_kbd_dock_event(&return_value);
 		break;
+<<<<<<< HEAD
 	case WMID_GAMING_TURBO_KEY_EVENT:
 		if (return_value.key_num == 0x4)
 			acer_toggle_turbo();
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		pr_warn("Unknown function number - %d - %d\n",
 			return_value.function, return_value.key_num);

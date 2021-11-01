@@ -1015,7 +1015,11 @@ u16 nvmet_parse_admin_cmd(struct nvmet_req *req)
 	if (unlikely(ret))
 		return ret;
 
+<<<<<<< HEAD
 	if (nvmet_is_passthru_req(req))
+=======
+	if (nvmet_req_passthru_ctrl(req))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return nvmet_parse_passthru_admin_cmd(req);
 
 	switch (cmd->common.opcode) {

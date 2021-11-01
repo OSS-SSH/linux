@@ -6,9 +6,12 @@
 
 #include "i915_scatterlist.h"
 
+<<<<<<< HEAD
 #include "i915_buddy.h"
 #include "i915_ttm_buddy_manager.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_mm.h>
 
 #include <linux/slab.h>
@@ -107,6 +110,7 @@ struct sg_table *i915_sg_from_mm_node(const struct drm_mm_node *node,
 	return st;
 }
 
+<<<<<<< HEAD
 /**
  * i915_sg_from_buddy_resource - Create an sg_table from a struct
  * i915_buddy_block list
@@ -184,6 +188,8 @@ struct sg_table *i915_sg_from_buddy_resource(struct ttm_resource *res,
 	return st;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if IS_ENABLED(CONFIG_DRM_I915_SELFTEST)
 #include "selftests/scatterlist.c"
 #endif

@@ -246,8 +246,11 @@ struct security_class_mapping secclass_map[] = {
 	    NULL } },
 	{ "xdp_socket",
 	  { COMMON_SOCK_PERMS, NULL } },
+<<<<<<< HEAD
 	{ "mctp_socket",
 	  { COMMON_SOCK_PERMS, NULL } },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ "perf_event",
 	  { "open", "cpu", "kernel", "tracepoint", "read", "write", NULL } },
 	{ "lockdown",
@@ -257,6 +260,10 @@ struct security_class_mapping secclass_map[] = {
 	{ NULL }
   };
 
+<<<<<<< HEAD
 #if PF_MAX > 46
+=======
+#if PF_MAX > 45
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #error New address family defined, please update secclass_map.
 #endif

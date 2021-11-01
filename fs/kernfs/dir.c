@@ -17,7 +17,11 @@
 
 #include "kernfs-internal.h"
 
+<<<<<<< HEAD
 DECLARE_RWSEM(kernfs_rwsem);
+=======
+DEFINE_MUTEX(kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static DEFINE_SPINLOCK(kernfs_rename_lock);	/* kn->parent and ->name */
 static char kernfs_pr_cont_buf[PATH_MAX];	/* protected by rename_lock */
 static DEFINE_SPINLOCK(kernfs_idr_lock);	/* root->ino_idr */
@@ -26,7 +30,11 @@ static DEFINE_SPINLOCK(kernfs_idr_lock);	/* root->ino_idr */
 
 static bool kernfs_active(struct kernfs_node *kn)
 {
+<<<<<<< HEAD
 	lockdep_assert_held(&kernfs_rwsem);
+=======
+	lockdep_assert_held(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return atomic_read(&kn->active) >= 0;
 }
 
@@ -340,7 +348,11 @@ static int kernfs_sd_compare(const struct kernfs_node *left,
  *	@kn->parent->dir.children.
  *
  *	Locking:
+<<<<<<< HEAD
  *	kernfs_rwsem held exclusive
+=======
+ *	mutex_lock(kernfs_mutex)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *	RETURNS:
  *	0 on susccess -EEXIST on failure.
@@ -372,7 +384,10 @@ static int kernfs_link_sibling(struct kernfs_node *kn)
 	/* successfully added, account subdir number */
 	if (kernfs_type(kn) == KERNFS_DIR)
 		kn->parent->dir.subdirs++;
+<<<<<<< HEAD
 	kernfs_inc_rev(kn->parent);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -386,7 +401,11 @@ static int kernfs_link_sibling(struct kernfs_node *kn)
  *	removed, %false if @kn wasn't on the rbtree.
  *
  *	Locking:
+<<<<<<< HEAD
  *	kernfs_rwsem held exclusive
+=======
+ *	mutex_lock(kernfs_mutex)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static bool kernfs_unlink_sibling(struct kernfs_node *kn)
 {
@@ -395,7 +414,10 @@ static bool kernfs_unlink_sibling(struct kernfs_node *kn)
 
 	if (kernfs_type(kn) == KERNFS_DIR)
 		kn->parent->dir.subdirs--;
+<<<<<<< HEAD
 	kernfs_inc_rev(kn->parent);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rb_erase(&kn->rb, &kn->parent->dir.children);
 	RB_CLEAR_NODE(&kn->rb);
@@ -457,6 +479,7 @@ void kernfs_put_active(struct kernfs_node *kn)
  * return after draining is complete.
  */
 static void kernfs_drain(struct kernfs_node *kn)
+<<<<<<< HEAD
 	__releases(&kernfs_rwsem) __acquires(&kernfs_rwsem)
 {
 	struct kernfs_root *root = kernfs_root(kn);
@@ -465,6 +488,16 @@ static void kernfs_drain(struct kernfs_node *kn)
 	WARN_ON_ONCE(kernfs_active(kn));
 
 	up_write(&kernfs_rwsem);
+=======
+	__releases(&kernfs_mutex) __acquires(&kernfs_mutex)
+{
+	struct kernfs_root *root = kernfs_root(kn);
+
+	lockdep_assert_held(&kernfs_mutex);
+	WARN_ON_ONCE(kernfs_active(kn));
+
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kernfs_lockdep(kn)) {
 		rwsem_acquire(&kn->dep_map, 0, 0, _RET_IP_);
@@ -483,7 +516,11 @@ static void kernfs_drain(struct kernfs_node *kn)
 
 	kernfs_drain_open_files(kn);
 
+<<<<<<< HEAD
 	down_write(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -722,7 +759,11 @@ int kernfs_add_one(struct kernfs_node *kn)
 	bool has_ns;
 	int ret;
 
+<<<<<<< HEAD
 	down_write(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = -EINVAL;
 	has_ns = kernfs_ns_enabled(parent);
@@ -753,7 +794,11 @@ int kernfs_add_one(struct kernfs_node *kn)
 		ps_iattr->ia_mtime = ps_iattr->ia_ctime;
 	}
 
+<<<<<<< HEAD
 	up_write(&kernfs_rwsem);
+=======
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Activate the new node unless CREATE_DEACTIVATED is requested.
@@ -767,7 +812,11 @@ int kernfs_add_one(struct kernfs_node *kn)
 	return 0;
 
 out_unlock:
+<<<<<<< HEAD
 	up_write(&kernfs_rwsem);
+=======
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -788,7 +837,11 @@ static struct kernfs_node *kernfs_find_ns(struct kernfs_node *parent,
 	bool has_ns = kernfs_ns_enabled(parent);
 	unsigned int hash;
 
+<<<<<<< HEAD
 	lockdep_assert_held(&kernfs_rwsem);
+=======
+	lockdep_assert_held(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (has_ns != (bool)ns) {
 		WARN(1, KERN_WARNING "kernfs: ns %s in '%s' for '%s'\n",
@@ -820,7 +873,11 @@ static struct kernfs_node *kernfs_walk_ns(struct kernfs_node *parent,
 	size_t len;
 	char *p, *name;
 
+<<<<<<< HEAD
 	lockdep_assert_held_read(&kernfs_rwsem);
+=======
+	lockdep_assert_held(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* grab kernfs_rename_lock to piggy back on kernfs_pr_cont_buf */
 	spin_lock_irq(&kernfs_rename_lock);
@@ -860,10 +917,17 @@ struct kernfs_node *kernfs_find_and_get_ns(struct kernfs_node *parent,
 {
 	struct kernfs_node *kn;
 
+<<<<<<< HEAD
 	down_read(&kernfs_rwsem);
 	kn = kernfs_find_ns(parent, name, ns);
 	kernfs_get(kn);
 	up_read(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+	kn = kernfs_find_ns(parent, name, ns);
+	kernfs_get(kn);
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return kn;
 }
@@ -884,10 +948,17 @@ struct kernfs_node *kernfs_walk_and_get_ns(struct kernfs_node *parent,
 {
 	struct kernfs_node *kn;
 
+<<<<<<< HEAD
 	down_read(&kernfs_rwsem);
 	kn = kernfs_walk_ns(parent, path, ns);
 	kernfs_get(kn);
 	up_read(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+	kn = kernfs_walk_ns(parent, path, ns);
+	kernfs_get(kn);
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return kn;
 }
@@ -1039,6 +1110,7 @@ static int kernfs_dop_revalidate(struct dentry *dentry, unsigned int flags)
 	if (flags & LOOKUP_RCU)
 		return -ECHILD;
 
+<<<<<<< HEAD
 	/* Negative hashed dentry? */
 	if (d_really_is_negative(dentry)) {
 		struct kernfs_node *parent;
@@ -1067,6 +1139,14 @@ static int kernfs_dop_revalidate(struct dentry *dentry, unsigned int flags)
 
 	kn = kernfs_dentry_node(dentry);
 	down_read(&kernfs_rwsem);
+=======
+	/* Always perform fresh lookup for negatives */
+	if (d_really_is_negative(dentry))
+		goto out_bad_unlocked;
+
+	kn = kernfs_dentry_node(dentry);
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The kernfs node has been deactivated */
 	if (!kernfs_active(kn))
@@ -1085,10 +1165,18 @@ static int kernfs_dop_revalidate(struct dentry *dentry, unsigned int flags)
 	    kernfs_info(dentry->d_sb)->ns != kn->ns)
 		goto out_bad;
 
+<<<<<<< HEAD
 	up_read(&kernfs_rwsem);
 	return 1;
 out_bad:
 	up_read(&kernfs_rwsem);
+=======
+	mutex_unlock(&kernfs_mutex);
+	return 1;
+out_bad:
+	mutex_unlock(&kernfs_mutex);
+out_bad_unlocked:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1100,16 +1188,28 @@ static struct dentry *kernfs_iop_lookup(struct inode *dir,
 					struct dentry *dentry,
 					unsigned int flags)
 {
+<<<<<<< HEAD
 	struct kernfs_node *parent = dir->i_private;
 	struct kernfs_node *kn;
 	struct inode *inode = NULL;
 	const void *ns = NULL;
 
 	down_read(&kernfs_rwsem);
+=======
+	struct dentry *ret;
+	struct kernfs_node *parent = dir->i_private;
+	struct kernfs_node *kn;
+	struct inode *inode;
+	const void *ns = NULL;
+
+	mutex_lock(&kernfs_mutex);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (kernfs_ns_enabled(parent))
 		ns = kernfs_info(dir->i_sb)->ns;
 
 	kn = kernfs_find_ns(parent, dentry->d_name.name, ns);
+<<<<<<< HEAD
 	/* attach dentry and inode */
 	if (kn) {
 		/* Inactive nodes are invisible to the VFS so don't
@@ -1135,6 +1235,27 @@ static struct dentry *kernfs_iop_lookup(struct inode *dir,
 
 	/* instantiate and hash (possibly negative) dentry */
 	return d_splice_alias(inode, dentry);
+=======
+
+	/* no such entry */
+	if (!kn || !kernfs_active(kn)) {
+		ret = NULL;
+		goto out_unlock;
+	}
+
+	/* attach dentry and inode */
+	inode = kernfs_get_inode(dir->i_sb, kn);
+	if (!inode) {
+		ret = ERR_PTR(-ENOMEM);
+		goto out_unlock;
+	}
+
+	/* instantiate and hash dentry */
+	ret = d_splice_alias(inode, dentry);
+ out_unlock:
+	mutex_unlock(&kernfs_mutex);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int kernfs_iop_mkdir(struct user_namespace *mnt_userns,
@@ -1254,7 +1375,11 @@ static struct kernfs_node *kernfs_next_descendant_post(struct kernfs_node *pos,
 {
 	struct rb_node *rbn;
 
+<<<<<<< HEAD
 	lockdep_assert_held_write(&kernfs_rwsem);
+=======
+	lockdep_assert_held(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* if first iteration, visit leftmost descendant which may be root */
 	if (!pos)
@@ -1290,7 +1415,11 @@ void kernfs_activate(struct kernfs_node *kn)
 {
 	struct kernfs_node *pos;
 
+<<<<<<< HEAD
 	down_write(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pos = NULL;
 	while ((pos = kernfs_next_descendant_post(pos, kn))) {
@@ -1304,14 +1433,22 @@ void kernfs_activate(struct kernfs_node *kn)
 		pos->flags |= KERNFS_ACTIVATED;
 	}
 
+<<<<<<< HEAD
 	up_write(&kernfs_rwsem);
+=======
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void __kernfs_remove(struct kernfs_node *kn)
 {
 	struct kernfs_node *pos;
 
+<<<<<<< HEAD
 	lockdep_assert_held_write(&kernfs_rwsem);
+=======
+	lockdep_assert_held(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Short-circuit if non-root @kn has already finished removal.
@@ -1334,7 +1471,11 @@ static void __kernfs_remove(struct kernfs_node *kn)
 		pos = kernfs_leftmost_descendant(kn);
 
 		/*
+<<<<<<< HEAD
 		 * kernfs_drain() drops kernfs_rwsem temporarily and @pos's
+=======
+		 * kernfs_drain() drops kernfs_mutex temporarily and @pos's
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * base ref could have been put by someone else by the time
 		 * the function returns.  Make sure it doesn't go away
 		 * underneath us.
@@ -1381,9 +1522,15 @@ static void __kernfs_remove(struct kernfs_node *kn)
  */
 void kernfs_remove(struct kernfs_node *kn)
 {
+<<<<<<< HEAD
 	down_write(&kernfs_rwsem);
 	__kernfs_remove(kn);
 	up_write(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+	__kernfs_remove(kn);
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1470,17 +1617,28 @@ bool kernfs_remove_self(struct kernfs_node *kn)
 {
 	bool ret;
 
+<<<<<<< HEAD
 	down_write(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kernfs_break_active_protection(kn);
 
 	/*
 	 * SUICIDAL is used to arbitrate among competing invocations.  Only
 	 * the first one will actually perform removal.  When the removal
 	 * is complete, SUICIDED is set and the active ref is restored
+<<<<<<< HEAD
 	 * while kernfs_rwsem for held exclusive.  The ones which lost
 	 * arbitration waits for SUICIDED && drained which can happen only
 	 * after the enclosing kernfs operation which executed the winning
 	 * instance of kernfs_remove_self() finished.
+=======
+	 * while holding kernfs_mutex.  The ones which lost arbitration
+	 * waits for SUICDED && drained which can happen only after the
+	 * enclosing kernfs operation which executed the winning instance
+	 * of kernfs_remove_self() finished.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	if (!(kn->flags & KERNFS_SUICIDAL)) {
 		kn->flags |= KERNFS_SUICIDAL;
@@ -1498,9 +1656,15 @@ bool kernfs_remove_self(struct kernfs_node *kn)
 			    atomic_read(&kn->active) == KN_DEACTIVATED_BIAS)
 				break;
 
+<<<<<<< HEAD
 			up_write(&kernfs_rwsem);
 			schedule();
 			down_write(&kernfs_rwsem);
+=======
+			mutex_unlock(&kernfs_mutex);
+			schedule();
+			mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		finish_wait(waitq, &wait);
 		WARN_ON_ONCE(!RB_EMPTY_NODE(&kn->rb));
@@ -1508,12 +1672,21 @@ bool kernfs_remove_self(struct kernfs_node *kn)
 	}
 
 	/*
+<<<<<<< HEAD
 	 * This must be done while kernfs_rwsem held exclusive; otherwise,
 	 * waiting for SUICIDED && deactivated could finish prematurely.
 	 */
 	kernfs_unbreak_active_protection(kn);
 
 	up_write(&kernfs_rwsem);
+=======
+	 * This must be done while holding kernfs_mutex; otherwise, waiting
+	 * for SUICIDED && deactivated could finish prematurely.
+	 */
+	kernfs_unbreak_active_protection(kn);
+
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -1537,13 +1710,21 @@ int kernfs_remove_by_name_ns(struct kernfs_node *parent, const char *name,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
 	down_write(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kn = kernfs_find_ns(parent, name, ns);
 	if (kn)
 		__kernfs_remove(kn);
 
+<<<<<<< HEAD
 	up_write(&kernfs_rwsem);
+=======
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kn)
 		return 0;
@@ -1569,7 +1750,11 @@ int kernfs_rename_ns(struct kernfs_node *kn, struct kernfs_node *new_parent,
 	if (!kn->parent)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	down_write(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	error = -ENOENT;
 	if (!kernfs_active(kn) || !kernfs_active(new_parent) ||
@@ -1623,7 +1808,11 @@ int kernfs_rename_ns(struct kernfs_node *kn, struct kernfs_node *new_parent,
 
 	error = 0;
  out:
+<<<<<<< HEAD
 	up_write(&kernfs_rwsem);
+=======
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return error;
 }
 
@@ -1698,7 +1887,11 @@ static int kernfs_fop_readdir(struct file *file, struct dir_context *ctx)
 
 	if (!dir_emit_dots(file, ctx))
 		return 0;
+<<<<<<< HEAD
 	down_read(&kernfs_rwsem);
+=======
+	mutex_lock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (kernfs_ns_enabled(parent))
 		ns = kernfs_info(dentry->d_sb)->ns;
@@ -1715,12 +1908,21 @@ static int kernfs_fop_readdir(struct file *file, struct dir_context *ctx)
 		file->private_data = pos;
 		kernfs_get(pos);
 
+<<<<<<< HEAD
 		up_read(&kernfs_rwsem);
 		if (!dir_emit(ctx, name, len, ino, type))
 			return 0;
 		down_read(&kernfs_rwsem);
 	}
 	up_read(&kernfs_rwsem);
+=======
+		mutex_unlock(&kernfs_mutex);
+		if (!dir_emit(ctx, name, len, ino, type))
+			return 0;
+		mutex_lock(&kernfs_mutex);
+	}
+	mutex_unlock(&kernfs_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	file->private_data = NULL;
 	ctx->pos = INT_MAX;
 	return 0;

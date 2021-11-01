@@ -49,14 +49,22 @@ void *iwl_uefi_get_pnvm(struct iwl_trans *trans, size_t *len)
 	err = efivar_entry_get(pnvm_efivar, NULL, &package_size, data);
 	if (err) {
 		IWL_DEBUG_FW(trans,
+<<<<<<< HEAD
 			     "PNVM UEFI variable not found %d (len %lu)\n",
+=======
+			     "PNVM UEFI variable not found %d (len %zd)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     err, package_size);
 		kfree(data);
 		data = ERR_PTR(err);
 		goto out;
 	}
 
+<<<<<<< HEAD
 	IWL_DEBUG_FW(trans, "Read PNVM from UEFI with size %lu\n", package_size);
+=======
+	IWL_DEBUG_FW(trans, "Read PNVM from UEFI with size %zd\n", package_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	*len = package_size;
 
 out:

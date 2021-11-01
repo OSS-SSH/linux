@@ -1178,11 +1178,16 @@ struct drm_plane_helper_funcs {
 	 * equivalent functionality should be implemented through private
 	 * members in the plane structure.
 	 *
+<<<<<<< HEAD
 	 * For GEM drivers who neither have a @prepare_fb nor @cleanup_fb hook
 	 * set drm_gem_plane_helper_prepare_fb() is called automatically to
 	 * implement this. Other drivers which need additional plane processing
 	 * can call drm_gem_plane_helper_prepare_fb() from their @prepare_fb
 	 * hook.
+=======
+	 * Drivers which always have their buffers pinned should use
+	 * drm_gem_plane_helper_prepare_fb() for this hook.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 *
 	 * The helpers will call @cleanup_fb with matching arguments for every
 	 * successful call to this hook.

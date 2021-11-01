@@ -170,6 +170,7 @@ out_free:
 	return 0;
 }
 
+<<<<<<< HEAD
 static struct btrfs_dir_item *btrfs_lookup_match_dir(
 			struct btrfs_trans_handle *trans,
 			struct btrfs_root *root, struct btrfs_path *path,
@@ -204,6 +205,12 @@ static struct btrfs_dir_item *btrfs_lookup_match_dir(
  *
  * Returns: NULL if the dir item does not exists, an error pointer if an error
  * happened, or a pointer to a dir item if a dir item exists for the given name.
+=======
+/*
+ * lookup a directory item based on name.  'dir' is the objectid
+ * we're searching in, and 'mod' tells us if you plan on deleting the
+ * item (use mod < 0) or changing the options (use mod > 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct btrfs_dir_item *btrfs_lookup_dir_item(struct btrfs_trans_handle *trans,
 					     struct btrfs_root *root,
@@ -211,6 +218,7 @@ struct btrfs_dir_item *btrfs_lookup_dir_item(struct btrfs_trans_handle *trans,
 					     const char *name, int name_len,
 					     int mod)
 {
+<<<<<<< HEAD
 	struct btrfs_key key;
 	struct btrfs_dir_item *di;
 
@@ -223,6 +231,25 @@ struct btrfs_dir_item *btrfs_lookup_dir_item(struct btrfs_trans_handle *trans,
 		return NULL;
 
 	return di;
+=======
+	int ret;
+	struct btrfs_key key;
+	int ins_len = mod < 0 ? -1 : 0;
+	int cow = mod != 0;
+
+	key.objectid = dir;
+	key.type = BTRFS_DIR_ITEM_KEY;
+
+	key.offset = btrfs_name_hash(name, name_len);
+
+	ret = btrfs_search_slot(trans, root, &key, path, ins_len, cow);
+	if (ret < 0)
+		return ERR_PTR(ret);
+	if (ret > 0)
+		return NULL;
+
+	return btrfs_match_dir_item_name(root->fs_info, path, name, name_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int btrfs_check_dir_item_collision(struct btrfs_root *root, u64 dir,
@@ -236,6 +263,10 @@ int btrfs_check_dir_item_collision(struct btrfs_root *root, u64 dir,
 	int slot;
 	struct btrfs_path *path;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	path = btrfs_alloc_path();
 	if (!path)
 		return -ENOMEM;
@@ -244,6 +275,7 @@ int btrfs_check_dir_item_collision(struct btrfs_root *root, u64 dir,
 	key.type = BTRFS_DIR_ITEM_KEY;
 	key.offset = btrfs_name_hash(name, name_len);
 
+<<<<<<< HEAD
 	di = btrfs_lookup_match_dir(NULL, root, path, &key, name, name_len, 0);
 	if (IS_ERR(di)) {
 		ret = PTR_ERR(di);
@@ -258,6 +290,22 @@ int btrfs_check_dir_item_collision(struct btrfs_root *root, u64 dir,
 	}
 
 	/* we found an item, look for our name in the item */
+=======
+	ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
+
+	/* return back any errors */
+	if (ret < 0)
+		goto out;
+
+	/* nothing found, we're safe */
+	if (ret > 0) {
+		ret = 0;
+		goto out;
+	}
+
+	/* we found an item, look for our name in the item */
+	di = btrfs_match_dir_item_name(root->fs_info, path, name, name_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (di) {
 		/* our exact name was found */
 		ret = -EEXIST;
@@ -284,6 +332,7 @@ out:
 }
 
 /*
+<<<<<<< HEAD
  * Lookup for a directory index item by name and index number.
  *
  * @trans:	The transaction handle to use. Can be NULL if @mod is 0.
@@ -300,11 +349,20 @@ out:
  * Returns: NULL if the dir index item does not exists, an error pointer if an
  * error happened, or a pointer to a dir item if the dir index item exists and
  * matches the criteria (name and index number).
+=======
+ * lookup a directory item based on index.  'dir' is the objectid
+ * we're searching in, and 'mod' tells us if you plan on deleting the
+ * item (use mod < 0) or changing the options (use mod > 0)
+ *
+ * The name is used to make sure the index really points to the name you were
+ * looking for.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct btrfs_dir_item *
 btrfs_lookup_dir_index_item(struct btrfs_trans_handle *trans,
 			    struct btrfs_root *root,
 			    struct btrfs_path *path, u64 dir,
+<<<<<<< HEAD
 			    u64 index, const char *name, int name_len,
 			    int mod)
 {
@@ -320,6 +378,26 @@ btrfs_lookup_dir_index_item(struct btrfs_trans_handle *trans,
 		return NULL;
 
 	return di;
+=======
+			    u64 objectid, const char *name, int name_len,
+			    int mod)
+{
+	int ret;
+	struct btrfs_key key;
+	int ins_len = mod < 0 ? -1 : 0;
+	int cow = mod != 0;
+
+	key.objectid = dir;
+	key.type = BTRFS_DIR_INDEX_KEY;
+	key.offset = objectid;
+
+	ret = btrfs_search_slot(trans, root, &key, path, ins_len, cow);
+	if (ret < 0)
+		return ERR_PTR(ret);
+	if (ret > 0)
+		return ERR_PTR(-ENOENT);
+	return btrfs_match_dir_item_name(root->fs_info, path, name, name_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct btrfs_dir_item *
@@ -376,18 +454,35 @@ struct btrfs_dir_item *btrfs_lookup_xattr(struct btrfs_trans_handle *trans,
 					  const char *name, u16 name_len,
 					  int mod)
 {
+<<<<<<< HEAD
 	struct btrfs_key key;
 	struct btrfs_dir_item *di;
+=======
+	int ret;
+	struct btrfs_key key;
+	int ins_len = mod < 0 ? -1 : 0;
+	int cow = mod != 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	key.objectid = dir;
 	key.type = BTRFS_XATTR_ITEM_KEY;
 	key.offset = btrfs_name_hash(name, name_len);
+<<<<<<< HEAD
 
 	di = btrfs_lookup_match_dir(trans, root, path, &key, name, name_len, mod);
 	if (IS_ERR(di) && PTR_ERR(di) == -ENOENT)
 		return NULL;
 
 	return di;
+=======
+	ret = btrfs_search_slot(trans, root, &key, path, ins_len, cow);
+	if (ret < 0)
+		return ERR_PTR(ret);
+	if (ret > 0)
+		return NULL;
+
+	return btrfs_match_dir_item_name(root->fs_info, path, name, name_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

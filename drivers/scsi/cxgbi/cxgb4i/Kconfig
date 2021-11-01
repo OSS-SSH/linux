@@ -2,7 +2,10 @@
 config SCSI_CXGB4_ISCSI
 	tristate "Chelsio T4 iSCSI support"
 	depends on PCI && INET && (IPV6 || IPV6=n)
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	depends on THERMAL || !THERMAL
 	depends on ETHERNET
 	depends on TLS || TLS=n

@@ -500,8 +500,13 @@ static int sym53c8xx_queue_command_lck(struct scsi_cmnd *cmd,
 	 *  Shorten our settle_time if needed for 
 	 *  this command not to time out.
 	 */
+<<<<<<< HEAD
 	if (np->s.settle_time_valid && scsi_cmd_to_rq(cmd)->timeout) {
 		unsigned long tlimit = jiffies + scsi_cmd_to_rq(cmd)->timeout;
+=======
+	if (np->s.settle_time_valid && cmd->request->timeout) {
+		unsigned long tlimit = jiffies + cmd->request->timeout;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tlimit -= SYM_CONF_TIMER_INTERVAL*2;
 		if (time_after(np->s.settle_time, tlimit)) {
 			np->s.settle_time = tlimit;

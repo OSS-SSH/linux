@@ -37,6 +37,10 @@ struct vctrl_voltage_table {
 struct vctrl_data {
 	struct regulator_dev *rdev;
 	struct regulator_desc desc;
+<<<<<<< HEAD
+=======
+	struct regulator *ctrl_reg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool enabled;
 	unsigned int min_slew_down_rate;
 	unsigned int ovp_threshold;
@@ -81,12 +85,16 @@ static int vctrl_calc_output_voltage(struct vctrl_data *vctrl, int ctrl_uV)
 static int vctrl_get_voltage(struct regulator_dev *rdev)
 {
 	struct vctrl_data *vctrl = rdev_get_drvdata(rdev);
+<<<<<<< HEAD
 	int ctrl_uV;
 
 	if (!rdev->supply)
 		return -EPROBE_DEFER;
 
 	ctrl_uV = regulator_get_voltage_rdev(rdev->supply->rdev);
+=======
+	int ctrl_uV = regulator_get_voltage_rdev(vctrl->ctrl_reg->rdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return vctrl_calc_output_voltage(vctrl, ctrl_uV);
 }
@@ -96,6 +104,7 @@ static int vctrl_set_voltage(struct regulator_dev *rdev,
 			     unsigned int *selector)
 {
 	struct vctrl_data *vctrl = rdev_get_drvdata(rdev);
+<<<<<<< HEAD
 	int orig_ctrl_uV;
 	int uV;
 	int ret;
@@ -109,6 +118,16 @@ static int vctrl_set_voltage(struct regulator_dev *rdev,
 	if (req_min_uV >= uV || !vctrl->ovp_threshold)
 		/* voltage rising or no OVP */
 		return regulator_set_voltage_rdev(rdev->supply->rdev,
+=======
+	struct regulator *ctrl_reg = vctrl->ctrl_reg;
+	int orig_ctrl_uV = regulator_get_voltage_rdev(ctrl_reg->rdev);
+	int uV = vctrl_calc_output_voltage(vctrl, orig_ctrl_uV);
+	int ret;
+
+	if (req_min_uV >= uV || !vctrl->ovp_threshold)
+		/* voltage rising or no OVP */
+		return regulator_set_voltage_rdev(ctrl_reg->rdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			vctrl_calc_ctrl_voltage(vctrl, req_min_uV),
 			vctrl_calc_ctrl_voltage(vctrl, req_max_uV),
 			PM_SUSPEND_ON);
@@ -126,7 +145,11 @@ static int vctrl_set_voltage(struct regulator_dev *rdev,
 		next_uV = max_t(int, req_min_uV, uV - max_drop_uV);
 		next_ctrl_uV = vctrl_calc_ctrl_voltage(vctrl, next_uV);
 
+<<<<<<< HEAD
 		ret = regulator_set_voltage_rdev(rdev->supply->rdev,
+=======
+		ret = regulator_set_voltage_rdev(ctrl_reg->rdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    next_ctrl_uV,
 					    next_ctrl_uV,
 					    PM_SUSPEND_ON);
@@ -143,7 +166,11 @@ static int vctrl_set_voltage(struct regulator_dev *rdev,
 
 err:
 	/* Try to go back to original voltage */
+<<<<<<< HEAD
 	regulator_set_voltage_rdev(rdev->supply->rdev, orig_ctrl_uV, orig_ctrl_uV,
+=======
+	regulator_set_voltage_rdev(ctrl_reg->rdev, orig_ctrl_uV, orig_ctrl_uV,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   PM_SUSPEND_ON);
 
 	return ret;
@@ -160,18 +187,29 @@ static int vctrl_set_voltage_sel(struct regulator_dev *rdev,
 				 unsigned int selector)
 {
 	struct vctrl_data *vctrl = rdev_get_drvdata(rdev);
+<<<<<<< HEAD
 	unsigned int orig_sel = vctrl->sel;
 	int ret;
 
 	if (!rdev->supply)
 		return -EPROBE_DEFER;
 
+=======
+	struct regulator *ctrl_reg = vctrl->ctrl_reg;
+	unsigned int orig_sel = vctrl->sel;
+	int ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (selector >= rdev->desc->n_voltages)
 		return -EINVAL;
 
 	if (selector >= vctrl->sel || !vctrl->ovp_threshold) {
 		/* voltage rising or no OVP */
+<<<<<<< HEAD
 		ret = regulator_set_voltage_rdev(rdev->supply->rdev,
+=======
+		ret = regulator_set_voltage_rdev(ctrl_reg->rdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    vctrl->vtable[selector].ctrl,
 					    vctrl->vtable[selector].ctrl,
 					    PM_SUSPEND_ON);
@@ -190,7 +228,11 @@ static int vctrl_set_voltage_sel(struct regulator_dev *rdev,
 		else
 			next_sel = vctrl->vtable[vctrl->sel].ovp_min_sel;
 
+<<<<<<< HEAD
 		ret = regulator_set_voltage_rdev(rdev->supply->rdev,
+=======
+		ret = regulator_set_voltage_rdev(ctrl_reg->rdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    vctrl->vtable[next_sel].ctrl,
 					    vctrl->vtable[next_sel].ctrl,
 					    PM_SUSPEND_ON);
@@ -213,7 +255,11 @@ static int vctrl_set_voltage_sel(struct regulator_dev *rdev,
 err:
 	if (vctrl->sel != orig_sel) {
 		/* Try to go back to original voltage */
+<<<<<<< HEAD
 		if (!regulator_set_voltage_rdev(rdev->supply->rdev,
+=======
+		if (!regulator_set_voltage_rdev(ctrl_reg->rdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					   vctrl->vtable[orig_sel].ctrl,
 					   vctrl->vtable[orig_sel].ctrl,
 					   PM_SUSPEND_ON))
@@ -245,6 +291,13 @@ static int vctrl_parse_dt(struct platform_device *pdev,
 	u32 pval;
 	u32 vrange_ctrl[2];
 
+<<<<<<< HEAD
+=======
+	vctrl->ctrl_reg = devm_regulator_get(&pdev->dev, "ctrl");
+	if (IS_ERR(vctrl->ctrl_reg))
+		return PTR_ERR(vctrl->ctrl_reg);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = of_property_read_u32(np, "ovp-threshold-percent", &pval);
 	if (!ret) {
 		vctrl->ovp_threshold = pval;
@@ -322,11 +375,19 @@ static int vctrl_cmp_ctrl_uV(const void *a, const void *b)
 	return at->ctrl - bt->ctrl;
 }
 
+<<<<<<< HEAD
 static int vctrl_init_vtable(struct platform_device *pdev,
 			     struct regulator *ctrl_reg)
 {
 	struct vctrl_data *vctrl = platform_get_drvdata(pdev);
 	struct regulator_desc *rdesc = &vctrl->desc;
+=======
+static int vctrl_init_vtable(struct platform_device *pdev)
+{
+	struct vctrl_data *vctrl = platform_get_drvdata(pdev);
+	struct regulator_desc *rdesc = &vctrl->desc;
+	struct regulator *ctrl_reg = vctrl->ctrl_reg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct vctrl_voltage_range *vrange_ctrl = &vctrl->vrange.ctrl;
 	int n_voltages;
 	int ctrl_uV;
@@ -402,19 +463,37 @@ static int vctrl_init_vtable(struct platform_device *pdev,
 static int vctrl_enable(struct regulator_dev *rdev)
 {
 	struct vctrl_data *vctrl = rdev_get_drvdata(rdev);
+<<<<<<< HEAD
 
 	vctrl->enabled = true;
 
 	return 0;
+=======
+	int ret = regulator_enable(vctrl->ctrl_reg);
+
+	if (!ret)
+		vctrl->enabled = true;
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int vctrl_disable(struct regulator_dev *rdev)
 {
 	struct vctrl_data *vctrl = rdev_get_drvdata(rdev);
+<<<<<<< HEAD
 
 	vctrl->enabled = false;
 
 	return 0;
+=======
+	int ret = regulator_disable(vctrl->ctrl_reg);
+
+	if (!ret)
+		vctrl->enabled = false;
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int vctrl_is_enabled(struct regulator_dev *rdev)
@@ -450,7 +529,10 @@ static int vctrl_probe(struct platform_device *pdev)
 	struct regulator_desc *rdesc;
 	struct regulator_config cfg = { };
 	struct vctrl_voltage_range *vrange_ctrl;
+<<<<<<< HEAD
 	struct regulator *ctrl_reg;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ctrl_uV;
 	int ret;
 
@@ -465,20 +547,29 @@ static int vctrl_probe(struct platform_device *pdev)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ctrl_reg = devm_regulator_get(&pdev->dev, "ctrl");
 	if (IS_ERR(ctrl_reg))
 		return PTR_ERR(ctrl_reg);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vrange_ctrl = &vctrl->vrange.ctrl;
 
 	rdesc = &vctrl->desc;
 	rdesc->name = "vctrl";
 	rdesc->type = REGULATOR_VOLTAGE;
 	rdesc->owner = THIS_MODULE;
+<<<<<<< HEAD
 	rdesc->supply_name = "ctrl";
 
 	if ((regulator_get_linear_step(ctrl_reg) == 1) ||
 	    (regulator_count_voltages(ctrl_reg) == -EINVAL)) {
+=======
+
+	if ((regulator_get_linear_step(vctrl->ctrl_reg) == 1) ||
+	    (regulator_count_voltages(vctrl->ctrl_reg) == -EINVAL)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rdesc->continuous_voltage_range = true;
 		rdesc->ops = &vctrl_ops_cont;
 	} else {
@@ -495,12 +586,20 @@ static int vctrl_probe(struct platform_device *pdev)
 	cfg.init_data = init_data;
 
 	if (!rdesc->continuous_voltage_range) {
+<<<<<<< HEAD
 		ret = vctrl_init_vtable(pdev, ctrl_reg);
 		if (ret)
 			return ret;
 
 		/* Use locked consumer API when not in regulator framework */
 		ctrl_uV = regulator_get_voltage(ctrl_reg);
+=======
+		ret = vctrl_init_vtable(pdev);
+		if (ret)
+			return ret;
+
+		ctrl_uV = regulator_get_voltage_rdev(vctrl->ctrl_reg->rdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ctrl_uV < 0) {
 			dev_err(&pdev->dev, "failed to get control voltage\n");
 			return ctrl_uV;
@@ -523,9 +622,12 @@ static int vctrl_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
 	/* Drop ctrl-supply here in favor of regulator core managed supply */
 	devm_regulator_put(ctrl_reg);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vctrl->rdev = devm_regulator_register(&pdev->dev, rdesc, &cfg);
 	if (IS_ERR(vctrl->rdev)) {
 		ret = PTR_ERR(vctrl->rdev);

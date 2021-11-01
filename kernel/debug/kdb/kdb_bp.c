@@ -523,6 +523,7 @@ static int kdb_ss(int argc, const char **argv)
 }
 
 static kdbtab_t bptab[] = {
+<<<<<<< HEAD
 	{	.name = "bp",
 		.func = kdb_bp,
 		.usage = "[<vaddr>]",
@@ -559,15 +560,61 @@ static kdbtab_t bptab[] = {
 		.help = "Single Step",
 		.minlen = 1,
 		.flags = KDB_ENABLE_FLOW_CTRL | KDB_REPEAT_NO_ARGS,
+=======
+	{	.cmd_name = "bp",
+		.cmd_func = kdb_bp,
+		.cmd_usage = "[<vaddr>]",
+		.cmd_help = "Set/Display breakpoints",
+		.cmd_flags = KDB_ENABLE_FLOW_CTRL | KDB_REPEAT_NO_ARGS,
+	},
+	{	.cmd_name = "bl",
+		.cmd_func = kdb_bp,
+		.cmd_usage = "[<vaddr>]",
+		.cmd_help = "Display breakpoints",
+		.cmd_flags = KDB_ENABLE_FLOW_CTRL | KDB_REPEAT_NO_ARGS,
+	},
+	{	.cmd_name = "bc",
+		.cmd_func = kdb_bc,
+		.cmd_usage = "<bpnum>",
+		.cmd_help = "Clear Breakpoint",
+		.cmd_flags = KDB_ENABLE_FLOW_CTRL,
+	},
+	{	.cmd_name = "be",
+		.cmd_func = kdb_bc,
+		.cmd_usage = "<bpnum>",
+		.cmd_help = "Enable Breakpoint",
+		.cmd_flags = KDB_ENABLE_FLOW_CTRL,
+	},
+	{	.cmd_name = "bd",
+		.cmd_func = kdb_bc,
+		.cmd_usage = "<bpnum>",
+		.cmd_help = "Disable Breakpoint",
+		.cmd_flags = KDB_ENABLE_FLOW_CTRL,
+	},
+	{	.cmd_name = "ss",
+		.cmd_func = kdb_ss,
+		.cmd_usage = "",
+		.cmd_help = "Single Step",
+		.cmd_minlen = 1,
+		.cmd_flags = KDB_ENABLE_FLOW_CTRL | KDB_REPEAT_NO_ARGS,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 };
 
 static kdbtab_t bphcmd = {
+<<<<<<< HEAD
 	.name = "bph",
 	.func = kdb_bp,
 	.usage = "[<vaddr>]",
 	.help = "[datar [length]|dataw [length]]   Set hw brk",
 	.flags = KDB_ENABLE_FLOW_CTRL | KDB_REPEAT_NO_ARGS,
+=======
+	.cmd_name = "bph",
+	.cmd_func = kdb_bp,
+	.cmd_usage = "[<vaddr>]",
+	.cmd_help = "[datar [length]|dataw [length]]   Set hw brk",
+	.cmd_flags = KDB_ENABLE_FLOW_CTRL | KDB_REPEAT_NO_ARGS,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Initialize the breakpoint table and register	breakpoint commands. */

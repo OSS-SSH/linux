@@ -43,6 +43,20 @@ struct ucontext {
  */
 #define DUMMY_MAGIC		0xb0d9ed01
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRUNCH
+#define CRUNCH_MAGIC		0x5065cf03
+#define CRUNCH_STORAGE_SIZE	(CRUNCH_SIZE + 8)
+
+struct crunch_sigframe {
+	unsigned long	magic;
+	unsigned long	size;
+	struct crunch_state	storage;
+} __attribute__((__aligned__(8)));
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_IWMMXT
 /* iwmmxt_area is 0x98 bytes long, preceded by 8 bytes of signature */
 #define IWMMXT_MAGIC		0x12ef842a
@@ -81,6 +95,12 @@ struct vfp_sigframe
  * one of these.
  */
 struct aux_sigframe {
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRUNCH
+	struct crunch_sigframe	crunch;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_IWMMXT
 	struct iwmmxt_sigframe	iwmmxt;
 #endif

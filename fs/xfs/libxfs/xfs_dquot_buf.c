@@ -70,7 +70,11 @@ xfs_dquot_verify(
 		return __this_address;
 
 	if ((ddq->d_type & XFS_DQTYPE_BIGTIME) &&
+<<<<<<< HEAD
 	    !xfs_has_bigtime(mp))
+=======
+	    !xfs_sb_version_hasbigtime(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return __this_address;
 
 	if ((ddq->d_type & XFS_DQTYPE_BIGTIME) && !ddq->d_id)
@@ -106,7 +110,11 @@ xfs_dqblk_verify(
 	struct xfs_dqblk	*dqb,
 	xfs_dqid_t		id)	/* used only during quotacheck */
 {
+<<<<<<< HEAD
 	if (xfs_has_crc(mp) &&
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    !uuid_equal(&dqb->dd_uuid, &mp->m_sb.sb_meta_uuid))
 		return __this_address;
 
@@ -134,7 +142,11 @@ xfs_dqblk_repair(
 	dqb->dd_diskdq.d_type = type;
 	dqb->dd_diskdq.d_id = cpu_to_be32(id);
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uuid_copy(&dqb->dd_uuid, &mp->m_sb.sb_meta_uuid);
 		xfs_update_cksum((char *)dqb, sizeof(struct xfs_dqblk),
 				 XFS_DQUOT_CRC_OFF);
@@ -151,7 +163,11 @@ xfs_dquot_buf_verify_crc(
 	int			ndquots;
 	int			i;
 
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
+=======
+	if (!xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 
 	/*

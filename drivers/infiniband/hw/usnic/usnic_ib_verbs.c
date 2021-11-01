@@ -168,6 +168,7 @@ static int usnic_ib_fill_create_qp_resp(struct usnic_ib_qp_grp *qp_grp,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int
 find_free_vf_and_create_qp_grp(struct ib_qp *qp,
 			       struct usnic_transport_spec *trans_spec,
@@ -180,29 +181,55 @@ find_free_vf_and_create_qp_grp(struct ib_qp *qp,
 	struct usnic_ib_qp_grp *qp_grp = to_uqp_grp(qp);
 	struct device *dev, **dev_list;
 	int i, ret;
+=======
+static struct usnic_ib_qp_grp*
+find_free_vf_and_create_qp_grp(struct usnic_ib_dev *us_ibdev,
+				struct usnic_ib_pd *pd,
+				struct usnic_transport_spec *trans_spec,
+				struct usnic_vnic_res_spec *res_spec)
+{
+	struct usnic_ib_vf *vf;
+	struct usnic_vnic *vnic;
+	struct usnic_ib_qp_grp *qp_grp;
+	struct device *dev, **dev_list;
+	int i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	BUG_ON(!mutex_is_locked(&us_ibdev->usdev_lock));
 
 	if (list_empty(&us_ibdev->vf_dev_list)) {
 		usnic_info("No vfs to allocate\n");
+<<<<<<< HEAD
 		return -ENOMEM;
+=======
+		return NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (usnic_ib_share_vf) {
 		/* Try to find resouces on a used vf which is in pd */
 		dev_list = usnic_uiom_get_dev_list(pd->umem_pd);
 		if (IS_ERR(dev_list))
+<<<<<<< HEAD
 			return PTR_ERR(dev_list);
 		for (i = 0; dev_list[i]; i++) {
 			dev = dev_list[i];
 			vf = dev_get_drvdata(dev);
 			mutex_lock(&vf->lock);
+=======
+			return ERR_CAST(dev_list);
+		for (i = 0; dev_list[i]; i++) {
+			dev = dev_list[i];
+			vf = dev_get_drvdata(dev);
+			spin_lock(&vf->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			vnic = vf->vnic;
 			if (!usnic_vnic_check_room(vnic, res_spec)) {
 				usnic_dbg("Found used vnic %s from %s\n",
 						dev_name(&us_ibdev->ib_dev.dev),
 						pci_name(usnic_vnic_get_pdev(
 									vnic)));
+<<<<<<< HEAD
 				ret = usnic_ib_qp_grp_create(qp_grp,
 							     us_ibdev->ufdev,
 							     vf, pd, res_spec,
@@ -212,6 +239,17 @@ find_free_vf_and_create_qp_grp(struct ib_qp *qp,
 				goto qp_grp_check;
 			}
 			mutex_unlock(&vf->lock);
+=======
+				qp_grp = usnic_ib_qp_grp_create(us_ibdev->ufdev,
+								vf, pd,
+								res_spec,
+								trans_spec);
+
+				spin_unlock(&vf->lock);
+				goto qp_grp_check;
+			}
+			spin_unlock(&vf->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		}
 		usnic_uiom_free_dev_list(dev_list);
@@ -220,6 +258,7 @@ find_free_vf_and_create_qp_grp(struct ib_qp *qp,
 
 	/* Try to find resources on an unused vf */
 	list_for_each_entry(vf, &us_ibdev->vf_dev_list, link) {
+<<<<<<< HEAD
 		mutex_lock(&vf->lock);
 		vnic = vf->vnic;
 		if (vf->qp_grp_ref_cnt == 0 &&
@@ -232,10 +271,25 @@ find_free_vf_and_create_qp_grp(struct ib_qp *qp,
 			goto qp_grp_check;
 		}
 		mutex_unlock(&vf->lock);
+=======
+		spin_lock(&vf->lock);
+		vnic = vf->vnic;
+		if (vf->qp_grp_ref_cnt == 0 &&
+		    usnic_vnic_check_room(vnic, res_spec) == 0) {
+			qp_grp = usnic_ib_qp_grp_create(us_ibdev->ufdev, vf,
+							pd, res_spec,
+							trans_spec);
+
+			spin_unlock(&vf->lock);
+			goto qp_grp_check;
+		}
+		spin_unlock(&vf->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	usnic_info("No free qp grp found on %s\n",
 		   dev_name(&us_ibdev->ib_dev.dev));
+<<<<<<< HEAD
 	return -ENOMEM;
 
 qp_grp_check:
@@ -245,6 +299,18 @@ qp_grp_check:
 			usnic_uiom_free_dev_list(dev_list);
 	}
 	return ret;
+=======
+	return ERR_PTR(-ENOMEM);
+
+qp_grp_check:
+	if (IS_ERR_OR_NULL(qp_grp)) {
+		usnic_err("Failed to allocate qp_grp\n");
+		if (usnic_ib_share_vf)
+			usnic_uiom_free_dev_list(dev_list);
+		return ERR_PTR(qp_grp ? PTR_ERR(qp_grp) : -ENOMEM);
+	}
+	return qp_grp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void qp_grp_destroy(struct usnic_ib_qp_grp *qp_grp)
@@ -253,9 +319,15 @@ static void qp_grp_destroy(struct usnic_ib_qp_grp *qp_grp)
 
 	WARN_ON(qp_grp->state != IB_QPS_RESET);
 
+<<<<<<< HEAD
 	mutex_lock(&vf->lock);
 	usnic_ib_qp_grp_destroy(qp_grp);
 	mutex_unlock(&vf->lock);
+=======
+	spin_lock(&vf->lock);
+	usnic_ib_qp_grp_destroy(qp_grp);
+	spin_unlock(&vf->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int create_qp_validate_user_data(struct usnic_ib_create_qp_cmd cmd)
@@ -458,12 +530,22 @@ int usnic_ib_dealloc_pd(struct ib_pd *pd, struct ib_udata *udata)
 	return 0;
 }
 
+<<<<<<< HEAD
 int usnic_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		       struct ib_udata *udata)
 {
 	int err;
 	struct usnic_ib_dev *us_ibdev;
 	struct usnic_ib_qp_grp *qp_grp = to_uqp_grp(ibqp);
+=======
+struct ib_qp *usnic_ib_create_qp(struct ib_pd *pd,
+					struct ib_qp_init_attr *init_attr,
+					struct ib_udata *udata)
+{
+	int err;
+	struct usnic_ib_dev *us_ibdev;
+	struct usnic_ib_qp_grp *qp_grp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct usnic_ib_ucontext *ucontext = rdma_udata_to_drv_context(
 		udata, struct usnic_ib_ucontext, ibucontext);
 	int cq_cnt;
@@ -473,29 +555,48 @@ int usnic_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 
 	usnic_dbg("\n");
 
+<<<<<<< HEAD
 	us_ibdev = to_usdev(ibqp->device);
 
 	if (init_attr->create_flags)
 		return -EOPNOTSUPP;
+=======
+	us_ibdev = to_usdev(pd->device);
+
+	if (init_attr->create_flags)
+		return ERR_PTR(-EOPNOTSUPP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = ib_copy_from_udata(&cmd, udata, sizeof(cmd));
 	if (err) {
 		usnic_err("%s: cannot copy udata for create_qp\n",
 			  dev_name(&us_ibdev->ib_dev.dev));
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return ERR_PTR(-EINVAL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	err = create_qp_validate_user_data(cmd);
 	if (err) {
 		usnic_err("%s: Failed to validate user data\n",
 			  dev_name(&us_ibdev->ib_dev.dev));
+<<<<<<< HEAD
 		return -EINVAL;
+=======
+		return ERR_PTR(-EINVAL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (init_attr->qp_type != IB_QPT_UD) {
 		usnic_err("%s asked to make a non-UD QP: %d\n",
 			  dev_name(&us_ibdev->ib_dev.dev), init_attr->qp_type);
+<<<<<<< HEAD
 		return -EOPNOTSUPP;
+=======
+		return ERR_PTR(-EOPNOTSUPP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	trans_spec = cmd.spec;
@@ -503,9 +604,19 @@ int usnic_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 	cq_cnt = (init_attr->send_cq == init_attr->recv_cq) ? 1 : 2;
 	res_spec = min_transport_spec[trans_spec.trans_type];
 	usnic_vnic_res_spec_update(&res_spec, USNIC_VNIC_RES_TYPE_CQ, cq_cnt);
+<<<<<<< HEAD
 	err = find_free_vf_and_create_qp_grp(ibqp, &trans_spec, &res_spec);
 	if (err)
 		goto out_release_mutex;
+=======
+	qp_grp = find_free_vf_and_create_qp_grp(us_ibdev, to_upd(pd),
+						&trans_spec,
+						&res_spec);
+	if (IS_ERR_OR_NULL(qp_grp)) {
+		err = qp_grp ? PTR_ERR(qp_grp) : -ENOMEM;
+		goto out_release_mutex;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = usnic_ib_fill_create_qp_resp(qp_grp, udata);
 	if (err) {
@@ -517,13 +628,21 @@ int usnic_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 	list_add_tail(&qp_grp->link, &ucontext->qp_grp_list);
 	usnic_ib_log_vf(qp_grp->vf);
 	mutex_unlock(&us_ibdev->usdev_lock);
+<<<<<<< HEAD
 	return 0;
+=======
+	return &qp_grp->ibqp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 out_release_qp_grp:
 	qp_grp_destroy(qp_grp);
 out_release_mutex:
 	mutex_unlock(&us_ibdev->usdev_lock);
+<<<<<<< HEAD
 	return err;
+=======
+	return ERR_PTR(err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int usnic_ib_destroy_qp(struct ib_qp *qp, struct ib_udata *udata)

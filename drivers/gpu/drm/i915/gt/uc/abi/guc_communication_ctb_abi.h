@@ -7,6 +7,7 @@
 #define _ABI_GUC_COMMUNICATION_CTB_ABI_H
 
 #include <linux/types.h>
+<<<<<<< HEAD
 #include <linux/build_bug.h>
 
 #include "guc_messages_abi.h"
@@ -112,6 +113,8 @@ static_assert(sizeof(struct guc_ct_buffer_desc) == 64);
 
 #define GUC_CTB_HXG_MSG_MIN_LEN		(GUC_CTB_MSG_MIN_LEN + GUC_HXG_MSG_MIN_LEN)
 #define GUC_CTB_HXG_MSG_MAX_LEN		GUC_CTB_MSG_MAX_LEN
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * DOC: CTB based communication
@@ -166,6 +169,31 @@ static_assert(sizeof(struct guc_ct_buffer_desc) == 64);
  */
 
 /*
+<<<<<<< HEAD
+=======
+ * Describes single command transport buffer.
+ * Used by both guc-master and clients.
+ */
+struct guc_ct_buffer_desc {
+	u32 addr;		/* gfx address */
+	u64 host_private;	/* host private data */
+	u32 size;		/* size in bytes */
+	u32 head;		/* offset updated by GuC*/
+	u32 tail;		/* offset updated by owner */
+	u32 is_in_error;	/* error indicator */
+	u32 reserved1;
+	u32 reserved2;
+	u32 owner;		/* id of the channel owner */
+	u32 owner_sub_id;	/* owner-defined field for extra tracking */
+	u32 reserved[5];
+} __packed;
+
+/* Type of command transport buffer */
+#define INTEL_GUC_CT_BUFFER_TYPE_SEND	0x0u
+#define INTEL_GUC_CT_BUFFER_TYPE_RECV	0x1u
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Definition of the command transport message header (DW0)
  *
  * bit[4..0]	message len (in dwords)

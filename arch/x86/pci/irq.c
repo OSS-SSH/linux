@@ -13,6 +13,7 @@
 #include <linux/dmi.h>
 #include <linux/io.h>
 #include <linux/smp.h>
+<<<<<<< HEAD
 #include <linux/spinlock.h>
 #include <asm/io_apic.h>
 #include <linux/irq.h>
@@ -20,6 +21,11 @@
 
 #include <asm/i8259.h>
 #include <asm/pc-conf-reg.h>
+=======
+#include <asm/io_apic.h>
+#include <linux/irq.h>
+#include <linux/acpi.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/pci_x86.h>
 
 #define PIRQ_SIGNATURE	(('$' << 0) + ('P' << 8) + ('I' << 16) + ('R' << 24))
@@ -51,8 +57,11 @@ struct irq_router {
 	int (*get)(struct pci_dev *router, struct pci_dev *dev, int pirq);
 	int (*set)(struct pci_dev *router, struct pci_dev *dev, int pirq,
 		int new);
+<<<<<<< HEAD
 	int (*lvl)(struct pci_dev *router, struct pci_dev *dev, int pirq,
 		int irq);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct irq_router_handler {
@@ -159,7 +168,11 @@ static void __init pirq_peer_trick(void)
 void elcr_set_level_irq(unsigned int irq)
 {
 	unsigned char mask = 1 << (irq & 7);
+<<<<<<< HEAD
 	unsigned int port = PIC_ELCR1 + (irq >> 3);
+=======
+	unsigned int port = 0x4d0 + (irq >> 3);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned char val;
 	static u16 elcr_irq_mask;
 
@@ -176,6 +189,7 @@ void elcr_set_level_irq(unsigned int irq)
 }
 
 /*
+<<<<<<< HEAD
  *	PIRQ routing for the M1487 ISA Bus Controller (IBC) ASIC used
  *	with the ALi FinALi 486 chipset.  The IBC is not decoded in the
  *	PCI configuration space, so we identify it by the accompanying
@@ -309,6 +323,8 @@ static int pirq_finali_lvl(struct pci_dev *router, struct pci_dev *dev,
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Common IRQ routing practice: nibbles in config space,
  * offset by some magic constant.
  */
@@ -359,6 +375,7 @@ static int pirq_ali_set(struct pci_dev *router, struct pci_dev *dev, int pirq, i
 }
 
 /*
+<<<<<<< HEAD
  *	PIRQ routing for the 82374EB/82374SB EISA System Component (ESC)
  *	ASIC used with the Intel 82420 and 82430 PCIsets.  The ESC is not
  *	decoded in the PCI configuration space, so we identify it by the
@@ -427,6 +444,8 @@ static int pirq_esc_set(struct pci_dev *router, struct pci_dev *dev, int pirq,
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * The Intel PIIX4 pirq rules are fairly simple: "pirq" is
  * just a pointer to the config space.
  */
@@ -445,6 +464,7 @@ static int pirq_piix_set(struct pci_dev *router, struct pci_dev *dev, int pirq, 
 }
 
 /*
+<<<<<<< HEAD
  *	PIRQ routing for the 82426EX ISA Bridge (IB) ASIC used with the
  *	Intel 82420EX PCIset.
  *
@@ -489,6 +509,8 @@ static int pirq_ib_set(struct pci_dev *router, struct pci_dev *dev, int pirq,
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * The VIA pirq rules are nibble-based, like ALI,
  * but without the ugly irq number munging.
  * However, PIRQD is in the upper instead of lower 4 bits.
@@ -800,11 +822,14 @@ static __init int intel_router_probe(struct irq_router *r, struct pci_dev *route
 		return 0;
 
 	switch (device) {
+<<<<<<< HEAD
 	case PCI_DEVICE_ID_INTEL_82375:
 		r->name = "PCEB/ESC";
 		r->get = pirq_esc_get;
 		r->set = pirq_esc_set;
 		return 1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case PCI_DEVICE_ID_INTEL_82371FB_0:
 	case PCI_DEVICE_ID_INTEL_82371SB_0:
 	case PCI_DEVICE_ID_INTEL_82371AB_0:
@@ -850,11 +875,14 @@ static __init int intel_router_probe(struct irq_router *r, struct pci_dev *route
 		r->get = pirq_piix_get;
 		r->set = pirq_piix_set;
 		return 1;
+<<<<<<< HEAD
 	case PCI_DEVICE_ID_INTEL_82425:
 		r->name = "PSC/IB";
 		r->get = pirq_ib_get;
 		r->set = pirq_ib_set;
 		return 1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if ((device >= PCI_DEVICE_ID_INTEL_5_3400_SERIES_LPC_MIN && 
@@ -1006,12 +1034,15 @@ static __init int ite_router_probe(struct irq_router *r, struct pci_dev *router,
 static __init int ali_router_probe(struct irq_router *r, struct pci_dev *router, u16 device)
 {
 	switch (device) {
+<<<<<<< HEAD
 	case PCI_DEVICE_ID_AL_M1489:
 		r->name = "FinALi";
 		r->get = pirq_finali_get;
 		r->set = pirq_finali_set;
 		r->lvl = pirq_finali_lvl;
 		return 1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case PCI_DEVICE_ID_AL_M1533:
 	case PCI_DEVICE_ID_AL_M1563:
 		r->name = "ALI";
@@ -1235,6 +1266,7 @@ static int pcibios_lookup_irq(struct pci_dev *dev, int assign)
 	} else if (r->get && (irq = r->get(pirq_router_dev, dev, pirq)) && \
 	((!(pci_probe & PCI_USE_PIRQ_MASK)) || ((1 << irq) & mask))) {
 		msg = "found";
+<<<<<<< HEAD
 		if (r->lvl)
 			r->lvl(pirq_router_dev, dev, pirq, irq);
 		else
@@ -1246,6 +1278,13 @@ static int pcibios_lookup_irq(struct pci_dev *dev, int assign)
 				r->lvl(pirq_router_dev, dev, pirq, newirq);
 			else
 				elcr_set_level_irq(newirq);
+=======
+		elcr_set_level_irq(irq);
+	} else if (newirq && r->set &&
+		(dev->class >> 8) != PCI_CLASS_DISPLAY_VGA) {
+		if (r->set(pirq_router_dev, dev, pirq, newirq)) {
+			elcr_set_level_irq(newirq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			msg = "assigned";
 			irq = newirq;
 		}

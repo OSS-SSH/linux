@@ -2390,6 +2390,7 @@ static void snapshot_status(struct dm_target *ti, status_type_t type,
 				DMEMIT(" discard_passdown_origin");
 		}
 		break;
+<<<<<<< HEAD
 
 	case STATUSTYPE_IMA:
 		DMEMIT_TARGET_NAME_VERSION(ti->type);
@@ -2400,6 +2401,8 @@ static void snapshot_status(struct dm_target *ti, status_type_t type,
 		DMEMIT(",snapshot_overflowed=%c", snap->snapshot_overflowed ? 'y' : 'n');
 		DMEMIT(";");
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -2744,9 +2747,12 @@ static void origin_status(struct dm_target *ti, status_type_t type,
 	case STATUSTYPE_TABLE:
 		snprintf(result, maxlen, "%s", o->dev->name);
 		break;
+<<<<<<< HEAD
 	case STATUSTYPE_IMA:
 		result[0] = '\0';
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

@@ -681,6 +681,7 @@ out_free:
 		}
 	}
 
+<<<<<<< HEAD
 	/* The following chips supports the Microsoft vendor extension,
 	 * therefore set the corresponding VsMsftOpCode.
 	 */
@@ -690,6 +691,13 @@ out_free:
 		hci_set_msft_opcode(hdev, 0xFCF0);
 		break;
 	}
+=======
+	/* RTL8822CE supports the Microsoft vendor extension and uses 0xFCF0
+	 * for VsMsftOpCode.
+	 */
+	if (lmp_subver == RTL_ROM_LMP_8822B)
+		hci_set_msft_opcode(hdev, 0xFCF0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return btrtl_dev;
 

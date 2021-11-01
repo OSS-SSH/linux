@@ -20,7 +20,10 @@
 	pinctrl-names = "default";
 	phy-handle = <&phy0>;
 	tx-internal-delay-ps = <2000>;
+<<<<<<< HEAD
 	rx-internal-delay-ps = <1800>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	status = "okay";
 
 	phy0: ethernet-phy@0 {

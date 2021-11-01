@@ -39,7 +39,10 @@ CPPFLAGS_vdso64.lds += -P -C -U$(ARCH)
 GCOV_PROFILE := n
 UBSAN_SANITIZE := n
 KASAN_SANITIZE := n
+<<<<<<< HEAD
 KCSAN_SANITIZE := n
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 # Force dependency (incbin is bad)
 $(obj)/vdso64_wrapper.o : $(obj)/vdso64.so

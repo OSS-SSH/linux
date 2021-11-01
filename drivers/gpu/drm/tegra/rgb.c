@@ -275,8 +275,16 @@ int tegra_dc_rgb_init(struct drm_device *drm, struct tegra_dc *dc)
 	if (output->bridge) {
 		err = drm_bridge_attach(&output->encoder, output->bridge,
 					NULL, DRM_BRIDGE_ATTACH_NO_CONNECTOR);
+<<<<<<< HEAD
 		if (err)
 			return err;
+=======
+		if (err) {
+			dev_err(output->dev, "failed to attach bridge: %d\n",
+				err);
+			return err;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		connector = drm_bridge_connector_init(drm, &output->encoder);
 		if (IS_ERR(connector)) {

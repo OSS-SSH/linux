@@ -127,6 +127,7 @@ Kconfig options:
   causes KCSAN to not report data races due to conflicts where the only plain
   accesses are aligned writes up to word size.
 
+<<<<<<< HEAD
 * ``CONFIG_KCSAN_PERMISSIVE``: Enable additional permissive rules to ignore
   certain classes of common data races. Unlike the above, the rules are more
   complex involving value-change patterns, access type, and address. This
@@ -139,6 +140,8 @@ To use the strictest possible rules, select ``CONFIG_KCSAN_STRICT=y``, which
 configures KCSAN to follow the Linux-kernel memory consistency model (LKMM) as
 closely as possible.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 DebugFS interface
 ~~~~~~~~~~~~~~~~~
 

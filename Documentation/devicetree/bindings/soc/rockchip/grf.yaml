@@ -15,6 +15,10 @@ properties:
       - items:
           - enum:
               - rockchip,rk3288-sgrf
+<<<<<<< HEAD
+=======
+              - rockchip,rv1108-pmugrf
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - rockchip,rv1108-usbgrf
           - const: syscon
       - items:
@@ -40,7 +44,10 @@ properties:
               - rockchip,rk3568-grf
               - rockchip,rk3568-pmugrf
               - rockchip,rv1108-grf
+<<<<<<< HEAD
               - rockchip,rv1108-pmugrf
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
           - const: syscon
           - const: simple-mfd
 
@@ -198,6 +205,7 @@ allOf:
         compatible:
           contains:
             enum:
+<<<<<<< HEAD
               - rockchip,px30-grf
               - rockchip,px30-pmugrf
               - rockchip,rk3188-grf
@@ -211,15 +219,31 @@ allOf:
               - rockchip,rk3568-pmugrf
               - rockchip,rv1108-grf
               - rockchip,rv1108-pmugrf
+=======
+              - rockchip,px30-pmugrf
+              - rockchip,px30-grf
+              - rockchip,rk3228-grf
+              - rockchip,rk3288-grf
+              - rockchip,rk3328-grf
+              - rockchip,rk3368-pmugrf
+              - rockchip,rk3368-grf
+              - rockchip,rk3399-pmugrf
+              - rockchip,rk3399-grf
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
     then:
       properties:
         io-domains:
+<<<<<<< HEAD
           type: object
 
           $ref: "/schemas/power/rockchip-io-domain.yaml#"
 
           unevaluatedProperties: false
+=======
+          description:
+            Documentation/devicetree/bindings/power/rockchip-io-domain.txt
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 examples:
   - |

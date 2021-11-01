@@ -9,6 +9,10 @@
 #include "xfs_shared.h"
 #include "xfs_format.h"
 #include "xfs_log_format.h"
+<<<<<<< HEAD
+=======
+#include "xfs_log_priv.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "xfs_trans_resv.h"
 #include "xfs_mount.h"
 #include "xfs_extent_busy.h"
@@ -16,7 +20,10 @@
 #include "xfs_trans.h"
 #include "xfs_trans_priv.h"
 #include "xfs_log.h"
+<<<<<<< HEAD
 #include "xfs_log_priv.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "xfs_trace.h"
 #include "xfs_error.h"
 #include "xfs_defer.h"
@@ -275,7 +282,11 @@ retry:
 	WARN_ON(resp->tr_logres > 0 &&
 		mp->m_super->s_writers.frozen == SB_FREEZE_COMPLETE);
 	ASSERT(!(flags & XFS_TRANS_RES_FDBLKS) ||
+<<<<<<< HEAD
 	       xfs_has_lazysbcount(mp));
+=======
+	       xfs_sb_version_haslazysbcount(&mp->m_sb));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	tp->t_magic = XFS_TRANS_HEADER_MAGIC;
 	tp->t_flags = flags;
@@ -295,7 +306,14 @@ retry:
 		 * Do not perform a synchronous scan because callers can hold
 		 * other locks.
 		 */
+<<<<<<< HEAD
 		xfs_blockgc_flush_all(mp);
+=======
+		error = xfs_blockgc_free_space(mp, NULL);
+		if (error)
+			return error;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		want_retry = false;
 		goto retry;
 	}
@@ -364,12 +382,20 @@ xfs_trans_mod_sb(
 	switch (field) {
 	case XFS_TRANS_SB_ICOUNT:
 		tp->t_icount_delta += delta;
+<<<<<<< HEAD
 		if (xfs_has_lazysbcount(mp))
+=======
+		if (xfs_sb_version_haslazysbcount(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			flags &= ~XFS_TRANS_SB_DIRTY;
 		break;
 	case XFS_TRANS_SB_IFREE:
 		tp->t_ifree_delta += delta;
+<<<<<<< HEAD
 		if (xfs_has_lazysbcount(mp))
+=======
+		if (xfs_sb_version_haslazysbcount(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			flags &= ~XFS_TRANS_SB_DIRTY;
 		break;
 	case XFS_TRANS_SB_FDBLOCKS:
@@ -398,7 +424,11 @@ xfs_trans_mod_sb(
 			delta -= blkres_delta;
 		}
 		tp->t_fdblocks_delta += delta;
+<<<<<<< HEAD
 		if (xfs_has_lazysbcount(mp))
+=======
+		if (xfs_sb_version_haslazysbcount(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			flags &= ~XFS_TRANS_SB_DIRTY;
 		break;
 	case XFS_TRANS_SB_RES_FDBLOCKS:
@@ -408,7 +438,11 @@ xfs_trans_mod_sb(
 		 * be applied to the on-disk superblock.
 		 */
 		tp->t_res_fdblocks_delta += delta;
+<<<<<<< HEAD
 		if (xfs_has_lazysbcount(mp))
+=======
+		if (xfs_sb_version_haslazysbcount(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			flags &= ~XFS_TRANS_SB_DIRTY;
 		break;
 	case XFS_TRANS_SB_FREXTENTS:
@@ -487,7 +521,11 @@ xfs_trans_apply_sb_deltas(
 	/*
 	 * Only update the superblock counters if we are logging them
 	 */
+<<<<<<< HEAD
 	if (!xfs_has_lazysbcount((tp->t_mountp))) {
+=======
+	if (!xfs_sb_version_haslazysbcount(&(tp->t_mountp->m_sb))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (tp->t_icount_delta)
 			be64_add_cpu(&sbp->sb_icount, tp->t_icount_delta);
 		if (tp->t_ifree_delta)
@@ -585,7 +623,11 @@ xfs_trans_unreserve_and_mod_sb(
 	if (tp->t_blk_res > 0)
 		blkdelta = tp->t_blk_res;
 	if ((tp->t_fdblocks_delta != 0) &&
+<<<<<<< HEAD
 	    (xfs_has_lazysbcount(mp) ||
+=======
+	    (xfs_sb_version_haslazysbcount(&mp->m_sb) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	     (tp->t_flags & XFS_TRANS_SB_DIRTY)))
 	        blkdelta += tp->t_fdblocks_delta;
 
@@ -595,7 +637,11 @@ xfs_trans_unreserve_and_mod_sb(
 	    (tp->t_flags & XFS_TRANS_SB_DIRTY))
 		rtxdelta += tp->t_frextents_delta;
 
+<<<<<<< HEAD
 	if (xfs_has_lazysbcount(mp) ||
+=======
+	if (xfs_sb_version_haslazysbcount(&mp->m_sb) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	     (tp->t_flags & XFS_TRANS_SB_DIRTY)) {
 		idelta = tp->t_icount_delta;
 		ifreedelta = tp->t_ifree_delta;
@@ -775,7 +821,11 @@ xfs_trans_committed_bulk(
 		 * object into the AIL as we are in a shutdown situation.
 		 */
 		if (aborted) {
+<<<<<<< HEAD
 			ASSERT(xfs_is_shutdown(ailp->ail_mount));
+=======
+			ASSERT(XFS_FORCED_SHUTDOWN(ailp->ail_mount));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (lip->li_ops->iop_unpin)
 				lip->li_ops->iop_unpin(lip, 1);
 			continue;
@@ -864,7 +914,11 @@ __xfs_trans_commit(
 	if (!(tp->t_flags & XFS_TRANS_DIRTY))
 		goto out_unreserve;
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp)) {
+=======
+	if (XFS_FORCED_SHUTDOWN(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		error = -EIO;
 		goto out_unreserve;
 	}
@@ -905,7 +959,11 @@ out_unreserve:
 	 */
 	xfs_trans_unreserve_and_mod_dquots(tp);
 	if (tp->t_ticket) {
+<<<<<<< HEAD
 		if (regrant && !xlog_is_shutdown(mp->m_log))
+=======
+		if (regrant && !XLOG_FORCED_SHUTDOWN(mp->m_log))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xfs_log_ticket_regrant(mp->m_log, tp->t_ticket);
 		else
 			xfs_log_ticket_ungrant(mp->m_log, tp->t_ticket);
@@ -950,12 +1008,20 @@ xfs_trans_cancel(
 	 * filesystem.  This happens in paths where we detect
 	 * corruption and decide to give up.
 	 */
+<<<<<<< HEAD
 	if (dirty && !xfs_is_shutdown(mp)) {
+=======
+	if (dirty && !XFS_FORCED_SHUTDOWN(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		XFS_ERROR_REPORT("xfs_trans_cancel", XFS_ERRLEVEL_LOW, mp);
 		xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
 	}
 #ifdef DEBUG
+<<<<<<< HEAD
 	if (!dirty && !xfs_is_shutdown(mp)) {
+=======
+	if (!dirty && !XFS_FORCED_SHUTDOWN(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct xfs_log_item *lip;
 
 		list_for_each_entry(lip, &tp->t_items, li_trans)

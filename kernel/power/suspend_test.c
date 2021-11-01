@@ -129,7 +129,11 @@ static int __init has_wakealarm(struct device *dev, const void *data)
 {
 	struct rtc_device *candidate = to_rtc_device(dev);
 
+<<<<<<< HEAD
 	if (!test_bit(RTC_FEATURE_ALARM, candidate->features))
+=======
+	if (!candidate->ops->set_alarm)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 	if (!device_may_wakeup(candidate->dev.parent))
 		return 0;

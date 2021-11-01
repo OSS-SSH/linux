@@ -1,7 +1,11 @@
 /*******************************************************************
  * This file is part of the Emulex Linux Device Driver for         *
  * Fibre Channel Host Bus Adapters.                                *
+<<<<<<< HEAD
  * Copyright (C) 2017-2021 Broadcom. All Rights Reserved. The term *
+=======
+ * Copyright (C) 2017-2019 Broadcom. All Rights Reserved. The term *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * “Broadcom” refers to Broadcom Inc. and/or its subsidiaries.     *
  * Copyright (C) 2007-2011 Emulex.  All rights reserved.           *
  * EMULEX and SLI are trademarks of Emulex.                        *
@@ -52,9 +56,12 @@
 /* scsistat output buffer size */
 #define LPFC_SCSISTAT_SIZE 8192
 
+<<<<<<< HEAD
 /* Congestion Info Buffer size */
 #define LPFC_CGN_BUF_SIZE 8192
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define LPFC_DEBUG_OUT_LINE_SZ	80
 
 /*
@@ -282,12 +289,15 @@ struct lpfc_idiag {
 	void *ptr_private;
 };
 
+<<<<<<< HEAD
 #define MAX_DEBUGFS_RX_TABLE_SIZE	(100 * LPFC_MAX_RXMONITOR_ENTRY)
 struct lpfc_rx_monitor_debug {
 	char *i_private;
 	char *buffer;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 
 #define lpfc_nvmeio_data(phba, fmt, arg...) \

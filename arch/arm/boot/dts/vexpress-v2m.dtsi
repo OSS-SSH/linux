@@ -17,6 +17,7 @@
  * TAKE CARE WHEN MAINTAINING THIS FILE TO PROPAGATE ANY RELEVANT
  * CHANGES TO vexpress-v2m-rs1.dtsi!
  */
+<<<<<<< HEAD
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 
 / {
@@ -74,16 +75,28 @@
 				<0 42 &gic GIC_SPI 42 IRQ_TYPE_LEVEL_HIGH>;
 
 		motherboard-bus@40000000 {
+=======
+
+/ {
+	bus@4000000 {
+		motherboard {
+			model = "V2M-P1";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			arm,hbi = <0x190>;
 			arm,vexpress,site = <0>;
 			compatible = "arm,vexpress,v2m-p1", "simple-bus";
 			#address-cells = <2>; /* SMB chipselect number and offset */
 			#size-cells = <1>;
+<<<<<<< HEAD
 			ranges = <0 0 0x40000000 0x04000000>,
 				 <1 0 0x44000000 0x04000000>,
 				 <2 0 0x48000000 0x04000000>,
 				 <3 0 0x4c000000 0x04000000>,
 				 <7 0 0x10000000 0x00020000>;
+=======
+			#interrupt-cells = <1>;
+			ranges;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			flash@0,00000000 {
 				compatible = "arm,vexpress-flash", "cfi-flash";

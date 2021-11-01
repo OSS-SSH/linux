@@ -298,7 +298,11 @@ int mte_default_setup(void)
 	int ret;
 
 	if (!(hwcaps2 & HWCAP2_MTE)) {
+<<<<<<< HEAD
 		ksft_print_msg("SKIP: MTE features unavailable\n");
+=======
+		ksft_print_msg("FAIL: MTE features unavailable\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return KSFT_SKIP;
 	}
 	/* Get current mte mode */

@@ -7,6 +7,10 @@
 #define IOSM_IPC_IMEM_H
 
 #include <linux/skbuff.h>
+<<<<<<< HEAD
+=======
+#include <stdbool.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "iosm_ipc_mmio.h"
 #include "iosm_ipc_pcie.h"

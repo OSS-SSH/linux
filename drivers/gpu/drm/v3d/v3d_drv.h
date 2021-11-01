@@ -37,6 +37,7 @@ struct v3d_queue_state {
 	u64 emit_seqno;
 };
 
+<<<<<<< HEAD
 /* Performance monitor object. The perform lifetime is controlled by userspace
  * using perfmon related ioctls. A perfmon can be attached to a submit_cl
  * request, and when this is the case, HW perf counters will be activated just
@@ -71,6 +72,8 @@ struct v3d_perfmon {
 	u64 values[];
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct v3d_dev {
 	struct drm_device drm;
 
@@ -123,9 +126,12 @@ struct v3d_dev {
 	 */
 	spinlock_t job_lock;
 
+<<<<<<< HEAD
 	/* Used to track the active perfmon if any. */
 	struct v3d_perfmon *active_perfmon;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Protects bo_stats */
 	struct mutex bo_lock;
 
@@ -170,11 +176,14 @@ v3d_has_csd(struct v3d_dev *v3d)
 struct v3d_file_priv {
 	struct v3d_dev *v3d;
 
+<<<<<<< HEAD
 	struct {
 		struct idr idr;
 		struct mutex lock;
 	} perfmon;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct drm_sched_entity sched_entity[V3D_MAX_QUEUES];
 };
 
@@ -247,11 +256,14 @@ struct v3d_job {
 	 */
 	struct dma_fence *done_fence;
 
+<<<<<<< HEAD
 	/* Pointer to a performance monitor object if the user requested it,
 	 * NULL otherwise.
 	 */
 	struct v3d_perfmon *perfmon;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Callback for the freeing of the job on refcount going to 0. */
 	void (*free)(struct kref *ref);
 };
@@ -400,6 +412,7 @@ void v3d_mmu_remove_ptes(struct v3d_bo *bo);
 /* v3d_sched.c */
 int v3d_sched_init(struct v3d_dev *v3d);
 void v3d_sched_fini(struct v3d_dev *v3d);
+<<<<<<< HEAD
 
 /* v3d_perfmon.c */
 void v3d_perfmon_get(struct v3d_perfmon *perfmon);
@@ -416,3 +429,5 @@ int v3d_perfmon_destroy_ioctl(struct drm_device *dev, void *data,
 			      struct drm_file *file_priv);
 int v3d_perfmon_get_values_ioctl(struct drm_device *dev, void *data,
 				 struct drm_file *file_priv);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

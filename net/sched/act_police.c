@@ -48,11 +48,18 @@ static const struct nla_policy police_policy[TCA_POLICE_MAX + 1] = {
 
 static int tcf_police_init(struct net *net, struct nlattr *nla,
 			       struct nlattr *est, struct tc_action **a,
+<<<<<<< HEAD
+=======
+			       int ovr, int bind, bool rtnl_held,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			       struct tcf_proto *tp, u32 flags,
 			       struct netlink_ext_ack *extack)
 {
 	int ret = 0, tcfp_result = TC_ACT_OK, err, size;
+<<<<<<< HEAD
 	bool bind = flags & TCA_ACT_FLAGS_BIND;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nlattr *tb[TCA_POLICE_MAX + 1];
 	struct tcf_chain *goto_ch = NULL;
 	struct tc_police *parm;
@@ -97,7 +104,11 @@ static int tcf_police_init(struct net *net, struct nlattr *nla,
 		}
 		ret = ACT_P_CREATED;
 		spin_lock_init(&(to_police(*a)->tcfp_lock));
+<<<<<<< HEAD
 	} else if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
+=======
+	} else if (!ovr) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tcf_idr_release(*a, bind);
 		return -EEXIST;
 	}

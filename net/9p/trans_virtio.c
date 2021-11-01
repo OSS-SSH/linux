@@ -610,7 +610,11 @@ static int p9_virtio_probe(struct virtio_device *vdev)
 	chan->vc_wq = kmalloc(sizeof(wait_queue_head_t), GFP_KERNEL);
 	if (!chan->vc_wq) {
 		err = -ENOMEM;
+<<<<<<< HEAD
 		goto out_remove_file;
+=======
+		goto out_free_tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	init_waitqueue_head(chan->vc_wq);
 	chan->ring_bufs_avail = 1;
@@ -628,8 +632,11 @@ static int p9_virtio_probe(struct virtio_device *vdev)
 
 	return 0;
 
+<<<<<<< HEAD
 out_remove_file:
 	sysfs_remove_file(&vdev->dev.kobj, &dev_attr_mount_tag.attr);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_free_tag:
 	kfree(tag);
 out_free_vq:

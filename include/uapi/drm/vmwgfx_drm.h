@@ -72,9 +72,12 @@ extern "C" {
 #define DRM_VMW_GB_SURFACE_CREATE_EXT   27
 #define DRM_VMW_GB_SURFACE_REF_EXT      28
 #define DRM_VMW_MSG                     29
+<<<<<<< HEAD
 #define DRM_VMW_MKSSTAT_RESET           30
 #define DRM_VMW_MKSSTAT_ADD             31
 #define DRM_VMW_MKSSTAT_REMOVE          32
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*************************************************************************/
 /**
@@ -1239,6 +1242,7 @@ struct drm_vmw_msg_arg {
 	__u32 receive_len;
 };
 
+<<<<<<< HEAD
 /**
  * struct drm_vmw_mksstat_add_arg
  *
@@ -1277,6 +1281,8 @@ struct drm_vmw_mksstat_remove_arg {
 	__u64 id;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if defined(__cplusplus)
 }
 #endif

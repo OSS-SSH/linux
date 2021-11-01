@@ -1829,6 +1829,7 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_SAE;
 			}
 			break;
+<<<<<<< HEAD
 		case WLAN_AKM_SUITE_FT_OVER_SAE:
 			val = WPA3_AUTH_SAE_PSK | WPA2_AUTH_FT;
 			profile->is_ft = true;
@@ -1837,6 +1838,8 @@ brcmf_set_key_mgmt(struct net_device *ndev, struct cfg80211_connect_params *sme)
 				profile->use_fwsup = BRCMF_PROFILE_FWSUP_SAE;
 			}
 			break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		default:
 			bphy_err(drvr, "invalid cipher group (%d)\n",
 				 sme->crypto.cipher_group);
@@ -7463,18 +7466,35 @@ static s32 brcmf_translate_country_code(struct brcmf_pub *drvr, char alpha2[2],
 	s32 found_index;
 	int i;
 
+<<<<<<< HEAD
 	country_codes = drvr->settings->country_codes;
 	if (!country_codes) {
 		brcmf_dbg(TRACE, "No country codes configured for device\n");
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if ((alpha2[0] == ccreq->country_abbrev[0]) &&
 	    (alpha2[1] == ccreq->country_abbrev[1])) {
 		brcmf_dbg(TRACE, "Country code already set\n");
 		return -EAGAIN;
 	}
 
+<<<<<<< HEAD
+=======
+	country_codes = drvr->settings->country_codes;
+	if (!country_codes) {
+		brcmf_dbg(TRACE, "No country codes configured for device, using ISO3166 code and 0 rev\n");
+		memset(ccreq, 0, sizeof(*ccreq));
+		ccreq->country_abbrev[0] = alpha2[0];
+		ccreq->country_abbrev[1] = alpha2[1];
+		ccreq->ccode[0] = alpha2[0];
+		ccreq->ccode[1] = alpha2[1];
+		return 0;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	found_index = -1;
 	for (i = 0; i < country_codes->table_size; i++) {
 		cc = &country_codes->table[i];

@@ -377,7 +377,11 @@ static const struct net_device_ops emac_netdev_ops = {
 	.ndo_start_xmit		= emac_start_xmit,
 	.ndo_set_mac_address	= eth_mac_addr,
 	.ndo_change_mtu		= emac_change_mtu,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= phy_do_ioctl_running,
+=======
+	.ndo_do_ioctl		= phy_do_ioctl_running,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout		= emac_tx_timeout,
 	.ndo_get_stats64	= emac_get_stats64,
 	.ndo_set_features       = emac_set_features,
@@ -735,13 +739,20 @@ static int emac_remove(struct platform_device *pdev)
 
 	put_device(&adpt->phydev->mdio.dev);
 	mdiobus_unregister(adpt->mii_bus);
+<<<<<<< HEAD
+=======
+	free_netdev(netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (adpt->phy.digital)
 		iounmap(adpt->phy.digital);
 	iounmap(adpt->phy.base);
 
+<<<<<<< HEAD
 	free_netdev(netdev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

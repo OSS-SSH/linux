@@ -34,6 +34,11 @@ extern const unsigned char IPA_PDU_HEADER[];
 /*****************************************************************************/
 #define IPA_CMD_INITIATOR_HOST  0x00
 #define IPA_CMD_INITIATOR_OSA   0x01
+<<<<<<< HEAD
+=======
+#define IPA_CMD_INITIATOR_HOST_REPLY  0x80
+#define IPA_CMD_INITIATOR_OSA_REPLY   0x81
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define IPA_CMD_PRIM_VERSION_NO 0x01
 
 struct qeth_ipa_caps {
@@ -64,6 +69,10 @@ static inline bool qeth_ipa_caps_enabled(struct qeth_ipa_caps *caps, u32 mask)
 enum qeth_card_types {
 	QETH_CARD_TYPE_OSD     = 1,
 	QETH_CARD_TYPE_IQD     = 5,
+<<<<<<< HEAD
+=======
+	QETH_CARD_TYPE_OSN     = 6,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	QETH_CARD_TYPE_OSM     = 3,
 	QETH_CARD_TYPE_OSX     = 2,
 };
@@ -72,6 +81,15 @@ enum qeth_card_types {
 #define IS_OSD(card)	((card)->info.type == QETH_CARD_TYPE_OSD)
 #define IS_OSM(card)	((card)->info.type == QETH_CARD_TYPE_OSM)
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_QETH_OSN
+#define IS_OSN(card)	((card)->info.type == QETH_CARD_TYPE_OSN)
+#else
+#define IS_OSN(card)	false
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_QETH_OSX
 #define IS_OSX(card)	((card)->info.type == QETH_CARD_TYPE_OSX)
 #else
@@ -86,6 +104,10 @@ enum qeth_link_types {
 	QETH_LINK_TYPE_FAST_ETH     = 0x01,
 	QETH_LINK_TYPE_HSTR         = 0x02,
 	QETH_LINK_TYPE_GBIT_ETH     = 0x03,
+<<<<<<< HEAD
+=======
+	QETH_LINK_TYPE_OSN          = 0x04,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	QETH_LINK_TYPE_10GBIT_ETH   = 0x10,
 	QETH_LINK_TYPE_25GBIT_ETH   = 0x12,
 	QETH_LINK_TYPE_LANE_ETH100  = 0x81,
@@ -116,6 +138,12 @@ enum qeth_ipa_cmds {
 	IPA_CMD_DELVLAN			= 0x26,
 	IPA_CMD_VNICC			= 0x2a,
 	IPA_CMD_SETBRIDGEPORT_OSA	= 0x2b,
+<<<<<<< HEAD
+=======
+	IPA_CMD_SETCCID			= 0x41,
+	IPA_CMD_DELCCID			= 0x42,
+	IPA_CMD_MODCCID			= 0x43,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	IPA_CMD_SETIP			= 0xb1,
 	IPA_CMD_QIPASSIST		= 0xb2,
 	IPA_CMD_SETASSPARMS		= 0xb3,
@@ -866,7 +894,12 @@ extern const char *qeth_get_ipa_msg(enum qeth_ipa_return_codes rc);
 extern const char *qeth_get_ipa_cmd_name(enum qeth_ipa_cmds cmd);
 
 /* Helper functions */
+<<<<<<< HEAD
 #define IS_IPA_REPLY(cmd) ((cmd)->hdr.initiator == IPA_CMD_INITIATOR_HOST)
+=======
+#define IS_IPA_REPLY(cmd) ((cmd->hdr.initiator == IPA_CMD_INITIATOR_HOST) || \
+			   (cmd->hdr.initiator == IPA_CMD_INITIATOR_OSA_REPLY))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*****************************************************************************/
 /* END OF   IP Assist related definitions                                    */
@@ -905,9 +938,16 @@ extern const unsigned char ULP_ENABLE[];
 		(PDU_ENCAPSULATION(buffer) + 0x17)
 #define QETH_ULP_ENABLE_RESP_LINK_TYPE(buffer) \
 		(PDU_ENCAPSULATION(buffer) + 0x2b)
+<<<<<<< HEAD
 
 #define QETH_MPC_PROT_L2	0x08
 #define QETH_MPC_PROT_L3	0x03
+=======
+/* Layer 2 definitions */
+#define QETH_PROT_LAYER2 0x08
+#define QETH_PROT_TCPIP  0x03
+#define QETH_PROT_OSN2   0x0a
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define QETH_ULP_ENABLE_PROT_TYPE(buffer) (buffer + 0x50)
 #define QETH_IPA_CMD_PROT_TYPE(buffer) (buffer + 0x19)
 

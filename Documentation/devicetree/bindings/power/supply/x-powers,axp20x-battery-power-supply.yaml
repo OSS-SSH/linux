@@ -19,6 +19,7 @@ allOf:
 
 properties:
   compatible:
+<<<<<<< HEAD
     oneOf:
       - const: x-powers,axp202-battery-power-supply
       - const: x-powers,axp209-battery-power-supply
@@ -27,6 +28,12 @@ properties:
           - const: x-powers,axp803-battery-power-supply
           - const: x-powers,axp813-battery-power-supply
       - const: x-powers,axp813-battery-power-supply
+=======
+    enum:
+      - x-powers,axp209-battery-power-supply
+      - x-powers,axp221-battery-power-supply
+      - x-powers,axp813-battery-power-supply
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 required:
   - compatible

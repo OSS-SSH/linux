@@ -5,8 +5,14 @@
  * Early support for invoking 32-bit EFI services from a 64-bit kernel.
  *
  * Because this thunking occurs before ExitBootServices() we have to
+<<<<<<< HEAD
  * restore the firmware's 32-bit GDT and IDT before we make EFI service
  * calls.
+=======
+ * restore the firmware's 32-bit GDT before we make EFI service calls,
+ * since the firmware's 32-bit IDT is still currently installed and it
+ * needs to be able to service interrupts.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * On the plus side, we don't have to worry about mangling 64-bit
  * addresses into 32-bits because we're executing with an identity
@@ -38,7 +44,11 @@ SYM_FUNC_START(__efi64_thunk)
 	/*
 	 * Convert x86-64 ABI params to i386 ABI
 	 */
+<<<<<<< HEAD
 	subq	$64, %rsp
+=======
+	subq	$32, %rsp
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	movl	%esi, 0x0(%rsp)
 	movl	%edx, 0x4(%rsp)
 	movl	%ecx, 0x8(%rsp)
@@ -48,6 +58,7 @@ SYM_FUNC_START(__efi64_thunk)
 	leaq	0x14(%rsp), %rbx
 	sgdt	(%rbx)
 
+<<<<<<< HEAD
 	addq	$16, %rbx
 	sidt	(%rbx)
 
@@ -55,12 +66,21 @@ SYM_FUNC_START(__efi64_thunk)
 	 * Switch to IDT and GDT with 32-bit segments. This is the firmware GDT
 	 * and IDT that was installed when the kernel started executing. The
 	 * pointers were saved at the EFI stub entry point in head_64.S.
+=======
+	/*
+	 * Switch to gdt with 32-bit segments. This is the firmware GDT
+	 * that was installed when the kernel started executing. This
+	 * pointer was saved at the EFI stub entry point in head_64.S.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 *
 	 * Pass the saved DS selector to the 32-bit code, and use far return to
 	 * restore the saved CS selector.
 	 */
+<<<<<<< HEAD
 	leaq	efi32_boot_idt(%rip), %rax
 	lidt	(%rax)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	leaq	efi32_boot_gdt(%rip), %rax
 	lgdt	(%rax)
 
@@ -71,7 +91,11 @@ SYM_FUNC_START(__efi64_thunk)
 	pushq	%rax
 	lretq
 
+<<<<<<< HEAD
 1:	addq	$64, %rsp
+=======
+1:	addq	$32, %rsp
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	movq	%rdi, %rax
 
 	pop	%rbx
@@ -132,6 +156,7 @@ SYM_FUNC_START_LOCAL(efi_enter32)
 
 	/*
 	 * Some firmware will return with interrupts enabled. Be sure to
+<<<<<<< HEAD
 	 * disable them before we switch GDTs and IDTs.
 	 */
 	cli
@@ -139,6 +164,12 @@ SYM_FUNC_START_LOCAL(efi_enter32)
 	lidtl	(%ebx)
 	subl	$16, %ebx
 
+=======
+	 * disable them before we switch GDTs.
+	 */
+	cli
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lgdtl	(%ebx)
 
 	movl	%cr4, %eax
@@ -173,11 +204,14 @@ SYM_DATA_START(efi32_boot_gdt)
 	.quad	0
 SYM_DATA_END(efi32_boot_gdt)
 
+<<<<<<< HEAD
 SYM_DATA_START(efi32_boot_idt)
 	.word	0
 	.quad	0
 SYM_DATA_END(efi32_boot_idt)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 SYM_DATA_START(efi32_boot_cs)
 	.word	0
 SYM_DATA_END(efi32_boot_cs)

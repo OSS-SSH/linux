@@ -864,17 +864,21 @@ static int nsim_dev_reload_down(struct devlink *devlink, bool netns_change,
 				struct netlink_ext_ack *extack)
 {
 	struct nsim_dev *nsim_dev = devlink_priv(devlink);
+<<<<<<< HEAD
 	struct nsim_bus_dev *nsim_bus_dev;
 
 	nsim_bus_dev = nsim_dev->nsim_bus_dev;
 	if (!mutex_trylock(&nsim_bus_dev->nsim_bus_reload_lock))
 		return -EOPNOTSUPP;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (nsim_dev->dont_allow_reload) {
 		/* For testing purposes, user set debugfs dont_allow_reload
 		 * value to true. So forbid it.
 		 */
 		NL_SET_ERR_MSG_MOD(extack, "User forbid the reload for testing purposes");
+<<<<<<< HEAD
 		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
 		return -EOPNOTSUPP;
 	}
@@ -882,6 +886,12 @@ static int nsim_dev_reload_down(struct devlink *devlink, bool netns_change,
 
 	nsim_dev_reload_destroy(nsim_dev);
 	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+=======
+		return -EOPNOTSUPP;
+	}
+
+	nsim_dev_reload_destroy(nsim_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -890,26 +900,36 @@ static int nsim_dev_reload_up(struct devlink *devlink, enum devlink_reload_actio
 			      struct netlink_ext_ack *extack)
 {
 	struct nsim_dev *nsim_dev = devlink_priv(devlink);
+<<<<<<< HEAD
 	struct nsim_bus_dev *nsim_bus_dev;
 	int ret;
 
 	nsim_bus_dev = nsim_dev->nsim_bus_dev;
 	mutex_lock(&nsim_bus_dev->nsim_bus_reload_lock);
 	nsim_bus_dev->in_reload = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (nsim_dev->fail_reload) {
 		/* For testing purposes, user set debugfs fail_reload
 		 * value to true. Fail right away.
 		 */
 		NL_SET_ERR_MSG_MOD(extack, "User setup the reload to fail for testing purposes");
+<<<<<<< HEAD
 		mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 	}
 
 	*actions_performed = BIT(DEVLINK_RELOAD_ACTION_DRIVER_REINIT);
+<<<<<<< HEAD
 	ret = nsim_dev_reload_create(nsim_dev, extack);
 	mutex_unlock(&nsim_bus_dev->nsim_bus_reload_lock);
 	return ret;
+=======
+	return nsim_dev_reload_create(nsim_dev, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int nsim_dev_info_get(struct devlink *devlink,
@@ -1448,10 +1468,17 @@ int nsim_dev_probe(struct nsim_bus_dev *nsim_bus_dev)
 	struct devlink *devlink;
 	int err;
 
+<<<<<<< HEAD
 	devlink = devlink_alloc_ns(&nsim_dev_devlink_ops, sizeof(*nsim_dev),
 				 nsim_bus_dev->initial_net, &nsim_bus_dev->dev);
 	if (!devlink)
 		return -ENOMEM;
+=======
+	devlink = devlink_alloc(&nsim_dev_devlink_ops, sizeof(*nsim_dev));
+	if (!devlink)
+		return -ENOMEM;
+	devlink_net_set(devlink, nsim_bus_dev->initial_net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	nsim_dev = devlink_priv(devlink);
 	nsim_dev->nsim_bus_dev = nsim_bus_dev;
 	nsim_dev->switch_id.id_len = sizeof(nsim_dev->switch_id.id);
@@ -1470,7 +1497,11 @@ int nsim_dev_probe(struct nsim_bus_dev *nsim_bus_dev)
 	if (err)
 		goto err_devlink_free;
 
+<<<<<<< HEAD
 	err = devlink_register(devlink);
+=======
+	err = devlink_register(devlink, &nsim_bus_dev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto err_resources_unregister;
 

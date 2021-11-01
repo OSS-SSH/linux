@@ -377,6 +377,7 @@
 				#interrupt-cells = <2>;
 			};
 
+<<<<<<< HEAD
 			sgpiom0: sgpiom@1e780500 {
 				#gpio-cells = <2>;
 				gpio-controller;
@@ -405,6 +406,8 @@
 				status = "disabled";
 			};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			gpio1: gpio@1e780800 {
 				#gpio-cells = <2>;
 				gpio-controller;

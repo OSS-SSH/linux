@@ -337,7 +337,11 @@
 &usb3 {
 	status = "okay";
 
+<<<<<<< HEAD
 	dwc3@7580000 {
+=======
+	usb@7580000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dr_mode = "host";
 	};
 };

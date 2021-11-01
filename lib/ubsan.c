@@ -14,7 +14,10 @@
 #include <linux/types.h>
 #include <linux/sched.h>
 #include <linux/uaccess.h>
+<<<<<<< HEAD
 #include <kunit/test-bug.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "ubsan.h"
 
@@ -142,8 +145,11 @@ static void ubsan_prologue(struct source_location *loc, const char *reason)
 		"========================================\n");
 	pr_err("UBSAN: %s in %s:%d:%d\n", reason, loc->file_name,
 		loc->line & LINE_MASK, loc->column & COLUMN_MASK);
+<<<<<<< HEAD
 
 	kunit_fail_current_test("%s in %s", reason, loc->file_name);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ubsan_epilogue(void)

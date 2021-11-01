@@ -13,6 +13,7 @@
  */
 
 #include <linux/types.h>
+<<<<<<< HEAD
 #include <linux/acpi.h>
 #include <linux/export.h>
 #include <linux/bitfield.h>
@@ -169,6 +170,13 @@ int hv_common_cpu_die(unsigned int cpu)
 
 	return 0;
 }
+=======
+#include <linux/export.h>
+#include <linux/bitfield.h>
+#include <asm/hyperv-tlfs.h>
+#include <asm/mshyperv.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Bit mask of the extended capability to query: see HV_EXT_CAPABILITY_xxx */
 bool hv_query_ext_cap(u64 cap_query)
@@ -215,6 +223,7 @@ bool hv_query_ext_cap(u64 cap_query)
 	return hv_extended_cap & cap_query;
 }
 EXPORT_SYMBOL_GPL(hv_query_ext_cap);
+<<<<<<< HEAD
 
 bool hv_is_hibernation_supported(void)
 {
@@ -283,3 +292,5 @@ void __weak hyperv_cleanup(void)
 {
 }
 EXPORT_SYMBOL_GPL(hyperv_cleanup);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

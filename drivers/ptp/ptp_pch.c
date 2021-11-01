@@ -644,7 +644,10 @@ static const struct pci_device_id pch_ieee1588_pcidev_id[] = {
 	 },
 	{0}
 };
+<<<<<<< HEAD
 MODULE_DEVICE_TABLE(pci, pch_ieee1588_pcidev_id);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static SIMPLE_DEV_PM_OPS(pch_pm_ops, pch_suspend, pch_resume);
 

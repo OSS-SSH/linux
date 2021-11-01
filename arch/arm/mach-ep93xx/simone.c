@@ -123,5 +123,9 @@ MACHINE_START(SIM_ONE, "Simplemachines Sim.One Board")
 	.init_irq	= ep93xx_init_irq,
 	.init_time	= ep93xx_timer_init,
 	.init_machine	= simone_init_machine,
+<<<<<<< HEAD
+=======
+	.init_late	= ep93xx_init_late,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.restart	= ep93xx_restart,
 MACHINE_END

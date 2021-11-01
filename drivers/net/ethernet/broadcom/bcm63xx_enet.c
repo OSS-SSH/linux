@@ -1699,7 +1699,11 @@ static const struct net_device_ops bcm_enet_ops = {
 	.ndo_start_xmit		= bcm_enet_start_xmit,
 	.ndo_set_mac_address	= bcm_enet_set_mac_address,
 	.ndo_set_rx_mode	= bcm_enet_set_multicast_list,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= bcm_enet_ioctl,
+=======
+	.ndo_do_ioctl		= bcm_enet_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_change_mtu		= bcm_enet_change_mtu,
 };
 
@@ -2446,7 +2450,11 @@ static const struct net_device_ops bcm_enetsw_ops = {
 	.ndo_stop		= bcm_enetsw_stop,
 	.ndo_start_xmit		= bcm_enet_start_xmit,
 	.ndo_change_mtu		= bcm_enet_change_mtu,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= bcm_enetsw_ioctl,
+=======
+	.ndo_do_ioctl		= bcm_enetsw_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 
@@ -2649,6 +2657,10 @@ static int bcm_enetsw_probe(struct platform_device *pdev)
 	if (!res_mem || irq_rx < 0)
 		return -ENODEV;
 
+<<<<<<< HEAD
+=======
+	ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev = alloc_etherdev(sizeof(*priv));
 	if (!dev)
 		return -ENOMEM;

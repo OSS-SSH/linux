@@ -33,6 +33,7 @@
 #include <drm/drm_print.h>
 #include <drm/drm_vblank.h>
 #include <drm/drm_dp_mst_helper.h>
+<<<<<<< HEAD
 #include <drm/drm_panel.h>
 
 #include "drm_crtc_helper_internal.h"
@@ -44,6 +45,11 @@ struct dp_aux_backlight {
 	bool enabled;
 };
 
+=======
+
+#include "drm_crtc_helper_internal.h"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * DOC: dp helpers
  *
@@ -772,7 +778,11 @@ int drm_dp_downstream_max_tmds_clock(const u8 dpcd[DP_RECEIVER_CAP_SIZE],
 		 * It's left up to the driver to check the
 		 * DP dual mode adapter's max TMDS clock.
 		 *
+<<<<<<< HEAD
 		 * Unfortunately it looks like branch devices
+=======
+		 * Unfortunatley it looks like branch devices
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * may not fordward that the DP dual mode i2c
 		 * access so we just usually get i2c nak :(
 		 */
@@ -1365,7 +1375,11 @@ static int drm_dp_i2c_msg_duration(const struct drm_dp_aux_msg *msg,
 }
 
 /*
+<<<<<<< HEAD
  * Determine how many retries should be attempted to successfully transfer
+=======
+ * Deterine how many retries should be attempted to successfully transfer
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * the specified message, based on the estimated durations of the
  * i2c and AUX transfers.
  */
@@ -1418,7 +1432,11 @@ static int drm_dp_i2c_do_msg(struct drm_dp_aux *aux, struct drm_dp_aux_msg *msg)
 			/*
 			 * While timeouts can be errors, they're usually normal
 			 * behavior (for instance, when a driver tries to
+<<<<<<< HEAD
 			 * communicate with a non-existent DisplayPort device).
+=======
+			 * communicate with a non-existant DisplayPort device).
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			 * Avoid spamming the kernel log with timeout errors.
 			 */
 			if (ret == -ETIMEDOUT)
@@ -3123,6 +3141,7 @@ int drm_dp_pcon_convert_rgb_to_ycbcr(struct drm_dp_aux *aux, u8 color_spc)
 	return 0;
 }
 EXPORT_SYMBOL(drm_dp_pcon_convert_rgb_to_ycbcr);
+<<<<<<< HEAD
 
 /**
  * drm_edp_backlight_set_level() - Set the backlight level of an eDP panel via AUX
@@ -3579,3 +3598,5 @@ int drm_panel_dp_aux_backlight(struct drm_panel *panel, struct drm_dp_aux *aux)
 EXPORT_SYMBOL(drm_panel_dp_aux_backlight);
 
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

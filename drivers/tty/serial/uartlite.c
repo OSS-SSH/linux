@@ -17,13 +17,19 @@
 #include <linux/interrupt.h>
 #include <linux/init.h>
 #include <linux/io.h>
+<<<<<<< HEAD
 #include <linux/iopoll.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/of.h>
 #include <linux/of_address.h>
 #include <linux/of_device.h>
 #include <linux/of_platform.h>
 #include <linux/clk.h>
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define ULITE_NAME		"ttyUL"
 #define ULITE_MAJOR		204
@@ -56,7 +62,10 @@
 #define ULITE_CONTROL_RST_TX	0x01
 #define ULITE_CONTROL_RST_RX	0x02
 #define ULITE_CONTROL_IE	0x10
+<<<<<<< HEAD
 #define UART_AUTOSUSPEND_TIMEOUT	3000	/* ms */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Static pointer to console port */
 #ifdef CONFIG_SERIAL_UARTLITE_CONSOLE
@@ -393,6 +402,7 @@ static int ulite_verify_port(struct uart_port *port, struct serial_struct *ser)
 static void ulite_pm(struct uart_port *port, unsigned int state,
 		     unsigned int oldstate)
 {
+<<<<<<< HEAD
 	int ret;
 
 	if (!state) {
@@ -403,6 +413,14 @@ static void ulite_pm(struct uart_port *port, unsigned int state,
 		pm_runtime_mark_last_busy(port->dev);
 		pm_runtime_put_autosuspend(port->dev);
 	}
+=======
+	struct uartlite_data *pdata = port->private_data;
+
+	if (!state)
+		clk_enable(pdata->clk);
+	else
+		clk_disable(pdata->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_CONSOLE_POLL
@@ -455,15 +473,34 @@ static const struct uart_ops ulite_ops = {
 static void ulite_console_wait_tx(struct uart_port *port)
 {
 	u8 val;
+<<<<<<< HEAD
+=======
+	unsigned long timeout;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Spin waiting for TX fifo to have space available.
 	 * When using the Microblaze Debug Module this can take up to 1s
 	 */
+<<<<<<< HEAD
 	if (read_poll_timeout_atomic(uart_in32, val, !(val & ULITE_STATUS_TXFULL),
 				     0, 1000000, false, ULITE_STATUS, port))
 		dev_warn(port->dev,
 			 "timeout waiting for TX buffer empty\n");
+=======
+	timeout = jiffies + msecs_to_jiffies(1000);
+	while (1) {
+		val = uart_in32(ULITE_STATUS, port);
+		if ((val & ULITE_STATUS_TXFULL) == 0)
+			break;
+		if (time_after(jiffies, timeout)) {
+			dev_warn(port->dev,
+				 "timeout waiting for TX buffer empty\n");
+			break;
+		}
+		cpu_relax();
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ulite_console_putchar(struct uart_port *port, int ch)
@@ -553,6 +590,7 @@ static void early_uartlite_putc(struct uart_port *port, int c)
 	 * This limit is pretty arbitrary, unless we are at about 10 baud
 	 * we'll never timeout on a working UART.
 	 */
+<<<<<<< HEAD
 	unsigned retries = 1000000;
 
 	while (--retries &&
@@ -562,6 +600,18 @@ static void early_uartlite_putc(struct uart_port *port, int c)
 	/* Only attempt the iowrite if we didn't timeout */
 	if (retries)
 		writel(c & 0xff, port->membase + ULITE_TX);
+=======
+
+	unsigned retries = 1000000;
+	/* read status bit - 0x8 offset */
+	while (--retries && (readl(port->membase + 8) & (1 << 3)))
+		;
+
+	/* Only attempt the iowrite if we didn't timeout */
+	/* write to TX_FIFO - 0x4 offset */
+	if (retries)
+		writel(c & 0xff, port->membase + 4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void early_uartlite_write(struct console *console,
@@ -716,6 +766,7 @@ static int __maybe_unused ulite_resume(struct device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int __maybe_unused ulite_runtime_suspend(struct device *dev)
 {
 	struct uart_port *port = dev_get_drvdata(dev);
@@ -739,15 +790,21 @@ static int __maybe_unused ulite_runtime_resume(struct device *dev)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* ---------------------------------------------------------------------
  * Platform bus binding
  */
 
+<<<<<<< HEAD
 static const struct dev_pm_ops ulite_pm_ops = {
 	SET_SYSTEM_SLEEP_PM_OPS(ulite_suspend, ulite_resume)
 	SET_RUNTIME_PM_OPS(ulite_runtime_suspend,
 			   ulite_runtime_resume, NULL)
 };
+=======
+static SIMPLE_DEV_PM_OPS(ulite_pm_ops, ulite_suspend, ulite_resume);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #if defined(CONFIG_OF)
 /* Match table for of_platform binding */
@@ -803,25 +860,35 @@ static int ulite_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	pm_runtime_use_autosuspend(&pdev->dev);
 	pm_runtime_set_autosuspend_delay(&pdev->dev, UART_AUTOSUSPEND_TIMEOUT);
 	pm_runtime_set_active(&pdev->dev);
 	pm_runtime_enable(&pdev->dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!ulite_uart_driver.state) {
 		dev_dbg(&pdev->dev, "uartlite: calling uart_register_driver()\n");
 		ret = uart_register_driver(&ulite_uart_driver);
 		if (ret < 0) {
 			dev_err(&pdev->dev, "Failed to register driver\n");
+<<<<<<< HEAD
 			clk_disable_unprepare(pdata->clk);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return ret;
 		}
 	}
 
 	ret = ulite_assign(&pdev->dev, id, res->start, irq, pdata);
 
+<<<<<<< HEAD
 	pm_runtime_mark_last_busy(&pdev->dev);
 	pm_runtime_put_autosuspend(&pdev->dev);
+=======
+	clk_disable(pdata->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -830,6 +897,7 @@ static int ulite_remove(struct platform_device *pdev)
 {
 	struct uart_port *port = dev_get_drvdata(&pdev->dev);
 	struct uartlite_data *pdata = port->private_data;
+<<<<<<< HEAD
 	int rc;
 
 	clk_disable_unprepare(pdata->clk);
@@ -838,6 +906,11 @@ static int ulite_remove(struct platform_device *pdev)
 	pm_runtime_set_suspended(&pdev->dev);
 	pm_runtime_dont_use_autosuspend(&pdev->dev);
 	return rc;
+=======
+
+	clk_disable_unprepare(pdata->clk);
+	return ulite_release(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* work with hotplug and coldplug */

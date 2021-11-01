@@ -8,6 +8,10 @@
 #include <asm/asm-prototypes.h>
 #include <asm/kup.h>
 #include <asm/cputime.h>
+<<<<<<< HEAD
+=======
+#include <asm/interrupt.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/hw_irq.h>
 #include <asm/interrupt.h>
 #include <asm/kprobes.h>
@@ -18,7 +22,10 @@
 #include <asm/switch_to.h>
 #include <asm/syscall.h>
 #include <asm/time.h>
+<<<<<<< HEAD
 #include <asm/tm.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/unistd.h>
 
 #if defined(CONFIG_PPC_ADV_DEBUG_REGS) && defined(CONFIG_PPC32)
@@ -93,7 +100,12 @@ notrace long system_call_exception(long r3, long r4, long r5,
 	CT_WARN_ON(ct_state() == CONTEXT_KERNEL);
 	user_exit_irqoff();
 
+<<<<<<< HEAD
 	BUG_ON(regs_is_unrecoverable(regs));
+=======
+	if (!IS_ENABLED(CONFIG_BOOKE) && !IS_ENABLED(CONFIG_40x))
+		BUG_ON(!(regs->msr & MSR_RI));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUG_ON(!(regs->msr & MSR_PR));
 	BUG_ON(arch_irq_disabled_regs(regs));
 
@@ -137,6 +149,7 @@ notrace long system_call_exception(long r3, long r4, long r5,
 	 */
 	irq_soft_mask_regs_set_state(regs, IRQS_ENABLED);
 
+<<<<<<< HEAD
 	/*
 	 * If system call is called with TM active, set _TIF_RESTOREALL to
 	 * prevent RFSCV being used to return to userspace, because POWER9
@@ -179,6 +192,8 @@ notrace long system_call_exception(long r3, long r4, long r5,
 	}
 #endif // CONFIG_PPC_TRANSACTIONAL_MEM
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	local_irq_enable();
 
 	if (unlikely(current_thread_info()->flags & _TIF_SYSCALL_DOTRACE)) {
@@ -504,7 +519,13 @@ notrace unsigned long interrupt_exit_user_prepare(struct pt_regs *regs)
 {
 	unsigned long ret;
 
+<<<<<<< HEAD
 	BUG_ON(regs_is_unrecoverable(regs));
+=======
+	if (!IS_ENABLED(CONFIG_BOOKE) && !IS_ENABLED(CONFIG_40x))
+		BUG_ON(!(regs->msr & MSR_RI));
+	BUG_ON(!(regs->msr & MSR_PR));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUG_ON(arch_irq_disabled_regs(regs));
 	CT_WARN_ON(ct_state() == CONTEXT_USER);
 
@@ -535,8 +556,15 @@ notrace unsigned long interrupt_exit_kernel_prepare(struct pt_regs *regs)
 	bool stack_store = current_thread_info()->flags &
 						_TIF_EMULATE_STACK_STORE;
 
+<<<<<<< HEAD
 	if (regs_is_unrecoverable(regs))
 		unrecoverable_exception(regs);
+=======
+	if (!IS_ENABLED(CONFIG_BOOKE) && !IS_ENABLED(CONFIG_40x) &&
+	    unlikely(!(regs->msr & MSR_RI)))
+		unrecoverable_exception(regs);
+	BUG_ON(regs->msr & MSR_PR);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * CT_WARN_ON comes here via program_check_exception,
 	 * so avoid recursion.

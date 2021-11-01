@@ -90,7 +90,11 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
 	struct zpci_dev *zdev = to_zpci_dev(dev);
 	struct s390_domain_device *domain_device;
 	unsigned long flags;
+<<<<<<< HEAD
 	int cc, rc;
+=======
+	int rc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!zdev)
 		return -ENODEV;
@@ -99,6 +103,7 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
 	if (!domain_device)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	if (zdev->dma_table) {
 		cc = zpci_dma_exit_device(zdev);
 		if (cc) {
@@ -114,6 +119,16 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
 		rc = -EIO;
 		goto out_restore;
 	}
+=======
+	if (zdev->dma_table)
+		zpci_dma_exit_device(zdev);
+
+	zdev->dma_table = s390_domain->dma_table;
+	rc = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
+				(u64) zdev->dma_table);
+	if (rc)
+		goto out_restore;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock_irqsave(&s390_domain->list_lock, flags);
 	/* First device defines the DMA range limits */
@@ -137,7 +152,10 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
 
 out_restore:
 	zpci_dma_init_device(zdev);
+<<<<<<< HEAD
 out_free:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(domain_device);
 
 	return rc;

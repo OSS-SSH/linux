@@ -605,7 +605,11 @@ static void __trigger_tid_waiter(struct rvt_qp *qp)
  * to this call via first_qp().
  *
  * If the qp trigger was already scheduled (!rval)
+<<<<<<< HEAD
  * the reference is dropped, otherwise the resume
+=======
+ * the the reference is dropped, otherwise the resume
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * or the destroy cancel will dispatch the reference.
  */
 static void tid_rdma_schedule_tid_wakeup(struct rvt_qp *qp)
@@ -5174,7 +5178,11 @@ bail_no_tx:
 	priv->s_flags &= ~RVT_S_BUSY;
 	/*
 	 * If we didn't get a txreq, the QP will be woken up later to try
+<<<<<<< HEAD
 	 * again, set the flags to the wake up which work item to wake
+=======
+	 * again, set the flags to the the wake up which work item to wake
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * up.
 	 * (A better algorithm should be found to do this and generalize the
 	 * sleep/wakeup flags.)

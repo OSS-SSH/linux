@@ -52,14 +52,20 @@ static long restore_sigcontext(struct pt_regs *regs,
 	struct sigcontext __user *sc)
 {
 	int err = 0;
+<<<<<<< HEAD
 	unsigned long sr = regs->sr;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* sc_pt_regs is structured the same as the start of pt_regs */
 	err |= __copy_from_user(regs, &sc->sc_pt_regs, sizeof(struct pt_regs));
 
+<<<<<<< HEAD
 	/* BIT(0) of regs->sr is Condition Code/Carry bit */
 	regs->sr = (sr & ~1) | (regs->sr & 1);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Restore the floating-point state. */
 	err |= restore_fpu_state(sc);
 
@@ -264,6 +270,13 @@ asmlinkage void do_notify_resume(struct pt_regs *regs,
 	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
 		do_signal(regs);
 
+<<<<<<< HEAD
 	if (thread_info_flags & _TIF_NOTIFY_RESUME)
 		tracehook_notify_resume(regs);
+=======
+	if (thread_info_flags & _TIF_NOTIFY_RESUME) {
+		tracehook_notify_resume(regs);
+		rseq_handle_notify_resume(NULL, regs);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

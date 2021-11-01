@@ -20,6 +20,7 @@ struct vboxsf_handle {
 	struct list_head head;
 };
 
+<<<<<<< HEAD
 struct vboxsf_handle *vboxsf_create_sf_handle(struct inode *inode,
 					      u64 handle, u32 access_flags)
 {
@@ -49,11 +50,23 @@ struct vboxsf_handle *vboxsf_create_sf_handle(struct inode *inode,
 static int vboxsf_file_open(struct inode *inode, struct file *file)
 {
 	struct vboxsf_sbi *sbi = VBOXSF_SBI(inode->i_sb);
+=======
+static int vboxsf_file_open(struct inode *inode, struct file *file)
+{
+	struct vboxsf_inode *sf_i = VBOXSF_I(inode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct shfl_createparms params = {};
 	struct vboxsf_handle *sf_handle;
 	u32 access_flags = 0;
 	int err;
 
+<<<<<<< HEAD
+=======
+	sf_handle = kmalloc(sizeof(*sf_handle), GFP_KERNEL);
+	if (!sf_handle)
+		return -ENOMEM;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * We check the value of params.handle afterwards to find out if
 	 * the call succeeded or failed, as the API does not seem to cleanly
@@ -105,6 +118,7 @@ static int vboxsf_file_open(struct inode *inode, struct file *file)
 	err = vboxsf_create_at_dentry(file_dentry(file), &params);
 	if (err == 0 && params.handle == SHFL_HANDLE_NIL)
 		err = (params.result == SHFL_FILE_EXISTS) ? -EEXIST : -ENOENT;
+<<<<<<< HEAD
 	if (err)
 		return err;
 
@@ -114,6 +128,26 @@ static int vboxsf_file_open(struct inode *inode, struct file *file)
 		return PTR_ERR(sf_handle);
 	}
 
+=======
+	if (err) {
+		kfree(sf_handle);
+		return err;
+	}
+
+	/* the host may have given us different attr then requested */
+	sf_i->force_restat = 1;
+
+	/* init our handle struct and add it to the inode's handles list */
+	sf_handle->handle = params.handle;
+	sf_handle->root = VBOXSF_SBI(inode->i_sb)->root;
+	sf_handle->access_flags = access_flags;
+	kref_init(&sf_handle->refcount);
+
+	mutex_lock(&sf_i->handle_list_mutex);
+	list_add(&sf_handle->head, &sf_i->handle_list);
+	mutex_unlock(&sf_i->handle_list_mutex);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	file->private_data = sf_handle;
 	return 0;
 }
@@ -127,6 +161,7 @@ static void vboxsf_handle_release(struct kref *refcount)
 	kfree(sf_handle);
 }
 
+<<<<<<< HEAD
 void vboxsf_release_sf_handle(struct inode *inode, struct vboxsf_handle *sf_handle)
 {
 	struct vboxsf_inode *sf_i = VBOXSF_I(inode);
@@ -140,13 +175,28 @@ void vboxsf_release_sf_handle(struct inode *inode, struct vboxsf_handle *sf_hand
 
 static int vboxsf_file_release(struct inode *inode, struct file *file)
 {
+=======
+static int vboxsf_file_release(struct inode *inode, struct file *file)
+{
+	struct vboxsf_inode *sf_i = VBOXSF_I(inode);
+	struct vboxsf_handle *sf_handle = file->private_data;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * When a file is closed on our (the guest) side, we want any subsequent
 	 * accesses done on the host side to see all changes done from our side.
 	 */
 	filemap_write_and_wait(inode->i_mapping);
 
+<<<<<<< HEAD
 	vboxsf_release_sf_handle(inode, file->private_data);
+=======
+	mutex_lock(&sf_i->handle_list_mutex);
+	list_del(&sf_handle->head);
+	mutex_unlock(&sf_i->handle_list_mutex);
+
+	kref_put(&sf_handle->refcount, vboxsf_handle_release);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

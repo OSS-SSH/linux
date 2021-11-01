@@ -369,11 +369,20 @@
 	};
 };
 
+<<<<<<< HEAD
 &mac_sw {
 	status = "okay";
 };
 
 &davinci_mdio_sw {
+=======
+&mac {
+	dual_emac;
+	status = "okay";
+};
+
+&davinci_mdio {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	status = "okay";
 
 	ethphy0: ethernet-phy@0 {
@@ -385,6 +394,7 @@
 	};
 };
 
+<<<<<<< HEAD
 &cpsw_port1 {
 	phy-handle = <&ethphy0>;
 	phy-mode = "mii";
@@ -395,6 +405,18 @@
 	phy-handle = <&ethphy1>;
 	phy-mode = "mii";
 	ti,dual-emac-pvid = <2>;
+=======
+&cpsw_emac0 {
+	phy-handle = <&ethphy0>;
+	phy-mode = "mii";
+	dual_emac_res_vlan = <1>;
+};
+
+&cpsw_emac1 {
+	phy-handle = <&ethphy1>;
+	phy-mode = "mii";
+	dual_emac_res_vlan = <2>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &mmc1 {

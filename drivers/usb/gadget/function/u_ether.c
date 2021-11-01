@@ -492,9 +492,14 @@ static netdev_tx_t eth_start_xmit(struct sk_buff *skb,
 	}
 	spin_unlock_irqrestore(&dev->lock, flags);
 
+<<<<<<< HEAD
 	if (!in) {
 		if (skb)
 			dev_kfree_skb_any(skb);
+=======
+	if (skb && !in) {
+		dev_kfree_skb_any(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return NETDEV_TX_OK;
 	}
 

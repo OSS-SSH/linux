@@ -10,7 +10,10 @@
 #include <linux/module.h>
 #include <linux/miscdevice.h>
 #include <linux/mutex.h>
+<<<<<<< HEAD
 #include <linux/wait.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <net/nfc/nci_core.h>
 
 enum virtual_ncidev_mode {
@@ -28,7 +31,10 @@ enum virtual_ncidev_mode {
 				 NFC_PROTO_ISO15693_MASK)
 
 static enum virtual_ncidev_mode state;
+<<<<<<< HEAD
 static DECLARE_WAIT_QUEUE_HEAD(wq);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct miscdevice miscdev;
 static struct sk_buff *send_buff;
 static struct nci_dev *ndev;
@@ -63,12 +69,19 @@ static int virtual_nci_send(struct nci_dev *ndev, struct sk_buff *skb)
 	}
 	send_buff = skb_copy(skb, GFP_KERNEL);
 	mutex_unlock(&nci_mutex);
+<<<<<<< HEAD
 	wake_up_interruptible(&wq);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct nci_ops virtual_nci_ops = {
+=======
+static struct nci_ops virtual_nci_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.open = virtual_nci_open,
 	.close = virtual_nci_close,
 	.send = virtual_nci_send
@@ -80,11 +93,17 @@ static ssize_t virtual_ncidev_read(struct file *file, char __user *buf,
 	size_t actual_len;
 
 	mutex_lock(&nci_mutex);
+<<<<<<< HEAD
 	while (!send_buff) {
 		mutex_unlock(&nci_mutex);
 		if (wait_event_interruptible(wq, send_buff))
 			return -EFAULT;
 		mutex_lock(&nci_mutex);
+=======
+	if (!send_buff) {
+		mutex_unlock(&nci_mutex);
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	actual_len = min_t(size_t, count, send_buff->len);
@@ -175,7 +194,11 @@ static int virtual_ncidev_close(struct inode *inode, struct file *file)
 static long virtual_ncidev_ioctl(struct file *flip, unsigned int cmd,
 				 unsigned long arg)
 {
+<<<<<<< HEAD
 	const struct nfc_dev *nfc_dev = ndev->nfc_dev;
+=======
+	struct nfc_dev *nfc_dev = ndev->nfc_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void __user *p = (void __user *)arg;
 
 	if (cmd != IOCTL_GET_NCIDEV_IDX)

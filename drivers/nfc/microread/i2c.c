@@ -73,7 +73,11 @@ static void microread_i2c_remove_len_crc(struct sk_buff *skb)
 	skb_trim(skb, MICROREAD_I2C_FRAME_TAILROOM);
 }
 
+<<<<<<< HEAD
 static int check_crc(const struct sk_buff *skb)
+=======
+static int check_crc(struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i;
 	u8 crc = 0;
@@ -225,7 +229,11 @@ static irqreturn_t microread_i2c_irq_thread_fn(int irq, void *phy_id)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
 static const struct nfc_phy_ops i2c_phy_ops = {
+=======
+static struct nfc_phy_ops i2c_phy_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.write = microread_i2c_write,
 	.enable = microread_i2c_enable,
 	.disable = microread_i2c_disable,

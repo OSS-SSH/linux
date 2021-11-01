@@ -38,7 +38,11 @@ static int session_write_header(char *path)
 		.mode = PERF_DATA_MODE_WRITE,
 	};
 
+<<<<<<< HEAD
 	session = perf_session__new(&data, NULL);
+=======
+	session = perf_session__new(&data, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	TEST_ASSERT_VAL("can't get session", !IS_ERR(session));
 
 	if (!perf_pmu__has_hybrid()) {
@@ -61,7 +65,10 @@ static int session_write_header(char *path)
 	TEST_ASSERT_VAL("failed to write header",
 			!perf_session__write_header(session, session->evlist, data.file.fd, true));
 
+<<<<<<< HEAD
 	evlist__delete(session->evlist);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	perf_session__delete(session);
 
 	return 0;
@@ -77,7 +84,11 @@ static int check_cpu_topology(char *path, struct perf_cpu_map *map)
 	int i;
 	struct aggr_cpu_id id;
 
+<<<<<<< HEAD
 	session = perf_session__new(&data, NULL);
+=======
+	session = perf_session__new(&data, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	TEST_ASSERT_VAL("can't get session", !IS_ERR(session));
 	cpu__setup_cpunode_map();
 

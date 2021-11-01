@@ -29,8 +29,11 @@ struct mtk_base_memif_data {
 	int quad_ch_reg;
 	int quad_ch_mask;
 	int quad_ch_shift;
+<<<<<<< HEAD
 	int int_odd_flag_reg;
 	int int_odd_flag_shift;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int enable_reg;
 	int enable_shift;
 	int hd_reg;
@@ -39,6 +42,7 @@ struct mtk_base_memif_data {
 	int hd_align_mshift;
 	int msb_reg;
 	int msb_shift;
+<<<<<<< HEAD
 	int msb_end_reg;
 	int msb_end_shift;
 	int agent_disable_reg;
@@ -46,6 +50,12 @@ struct mtk_base_memif_data {
 	int ch_num_reg;
 	int ch_num_shift;
 	int ch_num_maskbit;
+=======
+	int msb2_reg;
+	int msb2_shift;
+	int agent_disable_reg;
+	int agent_disable_shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* playback memif only */
 	int pbuf_reg;
 	int pbuf_mask;
@@ -67,7 +77,10 @@ struct mtk_base_irq_data {
 	int irq_en_shift;
 	int irq_clr_reg;
 	int irq_clr_shift;
+<<<<<<< HEAD
 	int irq_status_shift;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct device;

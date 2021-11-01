@@ -348,7 +348,11 @@ static int lola_setup_periods(struct lola *chip, struct lola_pcm *pcm,
 	periods = str->bufsize / period_bytes;
 
 	/* program the initial BDL entries */
+<<<<<<< HEAD
 	bdl = (__le32 *)(pcm->bdl->area + LOLA_BDL_ENTRY_SIZE * str->index);
+=======
+	bdl = (__le32 *)(pcm->bdl.area + LOLA_BDL_ENTRY_SIZE * str->index);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ofs = 0;
 	str->frags = 0;
 	for (i = 0; i < periods; i++) {
@@ -433,7 +437,11 @@ static int lola_setup_controller(struct lola *chip, struct lola_pcm *pcm,
 		return -EINVAL;
 
 	/* set up BDL */
+<<<<<<< HEAD
 	bdl = pcm->bdl->addr + LOLA_BDL_ENTRY_SIZE * str->index;
+=======
+	bdl = pcm->bdl.addr + LOLA_BDL_ENTRY_SIZE * str->index;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lola_dsd_write(chip, str->dsd, BDPL, (u32)bdl);
 	lola_dsd_write(chip, str->dsd, BDPU, upper_32_bits(bdl));
 	/* program the stream LVI (last valid index) of the BDL */
@@ -588,11 +596,19 @@ int lola_create_pcm(struct lola *chip)
 	int i, err;
 
 	for (i = 0; i < 2; i++) {
+<<<<<<< HEAD
 		chip->pcm[i].bdl =
 			snd_devm_alloc_pages(&chip->pci->dev, SNDRV_DMA_TYPE_DEV,
 					     PAGE_SIZE);
 		if (!chip->pcm[i].bdl)
 			return -ENOMEM;
+=======
+		err = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV,
+					  &chip->pci->dev,
+					  PAGE_SIZE, &chip->pcm[i].bdl);
+		if (err < 0)
+			return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	err = snd_pcm_new(chip->card, "Digigram Lola", 0,
@@ -614,6 +630,15 @@ int lola_create_pcm(struct lola *chip)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+void lola_free_pcm(struct lola *chip)
+{
+	snd_dma_free_pages(&chip->pcm[0].bdl);
+	snd_dma_free_pages(&chip->pcm[1].bdl);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  */
 

@@ -581,6 +581,7 @@ static struct platform_device mcf_esdhc = {
 };
 #endif /* MCFSDHC_BASE */
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_CAN_FLEXCAN)
 
 #include <linux/can/platform/flexcan.h>
@@ -622,6 +623,8 @@ static struct platform_device mcf_flexcan0 = {
 };
 #endif /* IS_ENABLED(CONFIG_CAN_FLEXCAN) */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct platform_device *mcf_devices[] __initdata = {
 	&mcf_uart,
 #if IS_ENABLED(CONFIG_FEC)
@@ -657,9 +660,12 @@ static struct platform_device *mcf_devices[] __initdata = {
 #ifdef MCFSDHC_BASE
 	&mcf_esdhc,
 #endif
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_CAN_FLEXCAN)
 	&mcf_flexcan0,
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*

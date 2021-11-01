@@ -2,7 +2,11 @@
 #ifndef __KERNEL_PRINTK__
 #define __KERNEL_PRINTK__
 
+<<<<<<< HEAD
 #include <linux/stdarg.h>
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/init.h>
 #include <linux/kern_levels.h>
 #include <linux/linkage.h>
@@ -70,7 +74,20 @@ extern int console_printk[];
 #define minimum_console_loglevel (console_printk[2])
 #define default_console_loglevel (console_printk[3])
 
+<<<<<<< HEAD
 extern void console_verbose(void);
+=======
+static inline void console_silent(void)
+{
+	console_loglevel = CONSOLE_LOGLEVEL_SILENT;
+}
+
+static inline void console_verbose(void)
+{
+	if (console_loglevel)
+		console_loglevel = CONSOLE_LOGLEVEL_MOTORMOUTH;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* strlen("ratelimit") + 1 */
 #define DEVKMSG_STR_MAX_SIZE 10
@@ -141,6 +158,21 @@ static inline __printf(1, 2) __cold
 void early_printk(const char *s, ...) { }
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PRINTK_NMI
+extern void printk_nmi_enter(void);
+extern void printk_nmi_exit(void);
+extern void printk_nmi_direct_enter(void);
+extern void printk_nmi_direct_exit(void);
+#else
+static inline void printk_nmi_enter(void) { }
+static inline void printk_nmi_exit(void) { }
+static inline void printk_nmi_direct_enter(void) { }
+static inline void printk_nmi_direct_exit(void) { }
+#endif /* PRINTK_NMI */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct dev_printk_info;
 
 #ifdef CONFIG_PRINTK
@@ -153,11 +185,16 @@ asmlinkage __printf(1, 0)
 int vprintk(const char *fmt, va_list args);
 
 asmlinkage __printf(1, 2) __cold
+<<<<<<< HEAD
 int _printk(const char *fmt, ...);
+=======
+int printk(const char *fmt, ...);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Special printk facility for scheduler/timekeeping use only, _DO_NOT_USE_ !
  */
+<<<<<<< HEAD
 __printf(1, 2) __cold int _printk_deferred(const char *fmt, ...);
 
 extern void __printk_safe_enter(void);
@@ -169,6 +206,9 @@ extern void __printk_safe_exit(void);
  */
 #define printk_deferred_enter __printk_safe_enter
 #define printk_deferred_exit __printk_safe_exit
+=======
+__printf(1, 2) __cold int printk_deferred(const char *fmt, ...);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Please don't use printk_ratelimit(), because it shares ratelimiting state
@@ -198,6 +238,11 @@ void dump_stack_print_info(const char *log_lvl);
 void show_regs_print_info(const char *log_lvl);
 extern asmlinkage void dump_stack_lvl(const char *log_lvl) __cold;
 extern asmlinkage void dump_stack(void) __cold;
+<<<<<<< HEAD
+=======
+extern void printk_safe_flush(void);
+extern void printk_safe_flush_on_panic(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 static inline __printf(1, 0)
 int vprintk(const char *s, va_list args)
@@ -205,11 +250,16 @@ int vprintk(const char *s, va_list args)
 	return 0;
 }
 static inline __printf(1, 2) __cold
+<<<<<<< HEAD
 int _printk(const char *s, ...)
+=======
+int printk(const char *s, ...)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return 0;
 }
 static inline __printf(1, 2) __cold
+<<<<<<< HEAD
 int _printk_deferred(const char *s, ...)
 {
 	return 0;
@@ -223,6 +273,12 @@ static inline void printk_deferred_exit(void)
 {
 }
 
+=======
+int printk_deferred(const char *s, ...)
+{
+	return 0;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int printk_ratelimit(void)
 {
 	return 0;
@@ -274,6 +330,17 @@ static inline void dump_stack_lvl(const char *log_lvl)
 static inline void dump_stack(void)
 {
 }
+<<<<<<< HEAD
+=======
+
+static inline void printk_safe_flush(void)
+{
+}
+
+static inline void printk_safe_flush_on_panic(void)
+{
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifdef CONFIG_SMP
@@ -336,6 +403,7 @@ extern int kptr_restrict;
 #define pr_fmt(fmt) fmt
 #endif
 
+<<<<<<< HEAD
 struct module;
 
 #ifdef CONFIG_PRINTK_INDEX
@@ -447,6 +515,8 @@ struct pi_entry {
 #define printk_deferred(fmt, ...)					\
 	printk_index_wrap(_printk_deferred, fmt, ##__VA_ARGS__)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * pr_emerg - Print an emergency-level message
  * @fmt: format string

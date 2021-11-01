@@ -20,6 +20,7 @@
 #include <linux/osq_lock.h>
 #include <linux/debug_locks.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 # define __DEP_MAP_MUTEX_INITIALIZER(lockname)			\
 		, .dep_map = {					\
@@ -31,6 +32,10 @@
 #endif
 
 #ifndef CONFIG_PREEMPT_RT
+=======
+struct ww_class;
+struct ww_acquire_ctx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Simple, straightforward mutexes with strict semantics:
@@ -62,7 +67,11 @@
  */
 struct mutex {
 	atomic_long_t		owner;
+<<<<<<< HEAD
 	raw_spinlock_t		wait_lock;
+=======
+	spinlock_t		wait_lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_MUTEX_SPIN_ON_OWNER
 	struct optimistic_spin_queue osq; /* Spinner MCS lock */
 #endif
@@ -75,6 +84,30 @@ struct mutex {
 #endif
 };
 
+<<<<<<< HEAD
+=======
+struct ww_mutex {
+	struct mutex base;
+	struct ww_acquire_ctx *ctx;
+#ifdef CONFIG_DEBUG_MUTEXES
+	struct ww_class *ww_class;
+#endif
+};
+
+/*
+ * This is the control structure for tasks blocked on mutex,
+ * which resides on the blocked task's kernel stack:
+ */
+struct mutex_waiter {
+	struct list_head	list;
+	struct task_struct	*task;
+	struct ww_acquire_ctx	*ww_ctx;
+#ifdef CONFIG_DEBUG_MUTEXES
+	void			*magic;
+#endif
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DEBUG_MUTEXES
 
 #define __DEBUG_MUTEX_INITIALIZER(lockname)				\
@@ -105,9 +138,25 @@ do {									\
 	__mutex_init((mutex), #mutex, &__key);				\
 } while (0)
 
+<<<<<<< HEAD
 #define __MUTEX_INITIALIZER(lockname) \
 		{ .owner = ATOMIC_LONG_INIT(0) \
 		, .wait_lock = __RAW_SPIN_LOCK_UNLOCKED(lockname.wait_lock) \
+=======
+#ifdef CONFIG_DEBUG_LOCK_ALLOC
+# define __DEP_MAP_MUTEX_INITIALIZER(lockname)			\
+		, .dep_map = {					\
+			.name = #lockname,			\
+			.wait_type_inner = LD_WAIT_SLEEP,	\
+		}
+#else
+# define __DEP_MAP_MUTEX_INITIALIZER(lockname)
+#endif
+
+#define __MUTEX_INITIALIZER(lockname) \
+		{ .owner = ATOMIC_LONG_INIT(0) \
+		, .wait_lock = __SPIN_LOCK_UNLOCKED(lockname.wait_lock) \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		, .wait_list = LIST_HEAD_INIT(lockname.wait_list) \
 		__DEBUG_MUTEX_INITIALIZER(lockname) \
 		__DEP_MAP_MUTEX_INITIALIZER(lockname) }
@@ -126,6 +175,7 @@ extern void __mutex_init(struct mutex *lock, const char *name,
  */
 extern bool mutex_is_locked(struct mutex *lock);
 
+<<<<<<< HEAD
 #else /* !CONFIG_PREEMPT_RT */
 /*
  * Preempt-RT variant based on rtmutexes.
@@ -170,6 +220,8 @@ do {							\
 } while (0)
 #endif /* CONFIG_PREEMPT_RT */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * See kernel/locking/mutex.c for detailed documentation of these APIs.
  * Also see Documentation/locking/mutex-design.rst.

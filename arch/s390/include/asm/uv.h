@@ -356,9 +356,17 @@ int uv_convert_from_secure(unsigned long paddr);
 int gmap_convert_to_secure(struct gmap *gmap, unsigned long gaddr);
 
 void setup_uv(void);
+<<<<<<< HEAD
 #else
 #define is_prot_virt_host() 0
 static inline void setup_uv(void) {}
+=======
+void adjust_to_uv_max(unsigned long *vmax);
+#else
+#define is_prot_virt_host() 0
+static inline void setup_uv(void) {}
+static inline void adjust_to_uv_max(unsigned long *vmax) {}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline int uv_destroy_page(unsigned long paddr)
 {
@@ -371,4 +379,13 @@ static inline int uv_convert_from_secure(unsigned long paddr)
 }
 #endif
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_PROTECTED_VIRTUALIZATION_GUEST) || IS_ENABLED(CONFIG_KVM)
+void uv_query_info(void);
+#else
+static inline void uv_query_info(void) {}
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _ASM_S390_UV_H */

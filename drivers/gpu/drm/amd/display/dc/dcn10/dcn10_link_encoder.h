@@ -118,7 +118,10 @@ struct dcn10_link_enc_registers {
 	uint32_t RDPCSTX_PHY_CNTL4;
 	uint32_t RDPCSTX_PHY_CNTL5;
 	uint32_t RDPCSTX_PHY_CNTL6;
+<<<<<<< HEAD
 	uint32_t RDPCSPIPE_PHY_CNTL6;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint32_t RDPCSTX_PHY_CNTL7;
 	uint32_t RDPCSTX_PHY_CNTL8;
 	uint32_t RDPCSTX_PHY_CNTL9;

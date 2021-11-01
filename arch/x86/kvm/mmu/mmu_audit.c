@@ -147,7 +147,11 @@ static void inspect_spte_has_rmap(struct kvm *kvm, u64 *sptep)
 		return;
 	}
 
+<<<<<<< HEAD
 	rmap_head = gfn_to_rmap(gfn, rev_sp->role.level, slot);
+=======
+	rmap_head = __gfn_to_rmap(gfn, rev_sp->role.level, slot);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!rmap_head->val) {
 		if (!__ratelimit(&ratelimit_state))
 			return;
@@ -200,7 +204,11 @@ static void audit_write_protection(struct kvm *kvm, struct kvm_mmu_page *sp)
 
 	slots = kvm_memslots_for_spte_role(kvm, sp->role);
 	slot = __gfn_to_memslot(slots, sp->gfn);
+<<<<<<< HEAD
 	rmap_head = gfn_to_rmap(sp->gfn, PG_LEVEL_4K, slot);
+=======
+	rmap_head = __gfn_to_rmap(sp->gfn, PG_LEVEL_4K, slot);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for_each_rmap_spte(rmap_head, &iter, sptep) {
 		if (is_writable_pte(*sptep))

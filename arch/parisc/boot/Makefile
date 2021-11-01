@@ -15,3 +15,10 @@ $(obj)/bzImage: $(obj)/compressed/vmlinux FORCE
 
 $(obj)/compressed/vmlinux: FORCE
 	$(Q)$(MAKE) $(build)=$(obj)/compressed $@
+<<<<<<< HEAD
+=======
+
+install: $(CONFIGURE) $(obj)/bzImage
+	sh -x  $(srctree)/$(obj)/install.sh $(KERNELRELEASE) $(obj)/bzImage \
+	      System.map "$(INSTALL_PATH)"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

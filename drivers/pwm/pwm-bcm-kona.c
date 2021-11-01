@@ -267,6 +267,11 @@ static int kona_pwmc_probe(struct platform_device *pdev)
 	if (kp == NULL)
 		return -ENOMEM;
 
+<<<<<<< HEAD
+=======
+	platform_set_drvdata(pdev, kp);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kp->chip.dev = &pdev->dev;
 	kp->chip.ops = &kona_pwm_ops;
 	kp->chip.npwm = 6;
@@ -296,13 +301,27 @@ static int kona_pwmc_probe(struct platform_device *pdev)
 
 	clk_disable_unprepare(kp->clk);
 
+<<<<<<< HEAD
 	ret = devm_pwmchip_add(&pdev->dev, &kp->chip);
+=======
+	ret = pwmchip_add(&kp->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		dev_err(&pdev->dev, "failed to add PWM chip: %d\n", ret);
 
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+static int kona_pwmc_remove(struct platform_device *pdev)
+{
+	struct kona_pwmc *kp = platform_get_drvdata(pdev);
+
+	return pwmchip_remove(&kp->chip);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct of_device_id bcm_kona_pwmc_dt[] = {
 	{ .compatible = "brcm,kona-pwm" },
 	{ },
@@ -315,6 +334,10 @@ static struct platform_driver kona_pwmc_driver = {
 		.of_match_table = bcm_kona_pwmc_dt,
 	},
 	.probe = kona_pwmc_probe,
+<<<<<<< HEAD
+=======
+	.remove = kona_pwmc_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 module_platform_driver(kona_pwmc_driver);
 

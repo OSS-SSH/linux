@@ -208,12 +208,23 @@ static int c101_close(struct net_device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int c101_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 			       void __user *data, int cmd)
 {
 #ifdef DEBUG_RINGS
 	port_t *port = dev_to_port(dev);
 
+=======
+static int c101_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+{
+	const size_t size = sizeof(sync_serial_settings);
+	sync_serial_settings new_line;
+	sync_serial_settings __user *line = ifr->ifr_settings.ifs_ifsu.sync;
+	port_t *port = dev_to_port(dev);
+
+#ifdef DEBUG_RINGS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (cmd == SIOCDEVPRIVATE) {
 		sca_dump_rings(dev);
 		printk(KERN_DEBUG "MSCI1: ST: %02x %02x %02x %02x\n",
@@ -224,6 +235,7 @@ static int c101_siocdevprivate(struct net_device *dev, struct ifreq *ifr,
 		return 0;
 	}
 #endif
+<<<<<<< HEAD
 
 	return -EOPNOTSUPP;
 }
@@ -240,6 +252,16 @@ static int c101_ioctl(struct net_device *dev, struct if_settings *ifs)
 		ifs->type = IF_IFACE_SYNC_SERIAL;
 		if (ifs->size < size) {
 			ifs->size = size; /* data size wanted */
+=======
+	if (cmd != SIOCWANDEV)
+		return hdlc_ioctl(dev, ifr, cmd);
+
+	switch (ifr->ifr_settings.type) {
+	case IF_GET_IFACE:
+		ifr->ifr_settings.type = IF_IFACE_SYNC_SERIAL;
+		if (ifr->ifr_settings.size < size) {
+			ifr->ifr_settings.size = size; /* data size wanted */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENOBUFS;
 		}
 		if (copy_to_user(line, &port->settings, size))
@@ -267,7 +289,11 @@ static int c101_ioctl(struct net_device *dev, struct if_settings *ifs)
 		return 0;
 
 	default:
+<<<<<<< HEAD
 		return hdlc_ioctl(dev, ifs);
+=======
+		return hdlc_ioctl(dev, ifr, cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -292,8 +318,12 @@ static const struct net_device_ops c101_ops = {
 	.ndo_open       = c101_open,
 	.ndo_stop       = c101_close,
 	.ndo_start_xmit = hdlc_start_xmit,
+<<<<<<< HEAD
 	.ndo_siocwandev = c101_ioctl,
 	.ndo_siocdevprivate = c101_siocdevprivate,
+=======
+	.ndo_do_ioctl   = c101_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int __init c101_run(unsigned long irq, unsigned long winbase)

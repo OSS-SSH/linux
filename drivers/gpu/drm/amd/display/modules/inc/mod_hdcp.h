@@ -123,6 +123,10 @@ enum mod_hdcp_display_state {
 
 struct mod_hdcp_psp_caps {
 	uint8_t dtm_v3_supported;
+<<<<<<< HEAD
+=======
+	uint8_t opm_state_query_supported;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum mod_hdcp_display_disable_option {
@@ -225,7 +229,10 @@ struct mod_hdcp_output {
 	uint8_t watchdog_timer_stop;
 	uint16_t callback_delay;
 	uint16_t watchdog_timer_delay;
+<<<<<<< HEAD
 	uint8_t auth_complete;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* used to represent per display info */
@@ -282,11 +289,16 @@ enum mod_hdcp_status mod_hdcp_setup(struct mod_hdcp *hdcp,
 /* called per link on link destroy */
 enum mod_hdcp_status mod_hdcp_teardown(struct mod_hdcp *hdcp);
 
+<<<<<<< HEAD
 /* called per display after stream is enabled */
+=======
+/* called per display on cp_desired set to true */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum mod_hdcp_status mod_hdcp_add_display(struct mod_hdcp *hdcp,
 		struct mod_hdcp_link *link, struct mod_hdcp_display *display,
 		struct mod_hdcp_output *output);
 
+<<<<<<< HEAD
 /* called per display before stream is disabled */
 enum mod_hdcp_status mod_hdcp_remove_display(struct mod_hdcp *hdcp,
 		uint8_t index, struct mod_hdcp_output *output);
@@ -298,6 +310,12 @@ enum mod_hdcp_status mod_hdcp_update_authentication(struct mod_hdcp *hdcp,
 		struct mod_hdcp_display_adjustment *display_adjust,
 		struct mod_hdcp_output *output);
 
+=======
+/* called per display on cp_desired set to false */
+enum mod_hdcp_status mod_hdcp_remove_display(struct mod_hdcp *hdcp,
+		uint8_t index, struct mod_hdcp_output *output);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* called to query hdcp information on a specific index */
 enum mod_hdcp_status mod_hdcp_query_display(struct mod_hdcp *hdcp,
 		uint8_t index, struct mod_hdcp_display_query *query);

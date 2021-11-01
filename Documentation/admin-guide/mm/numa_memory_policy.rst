@@ -245,6 +245,7 @@ MPOL_INTERLEAVED
 	address range or file.  During system boot up, the temporary
 	interleaved system default policy works in this mode.
 
+<<<<<<< HEAD
 MPOL_PREFERRED_MANY
 	This mode specifices that the allocation should be preferrably
 	satisfied from the nodemask specified in the policy. If there is
@@ -252,6 +253,8 @@ MPOL_PREFERRED_MANY
 	can fall back to all existing numa nodes. This is effectively
 	MPOL_PREFERRED allowed for a mask rather than a single node.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 NUMA memory policy supports the following optional mode flags:
 
 MPOL_F_STATIC_NODES
@@ -260,10 +263,17 @@ MPOL_F_STATIC_NODES
 	nodes changes after the memory policy has been defined.
 
 	Without this flag, any time a mempolicy is rebound because of a
+<<<<<<< HEAD
         change in the set of allowed nodes, the preferred nodemask (Preferred
         Many), preferred node (Preferred) or nodemask (Bind, Interleave) is
         remapped to the new set of allowed nodes.  This may result in nodes
         being used that were previously undesired.
+=======
+	change in the set of allowed nodes, the node (Preferred) or
+	nodemask (Bind, Interleave) is remapped to the new set of
+	allowed nodes.  This may result in nodes being used that were
+	previously undesired.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	With this flag, if the user-specified nodes overlap with the
 	nodes allowed by the task's cpuset, then the memory policy is

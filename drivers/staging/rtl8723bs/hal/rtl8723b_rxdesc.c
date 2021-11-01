@@ -4,6 +4,10 @@
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
  *
  ******************************************************************************/
+<<<<<<< HEAD
+=======
+#define _RTL8723B_REDESC_C_
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <rtl8723b_hal.h>
 

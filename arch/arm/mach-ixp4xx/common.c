@@ -268,6 +268,7 @@ static struct platform_device ixp46x_i2c_controller = {
 	.resource	= ixp46x_i2c_resources
 };
 
+<<<<<<< HEAD
 static struct resource ixp46x_ptp_resources[] = {
 	DEFINE_RES_MEM(IXP4XX_TIMESYNC_BASE_PHYS, SZ_4K),
 	DEFINE_RES_IRQ_NAMED(IRQ_IXP4XX_GPIO8, "master"),
@@ -285,6 +286,11 @@ static struct platform_device *ixp46x_devices[] __initdata = {
 	&ixp46x_hwrandom_device,
 	&ixp46x_i2c_controller,
 	&ixp46x_ptp,
+=======
+static struct platform_device *ixp46x_devices[] __initdata = {
+	&ixp46x_hwrandom_device,
+	&ixp46x_i2c_controller,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 unsigned long ixp4xx_exp_bus_size;

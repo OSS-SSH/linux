@@ -33,7 +33,11 @@
 #include <drm/drm_vblank.h>
 
 #include "vmwgfx_kms.h"
+<<<<<<< HEAD
 #include "vmw_surface_cache.h"
+=======
+#include "device_include/svga3d_surfacedefs.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define vmw_crtc_to_stdu(x) \
 	container_of(x, struct vmw_screen_target_display_unit, base.crtc)
@@ -1889,13 +1893,22 @@ int vmw_kms_stdu_init_display(struct vmw_private *dev_priv)
 		ret = vmw_stdu_init(dev_priv, i);
 
 		if (unlikely(ret != 0)) {
+<<<<<<< HEAD
 			drm_err(&dev_priv->drm,
 				"Failed to initialize STDU %d", i);
+=======
+			DRM_ERROR("Failed to initialize STDU %d", i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return ret;
 		}
 	}
 
 	drm_mode_config_reset(dev);
 
+<<<<<<< HEAD
+=======
+	DRM_INFO("Screen Target Display device initialized\n");
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }

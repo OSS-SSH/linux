@@ -119,8 +119,11 @@ void mmc_release_host(struct mmc_host *host);
 void mmc_get_card(struct mmc_card *card, struct mmc_ctx *ctx);
 void mmc_put_card(struct mmc_card *card, struct mmc_ctx *ctx);
 
+<<<<<<< HEAD
 int mmc_card_alternative_gpt_sector(struct mmc_card *card, sector_t *sector);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  *	mmc_claim_host - exclusively claim a host
  *	@host: mmc host to claim

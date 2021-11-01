@@ -171,6 +171,7 @@ static int adc128_probe(struct spi_device *spi)
 	mutex_init(&adc->lock);
 
 	ret = iio_device_register(indio_dev);
+<<<<<<< HEAD
 	if (ret)
 		goto err_disable_regulator;
 
@@ -178,6 +179,9 @@ static int adc128_probe(struct spi_device *spi)
 
 err_disable_regulator:
 	regulator_disable(adc->reg);
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 

@@ -108,7 +108,10 @@
 #include "amdgpu_df.h"
 #include "amdgpu_smuio.h"
 #include "amdgpu_fdinfo.h"
+<<<<<<< HEAD
 #include "amdgpu_mca.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define MAX_GPU_INSTANCE		16
 
@@ -620,6 +623,7 @@ struct amdgpu_video_codec_info {
 	u32 max_level;
 };
 
+<<<<<<< HEAD
 #define codec_info_build(type, width, height, level) \
 			 .codec_type = type,\
 			 .max_width = width,\
@@ -627,6 +631,8 @@ struct amdgpu_video_codec_info {
 			 .max_pixels_per_frame = height * width,\
 			 .max_level = level,
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct amdgpu_video_codecs {
 	const u32 codec_count;
 	const struct amdgpu_video_codec_info *codec_array;
@@ -758,7 +764,11 @@ enum amd_hw_ip_block_type {
 	MAX_HWIP
 };
 
+<<<<<<< HEAD
 #define HWIP_MAX_INSTANCE	10
+=======
+#define HWIP_MAX_INSTANCE	8
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct amd_powerplay {
 	void *pp_handle;
@@ -917,7 +927,10 @@ struct amdgpu_device {
 
 	/* display */
 	bool				enable_virtual_display;
+<<<<<<< HEAD
 	struct amdgpu_vkms_output       *amdgpu_vkms_output;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct amdgpu_mode_info		mode_info;
 	/* For pre-DCE11. DCE11 and later are in "struct amdgpu_device->dm" */
 	struct work_struct		hotplug_work;
@@ -1010,9 +1023,12 @@ struct amdgpu_device {
 	/* df */
 	struct amdgpu_df                df;
 
+<<<<<<< HEAD
 	/* MCA */
 	struct amdgpu_mca               mca;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct amdgpu_ip_block          ip_blocks[AMDGPU_MAX_IP_NUM];
 	uint32_t		        harvest_ip_mask;
 	int				num_ip_blocks;
@@ -1087,7 +1103,10 @@ struct amdgpu_device {
 
 	bool                            no_hw_access;
 	struct pci_saved_state          *pci_state;
+<<<<<<< HEAD
 	pci_channel_state_t		pci_channel_state;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct amdgpu_reset_control     *reset_cntl;
 };
@@ -1114,6 +1133,7 @@ void amdgpu_device_fini_sw(struct amdgpu_device *adev);
 
 int amdgpu_gpu_wait_for_idle(struct amdgpu_device *adev);
 
+<<<<<<< HEAD
 void amdgpu_device_mm_access(struct amdgpu_device *adev, loff_t pos,
 			     void *buf, size_t size, bool write);
 size_t amdgpu_device_aper_access(struct amdgpu_device *adev, loff_t pos,
@@ -1121,6 +1141,10 @@ size_t amdgpu_device_aper_access(struct amdgpu_device *adev, loff_t pos,
 
 void amdgpu_device_vram_access(struct amdgpu_device *adev, loff_t pos,
 			       void *buf, size_t size, bool write);
+=======
+void amdgpu_device_vram_access(struct amdgpu_device *adev, loff_t pos,
+			       uint32_t *buf, size_t size, bool write);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 uint32_t amdgpu_device_rreg(struct amdgpu_device *adev,
 			    uint32_t reg, uint32_t acc_flags);
 void amdgpu_device_wreg(struct amdgpu_device *adev,
@@ -1276,8 +1300,11 @@ int emu_soc_asic_init(struct amdgpu_device *adev);
 
 #define amdgpu_inc_vram_lost(adev) atomic_inc(&((adev)->vram_lost_counter));
 
+<<<<<<< HEAD
 #define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Common functions */
 bool amdgpu_device_has_job_running(struct amdgpu_device *adev);
 bool amdgpu_device_should_recover_gpu(struct amdgpu_device *adev);
@@ -1398,12 +1425,20 @@ int amdgpu_acpi_smart_shift_update(struct drm_device *dev, enum amdgpu_ss ss_sta
 int amdgpu_acpi_pcie_notify_device_ready(struct amdgpu_device *adev);
 
 void amdgpu_acpi_get_backlight_caps(struct amdgpu_dm_backlight_caps *caps);
+<<<<<<< HEAD
 bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev);
+=======
+bool amdgpu_acpi_is_s0ix_supported(struct amdgpu_device *adev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void amdgpu_acpi_detect(void);
 #else
 static inline int amdgpu_acpi_init(struct amdgpu_device *adev) { return 0; }
 static inline void amdgpu_acpi_fini(struct amdgpu_device *adev) { }
+<<<<<<< HEAD
 static inline bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev) { return false; }
+=======
+static inline bool amdgpu_acpi_is_s0ix_supported(struct amdgpu_device *adev) { return false; }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void amdgpu_acpi_detect(void) { }
 static inline bool amdgpu_acpi_is_power_shift_control_supported(void) { return false; }
 static inline int amdgpu_acpi_power_shift_control(struct amdgpu_device *adev,

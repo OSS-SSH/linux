@@ -21,6 +21,7 @@ static struct data_cmd data_cmds[];
 #define for_each_cmd(cmd) \
 	for (cmd = data_cmds; cmd && cmd->name; cmd++)
 
+<<<<<<< HEAD
 static const char * const data_subcommands[] = { "convert", NULL };
 
 static const char *data_usage[] = {
@@ -36,6 +37,48 @@ struct perf_data_convert_opts opts = {
 };
 
 const struct option data_options[] = {
+=======
+static const struct option data_options[] = {
+	OPT_END()
+};
+
+static const char * const data_subcommands[] = { "convert", NULL };
+
+static const char *data_usage[] = {
+	"perf data [<common options>] <command> [<options>]",
+	NULL
+};
+
+static void print_usage(void)
+{
+	struct data_cmd *cmd;
+
+	printf("Usage:\n");
+	printf("\t%s\n\n", data_usage[0]);
+	printf("\tAvailable commands:\n");
+
+	for_each_cmd(cmd) {
+		printf("\t %s\t- %s\n", cmd->name, cmd->summary);
+	}
+
+	printf("\n");
+}
+
+static const char * const data_convert_usage[] = {
+	"perf data convert [<options>]",
+	NULL
+};
+
+static int cmd_data_convert(int argc, const char **argv)
+{
+	const char *to_json = NULL;
+	const char *to_ctf = NULL;
+	struct perf_data_convert_opts opts = {
+		.force = false,
+		.all = false,
+	};
+	const struct option options[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		OPT_INCR('v', "verbose", &verbose, "be more verbose"),
 		OPT_STRING('i', "input", &input_name, "file", "input file name"),
 		OPT_STRING(0, "to-json", &to_json, NULL, "Convert to JSON format"),
@@ -48,6 +91,7 @@ const struct option data_options[] = {
 		OPT_END()
 	};
 
+<<<<<<< HEAD
 static int cmd_data_convert(int argc, const char **argv)
 {
 
@@ -55,6 +99,12 @@ static int cmd_data_convert(int argc, const char **argv)
 			     data_usage, 0);
 	if (argc) {
 		usage_with_options(data_usage, data_options);
+=======
+	argc = parse_options(argc, argv, options,
+			     data_convert_usage, 0);
+	if (argc) {
+		usage_with_options(data_convert_usage, options);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -1;
 	}
 
@@ -94,6 +144,7 @@ int cmd_data(int argc, const char **argv)
 	struct data_cmd *cmd;
 	const char *cmdstr;
 
+<<<<<<< HEAD
 	argc = parse_options_subcommand(argc, argv, data_options, data_subcommands, data_usage,
 			     PARSE_OPT_STOP_AT_NON_OPTION);
 
@@ -101,6 +152,16 @@ int cmd_data(int argc, const char **argv)
 		usage_with_options(data_usage, data_options);
 		return -1;
 	}
+=======
+	/* No command specified. */
+	if (argc < 2)
+		goto usage;
+
+	argc = parse_options_subcommand(argc, argv, data_options, data_subcommands, data_usage,
+			     PARSE_OPT_STOP_AT_NON_OPTION);
+	if (argc < 1)
+		goto usage;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cmdstr = argv[0];
 
@@ -112,6 +173,11 @@ int cmd_data(int argc, const char **argv)
 	}
 
 	pr_err("Unknown command: %s\n", cmdstr);
+<<<<<<< HEAD
 	usage_with_options(data_usage, data_options);
+=======
+usage:
+	print_usage();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return -1;
 }

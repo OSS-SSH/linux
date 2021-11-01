@@ -46,7 +46,10 @@ enum {
 	ETHTOOL_MSG_FEC_SET,
 	ETHTOOL_MSG_MODULE_EEPROM_GET,
 	ETHTOOL_MSG_STATS_GET,
+<<<<<<< HEAD
 	ETHTOOL_MSG_PHC_VCLOCKS_GET,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* add new constants above here */
 	__ETHTOOL_MSG_USER_CNT,
@@ -89,7 +92,10 @@ enum {
 	ETHTOOL_MSG_FEC_NTF,
 	ETHTOOL_MSG_MODULE_EEPROM_GET_REPLY,
 	ETHTOOL_MSG_STATS_GET_REPLY,
+<<<<<<< HEAD
 	ETHTOOL_MSG_PHC_VCLOCKS_GET_REPLY,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* add new constants above here */
 	__ETHTOOL_MSG_KERNEL_CNT,
@@ -377,8 +383,11 @@ enum {
 	ETHTOOL_A_COALESCE_TX_USECS_HIGH,		/* u32 */
 	ETHTOOL_A_COALESCE_TX_MAX_FRAMES_HIGH,		/* u32 */
 	ETHTOOL_A_COALESCE_RATE_SAMPLE_INTERVAL,	/* u32 */
+<<<<<<< HEAD
 	ETHTOOL_A_COALESCE_USE_CQE_MODE_TX,		/* u8 */
 	ETHTOOL_A_COALESCE_USE_CQE_MODE_RX,		/* u8 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* add new constants above here */
 	__ETHTOOL_A_COALESCE_CNT,
@@ -444,6 +453,7 @@ enum {
 	ETHTOOL_A_TSINFO_MAX = (__ETHTOOL_A_TSINFO_CNT - 1)
 };
 
+<<<<<<< HEAD
 /* PHC VCLOCKS */
 
 enum {
@@ -457,6 +467,8 @@ enum {
 	ETHTOOL_A_PHC_VCLOCKS_MAX = (__ETHTOOL_A_PHC_VCLOCKS_CNT - 1)
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* CABLE TEST */
 
 enum {

@@ -16,7 +16,10 @@
 #include <linux/debugfs.h>
 #include <linux/seq_file.h>
 #include <linux/time.h>
+<<<<<<< HEAD
 #include <linux/delay.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/quotaops.h>
 #include <linux/sched/signal.h>
 
@@ -2722,7 +2725,11 @@ int ocfs2_inode_lock_tracker(struct inode *inode,
 			return status;
 		}
 	}
+<<<<<<< HEAD
 	return 1;
+=======
+	return tmp_oh ? 1 : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void ocfs2_inode_unlock_tracker(struct inode *inode,
@@ -3913,6 +3920,7 @@ downconvert:
 	spin_unlock_irqrestore(&lockres->l_lock, flags);
 	ret = ocfs2_downconvert_lock(osb, lockres, new_level, set_lvb,
 				     gen);
+<<<<<<< HEAD
 	/* The dlm lock convert is being cancelled in background,
 	 * ocfs2_cancel_convert() is asynchronous in fs/dlm,
 	 * requeue it, try again later.
@@ -3924,6 +3932,8 @@ downconvert:
 		ret = 0;
 		msleep(20);
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 leave:
 	if (ret)
@@ -3951,7 +3961,11 @@ static int ocfs2_data_convert_worker(struct ocfs2_lock_res *lockres,
 		oi = OCFS2_I(inode);
 		oi->ip_dir_lock_gen++;
 		mlog(0, "generation: %u\n", oi->ip_dir_lock_gen);
+<<<<<<< HEAD
 		goto out_forget;
+=======
+		goto out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (!S_ISREG(inode->i_mode))
@@ -3982,7 +3996,10 @@ static int ocfs2_data_convert_worker(struct ocfs2_lock_res *lockres,
 		filemap_fdatawait(mapping);
 	}
 
+<<<<<<< HEAD
 out_forget:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	forget_all_cached_acls(inode);
 
 out:

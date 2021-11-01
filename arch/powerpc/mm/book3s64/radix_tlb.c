@@ -10,7 +10,10 @@
 #include <linux/memblock.h>
 #include <linux/mmu_context.h>
 #include <linux/sched/mm.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm/ppc-opcode.h>
 #include <asm/tlb.h>
@@ -1107,8 +1110,13 @@ EXPORT_SYMBOL(radix__flush_tlb_kernel_range);
  * invalidating a full PID, so it has a far lower threshold to change from
  * individual page flushes to full-pid flushes.
  */
+<<<<<<< HEAD
 static u32 tlb_single_page_flush_ceiling __read_mostly = 33;
 static u32 tlb_local_single_page_flush_ceiling __read_mostly = POWER9_TLB_SETS_RADIX * 2;
+=======
+static unsigned long tlb_single_page_flush_ceiling __read_mostly = 33;
+static unsigned long tlb_local_single_page_flush_ceiling __read_mostly = POWER9_TLB_SETS_RADIX * 2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline void __radix__flush_tlb_range(struct mm_struct *mm,
 					    unsigned long start, unsigned long end)
@@ -1525,6 +1533,7 @@ void do_h_rpt_invalidate_prt(unsigned long pid, unsigned long lpid,
 EXPORT_SYMBOL_GPL(do_h_rpt_invalidate_prt);
 
 #endif /* CONFIG_KVM_BOOK3S_HV_POSSIBLE */
+<<<<<<< HEAD
 
 static int __init create_tlb_single_page_flush_ceiling(void)
 {
@@ -1536,3 +1545,5 @@ static int __init create_tlb_single_page_flush_ceiling(void)
 }
 late_initcall(create_tlb_single_page_flush_ceiling);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

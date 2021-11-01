@@ -51,12 +51,23 @@
 #define RK3399_PMUGRF_CON0_VSEL		BIT(8)
 #define RK3399_PMUGRF_VSEL_SUPPLY_NUM	9
 
+<<<<<<< HEAD
 #define RK3568_PMU_GRF_IO_VSEL0		(0x0140)
 #define RK3568_PMU_GRF_IO_VSEL1		(0x0144)
 #define RK3568_PMU_GRF_IO_VSEL2		(0x0148)
 
 struct rockchip_iodomain;
 
+=======
+struct rockchip_iodomain;
+
+struct rockchip_iodomain_soc_data {
+	int grf_offset;
+	const char *supply_names[MAX_SUPPLIES];
+	void (*init)(struct rockchip_iodomain *iod);
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct rockchip_iodomain_supply {
 	struct rockchip_iodomain *iod;
 	struct regulator *reg;
@@ -64,6 +75,7 @@ struct rockchip_iodomain_supply {
 	int idx;
 };
 
+<<<<<<< HEAD
 struct rockchip_iodomain_soc_data {
 	int grf_offset;
 	const char *supply_names[MAX_SUPPLIES];
@@ -71,11 +83,14 @@ struct rockchip_iodomain_soc_data {
 	int (*write)(struct rockchip_iodomain_supply *supply, int uV);
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct rockchip_iodomain {
 	struct device *dev;
 	struct regmap *grf;
 	const struct rockchip_iodomain_soc_data *soc_data;
 	struct rockchip_iodomain_supply supplies[MAX_SUPPLIES];
+<<<<<<< HEAD
 	int (*write)(struct rockchip_iodomain_supply *supply, int uV);
 };
 
@@ -120,6 +135,10 @@ static int rk3568_iodomain_write(struct rockchip_iodomain_supply *supply, int uV
 	return 0;
 }
 
+=======
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int rockchip_iodomain_write(struct rockchip_iodomain_supply *supply,
 				   int uV)
 {
@@ -183,7 +202,11 @@ static int rockchip_iodomain_notify(struct notifier_block *nb,
 			return NOTIFY_BAD;
 	}
 
+<<<<<<< HEAD
 	ret = supply->iod->write(supply, uV);
+=======
+	ret = rockchip_iodomain_write(supply, uV);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret && event == REGULATOR_EVENT_PRE_VOLTAGE_CHANGE)
 		return NOTIFY_BAD;
 
@@ -445,6 +468,7 @@ static const struct rockchip_iodomain_soc_data soc_data_rk3399_pmu = {
 	.init = rk3399_pmu_iodomain_init,
 };
 
+<<<<<<< HEAD
 static const struct rockchip_iodomain_soc_data soc_data_rk3568_pmu = {
 	.grf_offset = 0x140,
 	.supply_names = {
@@ -461,6 +485,8 @@ static const struct rockchip_iodomain_soc_data soc_data_rk3568_pmu = {
 	.write = rk3568_iodomain_write,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct rockchip_iodomain_soc_data soc_data_rv1108 = {
 	.grf_offset = 0x404,
 	.supply_names = {
@@ -533,10 +559,13 @@ static const struct of_device_id rockchip_iodomain_match[] = {
 		.data = &soc_data_rk3399_pmu
 	},
 	{
+<<<<<<< HEAD
 		.compatible = "rockchip,rk3568-pmu-io-voltage-domain",
 		.data = &soc_data_rk3568_pmu
 	},
 	{
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.compatible = "rockchip,rv1108-io-voltage-domain",
 		.data = &soc_data_rv1108
 	},
@@ -569,11 +598,14 @@ static int rockchip_iodomain_probe(struct platform_device *pdev)
 	match = of_match_node(rockchip_iodomain_match, np);
 	iod->soc_data = match->data;
 
+<<<<<<< HEAD
 	if (iod->soc_data->write)
 		iod->write = iod->soc_data->write;
 	else
 		iod->write = rockchip_iodomain_write;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	parent = pdev->dev.parent;
 	if (parent && parent->of_node) {
 		iod->grf = syscon_node_to_regmap(parent->of_node);
@@ -634,7 +666,11 @@ static int rockchip_iodomain_probe(struct platform_device *pdev)
 		supply->reg = reg;
 		supply->nb.notifier_call = rockchip_iodomain_notify;
 
+<<<<<<< HEAD
 		ret = iod->write(supply, uV);
+=======
+		ret = rockchip_iodomain_write(supply, uV);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret) {
 			supply->reg = NULL;
 			goto unreg_notify;

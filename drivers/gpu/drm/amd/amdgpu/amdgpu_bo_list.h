@@ -34,7 +34,10 @@ struct amdgpu_fpriv;
 struct amdgpu_bo_list_entry {
 	struct ttm_validate_buffer	tv;
 	struct amdgpu_bo_va		*bo_va;
+<<<<<<< HEAD
 	struct dma_fence_chain		*chain;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint32_t			priority;
 	struct page			**user_pages;
 	bool				user_invalidated;

@@ -1298,8 +1298,12 @@ int mei_hbm_dispatch(struct mei_device *dev, struct mei_msg_hdr *hdr)
 
 		if (dev->dev_state != MEI_DEV_INIT_CLIENTS ||
 		    dev->hbm_state != MEI_HBM_STARTING) {
+<<<<<<< HEAD
 			if (dev->dev_state == MEI_DEV_POWER_DOWN ||
 			    dev->dev_state == MEI_DEV_POWERING_DOWN) {
+=======
+			if (dev->dev_state == MEI_DEV_POWER_DOWN) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dev_dbg(dev->dev, "hbm: start: on shutdown, ignoring\n");
 				return 0;
 			}
@@ -1382,8 +1386,12 @@ int mei_hbm_dispatch(struct mei_device *dev, struct mei_msg_hdr *hdr)
 
 		if (dev->dev_state != MEI_DEV_INIT_CLIENTS ||
 		    dev->hbm_state != MEI_HBM_DR_SETUP) {
+<<<<<<< HEAD
 			if (dev->dev_state == MEI_DEV_POWER_DOWN ||
 			    dev->dev_state == MEI_DEV_POWERING_DOWN) {
+=======
+			if (dev->dev_state == MEI_DEV_POWER_DOWN) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dev_dbg(dev->dev, "hbm: dma setup response: on shutdown, ignoring\n");
 				return 0;
 			}
@@ -1450,8 +1458,12 @@ int mei_hbm_dispatch(struct mei_device *dev, struct mei_msg_hdr *hdr)
 
 		if (dev->dev_state != MEI_DEV_INIT_CLIENTS ||
 		    dev->hbm_state != MEI_HBM_CLIENT_PROPERTIES) {
+<<<<<<< HEAD
 			if (dev->dev_state == MEI_DEV_POWER_DOWN ||
 			    dev->dev_state == MEI_DEV_POWERING_DOWN) {
+=======
+			if (dev->dev_state == MEI_DEV_POWER_DOWN) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dev_dbg(dev->dev, "hbm: properties response: on shutdown, ignoring\n");
 				return 0;
 			}
@@ -1493,8 +1505,12 @@ int mei_hbm_dispatch(struct mei_device *dev, struct mei_msg_hdr *hdr)
 
 		if (dev->dev_state != MEI_DEV_INIT_CLIENTS ||
 		    dev->hbm_state != MEI_HBM_ENUM_CLIENTS) {
+<<<<<<< HEAD
 			if (dev->dev_state == MEI_DEV_POWER_DOWN ||
 			    dev->dev_state == MEI_DEV_POWERING_DOWN) {
+=======
+			if (dev->dev_state == MEI_DEV_POWER_DOWN) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dev_dbg(dev->dev, "hbm: enumeration response: on shutdown, ignoring\n");
 				return 0;
 			}

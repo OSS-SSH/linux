@@ -275,13 +275,23 @@ struct snd_ymfpci {
 	unsigned char rev;	/* PCI revision */
 	unsigned long reg_area_phys;
 	void __iomem *reg_area_virt;
+<<<<<<< HEAD
+=======
+	struct resource *res_reg_area;
+	struct resource *fm_res;
+	struct resource *mpu_res;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	unsigned short old_legacy_ctrl;
 #ifdef SUPPORT_JOYSTICK
 	struct gameport *gameport;
 #endif
 
+<<<<<<< HEAD
 	struct snd_dma_buffer *work_ptr;
+=======
+	struct snd_dma_buffer work_ptr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	unsigned int bank_size_playback;
 	unsigned int bank_size_capture;
@@ -355,7 +365,12 @@ struct snd_ymfpci {
 
 int snd_ymfpci_create(struct snd_card *card,
 		      struct pci_dev *pci,
+<<<<<<< HEAD
 		      unsigned short old_legacy_ctrl);
+=======
+		      unsigned short old_legacy_ctrl,
+		      struct snd_ymfpci ** rcodec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void snd_ymfpci_free_gameport(struct snd_ymfpci *chip);
 
 extern const struct dev_pm_ops snd_ymfpci_pm;

@@ -7625,7 +7625,11 @@ static const struct net_device_ops s2io_netdev_ops = {
 	.ndo_start_xmit    	= s2io_xmit,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_rx_mode	= s2io_ndo_set_multicast,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= s2io_ioctl,
+=======
+	.ndo_do_ioctl	   	= s2io_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_mac_address    = s2io_set_mac_addr,
 	.ndo_change_mtu	   	= s2io_change_mtu,
 	.ndo_set_features	= s2io_set_features,
@@ -8566,7 +8570,11 @@ static void s2io_io_resume(struct pci_dev *pdev)
 			return;
 		}
 
+<<<<<<< HEAD
 		if (do_s2io_prog_unicast(netdev, netdev->dev_addr) == FAILURE) {
+=======
+		if (s2io_set_mac_addr(netdev, netdev->dev_addr) == FAILURE) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			s2io_card_down(sp);
 			pr_err("Can't restore mac addr after reset.\n");
 			return;

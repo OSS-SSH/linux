@@ -1,2 +1,8 @@
+<<<<<<< HEAD
 sphinx_rtd_theme
 Sphinx==2.4.4
+=======
+docutils
+Sphinx==2.4.4
+sphinx_rtd_theme
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -60,6 +60,7 @@
 #define RX8025_ADJ_DATA_MAX	62
 #define RX8025_ADJ_DATA_MIN	-62
 
+<<<<<<< HEAD
 enum rx_model {
 	model_rx_unknown,
 	model_rx_8025,
@@ -70,13 +71,20 @@ enum rx_model {
 static const struct i2c_device_id rx8025_id[] = {
 	{ "rx8025", model_rx_8025 },
 	{ "rx8035", model_rx_8035 },
+=======
+static const struct i2c_device_id rx8025_id[] = {
+	{ "rx8025", 0 },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ }
 };
 MODULE_DEVICE_TABLE(i2c, rx8025_id);
 
 struct rx8025_data {
 	struct rtc_device *rtc;
+<<<<<<< HEAD
 	enum rx_model model;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 ctrl1;
 };
 
@@ -109,6 +117,7 @@ static s32 rx8025_write_regs(const struct i2c_client *client,
 					      length, values);
 }
 
+<<<<<<< HEAD
 static int rx8025_is_osc_stopped(enum rx_model model, int ctrl2)
 {
 	int xstp = ctrl2 & RX8025_BIT_CTRL2_XST;
@@ -129,6 +138,12 @@ static int rx8025_check_validity(struct device *dev)
 	struct rx8025_data *drvdata = dev_get_drvdata(dev);
 	int ctrl2;
 	int xstp;
+=======
+static int rx8025_check_validity(struct device *dev)
+{
+	struct i2c_client *client = to_i2c_client(dev);
+	int ctrl2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ctrl2 = rx8025_read_reg(client, RX8025_REG_CTRL2);
 	if (ctrl2 < 0)
@@ -142,8 +157,12 @@ static int rx8025_check_validity(struct device *dev)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	xstp = rx8025_is_osc_stopped(drvdata->model, ctrl2);
 	if (xstp) {
+=======
+	if (!(ctrl2 & RX8025_BIT_CTRL2_XST)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_warn(dev, "crystal stopped, date is invalid\n");
 		return -EINVAL;
 	}
@@ -153,7 +172,10 @@ static int rx8025_check_validity(struct device *dev)
 
 static int rx8025_reset_validity(struct i2c_client *client)
 {
+<<<<<<< HEAD
 	struct rx8025_data *drvdata = i2c_get_clientdata(client);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ctrl2 = rx8025_read_reg(client, RX8025_REG_CTRL2);
 
 	if (ctrl2 < 0)
@@ -161,6 +183,7 @@ static int rx8025_reset_validity(struct i2c_client *client)
 
 	ctrl2 &= ~(RX8025_BIT_CTRL2_PON | RX8025_BIT_CTRL2_VDET);
 
+<<<<<<< HEAD
 	if (drvdata->model == model_rx_8025)
 		ctrl2 |= RX8025_BIT_CTRL2_XST;
 	else
@@ -168,21 +191,33 @@ static int rx8025_reset_validity(struct i2c_client *client)
 
 	return rx8025_write_reg(client, RX8025_REG_CTRL2,
 				ctrl2);
+=======
+	return rx8025_write_reg(client, RX8025_REG_CTRL2,
+				ctrl2 | RX8025_BIT_CTRL2_XST);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static irqreturn_t rx8025_handle_irq(int irq, void *dev_id)
 {
 	struct i2c_client *client = dev_id;
 	struct rx8025_data *rx8025 = i2c_get_clientdata(client);
+<<<<<<< HEAD
 	int status, xstp;
+=======
+	int status;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rtc_lock(rx8025->rtc);
 	status = rx8025_read_reg(client, RX8025_REG_CTRL2);
 	if (status < 0)
 		goto out;
 
+<<<<<<< HEAD
 	xstp = rx8025_is_osc_stopped(rx8025->model, status);
 	if (xstp)
+=======
+	if (!(status & RX8025_BIT_CTRL2_XST))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_warn(&client->dev, "Oscillation stop was detected,"
 			 "you may have to readjust the clock\n");
 
@@ -552,9 +587,12 @@ static int rx8025_probe(struct i2c_client *client,
 
 	i2c_set_clientdata(client, rx8025);
 
+<<<<<<< HEAD
 	if (id)
 		rx8025->model = id->driver_data;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = rx8025_init_client(client);
 	if (err)
 		return err;

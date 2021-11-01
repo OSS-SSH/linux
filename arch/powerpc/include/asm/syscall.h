@@ -90,9 +90,16 @@ static inline void syscall_get_arguments(struct task_struct *task,
 	unsigned long val, mask = -1UL;
 	unsigned int n = 6;
 
+<<<<<<< HEAD
 	if (is_32bit_task())
 		mask = 0xffffffff;
 
+=======
+#ifdef CONFIG_COMPAT
+	if (test_tsk_thread_flag(task, TIF_32BIT))
+		mask = 0xffffffff;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	while (n--) {
 		if (n == 0)
 			val = regs->orig_gpr3;
@@ -115,11 +122,25 @@ static inline void syscall_set_arguments(struct task_struct *task,
 
 static inline int syscall_get_arch(struct task_struct *task)
 {
+<<<<<<< HEAD
 	if (is_32bit_task())
 		return AUDIT_ARCH_PPC;
 	else if (IS_ENABLED(CONFIG_CPU_LITTLE_ENDIAN))
 		return AUDIT_ARCH_PPC64LE;
 	else
 		return AUDIT_ARCH_PPC64;
+=======
+	int arch;
+
+	if (IS_ENABLED(CONFIG_PPC64) && !test_tsk_thread_flag(task, TIF_32BIT))
+		arch = AUDIT_ARCH_PPC64;
+	else
+		arch = AUDIT_ARCH_PPC;
+
+#ifdef __LITTLE_ENDIAN__
+	arch |= __AUDIT_ARCH_LE;
+#endif
+	return arch;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif	/* _ASM_SYSCALL_H */

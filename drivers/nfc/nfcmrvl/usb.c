@@ -264,7 +264,11 @@ done:
 	return err;
 }
 
+<<<<<<< HEAD
 static const struct nfcmrvl_if_ops usb_ops = {
+=======
+static struct nfcmrvl_if_ops usb_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.nci_open = nfcmrvl_usb_nci_open,
 	.nci_close = nfcmrvl_usb_nci_close,
 	.nci_send = nfcmrvl_usb_nci_send,

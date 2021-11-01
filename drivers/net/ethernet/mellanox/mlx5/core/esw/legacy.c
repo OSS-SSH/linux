@@ -11,7 +11,10 @@
 #include "mlx5_core.h"
 #include "eswitch.h"
 #include "fs_core.h"
+<<<<<<< HEAD
 #include "esw/qos.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 enum {
 	LEGACY_VEPA_PRIO = 0,
@@ -509,6 +512,7 @@ unlock:
 	mutex_unlock(&esw->state_lock);
 	return err;
 }
+<<<<<<< HEAD
 
 int mlx5_eswitch_set_vport_rate(struct mlx5_eswitch *esw, u16 vport,
 				u32 max_rate, u32 min_rate)
@@ -528,3 +532,5 @@ int mlx5_eswitch_set_vport_rate(struct mlx5_eswitch *esw, u16 vport,
 	mutex_unlock(&esw->state_lock);
 	return err;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

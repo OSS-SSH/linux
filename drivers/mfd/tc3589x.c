@@ -187,7 +187,11 @@ again:
 
 	while (status) {
 		int bit = __ffs(status);
+<<<<<<< HEAD
 		int virq = irq_find_mapping(tc3589x->domain, bit);
+=======
+		int virq = irq_create_mapping(tc3589x->domain, bit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		handle_nested_irq(virq);
 		status &= ~(1 << bit);

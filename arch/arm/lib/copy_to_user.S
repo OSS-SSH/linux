@@ -109,7 +109,12 @@
 ENTRY(__copy_to_user_std)
 WEAK(arm_copy_to_user)
 #ifdef CONFIG_CPU_SPECTRE
+<<<<<<< HEAD
 	ldr	r3, =TASK_SIZE
+=======
+	get_thread_info r3
+	ldr	r3, [r3, #TI_ADDR_LIMIT]
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uaccess_mask_range_ptr r0, r2, r3, ip
 #endif
 

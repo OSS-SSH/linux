@@ -1174,6 +1174,7 @@ enum v4l2_mpeg_video_h264_entropy_mode -
     Cyclic intra macroblock refresh. This is the number of continuous
     macroblocks refreshed every frame. Each frame a successive set of
     macroblocks is refreshed until the cycle completes and starts from
+<<<<<<< HEAD
     the top of the frame. Setting this control to zero means that
     macroblocks will not be refreshed.  Note that this control will not
     take effect when ``V4L2_CID_MPEG_VIDEO_INTRA_REFRESH_PERIOD`` control
@@ -1192,6 +1193,9 @@ enum v4l2_mpeg_video_h264_entropy_mode -
     Note that if the client sets this control to non zero value the
     ``V4L2_CID_MPEG_VIDEO_CYCLIC_INTRA_REFRESH_MB`` control shall be
     ignored. Applicable to H264 and HEVC encoders.
+=======
+    the top of the frame. Applicable to H264, H263 and MPEG4 encoder.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ``V4L2_CID_MPEG_VIDEO_FRAME_RC_ENABLE (boolean)``
     Frame level rate control enable. If this control is disabled then
@@ -3017,9 +3021,12 @@ enum v4l2_mpeg_video_hevc_size_of_length_field -
     * - __u8
       - ``pic_struct``
       -
+<<<<<<< HEAD
     * - __u32
       - ``slice_segment_addr``
       -
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     * - __u8
       - ``ref_idx_l0[V4L2_HEVC_DPB_ENTRIES_NUM_MAX]``
       - The list of L0 reference elements as indices in the DPB.

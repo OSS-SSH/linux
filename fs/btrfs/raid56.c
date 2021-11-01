@@ -1035,7 +1035,11 @@ static int alloc_rbio_pages(struct btrfs_raid_bio *rbio)
 	for (i = 0; i < rbio->nr_pages; i++) {
 		if (rbio->stripe_pages[i])
 			continue;
+<<<<<<< HEAD
 		page = alloc_page(GFP_NOFS);
+=======
+		page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!page)
 			return -ENOMEM;
 		rbio->stripe_pages[i] = page;
@@ -1054,7 +1058,11 @@ static int alloc_rbio_parity_pages(struct btrfs_raid_bio *rbio)
 	for (; i < rbio->nr_pages; i++) {
 		if (rbio->stripe_pages[i])
 			continue;
+<<<<<<< HEAD
 		page = alloc_page(GFP_NOFS);
+=======
+		page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!page)
 			return -ENOMEM;
 		rbio->stripe_pages[i] = page;
@@ -1636,10 +1644,17 @@ struct btrfs_plug_cb {
 static int plug_cmp(void *priv, const struct list_head *a,
 		    const struct list_head *b)
 {
+<<<<<<< HEAD
 	const struct btrfs_raid_bio *ra = container_of(a, struct btrfs_raid_bio,
 						       plug_list);
 	const struct btrfs_raid_bio *rb = container_of(b, struct btrfs_raid_bio,
 						       plug_list);
+=======
+	struct btrfs_raid_bio *ra = container_of(a, struct btrfs_raid_bio,
+						 plug_list);
+	struct btrfs_raid_bio *rb = container_of(b, struct btrfs_raid_bio,
+						 plug_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 a_sector = ra->bio_list.head->bi_iter.bi_sector;
 	u64 b_sector = rb->bio_list.head->bi_iter.bi_sector;
 
@@ -2300,7 +2315,11 @@ static int alloc_rbio_essential_pages(struct btrfs_raid_bio *rbio)
 			if (rbio->stripe_pages[index])
 				continue;
 
+<<<<<<< HEAD
 			page = alloc_page(GFP_NOFS);
+=======
+			page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (!page)
 				return -ENOMEM;
 			rbio->stripe_pages[index] = page;
@@ -2350,14 +2369,22 @@ static noinline void finish_parity_scrub(struct btrfs_raid_bio *rbio,
 	if (!need_check)
 		goto writeback;
 
+<<<<<<< HEAD
 	p_page = alloc_page(GFP_NOFS);
+=======
+	p_page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!p_page)
 		goto cleanup;
 	SetPageUptodate(p_page);
 
 	if (has_qstripe) {
 		/* RAID6, allocate and map temp space for the Q stripe */
+<<<<<<< HEAD
 		q_page = alloc_page(GFP_NOFS);
+=======
+		q_page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!q_page) {
 			__free_page(p_page);
 			goto cleanup;

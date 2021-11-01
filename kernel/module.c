@@ -3355,11 +3355,14 @@ static int find_module_sections(struct module *mod, struct load_info *info)
 						sizeof(unsigned long),
 						&mod->num_kprobe_blacklist);
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_PRINTK_INDEX
 	mod->printk_index_start = section_objs(info, ".printk_index",
 					       sizeof(*mod->printk_index_start),
 					       &mod->printk_index_size);
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_HAVE_STATIC_CALL_INLINE
 	mod->static_call_sites = section_objs(info, ".static_call_sites",
 					      sizeof(*mod->static_call_sites),
@@ -4489,10 +4492,15 @@ static void cfi_init(struct module *mod)
 	/* Fix init/exit functions to point to the CFI jump table */
 	if (init)
 		mod->init = *init;
+<<<<<<< HEAD
 #ifdef CONFIG_MODULE_UNLOAD
 	if (exit)
 		mod->exit = *exit;
 #endif
+=======
+	if (exit)
+		mod->exit = *exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cfi_module_add(mod, module_addr_min);
 #endif

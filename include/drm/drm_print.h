@@ -327,7 +327,11 @@ static inline bool drm_debug_enabled(enum drm_debug_category category)
 /*
  * struct device based logging
  *
+<<<<<<< HEAD
  * Prefer drm_device based logging over device or printk based logging.
+=======
+ * Prefer drm_device based logging over device or prink based logging.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 __printf(3, 4)

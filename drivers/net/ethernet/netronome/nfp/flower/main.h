@@ -413,6 +413,7 @@ int nfp_flower_setup_tc(struct nfp_app *app, struct net_device *netdev,
 int nfp_flower_merge_offloaded_flows(struct nfp_app *app,
 				     struct nfp_fl_payload *sub_flow1,
 				     struct nfp_fl_payload *sub_flow2);
+<<<<<<< HEAD
 void
 nfp_flower_compile_meta(struct nfp_flower_meta_tci *ext,
 			struct nfp_flower_meta_tci *msk, u8 key_type);
@@ -469,17 +470,30 @@ nfp_flower_compile_ipv6_gre_tun(struct nfp_flower_ipv6_gre_tun *ext,
 				struct flow_rule *rule);
 int nfp_flower_compile_flow_match(struct nfp_app *app,
 				  struct flow_rule *rule,
+=======
+int nfp_flower_compile_flow_match(struct nfp_app *app,
+				  struct flow_cls_offload *flow,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  struct nfp_fl_key_ls *key_ls,
 				  struct net_device *netdev,
 				  struct nfp_fl_payload *nfp_flow,
 				  enum nfp_flower_tun_type tun_type,
 				  struct netlink_ext_ack *extack);
 int nfp_flower_compile_action(struct nfp_app *app,
+<<<<<<< HEAD
 			      struct flow_rule *rule,
 			      struct net_device *netdev,
 			      struct nfp_fl_payload *nfp_flow,
 			      struct netlink_ext_ack *extack);
 int nfp_compile_flow_metadata(struct nfp_app *app, u32 cookie,
+=======
+			      struct flow_cls_offload *flow,
+			      struct net_device *netdev,
+			      struct nfp_fl_payload *nfp_flow,
+			      struct netlink_ext_ack *extack);
+int nfp_compile_flow_metadata(struct nfp_app *app,
+			      struct flow_cls_offload *flow,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			      struct nfp_fl_payload *nfp_flow,
 			      struct net_device *netdev,
 			      struct netlink_ext_ack *extack);
@@ -551,6 +565,7 @@ int nfp_flower_xmit_pre_tun_flow(struct nfp_app *app,
 				 struct nfp_fl_payload *flow);
 int nfp_flower_xmit_pre_tun_del_flow(struct nfp_app *app,
 				     struct nfp_fl_payload *flow);
+<<<<<<< HEAD
 
 struct nfp_fl_payload *
 nfp_flower_allocate_new(struct nfp_fl_key_ls *key_layer);
@@ -569,4 +584,6 @@ nfp_flower_xmit_flow(struct nfp_app *app, struct nfp_fl_payload *nfp_flow,
 void
 nfp_flower_update_merge_stats(struct nfp_app *app,
 			      struct nfp_fl_payload *sub_flow);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

@@ -19,7 +19,10 @@
 #include "node.h"
 #include "segment.h"
 #include "gc.h"
+<<<<<<< HEAD
 #include "iostat.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <trace/events/f2fs.h>
 
 static struct kmem_cache *victim_entry_slab;
@@ -372,8 +375,12 @@ static struct victim_entry *attach_victim_entry(struct f2fs_sb_info *sbi,
 	struct atgc_management *am = &sbi->am;
 	struct victim_entry *ve;
 
+<<<<<<< HEAD
 	ve =  f2fs_kmem_cache_alloc(victim_entry_slab,
 				GFP_NOFS, true, NULL);
+=======
+	ve =  f2fs_kmem_cache_alloc(victim_entry_slab, GFP_NOFS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ve->mtime = mtime;
 	ve->segno = segno;
@@ -851,8 +858,12 @@ static void add_gc_inode(struct gc_inode_list *gc_list, struct inode *inode)
 		iput(inode);
 		return;
 	}
+<<<<<<< HEAD
 	new_ie = f2fs_kmem_cache_alloc(f2fs_inode_entry_slab,
 					GFP_NOFS, true, NULL);
+=======
+	new_ie = f2fs_kmem_cache_alloc(f2fs_inode_entry_slab, GFP_NOFS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	new_ie->inode = inode;
 
 	f2fs_radix_tree_insert(&gc_list->iroot, inode->i_ino, new_ie);
@@ -1500,10 +1511,15 @@ next_step:
 			int err;
 
 			if (S_ISREG(inode->i_mode)) {
+<<<<<<< HEAD
 				if (!down_write_trylock(&fi->i_gc_rwsem[READ])) {
 					sbi->skipped_gc_rwsem++;
 					continue;
 				}
+=======
+				if (!down_write_trylock(&fi->i_gc_rwsem[READ]))
+					continue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (!down_write_trylock(
 						&fi->i_gc_rwsem[WRITE])) {
 					sbi->skipped_gc_rwsem++;
@@ -1651,7 +1667,10 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
 							force_migrate);
 
 		stat_inc_seg_count(sbi, type, gc_type);
+<<<<<<< HEAD
 		sbi->gc_reclaimed_segs[sbi->gc_mode]++;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		migrated++;
 
 freed:
@@ -1753,7 +1772,11 @@ gc_more:
 		round++;
 	}
 
+<<<<<<< HEAD
 	if (gc_type == FG_GC)
+=======
+	if (gc_type == FG_GC && seg_freed)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sbi->cur_victim_sec = NULL_SEGNO;
 
 	if (sync)

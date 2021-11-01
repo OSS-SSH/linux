@@ -89,7 +89,11 @@ static const struct iwl_tt_params iwl9000_tt_params = {
 	.apmg_not_supported = true,					\
 	.num_rbds = 512,						\
 	.vht_mu_mimo_supported = true,					\
+<<<<<<< HEAD
 	.mac_addr_from_csr = 0x380,					\
+=======
+	.mac_addr_from_csr = true,					\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.nvm_type = IWL_NVM_EXT,					\
 	.dbgc_supported = true,						\
 	.min_umac_error_event_table = 0x800000,				\

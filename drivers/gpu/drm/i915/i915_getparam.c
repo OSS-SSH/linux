@@ -15,7 +15,11 @@ int i915_getparam_ioctl(struct drm_device *dev, void *data,
 	struct pci_dev *pdev = to_pci_dev(dev->dev);
 	const struct sseu_dev_info *sseu = &i915->gt.info.sseu;
 	drm_i915_getparam_t *param = data;
+<<<<<<< HEAD
 	int value = 0;
+=======
+	int value;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (param->param) {
 	case I915_PARAM_IRQ_ACTIVE:
@@ -134,7 +138,10 @@ int i915_getparam_ioctl(struct drm_device *dev, void *data,
 	case I915_PARAM_HAS_EXEC_FENCE_ARRAY:
 	case I915_PARAM_HAS_EXEC_SUBMIT_FENCE:
 	case I915_PARAM_HAS_EXEC_TIMELINE_FENCES:
+<<<<<<< HEAD
 	case I915_PARAM_HAS_USERPTR_PROBE:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* For the time being all of these are always true;
 		 * if some supported hardware does not have one of these
 		 * features this value needs to be provided from
@@ -151,9 +158,13 @@ int i915_getparam_ioctl(struct drm_device *dev, void *data,
 			return -ENODEV;
 		break;
 	case I915_PARAM_SUBSLICE_MASK:
+<<<<<<< HEAD
 		/* Only copy bits from the first slice */
 		memcpy(&value, sseu->subslice_mask,
 		       min(sseu->ss_stride, (u8)sizeof(value)));
+=======
+		value = sseu->subslice_mask[0];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!value)
 			return -ENODEV;
 		break;

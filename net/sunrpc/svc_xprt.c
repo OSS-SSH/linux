@@ -539,7 +539,10 @@ static void svc_xprt_release(struct svc_rqst *rqstp)
 	kfree(rqstp->rq_deferred);
 	rqstp->rq_deferred = NULL;
 
+<<<<<<< HEAD
 	pagevec_release(&rqstp->rq_pvec);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	svc_free_res_pages(rqstp);
 	rqstp->rq_res.page_len = 0;
 	rqstp->rq_res.page_base = 0;
@@ -663,9 +666,13 @@ static int svc_alloc_arg(struct svc_rqst *rqstp)
 {
 	struct svc_serv *serv = rqstp->rq_server;
 	struct xdr_buf *arg = &rqstp->rq_arg;
+<<<<<<< HEAD
 	unsigned long pages, filled, ret;
 
 	pagevec_init(&rqstp->rq_pvec);
+=======
+	unsigned long pages, filled;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pages = (serv->sv_max_mesg + 2 * PAGE_SIZE) >> PAGE_SHIFT;
 	if (pages > RPCSVC_MAXPAGES) {
@@ -675,12 +682,20 @@ static int svc_alloc_arg(struct svc_rqst *rqstp)
 		pages = RPCSVC_MAXPAGES;
 	}
 
+<<<<<<< HEAD
 	for (filled = 0; filled < pages; filled = ret) {
 		ret = alloc_pages_bulk_array(GFP_KERNEL, pages,
 					     rqstp->rq_pages);
 		if (ret > filled)
 			/* Made progress, don't sleep yet */
 			continue;
+=======
+	for (;;) {
+		filled = alloc_pages_bulk_array(GFP_KERNEL, pages,
+						rqstp->rq_pages);
+		if (filled == pages)
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		set_current_state(TASK_INTERRUPTIBLE);
 		if (signalled() || kthread_should_stop()) {
@@ -839,8 +854,12 @@ static int svc_handle_xprt(struct svc_rqst *rqstp, struct svc_xprt *xprt)
 		rqstp->rq_stime = ktime_get();
 		rqstp->rq_reserved = serv->sv_max_mesg;
 		atomic_add(rqstp->rq_reserved, &xprt->xpt_reserved);
+<<<<<<< HEAD
 	} else
 		svc_xprt_received(xprt);
+=======
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	trace_svc_handle_xprt(xprt, len);
 	return len;

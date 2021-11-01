@@ -732,9 +732,15 @@ static int __init sclp_vt220_tty_init(void)
 
 	/* Note: we're not testing for CONSOLE_IS_SCLP here to preserve
 	 * symmetry between VM and LPAR systems regarding ttyS1. */
+<<<<<<< HEAD
 	driver = tty_alloc_driver(1, TTY_DRIVER_REAL_RAW);
 	if (IS_ERR(driver))
 		return PTR_ERR(driver);
+=======
+	driver = alloc_tty_driver(1);
+	if (!driver)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rc = __sclp_vt220_init(MAX_KMEM_PAGES);
 	if (rc)
 		goto out_driver;
@@ -746,6 +752,10 @@ static int __init sclp_vt220_tty_init(void)
 	driver->type = TTY_DRIVER_TYPE_SYSTEM;
 	driver->subtype = SYSTEM_TYPE_TTY;
 	driver->init_termios = tty_std_termios;
+<<<<<<< HEAD
+=======
+	driver->flags = TTY_DRIVER_REAL_RAW;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tty_set_operations(driver, &sclp_vt220_ops);
 	tty_port_link_device(&sclp_vt220_port, driver, 0);
 
@@ -763,7 +773,11 @@ out_reg:
 out_init:
 	__sclp_vt220_cleanup();
 out_driver:
+<<<<<<< HEAD
 	tty_driver_kref_put(driver);
+=======
+	put_tty_driver(driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 __initcall(sclp_vt220_tty_init);

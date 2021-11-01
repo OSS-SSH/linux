@@ -6,9 +6,12 @@
  * Copyright 2005 IBM Corporation
  */
 
+<<<<<<< HEAD
 #ifndef _KERNEL_AUDIT_H_
 #define _KERNEL_AUDIT_H_
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/fs.h>
 #include <linux/audit.h>
 #include <linux/skbuff.h>
@@ -334,5 +337,8 @@ extern int audit_filter(int msgtype, unsigned int listtype);
 
 extern void audit_ctl_lock(void);
 extern void audit_ctl_unlock(void);
+<<<<<<< HEAD
 
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

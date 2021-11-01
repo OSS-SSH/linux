@@ -893,10 +893,13 @@ static int _set_required_opps(struct device *dev,
 	if (!required_opp_tables)
 		return 0;
 
+<<<<<<< HEAD
 	/* required-opps not fully initialized yet */
 	if (lazy_linking_pending(opp_table))
 		return -EBUSY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * We only support genpd's OPPs in the "required-opps" for now, as we
 	 * don't know much about other use cases. Error out if the required OPP
@@ -907,6 +910,13 @@ static int _set_required_opps(struct device *dev,
 		return -ENOENT;
 	}
 
+<<<<<<< HEAD
+=======
+	/* required-opps not fully initialized yet */
+	if (lazy_linking_pending(opp_table))
+		return -EBUSY;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Single genpd case */
 	if (!genpd_virt_devs)
 		return _set_required_opp(dev, dev, opp, 0);
@@ -1856,6 +1866,12 @@ void dev_pm_opp_put_supported_hw(struct opp_table *opp_table)
 	if (unlikely(!opp_table))
 		return;
 
+<<<<<<< HEAD
+=======
+	/* Make sure there are no concurrent readers while updating opp_table */
+	WARN_ON(!list_empty(&opp_table->opp_list));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(opp_table->supported_hw);
 	opp_table->supported_hw = NULL;
 	opp_table->supported_hw_count = 0;
@@ -1941,6 +1957,12 @@ void dev_pm_opp_put_prop_name(struct opp_table *opp_table)
 	if (unlikely(!opp_table))
 		return;
 
+<<<<<<< HEAD
+=======
+	/* Make sure there are no concurrent readers while updating opp_table */
+	WARN_ON(!list_empty(&opp_table->opp_list));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(opp_table->prop_name);
 	opp_table->prop_name = NULL;
 
@@ -2050,6 +2072,12 @@ void dev_pm_opp_put_regulators(struct opp_table *opp_table)
 	if (!opp_table->regulators)
 		goto put_opp_table;
 
+<<<<<<< HEAD
+=======
+	/* Make sure there are no concurrent readers while updating opp_table */
+	WARN_ON(!list_empty(&opp_table->opp_list));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (opp_table->enabled) {
 		for (i = opp_table->regulator_count - 1; i >= 0; i--)
 			regulator_disable(opp_table->regulators[i]);
@@ -2169,6 +2197,12 @@ void dev_pm_opp_put_clkname(struct opp_table *opp_table)
 	if (unlikely(!opp_table))
 		return;
 
+<<<<<<< HEAD
+=======
+	/* Make sure there are no concurrent readers while updating opp_table */
+	WARN_ON(!list_empty(&opp_table->opp_list));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	clk_put(opp_table->clk);
 	opp_table->clk = ERR_PTR(-EINVAL);
 
@@ -2267,6 +2301,12 @@ void dev_pm_opp_unregister_set_opp_helper(struct opp_table *opp_table)
 	if (unlikely(!opp_table))
 		return;
 
+<<<<<<< HEAD
+=======
+	/* Make sure there are no concurrent readers while updating opp_table */
+	WARN_ON(!list_empty(&opp_table->opp_list));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	opp_table->set_opp = NULL;
 
 	mutex_lock(&opp_table->lock);

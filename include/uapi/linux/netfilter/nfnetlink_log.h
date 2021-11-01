@@ -61,7 +61,11 @@ enum nfulnl_attr_type {
 	NFULA_HWTYPE,			/* hardware type */
 	NFULA_HWHEADER,			/* hardware header */
 	NFULA_HWLEN,			/* hardware header length */
+<<<<<<< HEAD
 	NFULA_CT,                       /* nfnetlink_conntrack.h */
+=======
+	NFULA_CT,                       /* nf_conntrack_netlink.h */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NFULA_CT_INFO,                  /* enum ip_conntrack_info */
 	NFULA_VLAN,			/* nested attribute: packet vlan info */
 	NFULA_L2HDR,			/* full L2 header */

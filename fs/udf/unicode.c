@@ -177,7 +177,11 @@ static int udf_name_from_CS0(struct super_block *sb,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (UDF_SB(sb)->s_nls_map)
+=======
+	if (UDF_QUERY_FLAG(sb, UDF_FLAG_NLS_MAP))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		conv_f = UDF_SB(sb)->s_nls_map->uni2char;
 	else
 		conv_f = NULL;
@@ -285,7 +289,11 @@ static int udf_name_to_CS0(struct super_block *sb,
 	if (ocu_max_len <= 0)
 		return 0;
 
+<<<<<<< HEAD
 	if (UDF_SB(sb)->s_nls_map)
+=======
+	if (UDF_QUERY_FLAG(sb, UDF_FLAG_NLS_MAP))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		conv_f = UDF_SB(sb)->s_nls_map->char2uni;
 	else
 		conv_f = NULL;

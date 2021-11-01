@@ -179,8 +179,13 @@ static int jbd2_descriptor_block_csum_verify(journal_t *j, void *buf)
 	if (!jbd2_journal_has_csum_v2or3(j))
 		return 1;
 
+<<<<<<< HEAD
 	tail = (struct jbd2_journal_block_tail *)((char *)buf +
 		j->j_blocksize - sizeof(struct jbd2_journal_block_tail));
+=======
+	tail = (struct jbd2_journal_block_tail *)(buf + j->j_blocksize -
+			sizeof(struct jbd2_journal_block_tail));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	provided = tail->t_checksum;
 	tail->t_checksum = 0;
 	calculated = jbd2_chksum(j, j->j_csum_seed, buf, j->j_blocksize);
@@ -196,7 +201,11 @@ static int jbd2_descriptor_block_csum_verify(journal_t *j, void *buf)
 static int count_tags(journal_t *journal, struct buffer_head *bh)
 {
 	char *			tagp;
+<<<<<<< HEAD
 	journal_block_tag_t	tag;
+=======
+	journal_block_tag_t *	tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int			nr = 0, size = journal->j_blocksize;
 	int			tag_bytes = journal_tag_bytes(journal);
 
@@ -206,6 +215,7 @@ static int count_tags(journal_t *journal, struct buffer_head *bh)
 	tagp = &bh->b_data[sizeof(journal_header_t)];
 
 	while ((tagp - bh->b_data + tag_bytes) <= size) {
+<<<<<<< HEAD
 		memcpy(&tag, tagp, sizeof(tag));
 
 		nr++;
@@ -214,6 +224,16 @@ static int count_tags(journal_t *journal, struct buffer_head *bh)
 			tagp += 16;
 
 		if (tag.t_flags & cpu_to_be16(JBD2_FLAG_LAST_TAG))
+=======
+		tag = (journal_block_tag_t *) tagp;
+
+		nr++;
+		tagp += tag_bytes;
+		if (!(tag->t_flags & cpu_to_be16(JBD2_FLAG_SAME_UUID)))
+			tagp += 16;
+
+		if (tag->t_flags & cpu_to_be16(JBD2_FLAG_LAST_TAG))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 	}
 
@@ -433,9 +453,15 @@ static int jbd2_commit_block_csum_verify(journal_t *j, void *buf)
 }
 
 static int jbd2_block_tag_csum_verify(journal_t *j, journal_block_tag_t *tag,
+<<<<<<< HEAD
 				      journal_block_tag3_t *tag3,
 				      void *buf, __u32 sequence)
 {
+=======
+				      void *buf, __u32 sequence)
+{
+	journal_block_tag3_t *tag3 = (journal_block_tag3_t *)tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u32 csum32;
 	__be32 seq;
 
@@ -496,7 +522,11 @@ static int do_one_pass(journal_t *journal,
 	while (1) {
 		int			flags;
 		char *			tagp;
+<<<<<<< HEAD
 		journal_block_tag_t	tag;
+=======
+		journal_block_tag_t *	tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct buffer_head *	obh;
 		struct buffer_head *	nbh;
 
@@ -613,8 +643,13 @@ static int do_one_pass(journal_t *journal,
 			       <= journal->j_blocksize - descr_csum_size) {
 				unsigned long io_block;
 
+<<<<<<< HEAD
 				memcpy(&tag, tagp, sizeof(tag));
 				flags = be16_to_cpu(tag.t_flags);
+=======
+				tag = (journal_block_tag_t *) tagp;
+				flags = be16_to_cpu(tag->t_flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				io_block = next_log_block++;
 				wrap(journal, next_log_block);
@@ -632,7 +667,11 @@ static int do_one_pass(journal_t *journal,
 
 					J_ASSERT(obh != NULL);
 					blocknr = read_tag_block(journal,
+<<<<<<< HEAD
 								 &tag);
+=======
+								 tag);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 					/* If the block has been
 					 * revoked, then we're all done
@@ -647,8 +686,13 @@ static int do_one_pass(journal_t *journal,
 
 					/* Look for block corruption */
 					if (!jbd2_block_tag_csum_verify(
+<<<<<<< HEAD
 			journal, &tag, (journal_block_tag3_t *)tagp,
 			obh->b_data, be32_to_cpu(tmp->h_sequence))) {
+=======
+						journal, tag, obh->b_data,
+						be32_to_cpu(tmp->h_sequence))) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						brelse(obh);
 						success = -EFSBADCRC;
 						printk(KERN_ERR "JBD2: Invalid "
@@ -760,6 +804,10 @@ static int do_one_pass(journal_t *journal,
 				 */
 				jbd_debug(1, "JBD2: Invalid checksum ignored in transaction %u, likely stale data\n",
 					  next_commit_ID);
+<<<<<<< HEAD
+=======
+				err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				brelse(bh);
 				goto done;
 			}
@@ -896,7 +944,11 @@ static int scan_revoke_records(journal_t *journal, struct buffer_head *bh,
 {
 	jbd2_journal_revoke_header_t *header;
 	int offset, max;
+<<<<<<< HEAD
 	unsigned csum_size = 0;
+=======
+	int csum_size = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u32 rcount;
 	int record_len = 4;
 

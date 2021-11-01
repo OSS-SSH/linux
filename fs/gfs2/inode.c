@@ -1985,8 +1985,13 @@ static int gfs2_setattr(struct user_namespace *mnt_userns,
 	if (error)
 		goto out;
 
+<<<<<<< HEAD
 	error = may_setattr(&init_user_ns, inode, attr->ia_valid);
 	if (error)
+=======
+	error = -EPERM;
+	if (IS_IMMUTABLE(inode) || IS_APPEND(inode))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto error;
 
 	error = setattr_prepare(&init_user_ns, dentry, attr);

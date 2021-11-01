@@ -1075,6 +1075,7 @@ xfrm_state_addr_cmp(const struct xfrm_tmpl *tmpl, const struct xfrm_state *x, un
 }
 
 #ifdef CONFIG_XFRM
+<<<<<<< HEAD
 static inline bool
 xfrm_default_allow(struct net *net, int dir)
 {
@@ -1091,6 +1092,8 @@ xfrm_default_allow(struct net *net, int dir)
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int __xfrm_policy_check(struct sock *, int dir, struct sk_buff *skb,
 			unsigned short family);
 
@@ -1104,6 +1107,7 @@ static inline int __xfrm_policy_check2(struct sock *sk, int dir,
 	if (sk && sk->sk_policy[XFRM_POLICY_IN])
 		return __xfrm_policy_check(sk, ndir, skb, family);
 
+<<<<<<< HEAD
 	if (xfrm_default_allow(net, dir))
 		return (!net->xfrm.policy_count[dir] && !secpath_exists(skb)) ||
 		       (skb_dst(skb) && (skb_dst(skb)->flags & DST_NOPOLICY)) ||
@@ -1111,6 +1115,11 @@ static inline int __xfrm_policy_check2(struct sock *sk, int dir,
 	else
 		return (skb_dst(skb) && (skb_dst(skb)->flags & DST_NOPOLICY)) ||
 		       __xfrm_policy_check(sk, ndir, skb, family);
+=======
+	return	(!net->xfrm.policy_count[dir] && !secpath_exists(skb)) ||
+		(skb_dst(skb) && (skb_dst(skb)->flags & DST_NOPOLICY)) ||
+		__xfrm_policy_check(sk, ndir, skb, family);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb, unsigned short family)
@@ -1162,6 +1171,7 @@ static inline int xfrm_route_forward(struct sk_buff *skb, unsigned short family)
 {
 	struct net *net = dev_net(skb->dev);
 
+<<<<<<< HEAD
 	if (xfrm_default_allow(net, XFRM_POLICY_FWD))
 		return !net->xfrm.policy_count[XFRM_POLICY_OUT] ||
 			(skb_dst(skb)->flags & DST_NOXFRM) ||
@@ -1169,6 +1179,11 @@ static inline int xfrm_route_forward(struct sk_buff *skb, unsigned short family)
 	else
 		return (skb_dst(skb)->flags & DST_NOXFRM) ||
 			__xfrm_route_forward(skb, family);
+=======
+	return	!net->xfrm.policy_count[XFRM_POLICY_OUT] ||
+		(skb_dst(skb)->flags & DST_NOXFRM) ||
+		__xfrm_route_forward(skb, family);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int xfrm4_route_forward(struct sk_buff *skb)

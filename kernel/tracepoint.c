@@ -15,6 +15,7 @@
 #include <linux/sched/task.h>
 #include <linux/static_key.h>
 
+<<<<<<< HEAD
 enum tp_func_state {
 	TP_FUNC_0,
 	TP_FUNC_1,
@@ -22,12 +23,15 @@ enum tp_func_state {
 	TP_FUNC_N,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern tracepoint_ptr_t __start___tracepoints_ptrs[];
 extern tracepoint_ptr_t __stop___tracepoints_ptrs[];
 
 DEFINE_SRCU(tracepoint_srcu);
 EXPORT_SYMBOL_GPL(tracepoint_srcu);
 
+<<<<<<< HEAD
 enum tp_transition_sync {
 	TP_TRANSITION_SYNC_1_0_1,
 	TP_TRANSITION_SYNC_N_2_1,
@@ -66,6 +70,8 @@ static void tp_rcu_cond_sync(enum tp_transition_sync sync)
 	snapshot->ongoing = false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Set to 1 to enable tracepoint debug output */
 static const int tracepoint_debug;
 
@@ -291,6 +297,7 @@ static void *func_remove(struct tracepoint_func **funcs,
 	return old;
 }
 
+<<<<<<< HEAD
 /*
  * Count the number of functions (enum tp_func_state) in a tp_funcs array.
  */
@@ -306,14 +313,33 @@ static enum tp_func_state nr_func_state(const struct tracepoint_func *tp_funcs)
 }
 
 static void tracepoint_update_call(struct tracepoint *tp, struct tracepoint_func *tp_funcs)
+=======
+static void tracepoint_update_call(struct tracepoint *tp, struct tracepoint_func *tp_funcs, bool sync)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	void *func = tp->iterator;
 
 	/* Synthetic events do not have static call sites */
 	if (!tp->static_call_key)
 		return;
+<<<<<<< HEAD
 	if (nr_func_state(tp_funcs) == TP_FUNC_1)
 		func = tp_funcs[0].func;
+=======
+
+	if (!tp_funcs[1].func) {
+		func = tp_funcs[0].func;
+		/*
+		 * If going from the iterator back to a single caller,
+		 * we need to synchronize with __DO_TRACE to make sure
+		 * that the data passed to the callback is the one that
+		 * belongs to that callback.
+		 */
+		if (sync)
+			tracepoint_synchronize_unregister();
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__static_call_update(tp->static_call_key, tp->static_call_tramp, func);
 }
 
@@ -347,6 +373,7 @@ static int tracepoint_add_func(struct tracepoint *tp,
 	 * a pointer to it.  This array is referenced by __DO_TRACE from
 	 * include/linux/tracepoint.h using rcu_dereference_sched().
 	 */
+<<<<<<< HEAD
 	switch (nr_func_state(tp_funcs)) {
 	case TP_FUNC_1:		/* 0->1 */
 		/*
@@ -382,6 +409,11 @@ static int tracepoint_add_func(struct tracepoint *tp,
 		WARN_ON_ONCE(1);
 		break;
 	}
+=======
+	rcu_assign_pointer(tp->funcs, tp_funcs);
+	tracepoint_update_call(tp, tp_funcs, false);
+	static_key_enable(&tp->key);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	release_probes(old);
 	return 0;
@@ -408,13 +440,18 @@ static int tracepoint_remove_func(struct tracepoint *tp,
 		/* Failed allocating new tp_funcs, replaced func with stub */
 		return 0;
 
+<<<<<<< HEAD
 	switch (nr_func_state(tp_funcs)) {
 	case TP_FUNC_0:		/* 1->0 */
+=======
+	if (!tp_funcs) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Removed last function */
 		if (tp->unregfunc && static_key_enabled(&tp->key))
 			tp->unregfunc();
 
 		static_key_disable(&tp->key);
+<<<<<<< HEAD
 		/* Set iterator static call */
 		tracepoint_update_call(tp, tp_funcs);
 		/* Both iterator and static call handle NULL tp->funcs */
@@ -454,6 +491,13 @@ static int tracepoint_remove_func(struct tracepoint *tp,
 	default:
 		WARN_ON_ONCE(1);
 		break;
+=======
+		rcu_assign_pointer(tp->funcs, tp_funcs);
+	} else {
+		rcu_assign_pointer(tp->funcs, tp_funcs);
+		tracepoint_update_call(tp, tp_funcs,
+				       tp_funcs[0].func != old[0].func);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	release_probes(old);
 	return 0;
@@ -577,7 +621,11 @@ bool trace_module_has_bad_taint(struct module *mod)
 static BLOCKING_NOTIFIER_HEAD(tracepoint_notify_list);
 
 /**
+<<<<<<< HEAD
  * register_tracepoint_module_notifier - register tracepoint coming/going notifier
+=======
+ * register_tracepoint_notifier - register tracepoint coming/going notifier
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @nb: notifier block
  *
  * Notifiers registered with this function are called on module
@@ -603,7 +651,11 @@ end:
 EXPORT_SYMBOL_GPL(register_tracepoint_module_notifier);
 
 /**
+<<<<<<< HEAD
  * unregister_tracepoint_module_notifier - unregister tracepoint coming/going notifier
+=======
+ * unregister_tracepoint_notifier - unregister tracepoint coming/going notifier
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @nb: notifier block
  *
  * The notifier block callback should expect a "struct tp_module" data

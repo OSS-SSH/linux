@@ -11,7 +11,10 @@
 #include <linux/platform_device.h>
 #include <linux/dma-map-ops.h>
 #include <linux/io.h>
+<<<<<<< HEAD
 #include <linux/delay.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm/irq.h>
 
@@ -207,6 +210,11 @@ static inline void udc_device_init(struct omap_usb_config *pdata)
 
 #endif
 
+<<<<<<< HEAD
+=======
+#if	IS_ENABLED(CONFIG_USB_OHCI_HCD)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* The dmamask must be set for OHCI to work */
 static u64 ohci_dmamask = ~(u32)0;
 
@@ -235,15 +243,29 @@ static struct platform_device ohci_device = {
 
 static inline void ohci_device_init(struct omap_usb_config *pdata)
 {
+<<<<<<< HEAD
 	if (!IS_ENABLED(CONFIG_USB_OHCI_HCD))
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (cpu_is_omap7xx())
 		ohci_resources[1].start = INT_7XX_USB_HHC_1;
 	pdata->ohci_device = &ohci_device;
 	pdata->ocpi_enable = &ocpi_enable;
 }
 
+<<<<<<< HEAD
+=======
+#else
+
+static inline void ohci_device_init(struct omap_usb_config *pdata)
+{
+}
+
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if	defined(CONFIG_USB_OTG) && defined(CONFIG_ARCH_OMAP_OTG)
 
 static struct resource otg_resources[] = {
@@ -528,6 +550,7 @@ bad:
 }
 
 #ifdef	CONFIG_ARCH_OMAP15XX
+<<<<<<< HEAD
 /* OMAP-1510 OHCI has its own MMU for DMA */
 #define OMAP1510_LB_MEMSIZE	32	/* Should be same as SDRAM size */
 #define OMAP1510_LB_CLOCK_DIV	0xfffec10c
@@ -601,6 +624,8 @@ static void omap_1510_local_bus_reset(void)
 	omap_1510_local_bus_power(1);
 	omap_1510_local_bus_init();
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* ULPD_DPLL_CTRL */
 #define DPLL_IOB		(1 << 13)
@@ -610,6 +635,28 @@ static void omap_1510_local_bus_reset(void)
 /* ULPD_APLL_CTRL */
 #define APLL_NDPLL_SWITCH	(1 << 0)
 
+<<<<<<< HEAD
+=======
+static int omap_1510_usb_ohci_notifier(struct notifier_block *nb,
+		unsigned long event, void *data)
+{
+	struct device *dev = data;
+
+	if (event != BUS_NOTIFY_ADD_DEVICE)
+		return NOTIFY_DONE;
+
+	if (strncmp(dev_name(dev), "ohci", 4) == 0 &&
+	    dma_direct_set_offset(dev, PHYS_OFFSET, OMAP1510_LB_OFFSET,
+			(u64)-1))
+		WARN_ONCE(1, "failed to set DMA offset\n");
+	return NOTIFY_OK;
+}
+
+static struct notifier_block omap_1510_usb_ohci_nb = {
+	.notifier_call		= omap_1510_usb_ohci_notifier,
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __init omap_1510_usb_init(struct omap_usb_config *config)
 {
 	unsigned int val;
@@ -664,19 +711,34 @@ static void __init omap_1510_usb_init(struct omap_usb_config *config)
 	}
 #endif
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_USB_OHCI_HCD) && config->register_host) {
 		int status;
 
 		ohci_device.dev.platform_data = config;
 		dma_direct_set_offset(&ohci_device.dev, PHYS_OFFSET,
 				      OMAP1510_LB_OFFSET, (u64)-1);
+=======
+#if	IS_ENABLED(CONFIG_USB_OHCI_HCD)
+	if (config->register_host) {
+		int status;
+
+		bus_register_notifier(&platform_bus_type,
+				      &omap_1510_usb_ohci_nb);
+		ohci_device.dev.platform_data = config;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		status = platform_device_register(&ohci_device);
 		if (status)
 			pr_debug("can't register OHCI device, %d\n", status);
 		/* hcd explicitly gates 48MHz */
+<<<<<<< HEAD
 
 		config->lb_reset = omap_1510_local_bus_reset;
 	}
+=======
+	}
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #else

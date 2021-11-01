@@ -7,11 +7,14 @@
  *
  * Code supporting the Jensen.
  */
+<<<<<<< HEAD
 #define __EXTERN_INLINE
 #include <asm/io.h>
 #include <asm/jensen.h>
 #undef  __EXTERN_INLINE
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/interrupt.h>
 #include <linux/kernel.h>
 #include <linux/types.h>
@@ -22,6 +25,14 @@
 
 #include <asm/ptrace.h>
 
+<<<<<<< HEAD
+=======
+#define __EXTERN_INLINE inline
+#include <asm/io.h>
+#include <asm/jensen.h>
+#undef  __EXTERN_INLINE
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/dma.h>
 #include <asm/irq.h>
 #include <asm/mmu_context.h>

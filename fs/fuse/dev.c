@@ -288,10 +288,17 @@ void fuse_request_end(struct fuse_req *req)
 
 	/*
 	 * test_and_set_bit() implies smp_mb() between bit
+<<<<<<< HEAD
 	 * changing and below FR_INTERRUPTED check. Pairs with
 	 * smp_mb() from queue_interrupt().
 	 */
 	if (test_bit(FR_INTERRUPTED, &req->flags)) {
+=======
+	 * changing and below intr_entry check. Pairs with
+	 * smp_mb() from queue_interrupt().
+	 */
+	if (!list_empty(&req->intr_entry)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		spin_lock(&fiq->lock);
 		list_del_init(&req->intr_entry);
 		spin_unlock(&fiq->lock);

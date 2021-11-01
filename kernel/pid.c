@@ -550,6 +550,7 @@ struct pid *pidfd_get_pid(unsigned int fd, unsigned int *flags)
  * Note, that this function can only be called after the fd table has
  * been unshared to avoid leaking the pidfd to the new process.
  *
+<<<<<<< HEAD
  * This symbol should not be explicitly exported to loadable modules.
  *
  * Return: On success, a cloexec pidfd is returned.
@@ -565,6 +566,15 @@ int pidfd_create(struct pid *pid, unsigned int flags)
 	if (flags & ~(O_NONBLOCK | O_RDWR | O_CLOEXEC))
 		return -EINVAL;
 
+=======
+ * Return: On success, a cloexec pidfd is returned.
+ *         On error, a negative errno number will be returned.
+ */
+static int pidfd_create(struct pid *pid, unsigned int flags)
+{
+	int fd;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fd = anon_inode_getfd("[pidfd]", &pidfd_fops, get_pid(pid),
 			      flags | O_RDWR | O_CLOEXEC);
 	if (fd < 0)
@@ -604,7 +614,14 @@ SYSCALL_DEFINE2(pidfd_open, pid_t, pid, unsigned int, flags)
 	if (!p)
 		return -ESRCH;
 
+<<<<<<< HEAD
 	fd = pidfd_create(p, flags);
+=======
+	if (pid_has_task(p, PIDTYPE_TGID))
+		fd = pidfd_create(p, flags);
+	else
+		fd = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	put_pid(p);
 	return fd;

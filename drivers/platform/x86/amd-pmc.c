@@ -46,6 +46,7 @@
 #define AMD_PMC_RESULT_CMD_UNKNOWN           0xFE
 #define AMD_PMC_RESULT_FAILED                0xFF
 
+<<<<<<< HEAD
 /* FCH SSC Registers */
 #define FCH_S0I3_ENTRY_TIME_L_OFFSET	0x30
 #define FCH_S0I3_ENTRY_TIME_H_OFFSET	0x34
@@ -63,11 +64,14 @@
 #define SMU_MSG_LOG_RESET		0x07
 #define SMU_MSG_LOG_DUMP_DATA		0x08
 #define SMU_MSG_GET_SUP_CONSTRAINTS	0x09
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* List of supported CPU ids */
 #define AMD_CPU_ID_RV			0x15D0
 #define AMD_CPU_ID_RN			0x1630
 #define AMD_CPU_ID_PCO			AMD_CPU_ID_RV
 #define AMD_CPU_ID_CZN			AMD_CPU_ID_RN
+<<<<<<< HEAD
 #define AMD_CPU_ID_YC			0x14B5
 
 #define PMC_MSG_DELAY_MIN_US		100
@@ -76,12 +80,20 @@
 #define SOC_SUBSYSTEM_IP_MAX	12
 #define DELAY_MIN_US		2000
 #define DELAY_MAX_US		3000
+=======
+
+#define AMD_SMU_FW_VERSION		0x0
+#define PMC_MSG_DELAY_MIN_US		100
+#define RESPONSE_REGISTER_LOOP_MAX	200
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum amd_pmc_def {
 	MSG_TEST = 0x01,
 	MSG_OS_HINT_PCO,
 	MSG_OS_HINT_RN,
 };
 
+<<<<<<< HEAD
 struct amd_pmc_bit_map {
 	const char *name;
 	u32 bit_mask;
@@ -112,13 +124,24 @@ struct amd_pmc_dev {
 	u32 active_ips;
 	struct device *dev;
 	struct mutex lock; /* generic mutex lock */
+=======
+struct amd_pmc_dev {
+	void __iomem *regbase;
+	void __iomem *smu_base;
+	u32 base_addr;
+	u32 cpu_id;
+	struct device *dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if IS_ENABLED(CONFIG_DEBUG_FS)
 	struct dentry *dbgfs_dir;
 #endif /* CONFIG_DEBUG_FS */
 };
 
 static struct amd_pmc_dev pmc;
+<<<<<<< HEAD
 static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, bool set, u32 *data, u8 msg, bool ret);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline u32 amd_pmc_reg_read(struct amd_pmc_dev *dev, int reg_offset)
 {
@@ -130,6 +153,7 @@ static inline void amd_pmc_reg_write(struct amd_pmc_dev *dev, int reg_offset, u3
 	iowrite32(val, dev->regbase + reg_offset);
 }
 
+<<<<<<< HEAD
 struct smu_metrics {
 	u32 table_version;
 	u32 hint_count;
@@ -147,10 +171,13 @@ struct smu_metrics {
 	u64 timecondition_notmet_totaltime[SOC_SUBSYSTEM_IP_MAX];
 } __packed;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DEBUG_FS
 static int smu_fw_info_show(struct seq_file *s, void *unused)
 {
 	struct amd_pmc_dev *dev = s->private;
+<<<<<<< HEAD
 	struct smu_metrics table;
 	int idx;
 
@@ -173,10 +200,17 @@ static int smu_fw_info_show(struct seq_file *s, void *unused)
 				   table.timecondition_notmet_lastcapture[idx]);
 	}
 
+=======
+	u32 value;
+
+	value = ioread32(dev->smu_base + AMD_SMU_FW_VERSION);
+	seq_printf(s, "SMU FW Info: %x\n", value);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 DEFINE_SHOW_ATTRIBUTE(smu_fw_info);
 
+<<<<<<< HEAD
 static int s0ix_stats_show(struct seq_file *s, void *unused)
 {
 	struct amd_pmc_dev *dev = s->private;
@@ -201,6 +235,8 @@ static int s0ix_stats_show(struct seq_file *s, void *unused)
 }
 DEFINE_SHOW_ATTRIBUTE(s0ix_stats);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void amd_pmc_dbgfs_unregister(struct amd_pmc_dev *dev)
 {
 	debugfs_remove_recursive(dev->dbgfs_dir);
@@ -211,8 +247,11 @@ static void amd_pmc_dbgfs_register(struct amd_pmc_dev *dev)
 	dev->dbgfs_dir = debugfs_create_dir("amd_pmc", NULL);
 	debugfs_create_file("smu_fw_info", 0644, dev->dbgfs_dir, dev,
 			    &smu_fw_info_fops);
+<<<<<<< HEAD
 	debugfs_create_file("s0ix_stats", 0644, dev->dbgfs_dir, dev,
 			    &s0ix_stats_fops);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #else
 static inline void amd_pmc_dbgfs_register(struct amd_pmc_dev *dev)
@@ -224,6 +263,7 @@ static inline void amd_pmc_dbgfs_unregister(struct amd_pmc_dev *dev)
 }
 #endif /* CONFIG_DEBUG_FS */
 
+<<<<<<< HEAD
 static int amd_pmc_setup_smu_logging(struct amd_pmc_dev *dev)
 {
 	u32 phys_addr_low, phys_addr_hi;
@@ -250,6 +290,8 @@ static int amd_pmc_setup_smu_logging(struct amd_pmc_dev *dev)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void amd_pmc_dump_registers(struct amd_pmc_dev *dev)
 {
 	u32 value;
@@ -264,6 +306,7 @@ static void amd_pmc_dump_registers(struct amd_pmc_dev *dev)
 	dev_dbg(dev->dev, "AMD_PMC_REGISTER_MESSAGE:%x\n", value);
 }
 
+<<<<<<< HEAD
 static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, bool set, u32 *data, u8 msg, bool ret)
 {
 	int rc;
@@ -277,6 +320,21 @@ static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, bool set, u32 *data, u8 msg
 	if (rc) {
 		dev_err(dev->dev, "failed to talk to SMU\n");
 		goto out_unlock;
+=======
+static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, bool set)
+{
+	int rc;
+	u8 msg;
+	u32 val;
+
+	/* Wait until we get a valid response */
+	rc = readx_poll_timeout(ioread32, dev->regbase + AMD_PMC_REGISTER_RESPONSE,
+				val, val > 0, PMC_MSG_DELAY_MIN_US,
+				PMC_MSG_DELAY_MIN_US * RESPONSE_REGISTER_LOOP_MAX);
+	if (rc) {
+		dev_err(dev->dev, "failed to talk to SMU\n");
+		return rc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* Write zero to response register */
@@ -286,6 +344,7 @@ static int amd_pmc_send_cmd(struct amd_pmc_dev *dev, bool set, u32 *data, u8 msg
 	amd_pmc_reg_write(dev, AMD_PMC_REGISTER_ARGUMENT, set);
 
 	/* Write message ID to message ID register */
+<<<<<<< HEAD
 	amd_pmc_reg_write(dev, AMD_PMC_REGISTER_MESSAGE, msg);
 
 	/* Wait until we get a valid response */
@@ -337,12 +396,18 @@ static int amd_pmc_get_os_hint(struct amd_pmc_dev *dev)
 		return MSG_OS_HINT_RN;
 	}
 	return -EINVAL;
+=======
+	msg = (dev->cpu_id == AMD_CPU_ID_RN) ? MSG_OS_HINT_RN : MSG_OS_HINT_PCO;
+	amd_pmc_reg_write(dev, AMD_PMC_REGISTER_MESSAGE, msg);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __maybe_unused amd_pmc_suspend(struct device *dev)
 {
 	struct amd_pmc_dev *pdev = dev_get_drvdata(dev);
 	int rc;
+<<<<<<< HEAD
 	u8 msg;
 
 	/* Reset and Start SMU logging - to monitor the s0i3 stats */
@@ -355,12 +420,22 @@ static int __maybe_unused amd_pmc_suspend(struct device *dev)
 		dev_err(pdev->dev, "suspend failed\n");
 
 	return rc;
+=======
+
+	rc = amd_pmc_send_cmd(pdev, 1);
+	if (rc)
+		dev_err(pdev->dev, "suspend failed\n");
+
+	amd_pmc_dump_registers(pdev);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __maybe_unused amd_pmc_resume(struct device *dev)
 {
 	struct amd_pmc_dev *pdev = dev_get_drvdata(dev);
 	int rc;
+<<<<<<< HEAD
 	u8 msg;
 
 	/* Let SMU know that we are looking for stats */
@@ -371,6 +446,14 @@ static int __maybe_unused amd_pmc_resume(struct device *dev)
 	if (rc)
 		dev_err(pdev->dev, "resume failed\n");
 
+=======
+
+	rc = amd_pmc_send_cmd(pdev, 0);
+	if (rc)
+		dev_err(pdev->dev, "resume failed\n");
+
+	amd_pmc_dump_registers(pdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -379,7 +462,10 @@ static const struct dev_pm_ops amd_pmc_pm_ops = {
 };
 
 static const struct pci_device_id pmc_pci_ids[] = {
+<<<<<<< HEAD
 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_YC) },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_CZN) },
 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_RN) },
 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_PCO) },
@@ -391,8 +477,14 @@ static int amd_pmc_probe(struct platform_device *pdev)
 {
 	struct amd_pmc_dev *dev = &pmc;
 	struct pci_dev *rdev;
+<<<<<<< HEAD
 	u32 base_addr_lo, base_addr_hi;
 	u64 base_addr, fch_phys_addr;
+=======
+	u32 base_addr_lo;
+	u32 base_addr_hi;
+	u64 base_addr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 	u32 val;
 
@@ -437,11 +529,19 @@ static int amd_pmc_probe(struct platform_device *pdev)
 	pci_dev_put(rdev);
 	base_addr = ((u64)base_addr_hi << 32 | base_addr_lo);
 
+<<<<<<< HEAD
+=======
+	dev->smu_base = devm_ioremap(dev->dev, base_addr, AMD_PMC_MAPPING_SIZE);
+	if (!dev->smu_base)
+		return -ENOMEM;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev->regbase = devm_ioremap(dev->dev, base_addr + AMD_PMC_BASE_ADDR_OFFSET,
 				    AMD_PMC_MAPPING_SIZE);
 	if (!dev->regbase)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	mutex_init(&dev->lock);
 
 	/* Use FCH registers to get the S0ix stats */
@@ -456,6 +556,9 @@ static int amd_pmc_probe(struct platform_device *pdev)
 	err = amd_pmc_setup_smu_logging(dev);
 	if (err)
 		dev_err(dev->dev, "SMU debugging info not supported on this platform\n");
+=======
+	amd_pmc_dump_registers(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	platform_set_drvdata(pdev, dev);
 	amd_pmc_dbgfs_register(dev);
@@ -467,16 +570,23 @@ static int amd_pmc_remove(struct platform_device *pdev)
 	struct amd_pmc_dev *dev = platform_get_drvdata(pdev);
 
 	amd_pmc_dbgfs_unregister(dev);
+<<<<<<< HEAD
 	mutex_destroy(&dev->lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
 static const struct acpi_device_id amd_pmc_acpi_ids[] = {
 	{"AMDI0005", 0},
+<<<<<<< HEAD
 	{"AMDI0006", 0},
 	{"AMDI0007", 0},
 	{"AMD0004", 0},
 	{"AMD0005", 0},
+=======
+	{"AMD0004", 0},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ }
 };
 MODULE_DEVICE_TABLE(acpi, amd_pmc_acpi_ids);

@@ -128,8 +128,12 @@ int brcmf_sdiod_intr_register(struct brcmf_sdio_dev *sdiodev)
 
 		if (sdiodev->bus_if->chip == BRCM_CC_43362_CHIP_ID) {
 			/* assign GPIO to SDIO core */
+<<<<<<< HEAD
 			addr = brcmf_chip_enum_base(sdiodev->func1->device);
 			addr = CORE_CC_REG(addr, gpiocontrol);
+=======
+			addr = CORE_CC_REG(SI_ENUM_BASE, gpiocontrol);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			gpiocontrol = brcmf_sdiod_readl(sdiodev, addr, &ret);
 			gpiocontrol |= 0x2;
 			brcmf_sdiod_writel(sdiodev, addr, gpiocontrol, &ret);
@@ -991,7 +995,10 @@ static const struct sdio_device_id brcmf_sdmmc_ids[] = {
 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_4359),
 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_4373),
 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43012),
+<<<<<<< HEAD
 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_43752),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BRCMF_SDIO_DEVICE(SDIO_DEVICE_ID_BROADCOM_CYPRESS_89359),
 	{ /* end: all zeroes */ }
 };

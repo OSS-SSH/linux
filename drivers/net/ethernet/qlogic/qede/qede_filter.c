@@ -831,7 +831,11 @@ int qede_configure_vlan_filters(struct qede_dev *edev)
 int qede_vlan_rx_kill_vid(struct net_device *dev, __be16 proto, u16 vid)
 {
 	struct qede_dev *edev = netdev_priv(dev);
+<<<<<<< HEAD
 	struct qede_vlan *vlan;
+=======
+	struct qede_vlan *vlan = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc = 0;
 
 	DP_VERBOSE(edev, NETIF_MSG_IFDOWN, "Removing vlan 0x%04x\n", vid);
@@ -842,7 +846,11 @@ int qede_vlan_rx_kill_vid(struct net_device *dev, __be16 proto, u16 vid)
 		if (vlan->vid == vid)
 			break;
 
+<<<<<<< HEAD
 	if (list_entry_is_head(vlan, &edev->vlan_list, list)) {
+=======
+	if (!vlan || (vlan->vid != vid)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		DP_VERBOSE(edev, (NETIF_MSG_IFUP | NETIF_MSG_IFDOWN),
 			   "Vlan isn't configured\n");
 		goto out;

@@ -29,7 +29,10 @@
 #include <asm/unistd.h>
 #include <asm/fpsimd.h>
 #include <asm/ptrace.h>
+<<<<<<< HEAD
 #include <asm/syscall.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/signal32.h>
 #include <asm/traps.h>
 #include <asm/vdso.h>
@@ -290,11 +293,14 @@ static int restore_sve_fpsimd_context(struct user_ctxs *user)
 	/* From now, fpsimd_thread_switch() won't touch thread.sve_state */
 
 	sve_alloc(current);
+<<<<<<< HEAD
 	if (!current->thread.sve_state) {
 		clear_thread_flag(TIF_SVE);
 		return -ENOMEM;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = __copy_from_user(current->thread.sve_state,
 			       (char __user const *)user->sve +
 					SVE_SIG_REGS_OFFSET,
@@ -896,7 +902,11 @@ static void do_signal(struct pt_regs *regs)
 		     retval == -ERESTART_RESTARTBLOCK ||
 		     (retval == -ERESTARTSYS &&
 		      !(ksig.ka.sa.sa_flags & SA_RESTART)))) {
+<<<<<<< HEAD
 			syscall_set_return_value(current, regs, -EINTR, 0);
+=======
+			regs->regs[0] = -EINTR;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			regs->pc = continue_addr;
 		}
 
@@ -917,7 +927,25 @@ static void do_signal(struct pt_regs *regs)
 	restore_saved_sigmask();
 }
 
+<<<<<<< HEAD
 void do_notify_resume(struct pt_regs *regs, unsigned long thread_flags)
+=======
+static bool cpu_affinity_invalid(struct pt_regs *regs)
+{
+	if (!compat_user_mode(regs))
+		return false;
+
+	/*
+	 * We're preemptible, but a reschedule will cause us to check the
+	 * affinity again.
+	 */
+	return !cpumask_test_cpu(raw_smp_processor_id(),
+				 system_32bit_el0_cpumask());
+}
+
+asmlinkage void do_notify_resume(struct pt_regs *regs,
+				 unsigned long thread_flags)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	do {
 		if (thread_flags & _TIF_NEED_RESCHED) {
@@ -940,8 +968,28 @@ void do_notify_resume(struct pt_regs *regs, unsigned long thread_flags)
 			if (thread_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
 				do_signal(regs);
 
+<<<<<<< HEAD
 			if (thread_flags & _TIF_NOTIFY_RESUME)
 				tracehook_notify_resume(regs);
+=======
+			if (thread_flags & _TIF_NOTIFY_RESUME) {
+				tracehook_notify_resume(regs);
+				rseq_handle_notify_resume(NULL, regs);
+
+				/*
+				 * If we reschedule after checking the affinity
+				 * then we must ensure that TIF_NOTIFY_RESUME
+				 * is set so that we check the affinity again.
+				 * Since tracehook_notify_resume() clears the
+				 * flag, ensure that the compiler doesn't move
+				 * it after the affinity check.
+				 */
+				barrier();
+
+				if (cpu_affinity_invalid(regs))
+					force_sig(SIGKILL);
+			}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			if (thread_flags & _TIF_FOREIGN_FPSTATE)
 				fpsimd_restore_current_state();
@@ -976,6 +1024,7 @@ void __init minsigstksz_setup(void)
 		round_up(sizeof(struct frame_record), 16) +
 		16; /* max alignment padding */
 }
+<<<<<<< HEAD
 
 /*
  * Compile-time assertions for siginfo_t offsets. Check NSIG* as well, as
@@ -1015,3 +1064,5 @@ static_assert(offsetof(siginfo_t, si_fd)	== 0x18);
 static_assert(offsetof(siginfo_t, si_call_addr)	== 0x10);
 static_assert(offsetof(siginfo_t, si_syscall)	== 0x18);
 static_assert(offsetof(siginfo_t, si_arch)	== 0x1c);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

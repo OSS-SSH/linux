@@ -91,6 +91,14 @@ static inline void kvm_dirty_gfn_set_dirtied(struct kvm_dirty_gfn *gfn)
 	gfn->flags = KVM_DIRTY_GFN_F_DIRTY;
 }
 
+<<<<<<< HEAD
+=======
+static inline bool kvm_dirty_gfn_invalid(struct kvm_dirty_gfn *gfn)
+{
+	return gfn->flags == 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool kvm_dirty_gfn_harvested(struct kvm_dirty_gfn *gfn)
 {
 	return gfn->flags & KVM_DIRTY_GFN_F_RESET;

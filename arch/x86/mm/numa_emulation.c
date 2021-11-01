@@ -447,12 +447,21 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
 	if (numa_dist_cnt) {
 		u64 phys;
 
+<<<<<<< HEAD
 		phys = memblock_phys_alloc_range(phys_size, PAGE_SIZE, 0,
 						 PFN_PHYS(max_pfn_mapped));
+=======
+		phys = memblock_find_in_range(0, PFN_PHYS(max_pfn_mapped),
+					      phys_size, PAGE_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!phys) {
 			pr_warn("NUMA: Warning: can't allocate copy of distance table, disabling emulation\n");
 			goto no_emu;
 		}
+<<<<<<< HEAD
+=======
+		memblock_reserve(phys, phys_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		phys_dist = __va(phys);
 
 		for (i = 0; i < numa_dist_cnt; i++)
@@ -517,7 +526,12 @@ void __init numa_emulation(struct numa_meminfo *numa_meminfo, int numa_dist_cnt)
 	}
 
 	/* free the copied physical distance table */
+<<<<<<< HEAD
 	memblock_free_ptr(phys_dist, phys_size);
+=======
+	if (phys_dist)
+		memblock_free(__pa(phys_dist), phys_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return;
 
 no_emu:

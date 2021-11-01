@@ -661,6 +661,7 @@
 	};
 };
 
+<<<<<<< HEAD
 &cpsw_port1 {
 	phy-mode = "mii";
 	phy-handle = <&ethphy0>;
@@ -672,13 +673,26 @@
 };
 
 &mac_sw {
+=======
+&cpsw_emac0 {
+	phy-mode = "mii";
+	phy-handle = <&ethphy0>;
+};
+
+&mac {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	status = "okay";
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&cpsw_default>;
 	pinctrl-1 = <&cpsw_sleep>;
 };
 
+<<<<<<< HEAD
 &davinci_mdio_sw {
+=======
+&davinci_mdio {
+	status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pinctrl-names = "default", "sleep";
 	pinctrl-0 = <&davinci_mdio_default>;
 	pinctrl-1 = <&davinci_mdio_sleep>;

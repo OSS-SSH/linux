@@ -16,6 +16,7 @@ dtb-$(CONFIG_ARCH_MVEBU) += armada-8040-mcbin-singleshot.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += armada-8040-puzzle-m801.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += armada-8080-db.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += cn9130-db.dtb
+<<<<<<< HEAD
 dtb-$(CONFIG_ARCH_MVEBU) += cn9130-db-B.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += cn9131-db.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += cn9131-db-B.dtb
@@ -23,3 +24,7 @@ dtb-$(CONFIG_ARCH_MVEBU) += cn9132-db.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += cn9132-db-B.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += cn9130-crb-A.dtb
 dtb-$(CONFIG_ARCH_MVEBU) += cn9130-crb-B.dtb
+=======
+dtb-$(CONFIG_ARCH_MVEBU) += cn9131-db.dtb
+dtb-$(CONFIG_ARCH_MVEBU) += cn9132-db.dtb
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -51,7 +51,10 @@
 /**
  * struct bcm_device_data - device specific data
  * @no_early_set_baudrate: Disallow set baudrate before driver setup()
+<<<<<<< HEAD
  * @drive_rts_on_open: drive RTS signal on ->open() when platform requires it
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct bcm_device_data {
 	bool	no_early_set_baudrate;
@@ -78,8 +81,11 @@ struct bcm_device_data {
  * @btlp: Apple ACPI method to toggle BT_WAKE pin ("Bluetooth Low Power")
  * @btpu: Apple ACPI method to drive BT_REG_ON pin high ("Bluetooth Power Up")
  * @btpd: Apple ACPI method to drive BT_REG_ON pin low ("Bluetooth Power Down")
+<<<<<<< HEAD
  * @gpio_count: internal counter for GPIO resources associated with ACPI device
  * @gpio_int_idx: index in _CRS for GpioInt() resource
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @txco_clk: external reference frequency clock used by Bluetooth device
  * @lpo_clk: external LPO clock used by Bluetooth device
  * @supplies: VBAT and VDDIO supplies used by Bluetooth device
@@ -91,13 +97,19 @@ struct bcm_device_data {
  *	set to 0 if @init_speed is already the preferred baudrate
  * @irq: interrupt triggered by HOST_WAKE_BT pin
  * @irq_active_low: whether @irq is active low
+<<<<<<< HEAD
  * @irq_acquired: flag to show if IRQ handler has been assigned
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @hu: pointer to HCI UART controller struct,
  *	used to disable flow control during runtime suspend and system sleep
  * @is_suspended: whether flow control is currently disabled
  * @no_early_set_baudrate: don't set_baudrate before setup()
+<<<<<<< HEAD
  * @drive_rts_on_open: drive RTS signal on ->open() when platform requires it
  * @pcm_int_params: keep the initial PCM configuration
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct bcm_device {
 	/* Must be the first member, hci_serdev.c expects this. */

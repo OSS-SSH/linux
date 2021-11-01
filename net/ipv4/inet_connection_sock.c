@@ -534,8 +534,12 @@ out:
 				   atomic_read(&newsk->sk_rmem_alloc));
 		mem_cgroup_sk_alloc(newsk);
 		if (newsk->sk_memcg && amt)
+<<<<<<< HEAD
 			mem_cgroup_charge_skmem(newsk->sk_memcg, amt,
 						GFP_KERNEL | __GFP_NOFAIL);
+=======
+			mem_cgroup_charge_skmem(newsk->sk_memcg, amt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		release_sock(newsk);
 	}

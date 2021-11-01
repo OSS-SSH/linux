@@ -34,8 +34,11 @@
 #define SMU_FW_NAME_LEN			0x24
 
 #define SMU_DPM_USER_PROFILE_RESTORE (1 << 0)
+<<<<<<< HEAD
 #define SMU_CUSTOM_FAN_SPEED_RPM     (1 << 1)
 #define SMU_CUSTOM_FAN_SPEED_PWM     (1 << 2)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 // Power Throttlers
 #define SMU_THROTTLER_PPT0_BIT			0
@@ -231,10 +234,15 @@ enum smu_memory_pool_size
 struct smu_user_dpm_profile {
 	uint32_t fan_mode;
 	uint32_t power_limit;
+<<<<<<< HEAD
 	uint32_t fan_speed_pwm;
 	uint32_t fan_speed_rpm;
 	uint32_t flags;
 	uint32_t user_od;
+=======
+	uint32_t fan_speed_percent;
+	uint32_t flags;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* user clock state information */
 	uint32_t clk_mask[SMU_CLK_COUNT];
@@ -356,7 +364,10 @@ struct smu_table_context
 
 	void				*overdrive_table;
 	void                            *boot_overdrive_table;
+<<<<<<< HEAD
 	void				*user_overdrive_table;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	uint32_t			gpu_metrics_table_size;
 	void				*gpu_metrics_table;
@@ -543,7 +554,11 @@ struct smu_context
 	struct work_struct interrupt_work;
 
 	unsigned fan_max_rpm;
+<<<<<<< HEAD
 	unsigned manual_fan_speed_pwm;
+=======
+	unsigned manual_fan_speed_percent;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	uint32_t gfx_default_hard_min_freq;
 	uint32_t gfx_default_soft_max_freq;
@@ -629,12 +644,15 @@ struct pptable_funcs {
 				 long *input, uint32_t size);
 
 	/**
+<<<<<<< HEAD
 	 * @restore_user_od_settings: Restore the user customized
 	 *                            OD settings on S3/S4/Runpm resume.
 	 */
 	int (*restore_user_od_settings)(struct smu_context *smu);
 
 	/**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * @get_clock_by_type_with_latency: Get the speed and latency of a clock
 	 *                                  domain.
 	 */
@@ -725,6 +743,7 @@ struct pptable_funcs {
 	bool (*is_dpm_running)(struct smu_context *smu);
 
 	/**
+<<<<<<< HEAD
 	 * @get_fan_speed_pwm: Get the current fan speed in PWM.
 	 */
 	int (*get_fan_speed_pwm)(struct smu_context *smu, uint32_t *speed);
@@ -733,6 +752,11 @@ struct pptable_funcs {
 	 * @get_fan_speed_rpm: Get the current fan speed in rpm.
 	 */
 	int (*get_fan_speed_rpm)(struct smu_context *smu, uint32_t *speed);
+=======
+	 * @get_fan_speed_percent: Get the current fan speed in percent.
+	 */
+	int (*get_fan_speed_percent)(struct smu_context *smu, uint32_t *speed);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/**
 	 * @set_watermarks_table: Configure and upload the watermarks tables to
@@ -1051,6 +1075,7 @@ struct pptable_funcs {
 	int (*set_fan_control_mode)(struct smu_context *smu, uint32_t mode);
 
 	/**
+<<<<<<< HEAD
 	 * @set_fan_speed_pwm: Set a static fan speed in PWM.
 	 */
 	int (*set_fan_speed_pwm)(struct smu_context *smu, uint32_t speed);
@@ -1059,6 +1084,11 @@ struct pptable_funcs {
 	 * @set_fan_speed_rpm: Set a static fan speed in rpm.
 	 */
 	int (*set_fan_speed_rpm)(struct smu_context *smu, uint32_t speed);
+=======
+	 * @set_fan_speed_percent: Set a static fan speed in percent.
+	 */
+	int (*set_fan_speed_percent)(struct smu_context *smu, uint32_t speed);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/**
 	 * @set_xgmi_pstate: Set inter-chip global memory interconnect pstate.
@@ -1335,6 +1365,7 @@ enum smu_cmn2asic_mapping_type {
 #define WORKLOAD_MAP(profile, workload) \
 	[profile] = {1, (workload)}
 
+<<<<<<< HEAD
 /**
  * smu_memcpy_trailing - Copy the end of one structure into the middle of another
  *
@@ -1359,6 +1390,8 @@ enum smu_cmn2asic_mapping_type {
 			 __dst_size);					   \
 })
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if !defined(SWSMU_CODE_LAYER_L2) && !defined(SWSMU_CODE_LAYER_L3) && !defined(SWSMU_CODE_LAYER_L4)
 int smu_get_power_limit(void *handle,
 			uint32_t *limit,

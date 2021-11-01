@@ -172,8 +172,12 @@ void tcp_rack_reo_timeout(struct sock *sk)
 
 /* Updates the RACK's reo_wnd based on DSACK and no. of recoveries.
  *
+<<<<<<< HEAD
  * If a DSACK is received that seems like it may have been due to reordering
  * triggering fast recovery, increment reo_wnd by min_rtt/4 (upper bounded
+=======
+ * If DSACK is received, increment reo_wnd by min_rtt/4 (upper bounded
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * by srtt), since there is possibility that spurious retransmission was
  * due to reordering delay longer than reo_wnd.
  *

@@ -124,8 +124,13 @@ static void dcn31_program_compbuf_size(struct hubbub *hubbub, unsigned int compb
 		ASSERT(hubbub2->det0_size + hubbub2->det1_size + hubbub2->det2_size
 				+ hubbub2->det3_size + compbuf_size_segments <= hubbub2->crb_size_segs);
 		REG_UPDATE(DCHUBBUB_COMPBUF_CTRL, COMPBUF_SIZE, compbuf_size_segments);
+<<<<<<< HEAD
 		hubbub2->compbuf_size_segments = compbuf_size_segments;
 		ASSERT(REG_GET(DCHUBBUB_COMPBUF_CTRL, CONFIG_ERROR, &compbuf_size_segments) && !compbuf_size_segments);
+=======
+		REG_WAIT(DCHUBBUB_COMPBUF_CTRL, COMPBUF_SIZE_CURRENT, compbuf_size_segments, 1, 100);
+		hubbub2->compbuf_size_segments = compbuf_size_segments;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -876,6 +881,7 @@ static bool hubbub31_get_dcc_compression_cap(struct hubbub *hubbub,
 static int hubbub31_init_dchub_sys_ctx(struct hubbub *hubbub,
 		struct dcn_hubbub_phys_addr_config *pa_config)
 {
+<<<<<<< HEAD
 	struct dcn20_hubbub *hubbub2 = TO_DCN20_HUBBUB(hubbub);
 	struct dcn_vmid_page_table_config phys_config;
 
@@ -903,6 +909,9 @@ static int hubbub31_init_dchub_sys_ctx(struct hubbub *hubbub,
 
 		dcn20_vmid_setup(&hubbub2->vmid[15], &phys_config);
 	}
+=======
+	hubbub3_init_dchub_sys_ctx(hubbub, pa_config);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dcn21_dchvm_init(hubbub);
 
@@ -960,8 +969,12 @@ static const struct hubbub_funcs hubbub31_funcs = {
 	.is_allow_self_refresh_enabled = hubbub1_is_allow_self_refresh_enabled,
 	.program_det_size = dcn31_program_det_size,
 	.program_compbuf_size = dcn31_program_compbuf_size,
+<<<<<<< HEAD
 	.init_crb = dcn31_init_crb,
 	.hubbub_read_state = hubbub2_read_state,
+=======
+	.init_crb = dcn31_init_crb
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 void hubbub31_construct(struct dcn20_hubbub *hubbub31,

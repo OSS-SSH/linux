@@ -53,10 +53,17 @@ properties:
   "#size-cells": true
 
   compatible:
+<<<<<<< HEAD
     enum:
       - ti,am654-cpsw-nuss
       - ti,j721e-cpsw-nuss
       - ti,am642-cpsw-nuss
+=======
+    oneOf:
+      - const: ti,am654-cpsw-nuss
+      - const: ti,j721e-cpsw-nuss
+      - const: ti,am642-cpsw-nuss
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   reg:
     maxItems: 1

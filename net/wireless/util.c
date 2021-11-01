@@ -1028,6 +1028,7 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
 	    !(rdev->wiphy.interface_modes & (1 << ntype)))
 		return -EOPNOTSUPP;
 
+<<<<<<< HEAD
 	/* if it's part of a bridge, reject changing type to station/ibss */
 	if (netif_is_bridge_port(dev) &&
 	    (ntype == NL80211_IFTYPE_ADHOC ||
@@ -1036,6 +1037,16 @@ int cfg80211_change_iface(struct cfg80211_registered_device *rdev,
 		return -EBUSY;
 
 	if (ntype != otype) {
+=======
+	if (ntype != otype) {
+		/* if it's part of a bridge, reject changing type to station/ibss */
+		if (netif_is_bridge_port(dev) &&
+		    (ntype == NL80211_IFTYPE_ADHOC ||
+		     ntype == NL80211_IFTYPE_STATION ||
+		     ntype == NL80211_IFTYPE_P2P_CLIENT))
+			return -EBUSY;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev->ieee80211_ptr->use_4addr = false;
 		dev->ieee80211_ptr->mesh_id_up_len = 0;
 		wdev_lock(dev->ieee80211_ptr);

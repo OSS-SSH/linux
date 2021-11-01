@@ -221,6 +221,7 @@ struct sock *nfc_llcp_accept_dequeue(struct sock *sk, struct socket *newsock);
 
 /* TLV API */
 int nfc_llcp_parse_gb_tlv(struct nfc_llcp_local *local,
+<<<<<<< HEAD
 			  const u8 *tlv_array, u16 tlv_array_len);
 int nfc_llcp_parse_connection_tlv(struct nfc_llcp_sock *sock,
 				  const u8 *tlv_array, u16 tlv_array_len);
@@ -230,6 +231,17 @@ void nfc_llcp_recv(void *data, struct sk_buff *skb, int err);
 u8 *nfc_llcp_build_tlv(u8 type, const u8 *value, u8 value_length, u8 *tlv_length);
 struct nfc_llcp_sdp_tlv *nfc_llcp_build_sdres_tlv(u8 tid, u8 sap);
 struct nfc_llcp_sdp_tlv *nfc_llcp_build_sdreq_tlv(u8 tid, const char *uri,
+=======
+			  u8 *tlv_array, u16 tlv_array_len);
+int nfc_llcp_parse_connection_tlv(struct nfc_llcp_sock *sock,
+				  u8 *tlv_array, u16 tlv_array_len);
+
+/* Commands API */
+void nfc_llcp_recv(void *data, struct sk_buff *skb, int err);
+u8 *nfc_llcp_build_tlv(u8 type, u8 *value, u8 value_length, u8 *tlv_length);
+struct nfc_llcp_sdp_tlv *nfc_llcp_build_sdres_tlv(u8 tid, u8 sap);
+struct nfc_llcp_sdp_tlv *nfc_llcp_build_sdreq_tlv(u8 tid, char *uri,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						  size_t uri_len);
 void nfc_llcp_free_sdp_tlv(struct nfc_llcp_sdp_tlv *sdp);
 void nfc_llcp_free_sdp_tlv_list(struct hlist_head *sdp_head);

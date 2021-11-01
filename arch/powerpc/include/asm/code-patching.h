@@ -23,7 +23,10 @@
 #define BRANCH_ABSOLUTE	0x2
 
 bool is_offset_in_branch_range(long offset);
+<<<<<<< HEAD
 bool is_offset_in_cond_branch_range(long offset);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int create_branch(struct ppc_inst *instr, const u32 *addr,
 		  unsigned long target, int flags);
 int create_cond_branch(struct ppc_inst *instr, const u32 *addr,

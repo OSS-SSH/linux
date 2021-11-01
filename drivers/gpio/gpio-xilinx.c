@@ -538,7 +538,11 @@ static void xgpio_irqhandler(struct irq_desc *desc)
 
 	for_each_set_bit(bit, all, 64) {
 		irq_offset = xgpio_from_bit(chip, bit);
+<<<<<<< HEAD
 		generic_handle_domain_irq(gc->irq.domain, irq_offset);
+=======
+		generic_handle_irq(irq_find_mapping(gc->irq.domain, irq_offset));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	chained_irq_exit(irqchip, desc);

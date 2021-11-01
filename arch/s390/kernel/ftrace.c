@@ -18,11 +18,16 @@
 #include <trace/syscall.h>
 #include <asm/asm-offsets.h>
 #include <asm/cacheflush.h>
+<<<<<<< HEAD
 #include <asm/ftrace.lds.h>
 #include <asm/nospec-branch.h>
 #include <asm/set_memory.h>
 #include "entry.h"
 #include "ftrace.h"
+=======
+#include <asm/set_memory.h>
+#include "entry.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * To generate function prologue either gcc's hotpatch feature (since gcc 4.8)
@@ -43,6 +48,7 @@
  * trampoline (ftrace_plt), which clobbers also r1.
  */
 
+<<<<<<< HEAD
 void *ftrace_func __read_mostly = ftrace_stub;
 struct ftrace_insn {
 	u16 opc;
@@ -168,6 +174,9 @@ int ftrace_init_nop(struct module *mod, struct dyn_ftrace *rec)
 
 	return 0;
 }
+=======
+unsigned long ftrace_plt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int ftrace_modify_call(struct dyn_ftrace *rec, unsigned long old_addr,
 		       unsigned long addr)
@@ -175,6 +184,7 @@ int ftrace_modify_call(struct dyn_ftrace *rec, unsigned long old_addr,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void ftrace_generate_nop_insn(struct ftrace_insn *insn)
 {
 	/* brcl 0,0 */
@@ -204,16 +214,21 @@ static void brcl_disable(void *brcl)
 	s390_kernel_write((char *)brcl + 1, &op, sizeof(op));
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int ftrace_make_nop(struct module *mod, struct dyn_ftrace *rec,
 		    unsigned long addr)
 {
 	struct ftrace_insn orig, new, old;
 
+<<<<<<< HEAD
 	if (ftrace_shared_hotpatch_trampoline(NULL)) {
 		brcl_disable((void *)rec->ip);
 		return 0;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (copy_from_kernel_nofault(&old, (void *) rec->ip, sizeof(old)))
 		return -EFAULT;
 	/* Replace ftrace call with a nop. */
@@ -227,6 +242,7 @@ int ftrace_make_nop(struct module *mod, struct dyn_ftrace *rec,
 	return 0;
 }
 
+<<<<<<< HEAD
 static void brcl_enable(void *brcl)
 {
 	u8 op = 0xf4; /* set mask field to all ones */
@@ -234,15 +250,20 @@ static void brcl_enable(void *brcl)
 	s390_kernel_write((char *)brcl + 1, &op, sizeof(op));
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int ftrace_make_call(struct dyn_ftrace *rec, unsigned long addr)
 {
 	struct ftrace_insn orig, new, old;
 
+<<<<<<< HEAD
 	if (ftrace_shared_hotpatch_trampoline(NULL)) {
 		brcl_enable((void *)rec->ip);
 		return 0;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (copy_from_kernel_nofault(&old, (void *) rec->ip, sizeof(old)))
 		return -EFAULT;
 	/* Replace nop with an ftrace call. */
@@ -258,7 +279,10 @@ int ftrace_make_call(struct dyn_ftrace *rec, unsigned long addr)
 
 int ftrace_update_ftrace_func(ftrace_func_t func)
 {
+<<<<<<< HEAD
 	ftrace_func = func;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -267,6 +291,7 @@ int __init ftrace_dyn_arch_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 void arch_ftrace_update_code(int command)
 {
 	if (ftrace_shared_hotpatch_trampoline(NULL))
@@ -288,10 +313,13 @@ int ftrace_arch_code_modify_post_process(void)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_MODULES
 
 static int __init ftrace_plt_init(void)
 {
+<<<<<<< HEAD
 	const char *start, *end;
 
 	ftrace_plt = module_alloc(PAGE_SIZE);
@@ -305,6 +333,20 @@ static int __init ftrace_plt_init(void)
 	}
 	memcpy(ftrace_plt, start, end - start);
 	set_memory_ro((unsigned long)ftrace_plt, 1);
+=======
+	unsigned int *ip;
+
+	ftrace_plt = (unsigned long) module_alloc(PAGE_SIZE);
+	if (!ftrace_plt)
+		panic("cannot allocate ftrace plt\n");
+	ip = (unsigned int *) ftrace_plt;
+	ip[0] = 0x0d10e310; /* basr 1,0; lg 1,10(1); br 1 */
+	ip[1] = 0x100a0004;
+	ip[2] = 0x07f10000;
+	ip[3] = FTRACE_ADDR >> 32;
+	ip[4] = FTRACE_ADDR & 0xffffffff;
+	set_memory_ro(ftrace_plt, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 device_initcall(ftrace_plt_init);
@@ -341,13 +383,25 @@ NOKPROBE_SYMBOL(prepare_ftrace_return);
  */
 int ftrace_enable_ftrace_graph_caller(void)
 {
+<<<<<<< HEAD
 	brcl_disable(ftrace_graph_caller);
+=======
+	u8 op = 0x04; /* set mask field to zero */
+
+	s390_kernel_write(__va(ftrace_graph_caller)+1, &op, sizeof(op));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
 int ftrace_disable_ftrace_graph_caller(void)
 {
+<<<<<<< HEAD
 	brcl_enable(ftrace_graph_caller);
+=======
+	u8 op = 0xf4; /* set mask field to all ones */
+
+	s390_kernel_write(__va(ftrace_graph_caller)+1, &op, sizeof(op));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

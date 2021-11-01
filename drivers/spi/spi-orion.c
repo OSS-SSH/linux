@@ -328,6 +328,7 @@ orion_spi_setup_transfer(struct spi_device *spi, struct spi_transfer *t)
 static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 {
 	struct orion_spi *orion_spi;
+<<<<<<< HEAD
 	void __iomem *ctrl_reg;
 	u32 val;
 
@@ -338,6 +339,10 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 
 	/* Clear existing chip-select and assertion state */
 	val &= ~(ORION_SPI_CS_MASK | 0x1);
+=======
+
+	orion_spi = spi_master_get_devdata(spi->master);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * If this line is using a GPIO to control chip select, this internal
@@ -346,7 +351,13 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 	 * as it is handled by a GPIO, but that doesn't matter. What we need
 	 * is to deassert the old chip select and assert some other chip select.
 	 */
+<<<<<<< HEAD
 	val |= ORION_SPI_CS(spi->chip_select);
+=======
+	orion_spi_clrbits(orion_spi, ORION_SPI_IF_CTRL_REG, ORION_SPI_CS_MASK);
+	orion_spi_setbits(orion_spi, ORION_SPI_IF_CTRL_REG,
+			  ORION_SPI_CS(spi->chip_select));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Chip select logic is inverted from spi_set_cs(). For lines using a
@@ -356,6 +367,7 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 	 * doesn't matter.
 	 */
 	if (!enable)
+<<<<<<< HEAD
 		val |= 0x1;
 
 	/*
@@ -363,6 +375,11 @@ static void orion_spi_set_cs(struct spi_device *spi, bool enable)
 	 * with a single write.
 	 */
 	writel(val, ctrl_reg);
+=======
+		orion_spi_setbits(orion_spi, ORION_SPI_IF_CTRL_REG, 0x1);
+	else
+		orion_spi_clrbits(orion_spi, ORION_SPI_IF_CTRL_REG, 0x1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int orion_spi_wait_till_ready(struct orion_spi *orion_spi)

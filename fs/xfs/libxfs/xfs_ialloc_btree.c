@@ -40,9 +40,15 @@ xfs_inobt_dup_cursor(
 
 STATIC void
 xfs_inobt_set_root(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*nptr,
 	int				inc)	/* level change */
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_ptr	*nptr,
+	int			inc)	/* level change */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct xfs_buf		*agbp = cur->bc_ag.agbp;
 	struct xfs_agi		*agi = agbp->b_addr;
@@ -54,9 +60,15 @@ xfs_inobt_set_root(
 
 STATIC void
 xfs_finobt_set_root(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*nptr,
 	int				inc)	/* level change */
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_ptr	*nptr,
+	int			inc)	/* level change */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct xfs_buf		*agbp = cur->bc_ag.agbp;
 	struct xfs_agi		*agi = agbp->b_addr;
@@ -76,7 +88,11 @@ xfs_inobt_mod_blockcount(
 	struct xfs_buf		*agbp = cur->bc_ag.agbp;
 	struct xfs_agi		*agi = agbp->b_addr;
 
+<<<<<<< HEAD
 	if (!xfs_has_inobtcounts(cur->bc_mp))
+=======
+	if (!xfs_sb_version_hasinobtcounts(&cur->bc_mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (cur->bc_btnum == XFS_BTNUM_FINO)
@@ -88,11 +104,19 @@ xfs_inobt_mod_blockcount(
 
 STATIC int
 __xfs_inobt_alloc_block(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*start,
 	union xfs_btree_ptr		*new,
 	int				*stat,
 	enum xfs_ag_resv_type		resv)
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_ptr	*start,
+	union xfs_btree_ptr	*new,
+	int			*stat,
+	enum xfs_ag_resv_type	resv)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	xfs_alloc_arg_t		args;		/* block allocation args */
 	int			error;		/* error return value */
@@ -127,20 +151,34 @@ __xfs_inobt_alloc_block(
 
 STATIC int
 xfs_inobt_alloc_block(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*start,
 	union xfs_btree_ptr		*new,
 	int				*stat)
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_ptr	*start,
+	union xfs_btree_ptr	*new,
+	int			*stat)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return __xfs_inobt_alloc_block(cur, start, new, stat, XFS_AG_RESV_NONE);
 }
 
 STATIC int
 xfs_finobt_alloc_block(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_ptr	*start,
 	union xfs_btree_ptr		*new,
 	int				*stat)
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_ptr	*start,
+	union xfs_btree_ptr	*new,
+	int			*stat)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (cur->bc_mp->m_finobt_nores)
 		return xfs_inobt_alloc_block(cur, start, new, stat);
@@ -156,7 +194,11 @@ __xfs_inobt_free_block(
 {
 	xfs_inobt_mod_blockcount(cur, -1);
 	return xfs_free_extent(cur->bc_tp,
+<<<<<<< HEAD
 			XFS_DADDR_TO_FSB(cur->bc_mp, xfs_buf_daddr(bp)), 1,
+=======
+			XFS_DADDR_TO_FSB(cur->bc_mp, XFS_BUF_ADDR(bp)), 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			&XFS_RMAP_OINFO_INOBT, resv);
 }
 
@@ -188,18 +230,30 @@ xfs_inobt_get_maxrecs(
 
 STATIC void
 xfs_inobt_init_key_from_rec(
+<<<<<<< HEAD
 	union xfs_btree_key		*key,
 	const union xfs_btree_rec	*rec)
+=======
+	union xfs_btree_key	*key,
+	union xfs_btree_rec	*rec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	key->inobt.ir_startino = rec->inobt.ir_startino;
 }
 
 STATIC void
 xfs_inobt_init_high_key_from_rec(
+<<<<<<< HEAD
 	union xfs_btree_key		*key,
 	const union xfs_btree_rec	*rec)
 {
 	__u32				x;
+=======
+	union xfs_btree_key	*key,
+	union xfs_btree_rec	*rec)
+{
+	__u32			x;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	x = be32_to_cpu(rec->inobt.ir_startino);
 	x += XFS_INODES_PER_CHUNK - 1;
@@ -212,7 +266,11 @@ xfs_inobt_init_rec_from_cur(
 	union xfs_btree_rec	*rec)
 {
 	rec->inobt.ir_startino = cpu_to_be32(cur->bc_rec.i.ir_startino);
+<<<<<<< HEAD
 	if (xfs_has_sparseinodes(cur->bc_mp)) {
+=======
+	if (xfs_sb_version_hassparseinodes(&cur->bc_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rec->inobt.ir_u.sp.ir_holemask =
 					cpu_to_be16(cur->bc_rec.i.ir_holemask);
 		rec->inobt.ir_u.sp.ir_count = cur->bc_rec.i.ir_count;
@@ -253,8 +311,13 @@ xfs_finobt_init_ptr_from_cur(
 
 STATIC int64_t
 xfs_inobt_key_diff(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*key)
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_key	*key)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return (int64_t)be32_to_cpu(key->inobt.ir_startino) -
 			  cur->bc_rec.i.ir_startino;
@@ -262,9 +325,15 @@ xfs_inobt_key_diff(
 
 STATIC int64_t
 xfs_inobt_diff_two_keys(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*k1,
 	const union xfs_btree_key	*k2)
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_key	*k1,
+	union xfs_btree_key	*k2)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return (int64_t)be32_to_cpu(k1->inobt.ir_startino) -
 			  be32_to_cpu(k2->inobt.ir_startino);
@@ -292,7 +361,11 @@ xfs_inobt_verify(
 	 * but beware of the landmine (i.e. need to check pag->pagi_init) if we
 	 * ever do.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fa = xfs_btree_sblock_v5hdr_verify(bp);
 		if (fa)
 			return fa;
@@ -360,9 +433,15 @@ const struct xfs_buf_ops xfs_finobt_buf_ops = {
 
 STATIC int
 xfs_inobt_keys_inorder(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_key	*k1,
 	const union xfs_btree_key	*k2)
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_key	*k1,
+	union xfs_btree_key	*k2)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return be32_to_cpu(k1->inobt.ir_startino) <
 		be32_to_cpu(k2->inobt.ir_startino);
@@ -370,9 +449,15 @@ xfs_inobt_keys_inorder(
 
 STATIC int
 xfs_inobt_recs_inorder(
+<<<<<<< HEAD
 	struct xfs_btree_cur		*cur,
 	const union xfs_btree_rec	*r1,
 	const union xfs_btree_rec	*r2)
+=======
+	struct xfs_btree_cur	*cur,
+	union xfs_btree_rec	*r1,
+	union xfs_btree_rec	*r2)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return be32_to_cpu(r1->inobt.ir_startino) + XFS_INODES_PER_CHUNK <=
 		be32_to_cpu(r2->inobt.ir_startino);
@@ -446,7 +531,11 @@ xfs_inobt_init_common(
 
 	cur->bc_blocklog = mp->m_sb.sb_blocklog;
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp))
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cur->bc_flags |= XFS_BTREE_CRC_BLOCKS;
 
 	/* take a reference for the cursor */
@@ -511,7 +600,11 @@ xfs_inobt_commit_staged_btree(
 		fields = XFS_AGI_ROOT | XFS_AGI_LEVEL;
 		agi->agi_root = cpu_to_be32(afake->af_root);
 		agi->agi_level = cpu_to_be32(afake->af_levels);
+<<<<<<< HEAD
 		if (xfs_has_inobtcounts(cur->bc_mp)) {
+=======
+		if (xfs_sb_version_hasinobtcounts(&cur->bc_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			agi->agi_iblocks = cpu_to_be32(afake->af_blocks);
 			fields |= XFS_AGI_IBLOCKS;
 		}
@@ -521,7 +614,11 @@ xfs_inobt_commit_staged_btree(
 		fields = XFS_AGI_FREE_ROOT | XFS_AGI_FREE_LEVEL;
 		agi->agi_free_root = cpu_to_be32(afake->af_root);
 		agi->agi_free_level = cpu_to_be32(afake->af_levels);
+<<<<<<< HEAD
 		if (xfs_has_inobtcounts(cur->bc_mp)) {
+=======
+		if (xfs_sb_version_hasinobtcounts(&cur->bc_mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			agi->agi_fblocks = cpu_to_be32(afake->af_blocks);
 			fields |= XFS_AGI_IBLOCKS;
 		}
@@ -737,10 +834,17 @@ xfs_finobt_calc_reserves(
 	xfs_extlen_t		tree_len = 0;
 	int			error;
 
+<<<<<<< HEAD
 	if (!xfs_has_finobt(mp))
 		return 0;
 
 	if (xfs_has_inobtcounts(mp))
+=======
+	if (!xfs_sb_version_hasfinobt(&mp->m_sb))
+		return 0;
+
+	if (xfs_sb_version_hasinobtcounts(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		error = xfs_finobt_read_blocks(mp, tp, pag, &tree_len);
 	else
 		error = xfs_inobt_count_blocks(mp, tp, pag, XFS_BTNUM_FINO,

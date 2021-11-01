@@ -213,7 +213,10 @@ struct prctl_mm_map {
 /* Speculation control variants */
 # define PR_SPEC_STORE_BYPASS		0
 # define PR_SPEC_INDIRECT_BRANCH	1
+<<<<<<< HEAD
 # define PR_SPEC_L1D_FLUSH		2
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Return and control values for PR_SET/GET_SPECULATION_CTRL */
 # define PR_SPEC_NOT_AFFECTED		0
 # define PR_SPEC_PRCTL			(1UL << 0)
@@ -235,6 +238,7 @@ struct prctl_mm_map {
 #define PR_GET_TAGGED_ADDR_CTRL		56
 # define PR_TAGGED_ADDR_ENABLE		(1UL << 0)
 /* MTE tag check fault modes */
+<<<<<<< HEAD
 # define PR_MTE_TCF_NONE		0
 # define PR_MTE_TCF_SYNC		(1UL << 1)
 # define PR_MTE_TCF_ASYNC		(1UL << 2)
@@ -244,6 +248,16 @@ struct prctl_mm_map {
 # define PR_MTE_TAG_MASK		(0xffffUL << PR_MTE_TAG_SHIFT)
 /* Unused; kept only for source compatibility */
 # define PR_MTE_TCF_SHIFT		1
+=======
+# define PR_MTE_TCF_SHIFT		1
+# define PR_MTE_TCF_NONE		(0UL << PR_MTE_TCF_SHIFT)
+# define PR_MTE_TCF_SYNC		(1UL << PR_MTE_TCF_SHIFT)
+# define PR_MTE_TCF_ASYNC		(2UL << PR_MTE_TCF_SHIFT)
+# define PR_MTE_TCF_MASK		(3UL << PR_MTE_TCF_SHIFT)
+/* MTE tag inclusion mask */
+# define PR_MTE_TAG_SHIFT		3
+# define PR_MTE_TAG_MASK		(0xffffUL << PR_MTE_TAG_SHIFT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Control reclaim behavior when allocating memory */
 #define PR_SET_IO_FLUSHER		57

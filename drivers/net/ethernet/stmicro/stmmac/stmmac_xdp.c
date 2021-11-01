@@ -34,18 +34,31 @@ static int stmmac_xdp_enable_pool(struct stmmac_priv *priv,
 	need_update = netif_running(priv->dev) && stmmac_xdp_is_enabled(priv);
 
 	if (need_update) {
+<<<<<<< HEAD
 		napi_disable(&ch->rx_napi);
 		napi_disable(&ch->tx_napi);
 		stmmac_disable_rx_queue(priv, queue);
 		stmmac_disable_tx_queue(priv, queue);
+=======
+		stmmac_disable_rx_queue(priv, queue);
+		stmmac_disable_tx_queue(priv, queue);
+		napi_disable(&ch->rx_napi);
+		napi_disable(&ch->tx_napi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	set_bit(queue, priv->af_xdp_zc_qps);
 
 	if (need_update) {
+<<<<<<< HEAD
 		stmmac_enable_rx_queue(priv, queue);
 		stmmac_enable_tx_queue(priv, queue);
 		napi_enable(&ch->rxtx_napi);
+=======
+		napi_enable(&ch->rxtx_napi);
+		stmmac_enable_rx_queue(priv, queue);
+		stmmac_enable_tx_queue(priv, queue);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		err = stmmac_xsk_wakeup(priv->dev, queue, XDP_WAKEUP_RX);
 		if (err)
@@ -72,10 +85,17 @@ static int stmmac_xdp_disable_pool(struct stmmac_priv *priv, u16 queue)
 	need_update = netif_running(priv->dev) && stmmac_xdp_is_enabled(priv);
 
 	if (need_update) {
+<<<<<<< HEAD
 		napi_disable(&ch->rxtx_napi);
 		stmmac_disable_rx_queue(priv, queue);
 		stmmac_disable_tx_queue(priv, queue);
 		synchronize_rcu();
+=======
+		stmmac_disable_rx_queue(priv, queue);
+		stmmac_disable_tx_queue(priv, queue);
+		synchronize_rcu();
+		napi_disable(&ch->rxtx_napi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	xsk_pool_dma_unmap(pool, STMMAC_RX_DMA_ATTR);
@@ -83,10 +103,17 @@ static int stmmac_xdp_disable_pool(struct stmmac_priv *priv, u16 queue)
 	clear_bit(queue, priv->af_xdp_zc_qps);
 
 	if (need_update) {
+<<<<<<< HEAD
 		stmmac_enable_rx_queue(priv, queue);
 		stmmac_enable_tx_queue(priv, queue);
 		napi_enable(&ch->rx_napi);
 		napi_enable(&ch->tx_napi);
+=======
+		napi_enable(&ch->rx_napi);
+		napi_enable(&ch->tx_napi);
+		stmmac_enable_rx_queue(priv, queue);
+		stmmac_enable_tx_queue(priv, queue);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;

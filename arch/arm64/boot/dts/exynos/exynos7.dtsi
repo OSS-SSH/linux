@@ -54,6 +54,7 @@
 			compatible = "arm,cortex-a57";
 			reg = <0x0>;
 			enable-method = "psci";
+<<<<<<< HEAD
 			i-cache-size = <0xc000>;
 			i-cache-line-size = <64>;
 			i-cache-sets = <256>;
@@ -61,6 +62,8 @@
 			d-cache-line-size = <64>;
 			d-cache-sets = <256>;
 			next-level-cache = <&atlas_l2>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		cpu_atlas1: cpu@1 {
@@ -68,6 +71,7 @@
 			compatible = "arm,cortex-a57";
 			reg = <0x1>;
 			enable-method = "psci";
+<<<<<<< HEAD
 			i-cache-size = <0xc000>;
 			i-cache-line-size = <64>;
 			i-cache-sets = <256>;
@@ -75,6 +79,8 @@
 			d-cache-line-size = <64>;
 			d-cache-sets = <256>;
 			next-level-cache = <&atlas_l2>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		cpu_atlas2: cpu@2 {
@@ -82,6 +88,7 @@
 			compatible = "arm,cortex-a57";
 			reg = <0x2>;
 			enable-method = "psci";
+<<<<<<< HEAD
 			i-cache-size = <0xc000>;
 			i-cache-line-size = <64>;
 			i-cache-sets = <256>;
@@ -89,6 +96,8 @@
 			d-cache-line-size = <64>;
 			d-cache-sets = <256>;
 			next-level-cache = <&atlas_l2>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		cpu_atlas3: cpu@3 {
@@ -96,6 +105,7 @@
 			compatible = "arm,cortex-a57";
 			reg = <0x3>;
 			enable-method = "psci";
+<<<<<<< HEAD
 			i-cache-size = <0xc000>;
 			i-cache-line-size = <64>;
 			i-cache-sets = <256>;
@@ -110,6 +120,8 @@
 			cache-size = <0x200000>;
 			cache-line-size = <64>;
 			cache-sets = <2048>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 	};
 
@@ -137,7 +149,11 @@
 			#address-cells = <0>;
 			interrupt-controller;
 			reg =	<0x11001000 0x1000>,
+<<<<<<< HEAD
 				<0x11002000 0x2000>,
+=======
+				<0x11002000 0x1000>,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				<0x11004000 0x2000>,
 				<0x11006000 0x2000>;
 		};

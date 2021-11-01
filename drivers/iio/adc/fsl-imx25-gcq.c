@@ -201,11 +201,19 @@ static int mx25_gcq_setup_cfgs(struct platform_device *pdev,
 	 */
 	priv->vref[MX25_ADC_REFP_INT] = NULL;
 	priv->vref[MX25_ADC_REFP_EXT] =
+<<<<<<< HEAD
 		devm_regulator_get_optional(dev, "vref-ext");
 	priv->vref[MX25_ADC_REFP_XP] =
 		devm_regulator_get_optional(dev, "vref-xp");
 	priv->vref[MX25_ADC_REFP_YP] =
 		devm_regulator_get_optional(dev, "vref-yp");
+=======
+		devm_regulator_get_optional(&pdev->dev, "vref-ext");
+	priv->vref[MX25_ADC_REFP_XP] =
+		devm_regulator_get_optional(&pdev->dev, "vref-xp");
+	priv->vref[MX25_ADC_REFP_YP] =
+		devm_regulator_get_optional(&pdev->dev, "vref-yp");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for_each_child_of_node(np, child) {
 		u32 reg;
@@ -307,7 +315,11 @@ static int mx25_gcq_probe(struct platform_device *pdev)
 	int ret;
 	int i;
 
+<<<<<<< HEAD
 	indio_dev = devm_iio_device_alloc(dev, sizeof(*priv));
+=======
+	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*priv));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!indio_dev)
 		return -ENOMEM;
 
@@ -347,11 +359,22 @@ static int mx25_gcq_probe(struct platform_device *pdev)
 		goto err_vref_disable;
 	}
 
+<<<<<<< HEAD
 	ret = platform_get_irq(pdev, 0);
 	if (ret < 0)
 		goto err_clk_unprepare;
 
 	priv->irq = ret;
+=======
+	priv->irq = platform_get_irq(pdev, 0);
+	if (priv->irq <= 0) {
+		ret = priv->irq;
+		if (!ret)
+			ret = -ENXIO;
+		goto err_clk_unprepare;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = request_irq(priv->irq, mx25_gcq_irq, 0, pdev->name, priv);
 	if (ret) {
 		dev_err(dev, "Failed requesting IRQ\n");

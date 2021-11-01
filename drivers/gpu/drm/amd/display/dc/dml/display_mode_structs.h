@@ -536,8 +536,11 @@ struct _vcs_dpi_display_rq_regs_st {
 	unsigned int mrq_expansion_mode;
 	unsigned int crq_expansion_mode;
 	unsigned int plane1_base_address;
+<<<<<<< HEAD
 	unsigned int aperture_low_addr;   // bits [47:18]
 	unsigned int aperture_high_addr;  // bits [47:18]
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct _vcs_dpi_display_dlg_sys_params_st {

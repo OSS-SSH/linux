@@ -252,11 +252,14 @@ static inline int kvm_write_guest_lock(struct kvm *kvm, gpa_t gpa,
 
 #define kvm_phys_to_vttbr(addr)		phys_to_ttbr(addr)
 
+<<<<<<< HEAD
 /*
  * When this is (directly or indirectly) used on the TLB invalidation
  * path, we rely on a previously issued DSB so that page table updates
  * and VMID reads are correctly ordered.
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static __always_inline u64 kvm_get_vttbr(struct kvm_s2_mmu *mmu)
 {
 	struct kvm_vmid *vmid = &mmu->vmid;
@@ -264,7 +267,11 @@ static __always_inline u64 kvm_get_vttbr(struct kvm_s2_mmu *mmu)
 	u64 cnp = system_supports_cnp() ? VTTBR_CNP_BIT : 0;
 
 	baddr = mmu->pgd_phys;
+<<<<<<< HEAD
 	vmid_field = (u64)READ_ONCE(vmid->vmid) << VTTBR_VMID_SHIFT;
+=======
+	vmid_field = (u64)vmid->vmid << VTTBR_VMID_SHIFT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return kvm_phys_to_vttbr(baddr) | vmid_field | cnp;
 }
 
@@ -272,10 +279,16 @@ static __always_inline u64 kvm_get_vttbr(struct kvm_s2_mmu *mmu)
  * Must be called from hyp code running at EL2 with an updated VTTBR
  * and interrupts disabled.
  */
+<<<<<<< HEAD
 static __always_inline void __load_stage2(struct kvm_s2_mmu *mmu,
 					  struct kvm_arch *arch)
 {
 	write_sysreg(arch->vtcr, vtcr_el2);
+=======
+static __always_inline void __load_stage2(struct kvm_s2_mmu *mmu, unsigned long vtcr)
+{
+	write_sysreg(vtcr, vtcr_el2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	write_sysreg(kvm_get_vttbr(mmu), vttbr_el2);
 
 	/*
@@ -286,6 +299,14 @@ static __always_inline void __load_stage2(struct kvm_s2_mmu *mmu,
 	asm(ALTERNATIVE("nop", "isb", ARM64_WORKAROUND_SPECULATIVE_AT));
 }
 
+<<<<<<< HEAD
+=======
+static __always_inline void __load_guest_stage2(struct kvm_s2_mmu *mmu)
+{
+	__load_stage2(mmu, kern_hyp_va(mmu->arch)->vtcr);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct kvm *kvm_s2_mmu_to_kvm(struct kvm_s2_mmu *mmu)
 {
 	return container_of(mmu->arch, struct kvm, arch);

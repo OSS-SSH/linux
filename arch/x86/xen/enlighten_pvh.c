@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <linux/acpi.h>
+<<<<<<< HEAD
 #include <linux/export.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <xen/hvc-console.h>
 
@@ -19,11 +22,18 @@
 /*
  * PVH variables.
  *
+<<<<<<< HEAD
  * The variable xen_pvh needs to live in a data segment since it is used
  * after startup_{32|64} is invoked, which will clear the .bss segment.
  */
 bool __ro_after_init xen_pvh;
 EXPORT_SYMBOL_GPL(xen_pvh);
+=======
+ * The variable xen_pvh needs to live in the data segment since it is used
+ * after startup_{32|64} is invoked, which will clear the .bss segment.
+ */
+bool xen_pvh __section(".data") = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void __init xen_pvh_init(struct boot_params *boot_params)
 {
@@ -38,10 +48,13 @@ void __init xen_pvh_init(struct boot_params *boot_params)
 	pfn = __pa(hypercall_page);
 	wrmsr_safe(msr, (u32)pfn, (u32)(pfn >> 32));
 
+<<<<<<< HEAD
 	if (xen_initial_domain())
 		x86_init.oem.arch_setup = xen_add_preferred_consoles;
 	x86_init.oem.banner = xen_banner;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xen_efi_init(boot_params);
 }
 

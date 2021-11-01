@@ -14,6 +14,7 @@
 	model = "Microchip PolarFire-SoC Icicle Kit";
 	compatible = "microchip,mpfs-icicle-kit";
 
+<<<<<<< HEAD
 	aliases {
 		ethernet0 = &emac1;
 		serial0 = &serial0;
@@ -24,6 +25,10 @@
 
 	chosen {
 		stdout-path = "serial0:115200n8";
+=======
+	chosen {
+		stdout-path = &serial0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	cpus {

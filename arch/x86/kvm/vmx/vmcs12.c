@@ -2,6 +2,10 @@
 
 #include "vmcs12.h"
 
+<<<<<<< HEAD
+=======
+#define ROL16(val, n) ((u16)(((u16)(val) << (n)) | ((u16)(val) >> (16 - (n)))))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define VMCS12_OFFSET(x) offsetof(struct vmcs12, x)
 #define FIELD(number, name)	[ROL16(number, 6)] = VMCS12_OFFSET(name)
 #define FIELD64(number, name)						\

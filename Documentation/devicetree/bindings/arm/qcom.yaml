@@ -31,7 +31,10 @@ description: |
         ipq6018
         ipq8074
         mdm9615
+<<<<<<< HEAD
         msm8226
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         msm8916
         msm8974
         msm8992
@@ -117,11 +120,14 @@ properties:
 
       - items:
           - enum:
+<<<<<<< HEAD
               - samsung,s3ve3g
           - const: qcom,msm8226
 
       - items:
           - enum:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - qcom,msm8960-cdp
           - const: qcom,msm8960
 
@@ -135,8 +141,11 @@ properties:
           - const: qcom,msm8974
 
       - items:
+<<<<<<< HEAD
           - enum:
               - alcatel,idol347
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
           - const: qcom,msm8916-mtp/1
           - const: qcom,msm8916-mtp
           - const: qcom,msm8916
@@ -189,8 +198,11 @@ properties:
       - items:
           - enum:
               - qcom,sc7280-idp
+<<<<<<< HEAD
               - qcom,sc7280-idp2
               - google,piglin
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - google,senor
           - const: qcom,sc7280
 

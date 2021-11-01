@@ -3,10 +3,15 @@
 
 ret=0
 sin=""
+<<<<<<< HEAD
 sinfail=""
 sout=""
 cin=""
 cinfail=""
+=======
+sout=""
+cin=""
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 cinsent=""
 cout=""
 ksft_skip=4
@@ -78,6 +83,7 @@ init()
 	done
 }
 
+<<<<<<< HEAD
 init_shapers()
 {
 	for i in `seq 1 4`; do
@@ -86,6 +92,8 @@ init_shapers()
 	done
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 cleanup_partial()
 {
 	rm -f "$capout"
@@ -98,8 +106,13 @@ cleanup_partial()
 
 cleanup()
 {
+<<<<<<< HEAD
 	rm -f "$cin" "$cout" "$sinfail"
 	rm -f "$sin" "$sout" "$cinsent" "$cinfail"
+=======
+	rm -f "$cin" "$cout"
+	rm -f "$sin" "$sout" "$cinsent"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cleanup_partial
 }
 
@@ -221,6 +234,7 @@ link_failure()
 {
 	ns="$1"
 
+<<<<<<< HEAD
 	if [ -z "$FAILING_LINKS" ]; then
 		l=$((RANDOM%4))
 		FAILING_LINKS=$((l+1))
@@ -230,6 +244,13 @@ link_failure()
 		veth="ns1eth$l"
 		ip -net "$ns" link set "$veth" down
 	done
+=======
+	l=$((RANDOM%4))
+	l=$((l+1))
+
+	veth="ns1eth$l"
+	ip -net "$ns" link set "$veth" down
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 # $1: IP address
@@ -294,6 +315,7 @@ do_transfer()
 		local_addr="0.0.0.0"
 	fi
 
+<<<<<<< HEAD
 	if [ "$test_link_fail" -eq 2 ];then
 		timeout ${timeout_test} \
 			ip netns exec ${listener_ns} \
@@ -305,6 +327,12 @@ do_transfer()
 				$mptcp_connect -t ${timeout_poll} -l -p $port -s ${srv_proto} \
 					${local_addr} < "$sin" > "$sout" &
 	fi
+=======
+	timeout ${timeout_test} \
+		ip netns exec ${listener_ns} \
+			$mptcp_connect -t ${timeout_poll} -l -p $port -s ${srv_proto} \
+				${local_addr} < "$sin" > "$sout" &
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spid=$!
 
 	sleep 1
@@ -315,7 +343,11 @@ do_transfer()
 				$mptcp_connect -t ${timeout_poll} -p $port -s ${cl_proto} \
 					$connect_addr < "$cin" > "$cout" &
 	else
+<<<<<<< HEAD
 		( cat "$cinfail" ; sleep 2; link_failure $listener_ns ; cat "$cinfail" ) | \
+=======
+		( cat "$cin" ; sleep 2; link_failure $listener_ns ; cat "$cin" ) | \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			tee "$cinsent" | \
 			timeout ${timeout_test} \
 				ip netns exec ${connector_ns} \
@@ -344,18 +376,31 @@ do_transfer()
 		let rm_nr_ns1=-addr_nr_ns1
 		if [ $rm_nr_ns1 -lt 8 ]; then
 			counter=1
+<<<<<<< HEAD
 			pos=1
 			dump=(`ip netns exec ${listener_ns} ./pm_nl_ctl dump`)
 			if [ ${#dump[@]} -gt 0 ]; then
+=======
+			dump=(`ip netns exec ${listener_ns} ./pm_nl_ctl dump`)
+			if [ ${#dump[@]} -gt 0 ]; then
+				id=${dump[1]}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				sleep 1
 
 				while [ $counter -le $rm_nr_ns1 ]
 				do
+<<<<<<< HEAD
 					id=${dump[$pos]}
 					ip netns exec ${listener_ns} ./pm_nl_ctl del $id
 					sleep 1
 					let counter+=1
 					let pos+=5
+=======
+					ip netns exec ${listener_ns} ./pm_nl_ctl del $id
+					sleep 1
+					let counter+=1
+					let id+=1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				done
 			fi
 		elif [ $rm_nr_ns1 -eq 8 ]; then
@@ -367,12 +412,15 @@ do_transfer()
 		fi
 	fi
 
+<<<<<<< HEAD
 	flags="subflow"
 	if [[ "${addr_nr_ns2}" = "fullmesh_"* ]]; then
 		flags="${flags},fullmesh"
 		addr_nr_ns2=${addr_nr_ns2:9}
 	fi
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if [ $addr_nr_ns2 -gt 0 ]; then
 		let add_nr_ns2=addr_nr_ns2
 		counter=3
@@ -384,7 +432,11 @@ do_transfer()
 			else
 				addr="10.0.$counter.2"
 			fi
+<<<<<<< HEAD
 			ip netns exec $ns2 ./pm_nl_ctl add $addr flags $flags
+=======
+			ip netns exec $ns2 ./pm_nl_ctl add $addr flags subflow
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			let counter+=1
 			let add_nr_ns2-=1
 		done
@@ -393,18 +445,31 @@ do_transfer()
 		let rm_nr_ns2=-addr_nr_ns2
 		if [ $rm_nr_ns2 -lt 8 ]; then
 			counter=1
+<<<<<<< HEAD
 			pos=1
 			dump=(`ip netns exec ${connector_ns} ./pm_nl_ctl dump`)
 			if [ ${#dump[@]} -gt 0 ]; then
+=======
+			dump=(`ip netns exec ${connector_ns} ./pm_nl_ctl dump`)
+			if [ ${#dump[@]} -gt 0 ]; then
+				id=${dump[1]}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				sleep 1
 
 				while [ $counter -le $rm_nr_ns2 ]
 				do
+<<<<<<< HEAD
 					id=${dump[$pos]}
 					ip netns exec ${connector_ns} ./pm_nl_ctl del $id
 					sleep 1
 					let counter+=1
 					let pos+=5
+=======
+					ip netns exec ${connector_ns} ./pm_nl_ctl del $id
+					sleep 1
+					let counter+=1
+					let id+=1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				done
 			fi
 		elif [ $rm_nr_ns2 -eq 8 ]; then
@@ -463,11 +528,15 @@ do_transfer()
 		return 1
 	fi
 
+<<<<<<< HEAD
 	if [ "$test_link_fail" -eq 2 ];then
 		check_transfer $sinfail $cout "file received by client"
 	else
 		check_transfer $sin $cout "file received by client"
 	fi
+=======
+	check_transfer $sin $cout "file received by client"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	retc=$?
 	if [ "$test_link_fail" -eq 0 ];then
 		check_transfer $cin $sout "file received by server"
@@ -510,6 +579,7 @@ run_tests()
 	lret=0
 	oldin=""
 
+<<<<<<< HEAD
 	# create the input file for the failure test when
 	# the first failure test run
 	if [ "$test_linkfail" -ne 0 -a -z "$cinfail" ]; then
@@ -532,11 +602,34 @@ run_tests()
 
 		sinfail=$(mktemp)
 		make_file "$sinfail" "server" $size
+=======
+	if [ "$test_linkfail" -eq 1 ];then
+		size=$((RANDOM%1024))
+		size=$((size+1))
+		size=$((size*128))
+
+		oldin=$(mktemp)
+		cp "$cin" "$oldin"
+		make_file "$cin" "client" $size
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fi
 
 	do_transfer ${listener_ns} ${connector_ns} MPTCP MPTCP ${connect_addr} \
 		${test_linkfail} ${addr_nr_ns1} ${addr_nr_ns2} ${speed} ${bkup}
 	lret=$?
+<<<<<<< HEAD
+=======
+
+	if [ "$test_linkfail" -eq 1 ];then
+		cp "$oldin" "$cin"
+		rm -f "$oldin"
+	fi
+
+	if [ $lret -ne 0 ]; then
+		ret=$lret
+		return
+	fi
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 chk_csum_nr()
@@ -578,6 +671,7 @@ chk_csum_nr()
 	fi
 }
 
+<<<<<<< HEAD
 chk_fail_nr()
 {
 	local mp_fail_nr_tx=$1
@@ -615,6 +709,8 @@ chk_fail_nr()
 	fi
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 chk_join_nr()
 {
 	local msg="$1"
@@ -664,6 +760,7 @@ chk_join_nr()
 	fi
 	if [ $checksum -eq 1 ]; then
 		chk_csum_nr
+<<<<<<< HEAD
 		chk_fail_nr 0 0
 	fi
 }
@@ -705,6 +802,8 @@ chk_stale_nr()
 		echo $ns stats
 		ip netns exec $ns ip -s link show
 		ip netns exec $ns nstat -as | grep MPTcp
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fi
 }
 
@@ -916,6 +1015,7 @@ chk_prio_nr()
 	fi
 }
 
+<<<<<<< HEAD
 chk_link_usage()
 {
 	local ns=$1
@@ -937,6 +1037,8 @@ chk_link_usage()
 	fi
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 subflows_tests()
 {
 	reset
@@ -1054,6 +1156,7 @@ signal_address_tests()
 	run_tests $ns1 $ns2 10.0.1.1
 	chk_join_nr "signal invalid addresses" 1 1 1
 	chk_add_nr 3 3
+<<<<<<< HEAD
 
 	# signal addresses race test
 	reset
@@ -1069,12 +1172,15 @@ signal_address_tests()
 	ip netns exec $ns2 ./pm_nl_ctl add 10.0.4.2 flags signal
 	run_tests $ns1 $ns2 10.0.1.1
 	chk_add_nr 4 4
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 link_failure_tests()
 {
 	# accept and use add_addr with additional subflows and link loss
 	reset
+<<<<<<< HEAD
 
 	# without any b/w limit each veth could spool the packets and get
 	# them acked at xmit time, so that the corresponding subflow will
@@ -1149,6 +1255,16 @@ link_failure_tests()
 	chk_add_nr 1 1
 	chk_stale_nr $ns2 1 -1 2
 	chk_link_usage $ns2 ns2eth3 $cinsent 50
+=======
+	ip netns exec $ns1 ./pm_nl_ctl limits 0 3
+	ip netns exec $ns1 ./pm_nl_ctl add 10.0.2.1 flags signal
+	ip netns exec $ns2 ./pm_nl_ctl limits 1 3
+	ip netns exec $ns2 ./pm_nl_ctl add 10.0.3.2 flags subflow
+	ip netns exec $ns2 ./pm_nl_ctl add 10.0.4.2 flags subflow
+	run_tests $ns1 $ns2 10.0.1.1 1
+	chk_join_nr "multiple flows, signal, link failure" 3 3 3
+	chk_add_nr 1 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 add_addr_timeout_tests()
@@ -1626,7 +1742,11 @@ syncookies_tests()
 	ip netns exec $ns2 ./pm_nl_ctl add 10.0.3.2 flags subflow
 	ip netns exec $ns2 ./pm_nl_ctl add 10.0.2.2 flags subflow
 	run_tests $ns1 $ns2 10.0.1.1
+<<<<<<< HEAD
 	chk_join_nr "subflows limited by server w cookies" 2 1 1
+=======
+	chk_join_nr "subflows limited by server w cookies" 2 2 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	# test signal address with cookies
 	reset_with_cookies
@@ -1747,6 +1867,7 @@ deny_join_id0_tests()
 	chk_join_nr "subflow and address allow join id0 2" 1 1 1
 }
 
+<<<<<<< HEAD
 fullmesh_tests()
 {
 	# fullmesh 1
@@ -1796,6 +1917,8 @@ fullmesh_tests()
 	chk_add_nr 1 1
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 all_tests()
 {
 	subflows_tests
@@ -1811,7 +1934,10 @@ all_tests()
 	syncookies_tests
 	checksum_tests
 	deny_join_id0_tests
+<<<<<<< HEAD
 	fullmesh_tests
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 usage()
@@ -1830,7 +1956,10 @@ usage()
 	echo "  -k syncookies_tests"
 	echo "  -S checksum_tests"
 	echo "  -d deny_join_id0_tests"
+<<<<<<< HEAD
 	echo "  -m fullmesh_tests"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	echo "  -c capture pcap files"
 	echo "  -C enable data checksum"
 	echo "  -h help"
@@ -1866,7 +1995,11 @@ if [ $do_all_tests -eq 1 ]; then
 	exit $ret
 fi
 
+<<<<<<< HEAD
 while getopts 'fsltra64bpkdmchCS' opt; do
+=======
+while getopts 'fsltra64bpkdchCS' opt; do
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case $opt in
 		f)
 			subflows_tests
@@ -1907,9 +2040,12 @@ while getopts 'fsltra64bpkdmchCS' opt; do
 		d)
 			deny_join_id0_tests
 			;;
+<<<<<<< HEAD
 		m)
 			fullmesh_tests
 			;;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		c)
 			;;
 		C)

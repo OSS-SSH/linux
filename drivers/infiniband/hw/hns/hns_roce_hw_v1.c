@@ -758,7 +758,11 @@ static struct hns_roce_qp *hns_roce_v1_create_lp_qp(struct hns_roce_dev *hr_dev,
 	init_attr.cap.max_recv_wr	= HNS_ROCE_MIN_WQE_NUM;
 	init_attr.cap.max_send_wr	= HNS_ROCE_MIN_WQE_NUM;
 
+<<<<<<< HEAD
 	qp = ib_create_qp(pd, &init_attr);
+=======
+	qp = hns_roce_create_qp(pd, &init_attr, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(qp)) {
 		dev_err(dev, "Create loop qp for mr free failed!");
 		return NULL;
@@ -923,7 +927,11 @@ static int hns_roce_v1_rsv_lp_qp(struct hns_roce_dev *hr_dev)
 create_lp_qp_failed:
 	for (i -= 1; i >= 0; i--) {
 		hr_qp = free_mr->mr_free_qp[i];
+<<<<<<< HEAD
 		if (ib_destroy_qp(&hr_qp->ibqp))
+=======
+		if (hns_roce_v1_destroy_qp(&hr_qp->ibqp, NULL))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dev_err(dev, "Destroy qp %d for mr free failed!\n", i);
 	}
 
@@ -953,7 +961,11 @@ static void hns_roce_v1_release_lp_qp(struct hns_roce_dev *hr_dev)
 		if (!hr_qp)
 			continue;
 
+<<<<<<< HEAD
 		ret = ib_destroy_qp(&hr_qp->ibqp);
+=======
+		ret = hns_roce_v1_destroy_qp(&hr_qp->ibqp, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			dev_err(dev, "Destroy qp %d for mr free failed(%d)!\n",
 				i, ret);

@@ -69,6 +69,7 @@
 
 /*******************************************************************************
  *
+<<<<<<< HEAD
  * AEST - Arm Error Source Table
  *
  * Conforms to: ACPI for the Armv8 RAS Extensions 1.1 Platform Design Document
@@ -239,6 +240,8 @@ typedef struct acpi_aest_node_interrupt {
 
 /*******************************************************************************
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * BDAT - BIOS Data ACPI Table
  *
  * Conforms to "BIOS Data ACPI Table", Interface Specification v4.0 Draft 5

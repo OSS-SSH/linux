@@ -47,7 +47,11 @@
  * cache before the transfer is done, causing old data to be seen by
  * the CPU.
  */
+<<<<<<< HEAD
 #define ARCH_DMA_MINALIGN	(128)
+=======
+#define ARCH_DMA_MINALIGN	L1_CACHE_BYTES
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_KASAN_SW_TAGS
 #define ARCH_SLAB_MINALIGN	(1ULL << KASAN_SHADOW_SCALE_SHIFT)

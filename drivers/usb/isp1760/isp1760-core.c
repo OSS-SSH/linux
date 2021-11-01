@@ -30,7 +30,10 @@ static int isp1760_init_core(struct isp1760_device *isp)
 {
 	struct isp1760_hcd *hcd = &isp->hcd;
 	struct isp1760_udc *udc = &isp->udc;
+<<<<<<< HEAD
 	u32 otg_ctrl;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Low-level chip reset */
 	if (isp->rst_gpio) {
@@ -84,6 +87,7 @@ static int isp1760_init_core(struct isp1760_device *isp)
 	 *
 	 * TODO: Really support OTG. For now we configure port 1 in device mode
 	 */
+<<<<<<< HEAD
 	if (isp->devflags & ISP1760_FLAG_ISP1761) {
 		if (isp->devflags & ISP1760_FLAG_PERIPHERAL_EN) {
 			otg_ctrl = (ISP176x_HW_DM_PULLDOWN_CLEAR |
@@ -95,6 +99,18 @@ static int isp1760_init_core(struct isp1760_device *isp)
 				    ISP176x_HW_SEL_CP_EXT);
 		}
 		isp1760_reg_write(hcd->regs, ISP176x_HC_OTG_CTRL, otg_ctrl);
+=======
+	if (((isp->devflags & ISP1760_FLAG_ISP1761) ||
+	     (isp->devflags & ISP1760_FLAG_ISP1763)) &&
+	    (isp->devflags & ISP1760_FLAG_PERIPHERAL_EN)) {
+		isp1760_field_set(hcd->fields, HW_DM_PULLDOWN);
+		isp1760_field_set(hcd->fields, HW_DP_PULLDOWN);
+		isp1760_field_set(hcd->fields, HW_OTG_DISABLE);
+	} else {
+		isp1760_field_set(hcd->fields, HW_SW_SEL_HC_DC);
+		isp1760_field_set(hcd->fields, HW_VBUS_DRV);
+		isp1760_field_set(hcd->fields, HW_SEL_CP_EXT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	dev_info(isp->dev, "%s bus width: %u, oc: %s\n",
@@ -237,6 +253,7 @@ static const struct reg_field isp1760_hc_reg_fields[] = {
 	[HC_ISO_IRQ_MASK_AND]	= REG_FIELD(ISP176x_HC_ISO_IRQ_MASK_AND, 0, 31),
 	[HC_INT_IRQ_MASK_AND]	= REG_FIELD(ISP176x_HC_INT_IRQ_MASK_AND, 0, 31),
 	[HC_ATL_IRQ_MASK_AND]	= REG_FIELD(ISP176x_HC_ATL_IRQ_MASK_AND, 0, 31),
+<<<<<<< HEAD
 	[HW_OTG_DISABLE_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL, 26, 26),
 	[HW_SW_SEL_HC_DC_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL, 23, 23),
 	[HW_VBUS_DRV_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL, 20, 20),
@@ -251,6 +268,22 @@ static const struct reg_field isp1760_hc_reg_fields[] = {
 	[HW_DM_PULLDOWN]	= REG_FIELD(ISP176x_HC_OTG_CTRL, 2, 2),
 	[HW_DP_PULLDOWN]	= REG_FIELD(ISP176x_HC_OTG_CTRL, 1, 1),
 	[HW_DP_PULLUP]		= REG_FIELD(ISP176x_HC_OTG_CTRL, 0, 0),
+=======
+	[HW_OTG_DISABLE]	= REG_FIELD(ISP176x_HC_OTG_CTRL_SET, 10, 10),
+	[HW_SW_SEL_HC_DC]	= REG_FIELD(ISP176x_HC_OTG_CTRL_SET, 7, 7),
+	[HW_VBUS_DRV]		= REG_FIELD(ISP176x_HC_OTG_CTRL_SET, 4, 4),
+	[HW_SEL_CP_EXT]		= REG_FIELD(ISP176x_HC_OTG_CTRL_SET, 3, 3),
+	[HW_DM_PULLDOWN]	= REG_FIELD(ISP176x_HC_OTG_CTRL_SET, 2, 2),
+	[HW_DP_PULLDOWN]	= REG_FIELD(ISP176x_HC_OTG_CTRL_SET, 1, 1),
+	[HW_DP_PULLUP]		= REG_FIELD(ISP176x_HC_OTG_CTRL_SET, 0, 0),
+	[HW_OTG_DISABLE_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL_CLEAR, 10, 10),
+	[HW_SW_SEL_HC_DC_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL_CLEAR, 7, 7),
+	[HW_VBUS_DRV_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL_CLEAR, 4, 4),
+	[HW_SEL_CP_EXT_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL_CLEAR, 3, 3),
+	[HW_DM_PULLDOWN_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL_CLEAR, 2, 2),
+	[HW_DP_PULLDOWN_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL_CLEAR, 1, 1),
+	[HW_DP_PULLUP_CLEAR]	= REG_FIELD(ISP176x_HC_OTG_CTRL_CLEAR, 0, 0),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct reg_field isp1763_hc_reg_fields[] = {
@@ -493,7 +526,11 @@ int isp1760_register(struct resource *mem, int irq, unsigned long irqflags,
 		       (devflags & ISP1760_FLAG_ISP1761));
 
 	if ((!IS_ENABLED(CONFIG_USB_ISP1760_HCD) || usb_disabled()) &&
+<<<<<<< HEAD
 	    (!udc_enabled || !IS_ENABLED(CONFIG_USB_ISP1761_UDC)))
+=======
+	    (!IS_ENABLED(CONFIG_USB_ISP1761_UDC) || !udc_enabled))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENODEV;
 
 	isp = devm_kzalloc(dev, sizeof(*isp), GFP_KERNEL);
@@ -573,7 +610,11 @@ int isp1760_register(struct resource *mem, int irq, unsigned long irqflags,
 			return ret;
 	}
 
+<<<<<<< HEAD
 	if (udc_enabled && IS_ENABLED(CONFIG_USB_ISP1761_UDC)) {
+=======
+	if (IS_ENABLED(CONFIG_USB_ISP1761_UDC) && udc_enabled) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = isp1760_udc_register(isp, irq, irqflags);
 		if (ret < 0) {
 			isp1760_hcd_unregister(hcd);

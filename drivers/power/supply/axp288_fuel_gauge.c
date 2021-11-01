@@ -2,8 +2,12 @@
 /*
  * axp288_fuel_gauge.c - Xpower AXP288 PMIC Fuel Gauge Driver
  *
+<<<<<<< HEAD
  * Copyright (C) 2020-2021 Andrejus Basovas <xxx@yyy.tld>
  * Copyright (C) 2016-2021 Hans de Goede <hdegoede@redhat.com>
+=======
+ * Copyright (C) 2016-2017 Hans de Goede <hdegoede@redhat.com>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Copyright (C) 2014 Intel Corporation
  *
  * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -20,6 +24,7 @@
 #include <linux/platform_device.h>
 #include <linux/power_supply.h>
 #include <linux/iio/consumer.h>
+<<<<<<< HEAD
 #include <asm/unaligned.h>
 #include <asm/iosf_mbi.h>
 
@@ -32,25 +37,55 @@
 #define CHRG_STAT_BAT_SAFE_MODE			(1 << 3)
 #define CHRG_STAT_BAT_VALID			(1 << 4)
 #define CHRG_STAT_BAT_PRESENT			(1 << 5)
+=======
+#include <linux/debugfs.h>
+#include <linux/seq_file.h>
+#include <asm/unaligned.h>
+
+#define PS_STAT_VBUS_TRIGGER		(1 << 0)
+#define PS_STAT_BAT_CHRG_DIR		(1 << 2)
+#define PS_STAT_VBAT_ABOVE_VHOLD	(1 << 3)
+#define PS_STAT_VBUS_VALID		(1 << 4)
+#define PS_STAT_VBUS_PRESENT		(1 << 5)
+
+#define CHRG_STAT_BAT_SAFE_MODE		(1 << 3)
+#define CHRG_STAT_BAT_VALID			(1 << 4)
+#define CHRG_STAT_BAT_PRESENT		(1 << 5)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CHRG_STAT_CHARGING			(1 << 6)
 #define CHRG_STAT_PMIC_OTP			(1 << 7)
 
 #define CHRG_CCCV_CC_MASK			0xf     /* 4 bits */
+<<<<<<< HEAD
 #define CHRG_CCCV_CC_BIT_POS			0
 #define CHRG_CCCV_CC_OFFSET			200     /* 200mA */
 #define CHRG_CCCV_CC_LSB_RES			200     /* 200mA */
 #define CHRG_CCCV_ITERM_20P			(1 << 4)    /* 20% of CC */
 #define CHRG_CCCV_CV_MASK			0x60        /* 2 bits */
 #define CHRG_CCCV_CV_BIT_POS			5
+=======
+#define CHRG_CCCV_CC_BIT_POS		0
+#define CHRG_CCCV_CC_OFFSET			200     /* 200mA */
+#define CHRG_CCCV_CC_LSB_RES		200     /* 200mA */
+#define CHRG_CCCV_ITERM_20P			(1 << 4)    /* 20% of CC */
+#define CHRG_CCCV_CV_MASK			0x60        /* 2 bits */
+#define CHRG_CCCV_CV_BIT_POS		5
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CHRG_CCCV_CV_4100MV			0x0     /* 4.10V */
 #define CHRG_CCCV_CV_4150MV			0x1     /* 4.15V */
 #define CHRG_CCCV_CV_4200MV			0x2     /* 4.20V */
 #define CHRG_CCCV_CV_4350MV			0x3     /* 4.35V */
 #define CHRG_CCCV_CHG_EN			(1 << 7)
 
+<<<<<<< HEAD
 #define FG_CNTL_OCV_ADJ_STAT			(1 << 2)
 #define FG_CNTL_OCV_ADJ_EN			(1 << 3)
 #define FG_CNTL_CAP_ADJ_STAT			(1 << 4)
+=======
+#define FG_CNTL_OCV_ADJ_STAT		(1 << 2)
+#define FG_CNTL_OCV_ADJ_EN			(1 << 3)
+#define FG_CNTL_CAP_ADJ_STAT		(1 << 4)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define FG_CNTL_CAP_ADJ_EN			(1 << 5)
 #define FG_CNTL_CC_EN				(1 << 6)
 #define FG_CNTL_GAUGE_EN			(1 << 7)
@@ -71,23 +106,41 @@
 #define FG_CC_CAP_VALID				(1 << 7)
 #define FG_CC_CAP_VAL_MASK			0x7F
 
+<<<<<<< HEAD
 #define FG_LOW_CAP_THR1_MASK			0xf0    /* 5% tp 20% */
 #define FG_LOW_CAP_THR1_VAL			0xa0    /* 15 perc */
 #define FG_LOW_CAP_THR2_MASK			0x0f    /* 0% to 15% */
+=======
+#define FG_LOW_CAP_THR1_MASK		0xf0    /* 5% tp 20% */
+#define FG_LOW_CAP_THR1_VAL			0xa0    /* 15 perc */
+#define FG_LOW_CAP_THR2_MASK		0x0f    /* 0% to 15% */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define FG_LOW_CAP_WARN_THR			14  /* 14 perc */
 #define FG_LOW_CAP_CRIT_THR			4   /* 4 perc */
 #define FG_LOW_CAP_SHDN_THR			0   /* 0 perc */
 
+<<<<<<< HEAD
 #define DEV_NAME				"axp288_fuel_gauge"
+=======
+#define NR_RETRY_CNT    3
+#define DEV_NAME	"axp288_fuel_gauge"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* 1.1mV per LSB expressed in uV */
 #define VOLTAGE_FROM_ADC(a)			((a * 11) / 10)
 /* properties converted to uV, uA */
+<<<<<<< HEAD
 #define PROP_VOLT(a)				((a) * 1000)
 #define PROP_CURR(a)				((a) * 1000)
 
 #define AXP288_REG_UPDATE_INTERVAL		(60 * HZ)
 #define AXP288_FG_INTR_NUM			6
+=======
+#define PROP_VOLT(a)		((a) * 1000)
+#define PROP_CURR(a)		((a) * 1000)
+
+#define AXP288_FG_INTR_NUM	6
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum {
 	QWBTU_IRQ = 0,
 	WBTU_IRQ,
@@ -98,6 +151,12 @@ enum {
 };
 
 enum {
+<<<<<<< HEAD
+=======
+	BAT_TEMP = 0,
+	PMIC_TEMP,
+	SYSTEM_TEMP,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BAT_CHRG_CURR,
 	BAT_D_CURR,
 	BAT_VOLT,
@@ -105,7 +164,11 @@ enum {
 };
 
 struct axp288_fg_info {
+<<<<<<< HEAD
 	struct device *dev;
+=======
+	struct platform_device *pdev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct regmap *regmap;
 	struct regmap_irq_chip_data *regmap_irqc;
 	int irq[AXP288_FG_INTR_NUM];
@@ -114,6 +177,7 @@ struct axp288_fg_info {
 	struct mutex lock;
 	int status;
 	int max_volt;
+<<<<<<< HEAD
 	int pwr_op;
 	int low_cap;
 	struct dentry *debug_file;
@@ -129,6 +193,9 @@ struct axp288_fg_info {
 	int ocv;
 	int fg_cc_mtr1;
 	int fg_des_cap1;
+=======
+	struct dentry *debug_file;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static enum power_supply_property fuel_gauge_props[] = {
@@ -148,12 +215,26 @@ static enum power_supply_property fuel_gauge_props[] = {
 
 static int fuel_gauge_reg_readb(struct axp288_fg_info *info, int reg)
 {
+<<<<<<< HEAD
 	unsigned int val;
 	int ret;
 
 	ret = regmap_read(info->regmap, reg, &val);
 	if (ret < 0) {
 		dev_err(info->dev, "Error reading reg 0x%02x err: %d\n", reg, ret);
+=======
+	int ret, i;
+	unsigned int val;
+
+	for (i = 0; i < NR_RETRY_CNT; i++) {
+		ret = regmap_read(info->regmap, reg, &val);
+		if (ret != -EBUSY)
+			break;
+	}
+
+	if (ret < 0) {
+		dev_err(&info->pdev->dev, "axp288 reg read err:%d\n", ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ret;
 	}
 
@@ -167,7 +248,11 @@ static int fuel_gauge_reg_writeb(struct axp288_fg_info *info, int reg, u8 val)
 	ret = regmap_write(info->regmap, reg, (unsigned int)val);
 
 	if (ret < 0)
+<<<<<<< HEAD
 		dev_err(info->dev, "Error writing reg 0x%02x err: %d\n", reg, ret);
+=======
+		dev_err(&info->pdev->dev, "axp288 reg write err:%d\n", ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -179,13 +264,23 @@ static int fuel_gauge_read_15bit_word(struct axp288_fg_info *info, int reg)
 
 	ret = regmap_bulk_read(info->regmap, reg, buf, 2);
 	if (ret < 0) {
+<<<<<<< HEAD
 		dev_err(info->dev, "Error reading reg 0x%02x err: %d\n", reg, ret);
+=======
+		dev_err(&info->pdev->dev, "Error reading reg 0x%02x err: %d\n",
+			reg, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ret;
 	}
 
 	ret = get_unaligned_be16(buf);
 	if (!(ret & FG_15BIT_WORD_VALID)) {
+<<<<<<< HEAD
 		dev_err(info->dev, "Error reg 0x%02x contents not valid\n", reg);
+=======
+		dev_err(&info->pdev->dev, "Error reg 0x%02x contents not valid\n",
+			reg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENXIO;
 	}
 
@@ -199,7 +294,12 @@ static int fuel_gauge_read_12bit_word(struct axp288_fg_info *info, int reg)
 
 	ret = regmap_bulk_read(info->regmap, reg, buf, 2);
 	if (ret < 0) {
+<<<<<<< HEAD
 		dev_err(info->dev, "Error reading reg 0x%02x err: %d\n", reg, ret);
+=======
+		dev_err(&info->pdev->dev, "Error reading reg 0x%02x err: %d\n",
+			reg, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ret;
 	}
 
@@ -207,6 +307,7 @@ static int fuel_gauge_read_12bit_word(struct axp288_fg_info *info, int reg)
 	return (buf[0] << 4) | ((buf[1] >> 4) & 0x0f);
 }
 
+<<<<<<< HEAD
 static int fuel_gauge_update_registers(struct axp288_fg_info *info)
 {
 	int ret;
@@ -274,11 +375,144 @@ static void fuel_gauge_get_status(struct axp288_fg_info *info)
 	int pwr_stat = info->pwr_stat;
 	int fg_res = info->fg_res;
 	int curr = info->d_curr;
+=======
+#ifdef CONFIG_DEBUG_FS
+static int fuel_gauge_debug_show(struct seq_file *s, void *data)
+{
+	struct axp288_fg_info *info = s->private;
+	int raw_val, ret;
+
+	seq_printf(s, " PWR_STATUS[%02x] : %02x\n",
+		AXP20X_PWR_INPUT_STATUS,
+		fuel_gauge_reg_readb(info, AXP20X_PWR_INPUT_STATUS));
+	seq_printf(s, "PWR_OP_MODE[%02x] : %02x\n",
+		AXP20X_PWR_OP_MODE,
+		fuel_gauge_reg_readb(info, AXP20X_PWR_OP_MODE));
+	seq_printf(s, " CHRG_CTRL1[%02x] : %02x\n",
+		AXP20X_CHRG_CTRL1,
+		fuel_gauge_reg_readb(info, AXP20X_CHRG_CTRL1));
+	seq_printf(s, "       VLTF[%02x] : %02x\n",
+		AXP20X_V_LTF_DISCHRG,
+		fuel_gauge_reg_readb(info, AXP20X_V_LTF_DISCHRG));
+	seq_printf(s, "       VHTF[%02x] : %02x\n",
+		AXP20X_V_HTF_DISCHRG,
+		fuel_gauge_reg_readb(info, AXP20X_V_HTF_DISCHRG));
+	seq_printf(s, "    CC_CTRL[%02x] : %02x\n",
+		AXP20X_CC_CTRL,
+		fuel_gauge_reg_readb(info, AXP20X_CC_CTRL));
+	seq_printf(s, "BATTERY CAP[%02x] : %02x\n",
+		AXP20X_FG_RES,
+		fuel_gauge_reg_readb(info, AXP20X_FG_RES));
+	seq_printf(s, "    FG_RDC1[%02x] : %02x\n",
+		AXP288_FG_RDC1_REG,
+		fuel_gauge_reg_readb(info, AXP288_FG_RDC1_REG));
+	seq_printf(s, "    FG_RDC0[%02x] : %02x\n",
+		AXP288_FG_RDC0_REG,
+		fuel_gauge_reg_readb(info, AXP288_FG_RDC0_REG));
+	seq_printf(s, "     FG_OCV[%02x] : %04x\n",
+		AXP288_FG_OCVH_REG,
+		fuel_gauge_read_12bit_word(info, AXP288_FG_OCVH_REG));
+	seq_printf(s, " FG_DES_CAP[%02x] : %04x\n",
+		AXP288_FG_DES_CAP1_REG,
+		fuel_gauge_read_15bit_word(info, AXP288_FG_DES_CAP1_REG));
+	seq_printf(s, "  FG_CC_MTR[%02x] : %04x\n",
+		AXP288_FG_CC_MTR1_REG,
+		fuel_gauge_read_15bit_word(info, AXP288_FG_CC_MTR1_REG));
+	seq_printf(s, " FG_OCV_CAP[%02x] : %02x\n",
+		AXP288_FG_OCV_CAP_REG,
+		fuel_gauge_reg_readb(info, AXP288_FG_OCV_CAP_REG));
+	seq_printf(s, "  FG_CC_CAP[%02x] : %02x\n",
+		AXP288_FG_CC_CAP_REG,
+		fuel_gauge_reg_readb(info, AXP288_FG_CC_CAP_REG));
+	seq_printf(s, " FG_LOW_CAP[%02x] : %02x\n",
+		AXP288_FG_LOW_CAP_REG,
+		fuel_gauge_reg_readb(info, AXP288_FG_LOW_CAP_REG));
+	seq_printf(s, "TUNING_CTL0[%02x] : %02x\n",
+		AXP288_FG_TUNE0,
+		fuel_gauge_reg_readb(info, AXP288_FG_TUNE0));
+	seq_printf(s, "TUNING_CTL1[%02x] : %02x\n",
+		AXP288_FG_TUNE1,
+		fuel_gauge_reg_readb(info, AXP288_FG_TUNE1));
+	seq_printf(s, "TUNING_CTL2[%02x] : %02x\n",
+		AXP288_FG_TUNE2,
+		fuel_gauge_reg_readb(info, AXP288_FG_TUNE2));
+	seq_printf(s, "TUNING_CTL3[%02x] : %02x\n",
+		AXP288_FG_TUNE3,
+		fuel_gauge_reg_readb(info, AXP288_FG_TUNE3));
+	seq_printf(s, "TUNING_CTL4[%02x] : %02x\n",
+		AXP288_FG_TUNE4,
+		fuel_gauge_reg_readb(info, AXP288_FG_TUNE4));
+	seq_printf(s, "TUNING_CTL5[%02x] : %02x\n",
+		AXP288_FG_TUNE5,
+		fuel_gauge_reg_readb(info, AXP288_FG_TUNE5));
+
+	ret = iio_read_channel_raw(info->iio_channel[BAT_TEMP], &raw_val);
+	if (ret >= 0)
+		seq_printf(s, "axp288-batttemp : %d\n", raw_val);
+	ret = iio_read_channel_raw(info->iio_channel[PMIC_TEMP], &raw_val);
+	if (ret >= 0)
+		seq_printf(s, "axp288-pmictemp : %d\n", raw_val);
+	ret = iio_read_channel_raw(info->iio_channel[SYSTEM_TEMP], &raw_val);
+	if (ret >= 0)
+		seq_printf(s, "axp288-systtemp : %d\n", raw_val);
+	ret = iio_read_channel_raw(info->iio_channel[BAT_CHRG_CURR], &raw_val);
+	if (ret >= 0)
+		seq_printf(s, "axp288-chrgcurr : %d\n", raw_val);
+	ret = iio_read_channel_raw(info->iio_channel[BAT_D_CURR], &raw_val);
+	if (ret >= 0)
+		seq_printf(s, "axp288-dchrgcur : %d\n", raw_val);
+	ret = iio_read_channel_raw(info->iio_channel[BAT_VOLT], &raw_val);
+	if (ret >= 0)
+		seq_printf(s, "axp288-battvolt : %d\n", raw_val);
+
+	return 0;
+}
+
+DEFINE_SHOW_ATTRIBUTE(fuel_gauge_debug);
+
+static void fuel_gauge_create_debugfs(struct axp288_fg_info *info)
+{
+	info->debug_file = debugfs_create_file("fuelgauge", 0666, NULL,
+		info, &fuel_gauge_debug_fops);
+}
+
+static void fuel_gauge_remove_debugfs(struct axp288_fg_info *info)
+{
+	debugfs_remove(info->debug_file);
+}
+#else
+static inline void fuel_gauge_create_debugfs(struct axp288_fg_info *info)
+{
+}
+static inline void fuel_gauge_remove_debugfs(struct axp288_fg_info *info)
+{
+}
+#endif
+
+static void fuel_gauge_get_status(struct axp288_fg_info *info)
+{
+	int pwr_stat, fg_res, curr, ret;
+
+	pwr_stat = fuel_gauge_reg_readb(info, AXP20X_PWR_INPUT_STATUS);
+	if (pwr_stat < 0) {
+		dev_err(&info->pdev->dev,
+			"PWR STAT read failed:%d\n", pwr_stat);
+		return;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Report full if Vbus is valid and the reported capacity is 100% */
 	if (!(pwr_stat & PS_STAT_VBUS_VALID))
 		goto not_full;
 
+<<<<<<< HEAD
+=======
+	fg_res = fuel_gauge_reg_readb(info, AXP20X_FG_RES);
+	if (fg_res < 0) {
+		dev_err(&info->pdev->dev, "FG RES read failed: %d\n", fg_res);
+		return;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!(fg_res & FG_REP_CAP_VALID))
 		goto not_full;
 
@@ -296,6 +530,14 @@ static void fuel_gauge_get_status(struct axp288_fg_info *info)
 	if (fg_res < 90 || (pwr_stat & PS_STAT_BAT_CHRG_DIR))
 		goto not_full;
 
+<<<<<<< HEAD
+=======
+	ret = iio_read_channel_raw(info->iio_channel[BAT_D_CURR], &curr);
+	if (ret < 0) {
+		dev_err(&info->pdev->dev, "FG get current failed: %d\n", ret);
+		return;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (curr == 0) {
 		info->status = POWER_SUPPLY_STATUS_FULL;
 		return;
@@ -308,16 +550,71 @@ not_full:
 		info->status = POWER_SUPPLY_STATUS_DISCHARGING;
 }
 
+<<<<<<< HEAD
 static int fuel_gauge_battery_health(struct axp288_fg_info *info)
 {
 	int vocv = VOLTAGE_FROM_ADC(info->ocv);
 	int health = POWER_SUPPLY_HEALTH_UNKNOWN;
+=======
+static int fuel_gauge_get_vbatt(struct axp288_fg_info *info, int *vbatt)
+{
+	int ret = 0, raw_val;
+
+	ret = iio_read_channel_raw(info->iio_channel[BAT_VOLT], &raw_val);
+	if (ret < 0)
+		goto vbatt_read_fail;
+
+	*vbatt = VOLTAGE_FROM_ADC(raw_val);
+vbatt_read_fail:
+	return ret;
+}
+
+static int fuel_gauge_get_current(struct axp288_fg_info *info, int *cur)
+{
+	int ret, discharge;
+
+	/* First check discharge current, so that we do only 1 read on bat. */
+	ret = iio_read_channel_raw(info->iio_channel[BAT_D_CURR], &discharge);
+	if (ret < 0)
+		return ret;
+
+	if (discharge > 0) {
+		*cur = -1 * discharge;
+		return 0;
+	}
+
+	return iio_read_channel_raw(info->iio_channel[BAT_CHRG_CURR], cur);
+}
+
+static int fuel_gauge_get_vocv(struct axp288_fg_info *info, int *vocv)
+{
+	int ret;
+
+	ret = fuel_gauge_read_12bit_word(info, AXP288_FG_OCVH_REG);
+	if (ret >= 0)
+		*vocv = VOLTAGE_FROM_ADC(ret);
+
+	return ret;
+}
+
+static int fuel_gauge_battery_health(struct axp288_fg_info *info)
+{
+	int ret, vocv, health = POWER_SUPPLY_HEALTH_UNKNOWN;
+
+	ret = fuel_gauge_get_vocv(info, &vocv);
+	if (ret < 0)
+		goto health_read_fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (vocv > info->max_volt)
 		health = POWER_SUPPLY_HEALTH_OVERVOLTAGE;
 	else
 		health = POWER_SUPPLY_HEALTH_GOOD;
 
+<<<<<<< HEAD
+=======
+health_read_fail:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return health;
 }
 
@@ -326,6 +623,7 @@ static int fuel_gauge_get_property(struct power_supply *ps,
 		union power_supply_propval *val)
 {
 	struct axp288_fg_info *info = power_supply_get_drvdata(ps);
+<<<<<<< HEAD
 	int ret, value;
 
 	mutex_lock(&info->lock);
@@ -334,6 +632,11 @@ static int fuel_gauge_get_property(struct power_supply *ps,
 	if (ret < 0)
 		goto out;
 
+=======
+	int ret = 0, value;
+
+	mutex_lock(&info->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (prop) {
 	case POWER_SUPPLY_PROP_STATUS:
 		fuel_gauge_get_status(info);
@@ -343,6 +646,7 @@ static int fuel_gauge_get_property(struct power_supply *ps,
 		val->intval = fuel_gauge_battery_health(info);
 		break;
 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
+<<<<<<< HEAD
 		value = VOLTAGE_FROM_ADC(info->bat_volt);
 		val->intval = PROP_VOLT(value);
 		break;
@@ -360,35 +664,103 @@ static int fuel_gauge_get_property(struct power_supply *ps,
 		break;
 	case POWER_SUPPLY_PROP_PRESENT:
 		if (info->pwr_op & CHRG_STAT_BAT_PRESENT)
+=======
+		ret = fuel_gauge_get_vbatt(info, &value);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+		val->intval = PROP_VOLT(value);
+		break;
+	case POWER_SUPPLY_PROP_VOLTAGE_OCV:
+		ret = fuel_gauge_get_vocv(info, &value);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+		val->intval = PROP_VOLT(value);
+		break;
+	case POWER_SUPPLY_PROP_CURRENT_NOW:
+		ret = fuel_gauge_get_current(info, &value);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+		val->intval = PROP_CURR(value);
+		break;
+	case POWER_SUPPLY_PROP_PRESENT:
+		ret = fuel_gauge_reg_readb(info, AXP20X_PWR_OP_MODE);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+
+		if (ret & CHRG_STAT_BAT_PRESENT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			val->intval = 1;
 		else
 			val->intval = 0;
 		break;
 	case POWER_SUPPLY_PROP_CAPACITY:
+<<<<<<< HEAD
 		if (!(info->fg_res & FG_REP_CAP_VALID))
 			dev_err(info->dev, "capacity measurement not valid\n");
 		val->intval = (info->fg_res & FG_REP_CAP_VAL_MASK);
 		break;
 	case POWER_SUPPLY_PROP_CAPACITY_ALERT_MIN:
 		val->intval = (info->low_cap & 0x0f);
+=======
+		ret = fuel_gauge_reg_readb(info, AXP20X_FG_RES);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+
+		if (!(ret & FG_REP_CAP_VALID))
+			dev_err(&info->pdev->dev,
+				"capacity measurement not valid\n");
+		val->intval = (ret & FG_REP_CAP_VAL_MASK);
+		break;
+	case POWER_SUPPLY_PROP_CAPACITY_ALERT_MIN:
+		ret = fuel_gauge_reg_readb(info, AXP288_FG_LOW_CAP_REG);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+		val->intval = (ret & 0x0f);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case POWER_SUPPLY_PROP_TECHNOLOGY:
 		val->intval = POWER_SUPPLY_TECHNOLOGY_LION;
 		break;
 	case POWER_SUPPLY_PROP_CHARGE_NOW:
+<<<<<<< HEAD
 		val->intval = info->fg_cc_mtr1 * FG_DES_CAP_RES_LSB;
 		break;
 	case POWER_SUPPLY_PROP_CHARGE_FULL:
 		val->intval = info->fg_des_cap1 * FG_DES_CAP_RES_LSB;
+=======
+		ret = fuel_gauge_read_15bit_word(info, AXP288_FG_CC_MTR1_REG);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+
+		val->intval = ret * FG_DES_CAP_RES_LSB;
+		break;
+	case POWER_SUPPLY_PROP_CHARGE_FULL:
+		ret = fuel_gauge_read_15bit_word(info, AXP288_FG_DES_CAP1_REG);
+		if (ret < 0)
+			goto fuel_gauge_read_err;
+
+		val->intval = ret * FG_DES_CAP_RES_LSB;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case POWER_SUPPLY_PROP_VOLTAGE_MAX_DESIGN:
 		val->intval = PROP_VOLT(info->max_volt);
 		break;
 	default:
+<<<<<<< HEAD
 		ret = -EINVAL;
 	}
 
 out:
+=======
+		mutex_unlock(&info->lock);
+		return -EINVAL;
+	}
+
+	mutex_unlock(&info->lock);
+	return 0;
+
+fuel_gauge_read_err:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&info->lock);
 	return ret;
 }
@@ -398,7 +770,11 @@ static int fuel_gauge_set_property(struct power_supply *ps,
 		const union power_supply_propval *val)
 {
 	struct axp288_fg_info *info = power_supply_get_drvdata(ps);
+<<<<<<< HEAD
 	int new_low_cap, ret = 0;
+=======
+	int ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_lock(&info->lock);
 	switch (prop) {
@@ -407,12 +783,21 @@ static int fuel_gauge_set_property(struct power_supply *ps,
 			ret = -EINVAL;
 			break;
 		}
+<<<<<<< HEAD
 		new_low_cap = info->low_cap;
 		new_low_cap &= 0xf0;
 		new_low_cap |= (val->intval & 0xf);
 		ret = fuel_gauge_reg_writeb(info, AXP288_FG_LOW_CAP_REG, new_low_cap);
 		if (ret == 0)
 			info->low_cap = new_low_cap;
+=======
+		ret = fuel_gauge_reg_readb(info, AXP288_FG_LOW_CAP_REG);
+		if (ret < 0)
+			break;
+		ret &= 0xf0;
+		ret |= (val->intval & 0xf);
+		ret = fuel_gauge_reg_writeb(info, AXP288_FG_LOW_CAP_REG, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	default:
 		ret = -EINVAL;
@@ -450,12 +835,17 @@ static irqreturn_t fuel_gauge_thread_handler(int irq, void *dev)
 	}
 
 	if (i >= AXP288_FG_INTR_NUM) {
+<<<<<<< HEAD
 		dev_warn(info->dev, "spurious interrupt!!\n");
+=======
+		dev_warn(&info->pdev->dev, "spurious interrupt!!\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return IRQ_NONE;
 	}
 
 	switch (i) {
 	case QWBTU_IRQ:
+<<<<<<< HEAD
 		dev_info(info->dev, "Quit Battery under temperature in work mode IRQ (QWBTU)\n");
 		break;
 	case WBTU_IRQ:
@@ -479,6 +869,33 @@ static irqreturn_t fuel_gauge_thread_handler(int irq, void *dev)
 
 	info->valid = 0; /* Force updating of the cached registers */
 
+=======
+		dev_info(&info->pdev->dev,
+			"Quit Battery under temperature in work mode IRQ (QWBTU)\n");
+		break;
+	case WBTU_IRQ:
+		dev_info(&info->pdev->dev,
+			"Battery under temperature in work mode IRQ (WBTU)\n");
+		break;
+	case QWBTO_IRQ:
+		dev_info(&info->pdev->dev,
+			"Quit Battery over temperature in work mode IRQ (QWBTO)\n");
+		break;
+	case WBTO_IRQ:
+		dev_info(&info->pdev->dev,
+			"Battery over temperature in work mode IRQ (WBTO)\n");
+		break;
+	case WL2_IRQ:
+		dev_info(&info->pdev->dev, "Low Batt Warning(2) INTR\n");
+		break;
+	case WL1_IRQ:
+		dev_info(&info->pdev->dev, "Low Batt Warning(1) INTR\n");
+		break;
+	default:
+		dev_warn(&info->pdev->dev, "Spurious Interrupt!!!\n");
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	power_supply_changed(info->bat);
 	return IRQ_HANDLED;
 }
@@ -487,7 +904,10 @@ static void fuel_gauge_external_power_changed(struct power_supply *psy)
 {
 	struct axp288_fg_info *info = power_supply_get_drvdata(psy);
 
+<<<<<<< HEAD
 	info->valid = 0; /* Force updating of the cached registers */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	power_supply_changed(info->bat);
 }
 
@@ -502,15 +922,27 @@ static const struct power_supply_desc fuel_gauge_desc = {
 	.external_power_changed	= fuel_gauge_external_power_changed,
 };
 
+<<<<<<< HEAD
 static void fuel_gauge_init_irq(struct axp288_fg_info *info, struct platform_device *pdev)
+=======
+static void fuel_gauge_init_irq(struct axp288_fg_info *info)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int ret, i, pirq;
 
 	for (i = 0; i < AXP288_FG_INTR_NUM; i++) {
+<<<<<<< HEAD
 		pirq = platform_get_irq(pdev, i);
 		info->irq[i] = regmap_irq_get_virq(info->regmap_irqc, pirq);
 		if (info->irq[i] < 0) {
 			dev_warn(info->dev, "regmap_irq get virq failed for IRQ %d: %d\n",
+=======
+		pirq = platform_get_irq(info->pdev, i);
+		info->irq[i] = regmap_irq_get_virq(info->regmap_irqc, pirq);
+		if (info->irq[i] < 0) {
+			dev_warn(&info->pdev->dev,
+				"regmap_irq get virq failed for IRQ %d: %d\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				pirq, info->irq[i]);
 			info->irq[i] = -1;
 			goto intr_failed;
@@ -519,10 +951,21 @@ static void fuel_gauge_init_irq(struct axp288_fg_info *info, struct platform_dev
 				NULL, fuel_gauge_thread_handler,
 				IRQF_ONESHOT, DEV_NAME, info);
 		if (ret) {
+<<<<<<< HEAD
 			dev_warn(info->dev, "request irq failed for IRQ %d: %d\n",
 				pirq, info->irq[i]);
 			info->irq[i] = -1;
 			goto intr_failed;
+=======
+			dev_warn(&info->pdev->dev,
+				"request irq failed for IRQ %d: %d\n",
+				pirq, info->irq[i]);
+			info->irq[i] = -1;
+			goto intr_failed;
+		} else {
+			dev_info(&info->pdev->dev, "HW IRQ %d -> VIRQ %d\n",
+				pirq, info->irq[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 	return;
@@ -618,6 +1061,12 @@ static int axp288_fuel_gauge_probe(struct platform_device *pdev)
 	struct axp20x_dev *axp20x = dev_get_drvdata(pdev->dev.parent);
 	struct power_supply_config psy_cfg = {};
 	static const char * const iio_chan_name[] = {
+<<<<<<< HEAD
+=======
+		[BAT_TEMP] = "axp288-batt-temp",
+		[PMIC_TEMP] = "axp288-pmic-temp",
+		[SYSTEM_TEMP] = "axp288-system-temp",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		[BAT_CHRG_CURR] = "axp288-chrg-curr",
 		[BAT_D_CURR] = "axp288-chrg-d-curr",
 		[BAT_VOLT] = "axp288-batt-volt",
@@ -627,15 +1076,35 @@ static int axp288_fuel_gauge_probe(struct platform_device *pdev)
 	if (dmi_check_system(axp288_no_battery_list))
 		return -ENODEV;
 
+<<<<<<< HEAD
+=======
+	/*
+	 * On some devices the fuelgauge and charger parts of the axp288 are
+	 * not used, check that the fuelgauge is enabled (CC_CTRL != 0).
+	 */
+	ret = regmap_read(axp20x->regmap, AXP20X_CC_CTRL, &val);
+	if (ret < 0)
+		return ret;
+	if (val == 0)
+		return -ENODEV;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	info = devm_kzalloc(&pdev->dev, sizeof(*info), GFP_KERNEL);
 	if (!info)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	info->dev = &pdev->dev;
 	info->regmap = axp20x->regmap;
 	info->regmap_irqc = axp20x->regmap_irqc;
 	info->status = POWER_SUPPLY_STATUS_UNKNOWN;
 	info->valid = 0;
+=======
+	info->pdev = pdev;
+	info->regmap = axp20x->regmap;
+	info->regmap_irqc = axp20x->regmap_irqc;
+	info->status = POWER_SUPPLY_STATUS_UNKNOWN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	platform_set_drvdata(pdev, info);
 
@@ -661,6 +1130,7 @@ static int axp288_fuel_gauge_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
 	ret = iosf_mbi_block_punit_i2c_access();
 	if (ret < 0)
 		goto out_free_iio_chan;
@@ -680,16 +1150,29 @@ static int axp288_fuel_gauge_probe(struct platform_device *pdev)
 	ret = fuel_gauge_reg_readb(info, AXP288_FG_DES_CAP1_REG);
 	if (ret < 0)
 		goto unblock_punit_i2c_access;
+=======
+	ret = fuel_gauge_reg_readb(info, AXP288_FG_DES_CAP1_REG);
+	if (ret < 0)
+		goto out_free_iio_chan;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!(ret & FG_DES_CAP1_VALID)) {
 		dev_err(&pdev->dev, "axp288 not configured by firmware\n");
 		ret = -ENODEV;
+<<<<<<< HEAD
 		goto unblock_punit_i2c_access;
+=======
+		goto out_free_iio_chan;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = fuel_gauge_reg_readb(info, AXP20X_CHRG_CTRL1);
 	if (ret < 0)
+<<<<<<< HEAD
 		goto unblock_punit_i2c_access;
+=======
+		goto out_free_iio_chan;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch ((ret & CHRG_CCCV_CV_MASK) >> CHRG_CCCV_CV_BIT_POS) {
 	case CHRG_CCCV_CV_4100MV:
 		info->max_volt = 4100;
@@ -705,6 +1188,7 @@ static int axp288_fuel_gauge_probe(struct platform_device *pdev)
 		break;
 	}
 
+<<<<<<< HEAD
 	ret = fuel_gauge_reg_readb(info, AXP20X_PWR_OP_MODE);
 	if (ret < 0)
 		goto unblock_punit_i2c_access;
@@ -721,6 +1205,8 @@ unblock_punit_i2c_access:
 	if (ret < 0)
 		goto out_free_iio_chan;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	psy_cfg.drv_data = info;
 	info->bat = power_supply_register(&pdev->dev, &fuel_gauge_desc, &psy_cfg);
 	if (IS_ERR(info->bat)) {
@@ -729,7 +1215,12 @@ unblock_punit_i2c_access:
 		goto out_free_iio_chan;
 	}
 
+<<<<<<< HEAD
 	fuel_gauge_init_irq(info, pdev);
+=======
+	fuel_gauge_create_debugfs(info);
+	fuel_gauge_init_irq(info);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 
@@ -753,6 +1244,10 @@ static int axp288_fuel_gauge_remove(struct platform_device *pdev)
 	int i;
 
 	power_supply_unregister(info->bat);
+<<<<<<< HEAD
+=======
+	fuel_gauge_remove_debugfs(info);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < AXP288_FG_INTR_NUM; i++)
 		if (info->irq[i] >= 0)

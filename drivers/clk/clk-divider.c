@@ -446,6 +446,7 @@ static long clk_divider_round_rate(struct clk_hw *hw, unsigned long rate,
 				  divider->width, divider->flags);
 }
 
+<<<<<<< HEAD
 static int clk_divider_determine_rate(struct clk_hw *hw,
 				      struct clk_rate_request *req)
 {
@@ -467,6 +468,8 @@ static int clk_divider_determine_rate(struct clk_hw *hw,
 				      divider->flags);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int divider_get_val(unsigned long rate, unsigned long parent_rate,
 		    const struct clk_div_table *table, u8 width,
 		    unsigned long flags)
@@ -522,7 +525,10 @@ static int clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
 const struct clk_ops clk_divider_ops = {
 	.recalc_rate = clk_divider_recalc_rate,
 	.round_rate = clk_divider_round_rate,
+<<<<<<< HEAD
 	.determine_rate = clk_divider_determine_rate,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.set_rate = clk_divider_set_rate,
 };
 EXPORT_SYMBOL_GPL(clk_divider_ops);
@@ -530,7 +536,10 @@ EXPORT_SYMBOL_GPL(clk_divider_ops);
 const struct clk_ops clk_divider_ro_ops = {
 	.recalc_rate = clk_divider_recalc_rate,
 	.round_rate = clk_divider_round_rate,
+<<<<<<< HEAD
 	.determine_rate = clk_divider_determine_rate,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 EXPORT_SYMBOL_GPL(clk_divider_ro_ops);
 

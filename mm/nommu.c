@@ -826,6 +826,12 @@ static int validate_mmap_request(struct file *file,
 			    (file->f_mode & FMODE_WRITE))
 				return -EACCES;
 
+<<<<<<< HEAD
+=======
+			if (locks_verify_locked(file))
+				return -EAGAIN;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (!(capabilities & NOMMU_MAP_DIRECT))
 				return -ENODEV;
 
@@ -1293,6 +1299,11 @@ unsigned long ksys_mmap_pgoff(unsigned long addr, unsigned long len,
 			goto out;
 	}
 
+<<<<<<< HEAD
+=======
+	flags &= ~MAP_DENYWRITE;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	retval = vm_mmap_pgoff(file, addr, len, prot, flags, pgoff);
 
 	if (file)

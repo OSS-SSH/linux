@@ -20,6 +20,11 @@ struct dma_coherent_mem {
 	bool		use_dev_dma_pfn_offset;
 };
 
+<<<<<<< HEAD
+=======
+static struct dma_coherent_mem *dma_coherent_default_memory __ro_after_init;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct dma_coherent_mem *dev_get_coherent_memory(struct device *dev)
 {
 	if (dev && dev->dma_mem)
@@ -35,6 +40,7 @@ static inline dma_addr_t dma_get_device_base(struct device *dev,
 	return mem->device_base;
 }
 
+<<<<<<< HEAD
 static struct dma_coherent_mem *dma_init_coherent_memory(phys_addr_t phys_addr,
 		dma_addr_t device_addr, size_t size, bool use_dma_pfn_offset)
 {
@@ -56,11 +62,44 @@ static struct dma_coherent_mem *dma_init_coherent_memory(phys_addr_t phys_addr,
 	dma_mem->bitmap = kzalloc(bitmap_size, GFP_KERNEL);
 	if (!dma_mem->bitmap)
 		goto out_free_dma_mem;
+=======
+static int dma_init_coherent_memory(phys_addr_t phys_addr,
+		dma_addr_t device_addr, size_t size,
+		struct dma_coherent_mem **mem)
+{
+	struct dma_coherent_mem *dma_mem = NULL;
+	void *mem_base = NULL;
+	int pages = size >> PAGE_SHIFT;
+	int bitmap_size = BITS_TO_LONGS(pages) * sizeof(long);
+	int ret;
+
+	if (!size) {
+		ret = -EINVAL;
+		goto out;
+	}
+
+	mem_base = memremap(phys_addr, size, MEMREMAP_WC);
+	if (!mem_base) {
+		ret = -EINVAL;
+		goto out;
+	}
+	dma_mem = kzalloc(sizeof(struct dma_coherent_mem), GFP_KERNEL);
+	if (!dma_mem) {
+		ret = -ENOMEM;
+		goto out;
+	}
+	dma_mem->bitmap = kzalloc(bitmap_size, GFP_KERNEL);
+	if (!dma_mem->bitmap) {
+		ret = -ENOMEM;
+		goto out;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dma_mem->virt_base = mem_base;
 	dma_mem->device_base = device_addr;
 	dma_mem->pfn_base = PFN_DOWN(phys_addr);
 	dma_mem->size = pages;
+<<<<<<< HEAD
 	dma_mem->use_dev_dma_pfn_offset = use_dma_pfn_offset;
 	spin_lock_init(&dma_mem->spinlock);
 
@@ -73,6 +112,18 @@ out_unmap_membase:
 	pr_err("Reserved memory: failed to init DMA memory pool at %pa, size %zd MiB\n",
 		&phys_addr, size / SZ_1M);
 	return ERR_PTR(-ENOMEM);
+=======
+	spin_lock_init(&dma_mem->spinlock);
+
+	*mem = dma_mem;
+	return 0;
+
+out:
+	kfree(dma_mem);
+	if (mem_base)
+		memunmap(mem_base);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void dma_release_coherent_memory(struct dma_coherent_mem *mem)
@@ -121,9 +172,15 @@ int dma_declare_coherent_memory(struct device *dev, phys_addr_t phys_addr,
 	struct dma_coherent_mem *mem;
 	int ret;
 
+<<<<<<< HEAD
 	mem = dma_init_coherent_memory(phys_addr, device_addr, size, false);
 	if (IS_ERR(mem))
 		return PTR_ERR(mem);
+=======
+	ret = dma_init_coherent_memory(phys_addr, device_addr, size, &mem);
+	if (ret)
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = dma_assign_coherent_memory(dev, mem);
 	if (ret)
@@ -189,6 +246,19 @@ int dma_alloc_from_dev_coherent(struct device *dev, ssize_t size,
 	return 1;
 }
 
+<<<<<<< HEAD
+=======
+void *dma_alloc_from_global_coherent(struct device *dev, ssize_t size,
+				     dma_addr_t *dma_handle)
+{
+	if (!dma_coherent_default_memory)
+		return NULL;
+
+	return __dma_alloc_from_coherent(dev, dma_coherent_default_memory, size,
+					 dma_handle);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __dma_release_from_coherent(struct dma_coherent_mem *mem,
 				       int order, void *vaddr)
 {
@@ -224,6 +294,18 @@ int dma_release_from_dev_coherent(struct device *dev, int order, void *vaddr)
 	return __dma_release_from_coherent(mem, order, vaddr);
 }
 
+<<<<<<< HEAD
+=======
+int dma_release_from_global_coherent(int order, void *vaddr)
+{
+	if (!dma_coherent_default_memory)
+		return 0;
+
+	return __dma_release_from_coherent(dma_coherent_default_memory, order,
+			vaddr);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __dma_mmap_from_coherent(struct dma_coherent_mem *mem,
 		struct vm_area_struct *vma, void *vaddr, size_t size, int *ret)
 {
@@ -269,6 +351,7 @@ int dma_mmap_from_dev_coherent(struct device *dev, struct vm_area_struct *vma,
 	return __dma_mmap_from_coherent(mem, vma, vaddr, size, ret);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_DMA_GLOBAL_POOL
 static struct dma_coherent_mem *dma_coherent_default_memory __ro_after_init;
 
@@ -291,6 +374,8 @@ int dma_release_from_global_coherent(int order, void *vaddr)
 			vaddr);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int dma_mmap_from_global_coherent(struct vm_area_struct *vma, void *vaddr,
 				   size_t size, int *ret)
 {
@@ -301,6 +386,7 @@ int dma_mmap_from_global_coherent(struct vm_area_struct *vma, void *vaddr,
 					vaddr, size, ret);
 }
 
+<<<<<<< HEAD
 int dma_init_global_coherent(phys_addr_t phys_addr, size_t size)
 {
 	struct dma_coherent_mem *mem;
@@ -314,6 +400,8 @@ int dma_init_global_coherent(phys_addr_t phys_addr, size_t size)
 }
 #endif /* CONFIG_DMA_GLOBAL_POOL */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Support for reserved memory regions defined in device tree
  */
@@ -322,6 +410,7 @@ int dma_init_global_coherent(phys_addr_t phys_addr, size_t size)
 #include <linux/of_fdt.h>
 #include <linux/of_reserved_mem.h>
 
+<<<<<<< HEAD
 #ifdef CONFIG_DMA_GLOBAL_POOL
 static struct reserved_mem *dma_reserved_default_memory __initdata;
 #endif
@@ -338,6 +427,27 @@ static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
 		rmem->priv = mem;
 	}
 	dma_assign_coherent_memory(dev, rmem->priv);
+=======
+static struct reserved_mem *dma_reserved_default_memory __initdata;
+
+static int rmem_dma_device_init(struct reserved_mem *rmem, struct device *dev)
+{
+	struct dma_coherent_mem *mem = rmem->priv;
+	int ret;
+
+	if (!mem) {
+		ret = dma_init_coherent_memory(rmem->base, rmem->base,
+					       rmem->size, &mem);
+		if (ret) {
+			pr_err("Reserved memory: failed to init DMA memory pool at %pa, size %ld MiB\n",
+				&rmem->base, (unsigned long)rmem->size / SZ_1M);
+			return ret;
+		}
+	}
+	mem->use_dev_dma_pfn_offset = true;
+	rmem->priv = mem;
+	dma_assign_coherent_memory(dev, mem);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -365,9 +475,13 @@ static int __init rmem_dma_setup(struct reserved_mem *rmem)
 		pr_err("Reserved memory: regions without no-map are not yet supported\n");
 		return -EINVAL;
 	}
+<<<<<<< HEAD
 #endif
 
 #ifdef CONFIG_DMA_GLOBAL_POOL
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (of_get_flat_dt_prop(node, "linux,dma-default", NULL)) {
 		WARN(dma_reserved_default_memory,
 		     "Reserved memory: region for default DMA coherent area is redefined\n");
@@ -381,6 +495,7 @@ static int __init rmem_dma_setup(struct reserved_mem *rmem)
 	return 0;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_DMA_GLOBAL_POOL
 static int __init dma_init_reserved_memory(void)
 {
@@ -391,6 +506,33 @@ static int __init dma_init_reserved_memory(void)
 }
 core_initcall(dma_init_reserved_memory);
 #endif /* CONFIG_DMA_GLOBAL_POOL */
+=======
+static int __init dma_init_reserved_memory(void)
+{
+	const struct reserved_mem_ops *ops;
+	int ret;
+
+	if (!dma_reserved_default_memory)
+		return -ENOMEM;
+
+	ops = dma_reserved_default_memory->ops;
+
+	/*
+	 * We rely on rmem_dma_device_init() does not propagate error of
+	 * dma_assign_coherent_memory() for "NULL" device.
+	 */
+	ret = ops->device_init(dma_reserved_default_memory, NULL);
+
+	if (!ret) {
+		dma_coherent_default_memory = dma_reserved_default_memory->priv;
+		pr_info("DMA: default coherent area is set\n");
+	}
+
+	return ret;
+}
+
+core_initcall(dma_init_reserved_memory);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 RESERVEDMEM_OF_DECLARE(dma, "shared-dma-pool", rmem_dma_setup);
 #endif

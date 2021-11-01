@@ -180,6 +180,7 @@ struct switchdev_obj_in_state_mrp {
 
 typedef int switchdev_obj_dump_cb_t(struct switchdev_obj *obj);
 
+<<<<<<< HEAD
 struct switchdev_brport {
 	struct net_device *dev;
 	const void *ctx;
@@ -188,6 +189,8 @@ struct switchdev_brport {
 	bool tx_fwd_offload;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum switchdev_notifier_type {
 	SWITCHDEV_FDB_ADD_TO_BRIDGE = 1,
 	SWITCHDEV_FDB_DEL_TO_BRIDGE,
@@ -205,9 +208,12 @@ enum switchdev_notifier_type {
 	SWITCHDEV_VXLAN_FDB_ADD_TO_DEVICE,
 	SWITCHDEV_VXLAN_FDB_DEL_TO_DEVICE,
 	SWITCHDEV_VXLAN_FDB_OFFLOADED,
+<<<<<<< HEAD
 
 	SWITCHDEV_BRPORT_OFFLOADED,
 	SWITCHDEV_BRPORT_UNOFFLOADED,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct switchdev_notifier_info {
@@ -237,11 +243,14 @@ struct switchdev_notifier_port_attr_info {
 	bool handled;
 };
 
+<<<<<<< HEAD
 struct switchdev_notifier_brport_info {
 	struct switchdev_notifier_info info; /* must be first */
 	const struct switchdev_brport brport;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct net_device *
 switchdev_notifier_info_to_dev(const struct switchdev_notifier_info *info)
 {
@@ -254,6 +263,7 @@ switchdev_notifier_info_to_extack(const struct switchdev_notifier_info *info)
 	return info->extack;
 }
 
+<<<<<<< HEAD
 static inline bool
 switchdev_fdb_is_dynamically_learned(const struct switchdev_notifier_fdb_info *fdb_info)
 {
@@ -273,6 +283,10 @@ void switchdev_bridge_port_unoffload(struct net_device *brport_dev,
 				     struct notifier_block *atomic_nb,
 				     struct notifier_block *blocking_nb);
 
+=======
+#ifdef CONFIG_NET_SWITCHDEV
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void switchdev_deferred_process(void);
 int switchdev_port_attr_set(struct net_device *dev,
 			    const struct switchdev_attr *attr,
@@ -299,6 +313,7 @@ void switchdev_port_fwd_mark_set(struct net_device *dev,
 				 struct net_device *group_dev,
 				 bool joining);
 
+<<<<<<< HEAD
 int switchdev_handle_fdb_add_to_device(struct net_device *dev,
 		const struct switchdev_notifier_fdb_info *fdb_info,
 		bool (*check_cb)(const struct net_device *dev),
@@ -323,6 +338,8 @@ int switchdev_handle_fdb_del_to_device(struct net_device *dev,
 				  const struct net_device *orig_dev, const void *ctx,
 				  const struct switchdev_notifier_fdb_info *fdb_info));
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int switchdev_handle_port_obj_add(struct net_device *dev,
 			struct switchdev_notifier_port_obj_info *port_obj_info,
 			bool (*check_cb)(const struct net_device *dev),
@@ -343,6 +360,7 @@ int switchdev_handle_port_attr_set(struct net_device *dev,
 				      struct netlink_ext_ack *extack));
 #else
 
+<<<<<<< HEAD
 static inline int
 switchdev_bridge_port_offload(struct net_device *brport_dev,
 			      struct net_device *dev, const void *ctx,
@@ -362,6 +380,8 @@ switchdev_bridge_port_unoffload(struct net_device *brport_dev,
 {
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void switchdev_deferred_process(void)
 {
 }
@@ -426,6 +446,7 @@ call_switchdev_blocking_notifiers(unsigned long val,
 }
 
 static inline int
+<<<<<<< HEAD
 switchdev_handle_fdb_add_to_device(struct net_device *dev,
 		const struct switchdev_notifier_fdb_info *fdb_info,
 		bool (*check_cb)(const struct net_device *dev),
@@ -458,6 +479,8 @@ switchdev_handle_fdb_del_to_device(struct net_device *dev,
 }
 
 static inline int
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 switchdev_handle_port_obj_add(struct net_device *dev,
 			struct switchdev_notifier_port_obj_info *port_obj_info,
 			bool (*check_cb)(const struct net_device *dev),

@@ -362,7 +362,11 @@ void tulip_select_media(struct net_device *dev, int startup)
 			iowrite32(0x33, ioaddr + CSR12);
 			new_csr6 = 0x01860000;
 			/* Trigger autonegotiation. */
+<<<<<<< HEAD
 			iowrite32(0x0001F868, ioaddr + 0xB8);
+=======
+			iowrite32(startup ? 0x0201F868 : 0x0001F868, ioaddr + 0xB8);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} else {
 			iowrite32(0x32, ioaddr + CSR12);
 			new_csr6 = 0x00420000;

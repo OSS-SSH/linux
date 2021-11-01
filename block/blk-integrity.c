@@ -426,6 +426,7 @@ EXPORT_SYMBOL(blk_integrity_register);
  */
 void blk_integrity_unregister(struct gendisk *disk)
 {
+<<<<<<< HEAD
 	struct blk_integrity *bi = &disk->queue->integrity;
 
 	if (!bi->profile)
@@ -447,6 +448,20 @@ int blk_integrity_add(struct gendisk *disk)
 	if (!ret)
 		kobject_uevent(&disk->integrity_kobj, KOBJ_ADD);
 	return ret;
+=======
+	blk_queue_flag_clear(QUEUE_FLAG_STABLE_WRITES, disk->queue);
+	memset(&disk->queue->integrity, 0, sizeof(struct blk_integrity));
+}
+EXPORT_SYMBOL(blk_integrity_unregister);
+
+void blk_integrity_add(struct gendisk *disk)
+{
+	if (kobject_init_and_add(&disk->integrity_kobj, &integrity_ktype,
+				 &disk_to_dev(disk)->kobj, "%s", "integrity"))
+		return;
+
+	kobject_uevent(&disk->integrity_kobj, KOBJ_ADD);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void blk_integrity_del(struct gendisk *disk)

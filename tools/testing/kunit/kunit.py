@@ -12,11 +12,16 @@ import sys
 import os
 import time
 
+<<<<<<< HEAD
 assert sys.version_info >= (3, 7), "Python version is too old"
 
 from collections import namedtuple
 from enum import Enum, auto
 from typing import Iterable, Sequence
+=======
+from collections import namedtuple
+from enum import Enum, auto
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 import kunit_config
 import kunit_json
@@ -31,13 +36,21 @@ KunitBuildRequest = namedtuple('KunitBuildRequest',
 			       ['jobs', 'build_dir', 'alltests',
 				'make_options'])
 KunitExecRequest = namedtuple('KunitExecRequest',
+<<<<<<< HEAD
                               ['timeout', 'build_dir', 'alltests',
                                'filter_glob', 'kernel_args'])
+=======
+			      ['timeout', 'build_dir', 'alltests', 'filter_glob'])
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 KunitParseRequest = namedtuple('KunitParseRequest',
 			       ['raw_output', 'input_data', 'build_dir', 'json'])
 KunitRequest = namedtuple('KunitRequest', ['raw_output','timeout', 'jobs',
 					   'build_dir', 'alltests', 'filter_glob',
+<<<<<<< HEAD
 					   'kernel_args', 'json', 'make_options'])
+=======
+					   'json', 'make_options'])
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 KernelDirectoryPath = sys.argv[0].split('tools/testing/kunit/')[0]
 
@@ -96,7 +109,10 @@ def exec_tests(linux: kunit_kernel.LinuxSourceTree,
 	kunit_parser.print_with_timestamp('Starting KUnit Kernel ...')
 	test_start = time.time()
 	result = linux.run_kernel(
+<<<<<<< HEAD
 		args=request.kernel_args,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		timeout=None if request.alltests else request.timeout,
                 filter_glob=request.filter_glob,
 		build_dir=request.build_dir)
@@ -115,6 +131,7 @@ def parse_tests(request: KunitParseRequest) -> KunitResult:
 					      'Tests not Parsed.')
 
 	if request.raw_output:
+<<<<<<< HEAD
 		output: Iterable[str] = request.input_data
 		if request.raw_output == 'all':
 			pass
@@ -125,6 +142,9 @@ def parse_tests(request: KunitParseRequest) -> KunitResult:
 		for line in output:
 			print(line.rstrip())
 
+=======
+		kunit_parser.raw_output(request.input_data)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else:
 		test_result = kunit_parser.parse_run_tests(request.input_data)
 	parse_end = time.time()
@@ -145,6 +165,10 @@ def parse_tests(request: KunitParseRequest) -> KunitResult:
 	return KunitResult(KunitStatus.SUCCESS, test_result,
 				parse_end - parse_start)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 def run_tests(linux: kunit_kernel.LinuxSourceTree,
 	      request: KunitRequest) -> KunitResult:
 	run_start = time.time()
@@ -163,8 +187,12 @@ def run_tests(linux: kunit_kernel.LinuxSourceTree,
 		return build_result
 
 	exec_request = KunitExecRequest(request.timeout, request.build_dir,
+<<<<<<< HEAD
 				 request.alltests, request.filter_glob,
 				 request.kernel_args)
+=======
+					request.alltests, request.filter_glob)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	exec_result = exec_tests(linux, exec_request)
 	if exec_result.status != KunitStatus.SUCCESS:
 		return exec_result
@@ -186,6 +214,7 @@ def run_tests(linux: kunit_kernel.LinuxSourceTree,
 				exec_result.elapsed_time))
 	return parse_result
 
+<<<<<<< HEAD
 # Problem:
 # $ kunit.py run --json
 # works as one would expect and prints the parsed test results as JSON.
@@ -206,11 +235,17 @@ def massage_argv(argv: Sequence[str]) -> Sequence[str]:
 		return  f'{arg}={pseudo_bool_flag_defaults[arg]}'
 	return list(map(massage_arg, argv))
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 def add_common_opts(parser) -> None:
 	parser.add_argument('--build_dir',
 			    help='As in the make command, it specifies the build '
 			    'directory.',
+<<<<<<< HEAD
 			    type=str, default='.kunit', metavar='build_dir')
+=======
+                            type=str, default='.kunit', metavar='build_dir')
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	parser.add_argument('--make_options',
 			    help='X=Y make option, can be repeated.',
 			    action='append')
@@ -270,6 +305,7 @@ def add_exec_opts(parser) -> None:
 			    nargs='?',
 			    default='',
 			    metavar='filter_glob')
+<<<<<<< HEAD
 	parser.add_argument('--kernel_args',
 			    help='Kernel command-line parameters. Maybe be repeated',
 			     action='append')
@@ -278,6 +314,12 @@ def add_parse_opts(parser) -> None:
 	parser.add_argument('--raw_output', help='If set don\'t format output from kernel. '
 			    'If set to --raw_output=kunit, filters to just KUnit output.',
 			    type=str, nargs='?', const='all', default=None)
+=======
+
+def add_parse_opts(parser) -> None:
+	parser.add_argument('--raw_output', help='don\'t format output from kernel',
+			    action='store_true')
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	parser.add_argument('--json',
 			    nargs='?',
 			    help='Stores test results in a JSON, and either '
@@ -323,7 +365,11 @@ def main(argv, linux=None):
 				  help='Specifies the file to read results from.',
 				  type=str, nargs='?', metavar='input_file')
 
+<<<<<<< HEAD
 	cli_args = parser.parse_args(massage_argv(argv))
+=======
+	cli_args = parser.parse_args(argv)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if get_kernel_root_path():
 		os.chdir(get_kernel_root_path())
@@ -345,7 +391,10 @@ def main(argv, linux=None):
 				       cli_args.build_dir,
 				       cli_args.alltests,
 				       cli_args.filter_glob,
+<<<<<<< HEAD
 				       cli_args.kernel_args,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				       cli_args.json,
 				       cli_args.make_options)
 		result = run_tests(linux, request)
@@ -400,8 +449,12 @@ def main(argv, linux=None):
 		exec_request = KunitExecRequest(cli_args.timeout,
 						cli_args.build_dir,
 						cli_args.alltests,
+<<<<<<< HEAD
 						cli_args.filter_glob,
 						cli_args.kernel_args)
+=======
+						cli_args.filter_glob)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		exec_result = exec_tests(linux, exec_request)
 		parse_request = KunitParseRequest(cli_args.raw_output,
 						  exec_result.result,

@@ -162,9 +162,13 @@ u64 __init kaslr_early_init(void)
 		 * a PAGE_SIZE multiple in the range [_etext - MODULES_VSIZE,
 		 * _stext) . This guarantees that the resulting region still
 		 * covers [_stext, _etext], and that all relative branches can
+<<<<<<< HEAD
 		 * be resolved without veneers unless this region is exhausted
 		 * and we fall back to a larger 2GB window in module_alloc()
 		 * when ARM64_MODULE_PLTS is enabled.
+=======
+		 * be resolved without veneers.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 */
 		module_range = MODULES_VSIZE - (u64)(_etext - _stext);
 		module_alloc_base = (u64)_etext + offset - MODULES_VSIZE;

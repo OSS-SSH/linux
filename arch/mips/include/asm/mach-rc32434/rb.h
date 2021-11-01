@@ -7,6 +7,11 @@
 #ifndef __ASM_RC32434_RB_H
 #define __ASM_RC32434_RB_H
 
+<<<<<<< HEAD
+=======
+#include <linux/genhd.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define REGBASE		0x18000000
 #define IDT434_REG_BASE ((volatile void *) KSEG1ADDR(REGBASE))
 #define UART0BASE	0x58000

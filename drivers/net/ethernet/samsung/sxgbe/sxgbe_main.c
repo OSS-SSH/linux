@@ -1964,7 +1964,11 @@ static const struct net_device_ops sxgbe_netdev_ops = {
 	.ndo_set_features	= sxgbe_set_features,
 	.ndo_set_rx_mode	= sxgbe_set_rx_mode,
 	.ndo_tx_timeout		= sxgbe_tx_timeout,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= sxgbe_ioctl,
+=======
+	.ndo_do_ioctl		= sxgbe_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	= sxgbe_poll_controller,
 #endif

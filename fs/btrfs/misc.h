@@ -5,7 +5,11 @@
 
 #include <linux/sched.h>
 #include <linux/wait.h>
+<<<<<<< HEAD
 #include <linux/math64.h>
+=======
+#include <asm/div64.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/rbtree.h>
 
 #define in_range(b, first, len) ((b) >= (first) && (b) < (first) + (len))

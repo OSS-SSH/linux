@@ -56,7 +56,11 @@ struct cisco_state {
 	u32 rxseq; /* RX sequence number */
 };
 
+<<<<<<< HEAD
 static int cisco_ioctl(struct net_device *dev, struct if_settings *ifs);
+=======
+static int cisco_ioctl(struct net_device *dev, struct ifreq *ifr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline struct cisco_state *state(hdlc_device *hdlc)
 {
@@ -306,14 +310,21 @@ static const struct header_ops cisco_header_ops = {
 	.create = cisco_hard_header,
 };
 
+<<<<<<< HEAD
 static int cisco_ioctl(struct net_device *dev, struct if_settings *ifs)
 {
 	cisco_proto __user *cisco_s = ifs->ifs_ifsu.cisco;
+=======
+static int cisco_ioctl(struct net_device *dev, struct ifreq *ifr)
+{
+	cisco_proto __user *cisco_s = ifr->ifr_settings.ifs_ifsu.cisco;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const size_t size = sizeof(cisco_proto);
 	cisco_proto new_settings;
 	hdlc_device *hdlc = dev_to_hdlc(dev);
 	int result;
 
+<<<<<<< HEAD
 	switch (ifs->type) {
 	case IF_GET_PROTO:
 		if (dev_to_hdlc(dev)->proto != &proto)
@@ -321,6 +332,15 @@ static int cisco_ioctl(struct net_device *dev, struct if_settings *ifs)
 		ifs->type = IF_PROTO_CISCO;
 		if (ifs->size < size) {
 			ifs->size = size; /* data size wanted */
+=======
+	switch (ifr->ifr_settings.type) {
+	case IF_GET_PROTO:
+		if (dev_to_hdlc(dev)->proto != &proto)
+			return -EINVAL;
+		ifr->ifr_settings.type = IF_PROTO_CISCO;
+		if (ifr->ifr_settings.size < size) {
+			ifr->ifr_settings.size = size; /* data size wanted */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENOBUFS;
 		}
 		if (copy_to_user(cisco_s, &state(hdlc)->settings, size))
@@ -364,19 +384,32 @@ static int cisco_ioctl(struct net_device *dev, struct if_settings *ifs)
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int __init hdlc_cisco_init(void)
+=======
+static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	register_hdlc_protocol(&proto);
 	return 0;
 }
 
+<<<<<<< HEAD
 static void __exit hdlc_cisco_exit(void)
+=======
+static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unregister_hdlc_protocol(&proto);
 }
 
+<<<<<<< HEAD
 module_init(hdlc_cisco_init);
 module_exit(hdlc_cisco_exit);
+=======
+module_init(mod_init);
+module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_AUTHOR("Krzysztof Halasa <khc@pm.waw.pl>");
 MODULE_DESCRIPTION("Cisco HDLC protocol support for generic HDLC");

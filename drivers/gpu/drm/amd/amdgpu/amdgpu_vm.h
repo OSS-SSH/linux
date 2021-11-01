@@ -359,7 +359,12 @@ struct amdgpu_vm_manager {
 	/* PASID to VM mapping, will be used in interrupt context to
 	 * look up VM of a page fault
 	 */
+<<<<<<< HEAD
 	struct xarray				pasids;
+=======
+	struct idr				pasid_idr;
+	spinlock_t				pasid_lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct amdgpu_bo_va_mapping;
@@ -374,12 +379,18 @@ extern const struct amdgpu_vm_update_funcs amdgpu_vm_sdma_funcs;
 void amdgpu_vm_manager_init(struct amdgpu_device *adev);
 void amdgpu_vm_manager_fini(struct amdgpu_device *adev);
 
+<<<<<<< HEAD
 int amdgpu_vm_set_pasid(struct amdgpu_device *adev, struct amdgpu_vm *vm,
 			u32 pasid);
 
 long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout);
 int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm);
 int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm);
+=======
+long amdgpu_vm_wait_idle(struct amdgpu_vm *vm, long timeout);
+int amdgpu_vm_init(struct amdgpu_device *adev, struct amdgpu_vm *vm, u32 pasid);
+int amdgpu_vm_make_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm, u32 pasid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void amdgpu_vm_release_compute(struct amdgpu_device *adev, struct amdgpu_vm *vm);
 void amdgpu_vm_fini(struct amdgpu_device *adev, struct amdgpu_vm *vm);
 void amdgpu_vm_get_pd_bo(struct amdgpu_vm *vm,
@@ -448,7 +459,11 @@ void amdgpu_vm_check_compute_bug(struct amdgpu_device *adev);
 void amdgpu_vm_get_task_info(struct amdgpu_device *adev, u32 pasid,
 			     struct amdgpu_task_info *task_info);
 bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
+<<<<<<< HEAD
 			    uint64_t addr, bool write_fault);
+=======
+			    uint64_t addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void amdgpu_vm_set_task_info(struct amdgpu_vm *vm);
 

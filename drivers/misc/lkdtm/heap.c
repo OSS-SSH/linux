@@ -13,6 +13,7 @@ static struct kmem_cache *a_cache;
 static struct kmem_cache *b_cache;
 
 /*
+<<<<<<< HEAD
  * Using volatile here means the compiler cannot ever make assumptions
  * about this value. This means compile-time length checks involving
  * this variable cannot be performed; only run-time checks.
@@ -20,6 +21,8 @@ static struct kmem_cache *b_cache;
 static volatile int __offset = 1;
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * If there aren't guard pages, it's likely that a consecutive allocation will
  * let us overflow into the second allocation without overwriting something real.
  */
@@ -31,7 +34,11 @@ void lkdtm_VMALLOC_LINEAR_OVERFLOW(void)
 	two = vzalloc(PAGE_SIZE);
 
 	pr_info("Attempting vmalloc linear overflow ...\n");
+<<<<<<< HEAD
 	memset(one, 0xAA, PAGE_SIZE + __offset);
+=======
+	memset(one, 0xAA, PAGE_SIZE + 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	vfree(two);
 	vfree(one);

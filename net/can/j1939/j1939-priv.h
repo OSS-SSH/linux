@@ -20,12 +20,18 @@
 
 struct j1939_session;
 enum j1939_sk_errqueue_type {
+<<<<<<< HEAD
 	J1939_ERRQUEUE_TX_ACK,
 	J1939_ERRQUEUE_TX_SCHED,
 	J1939_ERRQUEUE_TX_ABORT,
 	J1939_ERRQUEUE_RX_RTS,
 	J1939_ERRQUEUE_RX_DPO,
 	J1939_ERRQUEUE_RX_ABORT,
+=======
+	J1939_ERRQUEUE_ACK,
+	J1939_ERRQUEUE_SCHED,
+	J1939_ERRQUEUE_ABORT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* j1939 devices */
@@ -90,7 +96,10 @@ struct j1939_priv {
 	struct list_head j1939_socks;
 
 	struct kref rx_kref;
+<<<<<<< HEAD
 	u32 rx_tskey;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 void j1939_ecu_put(struct j1939_ecu *ecu);

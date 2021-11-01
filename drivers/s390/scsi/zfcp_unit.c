@@ -111,9 +111,15 @@ static void zfcp_unit_release(struct device *dev)
 }
 
 /**
+<<<<<<< HEAD
  * zfcp_unit_add - add unit to unit list of a port.
  * @port: pointer to port where unit is added
  * @fcp_lun: FCP LUN of unit to be added
+=======
+ * zfcp_unit_enqueue - enqueue unit to unit list of a port.
+ * @port: pointer to port where unit is added
+ * @fcp_lun: FCP LUN of unit to be enqueued
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Returns: 0 success
  *
  * Sets up some unit internal structures and creates sysfs entry.

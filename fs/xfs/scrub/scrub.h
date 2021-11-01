@@ -27,7 +27,11 @@ struct xchk_meta_ops {
 	int		(*repair)(struct xfs_scrub *);
 
 	/* Decide if we even have this piece of metadata. */
+<<<<<<< HEAD
 	bool		(*has)(struct xfs_mount *);
+=======
+	bool		(*has)(struct xfs_sb *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* type describing required/allowed inputs */
 	enum xchk_type	type;
@@ -35,6 +39,10 @@ struct xchk_meta_ops {
 
 /* Buffer pointers and btree cursors for an entire AG. */
 struct xchk_ag {
+<<<<<<< HEAD
+=======
+	xfs_agnumber_t		agno;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_perag	*pag;
 
 	/* AG btree roots */

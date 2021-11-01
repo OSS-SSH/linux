@@ -393,7 +393,11 @@ xfs_vn_unlink(
 	 * but still hashed. This is incompatible with case-insensitive
 	 * mode, so invalidate (unhash) the dentry in CI-mode.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_asciici(XFS_M(dir->i_sb)))
+=======
+	if (xfs_sb_version_hasasciici(&XFS_M(dir->i_sb)->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		d_invalidate(dentry);
 	return 0;
 }
@@ -558,10 +562,17 @@ xfs_stat_blksize(
 	 * default buffered I/O size, return that, otherwise return the compat
 	 * default.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_large_iosize(mp)) {
 		if (mp->m_swidth)
 			return XFS_FSB_TO_B(mp, mp->m_swidth);
 		if (xfs_has_allocsize(mp))
+=======
+	if (mp->m_flags & XFS_MOUNT_LARGEIO) {
+		if (mp->m_swidth)
+			return XFS_FSB_TO_B(mp, mp->m_swidth);
+		if (mp->m_flags & XFS_MOUNT_ALLOCSIZE)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return 1U << mp->m_allocsize_log;
 	}
 
@@ -582,7 +593,11 @@ xfs_vn_getattr(
 
 	trace_xfs_getattr(ip);
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	stat->size = XFS_ISIZE(ip);
@@ -597,7 +612,11 @@ xfs_vn_getattr(
 	stat->ctime = inode->i_ctime;
 	stat->blocks = XFS_FSB_TO_BB(mp, ip->i_nblocks + ip->i_delayed_blks);
 
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(mp)) {
+=======
+	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (request_mask & STATX_BTIME) {
 			stat->result_mask |= STATX_BTIME;
 			stat->btime = ip->i_crtime;
@@ -673,10 +692,17 @@ xfs_vn_change_ok(
 {
 	struct xfs_mount	*mp = XFS_I(d_inode(dentry))->i_mount;
 
+<<<<<<< HEAD
 	if (xfs_is_readonly(mp))
 		return -EROFS;
 
 	if (xfs_is_shutdown(mp))
+=======
+	if (mp->m_flags & XFS_MOUNT_RDONLY)
+		return -EROFS;
+
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	return setattr_prepare(mnt_userns, dentry, iattr);
@@ -778,7 +804,11 @@ xfs_setattr_nonsize(
 		 * in the transaction.
 		 */
 		if (!uid_eq(iuid, uid)) {
+<<<<<<< HEAD
 			if (XFS_IS_UQUOTA_ON(mp)) {
+=======
+			if (XFS_IS_QUOTA_RUNNING(mp) && XFS_IS_UQUOTA_ON(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				ASSERT(mask & ATTR_UID);
 				ASSERT(udqp);
 				olddquot1 = xfs_qm_vop_chown(tp, ip,
@@ -787,8 +817,13 @@ xfs_setattr_nonsize(
 			inode->i_uid = uid;
 		}
 		if (!gid_eq(igid, gid)) {
+<<<<<<< HEAD
 			if (XFS_IS_GQUOTA_ON(mp)) {
 				ASSERT(xfs_has_pquotino(mp) ||
+=======
+			if (XFS_IS_QUOTA_RUNNING(mp) && XFS_IS_GQUOTA_ON(mp)) {
+				ASSERT(xfs_sb_version_has_pquotino(&mp->m_sb) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				       !XFS_IS_PQUOTA_ON(mp));
 				ASSERT(mask & ATTR_GID);
 				ASSERT(gdqp);
@@ -808,7 +843,11 @@ xfs_setattr_nonsize(
 
 	XFS_STATS_INC(mp, xs_ig_attrchg);
 
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp))
+=======
+	if (mp->m_flags & XFS_MOUNT_WSYNC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_trans_set_sync(tp);
 	error = xfs_trans_commit(tp);
 
@@ -1037,7 +1076,11 @@ xfs_setattr_size(
 
 	XFS_STATS_INC(mp, xs_ig_attrchg);
 
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp))
+=======
+	if (mp->m_flags & XFS_MOUNT_WSYNC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_trans_set_sync(tp);
 
 	error = xfs_trans_commit(tp);
@@ -1287,11 +1330,19 @@ xfs_inode_should_enable_dax(
 {
 	if (!IS_ENABLED(CONFIG_FS_DAX))
 		return false;
+<<<<<<< HEAD
 	if (xfs_has_dax_never(ip->i_mount))
 		return false;
 	if (!xfs_inode_supports_dax(ip))
 		return false;
 	if (xfs_has_dax_always(ip->i_mount))
+=======
+	if (ip->i_mount->m_flags & XFS_MOUNT_DAX_NEVER)
+		return false;
+	if (!xfs_inode_supports_dax(ip))
+		return false;
+	if (ip->i_mount->m_flags & XFS_MOUNT_DAX_ALWAYS)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 	if (ip->i_diflags2 & XFS_DIFLAG2_DAX)
 		return true;
@@ -1344,7 +1395,11 @@ xfs_setup_inode(
 	gfp_t			gfp_mask;
 
 	inode->i_ino = ip->i_ino;
+<<<<<<< HEAD
 	inode->i_state |= I_NEW;
+=======
+	inode->i_state = I_NEW;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	inode_sb_list_add(inode);
 	/* make the inode look hashed for the writeback code */
@@ -1401,7 +1456,11 @@ xfs_setup_iops(
 			inode->i_mapping->a_ops = &xfs_address_space_operations;
 		break;
 	case S_IFDIR:
+<<<<<<< HEAD
 		if (xfs_has_asciici(XFS_M(inode->i_sb)))
+=======
+		if (xfs_sb_version_hasasciici(&XFS_M(inode->i_sb)->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			inode->i_op = &xfs_dir_ci_inode_operations;
 		else
 			inode->i_op = &xfs_dir_inode_operations;

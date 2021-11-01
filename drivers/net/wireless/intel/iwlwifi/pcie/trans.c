@@ -449,6 +449,7 @@ void iwl_pcie_apm_stop_master(struct iwl_trans *trans)
 	int ret;
 
 	/* stop device's busmaster DMA activity */
+<<<<<<< HEAD
 
 	if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
 		iwl_set_bit(trans, CSR_GP_CNTRL,
@@ -466,6 +467,13 @@ void iwl_pcie_apm_stop_master(struct iwl_trans *trans)
 				   CSR_RESET_REG_FLAG_MASTER_DISABLED, 100);
 	}
 
+=======
+	iwl_set_bit(trans, CSR_RESET, CSR_RESET_REG_FLAG_STOP_MASTER);
+
+	ret = iwl_poll_bit(trans, CSR_RESET,
+			   CSR_RESET_REG_FLAG_MASTER_DISABLED,
+			   CSR_RESET_REG_FLAG_MASTER_DISABLED, 100);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		IWL_WARN(trans, "Master Disable Timed Out, 100 usec\n");
 
@@ -1878,9 +1886,12 @@ static void iwl_trans_pcie_configure(struct iwl_trans *trans,
 {
 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
 
+<<<<<<< HEAD
 	/* free all first - we might be reconfigured for a different size */
 	iwl_pcie_free_rbs_pool(trans);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	trans->txqs.cmd.q_id = trans_cfg->cmd_queue;
 	trans->txqs.cmd.fifo = trans_cfg->cmd_fifo;
 	trans->txqs.cmd.wdg_timeout = trans_cfg->cmd_q_wdg_timeout;
@@ -2007,16 +2018,20 @@ bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans)
 {
 	int ret;
 	struct iwl_trans_pcie *trans_pcie = IWL_TRANS_GET_PCIE_TRANS(trans);
+<<<<<<< HEAD
 	u32 write = CSR_GP_CNTRL_REG_FLAG_MAC_ACCESS_REQ;
 	u32 mask = CSR_GP_CNTRL_REG_FLAG_MAC_CLOCK_READY |
 		   CSR_GP_CNTRL_REG_FLAG_GOING_TO_SLEEP;
 	u32 poll = CSR_GP_CNTRL_REG_VAL_MAC_ACCESS_EN;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock(&trans_pcie->reg_lock);
 
 	if (trans_pcie->cmd_hold_nic_awake)
 		goto out;
 
+<<<<<<< HEAD
 	if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_BZ) {
 		write = CSR_GP_CNTRL_REG_FLAG_BZ_MAC_ACCESS_REQ;
 		mask = CSR_GP_CNTRL_REG_FLAG_MAC_STATUS;
@@ -2025,6 +2040,11 @@ bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans)
 
 	/* this bit wakes up the NIC */
 	__iwl_trans_pcie_set_bit(trans, CSR_GP_CNTRL, write);
+=======
+	/* this bit wakes up the NIC */
+	__iwl_trans_pcie_set_bit(trans, CSR_GP_CNTRL,
+				 CSR_GP_CNTRL_REG_FLAG_MAC_ACCESS_REQ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (trans->trans_cfg->device_family >= IWL_DEVICE_FAMILY_8000)
 		udelay(2);
 
@@ -2048,7 +2068,14 @@ bool __iwl_trans_pcie_grab_nic_access(struct iwl_trans *trans)
 	 * 5000 series and later (including 1000 series) have non-volatile SRAM,
 	 * and do not save/restore SRAM when power cycling.
 	 */
+<<<<<<< HEAD
 	ret = iwl_poll_bit(trans, CSR_GP_CNTRL, poll, mask, 15000);
+=======
+	ret = iwl_poll_bit(trans, CSR_GP_CNTRL,
+			   CSR_GP_CNTRL_REG_VAL_MAC_ACCESS_EN,
+			   (CSR_GP_CNTRL_REG_FLAG_MAC_CLOCK_READY |
+			    CSR_GP_CNTRL_REG_FLAG_GOING_TO_SLEEP), 15000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (unlikely(ret < 0)) {
 		u32 cntrl = iwl_read32(trans, CSR_GP_CNTRL);
 
@@ -2968,8 +2995,13 @@ static u32 iwl_trans_pcie_dump_rbs(struct iwl_trans *trans,
 		struct iwl_rx_mem_buffer *rxb = rxq->queue[i];
 		struct iwl_fw_error_dump_rb *rb;
 
+<<<<<<< HEAD
 		dma_sync_single_for_cpu(trans->dev, rxb->page_dma,
 					max_len, DMA_FROM_DEVICE);
+=======
+		dma_unmap_page(trans->dev, rxb->page_dma, max_len,
+			       DMA_FROM_DEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		rb_len += sizeof(**data) + sizeof(*rb) + max_len;
 
@@ -2978,6 +3010,13 @@ static u32 iwl_trans_pcie_dump_rbs(struct iwl_trans *trans,
 		rb = (void *)(*data)->data;
 		rb->index = cpu_to_le32(i);
 		memcpy(rb->data, page_address(rxb->page), max_len);
+<<<<<<< HEAD
+=======
+		/* remap the page for the free benefit */
+		rxb->page_dma = dma_map_page(trans->dev, rxb->page,
+					     rxb->offset, max_len,
+					     DMA_FROM_DEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		*data = iwl_fw_error_next_data(*data);
 	}
@@ -3506,9 +3545,21 @@ struct iwl_trans *iwl_trans_pcie_alloc(struct pci_dev *pdev,
 	pci_set_master(pdev);
 
 	addr_size = trans->txqs.tfd.addr_size;
+<<<<<<< HEAD
 	ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(addr_size));
 	if (ret) {
 		ret = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+=======
+	ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(addr_size));
+	if (!ret)
+		ret = pci_set_consistent_dma_mask(pdev,
+						  DMA_BIT_MASK(addr_size));
+	if (ret) {
+		ret = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+		if (!ret)
+			ret = pci_set_consistent_dma_mask(pdev,
+							  DMA_BIT_MASK(32));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* both attempts failed: */
 		if (ret) {
 			dev_err(&pdev->dev, "No suitable DMA available\n");

@@ -472,6 +472,14 @@ static int snd_msnd_dsp_full_reset(struct snd_card *card)
 	return rv;
 }
 
+<<<<<<< HEAD
+=======
+static int snd_msnd_dev_free(struct snd_device *device)
+{
+	snd_printdd("snd_msnd_chip_free()\n");
+	return 0;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int snd_msnd_send_dsp_cmd_chk(struct snd_msnd *chip, u8 cmd)
 {
@@ -523,14 +531,24 @@ static int snd_msnd_attach(struct snd_card *card)
 {
 	struct snd_msnd *chip = card->private_data;
 	int err;
+<<<<<<< HEAD
 
 	err = devm_request_irq(card->dev, chip->irq, snd_msnd_interrupt, 0,
 			       card->shortname, chip);
+=======
+	static const struct snd_device_ops ops = {
+		.dev_free =      snd_msnd_dev_free,
+		};
+
+	err = request_irq(chip->irq, snd_msnd_interrupt, 0, card->shortname,
+			  chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0) {
 		printk(KERN_ERR LOGNAME ": Couldn't grab IRQ %d\n", chip->irq);
 		return err;
 	}
 	card->sync_irq = chip->irq;
+<<<<<<< HEAD
 	if (!devm_request_region(card->dev, chip->io, DSP_NUMIO,
 				 card->shortname))
 		return -EBUSY;
@@ -543,27 +561,65 @@ static int snd_msnd_attach(struct snd_card *card)
 		return -EBUSY;
 	}
 	chip->mappedbase = devm_ioremap(card->dev, chip->base, 0x8000);
+=======
+	if (request_region(chip->io, DSP_NUMIO, card->shortname) == NULL) {
+		free_irq(chip->irq, chip);
+		return -EBUSY;
+	}
+
+	if (!request_mem_region(chip->base, BUFFSIZE, card->shortname)) {
+		printk(KERN_ERR LOGNAME
+			": unable to grab memory region 0x%lx-0x%lx\n",
+			chip->base, chip->base + BUFFSIZE - 1);
+		release_region(chip->io, DSP_NUMIO);
+		free_irq(chip->irq, chip);
+		return -EBUSY;
+	}
+	chip->mappedbase = ioremap(chip->base, 0x8000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!chip->mappedbase) {
 		printk(KERN_ERR LOGNAME
 			": unable to map memory region 0x%lx-0x%lx\n",
 			chip->base, chip->base + BUFFSIZE - 1);
+<<<<<<< HEAD
 		return -EIO;
+=======
+		err = -EIO;
+		goto err_release_region;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	err = snd_msnd_dsp_full_reset(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
+=======
+		goto err_release_region;
+
+	/* Register device */
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+	if (err < 0)
+		goto err_release_region;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = snd_msnd_pcm(card, 0);
 	if (err < 0) {
 		printk(KERN_ERR LOGNAME ": error creating new PCM device\n");
+<<<<<<< HEAD
 		return err;
+=======
+		goto err_release_region;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	err = snd_msndmix_new(card);
 	if (err < 0) {
 		printk(KERN_ERR LOGNAME ": error creating new Mixer device\n");
+<<<<<<< HEAD
 		return err;
+=======
+		goto err_release_region;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 
@@ -579,7 +635,11 @@ static int snd_msnd_attach(struct snd_card *card)
 		if (err < 0) {
 			printk(KERN_ERR LOGNAME
 				": error creating new Midi device\n");
+<<<<<<< HEAD
 			return err;
+=======
+			goto err_release_region;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		mpu = chip->rmidi->private_data;
 
@@ -594,12 +654,39 @@ static int snd_msnd_attach(struct snd_card *card)
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	return 0;
 }
 
 
+=======
+		goto err_release_region;
+
+	return 0;
+
+err_release_region:
+	iounmap(chip->mappedbase);
+	release_mem_region(chip->base, BUFFSIZE);
+	release_region(chip->io, DSP_NUMIO);
+	free_irq(chip->irq, chip);
+	return err;
+}
+
+
+static void snd_msnd_unload(struct snd_card *card)
+{
+	struct snd_msnd *chip = card->private_data;
+
+	iounmap(chip->mappedbase);
+	release_mem_region(chip->base, BUFFSIZE);
+	release_region(chip->io, DSP_NUMIO);
+	free_irq(chip->irq, chip);
+	snd_card_free(card);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef MSND_CLASSIC
 
 /* Pinnacle/Fiji Logical Device Configuration */
@@ -858,8 +945,13 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(pdev, index[idx], id[idx], THIS_MODULE,
 				sizeof(struct snd_msnd), &card);
+=======
+	err = snd_card_new(pdev, index[idx], id[idx], THIS_MODULE,
+			   sizeof(struct snd_msnd), &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -900,6 +992,7 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 	printk(KERN_INFO LOGNAME ": Non-PnP mode: configuring at port 0x%lx\n",
 			cfg[idx]);
 
+<<<<<<< HEAD
 	if (!devm_request_region(card->dev, cfg[idx], 2,
 				 "Pinnacle/Fiji Config")) {
 		printk(KERN_ERR LOGNAME ": Config port 0x%lx conflict\n",
@@ -909,6 +1002,19 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 	if (reset[idx])
 		if (snd_msnd_pinnacle_cfg_reset(cfg[idx]))
 			return -EIO;
+=======
+	if (!request_region(cfg[idx], 2, "Pinnacle/Fiji Config")) {
+		printk(KERN_ERR LOGNAME ": Config port 0x%lx conflict\n",
+			   cfg[idx]);
+		snd_card_free(card);
+		return -EIO;
+	}
+	if (reset[idx])
+		if (snd_msnd_pinnacle_cfg_reset(cfg[idx])) {
+			err = -EIO;
+			goto cfg_error;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* DSP */
 	err = snd_msnd_write_cfg_logical(cfg[idx], 0,
@@ -916,7 +1022,11 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 					 irq[idx], mem[idx]);
 
 	if (err)
+<<<<<<< HEAD
 		return err;
+=======
+		goto cfg_error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The following are Pinnacle specific */
 
@@ -931,7 +1041,11 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 						 mpu_irq[idx], 0);
 
 		if (err)
+<<<<<<< HEAD
 			return err;
+=======
+			goto cfg_error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* IDE */
@@ -946,7 +1060,11 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 						 ide_irq[idx], 0);
 
 		if (err)
+<<<<<<< HEAD
 			return err;
+=======
+			goto cfg_error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* Joystick */
@@ -959,8 +1077,14 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 						 0, 0);
 
 		if (err)
+<<<<<<< HEAD
 			return err;
 	}
+=======
+			goto cfg_error;
+	}
+	release_region(cfg[idx], 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* MSND_CLASSIC */
 
@@ -990,22 +1114,49 @@ static int snd_msnd_isa_probe(struct device *pdev, unsigned int idx)
 	err = snd_msnd_probe(card);
 	if (err < 0) {
 		printk(KERN_ERR LOGNAME ": Probe failed\n");
+<<<<<<< HEAD
+=======
+		snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return err;
 	}
 
 	err = snd_msnd_attach(card);
 	if (err < 0) {
 		printk(KERN_ERR LOGNAME ": Attach failed\n");
+<<<<<<< HEAD
+=======
+		snd_card_free(card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return err;
 	}
 	dev_set_drvdata(pdev, card);
 
 	return 0;
+<<<<<<< HEAD
+=======
+
+#ifndef MSND_CLASSIC
+cfg_error:
+	release_region(cfg[idx], 2);
+	snd_card_free(card);
+	return err;
+#endif
+}
+
+static void snd_msnd_isa_remove(struct device *pdev, unsigned int dev)
+{
+	snd_msnd_unload(dev_get_drvdata(pdev));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct isa_driver snd_msnd_driver = {
 	.match		= snd_msnd_isa_match,
 	.probe		= snd_msnd_isa_probe,
+<<<<<<< HEAD
+=======
+	.remove		= snd_msnd_isa_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* FIXME: suspend, resume */
 	.driver		= {
 		.name	= DEV_NAME
@@ -1055,9 +1206,15 @@ static int snd_msnd_pnp_detect(struct pnp_card_link *pcard,
 	 * Create a new ALSA sound card entry, in anticipation
 	 * of detecting our hardware ...
 	 */
+<<<<<<< HEAD
 	ret = snd_devm_card_new(&pcard->card->dev,
 				index[idx], id[idx], THIS_MODULE,
 				sizeof(struct snd_msnd), &card);
+=======
+	ret = snd_card_new(&pcard->card->dev,
+			   index[idx], id[idx], THIS_MODULE,
+			   sizeof(struct snd_msnd), &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		return ret;
 
@@ -1099,18 +1256,39 @@ static int snd_msnd_pnp_detect(struct pnp_card_link *pcard,
 	ret = snd_msnd_probe(card);
 	if (ret < 0) {
 		printk(KERN_ERR LOGNAME ": Probe failed\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto _release_card;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = snd_msnd_attach(card);
 	if (ret < 0) {
 		printk(KERN_ERR LOGNAME ": Attach failed\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto _release_card;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	pnp_set_card_drvdata(pcard, card);
 	++idx;
 	return 0;
+<<<<<<< HEAD
+=======
+
+_release_card:
+	snd_card_free(card);
+	return ret;
+}
+
+static void snd_msnd_pnp_remove(struct pnp_card_link *pcard)
+{
+	snd_msnd_unload(pnp_get_card_drvdata(pcard));
+	pnp_set_card_drvdata(pcard, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int isa_registered;
@@ -1129,6 +1307,10 @@ static struct pnp_card_driver msnd_pnpc_driver = {
 	.name = "msnd_pinnacle",
 	.id_table = msnd_pnpids,
 	.probe = snd_msnd_pnp_detect,
+<<<<<<< HEAD
+=======
+	.remove = snd_msnd_pnp_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 #endif /* CONFIG_PNP */
 

@@ -15,6 +15,7 @@
 #include <linux/buffer_head.h>
 #include "qnx4.h"
 
+<<<<<<< HEAD
 /*
  * A qnx4 directory entry is an inode entry or link info
  * depending on the status field in the last byte. The
@@ -52,11 +53,18 @@ union qnx4_directory_entry {
 	struct qnx4_link_info link;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int qnx4_readdir(struct file *file, struct dir_context *ctx)
 {
 	struct inode *inode = file_inode(file);
 	unsigned int offset;
 	struct buffer_head *bh;
+<<<<<<< HEAD
+=======
+	struct qnx4_inode_entry *de;
+	struct qnx4_link_info *le;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long blknum;
 	int ix, ino;
 	int size;
@@ -73,6 +81,7 @@ static int qnx4_readdir(struct file *file, struct dir_context *ctx)
 		}
 		ix = (ctx->pos >> QNX4_DIR_ENTRY_SIZE_BITS) % QNX4_INODES_PER_BLOCK;
 		for (; ix < QNX4_INODES_PER_BLOCK; ix++, ctx->pos += QNX4_DIR_ENTRY_SIZE) {
+<<<<<<< HEAD
 			union qnx4_directory_entry *de;
 
 			offset = ix * QNX4_DIR_ENTRY_SIZE;
@@ -94,6 +103,29 @@ static int qnx4_readdir(struct file *file, struct dir_context *ctx)
 			size = strnlen(de->de_name, size);
 			QNX4DEBUG((KERN_INFO "qnx4_readdir:%.*s\n", size, name));
 			if (!dir_emit(ctx, de->de_name, size, ino, DT_UNKNOWN)) {
+=======
+			offset = ix * QNX4_DIR_ENTRY_SIZE;
+			de = (struct qnx4_inode_entry *) (bh->b_data + offset);
+			if (!de->di_fname[0])
+				continue;
+			if (!(de->di_status & (QNX4_FILE_USED|QNX4_FILE_LINK)))
+				continue;
+			if (!(de->di_status & QNX4_FILE_LINK))
+				size = QNX4_SHORT_NAME_MAX;
+			else
+				size = QNX4_NAME_MAX;
+			size = strnlen(de->di_fname, size);
+			QNX4DEBUG((KERN_INFO "qnx4_readdir:%.*s\n", size, de->di_fname));
+			if (!(de->di_status & QNX4_FILE_LINK))
+				ino = blknum * QNX4_INODES_PER_BLOCK + ix - 1;
+			else {
+				le  = (struct qnx4_link_info*)de;
+				ino = ( le32_to_cpu(le->dl_inode_blk) - 1 ) *
+					QNX4_INODES_PER_BLOCK +
+					le->dl_inode_ndx;
+			}
+			if (!dir_emit(ctx, de->di_fname, size, ino, DT_UNKNOWN)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				brelse(bh);
 				return 0;
 			}

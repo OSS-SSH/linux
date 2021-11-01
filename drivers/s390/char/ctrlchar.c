@@ -34,6 +34,7 @@ void schedule_sysrq_work(struct sysrq_work *sw)
 
 
 /**
+<<<<<<< HEAD
  * ctrlchar_handle - check for special chars at start of input
  *
  * @buf: console input buffer
@@ -41,6 +42,14 @@ void schedule_sysrq_work(struct sysrq_work *sw)
  * @tty: the tty struct for this console
  *
  * Return: CTRLCHAR_NONE, if nothing matched,
+=======
+ * Check for special chars at start of input.
+ *
+ * @param buf Console input buffer.
+ * @param len Length of valid data in buffer.
+ * @param tty The tty struct for this console.
+ * @return CTRLCHAR_NONE, if nothing matched,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *         CTRLCHAR_SYSRQ, if sysrq was encountered
  *         otherwise char to be inserted logically or'ed
  *         with CTRLCHAR_CTRL

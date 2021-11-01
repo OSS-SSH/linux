@@ -136,8 +136,11 @@ struct cpuinfo_x86 {
 	u16			logical_die_id;
 	/* Index into per_cpu list: */
 	u16			cpu_index;
+<<<<<<< HEAD
 	/*  Is SMT active on this core? */
 	bool			smt_active;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32			microcode;
 	/* Address space bits used by the cache internally */
 	u8			x86_cache_bits;
@@ -797,8 +800,11 @@ extern int set_tsc_mode(unsigned int val);
 
 DECLARE_PER_CPU(u64, msr_misc_features_shadow);
 
+<<<<<<< HEAD
 extern u16 get_llc_id(unsigned int cpu);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_CPU_SUP_AMD
 extern u32 amd_get_nodes_per_socket(void);
 extern u32 amd_get_highest_perf(void);

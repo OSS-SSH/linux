@@ -112,7 +112,11 @@ static struct kpp_alg curve25519_alg = {
 	.max_size		= curve25519_max_size,
 };
 
+<<<<<<< HEAD
 static int __init arm_curve25519_init(void)
+=======
+static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (elf_hwcap & HWCAP_NEON) {
 		static_branch_enable(&have_neon);
@@ -122,14 +126,23 @@ static int __init arm_curve25519_init(void)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void __exit arm_curve25519_exit(void)
+=======
+static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (IS_REACHABLE(CONFIG_CRYPTO_KPP) && elf_hwcap & HWCAP_NEON)
 		crypto_unregister_kpp(&curve25519_alg);
 }
 
+<<<<<<< HEAD
 module_init(arm_curve25519_init);
 module_exit(arm_curve25519_exit);
+=======
+module_init(mod_init);
+module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_ALIAS_CRYPTO("curve25519");
 MODULE_ALIAS_CRYPTO("curve25519-neon");

@@ -493,7 +493,12 @@ int vmw_kms_ldu_init_display(struct vmw_private *dev_priv)
 	struct drm_device *dev = &dev_priv->drm;
 	int i, ret;
 
+<<<<<<< HEAD
 	if (unlikely(dev_priv->ldu_priv)) {
+=======
+	if (dev_priv->ldu_priv) {
+		DRM_INFO("ldu system already on\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 	}
 
@@ -526,6 +531,11 @@ int vmw_kms_ldu_init_display(struct vmw_private *dev_priv)
 
 	drm_mode_config_reset(dev);
 
+<<<<<<< HEAD
+=======
+	DRM_INFO("Legacy Display Unit initialized\n");
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 err_free:

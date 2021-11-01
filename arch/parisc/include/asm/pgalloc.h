@@ -48,15 +48,25 @@ static inline pmd_t *pmd_alloc_one(struct mm_struct *mm, unsigned long address)
 {
 	pmd_t *pmd;
 
+<<<<<<< HEAD
 	pmd = (pmd_t *)__get_free_pages(GFP_PGTABLE_KERNEL, PMD_TABLE_ORDER);
 	if (likely(pmd))
 		memset ((void *)pmd, 0, PAGE_SIZE << PMD_TABLE_ORDER);
+=======
+	pmd = (pmd_t *)__get_free_pages(GFP_PGTABLE_KERNEL, PMD_ORDER);
+	if (likely(pmd))
+		memset ((void *)pmd, 0, PAGE_SIZE << PMD_ORDER);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return pmd;
 }
 
 static inline void pmd_free(struct mm_struct *mm, pmd_t *pmd)
 {
+<<<<<<< HEAD
 	free_pages((unsigned long)pmd, PMD_TABLE_ORDER);
+=======
+	free_pages((unsigned long)pmd, PMD_ORDER);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif
 

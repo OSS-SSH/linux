@@ -203,7 +203,11 @@ static const struct ad_sigma_delta_info ad7780_sigma_delta_info = {
 	.set_mode = ad7780_set_mode,
 	.postprocess_sample = ad7780_postprocess_sample,
 	.has_registers = false,
+<<<<<<< HEAD
 	.irq_flags = IRQF_TRIGGER_FALLING,
+=======
+	.irq_flags = IRQF_TRIGGER_LOW,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define _AD7780_CHANNEL(_bits, _wordsize, _mask_all)		\

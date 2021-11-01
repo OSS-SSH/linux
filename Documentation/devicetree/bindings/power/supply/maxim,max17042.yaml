@@ -19,15 +19,21 @@ properties:
       - maxim,max17047
       - maxim,max17050
       - maxim,max17055
+<<<<<<< HEAD
       - maxim,max77849-battery
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   reg:
     maxItems: 1
 
   interrupts:
     maxItems: 1
+<<<<<<< HEAD
     description: |
       The ALRT pin, an open-drain interrupt.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   maxim,rsns-microohm:
     $ref: /schemas/types.yaml#/definitions/uint32

@@ -2,6 +2,7 @@
 CPU hotplug in the Kernel
 =========================
 
+<<<<<<< HEAD
 :Date: September, 2021
 :Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
          Rusty Russell <rusty@rustcorp.com.au>,
@@ -9,6 +10,14 @@ CPU hotplug in the Kernel
          Ashok Raj <ashok.raj@intel.com>,
          Joel Schopp <jschopp@austin.ibm.com>,
 	 Thomas Gleixner <tglx@linutronix.de>
+=======
+:Date: December, 2016
+:Author: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+          Rusty Russell <rusty@rustcorp.com.au>,
+          Srivatsa Vaddagiri <vatsa@in.ibm.com>,
+          Ashok Raj <ashok.raj@intel.com>,
+          Joel Schopp <jschopp@austin.ibm.com>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Introduction
 ============
@@ -92,10 +101,16 @@ Never use anything other than ``cpumask_t`` to represent bitmap of CPUs.
 
 Using CPU hotplug
 =================
+<<<<<<< HEAD
 
 The kernel option *CONFIG_HOTPLUG_CPU* needs to be enabled. It is currently
 available on multiple architectures including ARM, MIPS, PowerPC and X86. The
 configuration is done via the sysfs interface::
+=======
+The kernel option *CONFIG_HOTPLUG_CPU* needs to be enabled. It is currently
+available on multiple architectures including ARM, MIPS, PowerPC and X86. The
+configuration is done via the sysfs interface: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
  $ ls -lh /sys/devices/system/cpu
  total 0
@@ -115,14 +130,22 @@ configuration is done via the sysfs interface::
 
 The files *offline*, *online*, *possible*, *present* represent the CPU masks.
 Each CPU folder contains an *online* file which controls the logical on (1) and
+<<<<<<< HEAD
 off (0) state. To logically shutdown CPU4::
+=======
+off (0) state. To logically shutdown CPU4: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
  $ echo 0 > /sys/devices/system/cpu/cpu4/online
   smpboot: CPU 4 is now offline
 
 Once the CPU is shutdown, it will be removed from */proc/interrupts*,
 */proc/cpuinfo* and should also not be shown visible by the *top* command. To
+<<<<<<< HEAD
 bring CPU4 back online::
+=======
+bring CPU4 back online: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
  $ echo 1 > /sys/devices/system/cpu/cpu4/online
  smpboot: Booting Node 0 Processor 4 APIC 0x1
@@ -144,7 +167,10 @@ The CPU hotplug coordination
 
 The offline case
 ----------------
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Once a CPU has been logically shutdown the teardown callbacks of registered
 hotplug states will be invoked, starting with ``CPUHP_ONLINE`` and terminating
 at state ``CPUHP_OFFLINE``. This includes:
@@ -159,6 +185,7 @@ at state ``CPUHP_OFFLINE``. This includes:
 * Once all services are migrated, kernel calls an arch specific routine
   ``__cpu_disable()`` to perform arch specific cleanup.
 
+<<<<<<< HEAD
 
 The CPU hotplug API
 ===================
@@ -637,13 +664,111 @@ ONLINE section for notifications on online and offline operation::
 Testing of hotplug states
 =========================
 
+=======
+Using the hotplug API
+---------------------
+It is possible to receive notifications once a CPU is offline or onlined. This
+might be important to certain drivers which need to perform some kind of setup
+or clean up functions based on the number of available CPUs: ::
+
+  #include <linux/cpuhotplug.h>
+
+  ret = cpuhp_setup_state(CPUHP_AP_ONLINE_DYN, "X/Y:online",
+                          Y_online, Y_prepare_down);
+
+*X* is the subsystem and *Y* the particular driver. The *Y_online* callback
+will be invoked during registration on all online CPUs. If an error
+occurs during the online callback the *Y_prepare_down* callback will be
+invoked on all CPUs on which the online callback was previously invoked.
+After registration completed, the *Y_online* callback will be invoked
+once a CPU is brought online and *Y_prepare_down* will be invoked when a
+CPU is shutdown. All resources which were previously allocated in
+*Y_online* should be released in *Y_prepare_down*.
+The return value *ret* is negative if an error occurred during the
+registration process. Otherwise a positive value is returned which
+contains the allocated hotplug for dynamically allocated states
+(*CPUHP_AP_ONLINE_DYN*). It will return zero for predefined states.
+
+The callback can be remove by invoking ``cpuhp_remove_state()``. In case of a
+dynamically allocated state (*CPUHP_AP_ONLINE_DYN*) use the returned state.
+During the removal of a hotplug state the teardown callback will be invoked.
+
+Multiple instances
+~~~~~~~~~~~~~~~~~~
+If a driver has multiple instances and each instance needs to perform the
+callback independently then it is likely that a ''multi-state'' should be used.
+First a multi-state state needs to be registered: ::
+
+  ret = cpuhp_setup_state_multi(CPUHP_AP_ONLINE_DYN, "X/Y:online,
+                                Y_online, Y_prepare_down);
+  Y_hp_online = ret;
+
+The ``cpuhp_setup_state_multi()`` behaves similar to ``cpuhp_setup_state()``
+except it prepares the callbacks for a multi state and does not invoke
+the callbacks. This is a one time setup.
+Once a new instance is allocated, you need to register this new instance: ::
+
+  ret = cpuhp_state_add_instance(Y_hp_online, &d->node);
+
+This function will add this instance to your previously allocated
+*Y_hp_online* state and invoke the previously registered callback
+(*Y_online*) on all online CPUs. The *node* element is a ``struct
+hlist_node`` member of your per-instance data structure.
+
+On removal of the instance: ::
+  cpuhp_state_remove_instance(Y_hp_online, &d->node)
+
+should be invoked which will invoke the teardown callback on all online
+CPUs.
+
+Manual setup
+~~~~~~~~~~~~
+Usually it is handy to invoke setup and teardown callbacks on registration or
+removal of a state because usually the operation needs to performed once a CPU
+goes online (offline) and during initial setup (shutdown) of the driver. However
+each registration and removal function is also available with a ``_nocalls``
+suffix which does not invoke the provided callbacks if the invocation of the
+callbacks is not desired. During the manual setup (or teardown) the functions
+``get_online_cpus()`` and ``put_online_cpus()`` should be used to inhibit CPU
+hotplug operations.
+
+
+The ordering of the events
+--------------------------
+The hotplug states are defined in ``include/linux/cpuhotplug.h``:
+
+* The states *CPUHP_OFFLINE* … *CPUHP_AP_OFFLINE* are invoked before the
+  CPU is up.
+* The states *CPUHP_AP_OFFLINE* … *CPUHP_AP_ONLINE* are invoked
+  just the after the CPU has been brought up. The interrupts are off and
+  the scheduler is not yet active on this CPU. Starting with *CPUHP_AP_OFFLINE*
+  the callbacks are invoked on the target CPU.
+* The states between *CPUHP_AP_ONLINE_DYN* and *CPUHP_AP_ONLINE_DYN_END* are
+  reserved for the dynamic allocation.
+* The states are invoked in the reverse order on CPU shutdown starting with
+  *CPUHP_ONLINE* and stopping at *CPUHP_OFFLINE*. Here the callbacks are
+  invoked on the CPU that will be shutdown until *CPUHP_AP_OFFLINE*.
+
+A dynamically allocated state via *CPUHP_AP_ONLINE_DYN* is often enough.
+However if an earlier invocation during the bring up or shutdown is required
+then an explicit state should be acquired. An explicit state might also be
+required if the hotplug event requires specific ordering in respect to
+another hotplug event.
+
+Testing of hotplug states
+=========================
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 One way to verify whether a custom state is working as expected or not is to
 shutdown a CPU and then put it online again. It is also possible to put the CPU
 to certain state (for instance *CPUHP_AP_ONLINE*) and then go back to
 *CPUHP_ONLINE*. This would simulate an error one state after *CPUHP_AP_ONLINE*
 which would lead to rollback to the online state.
 
+<<<<<<< HEAD
 All registered states are enumerated in ``/sys/devices/system/cpu/hotplug/states`` ::
+=======
+All registered states are enumerated in ``/sys/devices/system/cpu/hotplug/states``: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
  $ tail /sys/devices/system/cpu/hotplug/states
  138: mm/vmscan:online
@@ -657,7 +782,11 @@ All registered states are enumerated in ``/sys/devices/system/cpu/hotplug/states
  168: sched:active
  169: online
 
+<<<<<<< HEAD
 To rollback CPU4 to ``lib/percpu_cnt:online`` and back online just issue::
+=======
+To rollback CPU4 to ``lib/percpu_cnt:online`` and back online just issue: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   $ cat /sys/devices/system/cpu/cpu4/hotplug/state
   169
@@ -665,14 +794,23 @@ To rollback CPU4 to ``lib/percpu_cnt:online`` and back online just issue::
   $ cat /sys/devices/system/cpu/cpu4/hotplug/state
   140
 
+<<<<<<< HEAD
 It is important to note that the teardown callback of state 140 have been
 invoked. And now get back online::
+=======
+It is important to note that the teardown callbac of state 140 have been
+invoked. And now get back online: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   $ echo 169 > /sys/devices/system/cpu/cpu4/hotplug/target
   $ cat /sys/devices/system/cpu/cpu4/hotplug/state
   169
 
+<<<<<<< HEAD
 With trace events enabled, the individual steps are visible, too::
+=======
+With trace events enabled, the individual steps are visible, too: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   #  TASK-PID   CPU#    TIMESTAMP  FUNCTION
   #     | |       |        |         |
@@ -707,7 +845,10 @@ trace.
 
 Architecture's requirements
 ===========================
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 The following functions and configurations are required:
 
 ``CONFIG_HOTPLUG_CPU``
@@ -729,12 +870,20 @@ The following functions and configurations are required:
 
 User Space Notification
 =======================
+<<<<<<< HEAD
 
 After CPU successfully onlined or offline udev events are sent. A udev rule like::
 
   SUBSYSTEM=="cpu", DRIVERS=="processor", DEVPATH=="/devices/system/cpu/*", RUN+="the_hotplug_receiver.sh"
 
 will receive all events. A script like::
+=======
+After CPU successfully onlined or offline udev events are sent. A udev rule like: ::
+
+  SUBSYSTEM=="cpu", DRIVERS=="processor", DEVPATH=="/devices/system/cpu/*", RUN+="the_hotplug_receiver.sh"
+
+will receive all events. A script like: ::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   #!/bin/sh
 

@@ -1841,7 +1841,11 @@ static int sis190_mac_addr(struct net_device  *dev, void *p)
 static const struct net_device_ops sis190_netdev_ops = {
 	.ndo_open		= sis190_open,
 	.ndo_stop		= sis190_close,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= sis190_ioctl,
+=======
+	.ndo_do_ioctl		= sis190_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_start_xmit		= sis190_start_xmit,
 	.ndo_tx_timeout		= sis190_tx_timeout,
 	.ndo_set_rx_mode	= sis190_set_rx_mode,

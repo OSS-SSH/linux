@@ -194,8 +194,13 @@ static int dvb_usb_init(struct dvb_usb_device *d, short *adapter_nums)
 
 err_adapter_init:
 	dvb_usb_adapter_exit(d);
+<<<<<<< HEAD
 	dvb_usb_i2c_exit(d);
 err_i2c_init:
+=======
+err_i2c_init:
+	dvb_usb_i2c_exit(d);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (d->priv && d->props.priv_destroy)
 		d->props.priv_destroy(d);
 err_priv_init:

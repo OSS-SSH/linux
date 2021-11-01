@@ -1,7 +1,17 @@
 /* SPDX-License-Identifier: GPL-2.0 */
+<<<<<<< HEAD
 /* Marvell RVU Admin Function driver
  *
  * Copyright (C) 2018 Marvell.
+=======
+/*  Marvell OcteonTx2 RVU Admin Function driver
+ *
+ * Copyright (C) 2018 Marvell International Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #ifndef COMMON_H
@@ -60,8 +70,13 @@ static inline int qmem_alloc(struct device *dev, struct qmem **q,
 
 	qmem->entry_sz = entry_sz;
 	qmem->alloc_sz = (qsize * entry_sz) + OTX2_ALIGN;
+<<<<<<< HEAD
 	qmem->base = dma_alloc_attrs(dev, qmem->alloc_sz, &qmem->iova,
 				     GFP_KERNEL, DMA_ATTR_FORCE_CONTIGUOUS);
+=======
+	qmem->base = dma_alloc_coherent(dev, qmem->alloc_sz,
+					 &qmem->iova, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!qmem->base)
 		return -ENOMEM;
 
@@ -80,10 +95,16 @@ static inline void qmem_free(struct device *dev, struct qmem *qmem)
 		return;
 
 	if (qmem->base)
+<<<<<<< HEAD
 		dma_free_attrs(dev, qmem->alloc_sz,
 			       qmem->base - qmem->align,
 			       qmem->iova - qmem->align,
 			       DMA_ATTR_FORCE_CONTIGUOUS);
+=======
+		dma_free_coherent(dev, qmem->alloc_sz,
+				  qmem->base - qmem->align,
+				  qmem->iova - qmem->align);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	devm_kfree(dev, qmem);
 }
 
@@ -143,7 +164,14 @@ enum nix_scheduler {
 #define TXSCH_RR_QTM_MAX		((1 << 24) - 1)
 #define TXSCH_TL1_DFLT_RR_QTM		TXSCH_RR_QTM_MAX
 #define TXSCH_TL1_DFLT_RR_PRIO		(0x1ull)
+<<<<<<< HEAD
 #define CN10K_MAX_DWRR_WEIGHT          16384 /* Weight is 14bit on CN10K */
+=======
+#define MAX_SCHED_WEIGHT		0xFF
+#define DFLT_RR_WEIGHT			71
+#define DFLT_RR_QTM	((DFLT_RR_WEIGHT * TXSCH_RR_QTM_MAX) \
+			 / MAX_SCHED_WEIGHT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Min/Max packet sizes, excluding FCS */
 #define	NIC_HW_MIN_FRS			40
@@ -181,16 +209,25 @@ enum nix_scheduler {
 
 #define NIX_INTF_TYPE_CGX		0
 #define NIX_INTF_TYPE_LBK		1
+<<<<<<< HEAD
 #define NIX_INTF_TYPE_SDP		2
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define MAX_LMAC_PKIND			12
 #define NIX_LINK_CGX_LMAC(a, b)		(0 + 4 * (a) + (b))
 #define NIX_LINK_LBK(a)			(12 + (a))
 #define NIX_CHAN_CGX_LMAC_CHX(a, b, c)	(0x800 + 0x100 * (a) + 0x10 * (b) + (c))
 #define NIX_CHAN_LBK_CHX(a, b)		(0 + 0x100 * (a) + (b))
+<<<<<<< HEAD
 #define NIX_CHAN_SDP_CH_START          (0x700ull)
 #define NIX_CHAN_SDP_CHX(a)            (NIX_CHAN_SDP_CH_START + (a))
 #define NIX_CHAN_SDP_NUM_CHANS		256
+=======
+#define NIX_CHAN_SDP_CH_START		(0x700ull)
+
+#define SDP_CHANNELS			256
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* The mask is to extract lower 10-bits of channel number
  * which CPT will pass to X2P.

@@ -42,11 +42,14 @@
 #define DC_LOGGER \
 	engine->ctx->logger
 
+<<<<<<< HEAD
 #define DC_TRACE_LEVEL_MESSAGE(...) do { } while (0)
 #define IS_DC_I2CAUX_LOGGING_ENABLED() (false)
 #define LOG_FLAG_Error_I2cAux LOG_ERROR
 #define LOG_FLAG_I2cAux_DceAux LOG_I2C_AUX
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "reg_helper.h"
 
 #undef FN
@@ -76,8 +79,11 @@ enum {
 #define DEFAULT_AUX_ENGINE_MULT   0
 #define DEFAULT_AUX_ENGINE_LENGTH 69
 
+<<<<<<< HEAD
 #define DC_TRACE_LEVEL_MESSAGE(...) do { } while (0)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void release_engine(
 	struct dce_aux *engine)
 {
@@ -628,6 +634,7 @@ int dce_aux_transfer_dmub_raw(struct ddc_service *ddc,
 #define AUX_MAX_INVALID_REPLY_RETRIES 2
 #define AUX_MAX_TIMEOUT_RETRIES 3
 
+<<<<<<< HEAD
 static void dce_aux_log_payload(const char *payload_name,
 	unsigned char *payload, uint32_t length, uint32_t max_length_to_log)
 {
@@ -680,6 +687,8 @@ static void dce_aux_log_payload(const char *payload_name,
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 		struct aux_payload *payload)
 {
@@ -705,6 +714,7 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 	}
 
 	for (i = 0; i < AUX_MAX_RETRIES; i++) {
+<<<<<<< HEAD
 		DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 					LOG_FLAG_I2cAux_DceAux,
 					"dce_aux_transfer_with_retries: link_index=%u: START: retry %d of %d: address=0x%04x length=%u write=%d mot=%d",
@@ -733,6 +743,9 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 					(unsigned int) *payload->reply);
 		if (!payload->write)
 			dce_aux_log_payload("  read", payload->data, ret > 0 ? ret : 0, 16);
+=======
+		ret = dce_aux_transfer_raw(ddc, payload, &operation_result);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		switch (operation_result) {
 		case AUX_RET_SUCCESS:
@@ -741,6 +754,7 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 
 			switch (*payload->reply) {
 			case AUX_TRANSACTION_REPLY_AUX_ACK:
+<<<<<<< HEAD
 				DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 							LOG_FLAG_I2cAux_DceAux,
 							"dce_aux_transfer_with_retries: AUX_RET_SUCCESS: AUX_TRANSACTION_REPLY_AUX_ACK");
@@ -755,20 +769,31 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 					} else {
 						udelay(300);
 					}
+=======
+				if (!payload->write && payload->length != ret) {
+					if (++aux_ack_retries >= AUX_MAX_RETRIES)
+						goto fail;
+					else
+						udelay(300);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				} else
 					return true;
 			break;
 
 			case AUX_TRANSACTION_REPLY_AUX_DEFER:
+<<<<<<< HEAD
 				DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 							LOG_FLAG_I2cAux_DceAux,
 							"dce_aux_transfer_with_retries: AUX_RET_SUCCESS: AUX_TRANSACTION_REPLY_AUX_DEFER");
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				/* polling_timeout_period is in us */
 				defer_time_in_ms += aux110->polling_timeout_period / 1000;
 				++aux_defer_retries;
 				fallthrough;
 			case AUX_TRANSACTION_REPLY_I2C_OVER_AUX_DEFER:
+<<<<<<< HEAD
 				if (*payload->reply == AUX_TRANSACTION_REPLY_I2C_OVER_AUX_DEFER)
 					DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 								LOG_FLAG_I2cAux_DceAux,
@@ -791,14 +816,24 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 								AUX_MIN_DEFER_RETRIES,
 								defer_time_in_ms,
 								AUX_MAX_DEFER_TIMEOUT_MS);
+=======
+				retry_on_defer = true;
+				fallthrough;
+			case AUX_TRANSACTION_REPLY_I2C_OVER_AUX_NACK:
+				if (aux_defer_retries >= AUX_MIN_DEFER_RETRIES
+						&& defer_time_in_ms >= AUX_MAX_DEFER_TIMEOUT_MS) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					goto fail;
 				} else {
 					if ((*payload->reply == AUX_TRANSACTION_REPLY_AUX_DEFER) ||
 						(*payload->reply == AUX_TRANSACTION_REPLY_I2C_OVER_AUX_DEFER)) {
+<<<<<<< HEAD
 						DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 									LOG_FLAG_I2cAux_DceAux,
 									"dce_aux_transfer_with_retries: payload->defer_delay=%u",
 									payload->defer_delay);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						if (payload->defer_delay > 1) {
 							msleep(payload->defer_delay);
 							defer_time_in_ms += payload->defer_delay;
@@ -811,6 +846,7 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 				break;
 
 			case AUX_TRANSACTION_REPLY_I2C_DEFER:
+<<<<<<< HEAD
 				DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 							LOG_FLAG_I2cAux_DceAux,
 							"dce_aux_transfer_with_retries: AUX_RET_SUCCESS: AUX_TRANSACTION_REPLY_I2C_DEFER");
@@ -842,11 +878,22 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 				DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_ERROR,
 							LOG_FLAG_Error_I2cAux,
 							"dce_aux_transfer_with_retries: AUX_RET_SUCCESS: FAILURE: AUX_TRANSACTION_REPLY_* unknown, default case.");
+=======
+				aux_defer_retries = 0;
+				if (++aux_i2c_defer_retries >= AUX_MAX_I2C_DEFER_RETRIES)
+					goto fail;
+				break;
+
+			case AUX_TRANSACTION_REPLY_AUX_NACK:
+			case AUX_TRANSACTION_REPLY_HPD_DISCON:
+			default:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				goto fail;
 			}
 			break;
 
 		case AUX_RET_ERROR_INVALID_REPLY:
+<<<<<<< HEAD
 			DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 						LOG_FLAG_I2cAux_DceAux,
 						"dce_aux_transfer_with_retries: AUX_RET_ERROR_INVALID_REPLY");
@@ -858,10 +905,16 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 							AUX_MAX_INVALID_REPLY_RETRIES);
 				goto fail;
 			} else
+=======
+			if (++aux_invalid_reply_retries >= AUX_MAX_INVALID_REPLY_RETRIES)
+				goto fail;
+			else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				udelay(400);
 			break;
 
 		case AUX_RET_ERROR_TIMEOUT:
+<<<<<<< HEAD
 			DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 						LOG_FLAG_I2cAux_DceAux,
 						"dce_aux_transfer_with_retries: AUX_RET_ERROR_TIMEOUT");
@@ -891,6 +944,19 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 								AUX_MAX_TIMEOUT_RETRIES);
 					goto fail;
 				} else {
+=======
+			// Check whether a DEFER had occurred before the timeout.
+			// If so, treat timeout as a DEFER.
+			if (retry_on_defer) {
+				if (++aux_defer_retries >= AUX_MIN_DEFER_RETRIES)
+					goto fail;
+				else if (payload->defer_delay > 0)
+					msleep(payload->defer_delay);
+			} else {
+				if (++aux_timeout_retries >= AUX_MAX_TIMEOUT_RETRIES)
+					goto fail;
+				else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					/*
 					 * DP 1.4, 2.8.2:  AUX Transaction Response/Reply Timeouts
 					 * According to the DP spec there should be 3 retries total
@@ -905,15 +971,19 @@ bool dce_aux_transfer_with_retries(struct ddc_service *ddc,
 		case AUX_RET_ERROR_ENGINE_ACQUIRE:
 		case AUX_RET_ERROR_UNKNOWN:
 		default:
+<<<<<<< HEAD
 			DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_INFORMATION,
 						LOG_FLAG_I2cAux_DceAux,
 						"dce_aux_transfer_with_retries: Failure: operation_result=%d",
 						(int)operation_result);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto fail;
 		}
 	}
 
 fail:
+<<<<<<< HEAD
 	DC_TRACE_LEVEL_MESSAGE(DAL_TRACE_LEVEL_ERROR,
 				LOG_FLAG_Error_I2cAux,
 				"dce_aux_transfer_with_retries: FAILURE");
@@ -925,5 +995,9 @@ fail:
 				"AUX transaction failed. Result: %d",
 				operation_result);
 
+=======
+	if (!payload_reply)
+		payload->reply = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return false;
 }

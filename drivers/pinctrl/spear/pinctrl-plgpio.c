@@ -400,7 +400,12 @@ static void plgpio_irq_handler(struct irq_desc *desc)
 
 			/* get correct irq line number */
 			pin = i * MAX_GPIO_PER_REG + pin;
+<<<<<<< HEAD
 			generic_handle_domain_irq(gc->irq.domain, pin);
+=======
+			generic_handle_irq(
+				irq_find_mapping(gc->irq.domain, pin));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 	chained_irq_exit(irqchip, desc);

@@ -3331,7 +3331,10 @@ lpfc_mbx_process_link_up(struct lpfc_hba *phba, struct lpfc_mbx_read_top *la)
 		case LPFC_LINK_SPEED_32GHZ:
 		case LPFC_LINK_SPEED_64GHZ:
 		case LPFC_LINK_SPEED_128GHZ:
+<<<<<<< HEAD
 		case LPFC_LINK_SPEED_256GHZ:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		default:
 			phba->fc_linkspeed = LPFC_LINK_SPEED_UNKNOWN;
@@ -3647,10 +3650,13 @@ lpfc_mbx_cmpl_read_topology(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
 					phba->wait_4_mlo_maint_flg);
 		}
 		lpfc_mbx_process_link_up(phba, la);
+<<<<<<< HEAD
 
 		if (phba->cmf_active_mode != LPFC_CFG_OFF)
 			lpfc_cmf_signal_init(phba);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (attn_type == LPFC_ATT_LINK_DOWN ||
 		   attn_type == LPFC_ATT_UNEXP_WWPN) {
 		phba->fc_stat.LinkDown++;
@@ -4213,7 +4219,10 @@ lpfc_mbx_cmpl_ns_reg_login(struct lpfc_hba *phba, LPFC_MBOXQ_t *pmb)
 	struct lpfc_dmabuf *mp = (struct lpfc_dmabuf *)(pmb->ctx_buf);
 	struct lpfc_nodelist *ndlp = (struct lpfc_nodelist *)pmb->ctx_ndlp;
 	struct lpfc_vport *vport = pmb->vport;
+<<<<<<< HEAD
 	int rc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pmb->ctx_buf = NULL;
 	pmb->ctx_ndlp = NULL;
@@ -4289,6 +4298,7 @@ out:
 		/* Issue SCR just before NameServer GID_FT Query */
 		lpfc_issue_els_scr(vport, 0);
 
+<<<<<<< HEAD
 		/* Link was bounced or a Fabric LOGO occurred.  Start EDC
 		 * with initial FW values provided the congestion mode is
 		 * not off.  Note that signals may or may not be supported
@@ -4306,6 +4316,11 @@ out:
 		} else {
 			lpfc_issue_els_rdf(vport, 0);
 		}
+=======
+		if (!phba->cfg_enable_mi ||
+		    phba->sli4_hba.pc_sli4_params.mi_ver < LPFC_MIB3_SUPPORT)
+			lpfc_issue_els_rdf(vport, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	vport->fc_ns_retry = 0;
@@ -4521,6 +4536,7 @@ lpfc_nlp_counters(struct lpfc_vport *vport, int state, int count)
 	spin_unlock_irqrestore(shost->host_lock, iflags);
 }
 
+<<<<<<< HEAD
 /* Register a node with backend if not already done */
 void
 lpfc_nlp_reg_node(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
@@ -4656,10 +4672,13 @@ lpfc_handle_adisc_state(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void
 lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 		       int old_state, int new_state)
 {
+<<<<<<< HEAD
 	/* Trap ADISC changes here */
 	if (new_state == NLP_STE_ADISC_ISSUE ||
 	    old_state == NLP_STE_ADISC_ISSUE) {
@@ -4667,6 +4686,8 @@ lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 		return;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (new_state == NLP_STE_UNMAPPED_NODE) {
 		ndlp->nlp_flag &= ~NLP_NODEV_REMOVE;
 		ndlp->nlp_type |= NLP_FC_NODE;
@@ -4676,6 +4697,7 @@ lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 	if (new_state == NLP_STE_NPR_NODE)
 		ndlp->nlp_flag &= ~NLP_RCV_PLOGI;
 
+<<<<<<< HEAD
 	/* Reg/Unreg for FCP and NVME Transport interface */
 	if ((old_state == NLP_STE_MAPPED_NODE ||
 	     old_state == NLP_STE_UNMAPPED_NODE)) {
@@ -4687,6 +4709,62 @@ lpfc_nlp_state_cleanup(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp,
 	if (new_state ==  NLP_STE_MAPPED_NODE ||
 	    new_state == NLP_STE_UNMAPPED_NODE)
 		lpfc_nlp_reg_node(vport, ndlp);
+=======
+	/* FCP and NVME Transport interface */
+	if ((old_state == NLP_STE_MAPPED_NODE ||
+	     old_state == NLP_STE_UNMAPPED_NODE)) {
+		if (ndlp->rport &&
+		    lpfc_valid_xpt_node(ndlp)) {
+			vport->phba->nport_event_cnt++;
+			lpfc_unregister_remote_port(ndlp);
+		}
+
+		if (ndlp->nlp_fc4_type & NLP_FC4_NVME) {
+			vport->phba->nport_event_cnt++;
+			if (vport->phba->nvmet_support == 0) {
+				/* Start devloss if target. */
+				if (ndlp->nlp_type & NLP_NVME_TARGET)
+					lpfc_nvme_unregister_port(vport, ndlp);
+			} else {
+				/* NVMET has no upcall. */
+				lpfc_nlp_put(ndlp);
+			}
+		}
+	}
+
+	/* FCP and NVME Transport interfaces */
+
+	if (new_state ==  NLP_STE_MAPPED_NODE ||
+	    new_state == NLP_STE_UNMAPPED_NODE) {
+		if (lpfc_valid_xpt_node(ndlp)) {
+			vport->phba->nport_event_cnt++;
+			/*
+			 * Tell the fc transport about the port, if we haven't
+			 * already. If we have, and it's a scsi entity, be
+			 */
+			lpfc_register_remote_port(vport, ndlp);
+		}
+		/* Notify the NVME transport of this new rport. */
+		if (vport->phba->sli_rev >= LPFC_SLI_REV4 &&
+		    ndlp->nlp_fc4_type & NLP_FC4_NVME) {
+			if (vport->phba->nvmet_support == 0) {
+				/* Register this rport with the transport.
+				 * Only NVME Target Rports are registered with
+				 * the transport.
+				 */
+				if (ndlp->nlp_type & NLP_NVME_TARGET) {
+					vport->phba->nport_event_cnt++;
+					lpfc_nvme_register_port(vport, ndlp);
+				}
+			} else {
+				/* Just take an NDLP ref count since the
+				 * target does not register rports.
+				 */
+				lpfc_nlp_get(ndlp);
+			}
+		}
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if ((new_state ==  NLP_STE_MAPPED_NODE) &&
 		(vport->stat_data_enabled)) {

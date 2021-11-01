@@ -43,6 +43,12 @@
  *   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * Intel PCIe NTB Linux driver
+<<<<<<< HEAD
+=======
+ *
+ * Contact Information:
+ * Jon Mason <jon.mason@intel.com>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #ifndef NTB_HW_INTEL_H

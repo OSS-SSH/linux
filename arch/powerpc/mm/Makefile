@@ -18,5 +18,9 @@ obj-$(CONFIG_PPC_MM_SLICES)	+= slice.o
 obj-$(CONFIG_HUGETLB_PAGE)	+= hugetlbpage.o
 obj-$(CONFIG_NOT_COHERENT_CACHE) += dma-noncoherent.o
 obj-$(CONFIG_PPC_COPRO_BASE)	+= copro_fault.o
+<<<<<<< HEAD
 obj-$(CONFIG_PTDUMP_CORE)	+= ptdump/
+=======
+obj-$(CONFIG_PPC_PTDUMP)	+= ptdump/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-$(CONFIG_KASAN)		+= kasan/

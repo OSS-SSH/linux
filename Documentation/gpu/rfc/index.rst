@@ -19,7 +19,10 @@ host such documentation:
 .. toctree::
 
     i915_gem_lmem.rst
+<<<<<<< HEAD
 
 .. toctree::
 
     i915_scheduler.rst
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

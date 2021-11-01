@@ -83,42 +83,66 @@
 	status = "okay";
 
 	mdio1_phy5: ethernet-phy@c {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0xc>;
 	};
 
 	mdio1_phy6: ethernet-phy@d {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0xd>;
 	};
 
 	mdio1_phy7: ethernet-phy@e {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0xe>;
 	};
 
 	mdio1_phy8: ethernet-phy@f {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0xf>;
 	};
 
 	mdio1_phy1: ethernet-phy@1c {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0x1c>;
 	};
 
 	mdio1_phy2: ethernet-phy@1d {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0x1d>;
 	};
 
 	mdio1_phy3: ethernet-phy@1e {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0x1e>;
 	};
 
 	mdio1_phy4: ethernet-phy@1f {
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 1 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0x1f>;
 	};
 };
@@ -128,7 +152,10 @@
 
 	mdio2_aquantia_phy: ethernet-phy@0 {
 		compatible = "ethernet-phy-ieee802.3-c45";
+<<<<<<< HEAD
 		interrupts-extended = <&extirq 2 IRQ_TYPE_LEVEL_LOW>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg = <0x0>;
 	};
 };

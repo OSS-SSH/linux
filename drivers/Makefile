@@ -70,6 +70,10 @@ obj-$(CONFIG_FB_I810)           += video/fbdev/i810/
 obj-$(CONFIG_FB_INTEL)          += video/fbdev/intelfb/
 
 obj-$(CONFIG_PARPORT)		+= parport/
+<<<<<<< HEAD
+=======
+obj-$(CONFIG_NVM)		+= lightnvm/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 obj-y				+= base/ block/ misc/ mfd/ nfc/
 obj-$(CONFIG_LIBNVDIMM)		+= nvdimm/
 obj-$(CONFIG_DAX)		+= dax/

@@ -12,6 +12,11 @@
 
 #define BT_TMP_BUF_SIZE	100
 
+<<<<<<< HEAD
+=======
+#define DCMD_Printf			DBG_BT_INFO
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef bEnable
 #undef bEnable
 #endif

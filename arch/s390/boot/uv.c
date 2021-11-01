@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <asm/uv.h>
+<<<<<<< HEAD
 #include <asm/boot_data.h>
 #include <asm/facility.h>
 #include <asm/sections.h>
@@ -7,6 +8,11 @@
 #include "boot.h"
 #include "uv.h"
 
+=======
+#include <asm/facility.h>
+#include <asm/sections.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* will be used in arch/s390/kernel/uv.c */
 #ifdef CONFIG_PROTECTED_VIRTUALIZATION_GUEST
 int __bootdata_preserved(prot_virt_guest);
@@ -51,6 +57,7 @@ void uv_query_info(void)
 }
 
 #if IS_ENABLED(CONFIG_KVM)
+<<<<<<< HEAD
 void adjust_to_uv_max(unsigned long *vmax)
 {
 	if (is_prot_virt_host() && uv_info.max_sec_stor_addr)
@@ -80,5 +87,28 @@ static int is_prot_virt_host_capable(void)
 void sanitize_prot_virt_host(void)
 {
 	prot_virt_host = is_prot_virt_host_capable();
+=======
+static bool has_uv_sec_stor_limit(void)
+{
+	/*
+	 * keep these conditions in line with setup_uv()
+	 */
+	if (!is_prot_virt_host())
+		return false;
+
+	if (is_prot_virt_guest())
+		return false;
+
+	if (!test_facility(158))
+		return false;
+
+	return !!uv_info.max_sec_stor_addr;
+}
+
+void adjust_to_uv_max(unsigned long *vmax)
+{
+	if (has_uv_sec_stor_limit())
+		*vmax = min_t(unsigned long, *vmax, uv_info.max_sec_stor_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif

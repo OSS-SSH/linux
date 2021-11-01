@@ -33,8 +33,11 @@ enum host1x_intr_action {
 	 */
 	HOST1X_INTR_ACTION_WAKEUP_INTERRUPTIBLE,
 
+<<<<<<< HEAD
 	HOST1X_INTR_ACTION_SIGNAL_FENCE,
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	HOST1X_INTR_ACTION_COUNT
 };
 

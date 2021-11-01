@@ -1330,9 +1330,13 @@ static inline u16 socket_type_to_security_class(int family, int type, int protoc
 			return SECCLASS_SMC_SOCKET;
 		case PF_XDP:
 			return SECCLASS_XDP_SOCKET;
+<<<<<<< HEAD
 		case PF_MCTP:
 			return SECCLASS_MCTP_SOCKET;
 #if PF_MAX > 46
+=======
+#if PF_MAX > 45
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #error New address family defined, please update this function.
 #endif
 		}
@@ -2157,7 +2161,11 @@ static int selinux_ptrace_access_check(struct task_struct *child,
 static int selinux_ptrace_traceme(struct task_struct *parent)
 {
 	return avc_has_perm(&selinux_state,
+<<<<<<< HEAD
 			    task_sid_obj(parent), task_sid_obj(current),
+=======
+			    task_sid_subj(parent), task_sid_obj(current),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			    SECCLASS_PROCESS, PROCESS__PTRACE, NULL);
 }
 
@@ -3327,8 +3335,11 @@ static int selinux_inode_setxattr(struct user_namespace *mnt_userns,
 			}
 			ab = audit_log_start(audit_context(),
 					     GFP_ATOMIC, AUDIT_SELINUX_ERR);
+<<<<<<< HEAD
 			if (!ab)
 				return rc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			audit_log_format(ab, "op=setxattr invalid_context=");
 			audit_log_n_untrustedstring(ab, value, audit_size);
 			audit_log_end(ab);
@@ -6222,7 +6233,11 @@ static int selinux_msg_queue_msgrcv(struct kern_ipc_perm *msq, struct msg_msg *m
 	struct ipc_security_struct *isec;
 	struct msg_security_struct *msec;
 	struct common_audit_data ad;
+<<<<<<< HEAD
 	u32 sid = task_sid_obj(target);
+=======
+	u32 sid = task_sid_subj(target);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc;
 
 	isec = selinux_ipc(msq);
@@ -6556,8 +6571,11 @@ static int selinux_setprocattr(const char *name, void *value, size_t size)
 				ab = audit_log_start(audit_context(),
 						     GFP_ATOMIC,
 						     AUDIT_SELINUX_ERR);
+<<<<<<< HEAD
 				if (!ab)
 					return error;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				audit_log_format(ab, "op=fscreate invalid_context=");
 				audit_log_n_untrustedstring(ab, value, audit_size);
 				audit_log_end(ab);

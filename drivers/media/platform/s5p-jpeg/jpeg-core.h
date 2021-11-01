@@ -37,6 +37,7 @@
 #define EXYNOS3250_IRQ_TIMEOUT		0x10000000
 
 /* a selection of JPEG markers */
+<<<<<<< HEAD
 #define JPEG_MARKER_TEM				0x01
 #define JPEG_MARKER_SOF0				0xc0
 #define JPEG_MARKER_DHT				0xc4
@@ -46,6 +47,17 @@
 #define	JPEG_MARKER_SOS				0xda
 #define JPEG_MARKER_DQT				0xdb
 #define JPEG_MARKER_DHP				0xde
+=======
+#define TEM				0x01
+#define SOF0				0xc0
+#define DHT				0xc4
+#define RST				0xd0
+#define SOI				0xd8
+#define EOI				0xd9
+#define	SOS				0xda
+#define DQT				0xdb
+#define DHP				0xde
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Flags that indicate a format can be used for capture/output */
 #define SJPEG_FMT_FLAG_ENC_CAPTURE	(1 << 0)
@@ -187,11 +199,19 @@ struct s5p_jpeg_marker {
  * @fmt:	driver-specific format of this queue
  * @w:		image width
  * @h:		image height
+<<<<<<< HEAD
  * @sos:	JPEG_MARKER_SOS's position relative to the buffer beginning
  * @dht:	JPEG_MARKER_DHT' positions relative to the buffer beginning
  * @dqt:	JPEG_MARKER_DQT' positions relative to the buffer beginning
  * @sof:	JPEG_MARKER_SOF0's position relative to the buffer beginning
  * @sof_len:	JPEG_MARKER_SOF0's payload length (without length field itself)
+=======
+ * @sos:	SOS marker's position relative to the buffer beginning
+ * @dht:	DHT markers' positions relative to the buffer beginning
+ * @dqt:	DQT markers' positions relative to the buffer beginning
+ * @sof:	SOF0 marker's position relative to the buffer beginning
+ * @sof_len:	SOF0 marker's payload length (without length field itself)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @size:	image buffer size in bytes
  */
 struct s5p_jpeg_q_data {

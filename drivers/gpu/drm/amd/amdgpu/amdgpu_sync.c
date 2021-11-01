@@ -28,8 +28,11 @@
  *    Christian König <christian.koenig@amd.com>
  */
 
+<<<<<<< HEAD
 #include <linux/dma-fence-chain.h>
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "amdgpu.h"
 #include "amdgpu_trace.h"
 #include "amdgpu_amdkfd.h"
@@ -188,6 +191,7 @@ int amdgpu_sync_vm_fence(struct amdgpu_sync *sync, struct dma_fence *fence)
 	return amdgpu_sync_fence(sync, fence);
 }
 
+<<<<<<< HEAD
 /* Determine based on the owner and mode if we should sync to a fence or not */
 static bool amdgpu_sync_test_fence(struct amdgpu_device *adev,
 				   enum amdgpu_sync_mode mode,
@@ -237,6 +241,8 @@ static bool amdgpu_sync_test_fence(struct amdgpu_device *adev,
 	return true;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * amdgpu_sync_resv - sync to a reservation object
  *
@@ -262,6 +268,7 @@ int amdgpu_sync_resv(struct amdgpu_device *adev, struct amdgpu_sync *sync,
 
 	/* always sync to the exclusive fence */
 	f = dma_resv_excl_fence(resv);
+<<<<<<< HEAD
 	dma_fence_chain_for_each(f, f) {
 		struct dma_fence_chain *chain = to_dma_fence_chain(f);
 
@@ -290,6 +297,69 @@ int amdgpu_sync_resv(struct amdgpu_device *adev, struct amdgpu_sync *sync,
 		}
 	}
 	return 0;
+=======
+	r = amdgpu_sync_fence(sync, f);
+
+	flist = dma_resv_shared_list(resv);
+	if (!flist || r)
+		return r;
+
+	for (i = 0; i < flist->shared_count; ++i) {
+		void *fence_owner;
+
+		f = rcu_dereference_protected(flist->shared[i],
+					      dma_resv_held(resv));
+
+		fence_owner = amdgpu_sync_get_owner(f);
+
+		/* Always sync to moves, no matter what */
+		if (fence_owner == AMDGPU_FENCE_OWNER_UNDEFINED) {
+			r = amdgpu_sync_fence(sync, f);
+			if (r)
+				break;
+		}
+
+		/* We only want to trigger KFD eviction fences on
+		 * evict or move jobs. Skip KFD fences otherwise.
+		 */
+		if (fence_owner == AMDGPU_FENCE_OWNER_KFD &&
+		    owner != AMDGPU_FENCE_OWNER_UNDEFINED)
+			continue;
+
+		/* Never sync to VM updates either. */
+		if (fence_owner == AMDGPU_FENCE_OWNER_VM &&
+		    owner != AMDGPU_FENCE_OWNER_UNDEFINED)
+			continue;
+
+		/* Ignore fences depending on the sync mode */
+		switch (mode) {
+		case AMDGPU_SYNC_ALWAYS:
+			break;
+
+		case AMDGPU_SYNC_NE_OWNER:
+			if (amdgpu_sync_same_dev(adev, f) &&
+			    fence_owner == owner)
+				continue;
+			break;
+
+		case AMDGPU_SYNC_EQ_OWNER:
+			if (amdgpu_sync_same_dev(adev, f) &&
+			    fence_owner != owner)
+				continue;
+			break;
+
+		case AMDGPU_SYNC_EXPLICIT:
+			continue;
+		}
+
+		WARN(debug_evictions && fence_owner == AMDGPU_FENCE_OWNER_KFD,
+		     "Adding eviction fence to sync obj");
+		r = amdgpu_sync_fence(sync, f);
+		if (r)
+			break;
+	}
+	return r;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

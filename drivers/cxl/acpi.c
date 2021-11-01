@@ -243,9 +243,12 @@ static struct acpi_device *to_cxl_host_bridge(struct device *dev)
 {
 	struct acpi_device *adev = to_acpi_device(dev);
 
+<<<<<<< HEAD
 	if (!acpi_pci_find_root(adev->handle))
 		return NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (strcmp(acpi_device_hid(adev), "ACPI0016") == 0)
 		return adev;
 	return NULL;
@@ -269,6 +272,13 @@ static int add_host_bridge_uport(struct device *match, void *arg)
 	if (!bridge)
 		return 0;
 
+<<<<<<< HEAD
+=======
+	pci_root = acpi_pci_find_root(bridge->handle);
+	if (!pci_root)
+		return -ENXIO;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dport = find_dport_by_dev(root_port, match);
 	if (!dport) {
 		dev_dbg(host, "host bridge expected and not found\n");
@@ -281,11 +291,14 @@ static int add_host_bridge_uport(struct device *match, void *arg)
 		return PTR_ERR(port);
 	dev_dbg(host, "%s: add: %s\n", dev_name(match), dev_name(&port->dev));
 
+<<<<<<< HEAD
 	/*
 	 * Note that this lookup already succeeded in
 	 * to_cxl_host_bridge(), so no need to check for failure here
 	 */
 	pci_root = acpi_pci_find_root(bridge->handle);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ctx = (struct cxl_walk_context){
 		.dev = host,
 		.root = pci_root->bus,

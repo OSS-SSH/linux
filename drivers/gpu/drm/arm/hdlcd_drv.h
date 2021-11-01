@@ -11,7 +11,10 @@ struct hdlcd_drm_private {
 	struct clk			*clk;
 	struct drm_crtc			crtc;
 	struct drm_plane		*plane;
+<<<<<<< HEAD
 	unsigned int			irq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DEBUG_FS
 	atomic_t buffer_underrun_count;
 	atomic_t bus_error_count;

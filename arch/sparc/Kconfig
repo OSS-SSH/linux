@@ -19,6 +19,10 @@ config SPARC
 	select OF
 	select OF_PROMTREE
 	select HAVE_ASM_MODVERSIONS
+<<<<<<< HEAD
+=======
+	select HAVE_IDE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select HAVE_ARCH_KGDB if !SMP || SPARC64
 	select HAVE_ARCH_TRACEHOOK
 	select HAVE_ARCH_SECCOMP if SPARC64
@@ -37,6 +41,11 @@ config SPARC
 	select HAVE_EBPF_JIT if SPARC64
 	select HAVE_DEBUG_BUGVERBOSE
 	select GENERIC_SMP_IDLE_THREAD
+<<<<<<< HEAD
+=======
+	select GENERIC_STRNCPY_FROM_USER
+	select GENERIC_STRNLEN_USER
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select MODULES_USE_ELF_RELA
 	select PCI_SYSCALL if PCI
 	select PCI_MSI_ARCH_FALLBACKS if PCI_MSI
@@ -47,7 +56,10 @@ config SPARC
 	select NEED_DMA_MAP_STATE
 	select NEED_SG_DMA_LENGTH
 	select SET_FS
+<<<<<<< HEAD
 	select TRACE_IRQFLAGS_SUPPORT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config SPARC32
 	def_bool !64BIT

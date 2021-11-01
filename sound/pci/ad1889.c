@@ -740,6 +740,23 @@ snd_ad1889_ac97_xinit(struct snd_ad1889 *chip)
 
 }
 
+<<<<<<< HEAD
+=======
+static void
+snd_ad1889_ac97_bus_free(struct snd_ac97_bus *bus)
+{
+	struct snd_ad1889 *chip = bus->private_data;
+	chip->ac97_bus = NULL;
+}
+
+static void
+snd_ad1889_ac97_free(struct snd_ac97 *ac97)
+{
+	struct snd_ad1889 *chip = ac97->private_data;
+	chip->ac97 = NULL;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 snd_ad1889_ac97_init(struct snd_ad1889 *chip, const char *quirk_override)
 {
@@ -757,8 +774,16 @@ snd_ad1889_ac97_init(struct snd_ad1889 *chip, const char *quirk_override)
 	if (err < 0)
 		return err;
 	
+<<<<<<< HEAD
 	memset(&ac97, 0, sizeof(ac97));
 	ac97.private_data = chip;
+=======
+	chip->ac97_bus->private_free = snd_ad1889_ac97_bus_free;
+
+	memset(&ac97, 0, sizeof(ac97));
+	ac97.private_data = chip;
+	ac97.private_free = snd_ad1889_ac97_free;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ac97.pci = chip->pci;
 
 	err = snd_ac97_mixer(chip->ac97_bus, &ac97, &chip->ac97);
@@ -770,10 +795,18 @@ snd_ad1889_ac97_init(struct snd_ad1889 *chip, const char *quirk_override)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void
 snd_ad1889_free(struct snd_card *card)
 {
 	struct snd_ad1889 *chip = card->private_data;
+=======
+static int
+snd_ad1889_free(struct snd_ad1889 *chip)
+{
+	if (chip->irq < 0)
+		goto skip_hw;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock_irq(&chip->lock);
 
@@ -787,6 +820,7 @@ snd_ad1889_free(struct snd_card *card)
 	ad1889_readl(chip, AD_DMA_DISR);	/* flush, dammit! */
 
 	spin_unlock_irq(&chip->lock);
+<<<<<<< HEAD
 }
 
 static int
@@ -796,39 +830,127 @@ snd_ad1889_create(struct snd_card *card, struct pci_dev *pci)
 	int err;
 
 	err = pcim_enable_device(pci);
+=======
+
+	if (chip->irq >= 0)
+		free_irq(chip->irq, chip);
+
+skip_hw:
+	iounmap(chip->iobase);
+	pci_release_regions(chip->pci);
+	pci_disable_device(chip->pci);
+	kfree(chip);
+	return 0;
+}
+
+static int
+snd_ad1889_dev_free(struct snd_device *device) 
+{
+	struct snd_ad1889 *chip = device->device_data;
+	return snd_ad1889_free(chip);
+}
+
+static int
+snd_ad1889_init(struct snd_ad1889 *chip) 
+{
+	ad1889_writew(chip, AD_DS_CCS, AD_DS_CCS_CLKEN); /* turn on clock */
+	ad1889_readw(chip, AD_DS_CCS);	/* flush posted write */
+
+	usleep_range(10000, 11000);
+
+	/* enable Master and Target abort interrupts */
+	ad1889_writel(chip, AD_DMA_DISR, AD_DMA_DISR_PMAE | AD_DMA_DISR_PTAE);
+
+	return 0;
+}
+
+static int
+snd_ad1889_create(struct snd_card *card,
+		  struct pci_dev *pci,
+		  struct snd_ad1889 **rchip)
+{
+	int err;
+
+	struct snd_ad1889 *chip;
+	static const struct snd_device_ops ops = {
+		.dev_free = snd_ad1889_dev_free,
+	};
+
+	*rchip = NULL;
+
+	err = pci_enable_device(pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
 	/* check PCI availability (32bit DMA) */
 	if (dma_set_mask_and_coherent(&pci->dev, DMA_BIT_MASK(32))) {
 		dev_err(card->dev, "error setting 32-bit DMA mask.\n");
+<<<<<<< HEAD
 		return -ENXIO;
 	}
 
 	chip->card = card;
+=======
+		pci_disable_device(pci);
+		return -ENXIO;
+	}
+
+	/* allocate chip specific data with zero-filled memory */
+	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+	if (!chip) {
+		pci_disable_device(pci);
+		return -ENOMEM;
+	}
+
+	chip->card = card;
+	card->private_data = chip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	chip->pci = pci;
 	chip->irq = -1;
 
 	/* (1) PCI resource allocation */
+<<<<<<< HEAD
 	err = pcim_iomap_regions(pci, 1 << 0, card->driver);
 	if (err < 0)
 		return err;
 
 	chip->bar = pci_resource_start(pci, 0);
 	chip->iobase = pcim_iomap_table(pci)[0];
+=======
+	err = pci_request_regions(pci, card->driver);
+	if (err < 0)
+		goto free_and_ret;
+
+	chip->bar = pci_resource_start(pci, 0);
+	chip->iobase = pci_ioremap_bar(pci, 0);
+	if (chip->iobase == NULL) {
+		dev_err(card->dev, "unable to reserve region.\n");
+		err = -EBUSY;
+		goto free_and_ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	
 	pci_set_master(pci);
 
 	spin_lock_init(&chip->lock);	/* only now can we call ad1889_free */
 
+<<<<<<< HEAD
 	if (devm_request_irq(&pci->dev, pci->irq, snd_ad1889_interrupt,
 			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "cannot obtain IRQ %d\n", pci->irq);
+=======
+	if (request_irq(pci->irq, snd_ad1889_interrupt,
+			IRQF_SHARED, KBUILD_MODNAME, chip)) {
+		dev_err(card->dev, "cannot obtain IRQ %d\n", pci->irq);
+		snd_ad1889_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
+<<<<<<< HEAD
 	card->private_free = snd_ad1889_free;
 
 	/* (2) initialization of the chip hardware */
@@ -841,6 +963,31 @@ snd_ad1889_create(struct snd_card *card, struct pci_dev *pci)
 	ad1889_writel(chip, AD_DMA_DISR, AD_DMA_DISR_PMAE | AD_DMA_DISR_PTAE);
 
 	return 0;
+=======
+
+	/* (2) initialization of the chip hardware */
+	err = snd_ad1889_init(chip);
+	if (err < 0) {
+		snd_ad1889_free(chip);
+		return err;
+	}
+
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+	if (err < 0) {
+		snd_ad1889_free(chip);
+		return err;
+	}
+
+	*rchip = chip;
+
+	return 0;
+
+free_and_ret:
+	kfree(chip);
+	pci_disable_device(pci);
+
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int
@@ -861,19 +1008,33 @@ snd_ad1889_probe(struct pci_dev *pci,
 	}
 
 	/* (2) */
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index[devno], id[devno], THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
 		return err;
 	chip = card->private_data;
+=======
+	err = snd_card_new(&pci->dev, index[devno], id[devno], THIS_MODULE,
+			   0, &card);
+	/* XXX REVISIT: we can probably allocate chip in this call */
+	if (err < 0)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	strcpy(card->driver, "AD1889");
 	strcpy(card->shortname, "Analog Devices AD1889");
 
 	/* (3) */
+<<<<<<< HEAD
 	err = snd_ad1889_create(card, pci);
 	if (err < 0)
 		return err;
+=======
+	err = snd_ad1889_create(card, pci, &chip);
+	if (err < 0)
+		goto free_and_ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* (4) */
 	sprintf(card->longname, "%s at 0x%lx irq %i",
@@ -883,11 +1044,19 @@ snd_ad1889_probe(struct pci_dev *pci,
 	/* register AC97 mixer */
 	err = snd_ad1889_ac97_init(chip, ac97_quirk[devno]);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 	
 	err = snd_ad1889_pcm_init(chip, 0);
 	if (err < 0)
 		return err;
+=======
+		goto free_and_ret;
+	
+	err = snd_ad1889_pcm_init(chip, 0);
+	if (err < 0)
+		goto free_and_ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* register proc interface */
 	snd_ad1889_proc_init(chip);
@@ -895,13 +1064,30 @@ snd_ad1889_probe(struct pci_dev *pci,
 	/* (6) */
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
+=======
+		goto free_and_ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* (7) */
 	pci_set_drvdata(pci, card);
 
 	devno++;
 	return 0;
+<<<<<<< HEAD
+=======
+
+free_and_ret:
+	snd_card_free(card);
+	return err;
+}
+
+static void
+snd_ad1889_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct pci_device_id snd_ad1889_ids[] = {
@@ -914,6 +1100,10 @@ static struct pci_driver ad1889_pci_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_ad1889_ids,
 	.probe = snd_ad1889_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_ad1889_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 module_pci_driver(ad1889_pci_driver);

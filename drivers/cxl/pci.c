@@ -12,9 +12,15 @@
 #include <linux/pci.h>
 #include <linux/io.h>
 #include <linux/io-64-nonatomic-lo-hi.h>
+<<<<<<< HEAD
 #include "cxlmem.h"
 #include "pci.h"
 #include "cxl.h"
+=======
+#include "pci.h"
+#include "cxl.h"
+#include "mem.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * DOC: cxl pci
@@ -64,6 +70,7 @@ enum opcode {
 	CXL_MBOX_OP_MAX			= 0x10000
 };
 
+<<<<<<< HEAD
 /*
  * CXL 2.0 - Memory capacity multiplier
  * See Section 8.2.9.5
@@ -73,6 +80,8 @@ enum opcode {
  */
 #define CXL_CAPACITY_MULTIPLIER SZ_256M
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * struct mbox_cmd - A command to be submitted to hardware.
  * @opcode: (input) The command set and command submitted to hardware.
@@ -103,6 +112,11 @@ struct mbox_cmd {
 #define CXL_MBOX_SUCCESS 0
 };
 
+<<<<<<< HEAD
+=======
+static int cxl_mem_major;
+static DEFINE_IDA(cxl_memdev_ida);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static DECLARE_RWSEM(cxl_memdev_rwsem);
 static struct dentry *cxl_debugfs;
 static bool cxl_raw_allow_all;
@@ -575,7 +589,11 @@ static bool cxl_mem_raw_command_allowed(u16 opcode)
 	if (!IS_ENABLED(CONFIG_CXL_MEM_RAW_COMMANDS))
 		return false;
 
+<<<<<<< HEAD
 	if (security_locked_down(LOCKDOWN_PCI_ACCESS))
+=======
+	if (security_locked_down(LOCKDOWN_NONE))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return false;
 
 	if (cxl_raw_allow_all)
@@ -813,6 +831,7 @@ static int cxl_memdev_release_file(struct inode *inode, struct file *file)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void cxl_memdev_shutdown(struct device *dev)
 {
 	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
@@ -832,6 +851,15 @@ static const struct cdevm_file_operations cxl_memdev_fops = {
 		.llseek = noop_llseek,
 	},
 	.shutdown = cxl_memdev_shutdown,
+=======
+static const struct file_operations cxl_memdev_fops = {
+	.owner = THIS_MODULE,
+	.unlocked_ioctl = cxl_memdev_ioctl,
+	.open = cxl_memdev_open,
+	.release = cxl_memdev_release_file,
+	.compat_ioctl = compat_ptr_ioctl,
+	.llseek = noop_llseek,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline struct cxl_mem_command *cxl_mem_find_command(u16 opcode)
@@ -1041,8 +1069,13 @@ static int cxl_probe_regs(struct cxl_mem *cxlm, void __iomem *base,
 		    !dev_map->memdev.valid) {
 			dev_err(dev, "registers not found: %s%s%s\n",
 				!dev_map->status.valid ? "status " : "",
+<<<<<<< HEAD
 				!dev_map->mbox.valid ? "mbox " : "",
 				!dev_map->memdev.valid ? "memdev " : "");
+=======
+				!dev_map->mbox.valid ? "status " : "",
+				!dev_map->memdev.valid ? "status " : "");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENXIO;
 		}
 
@@ -1100,8 +1133,14 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 	struct device *dev = &pdev->dev;
 	u32 regloc_size, regblocks;
 	void __iomem *base;
+<<<<<<< HEAD
 	int regloc, i, n_maps;
 	struct cxl_register_map *map, maps[CXL_REGLOC_RBI_TYPES];
+=======
+	int regloc, i;
+	struct cxl_register_map *map, *n;
+	LIST_HEAD(register_maps);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret = 0;
 
 	regloc = cxl_mem_dvsec(pdev, PCI_DVSEC_ID_CXL_REGLOC_DVSEC_ID);
@@ -1120,12 +1159,27 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 	regloc += PCI_DVSEC_ID_CXL_REGLOC_BLOCK1_OFFSET;
 	regblocks = (regloc_size - PCI_DVSEC_ID_CXL_REGLOC_BLOCK1_OFFSET) / 8;
 
+<<<<<<< HEAD
 	for (i = 0, n_maps = 0; i < regblocks; i++, regloc += 8) {
+=======
+	for (i = 0; i < regblocks; i++, regloc += 8) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		u32 reg_lo, reg_hi;
 		u8 reg_type;
 		u64 offset;
 		u8 bar;
 
+<<<<<<< HEAD
+=======
+		map = kzalloc(sizeof(*map), GFP_KERNEL);
+		if (!map) {
+			ret = -ENOMEM;
+			goto free_maps;
+		}
+
+		list_add(&map->list, &register_maps);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pci_read_config_dword(pdev, regloc, &reg_lo);
 		pci_read_config_dword(pdev, regloc + 4, &reg_hi);
 
@@ -1135,6 +1189,7 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 		dev_dbg(dev, "Found register block in bar %u @ 0x%llx of type %u\n",
 			bar, offset, reg_type);
 
+<<<<<<< HEAD
 		/* Ignore unknown register block types */
 		if (reg_type > CXL_REGLOC_RBI_MEMDEV)
 			continue;
@@ -1144,6 +1199,14 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 			return -ENOMEM;
 
 		map = &maps[n_maps];
+=======
+		base = cxl_mem_map_regblock(cxlm, bar, offset);
+		if (!base) {
+			ret = -ENOMEM;
+			goto free_maps;
+		}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		map->barno = bar;
 		map->block_offset = offset;
 		map->reg_type = reg_type;
@@ -1154,22 +1217,256 @@ static int cxl_mem_setup_regs(struct cxl_mem *cxlm)
 		cxl_mem_unmap_regblock(cxlm, base);
 
 		if (ret)
+<<<<<<< HEAD
 			return ret;
 
 		n_maps++;
+=======
+			goto free_maps;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	pci_release_mem_regions(pdev);
 
+<<<<<<< HEAD
 	for (i = 0; i < n_maps; i++) {
 		ret = cxl_map_regs(cxlm, &maps[i]);
 		if (ret)
 			break;
+=======
+	list_for_each_entry(map, &register_maps, list) {
+		ret = cxl_map_regs(cxlm, map);
+		if (ret)
+			goto free_maps;
+	}
+
+free_maps:
+	list_for_each_entry_safe(map, n, &register_maps, list) {
+		list_del(&map->list);
+		kfree(map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+static struct cxl_memdev *to_cxl_memdev(struct device *dev)
+{
+	return container_of(dev, struct cxl_memdev, dev);
+}
+
+static void cxl_memdev_release(struct device *dev)
+{
+	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+
+	ida_free(&cxl_memdev_ida, cxlmd->id);
+	kfree(cxlmd);
+}
+
+static char *cxl_memdev_devnode(struct device *dev, umode_t *mode, kuid_t *uid,
+				kgid_t *gid)
+{
+	return kasprintf(GFP_KERNEL, "cxl/%s", dev_name(dev));
+}
+
+static ssize_t firmware_version_show(struct device *dev,
+				     struct device_attribute *attr, char *buf)
+{
+	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+	struct cxl_mem *cxlm = cxlmd->cxlm;
+
+	return sysfs_emit(buf, "%.16s\n", cxlm->firmware_version);
+}
+static DEVICE_ATTR_RO(firmware_version);
+
+static ssize_t payload_max_show(struct device *dev,
+				struct device_attribute *attr, char *buf)
+{
+	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+	struct cxl_mem *cxlm = cxlmd->cxlm;
+
+	return sysfs_emit(buf, "%zu\n", cxlm->payload_size);
+}
+static DEVICE_ATTR_RO(payload_max);
+
+static ssize_t label_storage_size_show(struct device *dev,
+				struct device_attribute *attr, char *buf)
+{
+	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+	struct cxl_mem *cxlm = cxlmd->cxlm;
+
+	return sysfs_emit(buf, "%zu\n", cxlm->lsa_size);
+}
+static DEVICE_ATTR_RO(label_storage_size);
+
+static ssize_t ram_size_show(struct device *dev, struct device_attribute *attr,
+			     char *buf)
+{
+	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+	struct cxl_mem *cxlm = cxlmd->cxlm;
+	unsigned long long len = range_len(&cxlm->ram_range);
+
+	return sysfs_emit(buf, "%#llx\n", len);
+}
+
+static struct device_attribute dev_attr_ram_size =
+	__ATTR(size, 0444, ram_size_show, NULL);
+
+static ssize_t pmem_size_show(struct device *dev, struct device_attribute *attr,
+			      char *buf)
+{
+	struct cxl_memdev *cxlmd = to_cxl_memdev(dev);
+	struct cxl_mem *cxlm = cxlmd->cxlm;
+	unsigned long long len = range_len(&cxlm->pmem_range);
+
+	return sysfs_emit(buf, "%#llx\n", len);
+}
+
+static struct device_attribute dev_attr_pmem_size =
+	__ATTR(size, 0444, pmem_size_show, NULL);
+
+static struct attribute *cxl_memdev_attributes[] = {
+	&dev_attr_firmware_version.attr,
+	&dev_attr_payload_max.attr,
+	&dev_attr_label_storage_size.attr,
+	NULL,
+};
+
+static struct attribute *cxl_memdev_pmem_attributes[] = {
+	&dev_attr_pmem_size.attr,
+	NULL,
+};
+
+static struct attribute *cxl_memdev_ram_attributes[] = {
+	&dev_attr_ram_size.attr,
+	NULL,
+};
+
+static struct attribute_group cxl_memdev_attribute_group = {
+	.attrs = cxl_memdev_attributes,
+};
+
+static struct attribute_group cxl_memdev_ram_attribute_group = {
+	.name = "ram",
+	.attrs = cxl_memdev_ram_attributes,
+};
+
+static struct attribute_group cxl_memdev_pmem_attribute_group = {
+	.name = "pmem",
+	.attrs = cxl_memdev_pmem_attributes,
+};
+
+static const struct attribute_group *cxl_memdev_attribute_groups[] = {
+	&cxl_memdev_attribute_group,
+	&cxl_memdev_ram_attribute_group,
+	&cxl_memdev_pmem_attribute_group,
+	NULL,
+};
+
+static const struct device_type cxl_memdev_type = {
+	.name = "cxl_memdev",
+	.release = cxl_memdev_release,
+	.devnode = cxl_memdev_devnode,
+	.groups = cxl_memdev_attribute_groups,
+};
+
+static void cxl_memdev_shutdown(struct cxl_memdev *cxlmd)
+{
+	down_write(&cxl_memdev_rwsem);
+	cxlmd->cxlm = NULL;
+	up_write(&cxl_memdev_rwsem);
+}
+
+static void cxl_memdev_unregister(void *_cxlmd)
+{
+	struct cxl_memdev *cxlmd = _cxlmd;
+	struct device *dev = &cxlmd->dev;
+
+	cdev_device_del(&cxlmd->cdev, dev);
+	cxl_memdev_shutdown(cxlmd);
+	put_device(dev);
+}
+
+static struct cxl_memdev *cxl_memdev_alloc(struct cxl_mem *cxlm)
+{
+	struct pci_dev *pdev = cxlm->pdev;
+	struct cxl_memdev *cxlmd;
+	struct device *dev;
+	struct cdev *cdev;
+	int rc;
+
+	cxlmd = kzalloc(sizeof(*cxlmd), GFP_KERNEL);
+	if (!cxlmd)
+		return ERR_PTR(-ENOMEM);
+
+	rc = ida_alloc_range(&cxl_memdev_ida, 0, CXL_MEM_MAX_DEVS, GFP_KERNEL);
+	if (rc < 0)
+		goto err;
+	cxlmd->id = rc;
+
+	dev = &cxlmd->dev;
+	device_initialize(dev);
+	dev->parent = &pdev->dev;
+	dev->bus = &cxl_bus_type;
+	dev->devt = MKDEV(cxl_mem_major, cxlmd->id);
+	dev->type = &cxl_memdev_type;
+	device_set_pm_not_required(dev);
+
+	cdev = &cxlmd->cdev;
+	cdev_init(cdev, &cxl_memdev_fops);
+	return cxlmd;
+
+err:
+	kfree(cxlmd);
+	return ERR_PTR(rc);
+}
+
+static struct cxl_memdev *devm_cxl_add_memdev(struct device *host,
+					      struct cxl_mem *cxlm)
+{
+	struct cxl_memdev *cxlmd;
+	struct device *dev;
+	struct cdev *cdev;
+	int rc;
+
+	cxlmd = cxl_memdev_alloc(cxlm);
+	if (IS_ERR(cxlmd))
+		return cxlmd;
+
+	dev = &cxlmd->dev;
+	rc = dev_set_name(dev, "mem%d", cxlmd->id);
+	if (rc)
+		goto err;
+
+	/*
+	 * Activate ioctl operations, no cxl_memdev_rwsem manipulation
+	 * needed as this is ordered with cdev_add() publishing the device.
+	 */
+	cxlmd->cxlm = cxlm;
+
+	cdev = &cxlmd->cdev;
+	rc = cdev_device_add(cdev, dev);
+	if (rc)
+		goto err;
+
+	rc = devm_add_action_or_reset(host, cxl_memdev_unregister, cxlmd);
+	if (rc)
+		return ERR_PTR(rc);
+	return cxlmd;
+
+err:
+	/*
+	 * The cdev was briefly live, shutdown any ioctl operations that
+	 * saw that state.
+	 */
+	cxl_memdev_shutdown(cxlmd);
+	put_device(dev);
+	return ERR_PTR(rc);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int cxl_xfer_log(struct cxl_mem *cxlm, uuid_t *uuid, u32 size, u8 *out)
 {
 	u32 remaining = size;
@@ -1264,6 +1561,7 @@ static struct cxl_mbox_get_supported_logs *cxl_get_gsl(struct cxl_mem *cxlm)
 }
 
 /**
+<<<<<<< HEAD
  * cxl_mem_get_partition_info - Get partition info
  * @cxlm: The device to act on
  * @active_volatile_bytes: returned active volatile capacity
@@ -1311,6 +1609,8 @@ static int cxl_mem_get_partition_info(struct cxl_mem *cxlm,
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * cxl_mem_enumerate_cmds() - Enumerate commands for a device.
  * @cxlm: The device.
  *
@@ -1406,6 +1706,7 @@ static int cxl_mem_identify(struct cxl_mem *cxlm)
 	if (rc < 0)
 		return rc;
 
+<<<<<<< HEAD
 	cxlm->total_bytes = le64_to_cpu(id.total_capacity);
 	cxlm->total_bytes *= CXL_CAPACITY_MULTIPLIER;
 
@@ -1427,6 +1728,18 @@ static int cxl_mem_identify(struct cxl_mem *cxlm)
 			cxlm->volatile_only_bytes,
 			cxlm->persistent_only_bytes,
 			cxlm->partition_align_bytes);
+=======
+	/*
+	 * TODO: enumerate DPA map, as 'ram' and 'pmem' do not alias.
+	 * For now, only the capacity is exported in sysfs
+	 */
+	cxlm->ram_range.start = 0;
+	cxlm->ram_range.end = le64_to_cpu(id.volatile_capacity) * SZ_256M - 1;
+
+	cxlm->pmem_range.start = 0;
+	cxlm->pmem_range.end =
+		le64_to_cpu(id.persistent_capacity) * SZ_256M - 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cxlm->lsa_size = le32_to_cpu(id.lsa_size);
 	memcpy(cxlm->firmware_version, id.fw_revision, sizeof(id.fw_revision));
@@ -1434,6 +1747,7 @@ static int cxl_mem_identify(struct cxl_mem *cxlm)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int cxl_mem_create_range_info(struct cxl_mem *cxlm)
 {
 	int rc;
@@ -1477,6 +1791,8 @@ static int cxl_mem_create_range_info(struct cxl_mem *cxlm)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int cxl_mem_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 {
 	struct cxl_memdev *cxlmd;
@@ -1507,11 +1823,15 @@ static int cxl_mem_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (rc)
 		return rc;
 
+<<<<<<< HEAD
 	rc = cxl_mem_create_range_info(cxlm);
 	if (rc)
 		return rc;
 
 	cxlmd = devm_cxl_add_memdev(&pdev->dev, cxlm, &cxl_memdev_fops);
+=======
+	cxlmd = devm_cxl_add_memdev(&pdev->dev, cxlm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(cxlmd))
 		return PTR_ERR(cxlmd);
 
@@ -1540,16 +1860,36 @@ static struct pci_driver cxl_mem_driver = {
 static __init int cxl_mem_init(void)
 {
 	struct dentry *mbox_debugfs;
+<<<<<<< HEAD
+=======
+	dev_t devt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc;
 
 	/* Double check the anonymous union trickery in struct cxl_regs */
 	BUILD_BUG_ON(offsetof(struct cxl_regs, memdev) !=
 		     offsetof(struct cxl_regs, device_regs.memdev));
 
+<<<<<<< HEAD
 	rc = pci_register_driver(&cxl_mem_driver);
 	if (rc)
 		return rc;
 
+=======
+	rc = alloc_chrdev_region(&devt, 0, CXL_MEM_MAX_DEVS, "cxl");
+	if (rc)
+		return rc;
+
+	cxl_mem_major = MAJOR(devt);
+
+	rc = pci_register_driver(&cxl_mem_driver);
+	if (rc) {
+		unregister_chrdev_region(MKDEV(cxl_mem_major, 0),
+					 CXL_MEM_MAX_DEVS);
+		return rc;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cxl_debugfs = debugfs_create_dir("cxl", NULL);
 	mbox_debugfs = debugfs_create_dir("mbox", cxl_debugfs);
 	debugfs_create_bool("raw_allow_all", 0600, mbox_debugfs,
@@ -1562,6 +1902,10 @@ static __exit void cxl_mem_exit(void)
 {
 	debugfs_remove_recursive(cxl_debugfs);
 	pci_unregister_driver(&cxl_mem_driver);
+<<<<<<< HEAD
+=======
+	unregister_chrdev_region(MKDEV(cxl_mem_major, 0), CXL_MEM_MAX_DEVS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 MODULE_LICENSE("GPL v2");

@@ -43,10 +43,15 @@
 #define LCD_CTRL_OUTPUT_ENABLED			  BIT(19)
 #define LCD_CTRL_BPORCH_ENABLE			  BIT(21)
 #define LCD_CTRL_FPORCH_ENABLE			  BIT(22)
+<<<<<<< HEAD
 #define LCD_CTRL_ALPHA_BLEND_BKGND_DISABLE	  BIT(23)
 #define LCD_CTRL_PIPELINE_DMA			  BIT(28)
 #define LCD_CTRL_VHSYNC_IDLE_LVL		  BIT(31)
 #define LCD_CTRL_ALPHA_ALL			  (0xff << 6)
+=======
+#define LCD_CTRL_PIPELINE_DMA			  BIT(28)
+#define LCD_CTRL_VHSYNC_IDLE_LVL		  BIT(31)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* interrupts */
 #define LCD_INT_STATUS				(0x4 * 0x001)
@@ -117,7 +122,10 @@
 #define LCD_LAYER_ALPHA_EMBED			BIT(5)
 #define LCD_LAYER_ALPHA_COMBI			(LCD_LAYER_ALPHA_STATIC | \
 						      LCD_LAYER_ALPHA_EMBED)
+<<<<<<< HEAD
 #define LCD_LAYER_ALPHA_DISABLED		~(LCD_LAYER_ALPHA_COMBI)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* RGB multiplied with alpha */
 #define LCD_LAYER_ALPHA_PREMULT			BIT(6)
 #define LCD_LAYER_INVERT_COL			BIT(7)

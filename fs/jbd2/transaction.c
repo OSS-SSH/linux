@@ -223,6 +223,7 @@ static void sub_reserved_credits(journal_t *journal, int blocks)
  * with j_state_lock held for reading. Returns 0 if handle joined the running
  * transaction. Returns 1 if we had to wait, j_state_lock is dropped, and
  * caller must retry.
+<<<<<<< HEAD
  *
  * Note: because j_state_lock may be dropped depending on the return
  * value, we need to fake out sparse so ti doesn't complain about a
@@ -232,6 +233,11 @@ static void sub_reserved_credits(journal_t *journal, int blocks)
 static int add_transaction_credits(journal_t *journal, int blocks,
 				   int rsv_blocks)
 __must_hold(&journal->j_state_lock)
+=======
+ */
+static int add_transaction_credits(journal_t *journal, int blocks,
+				   int rsv_blocks)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	transaction_t *t = journal->j_running_transaction;
 	int needed;
@@ -244,7 +250,10 @@ __must_hold(&journal->j_state_lock)
 	if (t->t_state != T_RUNNING) {
 		WARN_ON_ONCE(t->t_state >= T_FLUSH);
 		wait_transaction_locked(journal);
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 	}
 
@@ -273,12 +282,18 @@ __must_hold(&journal->j_state_lock)
 			wait_event(journal->j_wait_reserved,
 				   atomic_read(&journal->j_reserved_credits) + total <=
 				   journal->j_max_transaction_buffers);
+<<<<<<< HEAD
 			__acquire(&journal->j_state_lock); /* fake out sparse */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return 1;
 		}
 
 		wait_transaction_locked(journal);
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 	}
 
@@ -302,7 +317,10 @@ __must_hold(&journal->j_state_lock)
 					journal->j_max_transaction_buffers)
 			__jbd2_log_wait_for_space(journal);
 		write_unlock(&journal->j_state_lock);
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 	}
 
@@ -320,7 +338,10 @@ __must_hold(&journal->j_state_lock)
 		wait_event(journal->j_wait_reserved,
 			 atomic_read(&journal->j_reserved_credits) + rsv_blocks
 			 <= journal->j_max_transaction_buffers / 2);
+<<<<<<< HEAD
 		__acquire(&journal->j_state_lock); /* fake out sparse */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 	}
 	return 0;
@@ -424,6 +445,7 @@ repeat:
 
 	if (!handle->h_reserved) {
 		/* We may have dropped j_state_lock - restart in that case */
+<<<<<<< HEAD
 		if (add_transaction_credits(journal, blocks, rsv_blocks)) {
 			/*
 			 * add_transaction_credits releases
@@ -432,6 +454,10 @@ repeat:
 			__release(&journal->j_state_lock);
 			goto repeat;
 		}
+=======
+		if (add_transaction_credits(journal, blocks, rsv_blocks))
+			goto repeat;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		/*
 		 * We have handle reserved so we are allowed to join T_LOCKED
@@ -1421,7 +1447,11 @@ void jbd2_journal_set_triggers(struct buffer_head *bh,
 {
 	struct journal_head *jh = jbd2_journal_grab_journal_head(bh);
 
+<<<<<<< HEAD
 	if (WARN_ON_ONCE(!jh))
+=======
+	if (WARN_ON(!jh))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	jh->b_triggers = type;
 	jbd2_journal_put_journal_head(jh);

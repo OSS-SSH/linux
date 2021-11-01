@@ -14,11 +14,18 @@
 #include <linux/gfp.h>
 #include <linux/slab.h>
 #include <linux/uaccess.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm/machdep.h>
 #include <asm/firmware.h>
 #include <asm/opal.h>
+<<<<<<< HEAD
+=======
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/prom.h>
 
 static u64 opal_scom_unmangle(u64 addr)
@@ -189,7 +196,11 @@ static int scom_debug_init(void)
 	if (!firmware_has_feature(FW_FEATURE_OPAL))
 		return 0;
 
+<<<<<<< HEAD
 	root = debugfs_create_dir("scom", arch_debugfs_dir);
+=======
+	root = debugfs_create_dir("scom", powerpc_debugfs_root);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!root)
 		return -1;
 

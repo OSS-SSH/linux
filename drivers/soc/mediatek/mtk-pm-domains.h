@@ -60,7 +60,11 @@
 #define BUS_PROT_UPDATE_TOPAXI(_mask)				\
 		BUS_PROT_UPDATE(_mask,				\
 				INFRA_TOPAXI_PROTECTEN,		\
+<<<<<<< HEAD
 				INFRA_TOPAXI_PROTECTEN,		\
+=======
+				INFRA_TOPAXI_PROTECTEN_CLR,	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				INFRA_TOPAXI_PROTECTSTA1)
 
 struct scpsys_bus_prot_data {

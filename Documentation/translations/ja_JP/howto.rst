@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 .. raw:: latex
 
 	\kerneldocCJKoff
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 NOTE:
 This is a version of Documentation/process/howto.rst translated into Japanese.
 This document is maintained by Tsugikazu Shibata <tshibata@ab.jp.nec.com>
@@ -15,10 +18,13 @@ try to update the original English file first.
 
 ----------------------------------
 
+<<<<<<< HEAD
 .. raw:: latex
 
 	\kerneldocCJKon
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 この文書は、
 Documentation/process/howto.rst
 の和訳です。

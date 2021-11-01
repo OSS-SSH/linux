@@ -92,7 +92,11 @@ xfs_log_calc_minimum_size(
 	if (tres.tr_logcount > 1)
 		max_logres *= tres.tr_logcount;
 
+<<<<<<< HEAD
 	if (xfs_has_logv2(mp) && mp->m_sb.sb_logsunit > 1)
+=======
+	if (xfs_sb_version_haslogv2(&mp->m_sb) && mp->m_sb.sb_logsunit > 1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		lsunit = BTOBB(mp->m_sb.sb_logsunit);
 
 	/*

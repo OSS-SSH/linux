@@ -8,7 +8,10 @@
  * Copyright 2018 Nick Piggin, Michael Ellerman, IBM Corp.
  */
 
+<<<<<<< HEAD
 #include <linux/delay.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/export.h>
 #include <linux/kallsyms.h>
 #include <linux/module.h>

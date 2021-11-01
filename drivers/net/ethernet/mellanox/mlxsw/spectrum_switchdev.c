@@ -335,6 +335,7 @@ mlxsw_sp_bridge_port_find(struct mlxsw_sp_bridge *bridge,
 
 static struct mlxsw_sp_bridge_port *
 mlxsw_sp_bridge_port_create(struct mlxsw_sp_bridge_device *bridge_device,
+<<<<<<< HEAD
 			    struct net_device *brport_dev,
 			    struct netlink_ext_ack *extack)
 {
@@ -345,6 +346,16 @@ mlxsw_sp_bridge_port_create(struct mlxsw_sp_bridge_device *bridge_device,
 	bridge_port = kzalloc(sizeof(*bridge_port), GFP_KERNEL);
 	if (!bridge_port)
 		return ERR_PTR(-ENOMEM);
+=======
+			    struct net_device *brport_dev)
+{
+	struct mlxsw_sp_bridge_port *bridge_port;
+	struct mlxsw_sp_port *mlxsw_sp_port;
+
+	bridge_port = kzalloc(sizeof(*bridge_port), GFP_KERNEL);
+	if (!bridge_port)
+		return NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mlxsw_sp_port = mlxsw_sp_port_dev_lower_find(brport_dev);
 	bridge_port->lagged = mlxsw_sp_port->lagged;
@@ -361,6 +372,7 @@ mlxsw_sp_bridge_port_create(struct mlxsw_sp_bridge_device *bridge_device,
 	list_add(&bridge_port->list, &bridge_device->ports_list);
 	bridge_port->ref_count = 1;
 
+<<<<<<< HEAD
 	err = switchdev_bridge_port_offload(brport_dev, mlxsw_sp_port->dev,
 					    NULL, NULL, NULL, false, extack);
 	if (err)
@@ -372,12 +384,18 @@ err_switchdev_offload:
 	list_del(&bridge_port->list);
 	kfree(bridge_port);
 	return ERR_PTR(err);
+=======
+	return bridge_port;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void
 mlxsw_sp_bridge_port_destroy(struct mlxsw_sp_bridge_port *bridge_port)
 {
+<<<<<<< HEAD
 	switchdev_bridge_port_unoffload(bridge_port->dev, NULL, NULL, NULL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_del(&bridge_port->list);
 	WARN_ON(!list_empty(&bridge_port->vlans_list));
 	kfree(bridge_port);
@@ -403,10 +421,16 @@ mlxsw_sp_bridge_port_get(struct mlxsw_sp_bridge *bridge,
 	if (IS_ERR(bridge_device))
 		return ERR_CAST(bridge_device);
 
+<<<<<<< HEAD
 	bridge_port = mlxsw_sp_bridge_port_create(bridge_device, brport_dev,
 						  extack);
 	if (IS_ERR(bridge_port)) {
 		err = PTR_ERR(bridge_port);
+=======
+	bridge_port = mlxsw_sp_bridge_port_create(bridge_device, brport_dev);
+	if (!bridge_port) {
+		err = -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto err_bridge_port_create;
 	}
 
@@ -1583,6 +1607,10 @@ mlxsw_sp_mc_write_mdb_entry(struct mlxsw_sp *mlxsw_sp,
 {
 	long *flood_bitmap;
 	int num_of_ports;
+<<<<<<< HEAD
+=======
+	int alloc_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u16 mid_idx;
 	int err;
 
@@ -1592,17 +1620,30 @@ mlxsw_sp_mc_write_mdb_entry(struct mlxsw_sp *mlxsw_sp,
 		return false;
 
 	num_of_ports = mlxsw_core_max_ports(mlxsw_sp->core);
+<<<<<<< HEAD
 	flood_bitmap = bitmap_alloc(num_of_ports, GFP_KERNEL);
 	if (!flood_bitmap)
 		return false;
 
 	bitmap_copy(flood_bitmap, mid->ports_in_mid, num_of_ports);
+=======
+	alloc_size = sizeof(long) * BITS_TO_LONGS(num_of_ports);
+	flood_bitmap = kzalloc(alloc_size, GFP_KERNEL);
+	if (!flood_bitmap)
+		return false;
+
+	bitmap_copy(flood_bitmap,  mid->ports_in_mid, num_of_ports);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mlxsw_sp_mc_get_mrouters_bitmap(flood_bitmap, bridge_device, mlxsw_sp);
 
 	mid->mid = mid_idx;
 	err = mlxsw_sp_port_smid_full_entry(mlxsw_sp, mid_idx, flood_bitmap,
 					    bridge_device->mrouter);
+<<<<<<< HEAD
 	bitmap_free(flood_bitmap);
+=======
+	kfree(flood_bitmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return false;
 
@@ -2520,7 +2561,11 @@ mlxsw_sp_fdb_call_notifiers(enum switchdev_notifier_type type,
 			    const char *mac, u16 vid,
 			    struct net_device *dev, bool offloaded)
 {
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info info = {};
+=======
+	struct switchdev_notifier_fdb_info info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	info.addr = mac;
 	info.vid = vid;

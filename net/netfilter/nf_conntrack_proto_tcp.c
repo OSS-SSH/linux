@@ -823,6 +823,7 @@ static noinline bool tcp_new(struct nf_conn *ct, const struct sk_buff *skb,
 	return true;
 }
 
+<<<<<<< HEAD
 static bool tcp_can_early_drop(const struct nf_conn *ct)
 {
 	switch (ct->proto.tcp.state) {
@@ -839,6 +840,8 @@ static bool tcp_can_early_drop(const struct nf_conn *ct)
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Returns verdict for packet, or -1 for invalid. */
 int nf_conntrack_tcp_packet(struct nf_conn *ct,
 			    struct sk_buff *skb,
@@ -1046,6 +1049,7 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
 		if (index != TCP_RST_SET)
 			break;
 
+<<<<<<< HEAD
 		/* If we are closing, tuple might have been re-used already.
 		 * last_index, last_ack, and all other ct fields used for
 		 * sequence/window validation are outdated in that case.
@@ -1070,6 +1074,12 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
 
 			if (before(seq, ct->proto.tcp.seen[!dir].td_maxack) &&
 			    !tn->tcp_ignore_invalid_rst) {
+=======
+		if (ct->proto.tcp.seen[!dir].flags & IP_CT_TCP_FLAG_MAXACK_SET) {
+			u32 seq = ntohl(th->seq);
+
+			if (before(seq, ct->proto.tcp.seen[!dir].td_maxack)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				/* Invalid RST  */
 				spin_unlock_bh(&ct->lock);
 				nf_ct_l4proto_log_invalid(skb, ct, state, "invalid rst");
@@ -1170,6 +1180,7 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
 			nf_ct_kill_acct(ct, ctinfo, skb);
 			return NF_ACCEPT;
 		}
+<<<<<<< HEAD
 
 		if (index == TCP_SYN_SET && old_state == TCP_CONNTRACK_SYN_SENT) {
 			/* do not renew timeout on SYN retransmit.
@@ -1180,6 +1191,8 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
 			return NF_ACCEPT;
 		}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* ESTABLISHED without SEEN_REPLY, i.e. mid-connection
 		 * pickup with loose=1. Avoid large ESTABLISHED timeout.
 		 */
@@ -1201,6 +1214,25 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
 	return NF_ACCEPT;
 }
 
+<<<<<<< HEAD
+=======
+static bool tcp_can_early_drop(const struct nf_conn *ct)
+{
+	switch (ct->proto.tcp.state) {
+	case TCP_CONNTRACK_FIN_WAIT:
+	case TCP_CONNTRACK_LAST_ACK:
+	case TCP_CONNTRACK_TIME_WAIT:
+	case TCP_CONNTRACK_CLOSE:
+	case TCP_CONNTRACK_CLOSE_WAIT:
+		return true;
+	default:
+		break;
+	}
+
+	return false;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if IS_ENABLED(CONFIG_NF_CT_NETLINK)
 
 #include <linux/netfilter/nfnetlink.h>
@@ -1467,9 +1499,12 @@ void nf_conntrack_tcp_init_net(struct net *net)
 	 */
 	tn->tcp_be_liberal = 0;
 
+<<<<<<< HEAD
 	/* If it's non-zero, we turn off RST sequence number check */
 	tn->tcp_ignore_invalid_rst = 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Max number of the retransmitted packets without receiving an (acceptable)
 	 * ACK from the destination. If this number is reached, a shorter timer
 	 * will be started.
@@ -1478,6 +1513,10 @@ void nf_conntrack_tcp_init_net(struct net *net)
 
 #if IS_ENABLED(CONFIG_NF_FLOW_TABLE)
 	tn->offload_timeout = 30 * HZ;
+<<<<<<< HEAD
+=======
+	tn->offload_pickup = 120 * HZ;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 }
 

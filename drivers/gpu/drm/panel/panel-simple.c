@@ -36,8 +36,11 @@
 
 #include <drm/drm_crtc.h>
 #include <drm/drm_device.h>
+<<<<<<< HEAD
 #include <drm/drm_dp_aux_bus.h>
 #include <drm/drm_dp_helper.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_mipi_dsi.h>
 #include <drm/drm_panel.h>
 
@@ -187,7 +190,10 @@ struct panel_simple {
 
 	struct regulator *supply;
 	struct i2c_adapter *ddc;
+<<<<<<< HEAD
 	struct drm_dp_aux *aux;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct gpio_desc *enable_gpio;
 	struct gpio_desc *hpd_gpio;
@@ -660,8 +666,12 @@ static void panel_simple_parse_panel_timing_node(struct device *dev,
 		dev_err(dev, "Reject override mode: No display_timing found\n");
 }
 
+<<<<<<< HEAD
 static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
 			      struct drm_dp_aux *aux)
+=======
+static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct panel_simple *panel;
 	struct display_timing dt;
@@ -677,7 +687,10 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
 	panel->enabled = false;
 	panel->prepared_time = 0;
 	panel->desc = desc;
+<<<<<<< HEAD
 	panel->aux = aux;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	panel->no_hpd = of_property_read_bool(dev->of_node, "no-hpd");
 	if (!panel->no_hpd) {
@@ -712,8 +725,11 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
 
 		if (!panel->ddc)
 			return -EPROBE_DEFER;
+<<<<<<< HEAD
 	} else if (aux) {
 		panel->ddc = &aux->ddc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (desc == &panel_dpi) {
@@ -749,8 +765,15 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
 			desc->bpc != 8);
 		break;
 	case DRM_MODE_CONNECTOR_eDP:
+<<<<<<< HEAD
 		if (desc->bpc != 6 && desc->bpc != 8 && desc->bpc != 10)
 			dev_warn(dev, "Expected bpc in {6,8,10} but got: %u\n", desc->bpc);
+=======
+		if (desc->bus_format == 0)
+			dev_warn(dev, "Specify missing bus_format\n");
+		if (desc->bpc != 6 && desc->bpc != 8)
+			dev_warn(dev, "Expected bpc in {6,8} but got: %u\n", desc->bpc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case DRM_MODE_CONNECTOR_DSI:
 		if (desc->bpc != 6 && desc->bpc != 8)
@@ -798,6 +821,7 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
 	if (err)
 		goto disable_pm_runtime;
 
+<<<<<<< HEAD
 	if (!panel->base.backlight && panel->aux) {
 		pm_runtime_get_sync(dev);
 		err = drm_panel_dp_aux_backlight(&panel->base, panel->aux);
@@ -807,6 +831,8 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc,
 			goto disable_pm_runtime;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_panel_add(&panel->base);
 
 	return 0;
@@ -815,7 +841,11 @@ disable_pm_runtime:
 	pm_runtime_dont_use_autosuspend(dev);
 	pm_runtime_disable(dev);
 free_ddc:
+<<<<<<< HEAD
 	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
+=======
+	if (panel->ddc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		put_device(&panel->ddc->dev);
 
 	return err;
@@ -831,7 +861,11 @@ static int panel_simple_remove(struct device *dev)
 
 	pm_runtime_dont_use_autosuspend(dev);
 	pm_runtime_disable(dev);
+<<<<<<< HEAD
 	if (panel->ddc && (!panel->aux || panel->ddc != &panel->aux->ddc))
+=======
+	if (panel->ddc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		put_device(&panel->ddc->dev);
 
 	return 0;
@@ -1094,6 +1128,7 @@ static const struct panel_desc auo_b133xtn01 = {
 	},
 };
 
+<<<<<<< HEAD
 static const struct drm_display_mode auo_b133han05_mode = {
 	.clock = 142600,
 	.hdisplay = 1920,
@@ -1124,6 +1159,8 @@ static const struct panel_desc auo_b133han05 = {
 	.connector_type = DRM_MODE_CONNECTOR_eDP,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct drm_display_mode auo_b133htn01_mode = {
 	.clock = 150660,
 	.hdisplay = 1920,
@@ -1151,6 +1188,7 @@ static const struct panel_desc auo_b133htn01 = {
 	},
 };
 
+<<<<<<< HEAD
 static const struct drm_display_mode auo_b140han06_mode = {
 	.clock = 141000,
 	.hdisplay = 1920,
@@ -1181,6 +1219,8 @@ static const struct panel_desc auo_b140han06 = {
 	.connector_type = DRM_MODE_CONNECTOR_eDP,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct display_timing auo_g070vvn01_timings = {
 	.pixelclock = { 33300000, 34209000, 45000000 },
 	.hactive = { 800, 800, 800 },
@@ -1253,8 +1293,11 @@ static const struct panel_desc auo_g104sn02 = {
 		.width = 211,
 		.height = 158,
 	},
+<<<<<<< HEAD
 	.bus_format = MEDIA_BUS_FMT_RGB888_1X7X4_SPWG,
 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct drm_display_mode auo_g121ean01_mode = {
@@ -2005,6 +2048,7 @@ static const struct panel_desc edt_et035012dm6 = {
 	.bus_flags = DRM_BUS_FLAG_DE_LOW | DRM_BUS_FLAG_PIXDATA_SAMPLE_POSEDGE,
 };
 
+<<<<<<< HEAD
 static const struct drm_display_mode edt_etm0350g0dh6_mode = {
 	.clock = 6520,
 	.hdisplay = 320,
@@ -2031,6 +2075,8 @@ static const struct panel_desc edt_etm0350g0dh6 = {
 	.connector_type = DRM_MODE_CONNECTOR_DPI,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct drm_display_mode edt_etm043080dh6gp_mode = {
 	.clock = 10870,
 	.hdisplay = 480,
@@ -2082,9 +2128,12 @@ static const struct panel_desc edt_etm0430g0dh6 = {
 		.width = 95,
 		.height = 54,
 	},
+<<<<<<< HEAD
 	.bus_format = MEDIA_BUS_FMT_RGB666_1X18,
 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_SAMPLE_POSEDGE,
 	.connector_type = DRM_MODE_CONNECTOR_DPI,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct drm_display_mode edt_et057090dhu_mode = {
@@ -2149,6 +2198,7 @@ static const struct panel_desc edt_etm0700g0bdh6 = {
 	},
 	.bus_format = MEDIA_BUS_FMT_RGB666_1X18,
 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
+<<<<<<< HEAD
 	.connector_type = DRM_MODE_CONNECTOR_DPI,
 };
 
@@ -2203,6 +2253,8 @@ static const struct panel_desc eink_vb3300_kca = {
 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
 	.bus_flags = DRM_BUS_FLAG_DE_HIGH | DRM_BUS_FLAG_PIXDATA_DRIVE_POSEDGE,
 	.connector_type = DRM_MODE_CONNECTOR_DPI,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct display_timing evervision_vgg804821_timing = {
@@ -3126,6 +3178,7 @@ static const struct panel_desc logictechno_lt170410_2whc = {
 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
 };
 
+<<<<<<< HEAD
 static const struct drm_display_mode logictechno_lttd800480070_l6wh_rt_mode = {
 	.clock = 33000,
 	.hdisplay = 800,
@@ -3158,6 +3211,8 @@ static const struct panel_desc logictechno_lttd800480070_l6wh_rt = {
 	.connector_type = DRM_MODE_CONNECTOR_DPI,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct drm_display_mode mitsubishi_aa070mc01_mode = {
 	.clock = 30400,
 	.hdisplay = 800,
@@ -3224,6 +3279,7 @@ static const struct panel_desc mitsubishi_aa070mc01 = {
 	.bus_flags = DRM_BUS_FLAG_DE_HIGH,
 };
 
+<<<<<<< HEAD
 static const struct display_timing multi_inno_mi1010ait_1cp_timing = {
 	.pixelclock = { 68900000, 70000000, 73400000 },
 	.hactive = { 1280, 1280, 1280 },
@@ -3255,6 +3311,8 @@ static const struct panel_desc multi_inno_mi1010ait_1cp = {
 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct display_timing nec_nl12880bc20_05_timing = {
 	.pixelclock = { 67000000, 71000000, 75000000 },
 	.hactive = { 1280, 1280, 1280 },
@@ -3685,6 +3743,7 @@ static const struct panel_desc qd43003c0_40 = {
 	.bus_format = MEDIA_BUS_FMT_RGB888_1X24,
 };
 
+<<<<<<< HEAD
 static const struct drm_display_mode qishenglong_gopher2b_lcd_modes[] = {
 	{ /* 60 Hz */
 		.clock = 10800,
@@ -3725,6 +3784,8 @@ static const struct panel_desc qishenglong_gopher2b_lcd = {
 	.connector_type = DRM_MODE_CONNECTOR_DPI,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct display_timing rocktech_rk070er9427_timing = {
 	.pixelclock = { 26400000, 33300000, 46800000 },
 	.hactive = { 800, 800, 800 },
@@ -4428,7 +4489,11 @@ static const struct drm_display_mode yes_optoelectronics_ytc700tlag_05_201c_mode
 static const struct panel_desc yes_optoelectronics_ytc700tlag_05_201c = {
 	.modes = &yes_optoelectronics_ytc700tlag_05_201c_mode,
 	.num_modes = 1,
+<<<<<<< HEAD
 	.bpc = 8,
+=======
+	.bpc = 6,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.size = {
 		.width = 154,
 		.height = 90,
@@ -4496,6 +4561,7 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "auo,b116xw03",
 		.data = &auo_b116xw03,
 	}, {
+<<<<<<< HEAD
 		.compatible = "auo,b133han05",
 		.data = &auo_b133han05,
 	}, {
@@ -4505,6 +4571,11 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "auo,b140han06",
 		.data = &auo_b140han06,
 	}, {
+=======
+		.compatible = "auo,b133htn01",
+		.data = &auo_b133htn01,
+	}, {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.compatible = "auo,b133xtn01",
 		.data = &auo_b133xtn01,
 	}, {
@@ -4598,9 +4669,12 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "edt,et035012dm6",
 		.data = &edt_et035012dm6,
 	}, {
+<<<<<<< HEAD
 		.compatible = "edt,etm0350g0dh6",
 		.data = &edt_etm0350g0dh6,
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.compatible = "edt,etm043080dh6gp",
 		.data = &edt_etm043080dh6gp,
 	}, {
@@ -4622,12 +4696,15 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "edt,etm0700g0edh6",
 		.data = &edt_etm0700g0bdh6,
 	}, {
+<<<<<<< HEAD
 		.compatible = "edt,etmv570g2dhu",
 		.data = &edt_etmv570g2dhu,
 	}, {
 		.compatible = "eink,vb3300-kca",
 		.data = &eink_vb3300_kca,
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.compatible = "evervision,vgg804821",
 		.data = &evervision_vgg804821,
 	}, {
@@ -4739,6 +4816,7 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "logictechno,lt170410-2whc",
 		.data = &logictechno_lt170410_2whc,
 	}, {
+<<<<<<< HEAD
 		.compatible = "logictechno,lttd800480070-l6wh-rt",
 		.data = &logictechno_lttd800480070_l6wh_rt,
 	}, {
@@ -4748,6 +4826,11 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "multi-inno,mi1010ait-1cp",
 		.data = &multi_inno_mi1010ait_1cp,
 	}, {
+=======
+		.compatible = "mitsubishi,aa070mc01-ca1",
+		.data = &mitsubishi_aa070mc01,
+	}, {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.compatible = "nec,nl12880bc20-05",
 		.data = &nec_nl12880bc20_05,
 	}, {
@@ -4799,9 +4882,12 @@ static const struct of_device_id platform_of_match[] = {
 		.compatible = "qiaodian,qd43003c0-40",
 		.data = &qd43003c0_40,
 	}, {
+<<<<<<< HEAD
 		.compatible = "qishenglong,gopher2b-lcd",
 		.data = &qishenglong_gopher2b_lcd,
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.compatible = "rocktech,rk070er9427",
 		.data = &rocktech_rk070er9427,
 	}, {
@@ -4918,7 +5004,11 @@ static int panel_simple_platform_probe(struct platform_device *pdev)
 	if (!id)
 		return -ENODEV;
 
+<<<<<<< HEAD
 	return panel_simple_probe(&pdev->dev, id->data, NULL);
+=======
+	return panel_simple_probe(&pdev->dev, id->data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int panel_simple_platform_remove(struct platform_device *pdev)
@@ -5153,7 +5243,11 @@ static const struct panel_desc_dsi osd101t2045_53ts = {
 	},
 	.flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
 		 MIPI_DSI_MODE_VIDEO_SYNC_PULSE |
+<<<<<<< HEAD
 		 MIPI_DSI_MODE_NO_EOT_PACKET,
+=======
+		 MIPI_DSI_MODE_EOT_PACKET,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.format = MIPI_DSI_FMT_RGB888,
 	.lanes = 4,
 };
@@ -5198,7 +5292,11 @@ static int panel_simple_dsi_probe(struct mipi_dsi_device *dsi)
 
 	desc = id->data;
 
+<<<<<<< HEAD
 	err = panel_simple_probe(&dsi->dev, &desc->desc, NULL);
+=======
+	err = panel_simple_probe(&dsi->dev, &desc->desc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -5243,6 +5341,7 @@ static struct mipi_dsi_driver panel_simple_dsi_driver = {
 	.shutdown = panel_simple_dsi_shutdown,
 };
 
+<<<<<<< HEAD
 static int panel_simple_dp_aux_ep_probe(struct dp_aux_ep_device *aux_ep)
 {
 	const struct of_device_id *id;
@@ -5275,6 +5374,8 @@ static struct dp_aux_ep_driver panel_simple_dp_aux_ep_driver = {
 	.shutdown = panel_simple_dp_aux_ep_shutdown,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __init panel_simple_init(void)
 {
 	int err;
@@ -5283,6 +5384,7 @@ static int __init panel_simple_init(void)
 	if (err < 0)
 		return err;
 
+<<<<<<< HEAD
 	err = dp_aux_dp_driver_register(&panel_simple_dp_aux_ep_driver);
 	if (err < 0)
 		goto err_did_platform_register;
@@ -5302,6 +5404,17 @@ err_did_platform_register:
 	platform_driver_unregister(&panel_simple_platform_driver);
 
 	return err;
+=======
+	if (IS_ENABLED(CONFIG_DRM_MIPI_DSI)) {
+		err = mipi_dsi_driver_register(&panel_simple_dsi_driver);
+		if (err < 0) {
+			platform_driver_unregister(&panel_simple_platform_driver);
+			return err;
+		}
+	}
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 module_init(panel_simple_init);
 
@@ -5310,7 +5423,10 @@ static void __exit panel_simple_exit(void)
 	if (IS_ENABLED(CONFIG_DRM_MIPI_DSI))
 		mipi_dsi_driver_unregister(&panel_simple_dsi_driver);
 
+<<<<<<< HEAD
 	dp_aux_dp_driver_unregister(&panel_simple_dp_aux_ep_driver);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	platform_driver_unregister(&panel_simple_platform_driver);
 }
 module_exit(panel_simple_exit);

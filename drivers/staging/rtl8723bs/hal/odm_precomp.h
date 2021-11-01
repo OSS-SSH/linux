@@ -43,6 +43,10 @@
 #include "HalHWImg8723B_RF.h"
 #include "HalHWImg8723B_BB.h"
 #include "Hal8723BReg.h"
+<<<<<<< HEAD
+=======
+#include "odm_RTL8723B.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "odm_RegConfig8723B.h"
 
 #endif	/*  __ODM_PRECOMP_H__ */

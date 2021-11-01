@@ -45,13 +45,19 @@ xdp_monitor
 xdp_redirect
 xdp_redirect_cpu
 xdp_redirect_map
+<<<<<<< HEAD
 xdp_redirect_map_multi
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 xdp_router_ipv4
 xdp_rxq_info
 xdp_sample_pkts
 xdp_tx_iptunnel
 xdpsock
+<<<<<<< HEAD
 xdpsock_ctrl_proc
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 xsk_fwd
 testfile.img
 hbm_out.log

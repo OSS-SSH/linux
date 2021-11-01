@@ -324,7 +324,10 @@ enum mod_hdcp_status mod_hdcp_hdcp2_dp_transition(struct mod_hdcp *hdcp,
 /* log functions */
 void mod_hdcp_dump_binary_message(uint8_t *msg, uint32_t msg_size,
 		uint8_t *buf, uint32_t buf_size);
+<<<<<<< HEAD
 void mod_hdcp_log_ddc_trace(struct mod_hdcp *hdcp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* TODO: add adjustment log */
 
 /* psp functions */
@@ -332,6 +335,11 @@ enum mod_hdcp_status mod_hdcp_add_display_to_topology(
 		struct mod_hdcp *hdcp, struct mod_hdcp_display *display);
 enum mod_hdcp_status mod_hdcp_remove_display_from_topology(
 		struct mod_hdcp *hdcp, uint8_t index);
+<<<<<<< HEAD
+=======
+bool mod_hdcp_is_link_encryption_enabled(struct mod_hdcp *hdcp);
+void mod_hdcp_save_current_encryption_states(struct mod_hdcp *hdcp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum mod_hdcp_status mod_hdcp_hdcp1_create_session(struct mod_hdcp *hdcp);
 enum mod_hdcp_status mod_hdcp_hdcp1_destroy_session(struct mod_hdcp *hdcp);
 enum mod_hdcp_status mod_hdcp_hdcp1_validate_rx(struct mod_hdcp *hdcp);
@@ -495,6 +503,7 @@ static inline void set_watchdog_in_ms(struct mod_hdcp *hdcp, uint16_t time,
 	output->watchdog_timer_delay = time;
 }
 
+<<<<<<< HEAD
 static inline void set_auth_complete(struct mod_hdcp *hdcp,
 		struct mod_hdcp_output *output)
 {
@@ -502,6 +511,8 @@ static inline void set_auth_complete(struct mod_hdcp *hdcp,
 	mod_hdcp_log_ddc_trace(hdcp);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* connection topology helpers */
 static inline uint8_t is_display_active(struct mod_hdcp_display *display)
 {

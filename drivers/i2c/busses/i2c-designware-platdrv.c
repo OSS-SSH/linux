@@ -31,13 +31,20 @@
 #include <linux/sched.h>
 #include <linux/slab.h>
 #include <linux/suspend.h>
+<<<<<<< HEAD
 #include <linux/units.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "i2c-designware-core.h"
 
 static u32 i2c_dw_get_clk_rate_khz(struct dw_i2c_dev *dev)
 {
+<<<<<<< HEAD
 	return clk_get_rate(dev->clk) / KILO;
+=======
+	return clk_get_rate(dev->clk)/1000;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_ACPI
@@ -271,7 +278,11 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
 
 		if (!dev->sda_hold_time && t->sda_hold_ns)
 			dev->sda_hold_time =
+<<<<<<< HEAD
 				DIV_S64_ROUND_CLOSEST(clk_khz * t->sda_hold_ns, MICRO);
+=======
+				div_u64(clk_khz * t->sda_hold_ns + 500000, 1000000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	adap = &dev->adapter;

@@ -351,6 +351,7 @@ static int b53_mdio_probe(struct mdio_device *mdiodev)
 static void b53_mdio_remove(struct mdio_device *mdiodev)
 {
 	struct b53_device *dev = dev_get_drvdata(&mdiodev->dev);
+<<<<<<< HEAD
 
 	if (!dev)
 		return;
@@ -370,6 +371,11 @@ static void b53_mdio_shutdown(struct mdio_device *mdiodev)
 	b53_switch_shutdown(dev);
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
+=======
+	struct dsa_switch *ds = dev->ds;
+
+	dsa_unregister_switch(ds);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct of_device_id b53_of_match[] = {
@@ -389,7 +395,10 @@ MODULE_DEVICE_TABLE(of, b53_of_match);
 static struct mdio_driver b53_mdio_driver = {
 	.probe	= b53_mdio_probe,
 	.remove	= b53_mdio_remove,
+<<<<<<< HEAD
 	.shutdown = b53_mdio_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.mdiodrv.driver = {
 		.name = "bcm53xx",
 		.of_match_table = b53_of_match,

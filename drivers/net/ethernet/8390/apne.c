@@ -75,6 +75,10 @@
 #define NESM_STOP_PG	0x80	/* Last page +1 of RX ring */
 
 
+<<<<<<< HEAD
+=======
+struct net_device * __init apne_probe(int unit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int apne_probe1(struct net_device *dev, int ioaddr);
 
 static void apne_reset_8390(struct net_device *dev);
@@ -119,7 +123,11 @@ static u32 apne_msg_enable;
 module_param_named(msg_enable, apne_msg_enable, uint, 0444);
 MODULE_PARM_DESC(msg_enable, "Debug message level (see linux/netdevice.h for bitmap)");
 
+<<<<<<< HEAD
 static struct net_device * __init apne_probe(void)
+=======
+struct net_device * __init apne_probe(int unit)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *dev;
 	struct ei_device *ei_local;
@@ -149,6 +157,13 @@ static struct net_device * __init apne_probe(void)
 	dev = alloc_ei_netdev();
 	if (!dev)
 		return ERR_PTR(-ENOMEM);
+<<<<<<< HEAD
+=======
+	if (unit >= 0) {
+		sprintf(dev->name, "eth%d", unit);
+		netdev_boot_setup_check(dev);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ei_local = netdev_priv(dev);
 	ei_local->msg_enable = apne_msg_enable;
 
@@ -549,11 +564,19 @@ static irqreturn_t apne_interrupt(int irq, void *dev_id)
     return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef MODULE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct net_device *apne_dev;
 
 static int __init apne_module_init(void)
 {
+<<<<<<< HEAD
 	apne_dev = apne_probe();
+=======
+	apne_dev = apne_probe(-1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return PTR_ERR_OR_ZERO(apne_dev);
 }
 
@@ -573,6 +596,10 @@ static void __exit apne_module_exit(void)
 }
 module_init(apne_module_init);
 module_exit(apne_module_exit);
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int init_pcmcia(void)
 {

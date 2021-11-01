@@ -183,6 +183,7 @@ config SCSI_UFS_CRYPTO
 	  Enabling this makes it possible for the kernel to use the crypto
 	  capabilities of the UFS device (if present) to perform crypto
 	  operations on data being transferred to/from the device.
+<<<<<<< HEAD
 
 config SCSI_UFS_HPB
 	bool "Support UFS Host Performance Booster"
@@ -199,3 +200,5 @@ config SCSI_UFS_FAULT_INJECTION
 	help
 	  Enable fault injection support in the UFS driver. This makes it easier
 	  to test the UFS error handler and abort handler.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

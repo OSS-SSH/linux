@@ -9,7 +9,11 @@
 #include "iwl-prph.h"
 
 /* Highest firmware API version supported */
+<<<<<<< HEAD
 #define IWL_22000_UCODE_API_MAX	66
+=======
+#define IWL_22000_UCODE_API_MAX	64
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Lowest firmware API version supported */
 #define IWL_22000_UCODE_API_MIN	39
@@ -154,7 +158,11 @@ static const struct iwl_ht_params iwl_22000_ht_params = {
 	.apmg_not_supported = true,					\
 	.trans.mq_rx_supported = true,					\
 	.vht_mu_mimo_supported = true,					\
+<<<<<<< HEAD
 	.mac_addr_from_csr = 0x380,					\
+=======
+	.mac_addr_from_csr = true,					\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ht_params = &iwl_22000_ht_params,				\
 	.nvm_ver = IWL_22000_NVM_VERSION,				\
 	.trans.use_tfh = true,						\
@@ -215,6 +223,7 @@ static const struct iwl_ht_params iwl_22000_ht_params = {
 		},							\
 	}
 
+<<<<<<< HEAD
 #define IWL_DEVICE_BZ_COMMON						\
 	.ucode_api_max = IWL_22000_UCODE_API_MAX,			\
 	.ucode_api_min = IWL_22000_UCODE_API_MIN,			\
@@ -276,6 +285,8 @@ static const struct iwl_ht_params iwl_22000_ht_params = {
 		},							\
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 const struct iwl_cfg_trans_params iwl_qnj_trans_cfg = {
 	.mq_rx_supported = true,
 	.use_tfh = true,
@@ -434,7 +445,11 @@ const struct iwl_cfg_trans_params iwl_ma_trans_cfg = {
 };
 
 const struct iwl_cfg_trans_params iwl_bz_trans_cfg = {
+<<<<<<< HEAD
 	.device_family = IWL_DEVICE_FAMILY_BZ,
+=======
+	.device_family = IWL_DEVICE_FAMILY_AX210,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.base_params = &iwl_ax210_base_params,
 	.mq_rx_supported = true,
 	.use_tfh = true,
@@ -455,7 +470,10 @@ const char iwl_ax211_name[] = "Intel(R) Wi-Fi 6E AX211 160MHz";
 const char iwl_ax221_name[] = "Intel(R) Wi-Fi 6E AX221 160MHz";
 const char iwl_ax231_name[] = "Intel(R) Wi-Fi 6E AX231 160MHz";
 const char iwl_ax411_name[] = "Intel(R) Wi-Fi 6E AX411 160MHz";
+<<<<<<< HEAD
 const char iwl_bz_name[] = "Intel(R) TBD Bz device";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 const char iwl_ax200_killer_1650w_name[] =
 	"Killer(R) Wi-Fi 6 AX1650w 160MHz Wireless Network Adapter (200D2W)";
@@ -825,28 +843,44 @@ const struct iwl_cfg iwl_cfg_quz_a0_hr_b0 = {
 const struct iwl_cfg iwl_cfg_bz_a0_hr_b0 = {
 	.fw_name_pre = IWL_BZ_A_HR_B_FW_PRE,
 	.uhb_supported = true,
+<<<<<<< HEAD
 	IWL_DEVICE_BZ,
+=======
+	IWL_DEVICE_AX210,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.num_rbds = IWL_NUM_RBDS_AX210_HE,
 };
 
 const struct iwl_cfg iwl_cfg_bz_a0_gf_a0 = {
 	.fw_name_pre = IWL_BZ_A_GF_A_FW_PRE,
 	.uhb_supported = true,
+<<<<<<< HEAD
 	IWL_DEVICE_BZ,
+=======
+	IWL_DEVICE_AX210,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.num_rbds = IWL_NUM_RBDS_AX210_HE,
 };
 
 const struct iwl_cfg iwl_cfg_bz_a0_gf4_a0 = {
 	.fw_name_pre = IWL_BZ_A_GF4_A_FW_PRE,
 	.uhb_supported = true,
+<<<<<<< HEAD
 	IWL_DEVICE_BZ,
+=======
+	IWL_DEVICE_AX210,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.num_rbds = IWL_NUM_RBDS_AX210_HE,
 };
 
 const struct iwl_cfg iwl_cfg_bz_a0_mr_a0 = {
 	.fw_name_pre = IWL_BZ_A_MR_A_FW_PRE,
 	.uhb_supported = true,
+<<<<<<< HEAD
 	IWL_DEVICE_BZ,
+=======
+	IWL_DEVICE_AX210,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.num_rbds = IWL_NUM_RBDS_AX210_HE,
 };
 

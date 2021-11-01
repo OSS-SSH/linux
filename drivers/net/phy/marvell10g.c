@@ -28,7 +28,10 @@
 #include <linux/marvell_phy.h>
 #include <linux/phy.h>
 #include <linux/sfp.h>
+<<<<<<< HEAD
 #include <linux/netdevice.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define MV_PHY_ALASKA_NBT_QUIRK_MASK	0xfffffffe
 #define MV_PHY_ALASKA_NBT_QUIRK_REV	(MARVELL_PHY_ID_88X3310 | 0xa)
@@ -79,11 +82,14 @@ enum {
 	/* Temperature read register (88E2110 only) */
 	MV_PCS_TEMP		= 0x8042,
 
+<<<<<<< HEAD
 	/* Number of ports on the device */
 	MV_PCS_PORT_INFO	= 0xd00d,
 	MV_PCS_PORT_INFO_NPORTS_MASK	= 0x0380,
 	MV_PCS_PORT_INFO_NPORTS_SHIFT	= 7,
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* These registers appear at 0x800X and 0xa00X - the 0xa00X control
 	 * registers appear to set themselves to the 0x800X when AN is
 	 * restarted, but status registers appear readable from either.
@@ -105,6 +111,7 @@ enum {
 	MV_V2_33X0_PORT_CTRL_MACTYPE_10GBASER_NO_SGMII_AN	= 0x5,
 	MV_V2_33X0_PORT_CTRL_MACTYPE_10GBASER_RATE_MATCH	= 0x6,
 	MV_V2_33X0_PORT_CTRL_MACTYPE_USXGMII			= 0x7,
+<<<<<<< HEAD
 	MV_V2_PORT_INTR_STS     = 0xf040,
 	MV_V2_PORT_INTR_MASK    = 0xf043,
 	MV_V2_PORT_INTR_STS_WOL_EN      = BIT(8),
@@ -115,6 +122,8 @@ enum {
 	MV_V2_WOL_CTRL          = 0xf06e,
 	MV_V2_WOL_CTRL_CLEAR_STS        = BIT(15),
 	MV_V2_WOL_CTRL_MAGIC_PKT_EN     = BIT(0),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Temperature control/read registers (88X3310 only) */
 	MV_V2_TEMP_CTRL		= 0xf08a,
 	MV_V2_TEMP_CTRL_MASK	= 0xc000,
@@ -982,6 +991,7 @@ static const struct mv3310_chip mv2111_type = {
 #endif
 };
 
+<<<<<<< HEAD
 static int mv3310_get_number_of_ports(struct phy_device *phydev)
 {
 	int ret;
@@ -1014,6 +1024,8 @@ static int mv3340_match_phy_device(struct phy_device *phydev)
 	return mv3310_get_number_of_ports(phydev) == 4;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mv211x_match_phy_device(struct phy_device *phydev, bool has_5g)
 {
 	int val;
@@ -1039,6 +1051,7 @@ static int mv2111_match_phy_device(struct phy_device *phydev)
 	return mv211x_match_phy_device(phydev, false);
 }
 
+<<<<<<< HEAD
 static void mv3110_get_wol(struct phy_device *phydev,
 			   struct ethtool_wolinfo *wol)
 {
@@ -1118,6 +1131,12 @@ static struct phy_driver mv3310_drivers[] = {
 		.phy_id		= MARVELL_PHY_ID_88X3310,
 		.phy_id_mask	= MARVELL_PHY_ID_MASK,
 		.match_phy_device = mv3310_match_phy_device,
+=======
+static struct phy_driver mv3310_drivers[] = {
+	{
+		.phy_id		= MARVELL_PHY_ID_88X3310,
+		.phy_id_mask	= MARVELL_PHY_ID_88X33X0_MASK,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.name		= "mv88x3310",
 		.driver_data	= &mv3310_type,
 		.get_features	= mv3310_get_features,
@@ -1132,6 +1151,7 @@ static struct phy_driver mv3310_drivers[] = {
 		.set_tunable	= mv3310_set_tunable,
 		.remove		= mv3310_remove,
 		.set_loopback	= genphy_c45_loopback,
+<<<<<<< HEAD
 		.get_wol	= mv3110_get_wol,
 		.set_wol	= mv3110_set_wol,
 	},
@@ -1139,6 +1159,12 @@ static struct phy_driver mv3310_drivers[] = {
 		.phy_id		= MARVELL_PHY_ID_88X3310,
 		.phy_id_mask	= MARVELL_PHY_ID_MASK,
 		.match_phy_device = mv3340_match_phy_device,
+=======
+	},
+	{
+		.phy_id		= MARVELL_PHY_ID_88X3340,
+		.phy_id_mask	= MARVELL_PHY_ID_88X33X0_MASK,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.name		= "mv88x3340",
 		.driver_data	= &mv3340_type,
 		.get_features	= mv3310_get_features,
@@ -1171,8 +1197,11 @@ static struct phy_driver mv3310_drivers[] = {
 		.set_tunable	= mv3310_set_tunable,
 		.remove		= mv3310_remove,
 		.set_loopback	= genphy_c45_loopback,
+<<<<<<< HEAD
 		.get_wol	= mv3110_get_wol,
 		.set_wol	= mv3110_set_wol,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	{
 		.phy_id		= MARVELL_PHY_ID_88E2110,
@@ -1197,7 +1226,12 @@ static struct phy_driver mv3310_drivers[] = {
 module_phy_driver(mv3310_drivers);
 
 static struct mdio_device_id __maybe_unused mv3310_tbl[] = {
+<<<<<<< HEAD
 	{ MARVELL_PHY_ID_88X3310, MARVELL_PHY_ID_MASK },
+=======
+	{ MARVELL_PHY_ID_88X3310, MARVELL_PHY_ID_88X33X0_MASK },
+	{ MARVELL_PHY_ID_88X3340, MARVELL_PHY_ID_88X33X0_MASK },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ MARVELL_PHY_ID_88E2110, MARVELL_PHY_ID_MASK },
 	{ },
 };

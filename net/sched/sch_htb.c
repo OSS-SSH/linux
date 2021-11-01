@@ -125,7 +125,10 @@ struct htb_class {
 		struct htb_class_leaf {
 			int		deficit[TC_HTB_MAXDEPTH];
 			struct Qdisc	*q;
+<<<<<<< HEAD
 			struct netdev_queue *offload_queue;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} leaf;
 		struct htb_class_inner {
 			struct htb_prio clprio[TC_HTB_NUMPRIO];
@@ -239,7 +242,11 @@ static struct htb_class *htb_classify(struct sk_buff *skb, struct Qdisc *sch,
 	}
 
 	*qerr = NET_XMIT_SUCCESS | __NET_XMIT_BYPASS;
+<<<<<<< HEAD
 	while (tcf && (result = tcf_classify(skb, NULL, tcf, &res, false)) >= 0) {
+=======
+	while (tcf && (result = tcf_classify(skb, tcf, &res, false)) >= 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_NET_CLS_ACT
 		switch (result) {
 		case TC_ACT_QUEUED:
@@ -1412,6 +1419,7 @@ htb_graft_helper(struct netdev_queue *dev_queue, struct Qdisc *new_q)
 	return old_q;
 }
 
+<<<<<<< HEAD
 static struct netdev_queue *htb_offload_get_queue(struct htb_class *cl)
 {
 	struct netdev_queue *queue;
@@ -1453,6 +1461,26 @@ static void htb_offload_move_qdisc(struct Qdisc *sch, struct htb_class *cl_old,
 			dev_activate(dev);
 		WARN_ON(!(qdisc->flags & TCQ_F_BUILTIN));
 	}
+=======
+static void htb_offload_move_qdisc(struct Qdisc *sch, u16 qid_old, u16 qid_new)
+{
+	struct netdev_queue *queue_old, *queue_new;
+	struct net_device *dev = qdisc_dev(sch);
+	struct Qdisc *qdisc;
+
+	queue_old = netdev_get_tx_queue(dev, qid_old);
+	queue_new = netdev_get_tx_queue(dev, qid_new);
+
+	if (dev->flags & IFF_UP)
+		dev_deactivate(dev);
+	qdisc = dev_graft_qdisc(queue_old, NULL);
+	qdisc->dev_queue = queue_new;
+	qdisc = dev_graft_qdisc(queue_new, qdisc);
+	if (dev->flags & IFF_UP)
+		dev_activate(dev);
+
+	WARN_ON(!(qdisc->flags & TCQ_F_BUILTIN));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int htb_graft(struct Qdisc *sch, unsigned long arg, struct Qdisc *new,
@@ -1466,8 +1494,15 @@ static int htb_graft(struct Qdisc *sch, unsigned long arg, struct Qdisc *new,
 	if (cl->level)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (q->offload)
 		dev_queue = htb_offload_get_queue(cl);
+=======
+	if (q->offload) {
+		dev_queue = new->dev_queue;
+		WARN_ON(dev_queue != cl->leaf.q->dev_queue);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!new) {
 		new = qdisc_create_dflt(dev_queue, &pfifo_qdisc_ops,
@@ -1536,8 +1571,11 @@ static void htb_parent_to_leaf(struct Qdisc *sch, struct htb_class *cl,
 	parent->ctokens = parent->cbuffer;
 	parent->t_c = ktime_get_ns();
 	parent->cmode = HTB_CAN_SEND;
+<<<<<<< HEAD
 	if (q->offload)
 		parent->leaf.offload_queue = cl->leaf.offload_queue;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void htb_parent_to_leaf_offload(struct Qdisc *sch,
@@ -1558,7 +1596,10 @@ static int htb_destroy_class_offload(struct Qdisc *sch, struct htb_class *cl,
 				     struct netlink_ext_ack *extack)
 {
 	struct tc_htb_qopt_offload offload_opt;
+<<<<<<< HEAD
 	struct netdev_queue *dev_queue;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct Qdisc *q = cl->leaf.q;
 	struct Qdisc *old = NULL;
 	int err;
@@ -1567,6 +1608,7 @@ static int htb_destroy_class_offload(struct Qdisc *sch, struct htb_class *cl,
 		return -EINVAL;
 
 	WARN_ON(!q);
+<<<<<<< HEAD
 	dev_queue = htb_offload_get_queue(cl);
 	old = htb_graft_helper(dev_queue, NULL);
 	if (destroying)
@@ -1576,6 +1618,18 @@ static int htb_destroy_class_offload(struct Qdisc *sch, struct htb_class *cl,
 		WARN_ON(!(old->flags & TCQ_F_BUILTIN));
 	else
 		WARN_ON(old != q);
+=======
+	if (!destroying) {
+		/* On destroy of HTB, two cases are possible:
+		 * 1. q is a normal qdisc, but q->dev_queue has noop qdisc.
+		 * 2. q is a noop qdisc (for nodes that were inner),
+		 *    q->dev_queue is noop_netdev_queue.
+		 */
+		old = htb_graft_helper(q->dev_queue, NULL);
+		WARN_ON(!old);
+		WARN_ON(old != q);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (cl->parent) {
 		cl->parent->bstats_bias.bytes += q->bstats.bytes;
@@ -1594,17 +1648,31 @@ static int htb_destroy_class_offload(struct Qdisc *sch, struct htb_class *cl,
 	if (!err || destroying)
 		qdisc_put(old);
 	else
+<<<<<<< HEAD
 		htb_graft_helper(dev_queue, old);
+=======
+		htb_graft_helper(q->dev_queue, old);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (last_child)
 		return err;
 
+<<<<<<< HEAD
 	if (!err && offload_opt.classid != TC_H_MIN(cl->common.classid)) {
 		u32 classid = TC_H_MAJ(sch->handle) |
 			      TC_H_MIN(offload_opt.classid);
 		struct htb_class *moved_cl = htb_find(classid, sch);
 
 		htb_offload_move_qdisc(sch, moved_cl, cl, destroying);
+=======
+	if (!err && offload_opt.moved_qid != 0) {
+		if (destroying)
+			q->dev_queue = netdev_get_tx_queue(qdisc_dev(sch),
+							   offload_opt.qid);
+		else
+			htb_offload_move_qdisc(sch, offload_opt.moved_qid,
+					       offload_opt.qid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return err;
@@ -1727,11 +1795,17 @@ static int htb_delete(struct Qdisc *sch, unsigned long arg,
 	}
 
 	if (last_child) {
+<<<<<<< HEAD
 		struct netdev_queue *dev_queue = sch->dev_queue;
 
 		if (q->offload)
 			dev_queue = htb_offload_get_queue(cl);
 
+=======
+		struct netdev_queue *dev_queue;
+
+		dev_queue = q->offload ? cl->leaf.q->dev_queue : sch->dev_queue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		new_q = qdisc_create_dflt(dev_queue, &pfifo_qdisc_ops,
 					  cl->parent->common.classid,
 					  NULL);
@@ -1903,7 +1977,11 @@ static int htb_change_class(struct Qdisc *sch, u32 classid,
 			}
 			dev_queue = netdev_get_tx_queue(dev, offload_opt.qid);
 		} else { /* First child. */
+<<<<<<< HEAD
 			dev_queue = htb_offload_get_queue(parent);
+=======
+			dev_queue = parent->leaf.q->dev_queue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			old_q = htb_graft_helper(dev_queue, NULL);
 			WARN_ON(old_q != parent->leaf.q);
 			offload_opt = (struct tc_htb_qopt_offload) {
@@ -1960,8 +2038,11 @@ static int htb_change_class(struct Qdisc *sch, u32 classid,
 
 		/* leaf (we) needs elementary qdisc */
 		cl->leaf.q = new_q ? new_q : &noop_qdisc;
+<<<<<<< HEAD
 		if (q->offload)
 			cl->leaf.offload_queue = dev_queue;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		cl->parent = parent;
 

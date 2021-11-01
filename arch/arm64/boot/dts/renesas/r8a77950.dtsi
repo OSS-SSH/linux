@@ -7,8 +7,11 @@
 
 #include "r8a77951.dtsi"
 
+<<<<<<< HEAD
 #undef SOC_HAS_USB2_CH3
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &audma0 {
 	iommus = <&ipmmu_mp1 0>, <&ipmmu_mp1 1>,
 	       <&ipmmu_mp1 2>, <&ipmmu_mp1 3>,

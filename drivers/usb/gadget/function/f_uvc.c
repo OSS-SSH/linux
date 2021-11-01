@@ -418,7 +418,10 @@ uvc_register_video(struct uvc_device *uvc)
 
 	/* TODO reference counting. */
 	uvc->vdev.v4l2_dev = &uvc->v4l2_dev;
+<<<<<<< HEAD
 	uvc->vdev.v4l2_dev->dev = &cdev->gadget->dev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uvc->vdev.fops = &uvc_v4l2_fops;
 	uvc->vdev.ioctl_ops = &uvc_v4l2_ioctl_ops;
 	uvc->vdev.release = video_device_release_empty;

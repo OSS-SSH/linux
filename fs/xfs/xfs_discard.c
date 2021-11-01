@@ -169,7 +169,11 @@ xfs_ioc_trim(
 	 * We haven't recovered the log, so we cannot use our bnobt-guided
 	 * storage zapping commands.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_norecovery(mp))
+=======
+	if (mp->m_flags & XFS_MOUNT_NORECOVERY)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EROFS;
 
 	if (copy_from_user(&range, urange, sizeof(range)))

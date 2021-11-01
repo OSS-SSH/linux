@@ -13,9 +13,14 @@
 #include <sound/soc.h>
 #include <sound/soc-acpi.h>
 #include "sof_sdw_common.h"
+<<<<<<< HEAD
 #include "../../codecs/rt711.h"
 
 unsigned long sof_sdw_quirk = RT711_JD1;
+=======
+
+unsigned long sof_sdw_quirk = SOF_RT711_JD_SRC_JD1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int quirk_override = -1;
 module_param_named(quirk, quirk_override, int, 0444);
 MODULE_PARM_DESC(quirk, "Board-specific quirk override");
@@ -64,7 +69,11 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "09C6")
 		},
+<<<<<<< HEAD
 		.driver_data = (void *)(RT711_JD2 |
+=======
+		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_RT715_DAI_ID_FIX),
 	},
 	{
@@ -74,7 +83,11 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0983")
 		},
+<<<<<<< HEAD
 		.driver_data = (void *)(RT711_JD2 |
+=======
+		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_RT715_DAI_ID_FIX),
 	},
 	{
@@ -83,7 +96,11 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "098F"),
 		},
+<<<<<<< HEAD
 		.driver_data = (void *)(RT711_JD2 |
+=======
+		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_RT715_DAI_ID_FIX |
 					SOF_SDW_FOUR_SPK),
 	},
@@ -93,7 +110,11 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0990"),
 		},
+<<<<<<< HEAD
 		.driver_data = (void *)(RT711_JD2 |
+=======
+		.driver_data = (void *)(SOF_RT711_JD_SRC_JD2 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_RT715_DAI_ID_FIX |
 					SOF_SDW_FOUR_SPK),
 	},
@@ -115,7 +136,11 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 				  "Tiger Lake Client Platform"),
 		},
 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+<<<<<<< HEAD
 					RT711_JD1 |
+=======
+					SOF_RT711_JD_SRC_JD1 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_SDW_PCH_DMIC |
 					SOF_SSP_PORT(SOF_I2S_SSP2)),
 	},
@@ -126,6 +151,7 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A3E")
 		},
 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+<<<<<<< HEAD
 					RT711_JD2 |
 					SOF_RT715_DAI_ID_FIX),
 	},
@@ -142,13 +168,23 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 					SOF_SDW_FOUR_SPK),
 	},
 	{
+=======
+					SOF_RT711_JD_SRC_JD2 |
+					SOF_RT715_DAI_ID_FIX),
+	},
+	{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.callback = sof_sdw_quirk_cb,
 		.matches = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A5E")
 		},
 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+<<<<<<< HEAD
 					RT711_JD2 |
+=======
+					SOF_RT711_JD_SRC_JD2 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_RT715_DAI_ID_FIX |
 					SOF_SDW_FOUR_SPK),
 	},
@@ -188,6 +224,7 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 		},
 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
 					SOF_SDW_PCH_DMIC |
+<<<<<<< HEAD
 					RT711_JD2),
 	},
 	{
@@ -200,6 +237,9 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
 					SOF_SDW_PCH_DMIC |
 					RT711_JD1),
+=======
+					SOF_RT711_JD_SRC_JD2),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	/* TigerLake-SDCA devices */
 	{
@@ -209,7 +249,11 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0A32")
 		},
 		.driver_data = (void *)(SOF_SDW_TGL_HDMI |
+<<<<<<< HEAD
 					RT711_JD2 |
+=======
+					SOF_RT711_JD_SRC_JD2 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_RT715_DAI_ID_FIX |
 					SOF_SDW_FOUR_SPK),
 	},
@@ -220,7 +264,11 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
 			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
 			DMI_MATCH(DMI_PRODUCT_NAME, "Alder Lake Client Platform"),
 		},
+<<<<<<< HEAD
 		.driver_data = (void *)(RT711_JD2_100K |
+=======
+		.driver_data = (void *)(SOF_RT711_JD_SRC_JD1 |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					SOF_SDW_TGL_HDMI |
 					SOF_RT715_DAI_ID_FIX |
 					SOF_BT_OFFLOAD_SSP(2) |
@@ -352,6 +400,7 @@ static const struct snd_soc_ops sdw_ops = {
 	.shutdown = sdw_shutdown,
 };
 
+<<<<<<< HEAD
 static int sof_sdw_mic_codec_mockup_init(struct snd_soc_card *card,
 					 const struct snd_soc_acpi_link_adr *link,
 					 struct snd_soc_dai_link *dai_links,
@@ -366,6 +415,8 @@ static int sof_sdw_mic_codec_mockup_init(struct snd_soc_card *card,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct sof_sdw_codec_info codec_info_list[] = {
 	{
 		.part_id = 0x700,
@@ -448,6 +499,7 @@ static struct sof_sdw_codec_info codec_info_list[] = {
 		.dai_name = "rt5682-sdw",
 		.init = sof_sdw_rt5682_init,
 	},
+<<<<<<< HEAD
 	{
 		.part_id = 0xaaaa, /* generic codec mockup */
 		.version_id = 0,
@@ -476,6 +528,8 @@ static struct sof_sdw_codec_info codec_info_list[] = {
 		.dai_name = "sdw-mockup-aif1",
 		.init = sof_sdw_mic_codec_mockup_init,
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline int find_codec_info_part(u64 adr)
@@ -698,8 +752,12 @@ static int create_codec_dai_name(struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int set_codec_init_func(struct snd_soc_card *card,
 			       const struct snd_soc_acpi_link_adr *link,
+=======
+static int set_codec_init_func(const struct snd_soc_acpi_link_adr *link,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			       struct snd_soc_dai_link *dai_links,
 			       bool playback, int group_id)
 {
@@ -722,8 +780,12 @@ static int set_codec_init_func(struct snd_soc_card *card,
 			if (link->adr_d[i].endpoints->group_id != group_id)
 				continue;
 			if (codec_info_list[codec_index].init)
+<<<<<<< HEAD
 				codec_info_list[codec_index].init(card,
 						link,
+=======
+				codec_info_list[codec_index].init(link,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						dai_links,
 						&codec_info_list[codec_index],
 						playback);
@@ -808,8 +870,12 @@ static int get_slave_info(const struct snd_soc_acpi_link_adr *adr_link,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int create_sdw_dailink(struct snd_soc_card *card,
 			      struct device *dev, int *be_index,
+=======
+static int create_sdw_dailink(struct device *dev, int *be_index,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			      struct snd_soc_dai_link *dai_links,
 			      int sdw_be_num, int sdw_cpu_dai_num,
 			      struct snd_soc_dai_link_component *cpus,
@@ -929,6 +995,7 @@ static int create_sdw_dailink(struct snd_soc_card *card,
 			      cpus + *cpu_id, cpu_dai_num,
 			      codecs, codec_num,
 			      NULL, &sdw_ops);
+<<<<<<< HEAD
 		/*
 		 * SoundWire DAILINKs use 'stream' functions and Bank Switch operations
 		 * based on wait_for_completion(), tag them as 'nonatomic'.
@@ -936,6 +1003,10 @@ static int create_sdw_dailink(struct snd_soc_card *card,
 		dai_links[*be_index].nonatomic = true;
 
 		ret = set_codec_init_func(card, link, dai_links + (*be_index)++,
+=======
+
+		ret = set_codec_init_func(link, dai_links + (*be_index)++,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					  playback, group_id);
 		if (ret < 0) {
 			dev_err(dev, "failed to init codec %d", codec_index);
@@ -1116,7 +1187,11 @@ static int sof_card_dai_links_create(struct device *dev,
 		    group_generated[endpoint->group_id])
 			continue;
 
+<<<<<<< HEAD
 		ret = create_sdw_dailink(card, dev, &be_id, links, sdw_be_num,
+=======
+		ret = create_sdw_dailink(dev, &be_id, links, sdw_be_num,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					 sdw_cpu_dai_num, cpus, adr_link,
 					 &cpu_id, group_generated,
 					 codec_conf, codec_conf_count,
@@ -1179,7 +1254,11 @@ SSP:
 			      ssp_components, 1,
 			      NULL, info->ops);
 
+<<<<<<< HEAD
 		ret = info->init(card, NULL, links + link_id, info, 0);
+=======
+		ret = info->init(NULL, links + link_id, info, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret < 0)
 			return ret;
 
@@ -1402,7 +1481,11 @@ static int mc_remove(struct platform_device *pdev)
 		for_each_card_prelinks(card, j, link) {
 			if (!strcmp(link->codecs[0].dai_name,
 				    codec_info_list[i].dai_name)) {
+<<<<<<< HEAD
 				ret = codec_info_list[i].exit(card, link);
+=======
+				ret = codec_info_list[i].exit(&pdev->dev, link);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (ret)
 					dev_warn(&pdev->dev,
 						 "codec exit failed %d\n",

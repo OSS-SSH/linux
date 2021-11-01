@@ -423,8 +423,12 @@ int __must_check fsl_mc_allocate_irqs(struct fsl_mc_device *mc_dev);
 
 void fsl_mc_free_irqs(struct fsl_mc_device *mc_dev);
 
+<<<<<<< HEAD
 struct fsl_mc_device *fsl_mc_get_endpoint(struct fsl_mc_device *mc_dev,
 					  u16 if_id);
+=======
+struct fsl_mc_device *fsl_mc_get_endpoint(struct fsl_mc_device *mc_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 extern struct bus_type fsl_mc_bus_type;
 

@@ -564,7 +564,11 @@ static ssize_t set_led_id(struct snd_ctl_led_card *led_card, const char *buf, si
 			else {
 				for (; *s >= ' '; s++);
 				*s = '\0';
+<<<<<<< HEAD
 				strscpy(id.name, buf2, sizeof(id.name));
+=======
+				strlcpy(id.name, buf2, sizeof(id.name));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 			break;
 		}

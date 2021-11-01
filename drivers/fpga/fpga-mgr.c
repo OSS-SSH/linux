@@ -25,6 +25,7 @@ struct fpga_mgr_devres {
 	struct fpga_manager *mgr;
 };
 
+<<<<<<< HEAD
 static inline void fpga_mgr_fpga_remove(struct fpga_manager *mgr)
 {
 	if (mgr->mops->fpga_remove)
@@ -91,6 +92,8 @@ static inline int fpga_mgr_write_sg(struct fpga_manager *mgr,
 	return -EOPNOTSUPP;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * fpga_image_info_alloc - Allocate an FPGA image info struct
  * @dev: owning device
@@ -149,9 +152,15 @@ static int fpga_mgr_write_init_buf(struct fpga_manager *mgr,
 
 	mgr->state = FPGA_MGR_STATE_WRITE_INIT;
 	if (!mgr->mops->initial_header_size)
+<<<<<<< HEAD
 		ret = fpga_mgr_write_init(mgr, info, NULL, 0);
 	else
 		ret = fpga_mgr_write_init(
+=======
+		ret = mgr->mops->write_init(mgr, info, NULL, 0);
+	else
+		ret = mgr->mops->write_init(
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    mgr, info, buf, min(mgr->mops->initial_header_size, count));
 
 	if (ret) {
@@ -203,6 +212,30 @@ static int fpga_mgr_write_init_sg(struct fpga_manager *mgr,
 	return ret;
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * After all the FPGA image has been written, do the device specific steps to
+ * finish and set the FPGA into operating mode.
+ */
+static int fpga_mgr_write_complete(struct fpga_manager *mgr,
+				   struct fpga_image_info *info)
+{
+	int ret;
+
+	mgr->state = FPGA_MGR_STATE_WRITE_COMPLETE;
+	ret = mgr->mops->write_complete(mgr, info);
+	if (ret) {
+		dev_err(&mgr->dev, "Error after writing image data to FPGA\n");
+		mgr->state = FPGA_MGR_STATE_WRITE_COMPLETE_ERR;
+		return ret;
+	}
+	mgr->state = FPGA_MGR_STATE_OPERATING;
+
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * fpga_mgr_buf_load_sg - load fpga from image in buffer from a scatter list
  * @mgr:	fpga manager
@@ -233,13 +266,21 @@ static int fpga_mgr_buf_load_sg(struct fpga_manager *mgr,
 	/* Write the FPGA image to the FPGA. */
 	mgr->state = FPGA_MGR_STATE_WRITE;
 	if (mgr->mops->write_sg) {
+<<<<<<< HEAD
 		ret = fpga_mgr_write_sg(mgr, sgt);
+=======
+		ret = mgr->mops->write_sg(mgr, sgt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		struct sg_mapping_iter miter;
 
 		sg_miter_start(&miter, sgt->sgl, sgt->nents, SG_MITER_FROM_SG);
 		while (sg_miter_next(&miter)) {
+<<<<<<< HEAD
 			ret = fpga_mgr_write(mgr, miter.addr, miter.length);
+=======
+			ret = mgr->mops->write(mgr, miter.addr, miter.length);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (ret)
 				break;
 		}
@@ -269,7 +310,11 @@ static int fpga_mgr_buf_load_mapped(struct fpga_manager *mgr,
 	 * Write the FPGA image to the FPGA.
 	 */
 	mgr->state = FPGA_MGR_STATE_WRITE;
+<<<<<<< HEAD
 	ret = fpga_mgr_write(mgr, buf, count);
+=======
+	ret = mgr->mops->write(mgr, buf, count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		dev_err(&mgr->dev, "Error while writing image data to FPGA\n");
 		mgr->state = FPGA_MGR_STATE_WRITE_ERR;
@@ -462,7 +507,14 @@ static ssize_t status_show(struct device *dev,
 	u64 status;
 	int len = 0;
 
+<<<<<<< HEAD
 	status = fpga_mgr_status(mgr);
+=======
+	if (!mgr->mops->status)
+		return -ENOENT;
+
+	status = mgr->mops->status(mgr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (status & FPGA_MGR_STATUS_OPERATION_ERR)
 		len += sprintf(buf + len, "reconfig operation error\n");
@@ -610,7 +662,13 @@ struct fpga_manager *fpga_mgr_create(struct device *parent, const char *name,
 	struct fpga_manager *mgr;
 	int id, ret;
 
+<<<<<<< HEAD
 	if (!mops) {
+=======
+	if (!mops || !mops->write_complete || !mops->state ||
+	    !mops->write_init || (!mops->write && !mops->write_sg) ||
+	    (mops->write && mops->write_sg)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(parent, "Attempt to register without fpga_manager_ops\n");
 		return NULL;
 	}
@@ -728,7 +786,11 @@ int fpga_mgr_register(struct fpga_manager *mgr)
 	 * from device.  FPGA may be in reset mode or may have been programmed
 	 * by bootloader or EEPROM.
 	 */
+<<<<<<< HEAD
 	mgr->state = fpga_mgr_state(mgr);
+=======
+	mgr->state = mgr->mops->state(mgr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = device_add(&mgr->dev);
 	if (ret)
@@ -759,7 +821,12 @@ void fpga_mgr_unregister(struct fpga_manager *mgr)
 	 * If the low level driver provides a method for putting fpga into
 	 * a desired state upon unregister, do it.
 	 */
+<<<<<<< HEAD
 	fpga_mgr_fpga_remove(mgr);
+=======
+	if (mgr->mops->fpga_remove)
+		mgr->mops->fpga_remove(mgr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	device_unregister(&mgr->dev);
 }

@@ -31,6 +31,7 @@ extern bool dbg;
 #define IS_VALID_PAE_ROOT(x)	(!!(x))
 
 struct kvm_mmu_page {
+<<<<<<< HEAD
 	/*
 	 * Note, "link" through "spt" fit in a single 64 byte cache line on
 	 * 64-bit kernels, keep it that way unless there's a reason not to.
@@ -41,6 +42,15 @@ struct kvm_mmu_page {
 	bool tdp_mmu_page;
 	bool unsync;
 	u8 mmu_valid_gen;
+=======
+	struct list_head link;
+	struct hlist_node hash_link;
+	struct list_head lpage_disallowed_link;
+
+	bool unsync;
+	u8 mmu_valid_gen;
+	bool mmio_cached;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool lpage_disallowed; /* Can't be replaced by an equiv large page */
 
 	/*
@@ -62,7 +72,10 @@ struct kvm_mmu_page {
 	struct kvm_rmap_head parent_ptes; /* rmap pointers to parent sptes */
 	DECLARE_BITMAP(unsync_child_bitmap, 512);
 
+<<<<<<< HEAD
 	struct list_head lpage_disallowed_link;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_X86_32
 	/*
 	 * Used out of the mmu-lock to avoid reading spte values while an
@@ -75,6 +88,11 @@ struct kvm_mmu_page {
 	atomic_t write_flooding_count;
 
 #ifdef CONFIG_X86_64
+<<<<<<< HEAD
+=======
+	bool tdp_mmu_page;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Used for freeing the page asynchronously if it is a TDP MMU page. */
 	struct rcu_head rcu_head;
 #endif
@@ -126,14 +144,22 @@ static inline bool is_nx_huge_page_enabled(void)
 
 int mmu_try_to_unsync_pages(struct kvm_vcpu *vcpu, gfn_t gfn, bool can_unsync);
 
+<<<<<<< HEAD
 void kvm_mmu_gfn_disallow_lpage(const struct kvm_memory_slot *slot, gfn_t gfn);
 void kvm_mmu_gfn_allow_lpage(const struct kvm_memory_slot *slot, gfn_t gfn);
+=======
+void kvm_mmu_gfn_disallow_lpage(struct kvm_memory_slot *slot, gfn_t gfn);
+void kvm_mmu_gfn_allow_lpage(struct kvm_memory_slot *slot, gfn_t gfn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bool kvm_mmu_slot_gfn_write_protect(struct kvm *kvm,
 				    struct kvm_memory_slot *slot, u64 gfn,
 				    int min_level);
 void kvm_flush_remote_tlbs_with_address(struct kvm *kvm,
 					u64 start_gfn, u64 pages);
+<<<<<<< HEAD
 unsigned int pte_list_count(struct kvm_rmap_head *rmap_head);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Return values of handle_mmio_page_fault, mmu.page_fault, and fast_page_fault().
@@ -143,9 +169,12 @@ unsigned int pte_list_count(struct kvm_rmap_head *rmap_head);
  * RET_PF_INVALID: the spte is invalid, let the real page fault path update it.
  * RET_PF_FIXED: The faulting entry has been fixed.
  * RET_PF_SPURIOUS: The faulting entry was already fixed, e.g. by another vCPU.
+<<<<<<< HEAD
  *
  * Any names added to this enum should be exported to userspace for use in
  * tracepoints via TRACE_DEFINE_ENUM() in mmutrace.h
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 enum {
 	RET_PF_RETRY = 0,

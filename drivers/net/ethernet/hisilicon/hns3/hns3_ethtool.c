@@ -7,7 +7,25 @@
 #include <linux/sfp.h>
 
 #include "hns3_enet.h"
+<<<<<<< HEAD
 #include "hns3_ethtool.h"
+=======
+
+struct hns3_stats {
+	char stats_string[ETH_GSTRING_LEN];
+	int stats_offset;
+};
+
+struct hns3_sfp_type {
+	u8 type;
+	u8 ext_type;
+};
+
+struct hns3_pflag_desc {
+	char name[ETH_GSTRING_LEN];
+	void (*handler)(struct net_device *netdev, bool enable);
+};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* tqp related stats */
 #define HNS3_TQP_STAT(_string, _member)	{			\
@@ -298,8 +316,38 @@ out:
 	return ret_val;
 }
 
+<<<<<<< HEAD
 static void hns3_set_selftest_param(struct hnae3_handle *h, int (*st_param)[2])
 {
+=======
+/**
+ * hns3_self_test - self test
+ * @ndev: net device
+ * @eth_test: test cmd
+ * @data: test result
+ */
+static void hns3_self_test(struct net_device *ndev,
+			   struct ethtool_test *eth_test, u64 *data)
+{
+	struct hns3_nic_priv *priv = netdev_priv(ndev);
+	struct hnae3_handle *h = priv->ae_handle;
+	int st_param[HNS3_SELF_TEST_TYPE_NUM][2];
+	bool if_running = netif_running(ndev);
+	int test_index = 0;
+	u32 i;
+
+	if (hns3_nic_resetting(ndev)) {
+		netdev_err(ndev, "dev resetting!");
+		return;
+	}
+
+	/* Only do offline selftest, or pass by default */
+	if (eth_test->flags != ETH_TEST_FL_OFFLINE)
+		return;
+
+	netif_dbg(h, drv, ndev, "self test start");
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	st_param[HNAE3_LOOP_APP][0] = HNAE3_LOOP_APP;
 	st_param[HNAE3_LOOP_APP][1] =
 			h->flags & HNAE3_SUPPORT_APP_LOOPBACK;
@@ -316,6 +364,7 @@ static void hns3_set_selftest_param(struct hnae3_handle *h, int (*st_param)[2])
 	st_param[HNAE3_LOOP_PHY][0] = HNAE3_LOOP_PHY;
 	st_param[HNAE3_LOOP_PHY][1] =
 			h->flags & HNAE3_SUPPORT_PHY_LOOPBACK;
+<<<<<<< HEAD
 }
 
 static void hns3_selftest_prepare(struct net_device *ndev,
@@ -328,14 +377,20 @@ static void hns3_selftest_prepare(struct net_device *ndev,
 		netdev_info(ndev, "self test start\n");
 
 	hns3_set_selftest_param(h, st_param);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (if_running)
 		ndev->netdev_ops->ndo_stop(ndev);
 
 #if IS_ENABLED(CONFIG_VLAN_8021Q)
 	/* Disable the vlan filter for selftest does not support it */
+<<<<<<< HEAD
 	if (h->ae_algo->ops->enable_vlan_filter &&
 	    ndev->features & NETIF_F_HW_VLAN_CTAG_FILTER)
+=======
+	if (h->ae_algo->ops->enable_vlan_filter)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		h->ae_algo->ops->enable_vlan_filter(h, false);
 #endif
 
@@ -347,6 +402,7 @@ static void hns3_selftest_prepare(struct net_device *ndev,
 		h->ae_algo->ops->halt_autoneg(h, true);
 
 	set_bit(HNS3_NIC_STATE_TESTING, &priv->state);
+<<<<<<< HEAD
 }
 
 static void hns3_selftest_restore(struct net_device *ndev, bool if_running)
@@ -377,6 +433,8 @@ static void hns3_do_selftest(struct net_device *ndev, int (*st_param)[2],
 {
 	int test_index = 0;
 	u32 i;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < HNS3_SELF_TEST_TYPE_NUM; i++) {
 		enum hnae3_loop loop_type = (enum hnae3_loop)st_param[i][0];
@@ -395,6 +453,7 @@ static void hns3_do_selftest(struct net_device *ndev, int (*st_param)[2],
 
 		test_index++;
 	}
+<<<<<<< HEAD
 }
 
 /**
@@ -421,6 +480,23 @@ static void hns3_self_test(struct net_device *ndev,
 	hns3_selftest_prepare(ndev, if_running, st_param);
 	hns3_do_selftest(ndev, st_param, eth_test, data);
 	hns3_selftest_restore(ndev, if_running);
+=======
+
+	clear_bit(HNS3_NIC_STATE_TESTING, &priv->state);
+
+	if (h->ae_algo->ops->halt_autoneg)
+		h->ae_algo->ops->halt_autoneg(h, false);
+
+#if IS_ENABLED(CONFIG_VLAN_8021Q)
+	if (h->ae_algo->ops->enable_vlan_filter)
+		h->ae_algo->ops->enable_vlan_filter(h, true);
+#endif
+
+	if (if_running)
+		ndev->netdev_ops->ndo_open(ndev);
+
+	netif_dbg(h, drv, ndev, "self test end\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void hns3_update_limit_promisc_mode(struct net_device *netdev,
@@ -968,6 +1044,7 @@ static int hns3_get_rxnfc(struct net_device *netdev,
 	}
 }
 
+<<<<<<< HEAD
 static const struct hns3_reset_type_map hns3_reset_type[] = {
 	{ETH_RESET_MGMT, HNAE3_IMP_RESET},
 	{ETH_RESET_ALL, HNAE3_GLOBAL_RESET},
@@ -1022,6 +1099,8 @@ static int hns3_set_reset(struct net_device *netdev, u32 *flags)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void hns3_change_all_ring_bd_num(struct hns3_nic_priv *priv,
 					u32 tx_desc_num, u32 rx_desc_num)
 {
@@ -1208,9 +1287,13 @@ static void hns3_get_channels(struct net_device *netdev,
 }
 
 static int hns3_get_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			     struct ethtool_coalesce *cmd,
 			     struct kernel_ethtool_coalesce *kernel_coal,
 			     struct netlink_ext_ack *extack)
+=======
+			     struct ethtool_coalesce *cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct hns3_nic_priv *priv = netdev_priv(netdev);
 	struct hns3_enet_coalesce *tx_coal = &priv->tx_coal;
@@ -1232,11 +1315,14 @@ static int hns3_get_coalesce(struct net_device *netdev,
 	cmd->tx_max_coalesced_frames = tx_coal->int_ql;
 	cmd->rx_max_coalesced_frames = rx_coal->int_ql;
 
+<<<<<<< HEAD
 	kernel_coal->use_cqe_mode_tx = (priv->tx_cqe_mode ==
 					DIM_CQ_PERIOD_MODE_START_FROM_CQE);
 	kernel_coal->use_cqe_mode_rx = (priv->rx_cqe_mode ==
 					DIM_CQ_PERIOD_MODE_START_FROM_CQE);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1397,17 +1483,24 @@ static void hns3_set_coalesce_per_queue(struct net_device *netdev,
 }
 
 static int hns3_set_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 			     struct ethtool_coalesce *cmd,
 			     struct kernel_ethtool_coalesce *kernel_coal,
 			     struct netlink_ext_ack *extack)
+=======
+			     struct ethtool_coalesce *cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct hnae3_handle *h = hns3_get_handle(netdev);
 	struct hns3_nic_priv *priv = netdev_priv(netdev);
 	struct hns3_enet_coalesce *tx_coal = &priv->tx_coal;
 	struct hns3_enet_coalesce *rx_coal = &priv->rx_coal;
 	u16 queue_num = h->kinfo.num_tqps;
+<<<<<<< HEAD
 	enum dim_cq_period_mode tx_mode;
 	enum dim_cq_period_mode rx_mode;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 	int i;
 
@@ -1433,6 +1526,7 @@ static int hns3_set_coalesce(struct net_device *netdev,
 	for (i = 0; i < queue_num; i++)
 		hns3_set_coalesce_per_queue(netdev, cmd, i);
 
+<<<<<<< HEAD
 	tx_mode = kernel_coal->use_cqe_mode_tx ?
 		  DIM_CQ_PERIOD_MODE_START_FROM_CQE :
 		  DIM_CQ_PERIOD_MODE_START_FROM_EQE;
@@ -1441,6 +1535,8 @@ static int hns3_set_coalesce(struct net_device *netdev,
 		  DIM_CQ_PERIOD_MODE_START_FROM_EQE;
 	hns3_cq_period_mode_init(priv, tx_mode, rx_mode);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1746,8 +1842,12 @@ static int hns3_set_tunable(struct net_device *netdev,
 				 ETHTOOL_COALESCE_USE_ADAPTIVE |	\
 				 ETHTOOL_COALESCE_RX_USECS_HIGH |	\
 				 ETHTOOL_COALESCE_TX_USECS_HIGH |	\
+<<<<<<< HEAD
 				 ETHTOOL_COALESCE_MAX_FRAMES |		\
 				 ETHTOOL_COALESCE_USE_CQE)
+=======
+				 ETHTOOL_COALESCE_MAX_FRAMES)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int hns3_get_ts_info(struct net_device *netdev,
 			    struct ethtool_ts_info *info)
@@ -1760,6 +1860,7 @@ static int hns3_get_ts_info(struct net_device *netdev,
 	return ethtool_op_get_ts_info(netdev, info);
 }
 
+<<<<<<< HEAD
 static const struct hns3_ethtool_link_ext_state_mapping
 hns3_link_ext_state_map[] = {
 	{1, ETHTOOL_LINK_EXT_STATE_AUTONEG,
@@ -1825,6 +1926,8 @@ static int hns3_get_link_ext_state(struct net_device *netdev,
 	return -ENODATA;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct ethtool_ops hns3vf_ethtool_ops = {
 	.supported_coalesce_params = HNS3_ETHTOOL_COALESCE,
 	.get_drvinfo = hns3_get_drvinfo,
@@ -1853,7 +1956,10 @@ static const struct ethtool_ops hns3vf_ethtool_ops = {
 	.set_priv_flags = hns3_set_priv_flags,
 	.get_tunable = hns3_get_tunable,
 	.set_tunable = hns3_set_tunable,
+<<<<<<< HEAD
 	.reset = hns3_set_reset,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct ethtool_ops hns3_ethtool_ops = {
@@ -1895,8 +2001,11 @@ static const struct ethtool_ops hns3_ethtool_ops = {
 	.get_ts_info = hns3_get_ts_info,
 	.get_tunable = hns3_get_tunable,
 	.set_tunable = hns3_set_tunable,
+<<<<<<< HEAD
 	.reset = hns3_set_reset,
 	.get_link_ext_state = hns3_get_link_ext_state,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 void hns3_ethtool_set_ops(struct net_device *netdev)

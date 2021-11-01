@@ -7,7 +7,10 @@
 #include "fw_reset.h"
 #include "fs_core.h"
 #include "eswitch.h"
+<<<<<<< HEAD
 #include "esw/qos.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "sf/dev/dev.h"
 #include "sf/sf.h"
 
@@ -293,6 +296,7 @@ static const struct devlink_ops mlx5_devlink_ops = {
 	.eswitch_encap_mode_get = mlx5_devlink_eswitch_encap_mode_get,
 	.port_function_hw_addr_get = mlx5_devlink_port_function_hw_addr_get,
 	.port_function_hw_addr_set = mlx5_devlink_port_function_hw_addr_set,
+<<<<<<< HEAD
 	.rate_leaf_tx_share_set = mlx5_esw_devlink_rate_leaf_tx_share_set,
 	.rate_leaf_tx_max_set = mlx5_esw_devlink_rate_leaf_tx_max_set,
 	.rate_node_tx_share_set = mlx5_esw_devlink_rate_node_tx_share_set,
@@ -300,6 +304,8 @@ static const struct devlink_ops mlx5_devlink_ops = {
 	.rate_node_new = mlx5_esw_devlink_rate_node_new,
 	.rate_node_del = mlx5_esw_devlink_rate_node_del,
 	.rate_leaf_parent_set = mlx5_esw_devlink_rate_parent_set,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 #ifdef CONFIG_MLX5_SF_MANAGER
 	.port_new = mlx5_devlink_sf_port_new,
@@ -367,10 +373,16 @@ int mlx5_devlink_traps_get_action(struct mlx5_core_dev *dev, int trap_id,
 	return 0;
 }
 
+<<<<<<< HEAD
 struct devlink *mlx5_devlink_alloc(struct device *dev)
 {
 	return devlink_alloc(&mlx5_devlink_ops, sizeof(struct mlx5_core_dev),
 			     dev);
+=======
+struct devlink *mlx5_devlink_alloc(void)
+{
+	return devlink_alloc(&mlx5_devlink_ops, sizeof(struct mlx5_core_dev));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void mlx5_devlink_free(struct devlink *devlink)
@@ -604,6 +616,7 @@ static void mlx5_devlink_set_params_init_values(struct devlink *devlink)
 #endif
 }
 
+<<<<<<< HEAD
 static const struct devlink_param enable_eth_param =
 	DEVLINK_PARAM_GENERIC(ENABLE_ETH, BIT(DEVLINK_PARAM_CMODE_DRIVERINIT),
 			      NULL, NULL, NULL);
@@ -752,6 +765,8 @@ static void mlx5_devlink_auxdev_params_unregister(struct devlink *devlink)
 	mlx5_devlink_eth_param_unregister(devlink);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MLX5_TRAP_DROP(_id, _group_id)					\
 	DEVLINK_TRAP_GENERIC(DROP, DROP, _id,				\
 			     DEVLINK_TRAP_GROUP_GENERIC_ID_##_group_id, \
@@ -795,11 +810,19 @@ static void mlx5_devlink_traps_unregister(struct devlink *devlink)
 				       ARRAY_SIZE(mlx5_trap_groups_arr));
 }
 
+<<<<<<< HEAD
 int mlx5_devlink_register(struct devlink *devlink)
 {
 	int err;
 
 	err = devlink_register(devlink);
+=======
+int mlx5_devlink_register(struct devlink *devlink, struct device *dev)
+{
+	int err;
+
+	err = devlink_register(devlink, dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return err;
 
@@ -810,10 +833,13 @@ int mlx5_devlink_register(struct devlink *devlink)
 	mlx5_devlink_set_params_init_values(devlink);
 	devlink_params_publish(devlink);
 
+<<<<<<< HEAD
 	err = mlx5_devlink_auxdev_params_register(devlink);
 	if (err)
 		goto auxdev_reg_err;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = mlx5_devlink_traps_register(devlink);
 	if (err)
 		goto traps_reg_err;
@@ -821,8 +847,11 @@ int mlx5_devlink_register(struct devlink *devlink)
 	return 0;
 
 traps_reg_err:
+<<<<<<< HEAD
 	mlx5_devlink_auxdev_params_unregister(devlink);
 auxdev_reg_err:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	devlink_params_unregister(devlink, mlx5_devlink_params,
 				  ARRAY_SIZE(mlx5_devlink_params));
 params_reg_err:
@@ -833,8 +862,11 @@ params_reg_err:
 void mlx5_devlink_unregister(struct devlink *devlink)
 {
 	mlx5_devlink_traps_unregister(devlink);
+<<<<<<< HEAD
 	mlx5_devlink_auxdev_params_unregister(devlink);
 	devlink_params_unpublish(devlink);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	devlink_params_unregister(devlink, mlx5_devlink_params,
 				  ARRAY_SIZE(mlx5_devlink_params));
 	devlink_unregister(devlink);

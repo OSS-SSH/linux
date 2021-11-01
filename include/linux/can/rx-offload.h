@@ -20,7 +20,10 @@ struct can_rx_offload {
 					bool drop);
 
 	struct sk_buff_head skb_queue;
+<<<<<<< HEAD
 	struct sk_buff_head skb_irq_queue;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 skb_queue_len_max;
 
 	unsigned int mb_first;
@@ -49,11 +52,22 @@ unsigned int can_rx_offload_get_echo_skb(struct can_rx_offload *offload,
 					 unsigned int *frame_len_ptr);
 int can_rx_offload_queue_tail(struct can_rx_offload *offload,
 			      struct sk_buff *skb);
+<<<<<<< HEAD
 void can_rx_offload_irq_finish(struct can_rx_offload *offload);
 void can_rx_offload_threaded_irq_finish(struct can_rx_offload *offload);
 void can_rx_offload_del(struct can_rx_offload *offload);
 void can_rx_offload_enable(struct can_rx_offload *offload);
 
+=======
+void can_rx_offload_del(struct can_rx_offload *offload);
+void can_rx_offload_enable(struct can_rx_offload *offload);
+
+static inline void can_rx_offload_schedule(struct can_rx_offload *offload)
+{
+	napi_schedule(&offload->napi);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void can_rx_offload_disable(struct can_rx_offload *offload)
 {
 	napi_disable(&offload->napi);

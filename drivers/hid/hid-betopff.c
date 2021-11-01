@@ -56,14 +56,23 @@ static int betopff_init(struct hid_device *hid)
 {
 	struct betopff_device *betopff;
 	struct hid_report *report;
+<<<<<<< HEAD
 	struct hid_input *hidinput;
 	struct list_head *report_list =
 			&hid->report_enum[HID_OUTPUT_REPORT].report_list;
 	struct input_dev *dev;
+=======
+	struct hid_input *hidinput =
+			list_first_entry(&hid->inputs, struct hid_input, list);
+	struct list_head *report_list =
+			&hid->report_enum[HID_OUTPUT_REPORT].report_list;
+	struct input_dev *dev = hidinput->input;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int field_count = 0;
 	int error;
 	int i, j;
 
+<<<<<<< HEAD
 	if (list_empty(&hid->inputs)) {
 		hid_err(hid, "no inputs found\n");
 		return -ENODEV;
@@ -72,6 +81,8 @@ static int betopff_init(struct hid_device *hid)
 	hidinput = list_first_entry(&hid->inputs, struct hid_input, list);
 	dev = hidinput->input;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (list_empty(report_list)) {
 		hid_err(hid, "no output reports found\n");
 		return -ENODEV;

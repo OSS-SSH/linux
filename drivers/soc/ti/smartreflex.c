@@ -126,6 +126,7 @@ static irqreturn_t sr_interrupt(int irq, void *data)
 
 static void sr_set_clk_length(struct omap_sr *sr)
 {
+<<<<<<< HEAD
 	u32 fclk_speed;
 
 	/* Try interconnect target module fck first if it already exists */
@@ -133,6 +134,25 @@ static void sr_set_clk_length(struct omap_sr *sr)
 		return;
 
 	fclk_speed = clk_get_rate(sr->fck);
+=======
+	struct clk *fck;
+	u32 fclk_speed;
+
+	/* Try interconnect target module fck first if it already exists */
+	fck = clk_get(sr->pdev->dev.parent, "fck");
+	if (IS_ERR(fck)) {
+		fck = clk_get(&sr->pdev->dev, "fck");
+		if (IS_ERR(fck)) {
+			dev_err(&sr->pdev->dev,
+				"%s: unable to get fck for device %s\n",
+				__func__, dev_name(&sr->pdev->dev));
+			return;
+		}
+	}
+
+	fclk_speed = clk_get_rate(fck);
+	clk_put(fck);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (fclk_speed) {
 	case 12000000:
@@ -577,25 +597,40 @@ int sr_enable(struct omap_sr *sr, unsigned long volt)
 	/* errminlimit is opp dependent and hence linked to voltage */
 	sr->err_minlimit = nvalue_row->errminlimit;
 
+<<<<<<< HEAD
 	clk_enable(sr->fck);
 
 	/* Check if SR is already enabled. If yes do nothing */
 	if (sr_read_reg(sr, SRCONFIG) & SRCONFIG_SRENABLE)
 		goto out_enabled;
+=======
+	pm_runtime_get_sync(&sr->pdev->dev);
+
+	/* Check if SR is already enabled. If yes do nothing */
+	if (sr_read_reg(sr, SRCONFIG) & SRCONFIG_SRENABLE)
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Configure SR */
 	ret = sr_class->configure(sr);
 	if (ret)
+<<<<<<< HEAD
 		goto out_enabled;
+=======
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sr_write_reg(sr, NVALUERECIPROCAL, nvalue_row->nvalue);
 
 	/* SRCONFIG - enable SR */
 	sr_modify_reg(sr, SRCONFIG, SRCONFIG_SRENABLE, SRCONFIG_SRENABLE);
+<<<<<<< HEAD
 
 out_enabled:
 	sr->enabled = 1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -615,7 +650,11 @@ void sr_disable(struct omap_sr *sr)
 	}
 
 	/* Check if SR clocks are already disabled. If yes do nothing */
+<<<<<<< HEAD
 	if (!sr->enabled)
+=======
+	if (pm_runtime_suspended(&sr->pdev->dev))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	/*
@@ -636,8 +675,12 @@ void sr_disable(struct omap_sr *sr)
 		}
 	}
 
+<<<<<<< HEAD
 	clk_disable(sr->fck);
 	sr->enabled = 0;
+=======
+	pm_runtime_put_sync_suspend(&sr->pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -846,12 +889,17 @@ static int omap_sr_probe(struct platform_device *pdev)
 
 	irq = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
 
+<<<<<<< HEAD
 	sr_info->fck = devm_clk_get(pdev->dev.parent, "fck");
 	if (IS_ERR(sr_info->fck))
 		return PTR_ERR(sr_info->fck);
 	clk_prepare(sr_info->fck);
 
 	pm_runtime_enable(&pdev->dev);
+=======
+	pm_runtime_enable(&pdev->dev);
+	pm_runtime_irq_safe(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	snprintf(sr_info->name, SMARTREFLEX_NAME_LEN, "%s", pdata->name);
 
@@ -877,6 +925,15 @@ static int omap_sr_probe(struct platform_device *pdev)
 
 	list_add(&sr_info->node, &sr_list);
 
+<<<<<<< HEAD
+=======
+	ret = pm_runtime_get_sync(&pdev->dev);
+	if (ret < 0) {
+		pm_runtime_put_noidle(&pdev->dev);
+		goto err_list_del;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Call into late init to do initializations that require
 	 * both sr driver and sr class driver to be initiallized.
@@ -926,13 +983,23 @@ static int omap_sr_probe(struct platform_device *pdev)
 
 	}
 
+<<<<<<< HEAD
+=======
+	pm_runtime_put_sync(&pdev->dev);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 
 err_debugfs:
 	debugfs_remove_recursive(sr_info->dbg_dir);
 err_list_del:
 	list_del(&sr_info->node);
+<<<<<<< HEAD
 	clk_unprepare(sr_info->fck);
+=======
+
+	pm_runtime_put_sync(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -940,7 +1007,10 @@ err_list_del:
 static int omap_sr_remove(struct platform_device *pdev)
 {
 	struct omap_sr_data *pdata = pdev->dev.platform_data;
+<<<<<<< HEAD
 	struct device *dev = &pdev->dev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct omap_sr *sr_info;
 
 	if (!pdata) {
@@ -959,8 +1029,12 @@ static int omap_sr_remove(struct platform_device *pdev)
 		sr_stop_vddautocomp(sr_info);
 	debugfs_remove_recursive(sr_info->dbg_dir);
 
+<<<<<<< HEAD
 	pm_runtime_disable(dev);
 	clk_unprepare(sr_info->fck);
+=======
+	pm_runtime_disable(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_del(&sr_info->node);
 	return 0;
 }

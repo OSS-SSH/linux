@@ -189,11 +189,14 @@
 			     <1 10 IRQ_TYPE_LEVEL_LOW>;/* Hypervisor PPI */
 	};
 
+<<<<<<< HEAD
 	pmu {
 		compatible = "arm,cortex-a53-pmu";
 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	psci {
 		compatible = "arm,psci-0.2";
 		method = "smc";
@@ -770,6 +773,7 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		pcs_mdio1: mdio@8c07000 {
 			compatible = "fsl,fman-memac-mdio";
 			reg = <0x0 0x8c07000 0x0 0x1000>;
@@ -783,6 +787,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pcs_mdio2: mdio@8c0b000 {
 			compatible = "fsl,fman-memac-mdio";
 			reg = <0x0 0x8c0b000 0x0 0x1000>;

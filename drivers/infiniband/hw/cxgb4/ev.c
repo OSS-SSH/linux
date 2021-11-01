@@ -213,7 +213,12 @@ void c4iw_ev_dispatch(struct c4iw_dev *dev, struct t4_cqe *err_cqe)
 		break;
 	}
 done:
+<<<<<<< HEAD
 	c4iw_cq_rem_ref(chp);
+=======
+	if (refcount_dec_and_test(&chp->refcnt))
+		wake_up(&chp->wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	c4iw_qp_rem_ref(&qhp->ibqp);
 out:
 	return;
@@ -233,7 +238,12 @@ int c4iw_ev_handler(struct c4iw_dev *dev, u32 qid)
 		spin_lock_irqsave(&chp->comp_handler_lock, flag);
 		(*chp->ibcq.comp_handler)(&chp->ibcq, chp->ibcq.cq_context);
 		spin_unlock_irqrestore(&chp->comp_handler_lock, flag);
+<<<<<<< HEAD
 		c4iw_cq_rem_ref(chp);
+=======
+		if (refcount_dec_and_test(&chp->refcnt))
+			wake_up(&chp->wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		pr_debug("unknown cqid 0x%x\n", qid);
 		xa_unlock_irqrestore(&dev->cqs, flag);

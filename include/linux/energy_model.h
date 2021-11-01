@@ -11,7 +11,11 @@
 #include <linux/types.h>
 
 /**
+<<<<<<< HEAD
  * struct em_perf_state - Performance state of a performance domain
+=======
+ * em_perf_state - Performance state of a performance domain
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @frequency:	The frequency in KHz, for consistency with CPUFreq
  * @power:	The power consumed at this level (by 1 CPU or by a registered
  *		device). It can be a total power: static and dynamic.
@@ -25,7 +29,11 @@ struct em_perf_state {
 };
 
 /**
+<<<<<<< HEAD
  * struct em_perf_domain - Performance domain
+=======
+ * em_perf_domain - Performance domain
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @table:		List of performance states, in ascending order
  * @nr_perf_states:	Number of performance states
  * @milliwatts:		Flag indicating the power values are in milli-Watts
@@ -53,6 +61,7 @@ struct em_perf_domain {
 #ifdef CONFIG_ENERGY_MODEL
 #define EM_MAX_POWER 0xFFFF
 
+<<<<<<< HEAD
 /*
  * Increase resolution of energy estimation calculations for 64-bit
  * architectures. The extra resolution improves decision made by EAS for the
@@ -69,6 +78,8 @@ struct em_perf_domain {
 #define em_scale_power(p) (p)
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct em_data_callback {
 	/**
 	 * active_power() - Provide power at the next performance state of
@@ -103,12 +114,20 @@ void em_dev_unregister_perf_domain(struct device *dev);
 
 /**
  * em_cpu_energy() - Estimates the energy consumed by the CPUs of a
+<<<<<<< HEAD
  *		performance domain
+=======
+		performance domain
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @pd		: performance domain for which energy has to be estimated
  * @max_util	: highest utilization among CPUs of the domain
  * @sum_util	: sum of the utilization of all CPUs in the domain
  * @allowed_cpu_cap	: maximum allowed CPU capacity for the @pd, which
+<<<<<<< HEAD
  *			  might reflect reduced frequency (due to thermal)
+=======
+			  might reflect reduced frequency (due to thermal)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * This function must be used only for CPU devices. There is no validation,
  * i.e. if the EM is a CPU type and has cpumask allocated. It is called from

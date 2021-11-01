@@ -76,7 +76,11 @@ static ssize_t amdgpu_rap_debugfs_write(struct file *f, const char __user *buf,
 			dev_info(adev->dev, "RAP L0 validate test success.\n");
 		} else {
 			rap_shared_mem = (struct ta_rap_shared_memory *)
+<<<<<<< HEAD
 					 adev->psp.rap_context.context.mem_context.shared_buf;
+=======
+					 adev->psp.rap_context.rap_shared_buf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			rap_cmd_output = &(rap_shared_mem->rap_out_message.output);
 
 			dev_info(adev->dev, "RAP test failed, the output is:\n");
@@ -119,7 +123,11 @@ void amdgpu_rap_debugfs_init(struct amdgpu_device *adev)
 #if defined(CONFIG_DEBUG_FS)
 	struct drm_minor *minor = adev_to_drm(adev)->primary;
 
+<<<<<<< HEAD
 	if (!adev->psp.rap_context.context.initialized)
+=======
+	if (!adev->psp.rap_context.rap_initialized)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	debugfs_create_file("rap_test", S_IWUSR, minor->debugfs_root,

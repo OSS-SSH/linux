@@ -979,6 +979,10 @@ void crash_kexec(struct pt_regs *regs)
 	old_cpu = atomic_cmpxchg(&panic_cpu, PANIC_CPU_INVALID, this_cpu);
 	if (old_cpu == PANIC_CPU_INVALID) {
 		/* This is the 1st CPU which comes here, so go ahead. */
+<<<<<<< HEAD
+=======
+		printk_safe_flush_on_panic();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		__crash_kexec(regs);
 
 		/*

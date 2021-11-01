@@ -121,7 +121,11 @@ static void os_info_old_init(void)
 
 	if (os_info_init)
 		return;
+<<<<<<< HEAD
 	if (!oldmem_data.start)
+=======
+	if (!OLDMEM_BASE)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fail;
 	if (copy_oldmem_kernel(&addr, &S390_lowcore.os_info, sizeof(addr)))
 		goto fail;

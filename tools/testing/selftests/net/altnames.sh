@@ -45,7 +45,11 @@ altnames_test()
 	check_err $? "Got unexpected long alternative name from link show JSON"
 
 	ip link property del $DUMMY_DEV altname $SHORT_NAME
+<<<<<<< HEAD
 	check_err $? "Failed to delete short alternative name"
+=======
+	check_err $? "Failed to add short alternative name"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ip -j -p link show $SHORT_NAME &>/dev/null
 	check_fail $? "Unexpected success while trying to do link show with deleted short alternative name"

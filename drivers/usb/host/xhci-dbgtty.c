@@ -408,19 +408,37 @@ static int xhci_dbc_tty_register_device(struct xhci_dbc *dbc)
 		return -EBUSY;
 
 	xhci_dbc_tty_init_port(dbc, port);
+<<<<<<< HEAD
 
 	ret = kfifo_alloc(&port->write_fifo, DBC_WRITE_BUF_SIZE, GFP_KERNEL);
 	if (ret)
 		goto err_exit_port;
+=======
+	tty_dev = tty_port_register_device(&port->port,
+					   dbc_tty_driver, 0, NULL);
+	if (IS_ERR(tty_dev)) {
+		ret = PTR_ERR(tty_dev);
+		goto register_fail;
+	}
+
+	ret = kfifo_alloc(&port->write_fifo, DBC_WRITE_BUF_SIZE, GFP_KERNEL);
+	if (ret)
+		goto buf_alloc_fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = xhci_dbc_alloc_requests(dbc, BULK_IN, &port->read_pool,
 				      dbc_read_complete);
 	if (ret)
+<<<<<<< HEAD
 		goto err_free_fifo;
+=======
+		goto request_fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = xhci_dbc_alloc_requests(dbc, BULK_OUT, &port->write_pool,
 				      dbc_write_complete);
 	if (ret)
+<<<<<<< HEAD
 		goto err_free_requests;
 
 	tty_dev = tty_port_register_device(&port->port,
@@ -429,17 +447,32 @@ static int xhci_dbc_tty_register_device(struct xhci_dbc *dbc)
 		ret = PTR_ERR(tty_dev);
 		goto err_free_requests;
 	}
+=======
+		goto request_fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	port->registered = true;
 
 	return 0;
 
+<<<<<<< HEAD
 err_free_requests:
 	xhci_dbc_free_requests(&port->read_pool);
 	xhci_dbc_free_requests(&port->write_pool);
 err_free_fifo:
 	kfifo_free(&port->write_fifo);
 err_exit_port:
+=======
+request_fail:
+	xhci_dbc_free_requests(&port->read_pool);
+	xhci_dbc_free_requests(&port->write_pool);
+	kfifo_free(&port->write_fifo);
+
+buf_alloc_fail:
+	tty_unregister_device(dbc_tty_driver, 0);
+
+register_fail:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xhci_dbc_tty_exit_port(port);
 
 	dev_err(dbc->dev, "can't register tty port, err %d\n", ret);
@@ -539,7 +572,11 @@ static int dbc_tty_init(void)
 	ret = tty_register_driver(dbc_tty_driver);
 	if (ret) {
 		pr_err("Can't register dbc tty driver\n");
+<<<<<<< HEAD
 		tty_driver_kref_put(dbc_tty_driver);
+=======
+		put_tty_driver(dbc_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return ret;
 }
@@ -548,7 +585,11 @@ static void dbc_tty_exit(void)
 {
 	if (dbc_tty_driver) {
 		tty_unregister_driver(dbc_tty_driver);
+<<<<<<< HEAD
 		tty_driver_kref_put(dbc_tty_driver);
+=======
+		put_tty_driver(dbc_tty_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dbc_tty_driver = NULL;
 	}
 }

@@ -6,7 +6,11 @@ config INFINIBAND_IRDMA
 	depends on PCI
 	depends on ICE && I40E
 	select GENERIC_ALLOCATOR
+<<<<<<< HEAD
 	select AUXILIARY_BUS
+=======
+	select CONFIG_AUXILIARY_BUS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This is an Intel(R) Ethernet Protocol Driver for RDMA driver
 	  that support E810 (iWARP/RoCE) and X722 (iWARP) network devices.

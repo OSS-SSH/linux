@@ -64,6 +64,7 @@ int acrn_vm_destroy(struct acrn_vm *vm)
 	    test_and_set_bit(ACRN_VM_FLAG_DESTROYED, &vm->flags))
 		return 0;
 
+<<<<<<< HEAD
 	ret = hcall_destroy_vm(vm->vmid);
 	if (ret < 0) {
 		dev_err(acrn_dev.this_device,
@@ -72,6 +73,8 @@ int acrn_vm_destroy(struct acrn_vm *vm)
 		return ret;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Remove from global VM list */
 	write_lock_bh(&acrn_vm_list_lock);
 	list_del_init(&vm->list);
@@ -86,6 +89,17 @@ int acrn_vm_destroy(struct acrn_vm *vm)
 		vm->monitor_page = NULL;
 	}
 
+<<<<<<< HEAD
+=======
+	ret = hcall_destroy_vm(vm->vmid);
+	if (ret < 0) {
+		dev_err(acrn_dev.this_device,
+			"Failed to destroy VM %u\n", vm->vmid);
+		clear_bit(ACRN_VM_FLAG_DESTROYED, &vm->flags);
+		return ret;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	acrn_vm_all_ram_unmap(vm);
 
 	dev_dbg(acrn_dev.this_device, "VM %u destroyed.\n", vm->vmid);

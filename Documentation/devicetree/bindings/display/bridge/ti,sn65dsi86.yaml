@@ -18,7 +18,11 @@ properties:
     const: ti,sn65dsi86
 
   reg:
+<<<<<<< HEAD
     enum: [ 0x2c, 0x2d ]
+=======
+    const: 0x2d
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   enable-gpios:
     maxItems: 1
@@ -70,9 +74,12 @@ properties:
     const: 1
     description: See ../../pwm/pwm.yaml for description of the cell formats.
 
+<<<<<<< HEAD
   aux-bus:
     $ref: /schemas/display/dp-aux-bus.yaml#
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   ports:
     $ref: /schemas/graph.yaml#/properties/ports
 
@@ -153,6 +160,10 @@ properties:
 required:
   - compatible
   - reg
+<<<<<<< HEAD
+=======
+  - enable-gpios
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   - vccio-supply
   - vpll-supply
   - vcca-supply
@@ -203,11 +214,16 @@ examples:
 
           port@1 {
             reg = <1>;
+<<<<<<< HEAD
             sn65dsi86_out: endpoint {
+=======
+            endpoint {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               remote-endpoint = <&panel_in_edp>;
             };
           };
         };
+<<<<<<< HEAD
 
         aux-bus {
           panel {
@@ -223,6 +239,8 @@ examples:
             };
           };
         };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       };
     };
   - |

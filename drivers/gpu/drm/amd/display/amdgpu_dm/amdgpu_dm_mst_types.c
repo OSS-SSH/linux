@@ -213,6 +213,7 @@ static int dm_dp_mst_get_modes(struct drm_connector *connector)
 			drm_connector_update_edid_property(
 				&aconnector->base,
 				NULL);
+<<<<<<< HEAD
 
 			DRM_DEBUG_KMS("Can't get EDID of %s. Add default remote sink.", connector->name);
 			if (!aconnector->dc_sink) {
@@ -236,6 +237,8 @@ static int dm_dp_mst_get_modes(struct drm_connector *connector)
 				aconnector->dc_sink = dc_sink;
 			}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return ret;
 		}
 
@@ -518,7 +521,16 @@ struct dsc_mst_fairness_params {
 	uint32_t num_slices_h;
 	uint32_t num_slices_v;
 	uint32_t bpp_overwrite;
+<<<<<<< HEAD
 	struct amdgpu_dm_connector *aconnector;
+=======
+};
+
+struct dsc_mst_fairness_vars {
+	int pbn;
+	bool dsc_enabled;
+	int bpp_x16;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int kbps_to_peak_pbn(int kbps)
@@ -745,12 +757,20 @@ static void try_disable_dsc(struct drm_atomic_state *state,
 
 static bool compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
 					     struct dc_state *dc_state,
+<<<<<<< HEAD
 					     struct dc_link *dc_link,
 					     struct dsc_mst_fairness_vars *vars)
+=======
+					     struct dc_link *dc_link)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i;
 	struct dc_stream_state *stream;
 	struct dsc_mst_fairness_params params[MAX_PIPES];
+<<<<<<< HEAD
+=======
+	struct dsc_mst_fairness_vars vars[MAX_PIPES];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct amdgpu_dm_connector *aconnector;
 	int count = 0;
 	bool debugfs_overwrite = false;
@@ -771,7 +791,10 @@ static bool compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
 		params[count].timing = &stream->timing;
 		params[count].sink = stream->sink;
 		aconnector = (struct amdgpu_dm_connector *)stream->dm_stream_context;
+<<<<<<< HEAD
 		params[count].aconnector = aconnector;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		params[count].port = aconnector->port;
 		params[count].clock_force_enable = aconnector->dsc_settings.dsc_force_enable;
 		if (params[count].clock_force_enable == DSC_CLK_FORCE_ENABLE)
@@ -794,7 +817,10 @@ static bool compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
 	}
 	/* Try no compression */
 	for (i = 0; i < count; i++) {
+<<<<<<< HEAD
 		vars[i].aconnector = params[i].aconnector;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		vars[i].pbn = kbps_to_peak_pbn(params[i].bw_range.stream_kbps);
 		vars[i].dsc_enabled = false;
 		vars[i].bpp_x16 = 0;
@@ -848,8 +874,12 @@ static bool compute_mst_dsc_configs_for_link(struct drm_atomic_state *state,
 }
 
 bool compute_mst_dsc_configs_for_state(struct drm_atomic_state *state,
+<<<<<<< HEAD
 				       struct dc_state *dc_state,
 				       struct dsc_mst_fairness_vars *vars)
+=======
+				       struct dc_state *dc_state)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i, j;
 	struct dc_stream_state *stream;
@@ -880,7 +910,11 @@ bool compute_mst_dsc_configs_for_state(struct drm_atomic_state *state,
 			return false;
 
 		mutex_lock(&aconnector->mst_mgr.lock);
+<<<<<<< HEAD
 		if (!compute_mst_dsc_configs_for_link(state, dc_state, stream->link, vars)) {
+=======
+		if (!compute_mst_dsc_configs_for_link(state, dc_state, stream->link)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			mutex_unlock(&aconnector->mst_mgr.lock);
 			return false;
 		}

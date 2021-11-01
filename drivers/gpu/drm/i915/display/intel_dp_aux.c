@@ -158,6 +158,10 @@ static u32 skl_get_aux_send_ctl(struct intel_dp *intel_dp,
 	/*
 	 * Max timeout values:
 	 * SKL-GLK: 1.6ms
+<<<<<<< HEAD
+=======
+	 * CNL: 3.2ms
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * ICL+: 4ms
 	 */
 	ret = DP_AUX_CH_CTL_SEND_BUSY |

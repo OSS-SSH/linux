@@ -635,8 +635,13 @@ struct drm_gem_open {
 /**
  * DRM_CAP_VBLANK_HIGH_CRTC
  *
+<<<<<<< HEAD
  * If set to 1, the kernel supports specifying a :ref:`CRTC index<crtc_index>`
  * in the high bits of &drm_wait_vblank_request.type.
+=======
+ * If set to 1, the kernel supports specifying a CRTC index in the high bits of
+ * &drm_wait_vblank_request.type.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Starting kernel version 2.6.39, this capability is always set to 1.
  */
@@ -1050,6 +1055,7 @@ extern "C" {
 #define DRM_IOCTL_MODE_GETPROPBLOB	DRM_IOWR(0xAC, struct drm_mode_get_blob)
 #define DRM_IOCTL_MODE_GETFB		DRM_IOWR(0xAD, struct drm_mode_fb_cmd)
 #define DRM_IOCTL_MODE_ADDFB		DRM_IOWR(0xAE, struct drm_mode_fb_cmd)
+<<<<<<< HEAD
 /**
  * DRM_IOCTL_MODE_RMFB - Remove a framebuffer.
  *
@@ -1060,6 +1066,8 @@ extern "C" {
  * disable that plane. The CRTC the plane is linked to may also be disabled
  * (depending on driver capabilities).
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define DRM_IOCTL_MODE_RMFB		DRM_IOWR(0xAF, unsigned int)
 #define DRM_IOCTL_MODE_PAGE_FLIP	DRM_IOWR(0xB0, struct drm_mode_crtc_page_flip)
 #define DRM_IOCTL_MODE_DIRTYFB		DRM_IOWR(0xB1, struct drm_mode_fb_dirty_cmd)

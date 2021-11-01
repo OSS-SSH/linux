@@ -120,7 +120,11 @@ static irqreturn_t mpc8xxx_gpio_irq_cascade(int irq, void *data)
 	mask = gc->read_reg(mpc8xxx_gc->regs + GPIO_IER)
 		& gc->read_reg(mpc8xxx_gc->regs + GPIO_IMR);
 	for_each_set_bit(i, &mask, 32)
+<<<<<<< HEAD
 		generic_handle_domain_irq(mpc8xxx_gc->irq, 31 - i);
+=======
+		generic_handle_irq(irq_linear_revmap(mpc8xxx_gc->irq, 31 - i));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return IRQ_HANDLED;
 }
@@ -332,7 +336,11 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 				 mpc8xxx_gc->regs + GPIO_DIR, NULL,
 				 BGPIOF_BIG_ENDIAN);
 		if (ret)
+<<<<<<< HEAD
 			return ret;
+=======
+			goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_dbg(&pdev->dev, "GPIO registers are LITTLE endian\n");
 	} else {
 		ret = bgpio_init(gc, &pdev->dev, 4,
@@ -342,7 +350,11 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 				 BGPIOF_BIG_ENDIAN
 				 | BGPIOF_BIG_ENDIAN_BYTE_ORDER);
 		if (ret)
+<<<<<<< HEAD
 			return ret;
+=======
+			goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_dbg(&pdev->dev, "GPIO registers are BIG endian\n");
 	}
 
@@ -380,11 +392,19 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 	    is_acpi_node(fwnode))
 		gc->write_reg(mpc8xxx_gc->regs + GPIO_IBE, 0xffffffff);
 
+<<<<<<< HEAD
 	ret = devm_gpiochip_add_data(&pdev->dev, gc, mpc8xxx_gc);
 	if (ret) {
 		dev_err(&pdev->dev,
 			"GPIO chip registration failed with status %d\n", ret);
 		return ret;
+=======
+	ret = gpiochip_add_data(gc, mpc8xxx_gc);
+	if (ret) {
+		dev_err(&pdev->dev,
+			"GPIO chip registration failed with status %d\n", ret);
+		goto err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	mpc8xxx_gc->irqn = platform_get_irq(pdev, 0);
@@ -405,7 +425,11 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 
 	ret = devm_request_irq(&pdev->dev, mpc8xxx_gc->irqn,
 			       mpc8xxx_gpio_irq_cascade,
+<<<<<<< HEAD
 			       IRQF_NO_THREAD | IRQF_SHARED, "gpio-cascade",
+=======
+			       IRQF_SHARED, "gpio-cascade",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			       mpc8xxx_gc);
 	if (ret) {
 		dev_err(&pdev->dev,
@@ -416,7 +440,11 @@ static int mpc8xxx_probe(struct platform_device *pdev)
 
 	return 0;
 err:
+<<<<<<< HEAD
 	irq_domain_remove(mpc8xxx_gc->irq);
+=======
+	iounmap(mpc8xxx_gc->regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -429,6 +457,12 @@ static int mpc8xxx_remove(struct platform_device *pdev)
 		irq_domain_remove(mpc8xxx_gc->irq);
 	}
 
+<<<<<<< HEAD
+=======
+	gpiochip_remove(&mpc8xxx_gc->gc);
+	iounmap(mpc8xxx_gc->regs);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

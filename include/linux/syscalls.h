@@ -915,7 +915,10 @@ asmlinkage long sys_mincore(unsigned long start, size_t len,
 asmlinkage long sys_madvise(unsigned long start, size_t len, int behavior);
 asmlinkage long sys_process_madvise(int pidfd, const struct iovec __user *vec,
 			size_t vlen, int behavior, unsigned int flags);
+<<<<<<< HEAD
 asmlinkage long sys_process_mrelease(int pidfd, unsigned int flags);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 asmlinkage long sys_remap_file_pages(unsigned long start, unsigned long size,
 			unsigned long prot, unsigned long pgoff,
 			unsigned long flags);
@@ -1159,6 +1162,10 @@ asmlinkage long sys_ustat(unsigned dev, struct ustat __user *ubuf);
 asmlinkage long sys_vfork(void);
 asmlinkage long sys_recv(int, void __user *, size_t, unsigned);
 asmlinkage long sys_send(int, void __user *, size_t, unsigned);
+<<<<<<< HEAD
+=======
+asmlinkage long sys_bdflush(int func, long data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 asmlinkage long sys_oldumount(char __user *name);
 asmlinkage long sys_uselib(const char __user *library);
 asmlinkage long sys_sysfs(int option,
@@ -1373,9 +1380,12 @@ long ksys_old_shmctl(int shmid, int cmd, struct shmid_ds __user *buf);
 long compat_ksys_semtimedop(int semid, struct sembuf __user *tsems,
 			    unsigned int nsops,
 			    const struct old_timespec32 __user *timeout);
+<<<<<<< HEAD
 long __do_semtimedop(int semid, struct sembuf *tsems, unsigned int nsops,
 		     const struct timespec64 *timeout,
 		     struct ipc_namespace *ns);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int __sys_getsockopt(int fd, int level, int optname, char __user *optval,
 		int __user *optlen);

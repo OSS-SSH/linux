@@ -8,6 +8,12 @@
 
 #endif /* defined(__sparc__) && defined(__arch64__) */
 
+<<<<<<< HEAD
+=======
+
+#define __ARCH_SI_TRAPNO
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm-generic/siginfo.h>
 
 

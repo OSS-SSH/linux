@@ -72,7 +72,11 @@ static int create_beep_ctls(struct hda_codec *codec)
 #define create_beep_ctls(codec)		0
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_PM
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void ad198x_power_eapd_write(struct hda_codec *codec, hda_nid_t front,
 				hda_nid_t hp)
 {
@@ -112,10 +116,23 @@ static void ad198x_power_eapd(struct hda_codec *codec)
 	}
 }
 
+<<<<<<< HEAD
 static int ad198x_suspend(struct hda_codec *codec)
 {
 	snd_hda_shutup_pins(codec);
 	ad198x_power_eapd(codec);
+=======
+static void ad198x_shutup(struct hda_codec *codec)
+{
+	snd_hda_shutup_pins(codec);
+	ad198x_power_eapd(codec);
+}
+
+#ifdef CONFIG_PM
+static int ad198x_suspend(struct hda_codec *codec)
+{
+	ad198x_shutup(codec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 #endif
@@ -162,6 +179,10 @@ static const struct hda_codec_ops ad198x_auto_patch_ops = {
 	.check_power_status = snd_hda_gen_check_power_status,
 	.suspend = ad198x_suspend,
 #endif
+<<<<<<< HEAD
+=======
+	.reboot_notify = ad198x_shutup,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 

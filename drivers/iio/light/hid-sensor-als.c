@@ -294,8 +294,13 @@ static int hid_als_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	indio_dev->channels = devm_kmemdup(&pdev->dev, als_channels,
 					   sizeof(als_channels), GFP_KERNEL);
+=======
+	indio_dev->channels = kmemdup(als_channels,
+				      sizeof(als_channels), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!indio_dev->channels) {
 		dev_err(&pdev->dev, "failed to duplicate channels\n");
 		return -ENOMEM;
@@ -306,7 +311,11 @@ static int hid_als_probe(struct platform_device *pdev)
 			       HID_USAGE_SENSOR_ALS, als_state);
 	if (ret) {
 		dev_err(&pdev->dev, "failed to setup attributes\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto error_free_dev_mem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	indio_dev->num_channels =
@@ -321,7 +330,11 @@ static int hid_als_probe(struct platform_device *pdev)
 				&als_state->common_attributes);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "trigger setup failed\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto error_free_dev_mem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = iio_device_register(indio_dev);
@@ -346,6 +359,11 @@ error_iio_unreg:
 	iio_device_unregister(indio_dev);
 error_remove_trigger:
 	hid_sensor_remove_trigger(indio_dev, &als_state->common_attributes);
+<<<<<<< HEAD
+=======
+error_free_dev_mem:
+	kfree(indio_dev->channels);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -359,6 +377,10 @@ static int hid_als_remove(struct platform_device *pdev)
 	sensor_hub_remove_callback(hsdev, HID_USAGE_SENSOR_ALS);
 	iio_device_unregister(indio_dev);
 	hid_sensor_remove_trigger(indio_dev, &als_state->common_attributes);
+<<<<<<< HEAD
+=======
+	kfree(indio_dev->channels);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

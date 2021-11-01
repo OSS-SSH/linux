@@ -29,8 +29,11 @@ properties:
     description:
       Regulator for the LRADC reference voltage
 
+<<<<<<< HEAD
   wakeup-source: true
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 patternProperties:
   "^button-[0-9]+$":
     type: object

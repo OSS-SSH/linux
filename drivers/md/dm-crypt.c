@@ -2223,11 +2223,19 @@ static void kcryptd_queue_crypt(struct dm_crypt_io *io)
 	if ((bio_data_dir(io->base_bio) == READ && test_bit(DM_CRYPT_NO_READ_WORKQUEUE, &cc->flags)) ||
 	    (bio_data_dir(io->base_bio) == WRITE && test_bit(DM_CRYPT_NO_WRITE_WORKQUEUE, &cc->flags))) {
 		/*
+<<<<<<< HEAD
 		 * in_hardirq(): Crypto API's skcipher_walk_first() refuses to work in hard IRQ context.
 		 * irqs_disabled(): the kernel may run some IO completion from the idle thread, but
 		 * it is being executed with irqs disabled.
 		 */
 		if (in_hardirq() || irqs_disabled()) {
+=======
+		 * in_irq(): Crypto API's skcipher_walk_first() refuses to work in hard IRQ context.
+		 * irqs_disabled(): the kernel may run some IO completion from the idle thread, but
+		 * it is being executed with irqs disabled.
+		 */
+		if (in_irq() || irqs_disabled()) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			tasklet_init(&io->tasklet, kcryptd_crypt_tasklet, (unsigned long)&io->work);
 			tasklet_schedule(&io->tasklet);
 			return;
@@ -2661,12 +2669,16 @@ static void *crypt_page_alloc(gfp_t gfp_mask, void *pool_data)
 	struct crypt_config *cc = pool_data;
 	struct page *page;
 
+<<<<<<< HEAD
 	/*
 	 * Note, percpu_counter_read_positive() may over (and under) estimate
 	 * the current usage by at most (batch - 1) * num_online_cpus() pages,
 	 * but avoids potential spinlock contention of an exact result.
 	 */
 	if (unlikely(percpu_counter_read_positive(&cc->n_allocated_pages) >= dm_crypt_pages_per_client) &&
+=======
+	if (unlikely(percpu_counter_compare(&cc->n_allocated_pages, dm_crypt_pages_per_client) >= 0) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    likely(gfp_mask & __GFP_NORETRY))
 		return NULL;
 
@@ -3490,6 +3502,7 @@ static void crypt_status(struct dm_target *ti, status_type_t type,
 			if (test_bit(CRYPT_IV_LARGE_SECTORS, &cc->cipher_flags))
 				DMEMIT(" iv_large_sectors");
 		}
+<<<<<<< HEAD
 		break;
 
 	case STATUSTYPE_IMA:
@@ -3518,6 +3531,9 @@ static void crypt_status(struct dm_target *ti, status_type_t type,
 		DMEMIT(",key_extra_size=%u", cc->key_extra_size);
 		DMEMIT(",key_mac_size=%u", cc->key_mac_size);
 		DMEMIT(";");
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	}
 }

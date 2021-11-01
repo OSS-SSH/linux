@@ -12,7 +12,10 @@
 #include <linux/of_address.h>
 #include <linux/of_irq.h>
 #include <linux/platform_device.h>
+<<<<<<< HEAD
 #include <linux/pm_wakeirq.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "mtu3.h"
 #include "mtu3_dr.h"
@@ -45,6 +48,7 @@ int ssusb_check_clocks(struct ssusb_mtk *ssusb, u32 ex_clks)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int wait_for_ip_sleep(struct ssusb_mtk *ssusb)
 {
 	bool sleep_check = true;
@@ -71,6 +75,8 @@ static int wait_for_ip_sleep(struct ssusb_mtk *ssusb)
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ssusb_phy_init(struct ssusb_mtk *ssusb)
 {
 	int i;
@@ -235,10 +241,13 @@ static int get_ssusb_rscs(struct platform_device *pdev, struct ssusb_mtk *ssusb)
 	if (IS_ERR(ssusb->ippc_base))
 		return PTR_ERR(ssusb->ippc_base);
 
+<<<<<<< HEAD
 	ssusb->wakeup_irq = platform_get_irq_byname_optional(pdev, "wakeup");
 	if (ssusb->wakeup_irq == -EPROBE_DEFER)
 		return ssusb->wakeup_irq;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ssusb->dr_mode = usb_get_dr_mode(dev);
 	if (ssusb->dr_mode == USB_DR_MODE_UNKNOWN)
 		ssusb->dr_mode = USB_DR_MODE_OTG;
@@ -256,8 +265,11 @@ static int get_ssusb_rscs(struct platform_device *pdev, struct ssusb_mtk *ssusb)
 	/* optional property, ignore the error if it does not exist */
 	of_property_read_u32(node, "mediatek,u3p-dis-msk",
 			     &ssusb->u3p_dis_msk);
+<<<<<<< HEAD
 	of_property_read_u32(node, "mediatek,u2p-dis-msk",
 			     &ssusb->u2p_dis_msk);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	otg_sx->vbus = devm_regulator_get(dev, "vbus");
 	if (IS_ERR(otg_sx->vbus)) {
@@ -274,9 +286,12 @@ static int get_ssusb_rscs(struct platform_device *pdev, struct ssusb_mtk *ssusb)
 		of_property_read_bool(node, "enable-manual-drd");
 	otg_sx->role_sw_used = of_property_read_bool(node, "usb-role-switch");
 
+<<<<<<< HEAD
 	/* can't disable port0 when use dual-role mode */
 	ssusb->u2p_dis_msk &= ~0x1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (otg_sx->role_sw_used || otg_sx->manual_drd_enabled)
 		goto out;
 
@@ -289,11 +304,17 @@ static int get_ssusb_rscs(struct platform_device *pdev, struct ssusb_mtk *ssusb)
 	}
 
 out:
+<<<<<<< HEAD
 	dev_info(dev, "dr_mode: %d, is_u3_dr: %d, drd: %s\n",
 		 ssusb->dr_mode, otg_sx->is_u3_drd,
 		otg_sx->manual_drd_enabled ? "manual" : "auto");
 	dev_info(dev, "u2p_dis_msk: %x, u3p_dis_msk: %x\n",
 		 ssusb->u2p_dis_msk, ssusb->u3p_dis_msk);
+=======
+	dev_info(dev, "dr_mode: %d, is_u3_dr: %d, u3p_dis_msk: %x, drd: %s\n",
+		ssusb->dr_mode, otg_sx->is_u3_drd, ssusb->u3p_dis_msk,
+		otg_sx->manual_drd_enabled ? "manual" : "auto");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -326,16 +347,23 @@ static int mtu3_probe(struct platform_device *pdev)
 	ssusb_debugfs_create_root(ssusb);
 
 	/* enable power domain */
+<<<<<<< HEAD
 	pm_runtime_set_active(dev);
 	pm_runtime_use_autosuspend(dev);
 	pm_runtime_set_autosuspend_delay(dev, 4000);
 	pm_runtime_enable(dev);
 	pm_runtime_get_sync(dev);
+=======
+	pm_runtime_enable(dev);
+	pm_runtime_get_sync(dev);
+	device_enable_async_suspend(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = ssusb_rscs_init(ssusb);
 	if (ret)
 		goto comm_init_err;
 
+<<<<<<< HEAD
 	if (ssusb->wakeup_irq > 0) {
 		ret = dev_pm_set_dedicated_wake_irq(dev, ssusb->wakeup_irq);
 		if (ret) {
@@ -345,6 +373,8 @@ static int mtu3_probe(struct platform_device *pdev)
 		dev_info(dev, "wakeup irq %d\n", ssusb->wakeup_irq);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ssusb_ip_sw_reset(ssusb);
 
 	if (IS_ENABLED(CONFIG_USB_MTU3_HOST))
@@ -395,11 +425,14 @@ static int mtu3_probe(struct platform_device *pdev)
 		goto comm_exit;
 	}
 
+<<<<<<< HEAD
 	device_enable_async_suspend(dev);
 	pm_runtime_mark_last_busy(dev);
 	pm_runtime_put_autosuspend(dev);
 	pm_runtime_forbid(dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 host_exit:
@@ -409,7 +442,11 @@ gadget_exit:
 comm_exit:
 	ssusb_rscs_exit(ssusb);
 comm_init_err:
+<<<<<<< HEAD
 	pm_runtime_put_noidle(dev);
+=======
+	pm_runtime_put_sync(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pm_runtime_disable(dev);
 	ssusb_debugfs_remove_root(ssusb);
 
@@ -420,8 +457,11 @@ static int mtu3_remove(struct platform_device *pdev)
 {
 	struct ssusb_mtk *ssusb = platform_get_drvdata(pdev);
 
+<<<<<<< HEAD
 	pm_runtime_get_sync(&pdev->dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (ssusb->dr_mode) {
 	case USB_DR_MODE_PERIPHERAL:
 		ssusb_gadget_exit(ssusb);
@@ -439,6 +479,7 @@ static int mtu3_remove(struct platform_device *pdev)
 	}
 
 	ssusb_rscs_exit(ssusb);
+<<<<<<< HEAD
 	ssusb_debugfs_remove_root(ssusb);
 	pm_runtime_disable(&pdev->dev);
 	pm_runtime_put_noidle(&pdev->dev);
@@ -465,10 +506,16 @@ static int resume_ip_and_ports(struct ssusb_mtk *ssusb, pm_message_t msg)
 	default:
 		return -EINVAL;
 	}
+=======
+	pm_runtime_put_sync(&pdev->dev);
+	pm_runtime_disable(&pdev->dev);
+	ssusb_debugfs_remove_root(ssusb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static int mtu3_suspend_common(struct device *dev, pm_message_t msg)
 {
 	struct ssusb_mtk *ssusb = dev_get_drvdata(dev);
@@ -514,12 +561,43 @@ err:
 }
 
 static int mtu3_resume_common(struct device *dev, pm_message_t msg)
+=======
+/*
+ * when support dual-role mode, we reject suspend when
+ * it works as device mode;
+ */
+static int __maybe_unused mtu3_suspend(struct device *dev)
+{
+	struct ssusb_mtk *ssusb = dev_get_drvdata(dev);
+
+	dev_dbg(dev, "%s\n", __func__);
+
+	/* REVISIT: disconnect it for only device mode? */
+	if (!ssusb->is_host)
+		return 0;
+
+	ssusb_host_disable(ssusb, true);
+	ssusb_phy_power_off(ssusb);
+	clk_bulk_disable_unprepare(BULK_CLKS_CNT, ssusb->clks);
+	ssusb_wakeup_set(ssusb, true);
+
+	return 0;
+}
+
+static int __maybe_unused mtu3_resume(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ssusb_mtk *ssusb = dev_get_drvdata(dev);
 	int ret;
 
 	dev_dbg(dev, "%s\n", __func__);
 
+<<<<<<< HEAD
+=======
+	if (!ssusb->is_host)
+		return 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ssusb_wakeup_set(ssusb, false);
 	ret = clk_bulk_prepare_enable(BULK_CLKS_CNT, ssusb->clks);
 	if (ret)
@@ -529,7 +607,13 @@ static int mtu3_resume_common(struct device *dev, pm_message_t msg)
 	if (ret)
 		goto phy_err;
 
+<<<<<<< HEAD
 	return resume_ip_and_ports(ssusb, msg);
+=======
+	ssusb_host_enable(ssusb);
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 phy_err:
 	clk_bulk_disable_unprepare(BULK_CLKS_CNT, ssusb->clks);
@@ -537,6 +621,7 @@ clks_err:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int __maybe_unused mtu3_suspend(struct device *dev)
 {
 	return mtu3_suspend_common(dev, PMSG_SUSPEND);
@@ -567,6 +652,10 @@ static const struct dev_pm_ops mtu3_pm_ops = {
 	SET_SYSTEM_SLEEP_PM_OPS(mtu3_suspend, mtu3_resume)
 	SET_RUNTIME_PM_OPS(mtu3_runtime_suspend,
 			   mtu3_runtime_resume, NULL)
+=======
+static const struct dev_pm_ops mtu3_pm_ops = {
+	SET_SYSTEM_SLEEP_PM_OPS(mtu3_suspend, mtu3_resume)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define DEV_PM_OPS (IS_ENABLED(CONFIG_PM) ? &mtu3_pm_ops : NULL)

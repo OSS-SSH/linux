@@ -92,12 +92,23 @@ static ssize_t flash_strobe_store(struct device *dev,
 	struct led_classdev *led_cdev = dev_get_drvdata(dev);
 	struct led_classdev_flash *fled_cdev = lcdev_to_flcdev(led_cdev);
 	unsigned long state;
+<<<<<<< HEAD
 	ssize_t ret = -EBUSY;
 
 	mutex_lock(&led_cdev->led_access);
 
 	if (led_sysfs_is_disabled(led_cdev))
 		goto unlock;
+=======
+	ssize_t ret = -EINVAL;
+
+	mutex_lock(&led_cdev->led_access);
+
+	if (led_sysfs_is_disabled(led_cdev)) {
+		ret = -EBUSY;
+		goto unlock;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = kstrtoul(buf, 10, &state);
 	if (ret)

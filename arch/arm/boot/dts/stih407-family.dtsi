@@ -616,6 +616,7 @@
 			st,lpc-mode = <ST_LPC_MODE_CLKSRC>;
 		};
 
+<<<<<<< HEAD
 		spifsm: spifsm@9022000{
 			compatible = "st,spi-fsm";
 			reg = <0x9022000 0x1000>;
@@ -631,6 +632,8 @@
 			status = "disabled";
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sata0: sata@9b20000 {
 			compatible = "st,ahci";
 			reg = <0x9b20000 0x1000>;

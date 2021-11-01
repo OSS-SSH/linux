@@ -6,7 +6,10 @@
 
 #include <drm/drm_atomic.h>
 #include <drm/drm_atomic_helper.h>
+<<<<<<< HEAD
 #include <drm/drm_gem_atomic_helper.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_plane_helper.h>
 
 #include "omap_dmm_tiler.h"
@@ -30,8 +33,11 @@ static int omap_plane_prepare_fb(struct drm_plane *plane,
 	if (!new_state->fb)
 		return 0;
 
+<<<<<<< HEAD
 	drm_gem_plane_helper_prepare_fb(plane, new_state);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return omap_framebuffer_pin(new_state->fb);
 }
 

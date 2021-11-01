@@ -437,13 +437,21 @@ static int intel_pmu_set_msr(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
 			    !(msr & MSR_PMC_FULL_WIDTH_BIT))
 				data = (s64)(s32)data;
 			pmc->counter += data - pmc_read_counter(pmc);
+<<<<<<< HEAD
 			if (pmc->perf_event && !pmc->is_paused)
+=======
+			if (pmc->perf_event)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				perf_event_period(pmc->perf_event,
 						  get_sample_period(pmc, data));
 			return 0;
 		} else if ((pmc = get_fixed_pmc(pmu, msr))) {
 			pmc->counter += data - pmc_read_counter(pmc);
+<<<<<<< HEAD
 			if (pmc->perf_event && !pmc->is_paused)
+=======
+			if (pmc->perf_event)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				perf_event_period(pmc->perf_event,
 						  get_sample_period(pmc, data));
 			return 0;

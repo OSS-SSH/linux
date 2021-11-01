@@ -8,14 +8,23 @@
 #include <linux/debugfs.h>
 #include <linux/sunrpc/sched.h>
 #include <linux/sunrpc/clnt.h>
+<<<<<<< HEAD
 
 #include "netns.h"
 #include "fail.h"
+=======
+#include "netns.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct dentry *topdir;
 static struct dentry *rpc_clnt_dir;
 static struct dentry *rpc_xprt_dir;
 
+<<<<<<< HEAD
+=======
+unsigned int rpc_inject_disconnect;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 tasks_show(struct seq_file *f, void *v)
 {
@@ -90,7 +99,11 @@ static int tasks_open(struct inode *inode, struct file *filp)
 		struct seq_file *seq = filp->private_data;
 		struct rpc_clnt *clnt = seq->private = inode->i_private;
 
+<<<<<<< HEAD
 		if (!refcount_inc_not_zero(&clnt->cl_count)) {
+=======
+		if (!atomic_inc_not_zero(&clnt->cl_count)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			seq_release(inode, filp);
 			ret = -EINVAL;
 		}
@@ -235,6 +248,11 @@ rpc_xprt_debugfs_register(struct rpc_xprt *xprt)
 	/* make tasks file */
 	debugfs_create_file("info", S_IFREG | 0400, xprt->debugfs, xprt,
 			    &xprt_info_fops);
+<<<<<<< HEAD
+=======
+
+	atomic_set(&xprt->inject_disconnect, rpc_inject_disconnect);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void
@@ -244,6 +262,7 @@ rpc_xprt_debugfs_unregister(struct rpc_xprt *xprt)
 	xprt->debugfs = NULL;
 }
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_FAIL_SUNRPC)
 struct fail_sunrpc_attr fail_sunrpc = {
 	.attr			= FAULT_ATTR_INITIALIZER,
@@ -268,6 +287,58 @@ static void fail_sunrpc_init(void)
 {
 }
 #endif
+=======
+static int
+fault_open(struct inode *inode, struct file *filp)
+{
+	filp->private_data = kmalloc(128, GFP_KERNEL);
+	if (!filp->private_data)
+		return -ENOMEM;
+	return 0;
+}
+
+static int
+fault_release(struct inode *inode, struct file *filp)
+{
+	kfree(filp->private_data);
+	return 0;
+}
+
+static ssize_t
+fault_disconnect_read(struct file *filp, char __user *user_buf,
+		      size_t len, loff_t *offset)
+{
+	char *buffer = (char *)filp->private_data;
+	size_t size;
+
+	size = sprintf(buffer, "%u\n", rpc_inject_disconnect);
+	return simple_read_from_buffer(user_buf, len, offset, buffer, size);
+}
+
+static ssize_t
+fault_disconnect_write(struct file *filp, const char __user *user_buf,
+		       size_t len, loff_t *offset)
+{
+	char buffer[16];
+
+	if (len >= sizeof(buffer))
+		len = sizeof(buffer) - 1;
+	if (copy_from_user(buffer, user_buf, len))
+		return -EFAULT;
+	buffer[len] = '\0';
+	if (kstrtouint(buffer, 10, &rpc_inject_disconnect))
+		return -EINVAL;
+	return len;
+}
+
+static const struct file_operations fault_disconnect_fops = {
+	.owner		= THIS_MODULE,
+	.open		= fault_open,
+	.read		= fault_disconnect_read,
+	.write		= fault_disconnect_write,
+	.release	= fault_release,
+};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void __exit
 sunrpc_debugfs_exit(void)
@@ -281,11 +352,23 @@ sunrpc_debugfs_exit(void)
 void __init
 sunrpc_debugfs_init(void)
 {
+<<<<<<< HEAD
+=======
+	struct dentry *rpc_fault_dir;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	topdir = debugfs_create_dir("sunrpc", NULL);
 
 	rpc_clnt_dir = debugfs_create_dir("rpc_clnt", topdir);
 
 	rpc_xprt_dir = debugfs_create_dir("rpc_xprt", topdir);
 
+<<<<<<< HEAD
 	fail_sunrpc_init();
+=======
+	rpc_fault_dir = debugfs_create_dir("inject_fault", topdir);
+
+	debugfs_create_file("disconnect", S_IFREG | 0400, rpc_fault_dir, NULL,
+			    &fault_disconnect_fops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

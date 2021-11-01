@@ -23,9 +23,15 @@ description: |+
 
 properties:
   compatible:
+<<<<<<< HEAD
     enum:
       - intel,lgm-emmc-phy
       - intel,keembay-emmc-phy
+=======
+    oneOf:
+      - const: intel,lgm-emmc-phy
+      - const: intel,keembay-emmc-phy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   "#phy-cells":
     const: 0

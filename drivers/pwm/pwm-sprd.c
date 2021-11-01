@@ -183,10 +183,20 @@ static int sprd_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 			}
 		}
 
+<<<<<<< HEAD
 		ret = sprd_pwm_config(spc, pwm, state->duty_cycle,
 				      state->period);
 		if (ret)
 			return ret;
+=======
+		if (state->period != cstate->period ||
+		    state->duty_cycle != cstate->duty_cycle) {
+			ret = sprd_pwm_config(spc, pwm, state->duty_cycle,
+					      state->period);
+			if (ret)
+				return ret;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		sprd_pwm_write(spc, pwm->hwpwm, SPRD_PWM_ENABLE, 1);
 	} else if (cstate->enabled) {

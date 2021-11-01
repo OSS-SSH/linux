@@ -10,8 +10,11 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
+<<<<<<< HEAD
 #include <ctype.h>
 #include <endian.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <errno.h>
 #include <linux/err.h>
 #include <linux/btf.h>
@@ -55,6 +58,7 @@ struct btf_dump_type_aux_state {
 	__u8 referenced: 1;
 };
 
+<<<<<<< HEAD
 /* indent string length; one indent string is added for each indent level */
 #define BTF_DATA_INDENT_STR_LEN			32
 
@@ -75,6 +79,8 @@ struct btf_dump_data {
 	bool is_array_char;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct btf_dump {
 	const struct btf *btf;
 	const struct btf_ext *btf_ext;
@@ -82,7 +88,10 @@ struct btf_dump {
 	struct btf_dump_opts opts;
 	int ptr_sz;
 	bool strip_mods;
+<<<<<<< HEAD
 	bool skip_anon_defs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int last_id;
 
 	/* per-type auxiliary state */
@@ -112,10 +121,13 @@ struct btf_dump {
 	 * name occurrences
 	 */
 	struct hashmap *ident_names;
+<<<<<<< HEAD
 	/*
 	 * data for typed display; allocated if needed.
 	 */
 	struct btf_dump_data *typed_dump;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static size_t str_hash_fn(const void *key, void *ctx)
@@ -792,11 +804,19 @@ static void btf_dump_emit_type(struct btf_dump *d, __u32 id, __u32 cont_id)
 		break;
 	case BTF_KIND_FUNC_PROTO: {
 		const struct btf_param *p = btf_params(t);
+<<<<<<< HEAD
 		__u16 n = btf_vlen(t);
 		int i;
 
 		btf_dump_emit_type(d, t->type, cont_id);
 		for (i = 0; i < n; i++, p++)
+=======
+		__u16 vlen = btf_vlen(t);
+		int i;
+
+		btf_dump_emit_type(d, t->type, cont_id);
+		for (i = 0; i < vlen; i++, p++)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			btf_dump_emit_type(d, p->type, cont_id);
 
 		break;
@@ -879,9 +899,14 @@ static void btf_dump_emit_bit_padding(const struct btf_dump *d,
 static void btf_dump_emit_struct_fwd(struct btf_dump *d, __u32 id,
 				     const struct btf_type *t)
 {
+<<<<<<< HEAD
 	btf_dump_printf(d, "%s%s%s",
 			btf_is_struct(t) ? "struct" : "union",
 			t->name_off ? " " : "",
+=======
+	btf_dump_printf(d, "%s %s",
+			btf_is_struct(t) ? "struct" : "union",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			btf_dump_type_name(d, id));
 }
 
@@ -1287,7 +1312,11 @@ static void btf_dump_emit_type_chain(struct btf_dump *d,
 		case BTF_KIND_UNION:
 			btf_dump_emit_mods(d, decls);
 			/* inline anonymous struct/union */
+<<<<<<< HEAD
 			if (t->name_off == 0 && !d->skip_anon_defs)
+=======
+			if (t->name_off == 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				btf_dump_emit_struct_def(d, id, t, lvl);
 			else
 				btf_dump_emit_struct_fwd(d, id, t);
@@ -1295,7 +1324,11 @@ static void btf_dump_emit_type_chain(struct btf_dump *d,
 		case BTF_KIND_ENUM:
 			btf_dump_emit_mods(d, decls);
 			/* inline anonymous enum */
+<<<<<<< HEAD
 			if (t->name_off == 0 && !d->skip_anon_defs)
+=======
+			if (t->name_off == 0)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				btf_dump_emit_enum_def(d, id, t, lvl);
 			else
 				btf_dump_emit_enum_fwd(d, id, t);
@@ -1420,6 +1453,7 @@ static void btf_dump_emit_type_chain(struct btf_dump *d,
 	btf_dump_emit_name(d, fname, last_was_ptr);
 }
 
+<<<<<<< HEAD
 /* show type name as (type_name) */
 static void btf_dump_emit_type_cast(struct btf_dump *d, __u32 id,
 				    bool top_level)
@@ -1453,6 +1487,8 @@ static void btf_dump_emit_type_cast(struct btf_dump *d, __u32 id,
 		btf_dump_printf(d, ")");
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* return number of duplicates (occurrences) of a given name */
 static size_t btf_dump_name_dups(struct btf_dump *d, struct hashmap *name_map,
 				 const char *orig_name)
@@ -1503,6 +1539,7 @@ static const char *btf_dump_ident_name(struct btf_dump *d, __u32 id)
 {
 	return btf_dump_resolve_name(d, id, d->ident_names);
 }
+<<<<<<< HEAD
 
 static int btf_dump_dump_type_data(struct btf_dump *d,
 				   const char *fname,
@@ -2303,3 +2340,5 @@ int btf_dump__dump_type_data(struct btf_dump *d, __u32 id,
 
 	return libbpf_err(ret);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -294,8 +294,16 @@ static int imx_pd_bind(struct device *dev, struct device *master, void *data)
 
 	if (imxpd->next_bridge) {
 		ret = drm_bridge_attach(encoder, imxpd->next_bridge, bridge, 0);
+<<<<<<< HEAD
 		if (ret < 0)
 			return ret;
+=======
+		if (ret < 0) {
+			dev_err(imxpd->dev, "failed to attach bridge: %d\n",
+				ret);
+			return ret;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		drm_connector_helper_add(connector,
 					 &imx_pd_connector_helper_funcs);

@@ -69,6 +69,7 @@ bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
 }
 EXPORT_SYMBOL_GPL(i2c_acpi_get_i2c_resource);
 
+<<<<<<< HEAD
 static int i2c_acpi_resource_count(struct acpi_resource *ares, void *data)
 {
 	struct acpi_resource_i2c_serialbus *sb;
@@ -101,6 +102,8 @@ int i2c_acpi_client_count(struct acpi_device *adev)
 }
 EXPORT_SYMBOL_GPL(i2c_acpi_client_count);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int i2c_acpi_fill_info(struct acpi_resource *ares, void *data)
 {
 	struct i2c_acpi_lookup *lookup = data;
@@ -454,7 +457,10 @@ static int i2c_acpi_notify(struct notifier_block *nb, unsigned long value,
 			break;
 
 		i2c_acpi_register_device(adapter, adev, &info);
+<<<<<<< HEAD
 		put_device(&adapter->dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case ACPI_RECONFIG_DEVICE_REMOVE:
 		if (!acpi_device_enumerated(adev))

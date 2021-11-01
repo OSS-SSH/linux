@@ -296,6 +296,7 @@ static int bpmp_debug_show(struct seq_file *m, void *p)
 	struct file *file = m->private;
 	struct inode *inode = file_inode(file);
 	struct tegra_bpmp *bpmp = inode->i_private;
+<<<<<<< HEAD
 	char fnamebuf[256];
 	const char *filename;
 	struct mrq_debug_request req = {
@@ -315,11 +316,24 @@ static int bpmp_debug_show(struct seq_file *m, void *p)
 	};
 	uint32_t fd = 0, len = 0;
 	int remaining, err;
+=======
+	char *databuf = NULL;
+	char fnamebuf[256];
+	const char *filename;
+	uint32_t nbytes = 0;
+	size_t len;
+	int err;
+
+	len = seq_get_buf(m, &databuf);
+	if (!databuf)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	filename = get_filename(bpmp, file, fnamebuf, sizeof(fnamebuf));
 	if (!filename)
 		return -ENOENT;
 
+<<<<<<< HEAD
 	mutex_lock(&bpmp_debug_lock);
 	err = mrq_debug_open(bpmp, filename, &fd, &len, 0);
 	if (err)
@@ -351,6 +365,12 @@ close:
 	err = mrq_debug_close(bpmp, fd);
 out:
 	mutex_unlock(&bpmp_debug_lock);
+=======
+	err = mrq_debug_read(bpmp, filename, databuf, len, &nbytes);
+	if (!err)
+		seq_commit(m, nbytes);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 

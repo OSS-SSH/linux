@@ -15,7 +15,10 @@ static void ionic_watchdog_cb(struct timer_list *t)
 {
 	struct ionic *ionic = from_timer(ionic, t, watchdog_timer);
 	struct ionic_lif *lif = ionic->lif;
+<<<<<<< HEAD
 	struct ionic_deferred_work *work;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int hb;
 
 	mod_timer(&ionic->watchdog_timer,
@@ -32,6 +35,7 @@ static void ionic_watchdog_cb(struct timer_list *t)
 	if (hb >= 0 &&
 	    !test_bit(IONIC_LIF_F_FW_RESET, lif->state))
 		ionic_link_status_check_request(lif, CAN_NOT_SLEEP);
+<<<<<<< HEAD
 
 	if (test_bit(IONIC_LIF_F_FILTER_SYNC_NEEDED, lif->state)) {
 		work = kzalloc(sizeof(*work), GFP_ATOMIC);
@@ -44,6 +48,8 @@ static void ionic_watchdog_cb(struct timer_list *t)
 		netdev_dbg(lif->netdev, "deferred: rx_mode\n");
 		ionic_lif_deferred_enqueue(&lif->deferred, work);
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void ionic_init_devinfo(struct ionic *ionic)
@@ -119,8 +125,11 @@ int ionic_dev_setup(struct ionic *ionic)
 	idev->last_fw_hb = 0;
 	idev->fw_hb_ready = true;
 	idev->fw_status_ready = true;
+<<<<<<< HEAD
 	idev->fw_generation = IONIC_FW_STS_F_GENERATION &
 			      ioread8(&idev->dev_info_regs->fw_status);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mod_timer(&ionic->watchdog_timer,
 		  round_jiffies(jiffies + ionic->watchdog_period));
@@ -136,9 +145,13 @@ int ionic_heartbeat_check(struct ionic *ionic)
 {
 	struct ionic_dev *idev = &ionic->idev;
 	unsigned long check_time, last_check_time;
+<<<<<<< HEAD
 	bool fw_status_ready = true;
 	bool fw_hb_ready;
 	u8 fw_generation;
+=======
+	bool fw_status_ready, fw_hb_ready;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 fw_status;
 	u32 fw_hb;
 
@@ -157,6 +170,7 @@ do_check_time:
 
 	/* firmware is useful only if the running bit is set and
 	 * fw_status != 0xff (bad PCI read)
+<<<<<<< HEAD
 	 * If fw_status is not ready don't bother with the generation.
 	 */
 	fw_status = ioread8(&idev->dev_info_regs->fw_status);
@@ -180,6 +194,11 @@ do_check_time:
 			fw_status_ready = false;
 		}
 	}
+=======
+	 */
+	fw_status = ioread8(&idev->dev_info_regs->fw_status);
+	fw_status_ready = (fw_status != 0xff) && (fw_status & IONIC_FW_STS_F_RUNNING);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* is this a transition? */
 	if (fw_status_ready != idev->fw_status_ready) {

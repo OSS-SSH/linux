@@ -31,7 +31,11 @@ int main(void)
 	DEFINE(THREAD_KSP, offsetof(struct thread_struct, ksp));
 	DEFINE(THREAD_USP, offsetof(struct thread_struct, usp));
 	DEFINE(THREAD_SR, offsetof(struct thread_struct, sr));
+<<<<<<< HEAD
 	DEFINE(THREAD_FC, offsetof(struct thread_struct, fc));
+=======
+	DEFINE(THREAD_FS, offsetof(struct thread_struct, fs));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	DEFINE(THREAD_CRP, offsetof(struct thread_struct, crp));
 	DEFINE(THREAD_ESP0, offsetof(struct thread_struct, esp0));
 	DEFINE(THREAD_FPREG, offsetof(struct thread_struct, fp));

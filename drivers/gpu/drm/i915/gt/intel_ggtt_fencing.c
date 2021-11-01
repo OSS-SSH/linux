@@ -348,7 +348,11 @@ static struct i915_fence_reg *fence_find(struct i915_ggtt *ggtt)
 	if (intel_has_pending_fb_unpin(ggtt->vm.i915))
 		return ERR_PTR(-EAGAIN);
 
+<<<<<<< HEAD
 	return ERR_PTR(-ENOBUFS);
+=======
+	return ERR_PTR(-EDEADLK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int __i915_vma_pin_fence(struct i915_vma *vma)

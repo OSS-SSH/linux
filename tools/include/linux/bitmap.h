@@ -111,10 +111,17 @@ static inline int test_and_clear_bit(int nr, unsigned long *addr)
 }
 
 /**
+<<<<<<< HEAD
  * bitmap_zalloc - Allocate bitmap
  * @nbits: Number of bits
  */
 static inline unsigned long *bitmap_zalloc(int nbits)
+=======
+ * bitmap_alloc - Allocate bitmap
+ * @nbits: Number of bits
+ */
+static inline unsigned long *bitmap_alloc(int nbits)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return calloc(1, BITS_TO_LONGS(nbits) * sizeof(unsigned long));
 }

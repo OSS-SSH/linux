@@ -24,8 +24,11 @@
 #define DEFER_TIME (msecs_to_jiffies(1000))
 #define DEFER_WARN_INTERVAL (60 * HZ)
 
+<<<<<<< HEAD
 #define BIAS_MAX	LONG_MAX
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int page_pool_init(struct page_pool *pool,
 			  const struct page_pool_params *params)
 {
@@ -69,10 +72,13 @@ static int page_pool_init(struct page_pool *pool,
 		 */
 	}
 
+<<<<<<< HEAD
 	if (PAGE_POOL_DMA_USE_PP_FRAG_COUNT &&
 	    pool->p.flags & PP_FLAG_PAGE_FRAG)
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ptr_ring_init(&pool->ring, ring_qsize, GFP_KERNEL) < 0)
 		return -ENOMEM;
 
@@ -212,6 +218,7 @@ static bool page_pool_dma_map(struct page_pool *pool, struct page *page)
 	return true;
 }
 
+<<<<<<< HEAD
 static void page_pool_set_pp_info(struct page_pool *pool,
 				  struct page *page)
 {
@@ -225,6 +232,8 @@ static void page_pool_clear_pp_info(struct page *page)
 	page->pp = NULL;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct page *__page_pool_alloc_page_order(struct page_pool *pool,
 						 gfp_t gfp)
 {
@@ -241,7 +250,11 @@ static struct page *__page_pool_alloc_page_order(struct page_pool *pool,
 		return NULL;
 	}
 
+<<<<<<< HEAD
 	page_pool_set_pp_info(pool, page);
+=======
+	page->pp_magic |= PP_SIGNATURE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Track how many pages are held 'in-flight' */
 	pool->pages_state_hold_cnt++;
@@ -285,8 +298,12 @@ static struct page *__page_pool_alloc_pages_slow(struct page_pool *pool,
 			put_page(page);
 			continue;
 		}
+<<<<<<< HEAD
 
 		page_pool_set_pp_info(pool, page);
+=======
+		page->pp_magic |= PP_SIGNATURE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pool->alloc.cache[pool->alloc.count++] = page;
 		/* Track how many pages are held 'in-flight' */
 		pool->pages_state_hold_cnt++;
@@ -365,12 +382,20 @@ void page_pool_release_page(struct page_pool *pool, struct page *page)
 			     DMA_ATTR_SKIP_CPU_SYNC);
 	page_pool_set_dma_addr(page, 0);
 skip_dma_unmap:
+<<<<<<< HEAD
 	page_pool_clear_pp_info(page);
+=======
+	page->pp_magic = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* This may be the last page returned, releasing the pool, so
 	 * it is not safe to reference pool afterwards.
 	 */
+<<<<<<< HEAD
 	count = atomic_inc_return_relaxed(&pool->pages_state_release_cnt);
+=======
+	count = atomic_inc_return(&pool->pages_state_release_cnt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	trace_page_pool_state_release(pool, page, count);
 }
 EXPORT_SYMBOL(page_pool_release_page);
@@ -425,11 +450,14 @@ static __always_inline struct page *
 __page_pool_put_page(struct page_pool *pool, struct page *page,
 		     unsigned int dma_sync_size, bool allow_direct)
 {
+<<<<<<< HEAD
 	/* It is not the last user for the page frag case */
 	if (pool->p.flags & PP_FLAG_PAGE_FRAG &&
 	    page_pool_atomic_sub_frag_count_return(page, 1))
 		return NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* This allocator is optimized for the XDP mode that uses
 	 * one-frame-per-page, but have fallbacks that act like the
 	 * regular page allocator APIs.
@@ -522,6 +550,7 @@ void page_pool_put_page_bulk(struct page_pool *pool, void **data,
 }
 EXPORT_SYMBOL(page_pool_put_page_bulk);
 
+<<<<<<< HEAD
 static struct page *page_pool_drain_frag(struct page_pool *pool,
 					 struct page *page)
 {
@@ -600,6 +629,8 @@ frag_reset:
 }
 EXPORT_SYMBOL(page_pool_alloc_frag);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void page_pool_empty_ring(struct page_pool *pool)
 {
 	struct page *page;
@@ -705,8 +736,11 @@ void page_pool_destroy(struct page_pool *pool)
 	if (!page_pool_put(pool))
 		return;
 
+<<<<<<< HEAD
 	page_pool_free_frag(pool);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!page_pool_release(pool))
 		return;
 
@@ -739,6 +773,7 @@ bool page_pool_return_skb_page(struct page *page)
 	struct page_pool *pp;
 
 	page = compound_head(page);
+<<<<<<< HEAD
 
 	/* page->pp_magic is OR'ed with PP_SIGNATURE after the allocation
 	 * in order to preserve any existing bits, such as bit 0 for the
@@ -748,6 +783,9 @@ bool page_pool_return_skb_page(struct page *page)
 	 * to avoid recycling the pfmemalloc page.
 	 */
 	if (unlikely((page->pp_magic & ~0x3UL) != PP_SIGNATURE))
+=======
+	if (unlikely(page->pp_magic != PP_SIGNATURE))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return false;
 
 	pp = page->pp;
@@ -757,6 +795,10 @@ bool page_pool_return_skb_page(struct page *page)
 	 * The page will be returned to the pool here regardless of the
 	 * 'flipped' fragment being in use or not.
 	 */
+<<<<<<< HEAD
+=======
+	page->pp = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	page_pool_put_full_page(pp, page, false);
 
 	return true;

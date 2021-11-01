@@ -17,7 +17,10 @@ struct vhost_iotlb_map {
 	u32 perm;
 	u32 flags_padding;
 	u64 __subtree_last;
+<<<<<<< HEAD
 	void *opaque;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define VHOST_IOTLB_FLAG_RETIRE 0x1
@@ -30,8 +33,11 @@ struct vhost_iotlb {
 	unsigned int flags;
 };
 
+<<<<<<< HEAD
 int vhost_iotlb_add_range_ctx(struct vhost_iotlb *iotlb, u64 start, u64 last,
 			      u64 addr, unsigned int perm, void *opaque);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int vhost_iotlb_add_range(struct vhost_iotlb *iotlb, u64 start, u64 last,
 			  u64 addr, unsigned int perm);
 void vhost_iotlb_del_range(struct vhost_iotlb *iotlb, u64 start, u64 last);

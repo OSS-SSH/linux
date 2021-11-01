@@ -226,7 +226,10 @@ int tm_signal_pagefault(void)
 	stack_t ss;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SKIP_IF(!have_userfaultfd());
 
 	setup_uf_mem();

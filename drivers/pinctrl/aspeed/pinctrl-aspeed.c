@@ -133,8 +133,13 @@ static int aspeed_disable_sig(struct aspeed_pinmux_data *ctx,
 }
 
 /**
+<<<<<<< HEAD
  * aspeed_find_expr_by_name - Search for the signal expression needed to
  * enable the pin's signal for the requested function.
+=======
+ * Search for the signal expression needed to enable the pin's signal for the
+ * requested function.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * @exprs: List of signal expressions (haystack)
  * @name: The name of the requested function (needle)

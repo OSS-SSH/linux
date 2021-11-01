@@ -57,6 +57,7 @@ const __u8 nci_init_rsp_v2[] = {0x40, 0x01, 0x1c, 0x00, 0x1a, 0x7e, 0x06,
 const __u8 nci_rf_disc_map_rsp[] = {0x41, 0x00, 0x01, 0x00};
 const __u8 nci_rf_disc_rsp[] = {0x41, 0x03, 0x01, 0x00};
 const __u8 nci_rf_deact_rsp[] = {0x41, 0x06, 0x01, 0x00};
+<<<<<<< HEAD
 const __u8 nci_rf_deact_ntf[] = {0x61, 0x06, 0x02, 0x00, 0x00};
 const __u8 nci_rf_activate_ntf[] = {0x61, 0x05, 0x1D, 0x01, 0x02, 0x04, 0x00,
 				     0xFF, 0xFF, 0x0C, 0x44, 0x03, 0x07, 0x04,
@@ -80,6 +81,8 @@ const __u8 nci_t4t_read_rsp3[] = {0x00, 0x00, 0x11, 0xD1, 0x01, 0x0B, 0x54, 0x02
 				   0x65, 0x6E, 0x4E, 0x46, 0x43, 0x20, 0x54, 0x45,
 				   0x53, 0x54, 0x90, 0x00};
 const __u8 nci_t4t_rsp_ok[] = {0x00, 0x00, 0x02, 0x90, 0x00};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct msgtemplate {
 	struct nlmsghdr n;
@@ -110,7 +113,11 @@ error:
 
 static int send_cmd_mt_nla(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
 			   __u8 genl_cmd, int nla_num, __u16 nla_type[],
+<<<<<<< HEAD
 			   void *nla_data[], int nla_len[], __u16 flags)
+=======
+			   void *nla_data[], int nla_len[])
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sockaddr_nl nladdr;
 	struct msgtemplate msg;
@@ -121,7 +128,11 @@ static int send_cmd_mt_nla(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
 
 	msg.n.nlmsg_len = NLMSG_LENGTH(GENL_HDRLEN);
 	msg.n.nlmsg_type = nlmsg_type;
+<<<<<<< HEAD
 	msg.n.nlmsg_flags = flags;
+=======
+	msg.n.nlmsg_flags = NLM_F_REQUEST;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	msg.n.nlmsg_seq = 0;
 	msg.n.nlmsg_pid = nlmsg_pid;
 	msg.g.cmd = genl_cmd;
@@ -133,11 +144,19 @@ static int send_cmd_mt_nla(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
 		na->nla_type = nla_type[cnt];
 		na->nla_len = nla_len[cnt] + NLA_HDRLEN;
 
+<<<<<<< HEAD
 		if (nla_len[cnt] > 0)
 			memcpy(NLA_DATA(na), nla_data[cnt], nla_len[cnt]);
 
 		prv_len = NLA_ALIGN(nla_len[cnt]) + NLA_HDRLEN;
 		msg.n.nlmsg_len += prv_len;
+=======
+		if (nla_len > 0)
+			memcpy(NLA_DATA(na), nla_data[cnt], nla_len[cnt]);
+
+		msg.n.nlmsg_len += NLMSG_ALIGN(na->nla_len);
+		prv_len = na->nla_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	buf = (char *)&msg;
@@ -169,11 +188,19 @@ static int send_get_nfc_family(int sd, __u32 pid)
 	nla_get_family_data = family_name;
 
 	return send_cmd_mt_nla(sd, GENL_ID_CTRL, pid, CTRL_CMD_GETFAMILY,
+<<<<<<< HEAD
 				1, &nla_get_family_type, &nla_get_family_data,
 				&nla_get_family_len, NLM_F_REQUEST);
 }
 
 static int get_family_id(int sd, __u32 pid, __u32 *event_group)
+=======
+				1, &nla_get_family_type,
+				&nla_get_family_data, &nla_get_family_len);
+}
+
+static int get_family_id(int sd, __u32 pid)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct {
 		struct nlmsghdr n;
@@ -181,9 +208,14 @@ static int get_family_id(int sd, __u32 pid, __u32 *event_group)
 		char buf[512];
 	} ans;
 	struct nlattr *na;
+<<<<<<< HEAD
 	int resp_len;
 	__u16 id;
 	int len;
+=======
+	int rep_len;
+	__u16 id;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc;
 
 	rc = send_get_nfc_family(sd, pid);
@@ -191,6 +223,7 @@ static int get_family_id(int sd, __u32 pid, __u32 *event_group)
 	if (rc < 0)
 		return 0;
 
+<<<<<<< HEAD
 	resp_len = recv(sd, &ans, sizeof(ans), 0);
 
 	if (ans.n.nlmsg_type == NLMSG_ERROR || resp_len < 0 ||
@@ -234,6 +267,19 @@ static int get_family_id(int sd, __u32 pid, __u32 *event_group)
 		}
 		na = (struct nlattr *)(GENLMSG_DATA(&ans) + len);
 	}
+=======
+	rep_len = recv(sd, &ans, sizeof(ans), 0);
+
+	if (ans.n.nlmsg_type == NLMSG_ERROR || rep_len < 0 ||
+	    !NLMSG_OK(&ans.n, rep_len))
+		return 0;
+
+	na = (struct nlattr *)GENLMSG_DATA(&ans);
+	na = (struct nlattr *)((char *)na + NLA_ALIGN(na->nla_len));
+	if (na->nla_type == CTRL_ATTR_FAMILY_ID)
+		id = *(__u16 *)NLA_DATA(na);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return id;
 }
 
@@ -245,12 +291,20 @@ static int send_cmd_with_idx(int sd, __u16 nlmsg_type, __u32 nlmsg_pid,
 	int nla_len = 4;
 
 	return send_cmd_mt_nla(sd, nlmsg_type, nlmsg_pid, genl_cmd, 1,
+<<<<<<< HEAD
 				&nla_type, &nla_data, &nla_len, NLM_F_REQUEST);
+=======
+				&nla_type, &nla_data, &nla_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int get_nci_devid(int sd, __u16 fid, __u32 pid, int dev_id, struct msgtemplate *msg)
 {
+<<<<<<< HEAD
 	int rc, resp_len;
+=======
+	int rc, rep_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rc = send_cmd_with_idx(sd, fid, pid, NFC_CMD_GET_DEVICE, dev_id);
 	if (rc < 0) {
@@ -258,14 +312,23 @@ static int get_nci_devid(int sd, __u16 fid, __u32 pid, int dev_id, struct msgtem
 		goto error;
 	}
 
+<<<<<<< HEAD
 	resp_len = recv(sd, msg, sizeof(*msg), 0);
 	if (resp_len < 0) {
+=======
+	rep_len = recv(sd, msg, sizeof(*msg), 0);
+	if (rep_len < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rc = -2;
 		goto error;
 	}
 
 	if (msg->n.nlmsg_type == NLMSG_ERROR ||
+<<<<<<< HEAD
 	    !NLMSG_OK(&msg->n, resp_len)) {
+=======
+	    !NLMSG_OK(&msg->n, rep_len)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rc = -3;
 		goto error;
 	}
@@ -278,6 +341,7 @@ error:
 static __u8 get_dev_enable_state(struct msgtemplate *msg)
 {
 	struct nlattr *na;
+<<<<<<< HEAD
 	int resp_len;
 	int len;
 
@@ -286,13 +350,27 @@ static __u8 get_dev_enable_state(struct msgtemplate *msg)
 	len = 0;
 
 	while (len < resp_len) {
+=======
+	int rep_len;
+	int len;
+
+	rep_len = GENLMSG_PAYLOAD(&msg->n);
+	na = (struct nlattr *)GENLMSG_DATA(msg);
+	len = 0;
+
+	while (len < rep_len) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		len += NLA_ALIGN(na->nla_len);
 		if (na->nla_type == NFC_ATTR_DEVICE_POWERED)
 			return *(char *)NLA_DATA(na);
 		na = (struct nlattr *)(GENLMSG_DATA(msg) + len);
 	}
 
+<<<<<<< HEAD
 	return resp_len;
+=======
+	return rep_len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 FIXTURE(NCI) {
@@ -326,7 +404,12 @@ static void *virtual_dev_open(void *data)
 
 	dev_fd = *(int *)data;
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_reset_cmd))
@@ -335,7 +418,12 @@ static void *virtual_dev_open(void *data)
 		goto error;
 	write(dev_fd, nci_reset_rsp, sizeof(nci_reset_rsp));
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_init_cmd))
@@ -344,7 +432,12 @@ static void *virtual_dev_open(void *data)
 		goto error;
 	write(dev_fd, nci_init_rsp, sizeof(nci_init_rsp));
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_rf_disc_map_cmd))
@@ -366,7 +459,12 @@ static void *virtual_dev_open_v2(void *data)
 
 	dev_fd = *(int *)data;
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_reset_cmd))
@@ -376,7 +474,12 @@ static void *virtual_dev_open_v2(void *data)
 	write(dev_fd, nci_reset_rsp_v2, sizeof(nci_reset_rsp_v2));
 	write(dev_fd, nci_reset_ntf, sizeof(nci_reset_ntf));
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_init_cmd_v2))
@@ -385,7 +488,12 @@ static void *virtual_dev_open_v2(void *data)
 		goto error;
 	write(dev_fd, nci_init_rsp_v2, sizeof(nci_init_rsp_v2));
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_rf_disc_map_cmd))
@@ -403,7 +511,10 @@ FIXTURE_SETUP(NCI)
 {
 	struct msgtemplate msg;
 	pthread_t thread_t;
+<<<<<<< HEAD
 	__u32 event_group;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int status;
 	int rc;
 
@@ -415,16 +526,23 @@ FIXTURE_SETUP(NCI)
 	ASSERT_NE(self->sd, -1);
 
 	self->pid = getpid();
+<<<<<<< HEAD
 	self->fid = get_family_id(self->sd, self->pid, &event_group);
+=======
+	self->fid = get_family_id(self->sd, self->pid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ASSERT_NE(self->fid, -1);
 
 	self->virtual_nci_fd = open("/dev/virtual_nci", O_RDWR);
 	ASSERT_GT(self->virtual_nci_fd, -1);
 
+<<<<<<< HEAD
 	rc = setsockopt(self->sd, SOL_NETLINK, NETLINK_ADD_MEMBERSHIP, &event_group,
 			sizeof(event_group));
 	ASSERT_NE(rc, -1);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rc = ioctl(self->virtual_nci_fd, IOCTL_GET_NCIDEV_IDX, &self->dev_idex);
 	ASSERT_EQ(rc, 0);
 
@@ -457,7 +575,12 @@ static void *virtual_deinit(void *data)
 
 	dev_fd = *(int *)data;
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_reset_cmd))
@@ -479,7 +602,12 @@ static void *virtual_deinit_v2(void *data)
 
 	dev_fd = *(int *)data;
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_reset_cmd))
@@ -542,14 +670,24 @@ static void *virtual_poll_start(void *data)
 
 	dev_fd = *(int *)data;
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_rf_discovery_cmd))
 		goto error;
 	if (memcmp(nci_rf_discovery_cmd, buf, len))
 		goto error;
+<<<<<<< HEAD
 	write(dev_fd, nci_rf_disc_rsp, sizeof(nci_rf_disc_rsp));
+=======
+	write(dev_fd, nci_rf_disc_rsp, sizeof(nci_rf_disc_rsp))
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return (void *)0;
 error:
@@ -564,7 +702,12 @@ static void *virtual_poll_stop(void *data)
 
 	dev_fd = *(int *)data;
 
+<<<<<<< HEAD
 	len = read(dev_fd, buf, 258);
+=======
+	while ((len = read(dev_fd, buf, 258)) == 0)
+		;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (len <= 0)
 		goto error;
 	if (len != sizeof(nci_rf_deact_cmd))
@@ -578,17 +721,26 @@ error:
 	return (void *)-1;
 }
 
+<<<<<<< HEAD
 int start_polling(int dev_idx, int proto, int virtual_fd, int sd, int fid, int pid)
 {
 	__u16 nla_start_poll_type[2] = {NFC_ATTR_DEVICE_INDEX,
 					 NFC_ATTR_PROTOCOLS};
 	void *nla_start_poll_data[2] = {&dev_idx, &proto};
+=======
+TEST_F(NCI, start_poll)
+{
+	__u16 nla_start_poll_type[2] = {NFC_ATTR_DEVICE_INDEX,
+					 NFC_ATTR_PROTOCOLS};
+	void *nla_start_poll_data[2] = {&self->dev_idex, &self->proto};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int nla_start_poll_len[2] = {4, 4};
 	pthread_t thread_t;
 	int status;
 	int rc;
 
 	rc = pthread_create(&thread_t, NULL, virtual_poll_start,
+<<<<<<< HEAD
 			    (void *)&virtual_fd);
 	if (rc < 0)
 		return rc;
@@ -854,6 +1006,29 @@ TEST_F(NCI, t4t_tag_read)
 
 	status = disconnect_tag(nfc_sock, self->virtual_nci_fd);
 	EXPECT_EQ(status, 0);
+=======
+			    (void *)&self->virtual_nci_fd);
+	ASSERT_GT(rc, -1);
+
+	rc = send_cmd_mt_nla(self->sd, self->fid, self->pid,
+			     NFC_CMD_START_POLL, 2, nla_start_poll_type,
+			     nla_start_poll_data, nla_start_poll_len);
+	EXPECT_EQ(rc, 0);
+
+	pthread_join(thread_t, (void **)&status);
+	ASSERT_EQ(status, 0);
+
+	rc = pthread_create(&thread_t, NULL, virtual_poll_stop,
+			    (void *)&self->virtual_nci_fd);
+	ASSERT_GT(rc, -1);
+
+	rc = send_cmd_with_idx(self->sd, self->fid, self->pid,
+			       NFC_CMD_STOP_POLL, self->dev_idex);
+	EXPECT_EQ(rc, 0);
+
+	pthread_join(thread_t, (void **)&status);
+	ASSERT_EQ(status, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 TEST_F(NCI, deinit)

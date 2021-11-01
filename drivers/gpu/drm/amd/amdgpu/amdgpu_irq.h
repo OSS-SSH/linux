@@ -80,7 +80,10 @@ struct amdgpu_irq_src_funcs {
 
 struct amdgpu_irq {
 	bool				installed;
+<<<<<<< HEAD
 	unsigned int			irq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spinlock_t			lock;
 	/* interrupt sources */
 	struct amdgpu_irq_client	client[AMDGPU_IRQ_CLIENTID_MAX];
@@ -101,6 +104,10 @@ struct amdgpu_irq {
 };
 
 void amdgpu_irq_disable_all(struct amdgpu_device *adev);
+<<<<<<< HEAD
+=======
+irqreturn_t amdgpu_irq_handler(int irq, void *arg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int amdgpu_irq_init(struct amdgpu_device *adev);
 void amdgpu_irq_fini_sw(struct amdgpu_device *adev);

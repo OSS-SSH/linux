@@ -62,20 +62,27 @@ EXPORT_SYMBOL_GPL(pci_epf_type_add_cfs);
  */
 void pci_epf_unbind(struct pci_epf *epf)
 {
+<<<<<<< HEAD
 	struct pci_epf *epf_vf;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epf->driver) {
 		dev_WARN(&epf->dev, "epf device not bound to driver\n");
 		return;
 	}
 
 	mutex_lock(&epf->lock);
+<<<<<<< HEAD
 	list_for_each_entry(epf_vf, &epf->pci_vepf, list) {
 		if (epf_vf->is_bound)
 			epf_vf->driver->ops->unbind(epf_vf);
 	}
 	if (epf->is_bound)
 		epf->driver->ops->unbind(epf);
+=======
+	epf->driver->ops->unbind(epf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epf->lock);
 	module_put(epf->driver->owner);
 }
@@ -90,6 +97,7 @@ EXPORT_SYMBOL_GPL(pci_epf_unbind);
  */
 int pci_epf_bind(struct pci_epf *epf)
 {
+<<<<<<< HEAD
 	struct device *dev = &epf->dev;
 	struct pci_epf *epf_vf;
 	u8 func_no, vfunc_no;
@@ -98,6 +106,12 @@ int pci_epf_bind(struct pci_epf *epf)
 
 	if (!epf->driver) {
 		dev_WARN(dev, "epf device not bound to driver\n");
+=======
+	int ret;
+
+	if (!epf->driver) {
+		dev_WARN(&epf->dev, "epf device not bound to driver\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 	}
 
@@ -105,6 +119,7 @@ int pci_epf_bind(struct pci_epf *epf)
 		return -EAGAIN;
 
 	mutex_lock(&epf->lock);
+<<<<<<< HEAD
 	list_for_each_entry(epf_vf, &epf->pci_vepf, list) {
 		vfunc_no = epf_vf->vfunc_no;
 
@@ -169,12 +184,17 @@ int pci_epf_bind(struct pci_epf *epf)
 ret:
 	mutex_unlock(&epf->lock);
 	pci_epf_unbind(epf);
+=======
+	ret = epf->driver->ops->bind(epf);
+	mutex_unlock(&epf->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
 EXPORT_SYMBOL_GPL(pci_epf_bind);
 
 /**
+<<<<<<< HEAD
  * pci_epf_add_vepf() - associate virtual EP function to physical EP function
  * @epf_pf: the physical EP function to which the virtual EP function should be
  *   associated
@@ -240,6 +260,8 @@ void pci_epf_remove_vepf(struct pci_epf *epf_pf, struct pci_epf *epf_vf)
 EXPORT_SYMBOL_GPL(pci_epf_remove_vepf);
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * pci_epf_free_space() - free the allocated PCI EPF register space
  * @epf: the EPF device from whom to free the memory
  * @addr: the virtual address of the PCI EPF register space
@@ -455,10 +477,13 @@ struct pci_epf *pci_epf_create(const char *name)
 		return ERR_PTR(-ENOMEM);
 	}
 
+<<<<<<< HEAD
 	/* VFs are numbered starting with 1. So set BIT(0) by default */
 	epf->vfunction_num_map = 1;
 	INIT_LIST_HEAD(&epf->pci_vepf);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev = &epf->dev;
 	device_initialize(dev);
 	dev->bus = &pci_epf_bus_type;
@@ -529,14 +554,27 @@ static int pci_epf_device_probe(struct device *dev)
 	return driver->probe(epf);
 }
 
+<<<<<<< HEAD
 static void pci_epf_device_remove(struct device *dev)
 {
+=======
+static int pci_epf_device_remove(struct device *dev)
+{
+	int ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct pci_epf *epf = to_pci_epf(dev);
 	struct pci_epf_driver *driver = to_pci_epf_driver(dev->driver);
 
 	if (driver->remove)
+<<<<<<< HEAD
 		driver->remove(epf);
 	epf->driver = NULL;
+=======
+		ret = driver->remove(epf);
+	epf->driver = NULL;
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct bus_type pci_epf_bus_type = {

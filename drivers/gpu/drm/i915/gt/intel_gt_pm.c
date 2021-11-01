@@ -6,6 +6,10 @@
 #include <linux/suspend.h>
 
 #include "i915_drv.h"
+<<<<<<< HEAD
+=======
+#include "i915_globals.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "i915_params.h"
 #include "intel_context.h"
 #include "intel_engine_pm.h"
@@ -66,6 +70,11 @@ static int __gt_unpark(struct intel_wakeref *wf)
 
 	GT_TRACE(gt, "\n");
 
+<<<<<<< HEAD
+=======
+	i915_globals_unpark();
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * It seems that the DMC likes to transition between the DC states a lot
 	 * when there are no connected displays (no active power domains) during
@@ -113,6 +122,11 @@ static int __gt_park(struct intel_wakeref *wf)
 	GEM_BUG_ON(!wakeref);
 	intel_display_power_put_async(i915, POWER_DOMAIN_GT_IRQ, wakeref);
 
+<<<<<<< HEAD
+=======
+	i915_globals_park();
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -169,6 +183,11 @@ static void gt_sanitize(struct intel_gt *gt, bool force)
 	if (intel_gt_is_wedged(gt))
 		intel_gt_unset_wedged(gt);
 
+<<<<<<< HEAD
+=======
+	intel_uc_sanitize(&gt->uc);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for_each_engine(engine, gt, id)
 		if (engine->reset.prepare)
 			engine->reset.prepare(engine);
@@ -184,8 +203,11 @@ static void gt_sanitize(struct intel_gt *gt, bool force)
 			__intel_engine_reset(engine, false);
 	}
 
+<<<<<<< HEAD
 	intel_uc_reset(&gt->uc, false);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for_each_engine(engine, gt, id)
 		if (engine->reset.finish)
 			engine->reset.finish(engine);
@@ -238,8 +260,11 @@ int intel_gt_resume(struct intel_gt *gt)
 		goto err_wedged;
 	}
 
+<<<<<<< HEAD
 	intel_uc_reset_finish(&gt->uc);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	intel_rps_enable(&gt->rps);
 	intel_llc_enable(&gt->llc);
 

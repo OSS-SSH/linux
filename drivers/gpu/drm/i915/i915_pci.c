@@ -22,13 +22,26 @@
  *
  */
 
+<<<<<<< HEAD
+=======
+#include <linux/console.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/vga_switcheroo.h>
 
 #include <drm/drm_drv.h>
 #include <drm/i915_pciids.h>
 
+<<<<<<< HEAD
 #include "i915_drv.h"
 #include "i915_pci.h"
+=======
+#include "display/intel_fbdev.h"
+
+#include "i915_drv.h"
+#include "i915_perf.h"
+#include "i915_globals.h"
+#include "i915_selftest.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define PLATFORM(x) .platform = (x)
 #define GEN(x) \
@@ -782,13 +795,34 @@ static const struct intel_device_info cml_gt2_info = {
 	.gt = 2,
 };
 
+<<<<<<< HEAD
+=======
+#define GEN10_FEATURES \
+	GEN9_FEATURES, \
+	GEN(10), \
+	.dbuf.size = 1024 - 4, /* 4 blocks for bypass path allocation */ \
+	.display.has_dsc = 1, \
+	.has_coherent_ggtt = false, \
+	GLK_COLORS
+
+static const struct intel_device_info cnl_info = {
+	GEN10_FEATURES,
+	PLATFORM(INTEL_CANNONLAKE),
+	.gt = 2,
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define GEN11_DEFAULT_PAGE_SIZES \
 	.page_sizes = I915_GTT_PAGE_SIZE_4K | \
 		      I915_GTT_PAGE_SIZE_64K | \
 		      I915_GTT_PAGE_SIZE_2M
 
 #define GEN11_FEATURES \
+<<<<<<< HEAD
 	GEN9_FEATURES, \
+=======
+	GEN10_FEATURES, \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	GEN11_DEFAULT_PAGE_SIZES, \
 	.abox_mask = BIT(0), \
 	.cpu_transcoder_mask = BIT(TRANSCODER_A) | BIT(TRANSCODER_B) | \
@@ -811,12 +845,19 @@ static const struct intel_device_info cml_gt2_info = {
 		[TRANSCODER_DSI_1] = TRANSCODER_DSI1_OFFSET, \
 	}, \
 	GEN(11), \
+<<<<<<< HEAD
 	.color = { .degamma_lut_size = 33, .gamma_lut_size = 262145 }, \
 	.dbuf.size = 2048, \
 	.dbuf.slice_mask = BIT(DBUF_S1) | BIT(DBUF_S2), \
 	.display.has_dsc = 1, \
 	.has_coherent_ggtt = false, \
 	.has_logical_ring_elsq = 1
+=======
+	.dbuf.size = 2048, \
+	.dbuf.slice_mask = BIT(DBUF_S1) | BIT(DBUF_S2), \
+	.has_logical_ring_elsq = 1, \
+	.color = { .degamma_lut_size = 33, .gamma_lut_size = 262145 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct intel_device_info icl_info = {
 	GEN11_FEATURES,
@@ -828,6 +869,10 @@ static const struct intel_device_info icl_info = {
 static const struct intel_device_info ehl_info = {
 	GEN11_FEATURES,
 	PLATFORM(INTEL_ELKHARTLAKE),
+<<<<<<< HEAD
+=======
+	.require_force_probe = 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.platform_engine_mask = BIT(RCS0) | BIT(BCS0) | BIT(VCS0) | BIT(VECS0),
 	.ppgtt_size = 36,
 };
@@ -835,6 +880,10 @@ static const struct intel_device_info ehl_info = {
 static const struct intel_device_info jsl_info = {
 	GEN11_FEATURES,
 	PLATFORM(INTEL_JASPERLAKE),
+<<<<<<< HEAD
+=======
+	.require_force_probe = 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.platform_engine_mask = BIT(RCS0) | BIT(BCS0) | BIT(VCS0) | BIT(VECS0),
 	.ppgtt_size = 36,
 };
@@ -890,6 +939,10 @@ static const struct intel_device_info rkl_info = {
 
 #define DGFX_FEATURES \
 	.memory_regions = REGION_SMEM | REGION_LMEM | REGION_STOLEN_LMEM, \
+<<<<<<< HEAD
+=======
+	.has_master_unit_irq = 1, \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.has_llc = 0, \
 	.has_snoop = 1, \
 	.is_dgfx = 1
@@ -897,7 +950,10 @@ static const struct intel_device_info rkl_info = {
 static const struct intel_device_info dg1_info __maybe_unused = {
 	GEN12_FEATURES,
 	DGFX_FEATURES,
+<<<<<<< HEAD
 	.graphics_rel = 10,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	PLATFORM(INTEL_DG1),
 	.pipe_mask = BIT(PIPE_A) | BIT(PIPE_B) | BIT(PIPE_C) | BIT(PIPE_D),
 	.require_force_probe = 1,
@@ -917,6 +973,7 @@ static const struct intel_device_info adl_s_info = {
 	.display.has_psr_hw_tracking = 0,
 	.platform_engine_mask =
 		BIT(RCS0) | BIT(BCS0) | BIT(VECS0) | BIT(VCS0) | BIT(VCS2),
+<<<<<<< HEAD
 	.dma_mask_size = 39,
 };
 
@@ -962,15 +1019,35 @@ static const struct intel_device_info adl_s_info = {
 		[TRANSCODER_D] = TRANSCODER_D_OFFSET,				\
 	},									\
 	XE_LPD_CURSOR_OFFSETS
+=======
+	.dma_mask_size = 46,
+};
+
+#define XE_LPD_FEATURES \
+	.display.ver = 13,						\
+	.display.has_psr_hw_tracking = 0,				\
+	.abox_mask = GENMASK(1, 0),					\
+	.pipe_mask = BIT(PIPE_A) | BIT(PIPE_B) | BIT(PIPE_C) | BIT(PIPE_D), \
+	.cpu_transcoder_mask = BIT(TRANSCODER_A) | BIT(TRANSCODER_B) |	\
+		BIT(TRANSCODER_C) | BIT(TRANSCODER_D),			\
+	.dbuf.size = 4096,						\
+	.dbuf.slice_mask = BIT(DBUF_S1) | BIT(DBUF_S2) | BIT(DBUF_S3) | BIT(DBUF_S4)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct intel_device_info adl_p_info = {
 	GEN12_FEATURES,
 	XE_LPD_FEATURES,
 	PLATFORM(INTEL_ALDERLAKE_P),
+<<<<<<< HEAD
 	.require_force_probe = 1,
 	.display.has_cdclk_crawl = 1,
 	.display.has_modular_fia = 1,
 	.display.has_psr_hw_tracking = 0,
+=======
+	.has_cdclk_crawl = 1,
+	.require_force_probe = 1,
+	.display.has_modular_fia = 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.platform_engine_mask =
 		BIT(RCS0) | BIT(BCS0) | BIT(VECS0) | BIT(VCS0) | BIT(VCS2),
 	.ppgtt_size = 48,
@@ -978,6 +1055,7 @@ static const struct intel_device_info adl_p_info = {
 };
 
 #undef GEN
+<<<<<<< HEAD
 
 #define XE_HP_PAGE_SIZES \
 	.page_sizes = I915_GTT_PAGE_SIZE_4K | \
@@ -1039,6 +1117,8 @@ static const struct intel_device_info dg2_info = {
 	.require_force_probe = 1,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #undef PLATFORM
 
 /*
@@ -1108,6 +1188,10 @@ static const struct pci_device_id pciidlist[] = {
 	INTEL_CML_GT2_IDS(&cml_gt2_info),
 	INTEL_CML_U_GT1_IDS(&cml_gt1_info),
 	INTEL_CML_U_GT2_IDS(&cml_gt2_info),
+<<<<<<< HEAD
+=======
+	INTEL_CNL_IDS(&cnl_info),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INTEL_ICL_11_IDS(&icl_info),
 	INTEL_EHL_IDS(&ehl_info),
 	INTEL_JSL_IDS(&jsl_info),
@@ -1234,6 +1318,7 @@ static struct pci_driver i915_pci_driver = {
 	.driver.pm = &i915_pm_ops,
 };
 
+<<<<<<< HEAD
 int i915_register_pci_driver(void)
 {
 	return pci_register_driver(&i915_pci_driver);
@@ -1243,3 +1328,67 @@ void i915_unregister_pci_driver(void)
 {
 	pci_unregister_driver(&i915_pci_driver);
 }
+=======
+static int __init i915_init(void)
+{
+	bool use_kms = true;
+	int err;
+
+	err = i915_globals_init();
+	if (err)
+		return err;
+
+	err = i915_mock_selftests();
+	if (err)
+		return err > 0 ? 0 : err;
+
+	/*
+	 * Enable KMS by default, unless explicitly overriden by
+	 * either the i915.modeset prarameter or by the
+	 * vga_text_mode_force boot option.
+	 */
+
+	if (i915_modparams.modeset == 0)
+		use_kms = false;
+
+	if (vgacon_text_force() && i915_modparams.modeset == -1)
+		use_kms = false;
+
+	if (!use_kms) {
+		/* Silently fail loading to not upset userspace. */
+		DRM_DEBUG_DRIVER("KMS disabled.\n");
+		return 0;
+	}
+
+	i915_pmu_init();
+
+	err = pci_register_driver(&i915_pci_driver);
+	if (err) {
+		i915_pmu_exit();
+		return err;
+	}
+
+	i915_perf_sysctl_register();
+	return 0;
+}
+
+static void __exit i915_exit(void)
+{
+	if (!i915_pci_driver.driver.owner)
+		return;
+
+	i915_perf_sysctl_unregister();
+	pci_unregister_driver(&i915_pci_driver);
+	i915_globals_exit();
+	i915_pmu_exit();
+}
+
+module_init(i915_init);
+module_exit(i915_exit);
+
+MODULE_AUTHOR("Tungsten Graphics, Inc.");
+MODULE_AUTHOR("Intel Corporation");
+
+MODULE_DESCRIPTION(DRIVER_DESC);
+MODULE_LICENSE("GPL and additional rights");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

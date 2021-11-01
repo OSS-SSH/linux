@@ -3403,7 +3403,10 @@ void unmap_mapping_pages(struct address_space *mapping, pgoff_t start,
 		unmap_mapping_range_tree(&mapping->i_mmap, &details);
 	i_mmap_unlock_write(mapping);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(unmap_mapping_pages);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * unmap_mapping_range - unmap the portion of all mmaps in the specified
@@ -4027,6 +4030,7 @@ vm_fault_t finish_fault(struct vm_fault *vmf)
 				return ret;
 		}
 
+<<<<<<< HEAD
 		if (vmf->prealloc_pte) {
 			vmf->ptl = pmd_lock(vma->vm_mm, vmf->pmd);
 			if (likely(pmd_none(*vmf->pmd))) {
@@ -4038,6 +4042,10 @@ vm_fault_t finish_fault(struct vm_fault *vmf)
 		} else if (unlikely(pte_alloc(vma->vm_mm, vmf->pmd))) {
 			return VM_FAULT_OOM;
 		}
+=======
+		if (unlikely(pte_alloc(vma->vm_mm, vmf->pmd)))
+			return VM_FAULT_OOM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* See comment in handle_pte_fault() */

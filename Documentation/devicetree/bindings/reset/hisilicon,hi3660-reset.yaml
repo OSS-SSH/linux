@@ -72,5 +72,9 @@ examples:
         resets = <&iomcu_rst 0x20 3>;
         pinctrl-names = "default";
         pinctrl-0 = <&i2c0_pmx_func &i2c0_cfg_func>;
+<<<<<<< HEAD
+=======
+        status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     };
 ...

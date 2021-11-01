@@ -18,7 +18,10 @@
 #include "adf_pf2vf_msg.h"
 
 #define ADF_VINTSOU_OFFSET	0x204
+<<<<<<< HEAD
 #define ADF_VINTMSK_OFFSET	0x208
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ADF_VINTSOU_BUN		BIT(0)
 #define ADF_VINTSOU_PF2VF	BIT(1)
 
@@ -29,6 +32,7 @@ struct adf_vf_stop_data {
 	struct work_struct work;
 };
 
+<<<<<<< HEAD
 void adf_enable_pf2vf_interrupts(struct adf_accel_dev *accel_dev)
 {
 	struct adf_accel_pci *pci_info = &accel_dev->accel_pci_dev;
@@ -50,6 +54,8 @@ void adf_disable_pf2vf_interrupts(struct adf_accel_dev *accel_dev)
 }
 EXPORT_SYMBOL_GPL(adf_disable_pf2vf_interrupts);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int adf_enable_msi(struct adf_accel_dev *accel_dev)
 {
 	struct adf_accel_pci *pci_dev_info = &accel_dev->accel_pci_dev;
@@ -182,12 +188,17 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 	struct adf_bar *pmisc =
 			&GET_BARS(accel_dev)[hw_data->get_misc_bar_id(hw_data)];
 	void __iomem *pmisc_bar_addr = pmisc->virt_addr;
+<<<<<<< HEAD
 	bool handled = false;
 	u32 v_int, v_mask;
+=======
+	u32 v_int;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Read VF INT source CSR to determine the source of VF interrupt */
 	v_int = ADF_CSR_RD(pmisc_bar_addr, ADF_VINTSOU_OFFSET);
 
+<<<<<<< HEAD
 	/* Read VF INT mask CSR to determine which sources are masked */
 	v_mask = ADF_CSR_RD(pmisc_bar_addr, ADF_VINTMSK_OFFSET);
 
@@ -197,6 +208,8 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 	 */
 	v_int &= ~v_mask;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Check for PF2VF interrupt */
 	if (v_int & ADF_VINTSOU_PF2VF) {
 		/* Disable PF to VF interrupt */
@@ -204,7 +217,11 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 
 		/* Schedule tasklet to handle interrupt BH */
 		tasklet_hi_schedule(&accel_dev->vf.pf2vf_bh_tasklet);
+<<<<<<< HEAD
 		handled = true;
+=======
+		return IRQ_HANDLED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* Check bundle interrupt */
@@ -216,10 +233,17 @@ static irqreturn_t adf_isr(int irq, void *privdata)
 		csr_ops->write_csr_int_flag_and_col(bank->csr_addr,
 						    bank->bank_number, 0);
 		tasklet_hi_schedule(&bank->resp_handler);
+<<<<<<< HEAD
 		handled = true;
 	}
 
 	return handled ? IRQ_HANDLED : IRQ_NONE;
+=======
+		return IRQ_HANDLED;
+	}
+
+	return IRQ_NONE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int adf_request_msi_irq(struct adf_accel_dev *accel_dev)
@@ -317,6 +341,7 @@ err_out:
 }
 EXPORT_SYMBOL_GPL(adf_vf_isr_resource_alloc);
 
+<<<<<<< HEAD
 /**
  * adf_flush_vf_wq() - Flush workqueue for VF
  * @accel_dev:  Pointer to acceleration device.
@@ -341,6 +366,8 @@ EXPORT_SYMBOL_GPL(adf_flush_vf_wq);
  *
  * Return: 0 on success, error code otherwise.
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int __init adf_init_vf_wq(void)
 {
 	adf_vf_stop_wq = alloc_workqueue("adf_vf_stop_wq", WQ_MEM_RECLAIM, 0);

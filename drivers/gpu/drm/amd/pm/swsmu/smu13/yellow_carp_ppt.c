@@ -25,7 +25,11 @@
 
 #include "amdgpu.h"
 #include "amdgpu_smu.h"
+<<<<<<< HEAD
 #include "smu_v13_0.h"
+=======
+#include "smu_v13_0_1.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "smu13_driver_if_yellow_carp.h"
 #include "yellow_carp_ppt.h"
 #include "smu_v13_0_1_ppsmc.h"
@@ -186,6 +190,7 @@ err0_out:
 	return -ENOMEM;
 }
 
+<<<<<<< HEAD
 static int yellow_carp_fini_smc_tables(struct smu_context *smu)
 {
 	struct smu_table_context *smu_table = &smu->smu_table;
@@ -202,6 +207,8 @@ static int yellow_carp_fini_smc_tables(struct smu_context *smu)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int yellow_carp_system_features_control(struct smu_context *smu, bool en)
 {
 	struct smu_feature *feature = &smu->smu_feature;
@@ -298,9 +305,19 @@ static int yellow_carp_mode_reset(struct smu_context *smu, int type)
 	if (index < 0)
 		return index == -EACCES ? 0 : index;
 
+<<<<<<< HEAD
 	ret = smu_cmn_send_smc_msg_with_param(smu, (uint16_t)index, type, NULL);
 	if (ret)
 		dev_err(smu->adev->dev, "Failed to mode reset!\n");
+=======
+	mutex_lock(&smu->message_lock);
+
+	ret = smu_cmn_send_msg_without_waiting(smu, (uint16_t)index, type);
+
+	mutex_unlock(&smu->message_lock);
+
+	mdelay(10);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -572,7 +589,11 @@ static int yellow_carp_get_power_profile_mode(struct smu_context *smu,
 		if (workload_type < 0)
 			continue;
 
+<<<<<<< HEAD
 		size += sysfs_emit_at(buf, size, "%2d %14s%s\n",
+=======
+		size += sprintf(buf + size, "%2d %14s%s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			i, profile_name[i], (i == smu->power_profile_mode) ? "*" : " ");
 	}
 
@@ -671,6 +692,7 @@ static ssize_t yellow_carp_get_gpu_metrics(struct smu_context *smu,
 	return sizeof(struct gpu_metrics_v2_1);
 }
 
+<<<<<<< HEAD
 static int yellow_carp_set_default_dpm_tables(struct smu_context *smu)
 {
 	struct smu_table_context *smu_table = &smu->smu_table;
@@ -678,6 +700,8 @@ static int yellow_carp_set_default_dpm_tables(struct smu_context *smu)
 	return smu_cmn_update_table(smu, SMU_TABLE_DPMCLOCKS, 0, smu_table->clocks_table, false);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int yellow_carp_od_edit_dpm_table(struct smu_context *smu, enum PP_OD_DPM_TABLE_COMMAND type,
 					long input[], uint32_t size)
 {
@@ -731,7 +755,11 @@ static int yellow_carp_od_edit_dpm_table(struct smu_context *smu, enum PP_OD_DPM
 		} else {
 			if (smu->gfx_actual_hard_min_freq > smu->gfx_actual_soft_max_freq) {
 				dev_err(smu->adev->dev,
+<<<<<<< HEAD
 					"The setting minimum sclk (%d) MHz is greater than the setting maximum sclk (%d) MHz\n",
+=======
+					"The setting minimun sclk (%d) MHz is greater than the setting maximum sclk (%d) MHz\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					smu->gfx_actual_hard_min_freq,
 					smu->gfx_actual_soft_max_freq);
 				return -EINVAL;
@@ -1052,6 +1080,7 @@ static int yellow_carp_print_clk_levels(struct smu_context *smu,
 	int i, size = 0, ret = 0;
 	uint32_t cur_value = 0, value = 0, count = 0;
 
+<<<<<<< HEAD
 	smu_cmn_get_sysfs_buf(&buf, &size);
 
 	switch (clk_type) {
@@ -1065,6 +1094,19 @@ static int yellow_carp_print_clk_levels(struct smu_context *smu,
 	case SMU_OD_RANGE:
 		size += sysfs_emit_at(buf, size, "%s:\n", "OD_RANGE");
 		size += sysfs_emit_at(buf, size, "SCLK: %7uMhz %10uMhz\n",
+=======
+	switch (clk_type) {
+	case SMU_OD_SCLK:
+		size = sprintf(buf, "%s:\n", "OD_SCLK");
+		size += sprintf(buf + size, "0: %10uMhz\n",
+		(smu->gfx_actual_hard_min_freq > 0) ? smu->gfx_actual_hard_min_freq : smu->gfx_default_hard_min_freq);
+		size += sprintf(buf + size, "1: %10uMhz\n",
+		(smu->gfx_actual_soft_max_freq > 0) ? smu->gfx_actual_soft_max_freq : smu->gfx_default_soft_max_freq);
+		break;
+	case SMU_OD_RANGE:
+		size = sprintf(buf, "%s:\n", "OD_RANGE");
+		size += sprintf(buf + size, "SCLK: %7uMhz %10uMhz\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						smu->gfx_default_hard_min_freq, smu->gfx_default_soft_max_freq);
 		break;
 	case SMU_SOCCLK:
@@ -1085,7 +1127,11 @@ static int yellow_carp_print_clk_levels(struct smu_context *smu,
 			if (ret)
 				goto print_clk_out;
 
+<<<<<<< HEAD
 			size += sysfs_emit_at(buf, size, "%d: %uMhz %s\n", i, value,
+=======
+			size += sprintf(buf + size, "%d: %uMhz %s\n", i, value,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					cur_value == value ? "*" : "");
 		}
 		break;
@@ -1224,17 +1270,29 @@ static int yellow_carp_set_fine_grain_gfx_freq_parameters(struct smu_context *sm
 }
 
 static const struct pptable_funcs yellow_carp_ppt_funcs = {
+<<<<<<< HEAD
 	.check_fw_status = smu_v13_0_check_fw_status,
 	.check_fw_version = smu_v13_0_check_fw_version,
 	.init_smc_tables = yellow_carp_init_smc_tables,
 	.fini_smc_tables = yellow_carp_fini_smc_tables,
 	.get_vbios_bootup_values = smu_v13_0_get_vbios_bootup_values,
+=======
+	.check_fw_status = smu_v13_0_1_check_fw_status,
+	.check_fw_version = smu_v13_0_1_check_fw_version,
+	.init_smc_tables = yellow_carp_init_smc_tables,
+	.fini_smc_tables = smu_v13_0_1_fini_smc_tables,
+	.get_vbios_bootup_values = smu_v13_0_1_get_vbios_bootup_values,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.system_features_control = yellow_carp_system_features_control,
 	.send_smc_msg_with_param = smu_cmn_send_smc_msg_with_param,
 	.send_smc_msg = smu_cmn_send_smc_msg,
 	.dpm_set_vcn_enable = yellow_carp_dpm_set_vcn_enable,
 	.dpm_set_jpeg_enable = yellow_carp_dpm_set_jpeg_enable,
+<<<<<<< HEAD
 	.set_default_dpm_table = yellow_carp_set_default_dpm_tables,
+=======
+	.set_default_dpm_table = smu_v13_0_1_set_default_dpm_tables,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.read_sensor = yellow_carp_read_sensor,
 	.is_dpm_running = yellow_carp_is_dpm_running,
 	.set_watermarks_table = yellow_carp_set_watermarks_table,
@@ -1243,8 +1301,13 @@ static const struct pptable_funcs yellow_carp_ppt_funcs = {
 	.get_gpu_metrics = yellow_carp_get_gpu_metrics,
 	.get_enabled_mask = smu_cmn_get_enabled_32_bits_mask,
 	.get_pp_feature_mask = smu_cmn_get_pp_feature_mask,
+<<<<<<< HEAD
 	.set_driver_table_location = smu_v13_0_set_driver_table_location,
 	.gfx_off_control = smu_v13_0_gfx_off_control,
+=======
+	.set_driver_table_location = smu_v13_0_1_set_driver_table_location,
+	.gfx_off_control = smu_v13_0_1_gfx_off_control,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.post_init = yellow_carp_post_smu_init,
 	.mode2_reset = yellow_carp_mode2_reset,
 	.get_dpm_ultimate_freq = yellow_carp_get_dpm_ultimate_freq,

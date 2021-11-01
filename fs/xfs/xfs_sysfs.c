@@ -10,7 +10,10 @@
 #include "xfs_log_format.h"
 #include "xfs_trans_resv.h"
 #include "xfs_sysfs.h"
+<<<<<<< HEAD
 #include "xfs_log.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "xfs_log_priv.h"
 #include "xfs_mount.h"
 

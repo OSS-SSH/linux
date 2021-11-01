@@ -467,6 +467,7 @@ static struct ref_scale_ops acqrel_ops = {
 	.name		= "acqrel"
 };
 
+<<<<<<< HEAD
 static volatile u64 stopopts;
 
 static void ref_clock_section(const int nloops)
@@ -501,6 +502,8 @@ static struct ref_scale_ops clock_ops = {
 	.name		= "clock"
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void rcu_scale_one_reader(void)
 {
 	if (readdelay <= 0)
@@ -521,13 +524,21 @@ ref_scale_reader(void *arg)
 	s64 duration;
 
 	VERBOSE_SCALEOUT_BATCH("ref_scale_reader %ld: task started", me);
+<<<<<<< HEAD
 	WARN_ON_ONCE(set_cpus_allowed_ptr(current, cpumask_of(me % nr_cpu_ids)));
+=======
+	set_cpus_allowed_ptr(current, cpumask_of(me % nr_cpu_ids));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	set_user_nice(current, MAX_NICE);
 	atomic_inc(&n_init);
 	if (holdoff)
 		schedule_timeout_interruptible(holdoff * HZ);
 repeat:
+<<<<<<< HEAD
 	VERBOSE_SCALEOUT_BATCH("ref_scale_reader %ld: waiting to start next experiment on cpu %d", me, raw_smp_processor_id());
+=======
+	VERBOSE_SCALEOUT_BATCH("ref_scale_reader %ld: waiting to start next experiment on cpu %d", me, smp_processor_id());
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	// Wait for signal that this reader can start.
 	wait_event(rt->wq, (atomic_read(&nreaders_exp) && smp_load_acquire(&rt->start_reader)) ||
@@ -537,7 +548,11 @@ repeat:
 		goto end;
 
 	// Make sure that the CPU is affinitized appropriately during testing.
+<<<<<<< HEAD
 	WARN_ON_ONCE(raw_smp_processor_id() != me);
+=======
+	WARN_ON_ONCE(smp_processor_id() != me);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	WRITE_ONCE(rt->start_reader, 0);
 	if (!atomic_dec_return(&n_started))
@@ -793,7 +808,11 @@ ref_scale_init(void)
 	int firsterr = 0;
 	static struct ref_scale_ops *scale_ops[] = {
 		&rcu_ops, &srcu_ops, &rcu_trace_ops, &rcu_tasks_ops, &refcnt_ops, &rwlock_ops,
+<<<<<<< HEAD
 		&rwsem_ops, &lock_ops, &lock_irq_ops, &acqrel_ops, &clock_ops,
+=======
+		&rwsem_ops, &lock_ops, &lock_irq_ops, &acqrel_ops,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	if (!torture_init_begin(scale_type, verbose))

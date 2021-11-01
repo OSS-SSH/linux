@@ -588,7 +588,11 @@ static int opal_recover_mce(struct pt_regs *regs,
 {
 	int recovered = 0;
 
+<<<<<<< HEAD
 	if (regs_is_unrecoverable(regs)) {
+=======
+	if (!(regs->msr & MSR_RI)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* If MSR_RI isn't set, we cannot recover */
 		pr_err("Machine check interrupt unrecoverable: MSR(RI=0)\n");
 		recovered = 0;

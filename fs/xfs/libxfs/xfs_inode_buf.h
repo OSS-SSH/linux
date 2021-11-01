@@ -21,7 +21,11 @@ struct xfs_imap {
 
 int	xfs_imap_to_bp(struct xfs_mount *mp, struct xfs_trans *tp,
 		       struct xfs_imap *imap, struct xfs_buf **bpp);
+<<<<<<< HEAD
 void	xfs_dinode_calc_crc(struct xfs_mount *mp, struct xfs_dinode *dip);
+=======
+void	xfs_dinode_calc_crc(struct xfs_mount *, struct xfs_dinode *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void	xfs_inode_to_disk(struct xfs_inode *ip, struct xfs_dinode *to,
 			  xfs_lsn_t lsn);
 int	xfs_inode_from_disk(struct xfs_inode *ip, struct xfs_dinode *from);
@@ -42,6 +46,7 @@ static inline uint64_t xfs_inode_encode_bigtime(struct timespec64 tv)
 struct timespec64 xfs_inode_from_disk_ts(struct xfs_dinode *dip,
 		const xfs_timestamp_t ts);
 
+<<<<<<< HEAD
 static inline bool
 xfs_dinode_good_version(struct xfs_mount *mp, uint8_t version)
 {
@@ -51,4 +56,6 @@ xfs_dinode_good_version(struct xfs_mount *mp, uint8_t version)
 }
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif	/* __XFS_INODE_BUF_H__ */

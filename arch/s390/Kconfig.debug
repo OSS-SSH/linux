@@ -1,5 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0
 
+<<<<<<< HEAD
+=======
+config TRACE_IRQFLAGS_SUPPORT
+	def_bool y
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config EARLY_PRINTK
 	def_bool y
 

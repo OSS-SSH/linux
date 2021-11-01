@@ -19,7 +19,11 @@ void lmc_mii_writereg(lmc_softc_t * const, unsigned, unsigned, unsigned);
 void lmc_gpio_mkinput(lmc_softc_t * const sc, u32 bits);
 void lmc_gpio_mkoutput(lmc_softc_t * const sc, u32 bits);
 
+<<<<<<< HEAD
 int lmc_ioctl(struct net_device *dev, struct if_settings *ifs);
+=======
+int lmc_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 extern lmc_media_t lmc_ds3_media;
 extern lmc_media_t lmc_ssi_media;

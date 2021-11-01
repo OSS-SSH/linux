@@ -1201,6 +1201,7 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 		key.type = BTRFS_ROOT_BACKREF_KEY;
 		key.offset = (u64)-1;
 
+<<<<<<< HEAD
 		ret = btrfs_search_backwards(root, &key, path);
 		if (ret < 0) {
 			goto err;
@@ -1209,6 +1210,23 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 			goto err;
 		}
 
+=======
+		ret = btrfs_search_slot(NULL, root, &key, path, 0, 0);
+		if (ret < 0) {
+			goto err;
+		} else if (ret > 0) {
+			ret = btrfs_previous_item(root, path, subvol_objectid,
+						  BTRFS_ROOT_BACKREF_KEY);
+			if (ret < 0) {
+				goto err;
+			} else if (ret > 0) {
+				ret = -ENOENT;
+				goto err;
+			}
+		}
+
+		btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		subvol_objectid = key.offset;
 
 		root_ref = btrfs_item_ptr(path->nodes[0], path->slots[0],
@@ -1241,6 +1259,7 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 			key.type = BTRFS_INODE_REF_KEY;
 			key.offset = (u64)-1;
 
+<<<<<<< HEAD
 			ret = btrfs_search_backwards(fs_root, &key, path);
 			if (ret < 0) {
 				goto err;
@@ -1249,6 +1268,23 @@ char *btrfs_get_subvol_name_from_objectid(struct btrfs_fs_info *fs_info,
 				goto err;
 			}
 
+=======
+			ret = btrfs_search_slot(NULL, fs_root, &key, path, 0, 0);
+			if (ret < 0) {
+				goto err;
+			} else if (ret > 0) {
+				ret = btrfs_previous_item(fs_root, path, dirid,
+							  BTRFS_INODE_REF_KEY);
+				if (ret < 0) {
+					goto err;
+				} else if (ret > 0) {
+					ret = -ENOENT;
+					goto err;
+				}
+			}
+
+			btrfs_item_key_to_cpu(path->nodes[0], &key, path->slots[0]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dirid = key.offset;
 
 			inode_ref = btrfs_item_ptr(path->nodes[0],
@@ -1339,9 +1375,12 @@ static int btrfs_fill_super(struct super_block *sb,
 	sb->s_op = &btrfs_super_ops;
 	sb->s_d_op = &btrfs_dentry_operations;
 	sb->s_export_op = &btrfs_export_ops;
+<<<<<<< HEAD
 #ifdef CONFIG_FS_VERITY
 	sb->s_vop = &btrfs_verityops;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sb->s_xattr = btrfs_xattr_handlers;
 	sb->s_time_gran = 1;
 #ifdef CONFIG_BTRFS_FS_POSIX_ACL
@@ -2030,6 +2069,16 @@ static int btrfs_remount(struct super_block *sb, int *flags, char *data)
 			ret = -EINVAL;
 			goto restore;
 		}
+<<<<<<< HEAD
+=======
+		if (fs_info->sectorsize < PAGE_SIZE) {
+			btrfs_warn(fs_info,
+	"read-write mount is not yet allowed for sectorsize %u page size %lu",
+				   fs_info->sectorsize, PAGE_SIZE);
+			ret = -EINVAL;
+			goto restore;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * NOTE: when remounting with a change that does writes, don't
@@ -2078,6 +2127,7 @@ restore:
 }
 
 /* Used to sort the devices by max_avail(descending sort) */
+<<<<<<< HEAD
 static int btrfs_cmp_device_free_bytes(const void *a, const void *b)
 {
 	const struct btrfs_device_info *dev_info1 = a;
@@ -2087,6 +2137,18 @@ static int btrfs_cmp_device_free_bytes(const void *a, const void *b)
 		return -1;
 	else if (dev_info1->max_avail < dev_info2->max_avail)
 		return 1;
+=======
+static inline int btrfs_cmp_device_free_bytes(const void *dev_info1,
+				       const void *dev_info2)
+{
+	if (((struct btrfs_device_info *)dev_info1)->max_avail >
+	    ((struct btrfs_device_info *)dev_info2)->max_avail)
+		return -1;
+	else if (((struct btrfs_device_info *)dev_info1)->max_avail <
+		 ((struct btrfs_device_info *)dev_info2)->max_avail)
+		return 1;
+	else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -2362,7 +2424,11 @@ static struct file_system_type btrfs_root_fs_type = {
 	.name		= "btrfs",
 	.mount		= btrfs_mount_root,
 	.kill_sb	= btrfs_kill_super,
+<<<<<<< HEAD
 	.fs_flags	= FS_REQUIRES_DEV | FS_BINARY_MOUNTDATA | FS_ALLOW_IDMAP,
+=======
+	.fs_flags	= FS_REQUIRES_DEV | FS_BINARY_MOUNTDATA,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 MODULE_ALIAS_FS("btrfs");
@@ -2553,11 +2619,14 @@ static void __init btrfs_print_mod_info(void)
 #else
 			", zoned=no"
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_FS_VERITY
 			", fsverity=yes"
 #else
 			", fsverity=no"
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			;
 	pr_info("Btrfs loaded, crc32c=%s%s\n", crc32c_impl(), options);
 }

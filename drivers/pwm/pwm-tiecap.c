@@ -189,6 +189,7 @@ static int ecap_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	if (state->period > NSEC_PER_SEC)
 		return -ERANGE;
 
@@ -196,6 +197,18 @@ static int ecap_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 			      state->period, enabled);
 	if (err)
 		return err;
+=======
+	if (state->period != pwm->state.period ||
+	    state->duty_cycle != pwm->state.duty_cycle) {
+		if (state->period > NSEC_PER_SEC)
+			return -ERANGE;
+
+		err = ecap_pwm_config(chip, pwm, state->duty_cycle,
+				      state->period, enabled);
+		if (err)
+			return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!enabled)
 		return ecap_pwm_enable(chip, pwm);
@@ -253,7 +266,11 @@ static int ecap_pwm_probe(struct platform_device *pdev)
 	if (IS_ERR(pc->mmio_base))
 		return PTR_ERR(pc->mmio_base);
 
+<<<<<<< HEAD
 	ret = devm_pwmchip_add(&pdev->dev, &pc->chip);
+=======
+	ret = pwmchip_add(&pc->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0) {
 		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
 		return ret;
@@ -267,9 +284,17 @@ static int ecap_pwm_probe(struct platform_device *pdev)
 
 static int ecap_pwm_remove(struct platform_device *pdev)
 {
+<<<<<<< HEAD
 	pm_runtime_disable(&pdev->dev);
 
 	return 0;
+=======
+	struct ecap_pwm_chip *pc = platform_get_drvdata(pdev);
+
+	pm_runtime_disable(&pdev->dev);
+
+	return pwmchip_remove(&pc->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_PM_SLEEP

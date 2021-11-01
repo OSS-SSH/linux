@@ -73,13 +73,18 @@ static void ar5312_misc_irq_handler(struct irq_desc *desc)
 {
 	u32 pending = ar5312_rst_reg_read(AR5312_ISR) &
 		      ar5312_rst_reg_read(AR5312_IMR);
+<<<<<<< HEAD
 	unsigned nr;
 	int ret = 0;
+=======
+	unsigned nr, misc_irq = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (pending) {
 		struct irq_domain *domain = irq_desc_get_handler_data(desc);
 
 		nr = __ffs(pending);
+<<<<<<< HEAD
 
 		ret = generic_handle_domain_irq(domain, nr);
 		if (nr == AR5312_MISC_IRQ_TIMER)
@@ -88,6 +93,18 @@ static void ar5312_misc_irq_handler(struct irq_desc *desc)
 
 	if (!pending || ret)
 		spurious_interrupt();
+=======
+		misc_irq = irq_find_mapping(domain, nr);
+	}
+
+	if (misc_irq) {
+		generic_handle_irq(misc_irq);
+		if (nr == AR5312_MISC_IRQ_TIMER)
+			ar5312_rst_reg_read(AR5312_TIMER);
+	} else {
+		spurious_interrupt();
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Enable the specified AR5312_MISC_IRQ interrupt */

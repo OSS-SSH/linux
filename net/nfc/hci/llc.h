@@ -26,20 +26,32 @@ struct nfc_llc_ops {
 
 struct nfc_llc_engine {
 	const char *name;
+<<<<<<< HEAD
 	const struct nfc_llc_ops *ops;
+=======
+	struct nfc_llc_ops *ops;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head entry;
 };
 
 struct nfc_llc {
 	void *data;
+<<<<<<< HEAD
 	const struct nfc_llc_ops *ops;
+=======
+	struct nfc_llc_ops *ops;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rx_headroom;
 	int rx_tailroom;
 };
 
 void *nfc_llc_get_data(struct nfc_llc *llc);
 
+<<<<<<< HEAD
 int nfc_llc_register(const char *name, const struct nfc_llc_ops *ops);
+=======
+int nfc_llc_register(const char *name, struct nfc_llc_ops *ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void nfc_llc_unregister(const char *name);
 
 int nfc_llc_nop_register(void);

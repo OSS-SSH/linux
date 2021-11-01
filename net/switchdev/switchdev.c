@@ -378,6 +378,7 @@ int call_switchdev_blocking_notifiers(unsigned long val, struct net_device *dev,
 }
 EXPORT_SYMBOL_GPL(call_switchdev_blocking_notifiers);
 
+<<<<<<< HEAD
 struct switchdev_nested_priv {
 	bool (*check_cb)(const struct net_device *dev);
 	bool (*foreign_dev_check_cb)(const struct net_device *dev,
@@ -638,6 +639,8 @@ int switchdev_handle_fdb_del_to_device(struct net_device *dev,
 }
 EXPORT_SYMBOL_GPL(switchdev_handle_fdb_del_to_device);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __switchdev_handle_port_obj_add(struct net_device *dev,
 			struct switchdev_notifier_port_obj_info *port_obj_info,
 			bool (*check_cb)(const struct net_device *dev),
@@ -809,6 +812,7 @@ int switchdev_handle_port_attr_set(struct net_device *dev,
 	return err;
 }
 EXPORT_SYMBOL_GPL(switchdev_handle_port_attr_set);
+<<<<<<< HEAD
 
 int switchdev_bridge_port_offload(struct net_device *brport_dev,
 				  struct net_device *dev, const void *ctx,
@@ -857,3 +861,5 @@ void switchdev_bridge_port_unoffload(struct net_device *brport_dev,
 					  NULL);
 }
 EXPORT_SYMBOL_GPL(switchdev_bridge_port_unoffload);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

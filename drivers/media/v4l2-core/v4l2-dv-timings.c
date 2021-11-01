@@ -196,7 +196,11 @@ bool v4l2_find_dv_timings_cap(struct v4l2_dv_timings *t,
 	if (!v4l2_valid_dv_timings(t, cap, fnc, fnc_handle))
 		return false;
 
+<<<<<<< HEAD
 	for (i = 0; v4l2_dv_timings_presets[i].bt.width; i++) {
+=======
+	for (i = 0; i < v4l2_dv_timings_presets[i].bt.width; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (v4l2_valid_dv_timings(v4l2_dv_timings_presets + i, cap,
 					  fnc, fnc_handle) &&
 		    v4l2_match_dv_timings(t, v4l2_dv_timings_presets + i,
@@ -218,7 +222,11 @@ bool v4l2_find_dv_timings_cea861_vic(struct v4l2_dv_timings *t, u8 vic)
 {
 	unsigned int i;
 
+<<<<<<< HEAD
 	for (i = 0; v4l2_dv_timings_presets[i].bt.width; i++) {
+=======
+	for (i = 0; i < v4l2_dv_timings_presets[i].bt.width; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		const struct v4l2_bt_timings *bt =
 			&v4l2_dv_timings_presets[i].bt;
 

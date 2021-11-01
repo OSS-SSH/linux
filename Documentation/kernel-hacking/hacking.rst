@@ -76,8 +76,13 @@ handler is never re-entered: if the same interrupt arrives, it is queued
 fast: frequently it simply acknowledges the interrupt, marks a 'software
 interrupt' for execution and exits.
 
+<<<<<<< HEAD
 You can tell you are in a hardware interrupt, because in_hardirq() returns
 true.
+=======
+You can tell you are in a hardware interrupt, because
+:c:func:`in_irq()` returns true.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 .. warning::
 

@@ -27,6 +27,7 @@ static inline struct super_block *fsnotify_conn_sb(
 	return container_of(conn->obj, struct super_block, s_fsnotify_marks);
 }
 
+<<<<<<< HEAD
 static inline struct super_block *fsnotify_connector_sb(
 				struct fsnotify_mark_connector *conn)
 {
@@ -42,6 +43,8 @@ static inline struct super_block *fsnotify_connector_sb(
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* destroy all events sitting in this groups notification queue */
 extern void fsnotify_flush_notify(struct fsnotify_group *group);
 

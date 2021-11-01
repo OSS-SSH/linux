@@ -456,7 +456,13 @@ void afs_fs_fetch_data(struct afs_operation *op)
 	struct afs_read *req = op->fetch.req;
 	__be32 *bp;
 
+<<<<<<< HEAD
 	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
+=======
+	if (upper_32_bits(req->pos) ||
+	    upper_32_bits(req->len) ||
+	    upper_32_bits(req->pos + req->len))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return afs_fs_fetch_data64(op);
 
 	_enter("");
@@ -1111,7 +1117,13 @@ void afs_fs_store_data(struct afs_operation *op)
 	       (unsigned long long)op->store.pos,
 	       (unsigned long long)op->store.i_size);
 
+<<<<<<< HEAD
 	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
+=======
+	if (upper_32_bits(op->store.pos) ||
+	    upper_32_bits(op->store.size) ||
+	    upper_32_bits(op->store.i_size))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return afs_fs_store_data64(op);
 
 	call = afs_alloc_flat_call(op->net, &afs_RXFSStoreData,
@@ -1225,7 +1237,11 @@ static void afs_fs_setattr_size(struct afs_operation *op)
 	       key_serial(op->key), vp->fid.vid, vp->fid.vnode);
 
 	ASSERT(attr->ia_valid & ATTR_SIZE);
+<<<<<<< HEAD
 	if (test_bit(AFS_SERVER_FL_HAS_FS64, &op->server->flags))
+=======
+	if (upper_32_bits(attr->ia_size))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return afs_fs_setattr_size64(op);
 
 	call = afs_alloc_flat_call(op->net, &afs_RXFSStoreData_as_Status,
@@ -1653,6 +1669,7 @@ static int afs_deliver_fs_get_capabilities(struct afs_call *call)
 			return ret;
 
 		count = ntohl(call->tmp);
+<<<<<<< HEAD
 		call->count = count;
 		call->count2 = count;
 		if (count == 0) {
@@ -1666,11 +1683,22 @@ static int afs_deliver_fs_get_capabilities(struct afs_call *call)
 		call->unmarshall++;
 		fallthrough;
 
+=======
+
+		call->count = count;
+		call->count2 = count;
+		afs_extract_discard(call, count * sizeof(__be32));
+		call->unmarshall++;
+		fallthrough;
+
+		/* Extract capabilities words */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 2:
 		ret = afs_extract_data(call, false);
 		if (ret < 0)
 			return ret;
 
+<<<<<<< HEAD
 		afs_extract_discard(call, (count - 1) * sizeof(__be32));
 		call->unmarshall++;
 		fallthrough;
@@ -1680,6 +1708,9 @@ static int afs_deliver_fs_get_capabilities(struct afs_call *call)
 		ret = afs_extract_data(call, false);
 		if (ret < 0)
 			return ret;
+=======
+		/* TODO: Examine capabilities */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		call->unmarshall++;
 		break;

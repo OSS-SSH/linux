@@ -1529,6 +1529,10 @@ static int rk_gmac_powerup(struct rk_priv_data *bsp_priv)
 		return ret;
 	}
 
+<<<<<<< HEAD
+=======
+	pm_runtime_enable(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pm_runtime_get_sync(dev);
 
 	if (bsp_priv->integrated_phy)
@@ -1539,10 +1543,20 @@ static int rk_gmac_powerup(struct rk_priv_data *bsp_priv)
 
 static void rk_gmac_powerdown(struct rk_priv_data *gmac)
 {
+<<<<<<< HEAD
 	if (gmac->integrated_phy)
 		rk_gmac_integrated_phy_powerdown(gmac);
 
 	pm_runtime_put_sync(&gmac->pdev->dev);
+=======
+	struct device *dev = &gmac->pdev->dev;
+
+	if (gmac->integrated_phy)
+		rk_gmac_integrated_phy_powerdown(gmac);
+
+	pm_runtime_put_sync(dev);
+	pm_runtime_disable(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	phy_power_on(gmac, false);
 	gmac_clk_enable(gmac, false);

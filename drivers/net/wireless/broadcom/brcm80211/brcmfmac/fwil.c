@@ -15,7 +15,10 @@
 #include "bus.h"
 #include "debug.h"
 #include "tracepoint.h"
+<<<<<<< HEAD
 #include "xtlv.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "fwil.h"
 #include "proto.h"
 
@@ -151,8 +154,12 @@ brcmf_fil_cmd_data_get(struct brcmf_if *ifp, u32 cmd, void *data, u32 len)
 	mutex_lock(&ifp->drvr->proto_block);
 	err = brcmf_fil_cmd_data(ifp, cmd, data, len, false);
 
+<<<<<<< HEAD
 	brcmf_dbg(FIL, "ifidx=%d, cmd=%d, len=%d, err=%d\n", ifp->ifidx, cmd,
 		  len, err);
+=======
+	brcmf_dbg(FIL, "ifidx=%d, cmd=%d, len=%d\n", ifp->ifidx, cmd, len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	brcmf_dbg_hex_dump(BRCMF_FIL_ON(), data,
 			   min_t(uint, len, MAX_HEX_DUMP_LEN), "data\n");
 
@@ -262,8 +269,12 @@ brcmf_fil_iovar_data_get(struct brcmf_if *ifp, char *name, void *data,
 		bphy_err(drvr, "Creating iovar failed\n");
 	}
 
+<<<<<<< HEAD
 	brcmf_dbg(FIL, "ifidx=%d, name=%s, len=%d, err=%d\n", ifp->ifidx, name,
 		  len, err);
+=======
+	brcmf_dbg(FIL, "ifidx=%d, name=%s, len=%d\n", ifp->ifidx, name, len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	brcmf_dbg_hex_dump(BRCMF_FIL_ON(), data,
 			   min_t(uint, len, MAX_HEX_DUMP_LEN), "data\n");
 
@@ -386,13 +397,22 @@ brcmf_fil_bsscfg_data_get(struct brcmf_if *ifp, char *name,
 		err = -EPERM;
 		bphy_err(drvr, "Creating bsscfg failed\n");
 	}
+<<<<<<< HEAD
 	brcmf_dbg(FIL, "ifidx=%d, bsscfgidx=%d, name=%s, len=%d, err=%d\n",
 		  ifp->ifidx, ifp->bsscfgidx, name, len, err);
+=======
+	brcmf_dbg(FIL, "ifidx=%d, bsscfgidx=%d, name=%s, len=%d\n", ifp->ifidx,
+		  ifp->bsscfgidx, name, len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	brcmf_dbg_hex_dump(BRCMF_FIL_ON(), data,
 			   min_t(uint, len, MAX_HEX_DUMP_LEN), "data\n");
 
 	mutex_unlock(&drvr->proto_block);
 	return err;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 s32
@@ -416,6 +436,7 @@ brcmf_fil_bsscfg_int_get(struct brcmf_if *ifp, char *name, u32 *data)
 		*data = le32_to_cpu(data_le);
 	return err;
 }
+<<<<<<< HEAD
 
 static u32 brcmf_create_xtlv(char *name, u16 id, char *data, u32 len,
 			     char *buf, u32 buflen)
@@ -530,3 +551,5 @@ s32 brcmf_fil_xtlv_int16_get(struct brcmf_if *ifp, char *name, u16 id, u16 *data
 	return err;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -45,10 +45,15 @@ static int fdomain_probe(struct pcmcia_device *link)
 		goto fail_disable;
 
 	if (!request_region(link->resource[0]->start, FDOMAIN_REGION_SIZE,
+<<<<<<< HEAD
 			    "fdomain_cs")) {
 		ret = -EBUSY;
 		goto fail_disable;
 	}
+=======
+			    "fdomain_cs"))
+		goto fail_disable;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sh = fdomain_create(link->resource[0]->start, link->irq, 7, &link->dev);
 	if (!sh) {

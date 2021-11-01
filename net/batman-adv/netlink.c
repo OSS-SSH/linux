@@ -359,13 +359,23 @@ static int batadv_netlink_mesh_fill(struct sk_buff *msg,
 			atomic_read(&bat_priv->orig_interval)))
 		goto nla_put_failure;
 
+<<<<<<< HEAD
 	batadv_hardif_put(primary_if);
+=======
+	if (primary_if)
+		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	genlmsg_end(msg, hdr);
 	return 0;
 
 nla_put_failure:
+<<<<<<< HEAD
 	batadv_hardif_put(primary_if);
+=======
+	if (primary_if)
+		batadv_hardif_put(primary_if);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	genlmsg_cancel(msg, hdr);
 	return -EMSGSIZE;

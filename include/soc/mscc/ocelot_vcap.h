@@ -694,7 +694,12 @@ int ocelot_vcap_filter_add(struct ocelot *ocelot,
 int ocelot_vcap_filter_del(struct ocelot *ocelot,
 			   struct ocelot_vcap_filter *rule);
 struct ocelot_vcap_filter *
+<<<<<<< HEAD
 ocelot_vcap_block_find_filter_by_id(struct ocelot_vcap_block *block,
 				    unsigned long cookie, bool tc_offload);
+=======
+ocelot_vcap_block_find_filter_by_id(struct ocelot_vcap_block *block, int id,
+				    bool tc_offload);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* _OCELOT_VCAP_H_ */

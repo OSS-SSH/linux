@@ -51,6 +51,7 @@ enum {
 	 * the file range, inode's io_tree).
 	 */
 	BTRFS_INODE_NO_DELALLOC_FLUSH,
+<<<<<<< HEAD
 	/*
 	 * Set when we are working on enabling verity for a file. Computing and
 	 * writing the whole Merkle tree can take a while so we want to prevent
@@ -58,6 +59,8 @@ enum {
 	 * on the same file.
 	 */
 	BTRFS_INODE_VERITY_IN_PROGRESS,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* in memory btrfs inode */
@@ -196,10 +199,15 @@ struct btrfs_inode {
 	 */
 	u64 csum_bytes;
 
+<<<<<<< HEAD
 	/* Backwards incompatible flags, lower half of inode_item::flags  */
 	u32 flags;
 	/* Read-only compatibility flags, upper half of inode_item::flags */
 	u32 ro_flags;
+=======
+	/* flags field from the on disk inode */
+	u32 flags;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Counters to keep track of the number of extent item's we may use due
@@ -357,6 +365,7 @@ struct btrfs_dio_private {
 	u8 csums[];
 };
 
+<<<<<<< HEAD
 /*
  * btrfs_inode_item stores flags in a u64, btrfs_inode stores them in two
  * separate u32s. These two functions convert between the two representations.
@@ -373,6 +382,8 @@ static inline void btrfs_inode_split_flags(u64 inode_item_flags,
 	*ro_flags = (u32)(inode_item_flags >> 32);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Array of bytes with variable length, hexadecimal format 0x1234 */
 #define CSUM_FMT				"0x%*phN"
 #define CSUM_FMT_VALUE(size, bytes)		size, bytes

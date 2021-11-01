@@ -456,7 +456,11 @@ static void dml1_rq_dlg_get_row_heights(
 	log2_meta_req_bytes = 6; /* meta request is 64b and is 8x8byte meta element */
 
 	/* each 64b meta request for dcn is 8x8 meta elements and
+<<<<<<< HEAD
 	 * a meta element covers one 256b block of the data surface.
+=======
+	 * a meta element covers one 256b block of the the data surface.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	log2_meta_req_height = log2_blk256_height + 3; /* meta req is 8x8 */
 	log2_meta_req_width = log2_meta_req_bytes + 8 - log2_bytes_per_element
@@ -718,7 +722,11 @@ static void get_surf_rq_param(
 	log2_meta_req_bytes = 6; /* meta request is 64b and is 8x8byte meta element */
 
 	/* each 64b meta request for dcn is 8x8 meta elements and
+<<<<<<< HEAD
 	 * a meta element covers one 256b block of the data surface.
+=======
+	 * a meta element covers one 256b block of the the data surface.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	log2_meta_req_height = log2_blk256_height + 3; /* meta req is 8x8 byte, each byte represent 1 blk256 */
 	log2_meta_req_width = log2_meta_req_bytes + 8 - log2_bytes_per_element

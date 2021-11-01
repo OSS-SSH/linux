@@ -61,12 +61,18 @@ static unsigned int tx_sgl = 1;
 module_param(tx_sgl, uint, 0600);
 MODULE_PARM_DESC(tx_sgl, "Minimum number of frags when using dma_map_sg() to optimize the IOMMU mapping");
 
+<<<<<<< HEAD
 static bool page_pool_enabled = true;
 module_param(page_pool_enabled, bool, 0400);
 
 #define HNS3_SGL_SIZE(nfrag)	(sizeof(struct scatterlist) * (nfrag) +	\
 				 sizeof(struct sg_table))
 #define HNS3_MAX_SGL_SIZE	ALIGN(HNS3_SGL_SIZE(HNS3_MAX_TSO_BD_NUM), \
+=======
+#define HNS3_SGL_SIZE(nfrag)	(sizeof(struct scatterlist) * (nfrag) +	\
+				 sizeof(struct sg_table))
+#define HNS3_MAX_SGL_SIZE	ALIGN(HNS3_SGL_SIZE(HNS3_MAX_TSO_BD_NUM),\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				      dma_get_cache_alignment())
 
 #define DEFAULT_MSG_LEVEL (NETIF_MSG_PROBE | NETIF_MSG_LINK | \
@@ -76,7 +82,10 @@ module_param(page_pool_enabled, bool, 0400);
 #define HNS3_OUTER_VLAN_TAG	2
 
 #define HNS3_MIN_TX_LEN		33U
+<<<<<<< HEAD
 #define HNS3_MIN_TUN_PKT_LEN	65U
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* hns3_pci_tbl - PCI Device ID Table
  *
@@ -104,7 +113,11 @@ static const struct pci_device_id hns3_pci_tbl[] = {
 	{PCI_VDEVICE(HUAWEI, HNAE3_DEV_ID_RDMA_DCB_PFC_VF),
 	 HNAE3_DEV_SUPPORT_ROCE_DCB_BITS},
 	/* required last entry */
+<<<<<<< HEAD
 	{0,}
+=======
+	{0, }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 MODULE_DEVICE_TABLE(pci, hns3_pci_tbl);
 
@@ -623,9 +636,19 @@ static int hns3_nic_set_real_num_queue(struct net_device *netdev)
 			return ret;
 		}
 
+<<<<<<< HEAD
 		for (i = 0; i < tc_info->num_tc; i++)
 			netdev_set_tc_queue(netdev, i, tc_info->tqp_count[i],
 					    tc_info->tqp_offset[i]);
+=======
+		for (i = 0; i < HNAE3_MAX_TC; i++) {
+			if (!test_bit(i, &tc_info->tc_en))
+				continue;
+
+			netdev_set_tc_queue(netdev, i, tc_info->tqp_count[i],
+					    tc_info->tqp_offset[i]);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = netif_set_real_num_tx_queues(netdev, queue_size);
@@ -775,11 +798,14 @@ static int hns3_nic_net_open(struct net_device *netdev)
 	if (hns3_nic_resetting(netdev))
 		return -EBUSY;
 
+<<<<<<< HEAD
 	if (!test_bit(HNS3_NIC_STATE_DOWN, &priv->state)) {
 		netdev_warn(netdev, "net open repeatedly!\n");
 		return 0;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netif_carrier_off(netdev);
 
 	ret = hns3_nic_set_real_num_queue(netdev);
@@ -976,7 +1002,12 @@ static u32 hns3_tx_spare_space(struct hns3_enet_ring *ring)
 	/* The free tx buffer is divided into two part, so pick the
 	 * larger one.
 	 */
+<<<<<<< HEAD
 	return max(ntc, tx_spare->len - ntu) - 1;
+=======
+	return (ntc > (tx_spare->len - ntu) ? ntc :
+			(tx_spare->len - ntu)) - 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void hns3_tx_spare_update(struct hns3_enet_ring *ring)
@@ -1429,11 +1460,16 @@ static int hns3_set_l2l3l4(struct sk_buff *skb, u8 ol4_proto,
 			       l4.tcp->doff);
 		break;
 	case IPPROTO_UDP:
+<<<<<<< HEAD
 		if (hns3_tunnel_csum_bug(skb)) {
 			int ret = skb_put_padto(skb, HNS3_MIN_TUN_PKT_LEN);
 
 			return ret ? ret : skb_checksum_help(skb);
 		}
+=======
+		if (hns3_tunnel_csum_bug(skb))
+			return skb_checksum_help(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		hns3_set_field(*type_cs_vlan_tso, HNS3_TXD_L4CS_B, 1);
 		hns3_set_field(*type_cs_vlan_tso, HNS3_TXD_L4T_S,
@@ -2859,7 +2895,11 @@ static const struct net_device_ops hns3_nic_netdev_ops = {
 	.ndo_start_xmit		= hns3_nic_net_xmit,
 	.ndo_tx_timeout		= hns3_nic_net_timeout,
 	.ndo_set_mac_address	= hns3_nic_net_set_mac_address,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= hns3_nic_do_ioctl,
+=======
+	.ndo_do_ioctl		= hns3_nic_do_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_change_mtu		= hns3_nic_change_mtu,
 	.ndo_set_features	= hns3_nic_set_features,
 	.ndo_features_check	= hns3_features_check,
@@ -3134,6 +3174,14 @@ static void hns3_set_default_feature(struct net_device *netdev)
 
 	netdev->priv_flags |= IFF_UNICAST_FLT;
 
+<<<<<<< HEAD
+=======
+	netdev->hw_enc_features |= NETIF_F_RXCSUM | NETIF_F_SG | NETIF_F_GSO |
+		NETIF_F_GRO | NETIF_F_TSO | NETIF_F_TSO6 | NETIF_F_GSO_GRE |
+		NETIF_F_GSO_GRE_CSUM | NETIF_F_GSO_UDP_TUNNEL |
+		NETIF_F_SCTP_CRC | NETIF_F_TSO_MANGLEID | NETIF_F_FRAGLIST;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netdev->gso_partial_features |= NETIF_F_GSO_GRE_CSUM;
 
 	netdev->features |= NETIF_F_HW_VLAN_CTAG_FILTER |
@@ -3143,6 +3191,7 @@ static void hns3_set_default_feature(struct net_device *netdev)
 		NETIF_F_GSO_GRE_CSUM | NETIF_F_GSO_UDP_TUNNEL |
 		NETIF_F_SCTP_CRC | NETIF_F_FRAGLIST;
 
+<<<<<<< HEAD
 	if (ae_dev->dev_version >= HNAE3_DEVICE_VERSION_V2) {
 		netdev->features |= NETIF_F_GRO_HW;
 
@@ -3174,6 +3223,64 @@ static void hns3_set_default_feature(struct net_device *netdev)
 		  NETIF_F_HW_TC);
 
 	netdev->hw_enc_features |= netdev->vlan_features | NETIF_F_TSO_MANGLEID;
+=======
+	netdev->vlan_features |= NETIF_F_RXCSUM |
+		NETIF_F_SG | NETIF_F_GSO | NETIF_F_GRO |
+		NETIF_F_TSO | NETIF_F_TSO6 | NETIF_F_GSO_GRE |
+		NETIF_F_GSO_GRE_CSUM | NETIF_F_GSO_UDP_TUNNEL |
+		NETIF_F_SCTP_CRC | NETIF_F_FRAGLIST;
+
+	netdev->hw_features |= NETIF_F_HW_VLAN_CTAG_TX |
+		NETIF_F_HW_VLAN_CTAG_RX |
+		NETIF_F_RXCSUM | NETIF_F_SG | NETIF_F_GSO |
+		NETIF_F_GRO | NETIF_F_TSO | NETIF_F_TSO6 | NETIF_F_GSO_GRE |
+		NETIF_F_GSO_GRE_CSUM | NETIF_F_GSO_UDP_TUNNEL |
+		NETIF_F_SCTP_CRC | NETIF_F_FRAGLIST;
+
+	if (ae_dev->dev_version >= HNAE3_DEVICE_VERSION_V2) {
+		netdev->hw_features |= NETIF_F_GRO_HW;
+		netdev->features |= NETIF_F_GRO_HW;
+
+		if (!(h->flags & HNAE3_SUPPORT_VF)) {
+			netdev->hw_features |= NETIF_F_NTUPLE;
+			netdev->features |= NETIF_F_NTUPLE;
+		}
+	}
+
+	if (test_bit(HNAE3_DEV_SUPPORT_UDP_GSO_B, ae_dev->caps)) {
+		netdev->hw_features |= NETIF_F_GSO_UDP_L4;
+		netdev->features |= NETIF_F_GSO_UDP_L4;
+		netdev->vlan_features |= NETIF_F_GSO_UDP_L4;
+		netdev->hw_enc_features |= NETIF_F_GSO_UDP_L4;
+	}
+
+	if (test_bit(HNAE3_DEV_SUPPORT_HW_TX_CSUM_B, ae_dev->caps)) {
+		netdev->hw_features |= NETIF_F_HW_CSUM;
+		netdev->features |= NETIF_F_HW_CSUM;
+		netdev->vlan_features |= NETIF_F_HW_CSUM;
+		netdev->hw_enc_features |= NETIF_F_HW_CSUM;
+	} else {
+		netdev->hw_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
+		netdev->features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
+		netdev->vlan_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
+		netdev->hw_enc_features |= NETIF_F_IP_CSUM | NETIF_F_IPV6_CSUM;
+	}
+
+	if (test_bit(HNAE3_DEV_SUPPORT_UDP_TUNNEL_CSUM_B, ae_dev->caps)) {
+		netdev->hw_features |= NETIF_F_GSO_UDP_TUNNEL_CSUM;
+		netdev->features |= NETIF_F_GSO_UDP_TUNNEL_CSUM;
+		netdev->vlan_features |= NETIF_F_GSO_UDP_TUNNEL_CSUM;
+		netdev->hw_enc_features |= NETIF_F_GSO_UDP_TUNNEL_CSUM;
+	}
+
+	if (test_bit(HNAE3_DEV_SUPPORT_FD_FORWARD_TC_B, ae_dev->caps)) {
+		netdev->hw_features |= NETIF_F_HW_TC;
+		netdev->features |= NETIF_F_HW_TC;
+	}
+
+	if (test_bit(HNAE3_DEV_SUPPORT_VLAN_FLTR_MDF_B, ae_dev->caps))
+		netdev->hw_features |= NETIF_F_HW_VLAN_CTAG_FILTER;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int hns3_alloc_buffer(struct hns3_enet_ring *ring,
@@ -3182,6 +3289,7 @@ static int hns3_alloc_buffer(struct hns3_enet_ring *ring,
 	unsigned int order = hns3_page_order(ring);
 	struct page *p;
 
+<<<<<<< HEAD
 	if (ring->page_pool) {
 		p = page_pool_dev_alloc_frag(ring->page_pool,
 					     &cb->page_offset,
@@ -3197,6 +3305,8 @@ static int hns3_alloc_buffer(struct hns3_enet_ring *ring,
 		return 0;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	p = dev_alloc_pages(order);
 	if (!p)
 		return -ENOMEM;
@@ -3219,6 +3329,7 @@ static void hns3_free_buffer(struct hns3_enet_ring *ring,
 	if (cb->type & (DESC_TYPE_SKB | DESC_TYPE_BOUNCE_HEAD |
 			DESC_TYPE_BOUNCE_ALL | DESC_TYPE_SGL_SKB))
 		napi_consume_skb(cb->priv, budget);
+<<<<<<< HEAD
 	else if (!HNAE3_IS_TX_RING(ring)) {
 		if (cb->type & DESC_TYPE_PAGE && cb->pagecnt_bias)
 			__page_frag_cache_drain(cb->priv, cb->pagecnt_bias);
@@ -3226,6 +3337,10 @@ static void hns3_free_buffer(struct hns3_enet_ring *ring,
 			page_pool_put_full_page(ring->page_pool, cb->priv,
 						false);
 	}
+=======
+	else if (!HNAE3_IS_TX_RING(ring) && cb->pagecnt_bias)
+		__page_frag_cache_drain(cb->priv, cb->pagecnt_bias);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memset(cb, 0, sizeof(*cb));
 }
 
@@ -3312,7 +3427,11 @@ static int hns3_alloc_and_map_buffer(struct hns3_enet_ring *ring,
 	int ret;
 
 	ret = hns3_alloc_buffer(ring, cb);
+<<<<<<< HEAD
 	if (ret || ring->page_pool)
+=======
+	if (ret)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 
 	ret = hns3_map_buffer(ring, cb);
@@ -3334,8 +3453,12 @@ static int hns3_alloc_and_attach_buffer(struct hns3_enet_ring *ring, int i)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ring->desc[i].addr = cpu_to_le64(ring->desc_cb[i].dma +
 					 ring->desc_cb[i].page_offset);
+=======
+	ring->desc[i].addr = cpu_to_le64(ring->desc_cb[i].dma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -3365,8 +3488,12 @@ static void hns3_replace_buffer(struct hns3_enet_ring *ring, int i,
 {
 	hns3_unmap_buffer(ring, &ring->desc_cb[i]);
 	ring->desc_cb[i] = *res_cb;
+<<<<<<< HEAD
 	ring->desc[i].addr = cpu_to_le64(ring->desc_cb[i].dma +
 					 ring->desc_cb[i].page_offset);
+=======
+	ring->desc[i].addr = cpu_to_le64(ring->desc_cb[i].dma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ring->desc[i].rx.bd_base_info = 0;
 }
 
@@ -3538,12 +3665,15 @@ static void hns3_nic_reuse_page(struct sk_buff *skb, int i,
 	u32 frag_size = size - pull_len;
 	bool reused;
 
+<<<<<<< HEAD
 	if (ring->page_pool) {
 		skb_add_rx_frag(skb, i, desc_cb->priv, frag_offset,
 				frag_size, truesize);
 		return;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Avoid re-using remote or pfmem page */
 	if (unlikely(!dev_page_is_reusable(desc_cb->priv)))
 		goto out;
@@ -3861,9 +3991,12 @@ static int hns3_alloc_skb(struct hns3_enet_ring *ring, unsigned int length,
 		/* We can reuse buffer as-is, just make sure it is reusable */
 		if (dev_page_is_reusable(desc_cb->priv))
 			desc_cb->reuse_flag = 1;
+<<<<<<< HEAD
 		else if (desc_cb->type & DESC_TYPE_PP_FRAG)
 			page_pool_put_full_page(ring->page_pool, desc_cb->priv,
 						false);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else /* This page cannot be reused so discard it */
 			__page_frag_cache_drain(desc_cb->priv,
 						desc_cb->pagecnt_bias);
@@ -3871,10 +4004,13 @@ static int hns3_alloc_skb(struct hns3_enet_ring *ring, unsigned int length,
 		hns3_rx_ring_move_fw(ring);
 		return 0;
 	}
+<<<<<<< HEAD
 
 	if (ring->page_pool)
 		skb_mark_for_recycle(skb);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64_stats_update_begin(&ring->syncp);
 	ring->stats.seg_pkt_cnt++;
 	u64_stats_update_end(&ring->syncp);
@@ -3913,10 +4049,13 @@ static int hns3_add_frag(struct hns3_enet_ring *ring)
 					    "alloc rx fraglist skb fail\n");
 				return -ENXIO;
 			}
+<<<<<<< HEAD
 
 			if (ring->page_pool)
 				skb_mark_for_recycle(new_skb);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ring->frag_num = 0;
 
 			if (ring->tail_skb) {
@@ -4450,7 +4589,13 @@ static void hns3_tx_dim_work(struct work_struct *work)
 static void hns3_nic_init_dim(struct hns3_enet_tqp_vector *tqp_vector)
 {
 	INIT_WORK(&tqp_vector->rx_group.dim.work, hns3_rx_dim_work);
+<<<<<<< HEAD
 	INIT_WORK(&tqp_vector->tx_group.dim.work, hns3_tx_dim_work);
+=======
+	tqp_vector->rx_group.dim.mode = DIM_CQ_PERIOD_MODE_START_FROM_EQE;
+	INIT_WORK(&tqp_vector->tx_group.dim.work, hns3_tx_dim_work);
+	tqp_vector->tx_group.dim.mode = DIM_CQ_PERIOD_MODE_START_FROM_EQE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int hns3_nic_init_vector_data(struct hns3_nic_priv *priv)
@@ -4719,6 +4864,7 @@ static void hns3_put_ring_config(struct hns3_nic_priv *priv)
 	priv->ring = NULL;
 }
 
+<<<<<<< HEAD
 static void hns3_alloc_page_pool(struct hns3_enet_ring *ring)
 {
 	struct page_pool_params pp_params = {
@@ -4742,6 +4888,8 @@ static void hns3_alloc_page_pool(struct hns3_enet_ring *ring)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int hns3_alloc_ring_memory(struct hns3_enet_ring *ring)
 {
 	int ret;
@@ -4761,9 +4909,12 @@ static int hns3_alloc_ring_memory(struct hns3_enet_ring *ring)
 		goto out_with_desc_cb;
 
 	if (!HNAE3_IS_TX_RING(ring)) {
+<<<<<<< HEAD
 		if (page_pool_enabled)
 			hns3_alloc_page_pool(ring);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = hns3_alloc_ring_buffers(ring);
 		if (ret)
 			goto out_with_desc;
@@ -4804,11 +4955,14 @@ void hns3_fini_ring(struct hns3_enet_ring *ring)
 		devm_kfree(ring_to_dev(ring), tx_spare);
 		ring->tx_spare = NULL;
 	}
+<<<<<<< HEAD
 
 	if (!HNAE3_IS_TX_RING(ring) && ring->page_pool) {
 		page_pool_destroy(ring->page_pool);
 		ring->page_pool = NULL;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int hns3_buf_size2type(u32 buf_size)
@@ -4866,9 +5020,18 @@ static void hns3_init_tx_ring_tc(struct hns3_nic_priv *priv)
 	struct hnae3_tc_info *tc_info = &kinfo->tc_info;
 	int i;
 
+<<<<<<< HEAD
 	for (i = 0; i < tc_info->num_tc; i++) {
 		int j;
 
+=======
+	for (i = 0; i < HNAE3_MAX_TC; i++) {
+		int j;
+
+		if (!test_bit(i, &tc_info->tc_en))
+			continue;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (j = 0; j < tc_info->tqp_count[i]; j++) {
 			struct hnae3_queue *q;
 
@@ -4996,6 +5159,7 @@ static void hns3_info_show(struct hns3_nic_priv *priv)
 	dev_info(priv->dev, "Max mtu size: %u\n", priv->netdev->max_mtu);
 }
 
+<<<<<<< HEAD
 static void hns3_set_cq_period_mode(struct hns3_nic_priv *priv,
 				    enum dim_cq_period_mode mode, bool is_tx)
 {
@@ -5056,6 +5220,8 @@ static void hns3_state_init(struct hnae3_handle *handle)
 		set_bit(HNS3_NIC_STATE_RXD_ADV_LAYOUT_ENABLE, &priv->state);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int hns3_client_init(struct hnae3_handle *handle)
 {
 	struct pci_dev *pdev = handle->pdev;
@@ -5123,9 +5289,12 @@ static int hns3_client_init(struct hnae3_handle *handle)
 		goto out_init_ring;
 	}
 
+<<<<<<< HEAD
 	hns3_cq_period_mode_init(priv, DIM_CQ_PERIOD_MODE_START_FROM_EQE,
 				 DIM_CQ_PERIOD_MODE_START_FROM_EQE);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = hns3_init_phy(netdev);
 	if (ret)
 		goto out_init_phy;
@@ -5159,7 +5328,20 @@ static int hns3_client_init(struct hnae3_handle *handle)
 
 	netdev->max_mtu = HNS3_MAX_MTU(ae_dev->dev_specs.max_frm_size);
 
+<<<<<<< HEAD
 	hns3_state_init(handle);
+=======
+	if (test_bit(HNAE3_DEV_SUPPORT_HW_TX_CSUM_B, ae_dev->caps))
+		set_bit(HNS3_NIC_STATE_HW_TX_CSUM_ENABLE, &priv->state);
+
+	if (hnae3_ae_dev_rxd_adv_layout_supported(ae_dev))
+		set_bit(HNS3_NIC_STATE_RXD_ADV_LAYOUT_ENABLE, &priv->state);
+
+	set_bit(HNS3_NIC_STATE_INITED, &priv->state);
+
+	if (ae_dev->dev_version >= HNAE3_DEVICE_VERSION_V3)
+		set_bit(HNAE3_PFLAG_LIMIT_PROMISC, &handle->supported_pflags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = register_netdev(netdev);
 	if (ret) {
@@ -5449,8 +5631,11 @@ static int hns3_reset_notify_init_enet(struct hnae3_handle *handle)
 	if (ret)
 		goto err_uninit_vector;
 
+<<<<<<< HEAD
 	hns3_cq_period_mode_init(priv, priv->tx_cqe_mode, priv->rx_cqe_mode);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* the device can work without cpu rmap, only aRFS needs it */
 	ret = hns3_set_rx_cpu_rmap(netdev);
 	if (ret)

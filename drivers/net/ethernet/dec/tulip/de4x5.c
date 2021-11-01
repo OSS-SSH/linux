@@ -443,7 +443,10 @@
     =========================================================================
 */
 
+<<<<<<< HEAD
 #include <linux/compat.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/string.h>
@@ -903,8 +906,12 @@ static int     de4x5_close(struct net_device *dev);
 static struct  net_device_stats *de4x5_get_stats(struct net_device *dev);
 static void    de4x5_local_stats(struct net_device *dev, char *buf, int pkt_len);
 static void    set_multicast_list(struct net_device *dev);
+<<<<<<< HEAD
 static int     de4x5_siocdevprivate(struct net_device *dev, struct ifreq *rq,
 				    void __user *data, int cmd);
+=======
+static int     de4x5_ioctl(struct net_device *dev, struct ifreq *rq, int cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
 ** Private functions
@@ -1086,7 +1093,11 @@ static const struct net_device_ops de4x5_netdev_ops = {
     .ndo_start_xmit	= de4x5_queue_pkt,
     .ndo_get_stats	= de4x5_get_stats,
     .ndo_set_rx_mode	= set_multicast_list,
+<<<<<<< HEAD
     .ndo_siocdevprivate	= de4x5_siocdevprivate,
+=======
+    .ndo_do_ioctl	= de4x5_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     .ndo_set_mac_address= eth_mac_addr,
     .ndo_validate_addr	= eth_validate_addr,
 };
@@ -5359,7 +5370,11 @@ de4x5_dbg_rx(struct sk_buff *skb, int len)
 ** this function is only used for my testing.
 */
 static int
+<<<<<<< HEAD
 de4x5_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data, int cmd)
+=======
+de4x5_ioctl(struct net_device *dev, struct ifreq *rq, int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
     struct de4x5_private *lp = netdev_priv(dev);
     struct de4x5_ioctl *ioc = (struct de4x5_ioctl *) &rq->ifr_ifru;
@@ -5373,9 +5388,12 @@ de4x5_siocdevprivate(struct net_device *dev, struct ifreq *rq, void __user *data
     } tmp;
     u_long flags = 0;
 
+<<<<<<< HEAD
     if (cmd != SIOCDEVPRIVATE || in_compat_syscall())
 	return -EOPNOTSUPP;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     switch(ioc->cmd) {
     case DE4X5_GET_HWADDR:           /* Get the hardware address */
 	ioc->len = ETH_ALEN;

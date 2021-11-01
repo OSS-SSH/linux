@@ -223,7 +223,12 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
 	 * we can only call btrfs_qgroup_account_extent() directly to test
 	 * quota.
 	 */
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		test_err("couldn't find old roots: %d", ret);
@@ -235,7 +240,12 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		ulist_free(new_roots);
@@ -258,7 +268,12 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
 	old_roots = NULL;
 	new_roots = NULL;
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		test_err("couldn't find old roots: %d", ret);
@@ -269,7 +284,12 @@ static int test_no_shared_qgroup(struct btrfs_root *root,
 	if (ret)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		ulist_free(new_roots);
@@ -320,7 +340,12 @@ static int test_multiple_refs(struct btrfs_root *root,
 		return ret;
 	}
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		test_err("couldn't find old roots: %d", ret);
@@ -332,7 +357,12 @@ static int test_multiple_refs(struct btrfs_root *root,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		ulist_free(new_roots);
@@ -353,7 +383,12 @@ static int test_multiple_refs(struct btrfs_root *root,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		test_err("couldn't find old roots: %d", ret);
@@ -365,7 +400,12 @@ static int test_multiple_refs(struct btrfs_root *root,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		ulist_free(new_roots);
@@ -392,7 +432,12 @@ static int test_multiple_refs(struct btrfs_root *root,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &old_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		test_err("couldn't find old roots: %d", ret);
@@ -404,7 +449,12 @@ static int test_multiple_refs(struct btrfs_root *root,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots, false);
+=======
+	ret = btrfs_find_all_roots(&trans, fs_info, nodesize, 0, &new_roots,
+			false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		ulist_free(old_roots);
 		ulist_free(new_roots);

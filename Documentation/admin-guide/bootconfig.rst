@@ -178,7 +178,11 @@ update the boot loader and the kernel image itself as long as the boot
 loader passes the correct initrd file size. If by any chance, the boot
 loader passes a longer size, the kernel fails to find the bootconfig data.
 
+<<<<<<< HEAD
 To do this operation, Linux kernel provides ``bootconfig`` command under
+=======
+To do this operation, Linux kernel provides "bootconfig" command under
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 tools/bootconfig, which allows admin to apply or delete the config file
 to/from initrd image. You can build it by the following command::
 
@@ -196,6 +200,7 @@ To remove the config from the image, you can use -d option as below::
 Then add "bootconfig" on the normal kernel command line to tell the
 kernel to look for the bootconfig at the end of the initrd file.
 
+<<<<<<< HEAD
 
 Kernel parameters via Boot Config
 =================================
@@ -233,6 +238,8 @@ The final kernel cmdline will be the following::
  root="01234567-89ab-cdef-0123-456789abcd" ro bootconfig -- splash quiet
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Config File Limitation
 ======================
 

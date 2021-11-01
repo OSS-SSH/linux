@@ -312,6 +312,13 @@ static void update_cdma_locked(struct host1x_cdma *cdma)
 	bool signal = false;
 	struct host1x_job *job, *n;
 
+<<<<<<< HEAD
+=======
+	/* If CDMA is stopped, queue is cleared and we can return */
+	if (!cdma->running)
+		return;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Walk the sync queue, reading the sync point registers as necessary,
 	 * to consume as many sync queue entries as possible without blocking
@@ -320,8 +327,12 @@ static void update_cdma_locked(struct host1x_cdma *cdma)
 		struct host1x_syncpt *sp = job->syncpt;
 
 		/* Check whether this syncpt has completed, and bail if not */
+<<<<<<< HEAD
 		if (!host1x_syncpt_is_expired(sp, job->syncpt_end) &&
 		    !job->cancelled) {
+=======
+		if (!host1x_syncpt_is_expired(sp, job->syncpt_end)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* Start timer on next pending syncpt */
 			if (job->timeout)
 				cdma_start_timer_locked(cdma, job);
@@ -410,11 +421,16 @@ syncpt_incr:
 	else
 		restart_addr = cdma->last_pos;
 
+<<<<<<< HEAD
 	if (!job)
 		goto resume;
 
 	/* do CPU increments for the remaining syncpts */
 	if (job->syncpt_recovery) {
+=======
+	/* do CPU increments for the remaining syncpts */
+	if (job) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_dbg(dev, "%s: perform CPU incr on pending buffers\n",
 			__func__);
 
@@ -433,6 +449,7 @@ syncpt_incr:
 
 		dev_dbg(dev, "%s: finished sync_queue modification\n",
 			__func__);
+<<<<<<< HEAD
 	} else {
 		struct host1x_job *failed_job = job;
 
@@ -471,6 +488,10 @@ syncpt_incr:
 	}
 
 resume:
+=======
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* roll back DMAGET and start up channel again */
 	host1x_hw_cdma_resume(host1x, cdma, restart_addr);
 }
@@ -526,6 +547,7 @@ int host1x_cdma_begin(struct host1x_cdma *cdma, struct host1x_job *job)
 
 	mutex_lock(&cdma->lock);
 
+<<<<<<< HEAD
 	/*
 	 * Check if syncpoint was locked due to previous job timeout.
 	 * This needs to be done within the cdma lock to avoid a race
@@ -536,6 +558,8 @@ int host1x_cdma_begin(struct host1x_cdma *cdma, struct host1x_job *job)
 		return -EPERM;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (job->timeout) {
 		/* init state on first submit with timeout value */
 		if (!cdma->timeout.initialized) {

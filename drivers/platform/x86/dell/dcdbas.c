@@ -278,9 +278,15 @@ int dcdbas_smi_request(struct smi_cmd *smi_cmd)
 	}
 
 	/* SMI requires CPU 0 */
+<<<<<<< HEAD
 	cpus_read_lock();
 	ret = smp_call_on_cpu(0, raise_smi, smi_cmd, true);
 	cpus_read_unlock();
+=======
+	get_online_cpus();
+	ret = smp_call_on_cpu(0, raise_smi, smi_cmd, true);
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }

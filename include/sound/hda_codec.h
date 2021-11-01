@@ -114,6 +114,10 @@ struct hda_codec_ops {
 	int (*resume)(struct hda_codec *codec);
 	int (*check_power_status)(struct hda_codec *codec, hda_nid_t nid);
 #endif
+<<<<<<< HEAD
+=======
+	void (*reboot_notify)(struct hda_codec *codec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*stream_pm)(struct hda_codec *codec, hda_nid_t nid, bool on);
 };
 
@@ -224,7 +228,10 @@ struct hda_codec {
 #endif
 
 	/* misc flags */
+<<<<<<< HEAD
 	unsigned int configured:1; /* codec was configured */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int in_freeing:1; /* being released */
 	unsigned int registered:1; /* codec was registered */
 	unsigned int display_power_control:1; /* needs display power */

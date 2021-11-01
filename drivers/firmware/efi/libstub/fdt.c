@@ -271,7 +271,11 @@ efi_status_t allocate_new_fdt_and_exit_boot(void *handle,
 		return status;
 	}
 
+<<<<<<< HEAD
 	efi_info("Exiting boot services...\n");
+=======
+	efi_info("Exiting boot services and installing virtual address map...\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	map.map = &memory_map;
 	status = efi_allocate_pages(MAX_FDT_SIZE, new_fdt_addr, ULONG_MAX);

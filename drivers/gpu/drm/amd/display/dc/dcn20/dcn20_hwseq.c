@@ -1723,6 +1723,7 @@ void dcn20_program_front_end_for_ctx(
 
 				pipe = pipe->bottom_pipe;
 			}
+<<<<<<< HEAD
 		}
 		/* Program secondary blending tree and writeback pipes */
 		pipe = &context->res_ctx.pipe_ctx[i];
@@ -1732,6 +1733,15 @@ void dcn20_program_front_end_for_ctx(
 					|| pipe->stream->update_flags.raw)
 				&& hws->funcs.program_all_writeback_pipes_in_tree)
 			hws->funcs.program_all_writeback_pipes_in_tree(dc, pipe->stream, context);
+=======
+			/* Program secondary blending tree and writeback pipes */
+			pipe = &context->res_ctx.pipe_ctx[i];
+			if (!pipe->prev_odm_pipe && pipe->stream->num_wb_info > 0
+					&& (pipe->update_flags.raw || pipe->plane_state->update_flags.raw || pipe->stream->update_flags.raw)
+					&& hws->funcs.program_all_writeback_pipes_in_tree)
+				hws->funcs.program_all_writeback_pipes_in_tree(dc, pipe->stream, context);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

@@ -160,7 +160,11 @@ static struct rpc_clnt *get_gssp_clnt(struct sunrpc_net *sn)
 	mutex_lock(&sn->gssp_lock);
 	clnt = sn->gssp_clnt;
 	if (clnt)
+<<<<<<< HEAD
 		refcount_inc(&clnt->cl_count);
+=======
+		atomic_inc(&clnt->cl_count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&sn->gssp_lock);
 	return clnt;
 }

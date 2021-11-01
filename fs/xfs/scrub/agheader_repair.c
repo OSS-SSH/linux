@@ -70,7 +70,11 @@ struct xrep_agf_allocbt {
 STATIC int
 xrep_agf_walk_allocbt(
 	struct xfs_btree_cur		*cur,
+<<<<<<< HEAD
 	const struct xfs_alloc_rec_incore *rec,
+=======
+	struct xfs_alloc_rec_incore	*rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void				*priv)
 {
 	struct xrep_agf_allocbt		*raa = priv;
@@ -94,7 +98,11 @@ xrep_agf_check_agfl_block(
 {
 	struct xfs_scrub	*sc = priv;
 
+<<<<<<< HEAD
 	if (!xfs_verify_agbno(mp, sc->sa.pag->pag_agno, agbno))
+=======
+	if (!xfs_verify_agbno(mp, sc->sa.agno, agbno))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EFSCORRUPTED;
 	return 0;
 }
@@ -164,7 +172,11 @@ xrep_agf_find_btrees(
 		return -EFSCORRUPTED;
 
 	/* We must find the refcountbt root if that feature is enabled. */
+<<<<<<< HEAD
 	if (xfs_has_reflink(sc->mp) &&
+=======
+	if (xfs_sb_version_hasreflink(&sc->mp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    !xrep_check_btree_root(sc, &fab[XREP_AGF_REFCOUNTBT]))
 		return -EFSCORRUPTED;
 
@@ -188,6 +200,7 @@ xrep_agf_init_header(
 	memset(agf, 0, BBTOB(agf_bp->b_length));
 	agf->agf_magicnum = cpu_to_be32(XFS_AGF_MAGIC);
 	agf->agf_versionnum = cpu_to_be32(XFS_AGF_VERSION);
+<<<<<<< HEAD
 	agf->agf_seqno = cpu_to_be32(sc->sa.pag->pag_agno);
 	agf->agf_length = cpu_to_be32(xfs_ag_block_count(mp,
 							sc->sa.pag->pag_agno));
@@ -195,6 +208,14 @@ xrep_agf_init_header(
 	agf->agf_fllast = old_agf->agf_fllast;
 	agf->agf_flcount = old_agf->agf_flcount;
 	if (xfs_has_crc(mp))
+=======
+	agf->agf_seqno = cpu_to_be32(sc->sa.agno);
+	agf->agf_length = cpu_to_be32(xfs_ag_block_count(mp, sc->sa.agno));
+	agf->agf_flfirst = old_agf->agf_flfirst;
+	agf->agf_fllast = old_agf->agf_fllast;
+	agf->agf_flcount = old_agf->agf_flcount;
+	if (xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uuid_copy(&agf->agf_uuid, &mp->m_sb.sb_meta_uuid);
 
 	/* Mark the incore AGF data stale until we're done fixing things. */
@@ -224,7 +245,11 @@ xrep_agf_set_roots(
 	agf->agf_levels[XFS_BTNUM_RMAPi] =
 			cpu_to_be32(fab[XREP_AGF_RMAPBT].height);
 
+<<<<<<< HEAD
 	if (xfs_has_reflink(sc->mp)) {
+=======
+	if (xfs_sb_version_hasreflink(&sc->mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		agf->agf_refcount_root =
 				cpu_to_be32(fab[XREP_AGF_REFCOUNTBT].root);
 		agf->agf_refcount_level =
@@ -281,7 +306,11 @@ xrep_agf_calc_from_btrees(
 	agf->agf_btreeblks = cpu_to_be32(btreeblks);
 
 	/* Update the AGF counters from the refcountbt. */
+<<<<<<< HEAD
 	if (xfs_has_reflink(mp)) {
+=======
+	if (xfs_sb_version_hasreflink(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cur = xfs_refcountbt_init_cursor(mp, sc->tp, agf_bp,
 				sc->sa.pag);
 		error = xfs_btree_count_blocks(cur, &blocks);
@@ -364,16 +393,27 @@ xrep_agf(
 	int				error;
 
 	/* We require the rmapbt to rebuild anything. */
+<<<<<<< HEAD
 	if (!xfs_has_rmapbt(mp))
 		return -EOPNOTSUPP;
 
+=======
+	if (!xfs_sb_version_hasrmapbt(&mp->m_sb))
+		return -EOPNOTSUPP;
+
+	xchk_perag_get(sc->mp, &sc->sa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Make sure we have the AGF buffer, as scrub might have decided it
 	 * was corrupt after xfs_alloc_read_agf failed with -EFSCORRUPTED.
 	 */
 	error = xfs_trans_read_buf(mp, sc->tp, mp->m_ddev_targp,
+<<<<<<< HEAD
 			XFS_AG_DADDR(mp, sc->sa.pag->pag_agno,
 						XFS_AGF_DADDR(mp)),
+=======
+			XFS_AG_DADDR(mp, sc->sa.agno, XFS_AGF_DADDR(mp)),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			XFS_FSS_TO_BB(mp, 1), 0, &agf_bp, NULL);
 	if (error)
 		return error;
@@ -389,7 +429,11 @@ xrep_agf(
 	 * btrees rooted in the AGF.  If the AGFL contents are obviously bad
 	 * then we'll bail out.
 	 */
+<<<<<<< HEAD
 	error = xfs_alloc_read_agfl(mp, sc->tp, sc->sa.pag->pag_agno, &agfl_bp);
+=======
+	error = xfs_alloc_read_agfl(mp, sc->tp, sc->sa.agno, &agfl_bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (error)
 		return error;
 
@@ -443,7 +487,11 @@ struct xrep_agfl {
 STATIC int
 xrep_agfl_walk_rmap(
 	struct xfs_btree_cur	*cur,
+<<<<<<< HEAD
 	const struct xfs_rmap_irec *rec,
+=======
+	struct xfs_rmap_irec	*rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void			*priv)
 {
 	struct xrep_agfl	*ra = priv;
@@ -587,7 +635,11 @@ xrep_agfl_init_header(
 	agfl = XFS_BUF_TO_AGFL(agfl_bp);
 	memset(agfl, 0xFF, BBTOB(agfl_bp->b_length));
 	agfl->agfl_magicnum = cpu_to_be32(XFS_AGFL_MAGIC);
+<<<<<<< HEAD
 	agfl->agfl_seqno = cpu_to_be32(sc->sa.pag->pag_agno);
+=======
+	agfl->agfl_seqno = cpu_to_be32(sc->sa.agno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uuid_copy(&agfl->agfl_uuid, &mp->m_sb.sb_meta_uuid);
 
 	/*
@@ -600,8 +652,12 @@ xrep_agfl_init_header(
 	for_each_xbitmap_extent(br, n, agfl_extents) {
 		agbno = XFS_FSB_TO_AGBNO(mp, br->start);
 
+<<<<<<< HEAD
 		trace_xrep_agfl_insert(mp, sc->sa.pag->pag_agno, agbno,
 				br->len);
+=======
+		trace_xrep_agfl_insert(mp, sc->sa.agno, agbno, br->len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		while (br->len > 0 && fl_off < flcount) {
 			agfl_bno[fl_off] = cpu_to_be32(agbno);
@@ -640,9 +696,16 @@ xrep_agfl(
 	int			error;
 
 	/* We require the rmapbt to rebuild anything. */
+<<<<<<< HEAD
 	if (!xfs_has_rmapbt(mp))
 		return -EOPNOTSUPP;
 
+=======
+	if (!xfs_sb_version_hasrmapbt(&mp->m_sb))
+		return -EOPNOTSUPP;
+
+	xchk_perag_get(sc->mp, &sc->sa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xbitmap_init(&agfl_extents);
 
 	/*
@@ -650,8 +713,12 @@ xrep_agfl(
 	 * nothing wrong with the AGF, but all the AG header repair functions
 	 * have this chicken-and-egg problem.
 	 */
+<<<<<<< HEAD
 	error = xfs_alloc_read_agf(mp, sc->tp, sc->sa.pag->pag_agno, 0,
 			&agf_bp);
+=======
+	error = xfs_alloc_read_agf(mp, sc->tp, sc->sa.agno, 0, &agf_bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (error)
 		return error;
 
@@ -660,8 +727,12 @@ xrep_agfl(
 	 * was corrupt after xfs_alloc_read_agfl failed with -EFSCORRUPTED.
 	 */
 	error = xfs_trans_read_buf(mp, sc->tp, mp->m_ddev_targp,
+<<<<<<< HEAD
 			XFS_AG_DADDR(mp, sc->sa.pag->pag_agno,
 						XFS_AGFL_DADDR(mp)),
+=======
+			XFS_AG_DADDR(mp, sc->sa.agno, XFS_AGFL_DADDR(mp)),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			XFS_FSS_TO_BB(mp, 1), 0, &agfl_bp, NULL);
 	if (error)
 		return error;
@@ -726,8 +797,12 @@ xrep_agi_find_btrees(
 	int				error;
 
 	/* Read the AGF. */
+<<<<<<< HEAD
 	error = xfs_alloc_read_agf(mp, sc->tp, sc->sa.pag->pag_agno, 0,
 			&agf_bp);
+=======
+	error = xfs_alloc_read_agf(mp, sc->tp, sc->sa.agno, 0, &agf_bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (error)
 		return error;
 
@@ -741,7 +816,11 @@ xrep_agi_find_btrees(
 		return -EFSCORRUPTED;
 
 	/* We must find the finobt root if that feature is enabled. */
+<<<<<<< HEAD
 	if (xfs_has_finobt(mp) &&
+=======
+	if (xfs_sb_version_hasfinobt(&mp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    !xrep_check_btree_root(sc, &fab[XREP_AGI_FINOBT]))
 		return -EFSCORRUPTED;
 
@@ -765,12 +844,20 @@ xrep_agi_init_header(
 	memset(agi, 0, BBTOB(agi_bp->b_length));
 	agi->agi_magicnum = cpu_to_be32(XFS_AGI_MAGIC);
 	agi->agi_versionnum = cpu_to_be32(XFS_AGI_VERSION);
+<<<<<<< HEAD
 	agi->agi_seqno = cpu_to_be32(sc->sa.pag->pag_agno);
 	agi->agi_length = cpu_to_be32(xfs_ag_block_count(mp,
 							sc->sa.pag->pag_agno));
 	agi->agi_newino = cpu_to_be32(NULLAGINO);
 	agi->agi_dirino = cpu_to_be32(NULLAGINO);
 	if (xfs_has_crc(mp))
+=======
+	agi->agi_seqno = cpu_to_be32(sc->sa.agno);
+	agi->agi_length = cpu_to_be32(xfs_ag_block_count(mp, sc->sa.agno));
+	agi->agi_newino = cpu_to_be32(NULLAGINO);
+	agi->agi_dirino = cpu_to_be32(NULLAGINO);
+	if (xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uuid_copy(&agi->agi_uuid, &mp->m_sb.sb_meta_uuid);
 
 	/* We don't know how to fix the unlinked list yet. */
@@ -792,7 +879,11 @@ xrep_agi_set_roots(
 	agi->agi_root = cpu_to_be32(fab[XREP_AGI_INOBT].root);
 	agi->agi_level = cpu_to_be32(fab[XREP_AGI_INOBT].height);
 
+<<<<<<< HEAD
 	if (xfs_has_finobt(sc->mp)) {
+=======
+	if (xfs_sb_version_hasfinobt(&sc->mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		agi->agi_free_root = cpu_to_be32(fab[XREP_AGI_FINOBT].root);
 		agi->agi_free_level = cpu_to_be32(fab[XREP_AGI_FINOBT].height);
 	}
@@ -816,7 +907,11 @@ xrep_agi_calc_from_btrees(
 	error = xfs_ialloc_count_inodes(cur, &count, &freecount);
 	if (error)
 		goto err;
+<<<<<<< HEAD
 	if (xfs_has_inobtcounts(mp)) {
+=======
+	if (xfs_sb_version_hasinobtcounts(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_agblock_t	blocks;
 
 		error = xfs_btree_count_blocks(cur, &blocks);
@@ -829,7 +924,12 @@ xrep_agi_calc_from_btrees(
 	agi->agi_count = cpu_to_be32(count);
 	agi->agi_freecount = cpu_to_be32(freecount);
 
+<<<<<<< HEAD
 	if (xfs_has_finobt(mp) && xfs_has_inobtcounts(mp)) {
+=======
+	if (xfs_sb_version_hasfinobt(&mp->m_sb) &&
+	    xfs_sb_version_hasinobtcounts(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_agblock_t	blocks;
 
 		cur = xfs_inobt_init_cursor(mp, sc->tp, agi_bp,
@@ -897,16 +997,27 @@ xrep_agi(
 	int				error;
 
 	/* We require the rmapbt to rebuild anything. */
+<<<<<<< HEAD
 	if (!xfs_has_rmapbt(mp))
 		return -EOPNOTSUPP;
 
+=======
+	if (!xfs_sb_version_hasrmapbt(&mp->m_sb))
+		return -EOPNOTSUPP;
+
+	xchk_perag_get(sc->mp, &sc->sa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Make sure we have the AGI buffer, as scrub might have decided it
 	 * was corrupt after xfs_ialloc_read_agi failed with -EFSCORRUPTED.
 	 */
 	error = xfs_trans_read_buf(mp, sc->tp, mp->m_ddev_targp,
+<<<<<<< HEAD
 			XFS_AG_DADDR(mp, sc->sa.pag->pag_agno,
 						XFS_AGI_DADDR(mp)),
+=======
+			XFS_AG_DADDR(mp, sc->sa.agno, XFS_AGI_DADDR(mp)),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			XFS_FSS_TO_BB(mp, 1), 0, &agi_bp, NULL);
 	if (error)
 		return error;

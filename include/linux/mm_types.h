@@ -103,6 +103,7 @@ struct page {
 			unsigned long pp_magic;
 			struct page_pool *pp;
 			unsigned long _pp_mapping_pad;
+<<<<<<< HEAD
 			unsigned long dma_addr;
 			union {
 				/**
@@ -116,6 +117,13 @@ struct page {
 				 */
 				atomic_long_t pp_frag_count;
 			};
+=======
+			/**
+			 * @dma_addr: might require a 64-bit value on
+			 * 32-bit architectures.
+			 */
+			unsigned long dma_addr[2];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 		struct {	/* slab, slob and slub */
 			union {

@@ -337,17 +337,29 @@ static const struct attribute_group generic_uncore_format_group = {
 	.attrs = generic_uncore_formats_attr,
 };
 
+<<<<<<< HEAD
 void intel_generic_uncore_msr_init_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_msr_init_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	wrmsrl(uncore_msr_box_ctl(box), GENERIC_PMON_BOX_CTL_INT);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_msr_disable_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_msr_disable_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	wrmsrl(uncore_msr_box_ctl(box), GENERIC_PMON_BOX_CTL_FRZ);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_msr_enable_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_msr_enable_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	wrmsrl(uncore_msr_box_ctl(box), 0);
 }
@@ -377,7 +389,11 @@ static struct intel_uncore_ops generic_uncore_msr_ops = {
 	.read_counter		= uncore_msr_read_counter,
 };
 
+<<<<<<< HEAD
 void intel_generic_uncore_pci_init_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_pci_init_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = box->pci_dev;
 	int box_ctl = uncore_pci_box_ctl(box);
@@ -386,7 +402,11 @@ void intel_generic_uncore_pci_init_box(struct intel_uncore_box *box)
 	pci_write_config_dword(pdev, box_ctl, GENERIC_PMON_BOX_CTL_INT);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_pci_disable_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_pci_disable_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = box->pci_dev;
 	int box_ctl = uncore_pci_box_ctl(box);
@@ -394,7 +414,11 @@ void intel_generic_uncore_pci_disable_box(struct intel_uncore_box *box)
 	pci_write_config_dword(pdev, box_ctl, GENERIC_PMON_BOX_CTL_FRZ);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_pci_enable_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_pci_enable_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = box->pci_dev;
 	int box_ctl = uncore_pci_box_ctl(box);
@@ -411,8 +435,13 @@ static void intel_generic_uncore_pci_enable_event(struct intel_uncore_box *box,
 	pci_write_config_dword(pdev, hwc->config_base, hwc->config);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_pci_disable_event(struct intel_uncore_box *box,
 					    struct perf_event *event)
+=======
+static void intel_generic_uncore_pci_disable_event(struct intel_uncore_box *box,
+					     struct perf_event *event)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = box->pci_dev;
 	struct hw_perf_event *hwc = &event->hw;
@@ -420,8 +449,13 @@ void intel_generic_uncore_pci_disable_event(struct intel_uncore_box *box,
 	pci_write_config_dword(pdev, hwc->config_base, 0);
 }
 
+<<<<<<< HEAD
 u64 intel_generic_uncore_pci_read_counter(struct intel_uncore_box *box,
 					  struct perf_event *event)
+=======
+static u64 intel_generic_uncore_pci_read_counter(struct intel_uncore_box *box,
+					   struct perf_event *event)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pci_dev *pdev = box->pci_dev;
 	struct hw_perf_event *hwc = &event->hw;
@@ -454,7 +488,11 @@ static unsigned int generic_uncore_mmio_box_ctl(struct intel_uncore_box *box)
 	return type->box_ctls[box->dieid] + type->mmio_offsets[box->pmu->pmu_idx];
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_mmio_init_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_mmio_init_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned int box_ctl = generic_uncore_mmio_box_ctl(box);
 	struct intel_uncore_type *type = box->pmu->type;
@@ -478,7 +516,11 @@ void intel_generic_uncore_mmio_init_box(struct intel_uncore_box *box)
 	writel(GENERIC_PMON_BOX_CTL_INT, box->io_addr);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_mmio_disable_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_mmio_disable_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (!box->io_addr)
 		return;
@@ -486,7 +528,11 @@ void intel_generic_uncore_mmio_disable_box(struct intel_uncore_box *box)
 	writel(GENERIC_PMON_BOX_CTL_FRZ, box->io_addr);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_mmio_enable_box(struct intel_uncore_box *box)
+=======
+static void intel_generic_uncore_mmio_enable_box(struct intel_uncore_box *box)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (!box->io_addr)
 		return;
@@ -505,8 +551,13 @@ static void intel_generic_uncore_mmio_enable_event(struct intel_uncore_box *box,
 	writel(hwc->config, box->io_addr + hwc->config_base);
 }
 
+<<<<<<< HEAD
 void intel_generic_uncore_mmio_disable_event(struct intel_uncore_box *box,
 					     struct perf_event *event)
+=======
+static void intel_generic_uncore_mmio_disable_event(struct intel_uncore_box *box,
+					      struct perf_event *event)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct hw_perf_event *hwc = &event->hw;
 
@@ -568,8 +619,13 @@ static bool uncore_update_uncore_type(enum uncore_access_type type_id,
 	return true;
 }
 
+<<<<<<< HEAD
 struct intel_uncore_type **
 intel_uncore_generic_init_uncores(enum uncore_access_type type_id, int num_extra)
+=======
+static struct intel_uncore_type **
+intel_uncore_generic_init_uncores(enum uncore_access_type type_id)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct intel_uncore_discovery_type *type;
 	struct intel_uncore_type **uncores;
@@ -577,7 +633,11 @@ intel_uncore_generic_init_uncores(enum uncore_access_type type_id, int num_extra
 	struct rb_node *node;
 	int i = 0;
 
+<<<<<<< HEAD
 	uncores = kcalloc(num_discovered_types[type_id] + num_extra + 1,
+=======
+	uncores = kcalloc(num_discovered_types[type_id] + 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			  sizeof(struct intel_uncore_type *), GFP_KERNEL);
 	if (!uncores)
 		return empty_uncore;
@@ -606,17 +666,29 @@ intel_uncore_generic_init_uncores(enum uncore_access_type type_id, int num_extra
 
 void intel_uncore_generic_uncore_cpu_init(void)
 {
+<<<<<<< HEAD
 	uncore_msr_uncores = intel_uncore_generic_init_uncores(UNCORE_ACCESS_MSR, 0);
+=======
+	uncore_msr_uncores = intel_uncore_generic_init_uncores(UNCORE_ACCESS_MSR);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int intel_uncore_generic_uncore_pci_init(void)
 {
+<<<<<<< HEAD
 	uncore_pci_uncores = intel_uncore_generic_init_uncores(UNCORE_ACCESS_PCI, 0);
+=======
+	uncore_pci_uncores = intel_uncore_generic_init_uncores(UNCORE_ACCESS_PCI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
 void intel_uncore_generic_uncore_mmio_init(void)
 {
+<<<<<<< HEAD
 	uncore_mmio_uncores = intel_uncore_generic_init_uncores(UNCORE_ACCESS_MMIO, 0);
+=======
+	uncore_mmio_uncores = intel_uncore_generic_init_uncores(UNCORE_ACCESS_MMIO);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

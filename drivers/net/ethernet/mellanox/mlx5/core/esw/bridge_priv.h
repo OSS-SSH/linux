@@ -19,11 +19,14 @@ struct mlx5_esw_bridge_fdb_key {
 
 enum {
 	MLX5_ESW_BRIDGE_FLAG_ADDED_BY_USER = BIT(0),
+<<<<<<< HEAD
 	MLX5_ESW_BRIDGE_FLAG_PEER = BIT(1),
 };
 
 enum {
 	MLX5_ESW_BRIDGE_PORT_FLAG_PEER = BIT(0),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct mlx5_esw_bridge_fdb_entry {
@@ -33,7 +36,10 @@ struct mlx5_esw_bridge_fdb_entry {
 	struct list_head list;
 	struct list_head vlan_list;
 	u16 vport_num;
+<<<<<<< HEAD
 	u16 esw_owner_vhca_id;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u16 flags;
 
 	struct mlx5_flow_handle *ingress_handle;
@@ -53,9 +59,12 @@ struct mlx5_esw_bridge_vlan {
 
 struct mlx5_esw_bridge_port {
 	u16 vport_num;
+<<<<<<< HEAD
 	u16 esw_owner_vhca_id;
 	u16 flags;
 	struct mlx5_esw_bridge *bridge;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xarray vlans;
 };
 

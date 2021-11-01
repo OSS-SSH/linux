@@ -79,10 +79,16 @@ __jump_label_patch(struct jump_entry *entry, enum jump_label_type type)
 	return (struct jump_label_patch){.code = code, .size = size};
 }
 
+<<<<<<< HEAD
 static __always_inline void
 __jump_label_transform(struct jump_entry *entry,
 		       enum jump_label_type type,
 		       int init)
+=======
+static inline void __jump_label_transform(struct jump_entry *entry,
+					  enum jump_label_type type,
+					  int init)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct jump_label_patch jlp = __jump_label_patch(entry, type);
 

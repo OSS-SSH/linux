@@ -4,7 +4,11 @@
 
 #include <linux/compiler_types.h>
 
+<<<<<<< HEAD
 #include "x86.h"
+=======
+#include <asm/kvm_host.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define svm_asm(insn, clobber...)				\
 do {								\

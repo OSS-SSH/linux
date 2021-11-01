@@ -8,7 +8,10 @@
 
 #include <linux/types.h>
 #include "i915_gem.h"
+<<<<<<< HEAD
 #include "i915_gem_ww.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct i915_request;
 struct intel_context;

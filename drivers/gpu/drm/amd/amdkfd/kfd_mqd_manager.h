@@ -27,7 +27,10 @@
 #include "kfd_priv.h"
 
 #define KFD_MAX_NUM_SE 8
+<<<<<<< HEAD
 #define KFD_MAX_NUM_SH_PER_SE 2
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * struct mqd_manager

@@ -210,10 +210,15 @@ static void anon_release_pages(char *rel_area)
 
 static void anon_allocate_area(void **alloc_area)
 {
+<<<<<<< HEAD
 	*alloc_area = mmap(NULL, nr_pages * page_size, PROT_READ | PROT_WRITE,
 			   MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
 	if (*alloc_area == MAP_FAILED)
 		err("mmap of anonymous memory failed");
+=======
+	if (posix_memalign(alloc_area, page_size, nr_pages * page_size))
+		err("posix_memalign() failed");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void noop_alias_mapping(__u64 *start, size_t len, unsigned long offset)
@@ -566,6 +571,7 @@ static void retry_copy_page(int ufd, struct uffdio_copy *uffdio_copy,
 	}
 }
 
+<<<<<<< HEAD
 static void wake_range(int ufd, unsigned long addr, unsigned long len)
 {
 	struct uffdio_range uffdio_wake;
@@ -578,6 +584,8 @@ static void wake_range(int ufd, unsigned long addr, unsigned long len)
 			addr), exit(1);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __copy_page(int ufd, unsigned long offset, bool retry)
 {
 	struct uffdio_copy uffdio_copy;
@@ -597,7 +605,10 @@ static int __copy_page(int ufd, unsigned long offset, bool retry)
 		if (uffdio_copy.copy != -EEXIST)
 			err("UFFDIO_COPY error: %"PRId64,
 			    (int64_t)uffdio_copy.copy);
+<<<<<<< HEAD
 		wake_range(ufd, uffdio_copy.dst, page_size);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (uffdio_copy.copy != page_size) {
 		err("UFFDIO_COPY error: %"PRId64, (int64_t)uffdio_copy.copy);
 	} else {

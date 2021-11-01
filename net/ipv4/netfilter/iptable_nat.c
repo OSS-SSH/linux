@@ -17,6 +17,11 @@ struct iptable_nat_pernet {
 	struct nf_hook_ops *nf_nat_ops;
 };
 
+<<<<<<< HEAD
+=======
+static int __net_init iptable_nat_table_init(struct net *net);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static unsigned int iptable_nat_net_id __read_mostly;
 
 static const struct xt_table nf_nat_ipv4_table = {
@@ -27,6 +32,10 @@ static const struct xt_table nf_nat_ipv4_table = {
 			  (1 << NF_INET_LOCAL_IN),
 	.me		= THIS_MODULE,
 	.af		= NFPROTO_IPV4,
+<<<<<<< HEAD
+=======
+	.table_init	= iptable_nat_table_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static unsigned int iptable_nat_do_chain(void *priv,
@@ -110,7 +119,11 @@ static void ipt_nat_unregister_lookups(struct net *net)
 	kfree(ops);
 }
 
+<<<<<<< HEAD
 static int iptable_nat_table_init(struct net *net)
+=======
+static int __net_init iptable_nat_table_init(struct net *net)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ipt_replace *repl;
 	int ret;
@@ -152,6 +165,7 @@ static struct pernet_operations iptable_nat_net_ops = {
 
 static int __init iptable_nat_init(void)
 {
+<<<<<<< HEAD
 	int ret = xt_register_template(&nf_nat_ipv4_table,
 				       iptable_nat_table_init);
 
@@ -164,13 +178,26 @@ static int __init iptable_nat_init(void)
 		return ret;
 	}
 
+=======
+	int ret = register_pernet_subsys(&iptable_nat_net_ops);
+
+	if (ret)
+		return ret;
+
+	ret = iptable_nat_table_init(&init_net);
+	if (ret)
+		unregister_pernet_subsys(&iptable_nat_net_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
 static void __exit iptable_nat_exit(void)
 {
 	unregister_pernet_subsys(&iptable_nat_net_ops);
+<<<<<<< HEAD
 	xt_unregister_template(&nf_nat_ipv4_table);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 module_init(iptable_nat_init);

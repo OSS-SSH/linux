@@ -99,11 +99,14 @@ int dpsw_reset(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token);
 #define DPSW_IRQ_EVENT_LINK_CHANGED	0x0001
 
 /**
+<<<<<<< HEAD
  * DPSW_IRQ_EVENT_ENDPOINT_CHANGED - Indicates a change in endpoint
  */
 #define DPSW_IRQ_EVENT_ENDPOINT_CHANGED	0x0002
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * struct dpsw_irq_cfg - IRQ configuration
  * @addr:	Address that must be written to signal a message-based interrupt
  * @val:	Value to write into irq_addr address
@@ -757,6 +760,7 @@ int dpsw_acl_add_entry(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token,
 
 int dpsw_acl_remove_entry(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token,
 			  u16 acl_id, const struct dpsw_acl_entry_cfg *cfg);
+<<<<<<< HEAD
 
 /**
  * enum dpsw_reflection_filter - Filter type for frames to be reflected
@@ -788,4 +792,6 @@ int dpsw_if_add_reflection(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token,
 
 int dpsw_if_remove_reflection(struct fsl_mc_io *mc_io, u32 cmd_flags, u16 token,
 			      u16 if_id, const struct dpsw_reflection_cfg *cfg);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __FSL_DPSW_H */

@@ -24,7 +24,10 @@
 #include "block-group.h"
 #include "backref.h"
 #include "misc.h"
+<<<<<<< HEAD
 #include "subpage.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Relocation overview
@@ -2782,11 +2785,15 @@ static noinline_for_stack int prealloc_file_extent_cluster(
 	u64 num_bytes;
 	int nr;
 	int ret = 0;
+<<<<<<< HEAD
 	u64 i_size = i_size_read(&inode->vfs_inode);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 prealloc_start = cluster->start - offset;
 	u64 prealloc_end = cluster->end - offset;
 	u64 cur_offset = prealloc_start;
 
+<<<<<<< HEAD
 	/*
 	 * For subpage case, previous i_size may not be aligned to PAGE_SIZE.
 	 * This means the range [i_size, PAGE_END + 1) is filled with zeros by
@@ -2846,6 +2853,8 @@ static noinline_for_stack int prealloc_file_extent_cluster(
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUG_ON(cluster->start != cluster->boundary[0]);
 	ret = btrfs_alloc_data_chunk_ondemand(inode,
 					      prealloc_end + 1 - prealloc_start);
@@ -2947,6 +2956,7 @@ noinline int btrfs_should_cancel_balance(struct btrfs_fs_info *fs_info)
 }
 ALLOW_ERROR_INJECTION(btrfs_should_cancel_balance, TRUE);
 
+<<<<<<< HEAD
 static u64 get_cluster_boundary_end(struct file_extent_cluster *cluster,
 				    int cluster_nr)
 {
@@ -3081,15 +3091,29 @@ release_page:
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int relocate_file_extent_cluster(struct inode *inode,
 					struct file_extent_cluster *cluster)
 {
 	struct btrfs_fs_info *fs_info = btrfs_sb(inode->i_sb);
+<<<<<<< HEAD
 	u64 offset = BTRFS_I(inode)->index_cnt;
 	unsigned long index;
 	unsigned long last_index;
 	struct file_ra_state *ra;
 	int cluster_nr = 0;
+=======
+	u64 page_start;
+	u64 page_end;
+	u64 offset = BTRFS_I(inode)->index_cnt;
+	unsigned long index;
+	unsigned long last_index;
+	struct page *page;
+	struct file_ra_state *ra;
+	gfp_t mask = btrfs_alloc_write_mask(inode->i_mapping);
+	int nr = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret = 0;
 
 	if (!cluster->nr)
@@ -3110,6 +3134,7 @@ static int relocate_file_extent_cluster(struct inode *inode,
 	if (ret)
 		goto out;
 
+<<<<<<< HEAD
 	last_index = (cluster->end - offset) >> PAGE_SHIFT;
 	for (index = (cluster->start - offset) >> PAGE_SHIFT;
 	     index <= last_index && !ret; index++)
@@ -3118,6 +3143,111 @@ static int relocate_file_extent_cluster(struct inode *inode,
 		ret = btrfs_wait_ordered_range(inode, 0, (u64)-1);
 	if (ret == 0)
 		WARN_ON(cluster_nr != cluster->nr);
+=======
+	index = (cluster->start - offset) >> PAGE_SHIFT;
+	last_index = (cluster->end - offset) >> PAGE_SHIFT;
+	while (index <= last_index) {
+		ret = btrfs_delalloc_reserve_metadata(BTRFS_I(inode),
+				PAGE_SIZE);
+		if (ret)
+			goto out;
+
+		page = find_lock_page(inode->i_mapping, index);
+		if (!page) {
+			page_cache_sync_readahead(inode->i_mapping,
+						  ra, NULL, index,
+						  last_index + 1 - index);
+			page = find_or_create_page(inode->i_mapping, index,
+						   mask);
+			if (!page) {
+				btrfs_delalloc_release_metadata(BTRFS_I(inode),
+							PAGE_SIZE, true);
+				btrfs_delalloc_release_extents(BTRFS_I(inode),
+							PAGE_SIZE);
+				ret = -ENOMEM;
+				goto out;
+			}
+		}
+		ret = set_page_extent_mapped(page);
+		if (ret < 0) {
+			btrfs_delalloc_release_metadata(BTRFS_I(inode),
+							PAGE_SIZE, true);
+			btrfs_delalloc_release_extents(BTRFS_I(inode), PAGE_SIZE);
+			unlock_page(page);
+			put_page(page);
+			goto out;
+		}
+
+		if (PageReadahead(page)) {
+			page_cache_async_readahead(inode->i_mapping,
+						   ra, NULL, page, index,
+						   last_index + 1 - index);
+		}
+
+		if (!PageUptodate(page)) {
+			btrfs_readpage(NULL, page);
+			lock_page(page);
+			if (!PageUptodate(page)) {
+				unlock_page(page);
+				put_page(page);
+				btrfs_delalloc_release_metadata(BTRFS_I(inode),
+							PAGE_SIZE, true);
+				btrfs_delalloc_release_extents(BTRFS_I(inode),
+							       PAGE_SIZE);
+				ret = -EIO;
+				goto out;
+			}
+		}
+
+		page_start = page_offset(page);
+		page_end = page_start + PAGE_SIZE - 1;
+
+		lock_extent(&BTRFS_I(inode)->io_tree, page_start, page_end);
+
+		if (nr < cluster->nr &&
+		    page_start + offset == cluster->boundary[nr]) {
+			set_extent_bits(&BTRFS_I(inode)->io_tree,
+					page_start, page_end,
+					EXTENT_BOUNDARY);
+			nr++;
+		}
+
+		ret = btrfs_set_extent_delalloc(BTRFS_I(inode), page_start,
+						page_end, 0, NULL);
+		if (ret) {
+			unlock_page(page);
+			put_page(page);
+			btrfs_delalloc_release_metadata(BTRFS_I(inode),
+							 PAGE_SIZE, true);
+			btrfs_delalloc_release_extents(BTRFS_I(inode),
+			                               PAGE_SIZE);
+
+			clear_extent_bits(&BTRFS_I(inode)->io_tree,
+					  page_start, page_end,
+					  EXTENT_LOCKED | EXTENT_BOUNDARY);
+			goto out;
+
+		}
+		set_page_dirty(page);
+
+		unlock_extent(&BTRFS_I(inode)->io_tree,
+			      page_start, page_end);
+		unlock_page(page);
+		put_page(page);
+
+		index++;
+		btrfs_delalloc_release_extents(BTRFS_I(inode), PAGE_SIZE);
+		balance_dirty_pages_ratelimited(inode->i_mapping);
+		btrfs_throttle(fs_info);
+		if (btrfs_should_cancel_balance(fs_info)) {
+			ret = -ECANCELED;
+			goto out;
+		}
+	}
+	WARN_ON(nr != cluster->nr);
+	if (btrfs_is_zoned(fs_info) && !ret)
+		ret = btrfs_wait_ordered_range(inode, 0, (u64)-1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	kfree(ra);
 	return ret;

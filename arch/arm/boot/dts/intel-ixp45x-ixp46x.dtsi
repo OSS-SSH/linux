@@ -9,6 +9,7 @@
 
 / {
 	soc {
+<<<<<<< HEAD
 		bus@c4000000 {
 			compatible = "intel,ixp46x-expansion-bus-controller", "syscon";
 			/* Uses at least up to 0x124 */
@@ -20,6 +21,8 @@
 			reg = <0x70002100 4>;
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		interrupt-controller@c8003000 {
 			compatible = "intel,ixp43x-interrupt";
 		};

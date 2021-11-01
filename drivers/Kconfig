@@ -17,8 +17,11 @@ source "drivers/bus/Kconfig"
 
 source "drivers/connector/Kconfig"
 
+<<<<<<< HEAD
 source "drivers/firmware/Kconfig"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 source "drivers/gnss/Kconfig"
 
 source "drivers/mtd/Kconfig"
@@ -53,6 +56,11 @@ source "drivers/net/Kconfig"
 
 source "drivers/isdn/Kconfig"
 
+<<<<<<< HEAD
+=======
+source "drivers/lightnvm/Kconfig"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # input before char - char/joystick depends on it. As does USB.
 
 source "drivers/input/Kconfig"

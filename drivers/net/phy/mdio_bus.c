@@ -525,10 +525,13 @@ int __mdiobus_register(struct mii_bus *bus, struct module *owner)
 	    NULL == bus->read || NULL == bus->write)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (bus->parent && bus->parent->of_node)
 		bus->parent->of_node->fwnode.flags |=
 					FWNODE_FLAG_NEEDS_CHILD_BOUND_ON_ADD;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUG_ON(bus->state != MDIOBUS_ALLOCATED &&
 	       bus->state != MDIOBUS_UNREGISTERED);
 
@@ -538,6 +541,7 @@ int __mdiobus_register(struct mii_bus *bus, struct module *owner)
 	bus->dev.groups = NULL;
 	dev_set_name(&bus->dev, "%s", bus->id);
 
+<<<<<<< HEAD
 	/* We need to set state to MDIOBUS_UNREGISTERED to correctly release
 	 * the device in mdiobus_free()
 	 *
@@ -545,6 +549,8 @@ int __mdiobus_register(struct mii_bus *bus, struct module *owner)
 	 */
 	bus->state = MDIOBUS_UNREGISTERED;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = device_register(&bus->dev);
 	if (err) {
 		pr_err("mii_bus %s failed to register\n", bus->id);

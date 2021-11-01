@@ -18,6 +18,7 @@
 #define UAC1_DEF_PSRATE		48000
 #define UAC1_DEF_PSSIZE		2
 #define UAC1_DEF_REQ_NUM	2
+<<<<<<< HEAD
 #define UAC1_DEF_INT_REQ_NUM	10
 
 #define UAC1_DEF_MUTE_PRESENT	1
@@ -25,6 +26,8 @@
 #define UAC1_DEF_MIN_DB		(-100*256)	/* -100 dB */
 #define UAC1_DEF_MAX_DB		0		/* 0 dB */
 #define UAC1_DEF_RES_DB		(1*256)	/* 1 dB */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 struct f_uac1_opts {
@@ -35,6 +38,7 @@ struct f_uac1_opts {
 	int				p_chmask;
 	int				p_srate;
 	int				p_ssize;
+<<<<<<< HEAD
 
 	bool			p_mute_present;
 	bool			p_volume_present;
@@ -48,6 +52,8 @@ struct f_uac1_opts {
 	s16				c_volume_max;
 	s16				c_volume_res;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int				req_number;
 	unsigned			bound:1;
 

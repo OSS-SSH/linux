@@ -31,7 +31,10 @@ void __raw_spin_lock_init(raw_spinlock_t *lock, const char *name,
 
 EXPORT_SYMBOL(__raw_spin_lock_init);
 
+<<<<<<< HEAD
 #ifndef CONFIG_PREEMPT_RT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __rwlock_init(rwlock_t *lock, const char *name,
 		   struct lock_class_key *key)
 {
@@ -49,7 +52,10 @@ void __rwlock_init(rwlock_t *lock, const char *name,
 }
 
 EXPORT_SYMBOL(__rwlock_init);
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void spin_dump(raw_spinlock_t *lock, const char *msg)
 {
@@ -141,7 +147,10 @@ void do_raw_spin_unlock(raw_spinlock_t *lock)
 	arch_spin_unlock(&lock->raw_lock);
 }
 
+<<<<<<< HEAD
 #ifndef CONFIG_PREEMPT_RT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void rwlock_bug(rwlock_t *lock, const char *msg)
 {
 	if (!debug_locks_off())
@@ -231,5 +240,8 @@ void do_raw_write_unlock(rwlock_t *lock)
 	debug_write_unlock(lock);
 	arch_write_unlock(&lock->raw_lock);
 }
+<<<<<<< HEAD
 
 #endif /* !CONFIG_PREEMPT_RT */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

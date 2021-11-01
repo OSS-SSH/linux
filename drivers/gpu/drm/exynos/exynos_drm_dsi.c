@@ -809,6 +809,7 @@ static int exynos_dsi_init_link(struct exynos_dsi *dsi)
 			reg |= DSIM_AUTO_MODE;
 		if (dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSE)
 			reg |= DSIM_HSE_MODE;
+<<<<<<< HEAD
 		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HFP))
 			reg |= DSIM_HFP_MODE;
 		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_NO_HBP))
@@ -818,6 +819,17 @@ static int exynos_dsi_init_link(struct exynos_dsi *dsi)
 	}
 
 	if (!(dsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
+=======
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HFP))
+			reg |= DSIM_HFP_MODE;
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HBP))
+			reg |= DSIM_HBP_MODE;
+		if (!(dsi->mode_flags & MIPI_DSI_MODE_VIDEO_HSA))
+			reg |= DSIM_HSA_MODE;
+	}
+
+	if (!(dsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		reg |= DSIM_EOT_DISABLE;
 
 	switch (dsi->format) {
@@ -1738,6 +1750,10 @@ static const struct component_ops exynos_dsi_component_ops = {
 static int exynos_dsi_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
+<<<<<<< HEAD
+=======
+	struct resource *res;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct exynos_dsi *dsi;
 	int ret, i;
 
@@ -1788,7 +1804,12 @@ static int exynos_dsi_probe(struct platform_device *pdev)
 		}
 	}
 
+<<<<<<< HEAD
 	dsi->reg_base = devm_platform_ioremap_resource(pdev, 0);
+=======
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	dsi->reg_base = devm_ioremap_resource(dev, res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(dsi->reg_base))
 		return PTR_ERR(dsi->reg_base);
 

@@ -927,8 +927,12 @@ static u8 qos_oui[QOS_OUI_LEN] = { 0x00, 0x50, 0xF2 };
 static int libipw_verify_qos_info(struct libipw_qos_information_element
 				     *info_element, int sub_type)
 {
+<<<<<<< HEAD
 	if (info_element->elementID != QOS_ELEMENT_ID)
 		return -1;
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (info_element->qui_subtype != sub_type)
 		return -1;
 	if (memcmp(info_element->qui, qos_oui, QOS_OUI_LEN))
@@ -944,6 +948,7 @@ static int libipw_verify_qos_info(struct libipw_qos_information_element
 /*
  * Parse a QoS parameter element
  */
+<<<<<<< HEAD
 static int libipw_read_qos_param_element(
 			struct libipw_qos_parameter_info *element_param,
 			struct libipw_info_element *info_element)
@@ -956,11 +961,35 @@ static int libipw_read_qos_param_element(
 	memcpy(element_param, info_element, size);
 	return libipw_verify_qos_info(&element_param->info_element,
 				      QOS_OUI_PARAM_SUB_TYPE);
+=======
+static int libipw_read_qos_param_element(struct libipw_qos_parameter_info
+					    *element_param, struct libipw_info_element
+					    *info_element)
+{
+	int ret = 0;
+	u16 size = sizeof(struct libipw_qos_parameter_info) - 2;
+
+	if ((info_element == NULL) || (element_param == NULL))
+		return -1;
+
+	if (info_element->id == QOS_ELEMENT_ID && info_element->len == size) {
+		memcpy(element_param->info_element.qui, info_element->data,
+		       info_element->len);
+		element_param->info_element.elementID = info_element->id;
+		element_param->info_element.length = info_element->len;
+	} else
+		ret = -1;
+	if (ret == 0)
+		ret = libipw_verify_qos_info(&element_param->info_element,
+						QOS_OUI_PARAM_SUB_TYPE);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
  * Parse a QoS information element
  */
+<<<<<<< HEAD
 static int libipw_read_qos_info_element(
 			struct libipw_qos_information_element *element_info,
 			struct libipw_info_element *info_element)
@@ -972,6 +1001,33 @@ static int libipw_read_qos_info_element(
 
 	memcpy(element_info, info_element, size);
 	return libipw_verify_qos_info(element_info, QOS_OUI_INFO_SUB_TYPE);
+=======
+static int libipw_read_qos_info_element(struct
+					   libipw_qos_information_element
+					   *element_info, struct libipw_info_element
+					   *info_element)
+{
+	int ret = 0;
+	u16 size = sizeof(struct libipw_qos_information_element) - 2;
+
+	if (element_info == NULL)
+		return -1;
+	if (info_element == NULL)
+		return -1;
+
+	if ((info_element->id == QOS_ELEMENT_ID) && (info_element->len == size)) {
+		memcpy(element_info->qui, info_element->data,
+		       info_element->len);
+		element_info->elementID = info_element->id;
+		element_info->length = info_element->len;
+	} else
+		ret = -1;
+
+	if (ret == 0)
+		ret = libipw_verify_qos_info(element_info,
+						QOS_OUI_INFO_SUB_TYPE);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*

@@ -97,6 +97,7 @@
 	};
 };
 
+<<<<<<< HEAD
 &cpsw_port1 {
 	phy-handle = <&phy0>;
 	phy-mode = "rmii";
@@ -110,13 +111,30 @@
 &davinci_mdio_sw {
 	pinctrl-names = "default";
 	pinctrl-0 = <&mdio_pins>;
+=======
+&cpsw_emac0 {
+	phy-handle = <&phy0>;
+	phy-mode = "rmii";
+	dual_emac_res_vlan = <1>;
+};
+
+&davinci_mdio {
+	pinctrl-names = "default";
+	pinctrl-0 = <&mdio_pins>;
+	status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	phy0: ethernet-phy@0 {
 		reg = <0>;
 	};
 };
 
+<<<<<<< HEAD
 &mac_sw {
+=======
+&mac {
+	slaves = <1>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pinctrl-names = "default";
 	pinctrl-0 = <&ethernet0_pins>;
 	status = "okay";

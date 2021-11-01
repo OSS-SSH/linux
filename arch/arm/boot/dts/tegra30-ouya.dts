@@ -124,11 +124,20 @@
 			compatible = "onnn,nct1008";
 			reg = <0x4c>;
 			vcc-supply = <&sys_3v3_reg>;
+<<<<<<< HEAD
 
 			interrupt-parent = <&gpio>;
 			interrupts = <TEGRA_GPIO(CC, 2) IRQ_TYPE_EDGE_FALLING>;
 
 			#thermal-sensor-cells = <1>;
+=======
+			#thermal-sensor-cells = <1>;
+/*
+ *			The interrupt is bugged, once triggered it never clears.
+ *			interrupt-parent = <&gpio>;
+ *			interrupts = <TEGRA_GPIO(CC, 2) IRQ_TYPE_LEVEL_LOW>;
+ */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		pmic: pmic@2d {
@@ -4375,8 +4384,13 @@
 		nvidia,pins = "pcc2";
 		nvidia,function = "i2s4";
 		nvidia,pull = <TEGRA_PIN_PULL_NONE>;
+<<<<<<< HEAD
 		nvidia,tristate = <TEGRA_PIN_DISABLE>;
 		nvidia,enable-input = <TEGRA_PIN_ENABLE>;
+=======
+		nvidia,tristate = <TEGRA_PIN_ENABLE>;
+		nvidia,enable-input = <TEGRA_PIN_DISABLE>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 	sdmmc4_rst_n_pcc3 {
 		nvidia,pins = "sdmmc4_rst_n_pcc3";

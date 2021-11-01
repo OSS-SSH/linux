@@ -38,8 +38,13 @@ __printf(3, 4) __cold
 int dev_printk_emit(int level, const struct device *dev, const char *fmt, ...);
 
 __printf(3, 4) __cold
+<<<<<<< HEAD
 void _dev_printk(const char *level, const struct device *dev,
 		 const char *fmt, ...);
+=======
+void dev_printk(const char *level, const struct device *dev,
+		const char *fmt, ...);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 __printf(2, 3) __cold
 void _dev_emerg(const struct device *dev, const char *fmt, ...);
 __printf(2, 3) __cold
@@ -69,7 +74,11 @@ static inline void __dev_printk(const char *level, const struct device *dev,
 				struct va_format *vaf)
 {}
 static inline __printf(3, 4)
+<<<<<<< HEAD
 void _dev_printk(const char *level, const struct device *dev,
+=======
+void dev_printk(const char *level, const struct device *dev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 const char *fmt, ...)
 {}
 
@@ -98,6 +107,7 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 #endif
 
 /*
+<<<<<<< HEAD
  * Need to take variadic arguments even though we don't use them, as dev_fmt()
  * may only just have been expanded and may result in multiple arguments.
  */
@@ -130,10 +140,13 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 	})
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * #defines for all the dev_<level> macros to prefix with whatever
  * possible use of #define dev_fmt(fmt) ...
  */
 
+<<<<<<< HEAD
 #define dev_emerg(dev, fmt, ...) \
 	dev_printk_index_wrap(_dev_emerg, KERN_EMERG, dev, dev_fmt(fmt), ##__VA_ARGS__)
 #define dev_crit(dev, fmt, ...) \
@@ -148,6 +161,22 @@ void _dev_info(const struct device *dev, const char *fmt, ...)
 	dev_printk_index_wrap(_dev_notice, KERN_NOTICE, dev, dev_fmt(fmt), ##__VA_ARGS__)
 #define dev_info(dev, fmt, ...) \
 	dev_printk_index_wrap(_dev_info, KERN_INFO, dev, dev_fmt(fmt), ##__VA_ARGS__)
+=======
+#define dev_emerg(dev, fmt, ...)					\
+	_dev_emerg(dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_crit(dev, fmt, ...)						\
+	_dev_crit(dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_alert(dev, fmt, ...)					\
+	_dev_alert(dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_err(dev, fmt, ...)						\
+	_dev_err(dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_warn(dev, fmt, ...)						\
+	_dev_warn(dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_notice(dev, fmt, ...)					\
+	_dev_notice(dev, dev_fmt(fmt), ##__VA_ARGS__)
+#define dev_info(dev, fmt, ...)						\
+	_dev_info(dev, dev_fmt(fmt), ##__VA_ARGS__)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #if defined(CONFIG_DYNAMIC_DEBUG) || \
 	(defined(CONFIG_DYNAMIC_DEBUG_CORE) && defined(DYNAMIC_DEBUG_MODULE))

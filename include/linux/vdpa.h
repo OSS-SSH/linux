@@ -43,6 +43,7 @@ struct vdpa_vq_state_split {
  * @last_used_idx: used index
  */
 struct vdpa_vq_state_packed {
+<<<<<<< HEAD
 	u16	last_avail_counter:1;
 	u16	last_avail_idx:15;
 	u16	last_used_counter:1;
@@ -54,6 +55,19 @@ struct vdpa_vq_state {
 		struct vdpa_vq_state_split split;
 		struct vdpa_vq_state_packed packed;
 	};
+=======
+        u16	last_avail_counter:1;
+        u16	last_avail_idx:15;
+        u16	last_used_counter:1;
+        u16	last_used_idx:15;
+};
+
+struct vdpa_vq_state {
+     union {
+          struct vdpa_vq_state_split split;
+          struct vdpa_vq_state_packed packed;
+     };
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct vdpa_mgmt_dev;
@@ -65,7 +79,10 @@ struct vdpa_mgmt_dev;
  * @config: the configuration ops for this device.
  * @index: device index
  * @features_valid: were features initialized? for legacy guests
+<<<<<<< HEAD
  * @use_va: indicate whether virtual address must be used by this device
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @nvqs: maximum number of supported virtqueues
  * @mdev: management device pointer; caller must setup when registering device as part
  *	  of dev_add() mgmtdev ops callback before invoking _vdpa_register_device().
@@ -76,7 +93,10 @@ struct vdpa_device {
 	const struct vdpa_config_ops *config;
 	unsigned int index;
 	bool features_valid;
+<<<<<<< HEAD
 	bool use_va;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int nvqs;
 	struct vdpa_mgmt_dev *mdev;
 };
@@ -92,6 +112,7 @@ struct vdpa_iova_range {
 };
 
 /**
+<<<<<<< HEAD
  * Corresponding file area for device memory mapping
  * @file: vma->vm_file for the mapping
  * @offset: mapping offset in the vm_file
@@ -102,6 +123,8 @@ struct vdpa_map_file {
 };
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * struct vdpa_config_ops - operations for configuring a vDPA device.
  * Note: vDPA device drivers are required to implement all of the
  * operations unless it is mentioned to be optional in the following
@@ -143,7 +166,11 @@ struct vdpa_map_file {
  *				@vdev: vdpa device
  *				@idx: virtqueue index
  *				@state: pointer to returned state (last_avail_idx)
+<<<<<<< HEAD
  * @get_vq_notification:	Get the notification area for a virtqueue
+=======
+ * @get_vq_notification: 	Get the notification area for a virtqueue
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *				@vdev: vdpa device
  *				@idx: virtqueue index
  *				Returns the notifcation area
@@ -183,9 +210,12 @@ struct vdpa_map_file {
  * @set_status:			Set the device status
  *				@vdev: vdpa device
  *				@status: virtio device status
+<<<<<<< HEAD
  * @reset:			Reset device
  *				@vdev: vdpa device
  *				Returns integer: success (0) or error (< 0)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @get_config_size:		Get the size of the configuration space
  *				@vdev: vdpa device
  *				Returns size_t: configuration size
@@ -270,7 +300,10 @@ struct vdpa_config_ops {
 	u32 (*get_vendor_id)(struct vdpa_device *vdev);
 	u8 (*get_status)(struct vdpa_device *vdev);
 	void (*set_status)(struct vdpa_device *vdev, u8 status);
+<<<<<<< HEAD
 	int (*reset)(struct vdpa_device *vdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size_t (*get_config_size)(struct vdpa_device *vdev);
 	void (*get_config)(struct vdpa_device *vdev, unsigned int offset,
 			   void *buf, unsigned int len);
@@ -282,7 +315,11 @@ struct vdpa_config_ops {
 	/* DMA ops */
 	int (*set_map)(struct vdpa_device *vdev, struct vhost_iotlb *iotlb);
 	int (*dma_map)(struct vdpa_device *vdev, u64 iova, u64 size,
+<<<<<<< HEAD
 		       u64 pa, u32 perm, void *opaque);
+=======
+		       u64 pa, u32 perm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int (*dma_unmap)(struct vdpa_device *vdev, u64 iova, u64 size);
 
 	/* Free device resources */
@@ -291,6 +328,7 @@ struct vdpa_config_ops {
 
 struct vdpa_device *__vdpa_alloc_device(struct device *parent,
 					const struct vdpa_config_ops *config,
+<<<<<<< HEAD
 					size_t size, const char *name,
 					bool use_va);
 
@@ -307,11 +345,20 @@ struct vdpa_device *__vdpa_alloc_device(struct device *parent,
  * Return allocated data structure or ERR_PTR upon error
  */
 #define vdpa_alloc_device(dev_struct, member, parent, config, name, use_va)   \
+=======
+					size_t size, const char *name);
+
+#define vdpa_alloc_device(dev_struct, member, parent, config, name)   \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			  container_of(__vdpa_alloc_device( \
 				       parent, config, \
 				       sizeof(dev_struct) + \
 				       BUILD_BUG_ON_ZERO(offsetof( \
+<<<<<<< HEAD
 				       dev_struct, member)), name, use_va), \
+=======
+				       dev_struct, member)), name), \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				       dev_struct, member)
 
 int vdpa_register_device(struct vdpa_device *vdev, int nvqs);
@@ -366,16 +413,26 @@ static inline struct device *vdpa_get_dma_dev(struct vdpa_device *vdev)
 	return vdev->dma_dev;
 }
 
+<<<<<<< HEAD
 static inline int vdpa_reset(struct vdpa_device *vdev)
 {
 	const struct vdpa_config_ops *ops = vdev->config;
 
 	vdev->features_valid = false;
 	return ops->reset(vdev);
+=======
+static inline void vdpa_reset(struct vdpa_device *vdev)
+{
+        const struct vdpa_config_ops *ops = vdev->config;
+
+	vdev->features_valid = false;
+        ops->set_status(vdev, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int vdpa_set_features(struct vdpa_device *vdev, u64 features)
 {
+<<<<<<< HEAD
 	const struct vdpa_config_ops *ops = vdev->config;
 
 	vdev->features_valid = true;
@@ -387,6 +444,19 @@ static inline void vdpa_get_config(struct vdpa_device *vdev,
 				   unsigned int len)
 {
 	const struct vdpa_config_ops *ops = vdev->config;
+=======
+        const struct vdpa_config_ops *ops = vdev->config;
+
+	vdev->features_valid = true;
+        return ops->set_features(vdev, features);
+}
+
+
+static inline void vdpa_get_config(struct vdpa_device *vdev, unsigned offset,
+				   void *buf, unsigned int len)
+{
+        const struct vdpa_config_ops *ops = vdev->config;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Config accesses aren't supposed to trigger before features are set.

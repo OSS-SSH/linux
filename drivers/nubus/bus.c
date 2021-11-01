@@ -29,12 +29,23 @@ static int nubus_device_probe(struct device *dev)
 	return err;
 }
 
+<<<<<<< HEAD
 static void nubus_device_remove(struct device *dev)
 {
 	struct nubus_driver *ndrv = to_nubus_driver(dev->driver);
 
 	if (ndrv->remove)
 		ndrv->remove(to_nubus_board(dev));
+=======
+static int nubus_device_remove(struct device *dev)
+{
+	struct nubus_driver *ndrv = to_nubus_driver(dev->driver);
+	int err = -ENODEV;
+
+	if (dev->driver && ndrv->remove)
+		err = ndrv->remove(to_nubus_board(dev));
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct bus_type nubus_bus_type = {

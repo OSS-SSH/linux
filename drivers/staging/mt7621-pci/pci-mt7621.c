@@ -56,7 +56,10 @@
 #define PCIE_BAR_ENABLE			BIT(0)
 #define PCIE_PORT_INT_EN(x)		BIT(20 + (x))
 #define PCIE_PORT_LINKUP		BIT(0)
+<<<<<<< HEAD
 #define PCIE_PORT_CNT			3
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define PERST_DELAY_MS			100
 
@@ -389,11 +392,18 @@ static void mt7621_pcie_reset_ep_deassert(struct mt7621_pcie *pcie)
 	msleep(PERST_DELAY_MS);
 }
 
+<<<<<<< HEAD
 static int mt7621_pcie_init_ports(struct mt7621_pcie *pcie)
 {
 	struct device *dev = pcie->dev;
 	struct mt7621_pcie_port *port, *tmp;
 	u8 num_disabled = 0;
+=======
+static void mt7621_pcie_init_ports(struct mt7621_pcie *pcie)
+{
+	struct device *dev = pcie->dev;
+	struct mt7621_pcie_port *port, *tmp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	mt7621_pcie_reset_assert(pcie);
@@ -424,8 +434,13 @@ static int mt7621_pcie_init_ports(struct mt7621_pcie *pcie)
 			dev_err(dev, "pcie%d no card, disable it (RST & CLK)\n",
 				slot);
 			mt7621_control_assert(port);
+<<<<<<< HEAD
 			port->enabled = false;
 			num_disabled++;
+=======
+			clk_disable_unprepare(port->clk);
+			port->enabled = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			if (slot == 0) {
 				tmp = port;
@@ -436,8 +451,11 @@ static int mt7621_pcie_init_ports(struct mt7621_pcie *pcie)
 				phy_power_off(tmp->phy);
 		}
 	}
+<<<<<<< HEAD
 
 	return (num_disabled != PCIE_PORT_CNT) ? 0 : -ENODEV;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void mt7621_pcie_enable_port(struct mt7621_pcie_port *port)
@@ -545,11 +563,15 @@ static int mt7621_pci_probe(struct platform_device *pdev)
 		return err;
 	}
 
+<<<<<<< HEAD
 	err = mt7621_pcie_init_ports(pcie);
 	if (err) {
 		dev_err(dev, "Nothing connected in virtual bridges\n");
 		return 0;
 	}
+=======
+	mt7621_pcie_init_ports(pcie);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = mt7621_pcie_enable_ports(bridge);
 	if (err) {

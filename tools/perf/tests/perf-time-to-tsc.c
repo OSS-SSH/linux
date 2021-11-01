@@ -21,7 +21,10 @@
 #include "mmap.h"
 #include "tests.h"
 #include "pmu.h"
+<<<<<<< HEAD
 #include "pmu-hybrid.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define CHECK__(x) {				\
 	while ((x) < 0) {			\
@@ -94,7 +97,11 @@ int test__perf_time_to_tsc(struct test *test __maybe_unused, int subtest __maybe
 	 * For hybrid "cycles:u", it creates two events.
 	 * Init the second evsel here.
 	 */
+<<<<<<< HEAD
 	if (perf_pmu__has_hybrid() && perf_pmu__hybrid_mounted("cpu_atom")) {
+=======
+	if (perf_pmu__has_hybrid()) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		evsel = evsel__next(evsel);
 		evsel->core.attr.comm = 1;
 		evsel->core.attr.disabled = 1;

@@ -401,7 +401,11 @@ unexpected_exception:
 void vm_init_descriptor_tables(struct kvm_vm *vm)
 {
 	vm->handlers = vm_vaddr_alloc(vm, sizeof(struct handlers),
+<<<<<<< HEAD
 			vm->page_size);
+=======
+			vm->page_size, 0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*(vm_vaddr_t *)addr_gva2hva(vm, (vm_vaddr_t)(&exception_handlers)) = vm->handlers;
 }

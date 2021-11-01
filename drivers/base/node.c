@@ -26,6 +26,7 @@ static struct bus_type node_subsys = {
 	.dev_name = "node",
 };
 
+<<<<<<< HEAD
 static inline ssize_t cpumap_read(struct file *file, struct kobject *kobj,
 				  struct bin_attribute *attr, char *buf,
 				  loff_t off, size_t count)
@@ -34,17 +35,33 @@ static inline ssize_t cpumap_read(struct file *file, struct kobject *kobj,
 	struct node *node_dev = to_node(dev);
 	cpumask_var_t mask;
 	ssize_t n;
+=======
+
+static ssize_t node_read_cpumap(struct device *dev, bool list, char *buf)
+{
+	ssize_t n;
+	cpumask_var_t mask;
+	struct node *node_dev = to_node(dev);
+
+	/* 2008/04/07: buf currently PAGE_SIZE, need 9 chars per 32 bits. */
+	BUILD_BUG_ON((NR_CPUS/32 * 9) > (PAGE_SIZE-1));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!alloc_cpumask_var(&mask, GFP_KERNEL))
 		return 0;
 
 	cpumask_and(mask, cpumask_of_node(node_dev->dev.id), cpu_online_mask);
+<<<<<<< HEAD
 	n = cpumap_print_bitmask_to_buf(buf, mask, off, count);
+=======
+	n = cpumap_print_to_pagebuf(list, buf, mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	free_cpumask_var(mask);
 
 	return n;
 }
 
+<<<<<<< HEAD
 static BIN_ATTR_RO(cpumap, 0);
 
 static inline ssize_t cpulist_read(struct file *file, struct kobject *kobj,
@@ -67,6 +84,25 @@ static inline ssize_t cpulist_read(struct file *file, struct kobject *kobj,
 }
 
 static BIN_ATTR_RO(cpulist, 0);
+=======
+static inline ssize_t cpumap_show(struct device *dev,
+				  struct device_attribute *attr,
+				  char *buf)
+{
+	return node_read_cpumap(dev, false, buf);
+}
+
+static DEVICE_ATTR_RO(cpumap);
+
+static inline ssize_t cpulist_show(struct device *dev,
+				   struct device_attribute *attr,
+				   char *buf)
+{
+	return node_read_cpumap(dev, true, buf);
+}
+
+static DEVICE_ATTR_RO(cpulist);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * struct node_access_nodes - Access class device to hold user visible
@@ -79,7 +115,11 @@ static BIN_ATTR_RO(cpulist, 0);
 struct node_access_nodes {
 	struct device		dev;
 	struct list_head	list_node;
+<<<<<<< HEAD
 	unsigned int		access;
+=======
+	unsigned		access;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_HMEM_REPORTING
 	struct node_hmem_attrs	hmem_attrs;
 #endif
@@ -126,7 +166,11 @@ static void node_access_release(struct device *dev)
 }
 
 static struct node_access_nodes *node_init_node_access(struct node *node,
+<<<<<<< HEAD
 						       unsigned int access)
+=======
+						       unsigned access)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct node_access_nodes *access_node;
 	struct device *dev;
@@ -191,7 +235,11 @@ static struct attribute *access_attrs[] = {
  * @access: The access class the for the given attributes
  */
 void node_set_perf_attrs(unsigned int nid, struct node_hmem_attrs *hmem_attrs,
+<<<<<<< HEAD
 			 unsigned int access)
+=======
+			 unsigned access)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct node_access_nodes *c;
 	struct node *node;
@@ -561,12 +609,18 @@ static ssize_t node_read_distance(struct device *dev,
 static DEVICE_ATTR(distance, 0444, node_read_distance, NULL);
 
 static struct attribute *node_dev_attrs[] = {
+<<<<<<< HEAD
+=======
+	&dev_attr_cpumap.attr,
+	&dev_attr_cpulist.attr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	&dev_attr_meminfo.attr,
 	&dev_attr_numastat.attr,
 	&dev_attr_distance.attr,
 	&dev_attr_vmstat.attr,
 	NULL
 };
+<<<<<<< HEAD
 
 static struct bin_attribute *node_dev_bin_attrs[] = {
 	&bin_attr_cpumap,
@@ -583,6 +637,9 @@ static const struct attribute_group *node_dev_groups[] = {
 	&node_dev_group,
 	NULL
 };
+=======
+ATTRIBUTE_GROUPS(node_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_HUGETLBFS
 /*
@@ -728,7 +785,11 @@ int register_cpu_under_node(unsigned int cpu, unsigned int nid)
  */
 int register_memory_node_under_compute_node(unsigned int mem_nid,
 					    unsigned int cpu_nid,
+<<<<<<< HEAD
 					    unsigned int access)
+=======
+					    unsigned access)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct node *init_node, *targ_node;
 	struct node_access_nodes *initiator, *target;
@@ -785,6 +846,11 @@ int unregister_cpu_under_node(unsigned int cpu, unsigned int nid)
 #ifdef CONFIG_MEMORY_HOTPLUG_SPARSE
 static int __ref get_nid_for_pfn(unsigned long pfn)
 {
+<<<<<<< HEAD
+=======
+	if (!pfn_valid_within(pfn))
+		return -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DEFERRED_STRUCT_PAGE_INIT
 	if (system_state < SYSTEM_RUNNING)
 		return early_pfn_to_nid(pfn);

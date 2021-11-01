@@ -255,6 +255,7 @@ static void isc_sama5d2_config_rlp(struct isc_device *isc)
 	struct regmap *regmap = isc->regmap;
 	u32 rlp_mode = isc->config.rlp_cfg_mode;
 
+<<<<<<< HEAD
 	/*
 	 * In sama5d2, the YUV planar modes and the YUYV modes are treated
 	 * in the same way in RLP register.
@@ -272,6 +273,8 @@ static void isc_sama5d2_config_rlp(struct isc_device *isc)
 		rlp_mode |= ISC_RLP_CFG_MODE_YYCC;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	regmap_update_bits(regmap, ISC_RLP_CFG + isc->offsets.rlp,
 			   ISC_RLP_CFG_MODE_MASK, rlp_mode);
 }

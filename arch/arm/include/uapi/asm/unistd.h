@@ -15,7 +15,10 @@
 #define _UAPI__ASM_ARM_UNISTD_H
 
 #define __NR_OABI_SYSCALL_BASE	0x900000
+<<<<<<< HEAD
 #define __NR_SYSCALL_MASK	0x0fffff
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #if defined(__thumb__) || defined(__ARM_EABI__)
 #define __NR_SYSCALL_BASE	0

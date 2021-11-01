@@ -27,12 +27,19 @@
 #include <linux/list.h>
 #include <linux/sched.h>
 
+<<<<<<< HEAD
 #include <drm/drm_fourcc.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_mode_object.h>
 
 struct drm_clip_rect;
 struct drm_device;
 struct drm_file;
+<<<<<<< HEAD
+=======
+struct drm_format_info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct drm_framebuffer;
 struct drm_gem_object;
 
@@ -147,7 +154,11 @@ struct drm_framebuffer {
 	 * @pitches: Line stride per buffer. For userspace created object this
 	 * is copied from drm_mode_fb_cmd2.
 	 */
+<<<<<<< HEAD
 	unsigned int pitches[DRM_FORMAT_MAX_PLANES];
+=======
+	unsigned int pitches[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/**
 	 * @offsets: Offset from buffer start to the actual pixel data in bytes,
 	 * per buffer. For userspace created object this is copied from
@@ -165,7 +176,11 @@ struct drm_framebuffer {
 	 * data (even for linear buffers). Specifying an x/y pixel offset is
 	 * instead done through the source rectangle in &struct drm_plane_state.
 	 */
+<<<<<<< HEAD
 	unsigned int offsets[DRM_FORMAT_MAX_PLANES];
+=======
+	unsigned int offsets[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/**
 	 * @modifier: Data layout modifier. This is used to describe
 	 * tiling, or also special layouts (like compression) of auxiliary
@@ -210,7 +225,11 @@ struct drm_framebuffer {
 	 * This is used by the GEM framebuffer helpers, see e.g.
 	 * drm_gem_fb_create().
 	 */
+<<<<<<< HEAD
 	struct drm_gem_object *obj[DRM_FORMAT_MAX_PLANES];
+=======
+	struct drm_gem_object *obj[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define obj_to_fb(x) container_of(x, struct drm_framebuffer, base)

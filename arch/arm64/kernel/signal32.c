@@ -46,6 +46,11 @@ struct compat_aux_sigframe {
 	unsigned long			end_magic;
 } __attribute__((__aligned__(8)));
 
+<<<<<<< HEAD
+=======
+#define _BLOCKABLE (~(sigmask(SIGKILL) | sigmask(SIGSTOP)))
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int put_sigset_t(compat_sigset_t __user *uset, sigset_t *set)
 {
 	compat_sigset_t	cset;
@@ -188,8 +193,15 @@ static int compat_restore_sigframe(struct pt_regs *regs,
 	unsigned long psr;
 
 	err = get_sigset_t(&set, &sf->uc.uc_sigmask);
+<<<<<<< HEAD
 	if (err == 0)
 		set_current_blocked(&set);
+=======
+	if (err == 0) {
+		sigdelsetmask(&set, ~_BLOCKABLE);
+		set_current_blocked(&set);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	__get_user_error(regs->regs[0], &sf->uc.uc_mcontext.arm_r0, err);
 	__get_user_error(regs->regs[1], &sf->uc.uc_mcontext.arm_r1, err);
@@ -453,6 +465,7 @@ void compat_setup_restart_syscall(struct pt_regs *regs)
 {
        regs->regs[7] = __NR_compat_restart_syscall;
 }
+<<<<<<< HEAD
 
 /*
  * Compile-time assertions for siginfo_t offsets. Check NSIG* as well, as
@@ -492,3 +505,5 @@ static_assert(offsetof(compat_siginfo_t, si_fd)		== 0x10);
 static_assert(offsetof(compat_siginfo_t, si_call_addr)	== 0x0c);
 static_assert(offsetof(compat_siginfo_t, si_syscall)	== 0x10);
 static_assert(offsetof(compat_siginfo_t, si_arch)	== 0x14);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

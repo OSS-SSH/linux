@@ -3631,6 +3631,7 @@ dma_error:
 	return -1;
 }
 
+<<<<<<< HEAD
 static u16 i40e_swdcb_skb_tx_hash(struct net_device *dev,
 				  const struct sk_buff *skb,
 				  u16 num_tx_queues)
@@ -3680,6 +3681,8 @@ u16 i40e_lan_select_queue(struct net_device *netdev,
 	return qoffset + hash;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * i40e_xmit_xdp_ring - transmits an XDP buffer to an XDP Tx ring
  * @xdpf: data to transmit

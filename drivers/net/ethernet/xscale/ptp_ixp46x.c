@@ -5,23 +5,39 @@
  * Copyright (C) 2010 OMICRON electronics GmbH
  */
 #include <linux/device.h>
+<<<<<<< HEAD
 #include <linux/module.h>
 #include <linux/mod_devicetable.h>
 #include <linux/err.h>
+=======
+#include <linux/err.h>
+#include <linux/gpio.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/init.h>
 #include <linux/interrupt.h>
 #include <linux/io.h>
 #include <linux/irq.h>
 #include <linux/kernel.h>
 #include <linux/ptp_clock_kernel.h>
+<<<<<<< HEAD
 #include <linux/platform_device.h>
 #include <linux/soc/ixp4xx/cpu.h>
 #include <mach/ixp4xx-regs.h>
+=======
+#include <linux/soc/ixp4xx/cpu.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "ixp46x_ts.h"
 
 #define DRIVER		"ptp_ixp46x"
 #define N_EXT_TS	2
+<<<<<<< HEAD
+=======
+#define MASTER_GPIO	8
+#define MASTER_IRQ	25
+#define SLAVE_GPIO	7
+#define SLAVE_IRQ	24
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct ixp_clock {
 	struct ixp46x_ts_regs *regs;
@@ -29,11 +45,17 @@ struct ixp_clock {
 	struct ptp_clock_info caps;
 	int exts0_enabled;
 	int exts1_enabled;
+<<<<<<< HEAD
 	int slave_irq;
 	int master_irq;
 };
 
 static DEFINE_SPINLOCK(register_lock);
+=======
+};
+
+DEFINE_SPINLOCK(register_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Register access functions
@@ -242,6 +264,7 @@ static const struct ptp_clock_info ptp_ixp_caps = {
 
 static struct ixp_clock ixp_clock;
 
+<<<<<<< HEAD
 int ixp46x_ptp_find(struct ixp46x_ts_regs *__iomem *regs, int *phc_index)
 {
 	*regs = ixp_clock.regs;
@@ -274,6 +297,55 @@ static int ptp_ixp_probe(struct platform_device *pdev)
 	if (IS_ERR(ixp_clock.regs) ||
 	    !ixp_clock.master_irq || !ixp_clock.slave_irq)
 		return -ENXIO;
+=======
+static int setup_interrupt(int gpio)
+{
+	int irq;
+	int err;
+
+	err = gpio_request(gpio, "ixp4-ptp");
+	if (err)
+		return err;
+
+	err = gpio_direction_input(gpio);
+	if (err)
+		return err;
+
+	irq = gpio_to_irq(gpio);
+	if (irq < 0)
+		return irq;
+
+	err = irq_set_irq_type(irq, IRQF_TRIGGER_FALLING);
+	if (err) {
+		pr_err("cannot set trigger type for irq %d\n", irq);
+		return err;
+	}
+
+	err = request_irq(irq, isr, 0, DRIVER, &ixp_clock);
+	if (err) {
+		pr_err("request_irq failed for irq %d\n", irq);
+		return err;
+	}
+
+	return irq;
+}
+
+static void __exit ptp_ixp_exit(void)
+{
+	free_irq(MASTER_IRQ, &ixp_clock);
+	free_irq(SLAVE_IRQ, &ixp_clock);
+	ixp46x_phc_index = -1;
+	ptp_clock_unregister(ixp_clock.ptp_clock);
+}
+
+static int __init ptp_ixp_init(void)
+{
+	if (!cpu_is_ixp46x())
+		return -ENODEV;
+
+	ixp_clock.regs =
+		(struct ixp46x_ts_regs __iomem *) IXP4XX_TIMESYNC_BASE_VIRT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ixp_clock.caps = ptp_ixp_caps;
 
@@ -282,18 +354,23 @@ static int ptp_ixp_probe(struct platform_device *pdev)
 	if (IS_ERR(ixp_clock.ptp_clock))
 		return PTR_ERR(ixp_clock.ptp_clock);
 
+<<<<<<< HEAD
 	ret = devm_add_action_or_reset(dev, ptp_ixp_unregister_action,
 				       ixp_clock.ptp_clock);
 	if (ret) {
 		dev_err(dev, "failed to install clock removal handler\n");
 		return ret;
 	}
+=======
+	ixp46x_phc_index = ptp_clock_index(ixp_clock.ptp_clock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	__raw_writel(DEFAULT_ADDEND, &ixp_clock.regs->addend);
 	__raw_writel(1, &ixp_clock.regs->trgt_lo);
 	__raw_writel(0, &ixp_clock.regs->trgt_hi);
 	__raw_writel(TTIPEND, &ixp_clock.regs->event);
 
+<<<<<<< HEAD
 	ret = devm_request_irq(dev, ixp_clock.master_irq, isr,
 			       0, DRIVER, &ixp_clock);
 	if (ret)
@@ -327,6 +404,27 @@ static struct platform_driver ptp_ixp_driver = {
 	.probe = ptp_ixp_probe,
 };
 module_platform_driver(ptp_ixp_driver);
+=======
+	if (MASTER_IRQ != setup_interrupt(MASTER_GPIO)) {
+		pr_err("failed to setup gpio %d as irq\n", MASTER_GPIO);
+		goto no_master;
+	}
+	if (SLAVE_IRQ != setup_interrupt(SLAVE_GPIO)) {
+		pr_err("failed to setup gpio %d as irq\n", SLAVE_GPIO);
+		goto no_slave;
+	}
+
+	return 0;
+no_slave:
+	free_irq(MASTER_IRQ, &ixp_clock);
+no_master:
+	ptp_clock_unregister(ixp_clock.ptp_clock);
+	return -ENODEV;
+}
+
+module_init(ptp_ixp_init);
+module_exit(ptp_ixp_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_AUTHOR("Richard Cochran <richardcochran@gmail.com>");
 MODULE_DESCRIPTION("PTP clock using the IXP46X timer");

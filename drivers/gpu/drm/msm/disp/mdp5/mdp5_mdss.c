@@ -50,7 +50,12 @@ static irqreturn_t mdss_irq(int irq, void *arg)
 	while (intr) {
 		irq_hw_number_t hwirq = fls(intr) - 1;
 
+<<<<<<< HEAD
 		generic_handle_domain_irq(mdp5_mdss->irqcontroller.domain, hwirq);
+=======
+		generic_handle_irq(irq_find_mapping(
+				mdp5_mdss->irqcontroller.domain, hwirq));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		intr &= ~(1 << hwirq);
 	}
 

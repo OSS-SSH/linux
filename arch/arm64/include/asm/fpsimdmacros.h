@@ -94,7 +94,10 @@
 .endm
 
 /* SVE instruction encodings for non-SVE-capable assemblers */
+<<<<<<< HEAD
 /* (pre binutils 2.28, all kernel capable clang versions support SVE) */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* STR (vector): STR Z\nz, [X\nxbase, #\offset, MUL VL] */
 .macro _sve_str_v nz, nxbase, offset=0

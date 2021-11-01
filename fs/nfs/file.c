@@ -806,8 +806,14 @@ int nfs_lock(struct file *filp, int cmd, struct file_lock *fl)
 
 	nfs_inc_stats(inode, NFSIOS_VFSLOCK);
 
+<<<<<<< HEAD
 	if (fl->fl_flags & FL_RECLAIM)
 		return -ENOGRACE;
+=======
+	/* No mandatory locks over NFS */
+	if (__mandatory_lock(inode) && fl->fl_type != F_UNLCK)
+		goto out_err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (NFS_SERVER(inode)->flags & NFS_MOUNT_LOCAL_FCNTL)
 		is_local = 1;

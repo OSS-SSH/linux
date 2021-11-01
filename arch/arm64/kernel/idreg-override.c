@@ -54,7 +54,10 @@ static const struct ftr_set_desc pfr1 __initconst = {
 	.override	= &id_aa64pfr1_override,
 	.fields		= {
 	        { "bt", ID_AA64PFR1_BT_SHIFT },
+<<<<<<< HEAD
 		{ "mte", ID_AA64PFR1_MTE_SHIFT},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{}
 	},
 };
@@ -101,7 +104,10 @@ static const struct {
 	{ "arm64.nopauth",
 	  "id_aa64isar1.gpi=0 id_aa64isar1.gpa=0 "
 	  "id_aa64isar1.api=0 id_aa64isar1.apa=0"	   },
+<<<<<<< HEAD
 	{ "arm64.nomte",		"id_aa64pfr1.mte=0" },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ "nokaslr",			"kaslr.disabled=1" },
 };
 

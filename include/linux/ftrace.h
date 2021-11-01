@@ -643,6 +643,7 @@ static inline int ftrace_disable_ftrace_graph_caller(void) { return 0; }
 extern int ftrace_make_nop(struct module *mod,
 			   struct dyn_ftrace *rec, unsigned long addr);
 
+<<<<<<< HEAD
 /**
  * ftrace_need_init_nop - return whether nop call sites should be initialized
  *
@@ -659,6 +660,8 @@ extern int ftrace_make_nop(struct module *mod,
 #ifndef ftrace_need_init_nop
 #define ftrace_need_init_nop() (!__is_defined(CC_USING_NOP_MCOUNT))
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * ftrace_init_nop - initialize a nop call site

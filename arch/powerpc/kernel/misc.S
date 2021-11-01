@@ -29,7 +29,11 @@ _GLOBAL(reloc_offset)
 	li	r3, 0
 _GLOBAL(add_reloc_offset)
 	mflr	r0
+<<<<<<< HEAD
 	bcl	20,31,$+4
+=======
+	bl	1f
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 1:	mflr	r5
 	PPC_LL	r4,(2f-1b)(r5)
 	subf	r5,r4,r5

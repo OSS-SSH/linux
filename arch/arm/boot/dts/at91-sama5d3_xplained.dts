@@ -57,8 +57,11 @@
 			};
 
 			spi0: spi@f0004000 {
+<<<<<<< HEAD
 				pinctrl-names = "default";
 				pinctrl-0 = <&pinctrl_spi0_cs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				cs-gpios = <&pioD 13 0>, <0>, <0>, <&pioD 16 0>;
 				status = "okay";
 			};
@@ -171,8 +174,11 @@
 			};
 
 			spi1: spi@f8008000 {
+<<<<<<< HEAD
 				pinctrl-names = "default";
 				pinctrl-0 = <&pinctrl_spi1_cs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				cs-gpios = <&pioC 25 0>;
 				status = "okay";
 			};
@@ -252,6 +258,7 @@
 							<AT91_PIOE 3 AT91_PERIPH_GPIO AT91_PINCTRL_NONE
 							 AT91_PIOE 4 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 					};
+<<<<<<< HEAD
 
 					pinctrl_gpio_leds: gpio_leds_default {
 						atmel,pins =
@@ -272,6 +279,8 @@
 					pinctrl_vcc_mmc0_reg_gpio: vcc_mmc0_reg_gpio_default {
 						atmel,pins = <AT91_PIOE 2 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 					};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				};
 			};
 		};
@@ -363,8 +372,11 @@
 
 	vcc_mmc0_reg: fixedregulator_mmc0 {
 		compatible = "regulator-fixed";
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_vcc_mmc0_reg_gpio>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		gpio = <&pioE 2 GPIO_ACTIVE_LOW>;
 		regulator-name = "mmc0-card-supply";
 		regulator-min-microvolt = <3300000>;
@@ -388,9 +400,12 @@
 
 	leds {
 		compatible = "gpio-leds";
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_gpio_leds>;
 		status = "okay";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		d2 {
 			label = "d2";
@@ -399,7 +414,11 @@
 		};
 
 		d3 {
+<<<<<<< HEAD
 			label = "d3"; /* Conflict with EBI CS0, USART2 CTS. */
+=======
+			label = "d3";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			gpios = <&pioE 24 GPIO_ACTIVE_HIGH>;
 		};
 	};

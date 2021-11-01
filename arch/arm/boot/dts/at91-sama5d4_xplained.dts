@@ -7,7 +7,10 @@
  */
 /dts-v1/;
 #include "sama5d4.dtsi"
+<<<<<<< HEAD
 #include <dt-bindings/input/input.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 / {
 	model = "Atmel SAMA5D4 Xplained";
@@ -39,6 +42,19 @@
 				status = "okay";
 			};
 
+<<<<<<< HEAD
+=======
+			spi0: spi@f8010000 {
+				cs-gpios = <&pioC 3 0>, <0>, <0>, <0>;
+				status = "okay";
+				m25p80@0 {
+					compatible = "atmel,at25df321a";
+					spi-max-frequency = <50000000>;
+					reg = <0>;
+				};
+			};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			i2c0: i2c@f8014000 {
 				i2c-digital-filter;
 				status = "okay";
@@ -81,8 +97,11 @@
 			};
 
 			spi1: spi@fc018000 {
+<<<<<<< HEAD
 				pinctrl-names = "default";
 				pinctrl-0 = <&pinctrl_spi0_cs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				cs-gpios = <&pioB 21 0>;
 				status = "okay";
 			};
@@ -140,6 +159,7 @@
 						atmel,pins =
 							<AT91_PIOE 1 AT91_PERIPH_GPIO AT91_PINCTRL_PULL_UP_DEGLITCH>;
 					};
+<<<<<<< HEAD
 					pinctrl_spi0_cs: spi0_cs_default {
 						atmel,pins =
 							<AT91_PIOB 21 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
@@ -153,6 +173,8 @@
 						atmel,pins =
 							<AT91_PIOE 4 AT91_PERIPH_GPIO AT91_PINCTRL_NONE>;
 					};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				};
 			};
 		};
@@ -251,15 +273,22 @@
 		pb_user1 {
 			label = "pb_user1";
 			gpios = <&pioE 8 GPIO_ACTIVE_HIGH>;
+<<<<<<< HEAD
 			linux,code = <KEY_PROG1>;
+=======
+			linux,code = <0x100>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			wakeup-source;
 		};
 	};
 
 	leds {
 		compatible = "gpio-leds";
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_gpio_leds>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		status = "okay";
 
 		d8 {
@@ -286,8 +315,11 @@
 
 	vcc_mmc1_reg: fixedregulator_mmc1 {
 		compatible = "regulator-fixed";
+<<<<<<< HEAD
 		pinctrl-names = "default";
 		pinctrl-0 = <&pinctrl_vcc_mmc1_reg>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		gpio = <&pioE 4 GPIO_ACTIVE_LOW>;
 		regulator-name = "VDD MCI1";
 		regulator-min-microvolt = <3300000>;

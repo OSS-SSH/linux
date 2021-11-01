@@ -135,6 +135,7 @@ static const struct fec_devinfo fec_imx6ul_info = {
 		  FEC_QUIRK_HAS_COALESCE | FEC_QUIRK_CLEAR_SETUP_MII,
 };
 
+<<<<<<< HEAD
 static const struct fec_devinfo fec_imx8mq_info = {
 	.quirks = FEC_QUIRK_ENET_MAC | FEC_QUIRK_HAS_GBIT |
 		  FEC_QUIRK_HAS_BUFDESC_EX | FEC_QUIRK_HAS_CSUM |
@@ -155,6 +156,8 @@ static const struct fec_devinfo fec_imx8qm_info = {
 		  FEC_QUIRK_DELAYED_CLKS_SUPPORT,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct platform_device_id fec_devtype[] = {
 	{
 		/* keep it for coldfire */
@@ -182,12 +185,15 @@ static struct platform_device_id fec_devtype[] = {
 		.name = "imx6ul-fec",
 		.driver_data = (kernel_ulong_t)&fec_imx6ul_info,
 	}, {
+<<<<<<< HEAD
 		.name = "imx8mq-fec",
 		.driver_data = (kernel_ulong_t)&fec_imx8mq_info,
 	}, {
 		.name = "imx8qm-fec",
 		.driver_data = (kernel_ulong_t)&fec_imx8qm_info,
 	}, {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* sentinel */
 	}
 };
@@ -201,8 +207,11 @@ enum imx_fec_type {
 	MVF600_FEC,
 	IMX6SX_FEC,
 	IMX6UL_FEC,
+<<<<<<< HEAD
 	IMX8MQ_FEC,
 	IMX8QM_FEC,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct of_device_id fec_dt_ids[] = {
@@ -213,8 +222,11 @@ static const struct of_device_id fec_dt_ids[] = {
 	{ .compatible = "fsl,mvf600-fec", .data = &fec_devtype[MVF600_FEC], },
 	{ .compatible = "fsl,imx6sx-fec", .data = &fec_devtype[IMX6SX_FEC], },
 	{ .compatible = "fsl,imx6ul-fec", .data = &fec_devtype[IMX6UL_FEC], },
+<<<<<<< HEAD
 	{ .compatible = "fsl,imx8mq-fec", .data = &fec_devtype[IMX8MQ_FEC], },
 	{ .compatible = "fsl,imx8qm-fec", .data = &fec_devtype[IMX8QM_FEC], },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ /* sentinel */ }
 };
 MODULE_DEVICE_TABLE(of, fec_dt_ids);
@@ -1137,6 +1149,7 @@ fec_restart(struct net_device *ndev)
 	if (fep->bufdesc_ex)
 		ecntl |= (1 << 4);
 
+<<<<<<< HEAD
 	if (fep->quirks & FEC_QUIRK_DELAYED_CLKS_SUPPORT &&
 	    fep->rgmii_txc_dly)
 		ecntl |= FEC_ENET_TXC_DLY;
@@ -1144,6 +1157,8 @@ fec_restart(struct net_device *ndev)
 	    fep->rgmii_rxc_dly)
 		ecntl |= FEC_ENET_RXC_DLY;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef CONFIG_M5272
 	/* Enable the MIB statistic event counters */
 	writel(0 << 31, fep->hwp + FEC_MIB_CTRLSTAT);
@@ -2007,10 +2022,13 @@ static int fec_enet_clk_enable(struct net_device *ndev, bool enable)
 		if (ret)
 			goto failed_clk_ref;
 
+<<<<<<< HEAD
 		ret = clk_prepare_enable(fep->clk_2x_txclk);
 		if (ret)
 			goto failed_clk_2x_txclk;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fec_enet_phy_reset_after_clk_enable(ndev);
 	} else {
 		clk_disable_unprepare(fep->clk_enet_out);
@@ -2021,14 +2039,20 @@ static int fec_enet_clk_enable(struct net_device *ndev, bool enable)
 			mutex_unlock(&fep->ptp_clk_mutex);
 		}
 		clk_disable_unprepare(fep->clk_ref);
+<<<<<<< HEAD
 		clk_disable_unprepare(fep->clk_2x_txclk);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
 
+<<<<<<< HEAD
 failed_clk_2x_txclk:
 	if (fep->clk_ref)
 		clk_disable_unprepare(fep->clk_ref);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 failed_clk_ref:
 	if (fep->clk_ptp) {
 		mutex_lock(&fep->ptp_clk_mutex);
@@ -2042,6 +2066,7 @@ failed_clk_ptp:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int fec_enet_parse_rgmii_delay(struct fec_enet_private *fep,
 				      struct device_node *np)
 {
@@ -2070,6 +2095,8 @@ static int fec_enet_parse_rgmii_delay(struct fec_enet_private *fep,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int fec_enet_mii_probe(struct net_device *ndev)
 {
 	struct fec_enet_private *fep = netdev_priv(ndev);
@@ -2654,10 +2681,15 @@ static void fec_enet_itr_coal_set(struct net_device *ndev)
 	}
 }
 
+<<<<<<< HEAD
 static int fec_enet_get_coalesce(struct net_device *ndev,
 				 struct ethtool_coalesce *ec,
 				 struct kernel_ethtool_coalesce *kernel_coal,
 				 struct netlink_ext_ack *extack)
+=======
+static int
+fec_enet_get_coalesce(struct net_device *ndev, struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fec_enet_private *fep = netdev_priv(ndev);
 
@@ -2673,10 +2705,15 @@ static int fec_enet_get_coalesce(struct net_device *ndev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int fec_enet_set_coalesce(struct net_device *ndev,
 				 struct ethtool_coalesce *ec,
 				 struct kernel_ethtool_coalesce *kernel_coal,
 				 struct netlink_ext_ack *extack)
+=======
+static int
+fec_enet_set_coalesce(struct net_device *ndev, struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fec_enet_private *fep = netdev_priv(ndev);
 	struct device *dev = &fep->pdev->dev;
@@ -2728,7 +2765,11 @@ static void fec_enet_itr_coal_init(struct net_device *ndev)
 	ec.tx_coalesce_usecs = FEC_ITR_ICTT_DEFAULT;
 	ec.tx_max_coalesced_frames = FEC_ITR_ICFT_DEFAULT;
 
+<<<<<<< HEAD
 	fec_enet_set_coalesce(ndev, &ec, NULL, NULL);
+=======
+	fec_enet_set_coalesce(ndev, &ec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int fec_enet_get_tunable(struct net_device *netdev,
@@ -2769,6 +2810,7 @@ static int fec_enet_set_tunable(struct net_device *netdev,
 	return ret;
 }
 
+<<<<<<< HEAD
 /* LPI Sleep Ts count base on tx clk (clk_ref).
  * The lpi sleep cnt value = X us / (cycle_ns).
  */
@@ -2855,6 +2897,8 @@ fec_enet_set_eee(struct net_device *ndev, struct ethtool_eee *edata)
 	return phy_ethtool_set_eee(ndev->phydev, edata);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void
 fec_enet_get_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
 {
@@ -2882,12 +2926,21 @@ fec_enet_set_wol(struct net_device *ndev, struct ethtool_wolinfo *wol)
 	device_set_wakeup_enable(&ndev->dev, wol->wolopts & WAKE_MAGIC);
 	if (device_may_wakeup(&ndev->dev)) {
 		fep->wol_flag |= FEC_WOL_FLAG_ENABLE;
+<<<<<<< HEAD
 		if (fep->wake_irq > 0)
 			enable_irq_wake(fep->wake_irq);
 	} else {
 		fep->wol_flag &= (~FEC_WOL_FLAG_ENABLE);
 		if (fep->wake_irq > 0)
 			disable_irq_wake(fep->wake_irq);
+=======
+		if (fep->irq[0] > 0)
+			enable_irq_wake(fep->irq[0]);
+	} else {
+		fep->wol_flag &= (~FEC_WOL_FLAG_ENABLE);
+		if (fep->irq[0] > 0)
+			disable_irq_wake(fep->irq[0]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
@@ -2915,8 +2968,11 @@ static const struct ethtool_ops fec_enet_ethtool_ops = {
 	.set_tunable		= fec_enet_set_tunable,
 	.get_wol		= fec_enet_get_wol,
 	.set_wol		= fec_enet_set_wol,
+<<<<<<< HEAD
 	.get_eee		= fec_enet_get_eee,
 	.set_eee		= fec_enet_set_eee,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.get_link_ksettings	= phy_ethtool_get_link_ksettings,
 	.set_link_ksettings	= phy_ethtool_set_link_ksettings,
 	.self_test		= net_selftest,
@@ -3445,7 +3501,11 @@ static const struct net_device_ops fec_netdev_ops = {
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_tx_timeout		= fec_timeout,
 	.ndo_set_mac_address	= fec_set_mac_address,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= fec_enet_ioctl,
+=======
+	.ndo_do_ioctl		= fec_enet_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_poll_controller	= fec_poll_controller,
 #endif
@@ -3700,6 +3760,7 @@ static int fec_enet_get_irq_cnt(struct platform_device *pdev)
 	return irq_cnt;
 }
 
+<<<<<<< HEAD
 static void fec_enet_get_wakeup_irq(struct platform_device *pdev)
 {
 	struct net_device *ndev = platform_get_drvdata(pdev);
@@ -3711,6 +3772,8 @@ static void fec_enet_get_wakeup_irq(struct platform_device *pdev)
 		fep->wake_irq = fep->irq[0];
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int fec_enet_init_stop_mode(struct fec_enet_private *fep,
 				   struct device_node *np)
 {
@@ -3842,10 +3905,13 @@ fec_probe(struct platform_device *pdev)
 		fep->phy_interface = interface;
 	}
 
+<<<<<<< HEAD
 	ret = fec_enet_parse_rgmii_delay(fep, np);
 	if (ret)
 		goto failed_rgmii_delay;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fep->clk_ipg = devm_clk_get(&pdev->dev, "ipg");
 	if (IS_ERR(fep->clk_ipg)) {
 		ret = PTR_ERR(fep->clk_ipg);
@@ -3872,6 +3938,7 @@ fec_probe(struct platform_device *pdev)
 	fep->clk_ref = devm_clk_get(&pdev->dev, "enet_clk_ref");
 	if (IS_ERR(fep->clk_ref))
 		fep->clk_ref = NULL;
+<<<<<<< HEAD
 	fep->clk_ref_rate = clk_get_rate(fep->clk_ref);
 
 	/* clk_2x_txclk is optional, depends on board */
@@ -3880,6 +3947,8 @@ fec_probe(struct platform_device *pdev)
 		if (IS_ERR(fep->clk_2x_txclk))
 			fep->clk_2x_txclk = NULL;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	fep->bufdesc_ex = fep->quirks & FEC_QUIRK_HAS_BUFDESC_EX;
 	fep->clk_ptp = devm_clk_get(&pdev->dev, "ptp");
@@ -3950,9 +4019,12 @@ fec_probe(struct platform_device *pdev)
 		fep->irq[i] = irq;
 	}
 
+<<<<<<< HEAD
 	/* Decide which interrupt line is wakeup capable */
 	fec_enet_get_wakeup_irq(pdev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = fec_enet_mii_init(pdev);
 	if (ret)
 		goto failed_mii_init;
@@ -4000,7 +4072,10 @@ failed_clk_ahb:
 failed_clk_ipg:
 	fec_enet_clk_enable(ndev, false);
 failed_clk:
+<<<<<<< HEAD
 failed_rgmii_delay:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (of_phy_is_fixed_link(np))
 		of_phy_deregister_fixed_link(np);
 	of_node_put(phy_node);
@@ -4035,13 +4110,20 @@ fec_drv_remove(struct platform_device *pdev)
 	if (of_phy_is_fixed_link(np))
 		of_phy_deregister_fixed_link(np);
 	of_node_put(fep->phy_node);
+<<<<<<< HEAD
+=======
+	free_netdev(ndev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	clk_disable_unprepare(fep->clk_ahb);
 	clk_disable_unprepare(fep->clk_ipg);
 	pm_runtime_put_noidle(&pdev->dev);
 	pm_runtime_disable(&pdev->dev);
 
+<<<<<<< HEAD
 	free_netdev(ndev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -4176,4 +4258,8 @@ static struct platform_driver fec_driver = {
 
 module_platform_driver(fec_driver);
 
+<<<<<<< HEAD
+=======
+MODULE_ALIAS("platform:"DRIVER_NAME);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_LICENSE("GPL");

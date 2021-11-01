@@ -21,7 +21,11 @@
 				DBG_MDSCR_KDE | \
 				DBG_MDSCR_MDE)
 
+<<<<<<< HEAD
 static DEFINE_PER_CPU(u64, mdcr_el2);
+=======
+static DEFINE_PER_CPU(u32, mdcr_el2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * save/restore_guest_debug_regs

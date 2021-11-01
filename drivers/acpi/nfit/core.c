@@ -3007,6 +3007,7 @@ static int acpi_nfit_register_region(struct acpi_nfit_desc *acpi_desc,
 		ndr_desc->target_node = NUMA_NO_NODE;
 	}
 
+<<<<<<< HEAD
 	/* Fallback to address based numa information if node lookup failed */
 	if (ndr_desc->numa_node == NUMA_NO_NODE) {
 		ndr_desc->numa_node = memory_add_physaddr_to_nid(spa->address);
@@ -3019,6 +3020,8 @@ static int acpi_nfit_register_region(struct acpi_nfit_desc *acpi_desc,
 			NUMA_NO_NODE, ndr_desc->numa_node, &res.start, &res.end);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Persistence domain bits are hierarchical, if
 	 * ACPI_NFIT_CAPABILITY_CACHE_FLUSH is set then
@@ -3033,9 +3036,12 @@ static int acpi_nfit_register_region(struct acpi_nfit_desc *acpi_desc,
 		struct acpi_nfit_memory_map *memdev = nfit_memdev->memdev;
 		struct nd_mapping_desc *mapping;
 
+<<<<<<< HEAD
 		/* range index 0 == unmapped in SPA or invalid-SPA */
 		if (memdev->range_index == 0 || spa->range_index == 0)
 			continue;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (memdev->range_index != spa->range_index)
 			continue;
 		if (count >= ND_MAX_MAPPINGS) {

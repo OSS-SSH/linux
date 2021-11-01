@@ -57,8 +57,11 @@
 #define LPFC_MIN_DEVLOSS_TMO	1
 #define LPFC_MAX_DEVLOSS_TMO	255
 
+<<<<<<< HEAD
 #define LPFC_MAX_INFO_TMP_LEN	100
 #define LPFC_INFO_MORE_STR	"\nCould be more info...\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Write key size should be multiple of 4. If write key is changed
  * make sure that library write key is also changed.
@@ -114,6 +117,7 @@ lpfc_jedec_to_ascii(int incr, char hdw[])
 	return;
 }
 
+<<<<<<< HEAD
 static ssize_t
 lpfc_cmf_info_show(struct device *dev, struct device_attribute *attr,
 		   char *buf)
@@ -291,6 +295,8 @@ buffer_done:
 	return len;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * lpfc_drvr_version_show - Return the Emulex driver string with version number
  * @dev: class unused variable.
@@ -347,7 +353,11 @@ lpfc_nvme_info_show(struct device *dev, struct device_attribute *attr,
 	char *statep;
 	int i;
 	int len = 0;
+<<<<<<< HEAD
 	char tmp[LPFC_MAX_INFO_TMP_LEN] = {0};
+=======
+	char tmp[LPFC_MAX_NVME_INFO_TMP_LEN] = {0};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!(vport->cfg_enable_fc4_type & LPFC_ENABLE_NVME)) {
 		len = scnprintf(buf, PAGE_SIZE, "NVME Disabled\n");
@@ -691,9 +701,15 @@ lpfc_nvme_info_show(struct device *dev, struct device_attribute *attr,
 				"6314 Catching potential buffer "
 				"overflow > PAGE_SIZE = %lu bytes\n",
 				PAGE_SIZE);
+<<<<<<< HEAD
 		strscpy(buf + PAGE_SIZE - 1 - sizeof(LPFC_INFO_MORE_STR),
 			LPFC_INFO_MORE_STR,
 			sizeof(LPFC_INFO_MORE_STR) + 1);
+=======
+		strlcpy(buf + PAGE_SIZE - 1 - sizeof(LPFC_NVME_INFO_MORE_STR),
+			LPFC_NVME_INFO_MORE_STR,
+			sizeof(LPFC_NVME_INFO_MORE_STR) + 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return len;
@@ -2427,6 +2443,14 @@ lpfc_sriov_hw_max_virtfn_show(struct device *dev,
 	return scnprintf(buf, PAGE_SIZE, "%d\n", max_nr_virtfn);
 }
 
+<<<<<<< HEAD
+=======
+static inline bool lpfc_rangecheck(uint val, uint min, uint max)
+{
+	return val >= min && val <= max;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * lpfc_enable_bbcr_set: Sets an attribute value.
  * @phba: pointer the the adapter structure.
@@ -2815,7 +2839,10 @@ static DEVICE_ATTR_RO(lpfc_sriov_hw_max_virtfn);
 static DEVICE_ATTR(protocol, S_IRUGO, lpfc_sli4_protocol_show, NULL);
 static DEVICE_ATTR(lpfc_xlane_supported, S_IRUGO, lpfc_oas_supported_show,
 		   NULL);
+<<<<<<< HEAD
 static DEVICE_ATTR(cmf_info, 0444, lpfc_cmf_info_show, NULL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static char *lpfc_soft_wwn_key = "C99G71SL8032A";
 #define WWN_SZ 8
@@ -4213,7 +4240,10 @@ lpfc_topology_store(struct device *dev, struct device_attribute *attr,
 	const char *val_buf = buf;
 	int err;
 	uint32_t prev_val;
+<<<<<<< HEAD
 	u8 sli_family, if_type;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!strncmp(buf, "nolip ", strlen("nolip "))) {
 		nolip = 1;
@@ -4237,6 +4267,7 @@ lpfc_topology_store(struct device *dev, struct device_attribute *attr,
 		/*
 		 * The 'topology' is not a configurable parameter if :
 		 *   - persistent topology enabled
+<<<<<<< HEAD
 		 *   - ASIC_GEN_NUM >= 0xC, with no private loop support
 		 */
 		sli_family = bf_get(lpfc_sli_intf_sli_family,
@@ -4247,6 +4278,15 @@ lpfc_topology_store(struct device *dev, struct device_attribute *attr,
 		    (!phba->sli4_hba.pc_sli4_params.pls &&
 		     (sli_family == LPFC_SLI_INTF_FAMILY_G6 ||
 		      if_type == LPFC_SLI_INTF_IF_TYPE_6))) &&
+=======
+		 *   - G7/G6 with no private loop support
+		 */
+
+		if ((phba->hba_flag & HBA_PERSISTENT_TOPO ||
+		     (!phba->sli4_hba.pc_sli4_params.pls &&
+		     (phba->pcidev->device == PCI_DEVICE_ID_LANCER_G6_FC ||
+		     phba->pcidev->device == PCI_DEVICE_ID_LANCER_G7_FC))) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    val == 4) {
 			lpfc_printf_vlog(vport, KERN_ERR, LOG_INIT,
 				"3114 Loop mode not supported\n");
@@ -5591,9 +5631,15 @@ LPFC_VPORT_ATTR_R(fcp_class, 3, 2, 3,
 
 /*
 # lpfc_use_adisc: Use ADISC for FCP rediscovery instead of PLOGI. Value range
+<<<<<<< HEAD
 # is [0,1]. Default value is 1.
 */
 LPFC_VPORT_ATTR_RW(use_adisc, 1, 0, 1,
+=======
+# is [0,1]. Default value is 0.
+*/
+LPFC_VPORT_ATTR_RW(use_adisc, 0, 0, 1,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   "Use ADISC on rediscovery to authenticate FCP devices");
 
 /*
@@ -6201,8 +6247,12 @@ lpfc_sg_seg_cnt_show(struct device *dev, struct device_attribute *attr,
 	len = scnprintf(buf, PAGE_SIZE, "SGL sz: %d  total SGEs: %d\n",
 		       phba->cfg_sg_dma_buf_size, phba->cfg_total_seg_cnt);
 
+<<<<<<< HEAD
 	len += scnprintf(buf + len, PAGE_SIZE - len,
 			"Cfg: %d  SCSI: %d  NVME: %d\n",
+=======
+	len += scnprintf(buf + len, PAGE_SIZE, "Cfg: %d  SCSI: %d  NVME: %d\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			phba->cfg_sg_seg_cnt, phba->cfg_scsi_seg_cnt,
 			phba->cfg_nvme_seg_cnt);
 	return len;
@@ -6326,6 +6376,7 @@ LPFC_ATTR_RW(ras_fwlog_func, 0, 0, 7, "Firmware Logging Enabled on Function");
  */
 LPFC_BBCR_ATTR_RW(enable_bbcr, 1, 0, 1, "Enable BBC Recovery");
 
+<<<<<<< HEAD
 /* Signaling module parameters */
 int lpfc_fabric_cgn_frequency = 100; /* 100 ms default */
 module_param(lpfc_fabric_cgn_frequency, int, 0444);
@@ -6339,6 +6390,8 @@ int lpfc_use_cgn_signal = 1; /* 0 - only use FPINs, 1 - Use signals if avail  */
 module_param(lpfc_use_cgn_signal, int, 0444);
 MODULE_PARM_DESC(lpfc_use_cgn_signal, "Use Congestion signaling if available");
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * lpfc_enable_dpp: Enable DPP on G7
  *       0  = DPP on G7 disabled
@@ -6513,7 +6566,10 @@ struct device_attribute *lpfc_hba_attrs[] = {
 	&dev_attr_lpfc_enable_bbcr,
 	&dev_attr_lpfc_enable_dpp,
 	&dev_attr_lpfc_enable_mi,
+<<<<<<< HEAD
 	&dev_attr_cmf_info,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	&dev_attr_lpfc_max_vmid,
 	&dev_attr_lpfc_vmid_inactivity_timeout,
 	&dev_attr_lpfc_vmid_app_header,
@@ -6544,7 +6600,10 @@ struct device_attribute *lpfc_vport_attrs[] = {
 	&dev_attr_lpfc_max_scsicmpl_time,
 	&dev_attr_lpfc_stat_data_ctrl,
 	&dev_attr_lpfc_static_vport,
+<<<<<<< HEAD
 	&dev_attr_cmf_info,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NULL,
 };
 
@@ -6936,9 +6995,12 @@ lpfc_get_host_speed(struct Scsi_Host *shost)
 		case LPFC_LINK_SPEED_128GHZ:
 			fc_host_speed(shost) = FC_PORTSPEED_128GBIT;
 			break;
+<<<<<<< HEAD
 		case LPFC_LINK_SPEED_256GHZ:
 			fc_host_speed(shost) = FC_PORTSPEED_256GBIT;
 			break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		default:
 			fc_host_speed(shost) = FC_PORTSPEED_UNKNOWN;
 			break;
@@ -7106,9 +7168,12 @@ lpfc_get_stats(struct Scsi_Host *shost)
 	hs->invalid_crc_count = pmb->un.varRdLnk.crcCnt;
 	hs->error_frames = pmb->un.varRdLnk.crcCnt;
 
+<<<<<<< HEAD
 	hs->cn_sig_warn = atomic64_read(&phba->cgn_acqe_stat.warn);
 	hs->cn_sig_alarm = atomic64_read(&phba->cgn_acqe_stat.alarm);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hs->link_failure_count -= lso->link_failure_count;
 	hs->loss_of_sync_count -= lso->loss_of_sync_count;
 	hs->loss_of_signal_count -= lso->loss_of_signal_count;
@@ -7220,12 +7285,15 @@ lpfc_reset_stats(struct Scsi_Host *shost)
 	else
 		lso->link_events = (phba->fc_eventTag >> 1);
 
+<<<<<<< HEAD
 	atomic64_set(&phba->cgn_acqe_stat.warn, 0);
 	atomic64_set(&phba->cgn_acqe_stat.alarm, 0);
 
 	memset(&shost_to_fc_host(shost)->fpin_stats, 0,
 	       sizeof(shost_to_fc_host(shost)->fpin_stats));
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	psli->stats_start = ktime_get_seconds();
 
 	mempool_free(pmboxq, phba->mbox_mem_pool);
@@ -7659,12 +7727,15 @@ lpfc_get_cfgparam(struct lpfc_hba *phba)
 	lpfc_enable_dpp_init(phba, lpfc_enable_dpp);
 	lpfc_enable_mi_init(phba, lpfc_enable_mi);
 
+<<<<<<< HEAD
 	phba->cgn_p.cgn_param_mode = LPFC_CFG_OFF;
 	phba->cmf_active_mode = LPFC_CFG_OFF;
 	if (lpfc_fabric_cgn_frequency > EDC_CG_SIGFREQ_CNT_MAX ||
 	   lpfc_fabric_cgn_frequency < EDC_CG_SIGFREQ_CNT_MIN)
 		lpfc_fabric_cgn_frequency = 100; /* 100 ms default */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (phba->sli_rev != LPFC_SLI_REV4) {
 		/* NVME only supported on SLI4 */
 		phba->nvmet_support = 0;

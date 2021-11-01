@@ -899,8 +899,13 @@ static int uvc_ioctl_g_input(struct file *file, void *fh, unsigned int *input)
 {
 	struct uvc_fh *handle = fh;
 	struct uvc_video_chain *chain = handle->chain;
+<<<<<<< HEAD
 	u8 *buf;
 	int ret;
+=======
+	int ret;
+	u8 i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (chain->selector == NULL ||
 	    (chain->dev->quirks & UVC_QUIRK_IGNORE_SELECTOR_UNIT)) {
@@ -908,6 +913,7 @@ static int uvc_ioctl_g_input(struct file *file, void *fh, unsigned int *input)
 		return 0;
 	}
 
+<<<<<<< HEAD
 	buf = kmalloc(1, GFP_KERNEL);
 	if (!buf)
 		return -ENOMEM;
@@ -921,14 +927,29 @@ static int uvc_ioctl_g_input(struct file *file, void *fh, unsigned int *input)
 	kfree(buf);
 
 	return ret;
+=======
+	ret = uvc_query_ctrl(chain->dev, UVC_GET_CUR, chain->selector->id,
+			     chain->dev->intfnum,  UVC_SU_INPUT_SELECT_CONTROL,
+			     &i, 1);
+	if (ret < 0)
+		return ret;
+
+	*input = i - 1;
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int uvc_ioctl_s_input(struct file *file, void *fh, unsigned int input)
 {
 	struct uvc_fh *handle = fh;
 	struct uvc_video_chain *chain = handle->chain;
+<<<<<<< HEAD
 	u8 *buf;
 	int ret;
+=======
+	int ret;
+	u32 i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = uvc_acquire_privileges(handle);
 	if (ret < 0)
@@ -944,6 +965,7 @@ static int uvc_ioctl_s_input(struct file *file, void *fh, unsigned int input)
 	if (input >= chain->selector->bNrInPins)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	buf = kmalloc(1, GFP_KERNEL);
 	if (!buf)
 		return -ENOMEM;
@@ -955,6 +977,12 @@ static int uvc_ioctl_s_input(struct file *file, void *fh, unsigned int input)
 	kfree(buf);
 
 	return ret;
+=======
+	i = input + 1;
+	return uvc_query_ctrl(chain->dev, UVC_SET_CUR, chain->selector->id,
+			      chain->dev->intfnum, UVC_SU_INPUT_SELECT_CONTROL,
+			      &i, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int uvc_ioctl_queryctrl(struct file *file, void *fh,

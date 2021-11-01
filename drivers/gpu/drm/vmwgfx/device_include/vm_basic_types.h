@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0 OR MIT */
 /**********************************************************
  * Copyright 2015-2021 VMware, Inc.
@@ -29,6 +30,12 @@
 #include <linux/kernel.h>
 #include <linux/mm.h>
 #include <asm/page.h>
+=======
+/* SPDX-License-Identifier: GPL-2.0 */
+#ifndef _VM_BASIC_TYPES_H_
+#define _VM_BASIC_TYPES_H_
+#include <linux/kernel.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 typedef u32 uint32;
 typedef s32 int32;
@@ -40,11 +47,15 @@ typedef s8  int8;
 
 typedef uint64 PA;
 typedef uint32 PPN;
+<<<<<<< HEAD
 typedef uint32 PPN32;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 typedef uint64 PPN64;
 
 typedef bool Bool;
 
+<<<<<<< HEAD
 #define MAX_UINT64 U64_MAX
 #define MAX_UINT32 U32_MAX
 #define MAX_UINT16 U16_MAX
@@ -142,5 +153,8 @@ typedef struct MKSGuestStatInstanceDescriptor {
 	PPN64  strsPPNs[MKS_GUEST_STAT_INSTANCE_MAX_STRS_PPNS]; /* strings */
 	char   description[MKS_GUEST_STAT_INSTANCE_DESC_LENGTH];
 } MKSGuestStatInstanceDescriptor;
+=======
+#define MAX_UINT32 U32_MAX
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

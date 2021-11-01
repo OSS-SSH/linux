@@ -568,6 +568,10 @@ static int ti_ads7950_probe(struct spi_device *spi)
 	st->ring_xfer.tx_buf = &st->tx_buf[0];
 	st->ring_xfer.rx_buf = &st->rx_buf[0];
 	/* len will be set later */
+<<<<<<< HEAD
+=======
+	st->ring_xfer.cs_change = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spi_message_add_tail(&st->ring_xfer, &st->ring_msg);
 

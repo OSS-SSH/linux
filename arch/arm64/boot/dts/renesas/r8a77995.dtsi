@@ -15,6 +15,7 @@
 	#address-cells = <2>;
 	#size-cells = <2>;
 
+<<<<<<< HEAD
 	/*
 	 * The external audio clocks are configured as 0 Hz fixed frequency
 	 * clocks by default.
@@ -32,6 +33,8 @@
 		clock-frequency = <0>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* External CAN clock - to be overridden by boards that provide it */
 	can_clk: can {
 		compatible = "fixed-clock";
@@ -1033,6 +1036,7 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		rcar_sound: sound@ec500000 {
 			/*
 			 * #sound-dai-cells is required
@@ -1174,6 +1178,8 @@
 				 <&ipmmu_mp 14>, <&ipmmu_mp 15>;
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ohci0: usb@ee080000 {
 			compatible = "generic-ohci";
 			reg = <0 0xee080000 0 0x100>;

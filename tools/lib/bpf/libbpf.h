@@ -94,6 +94,7 @@ struct bpf_object_open_opts {
 	 * system Kconfig for CONFIG_xxx externs.
 	 */
 	const char *kconfig;
+<<<<<<< HEAD
 	/* Path to the custom BTF to be used for BPF CO-RE relocations.
 	 * This custom BTF completely replaces the use of vmlinux BTF
 	 * for the purpose of CO-RE relocations.
@@ -103,6 +104,10 @@ struct bpf_object_open_opts {
 	const char *btf_custom_path;
 };
 #define bpf_object_open_opts__last_field btf_custom_path
+=======
+};
+#define bpf_object_open_opts__last_field kconfig
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 LIBBPF_API struct bpf_object *bpf_object__open(const char *path);
 LIBBPF_API struct bpf_object *
@@ -244,6 +249,7 @@ LIBBPF_API int bpf_link__destroy(struct bpf_link *link);
 
 LIBBPF_API struct bpf_link *
 bpf_program__attach(struct bpf_program *prog);
+<<<<<<< HEAD
 
 struct bpf_perf_event_opts {
 	/* size of this struct, for forward/backward compatiblity */
@@ -273,10 +279,15 @@ struct bpf_kprobe_opts {
 };
 #define bpf_kprobe_opts__last_field retprobe
 
+=======
+LIBBPF_API struct bpf_link *
+bpf_program__attach_perf_event(struct bpf_program *prog, int pfd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 LIBBPF_API struct bpf_link *
 bpf_program__attach_kprobe(struct bpf_program *prog, bool retprobe,
 			   const char *func_name);
 LIBBPF_API struct bpf_link *
+<<<<<<< HEAD
 bpf_program__attach_kprobe_opts(struct bpf_program *prog,
                                 const char *func_name,
                                 const struct bpf_kprobe_opts *opts);
@@ -297,10 +308,13 @@ struct bpf_uprobe_opts {
 #define bpf_uprobe_opts__last_field retprobe
 
 LIBBPF_API struct bpf_link *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bpf_program__attach_uprobe(struct bpf_program *prog, bool retprobe,
 			   pid_t pid, const char *binary_path,
 			   size_t func_offset);
 LIBBPF_API struct bpf_link *
+<<<<<<< HEAD
 bpf_program__attach_uprobe_opts(struct bpf_program *prog, pid_t pid,
 				const char *binary_path, size_t func_offset,
 				const struct bpf_uprobe_opts *opts);
@@ -314,16 +328,21 @@ struct bpf_tracepoint_opts {
 #define bpf_tracepoint_opts__last_field bpf_cookie
 
 LIBBPF_API struct bpf_link *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bpf_program__attach_tracepoint(struct bpf_program *prog,
 			       const char *tp_category,
 			       const char *tp_name);
 LIBBPF_API struct bpf_link *
+<<<<<<< HEAD
 bpf_program__attach_tracepoint_opts(struct bpf_program *prog,
 				    const char *tp_category,
 				    const char *tp_name,
 				    const struct bpf_tracepoint_opts *opts);
 
 LIBBPF_API struct bpf_link *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bpf_program__attach_raw_tracepoint(struct bpf_program *prog,
 				   const char *tp_name);
 LIBBPF_API struct bpf_link *
@@ -550,7 +569,10 @@ LIBBPF_API bool bpf_map__is_offload_neutral(const struct bpf_map *map);
 LIBBPF_API bool bpf_map__is_internal(const struct bpf_map *map);
 LIBBPF_API int bpf_map__set_pin_path(struct bpf_map *map, const char *path);
 LIBBPF_API const char *bpf_map__get_pin_path(const struct bpf_map *map);
+<<<<<<< HEAD
 LIBBPF_API const char *bpf_map__pin_path(const struct bpf_map *map);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 LIBBPF_API bool bpf_map__is_pinned(const struct bpf_map *map);
 LIBBPF_API int bpf_map__pin(struct bpf_map *map, const char *path);
 LIBBPF_API int bpf_map__unpin(struct bpf_map *map, const char *path);

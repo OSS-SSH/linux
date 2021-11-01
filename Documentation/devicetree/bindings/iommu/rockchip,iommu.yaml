@@ -28,12 +28,20 @@ properties:
       - description: configuration registers for MMU instance 0
       - description: configuration registers for MMU instance 1
     minItems: 1
+<<<<<<< HEAD
+=======
+    maxItems: 2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   interrupts:
     items:
       - description: interruption for MMU instance 0
       - description: interruption for MMU instance 1
     minItems: 1
+<<<<<<< HEAD
+=======
+    maxItems: 2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   clocks:
     items:

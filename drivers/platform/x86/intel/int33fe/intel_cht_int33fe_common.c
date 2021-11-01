@@ -16,6 +16,36 @@
 
 #define EXPECTED_PTYPE		4
 
+<<<<<<< HEAD
+=======
+static int cht_int33fe_i2c_res_filter(struct acpi_resource *ares, void *data)
+{
+	struct acpi_resource_i2c_serialbus *sb;
+	int *count = data;
+
+	if (i2c_acpi_get_i2c_resource(ares, &sb))
+		(*count)++;
+
+	return 1;
+}
+
+static int cht_int33fe_count_i2c_clients(struct device *dev)
+{
+	struct acpi_device *adev = ACPI_COMPANION(dev);
+	LIST_HEAD(resource_list);
+	int count = 0;
+	int ret;
+
+	ret = acpi_dev_get_resources(adev, &resource_list,
+				     cht_int33fe_i2c_res_filter, &count);
+	acpi_dev_free_resource_list(&resource_list);
+	if (ret < 0)
+		return ret;
+
+	return count;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int cht_int33fe_check_hw_type(struct device *dev)
 {
 	unsigned long long ptyp;
@@ -42,7 +72,11 @@ static int cht_int33fe_check_hw_type(struct device *dev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	ret = i2c_acpi_client_count(ACPI_COMPANION(dev));
+=======
+	ret = cht_int33fe_count_i2c_clients(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < 0)
 		return ret;
 

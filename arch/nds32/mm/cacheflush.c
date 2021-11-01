@@ -318,6 +318,18 @@ void flush_anon_page(struct vm_area_struct *vma,
 	local_irq_restore(flags);
 }
 
+<<<<<<< HEAD
+=======
+void flush_kernel_dcache_page(struct page *page)
+{
+	unsigned long flags;
+	local_irq_save(flags);
+	cpu_dcache_wbinval_page((unsigned long)page_address(page));
+	local_irq_restore(flags);
+}
+EXPORT_SYMBOL(flush_kernel_dcache_page);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void flush_kernel_vmap_range(void *addr, int size)
 {
 	unsigned long flags;

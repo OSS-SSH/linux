@@ -28,4 +28,9 @@ static inline void scsi_req_free_cmd(struct scsi_request *req)
 		kfree(req->cmd);
 }
 
+<<<<<<< HEAD
+=======
+void scsi_req_init(struct scsi_request *req);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _SCSI_SCSI_REQUEST_H */

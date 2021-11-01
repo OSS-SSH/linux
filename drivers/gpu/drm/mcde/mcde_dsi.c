@@ -760,7 +760,11 @@ static void mcde_dsi_start(struct mcde_dsi *d)
 		DSI_MCTL_MAIN_DATA_CTL_BTA_EN |
 		DSI_MCTL_MAIN_DATA_CTL_READ_EN |
 		DSI_MCTL_MAIN_DATA_CTL_REG_TE_EN;
+<<<<<<< HEAD
 	if (!(d->mdsi->mode_flags & MIPI_DSI_MODE_NO_EOT_PACKET))
+=======
+	if (!(d->mdsi->mode_flags & MIPI_DSI_MODE_EOT_PACKET))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		val |= DSI_MCTL_MAIN_DATA_CTL_HOST_EOT_GEN;
 	writel(val, d->regs + DSI_MCTL_MAIN_DATA_CTL);
 
@@ -1052,6 +1056,10 @@ static int mcde_dsi_bridge_attach(struct drm_bridge *bridge,
 {
 	struct mcde_dsi *d = bridge_to_mcde_dsi(bridge);
 	struct drm_device *drm = bridge->dev;
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!drm_core_check_feature(drm, DRIVER_ATOMIC)) {
 		dev_err(d->dev, "we need atomic updates\n");
@@ -1059,7 +1067,17 @@ static int mcde_dsi_bridge_attach(struct drm_bridge *bridge,
 	}
 
 	/* Attach the DSI bridge to the output (panel etc) bridge */
+<<<<<<< HEAD
 	return drm_bridge_attach(bridge->encoder, d->bridge_out, bridge, flags);
+=======
+	ret = drm_bridge_attach(bridge->encoder, d->bridge_out, bridge, flags);
+	if (ret) {
+		dev_err(d->dev, "failed to attach the DSI bridge\n");
+		return ret;
+	}
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct drm_bridge_funcs mcde_dsi_bridge_funcs = {

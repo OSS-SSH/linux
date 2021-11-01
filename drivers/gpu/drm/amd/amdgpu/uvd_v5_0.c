@@ -210,6 +210,7 @@ static int uvd_v5_0_hw_fini(void *handle)
 {
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 
+<<<<<<< HEAD
 	/*
 	 * Proper cleanups before halting the HW engine:
 	 *   - cancel the delayed idle work
@@ -234,6 +235,8 @@ static int uvd_v5_0_hw_fini(void *handle)
 						       AMD_CG_STATE_GATE);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (RREG32(mmUVD_STATUS) != 0)
 		uvd_v5_0_stop(adev);
 
@@ -248,6 +251,10 @@ static int uvd_v5_0_suspend(void *handle)
 	r = uvd_v5_0_hw_fini(adev);
 	if (r)
 		return r;
+<<<<<<< HEAD
+=======
+	uvd_v5_0_set_clockgating_state(adev, AMD_CG_STATE_GATE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return amdgpu_uvd_suspend(adev);
 }

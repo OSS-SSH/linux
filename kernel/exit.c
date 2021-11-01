@@ -777,7 +777,11 @@ void __noreturn do_exit(long code)
 		schedule();
 	}
 
+<<<<<<< HEAD
 	io_uring_files_cancel();
+=======
+	io_uring_files_cancel(tsk->files);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	exit_signals(tsk);  /* sets PF_EXITING */
 
 	/* sync mm's RSS info before statistics gathering */

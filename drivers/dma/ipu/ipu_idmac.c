@@ -618,7 +618,10 @@ static int ipu_enable_channel(struct idmac *idmac, struct idmac_channel *ichan)
 	case IDMAC_SDC_1:
 	case IDMAC_IC_7:
 		ipu_channel_set_priority(ipu, channel, true);
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}
@@ -979,7 +982,10 @@ static int ipu_init_channel(struct idmac *idmac, struct idmac_channel *ichan)
 	case IDMAC_SDC_0:
 	case IDMAC_SDC_1:
 		n_desc = 4;
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}

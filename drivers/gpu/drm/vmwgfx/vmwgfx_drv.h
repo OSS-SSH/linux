@@ -1,7 +1,11 @@
 /* SPDX-License-Identifier: GPL-2.0 OR MIT */
 /**************************************************************************
  *
+<<<<<<< HEAD
  * Copyright 2009-2021 VMware, Inc., Palo Alto, CA., USA
+=======
+ * Copyright 2009-2015 VMware, Inc., Palo Alto, CA., USA
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the
@@ -54,10 +58,17 @@
 
 
 #define VMWGFX_DRIVER_NAME "vmwgfx"
+<<<<<<< HEAD
 #define VMWGFX_DRIVER_DATE "20210722"
 #define VMWGFX_DRIVER_MAJOR 2
 #define VMWGFX_DRIVER_MINOR 19
 #define VMWGFX_DRIVER_PATCHLEVEL 0
+=======
+#define VMWGFX_DRIVER_DATE "20210218"
+#define VMWGFX_DRIVER_MAJOR 2
+#define VMWGFX_DRIVER_MINOR 18
+#define VMWGFX_DRIVER_PATCHLEVEL 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define VMWGFX_FIFO_STATIC_SIZE (1024*1024)
 #define VMWGFX_MAX_RELOCATIONS 2048
 #define VMWGFX_MAX_VALIDATIONS 2048
@@ -91,9 +102,12 @@
 #define VMW_RES_FENCE ttm_driver_type3
 #define VMW_RES_SHADER ttm_driver_type4
 
+<<<<<<< HEAD
 #define MKSSTAT_CAPACITY_LOG2 5U
 #define MKSSTAT_CAPACITY (1U << MKSSTAT_CAPACITY_LOG2)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct vmw_fpriv {
 	struct ttm_object_file *tfile;
 	bool gb_aware; /* user-space is guest-backed aware */
@@ -314,6 +328,10 @@ struct vmw_res_cache_entry {
  * enum vmw_dma_map_mode - indicate how to perform TTM page dma mappings.
  */
 enum vmw_dma_map_mode {
+<<<<<<< HEAD
+=======
+	vmw_dma_phys,           /* Use physical page addresses */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vmw_dma_alloc_coherent, /* Use TTM coherent pages */
 	vmw_dma_map_populate,   /* Unmap from DMA just after unpopulate */
 	vmw_dma_map_bind,       /* Unmap from DMA just before unbind */
@@ -358,6 +376,10 @@ struct vmw_piter {
 	unsigned long num_pages;
 	bool (*next)(struct vmw_piter *);
 	dma_addr_t (*dma_address)(struct vmw_piter *);
+<<<<<<< HEAD
+=======
+	struct page *(*page)(struct vmw_piter *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -367,8 +389,12 @@ enum vmw_display_unit_type {
 	vmw_du_invalid = 0,
 	vmw_du_legacy,
 	vmw_du_screen_object,
+<<<<<<< HEAD
 	vmw_du_screen_target,
 	vmw_du_max
+=======
+	vmw_du_screen_target
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct vmw_validation_context;
@@ -488,12 +514,22 @@ struct vmw_private {
 	struct ttm_device bdev;
 
 	struct drm_vma_offset_manager vma_manager;
+<<<<<<< HEAD
 	u32 pci_id;
 	resource_size_t io_start;
 	resource_size_t vram_start;
 	resource_size_t vram_size;
 	resource_size_t max_primary_mem;
 	u32 __iomem *rmmio;
+=======
+	unsigned long pci_id;
+	u32 vmw_chipset;
+	resource_size_t io_start;
+	resource_size_t vram_start;
+	resource_size_t vram_size;
+	resource_size_t prim_bb_mem;
+	void __iomem *rmmio;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 *fifo_mem;
 	resource_size_t fifo_mem_size;
 	uint32_t fb_max_width;
@@ -514,6 +550,10 @@ struct vmw_private {
 	bool has_gmr;
 	bool has_mob;
 	spinlock_t hw_lock;
+<<<<<<< HEAD
+=======
+	spinlock_t cap_lock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool assume_16bpp;
 
 	enum vmw_sm_type sm_type;
@@ -629,6 +669,7 @@ struct vmw_private {
 
 	/* Validation memory reservation */
 	struct vmw_validation_mem vvm;
+<<<<<<< HEAD
 
 	uint32 *devcaps;
 
@@ -643,6 +684,8 @@ struct vmw_private {
 	u8 mksstat_kern_top_timer[MKSSTAT_CAPACITY];
 	atomic_t mksstat_kern_pids[MKSSTAT_CAPACITY];
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline struct vmw_surface *vmw_res_to_srf(struct vmw_resource *res)
@@ -1087,7 +1130,11 @@ static inline dma_addr_t vmw_piter_dma_addr(struct vmw_piter *viter)
  */
 static inline struct page *vmw_piter_page(struct vmw_piter *viter)
 {
+<<<<<<< HEAD
 	return viter->pages[viter->i];
+=======
+	return viter->page(viter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1295,6 +1342,10 @@ extern struct vmw_cmdbuf_res_manager *
 vmw_context_res_man(struct vmw_resource *ctx);
 extern struct vmw_resource *vmw_context_cotable(struct vmw_resource *ctx,
 						SVGACOTableType cotable_type);
+<<<<<<< HEAD
+=======
+extern struct list_head *vmw_context_binding_list(struct vmw_resource *ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct vmw_ctx_binding_state;
 extern struct vmw_ctx_binding_state *
 vmw_context_binding_state(struct vmw_resource *ctx);
@@ -1515,6 +1566,7 @@ __printf(1, 2) int vmw_host_printf(const char *fmt, ...);
 int vmw_msg_ioctl(struct drm_device *dev, void *data,
 		  struct drm_file *file_priv);
 
+<<<<<<< HEAD
 /* Host mksGuestStats -vmwgfx_msg.c: */
 int vmw_mksstat_get_kern_slot(pid_t pid, struct vmw_private *dev_priv);
 
@@ -1526,6 +1578,8 @@ int vmw_mksstat_remove_ioctl(struct drm_device *dev, void *data,
 		      struct drm_file *file_priv);
 int vmw_mksstat_remove_all(struct vmw_private *dev_priv);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* VMW logging */
 
 /**

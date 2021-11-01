@@ -254,7 +254,11 @@ endif
 #
 # Board-dependent options and extra files
 #
+<<<<<<< HEAD
 include $(srctree)/arch/mips/Kbuild.platforms
+=======
+include arch/mips/Kbuild.platforms
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ifdef CONFIG_PHYSICAL_START
 load-y					= $(CONFIG_PHYSICAL_START)
@@ -321,7 +325,11 @@ KBUILD_LDFLAGS		+= -m $(ld-emul)
 
 ifdef CONFIG_MIPS
 CHECKFLAGS += $(shell $(CC) $(KBUILD_CFLAGS) -dM -E -x c /dev/null | \
+<<<<<<< HEAD
 	egrep -vw '__GNUC_(MINOR_|PATCHLEVEL_)?_' | \
+=======
+	egrep -vw '__GNUC_(|MINOR_|PATCHLEVEL_)_' | \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sed -e "s/^\#define /-D'/" -e "s/ /'='/" -e "s/$$/'/" -e 's/\$$/&&/g')
 endif
 
@@ -560,9 +568,12 @@ sead3micro_defconfig-y		:= micro32r2el_defconfig BOARDS=sead-3
 legacy_defconfigs		+= xilfpga_defconfig
 xilfpga_defconfig-y		:= 32r2el_defconfig BOARDS=xilfpga
 
+<<<<<<< HEAD
 legacy_defconfigs		+= pistachio_defconfig
 pistachio_defconfig-y		:= 32r2el_defconfig BOARDS=marduk
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 .PHONY: $(legacy_defconfigs)
 $(legacy_defconfigs):
 	$(Q)$(MAKE) -f $(srctree)/Makefile $($@-y)

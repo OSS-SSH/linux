@@ -10,15 +10,22 @@
 #include "orangefs-bufmap.h"
 #include <linux/posix_acl_xattr.h>
 
+<<<<<<< HEAD
 struct posix_acl *orangefs_get_acl(struct inode *inode, int type, bool rcu)
+=======
+struct posix_acl *orangefs_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct posix_acl *acl;
 	int ret;
 	char *key = NULL, *value = NULL;
 
+<<<<<<< HEAD
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (type) {
 	case ACL_TYPE_ACCESS:
 		key = XATTR_NAME_POSIX_ACL_ACCESS;

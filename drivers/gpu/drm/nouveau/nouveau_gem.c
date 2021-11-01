@@ -247,8 +247,15 @@ nouveau_gem_new(struct nouveau_cli *cli, u64 size, int align, uint32_t domain,
 	}
 
 	ret = nouveau_bo_init(nvbo, size, align, domain, NULL, NULL);
+<<<<<<< HEAD
 	if (ret)
 		return ret;
+=======
+	if (ret) {
+		nouveau_bo_ref(NULL, &nvbo);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* we restrict allowed domains on nv50+ to only the types
 	 * that were requested at creation time.  not possibly on

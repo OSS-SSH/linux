@@ -59,7 +59,11 @@ static struct task_struct **writer_tasks;
 static struct task_struct **reader_tasks;
 
 static bool lock_is_write_held;
+<<<<<<< HEAD
 static atomic_t lock_is_read_held;
+=======
+static bool lock_is_read_held;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static unsigned long last_lock_release;
 
 struct lock_stress_stats {
@@ -682,7 +686,11 @@ static int lock_torture_writer(void *arg)
 		if (WARN_ON_ONCE(lock_is_write_held))
 			lwsp->n_lock_fail++;
 		lock_is_write_held = true;
+<<<<<<< HEAD
 		if (WARN_ON_ONCE(atomic_read(&lock_is_read_held)))
+=======
+		if (WARN_ON_ONCE(lock_is_read_held))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			lwsp->n_lock_fail++; /* rare, but... */
 
 		lwsp->n_lock_acquired++;
@@ -717,13 +725,21 @@ static int lock_torture_reader(void *arg)
 			schedule_timeout_uninterruptible(1);
 
 		cxt.cur_ops->readlock(tid);
+<<<<<<< HEAD
 		atomic_inc(&lock_is_read_held);
+=======
+		lock_is_read_held = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (WARN_ON_ONCE(lock_is_write_held))
 			lrsp->n_lock_fail++; /* rare, but... */
 
 		lrsp->n_lock_acquired++;
 		cxt.cur_ops->read_delay(&rand);
+<<<<<<< HEAD
 		atomic_dec(&lock_is_read_held);
+=======
+		lock_is_read_held = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cxt.cur_ops->readunlock(tid);
 
 		stutter_wait("lock_torture_reader");
@@ -738,14 +754,21 @@ static int lock_torture_reader(void *arg)
 static void __torture_print_stats(char *page,
 				  struct lock_stress_stats *statp, bool write)
 {
+<<<<<<< HEAD
 	long cur;
 	bool fail = false;
 	int i, n_stress;
 	long max = 0, min = statp ? data_race(statp[0].n_lock_acquired) : 0;
+=======
+	bool fail = false;
+	int i, n_stress;
+	long max = 0, min = statp ? statp[0].n_lock_acquired : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	long long sum = 0;
 
 	n_stress = write ? cxt.nrealwriters_stress : cxt.nrealreaders_stress;
 	for (i = 0; i < n_stress; i++) {
+<<<<<<< HEAD
 		if (data_race(statp[i].n_lock_fail))
 			fail = true;
 		cur = data_race(statp[i].n_lock_acquired);
@@ -754,6 +777,15 @@ static void __torture_print_stats(char *page,
 			max = cur;
 		if (min > cur)
 			min = cur;
+=======
+		if (statp[i].n_lock_fail)
+			fail = true;
+		sum += statp[i].n_lock_acquired;
+		if (max < statp[i].n_lock_acquired)
+			max = statp[i].n_lock_acquired;
+		if (min > statp[i].n_lock_acquired)
+			min = statp[i].n_lock_acquired;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	page += sprintf(page,
 			"%s:  Total: %lld  Max/Min: %ld/%ld %s  Fail: %d %s\n",
@@ -998,6 +1030,10 @@ static int __init lock_torture_init(void)
 		}
 
 		if (nreaders_stress) {
+<<<<<<< HEAD
+=======
+			lock_is_read_held = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			cxt.lrsa = kmalloc_array(cxt.nrealreaders_stress,
 						 sizeof(*cxt.lrsa),
 						 GFP_KERNEL);

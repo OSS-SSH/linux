@@ -418,6 +418,7 @@ static int pl2303_detect_type(struct usb_serial *serial)
 	bcdDevice = le16_to_cpu(desc->bcdDevice);
 	bcdUSB = le16_to_cpu(desc->bcdUSB);
 
+<<<<<<< HEAD
 	switch (bcdUSB) {
 	case 0x110:
 		switch (bcdDevice) {
@@ -447,6 +448,26 @@ static int pl2303_detect_type(struct usb_serial *serial)
 			return TYPE_TB;
 		}
 		break;
+=======
+	switch (bcdDevice) {
+	case 0x100:
+		/*
+		 * Assume it's an HXN-type if the device doesn't support the old read
+		 * request value.
+		 */
+		if (bcdUSB == 0x200 && !pl2303_supports_hx_status(serial))
+			return TYPE_HXN;
+		break;
+	case 0x300:
+		if (bcdUSB == 0x200)
+			return TYPE_TA;
+
+		return TYPE_HX;
+	case 0x400:
+		return TYPE_HXD;
+	case 0x500:
+		return TYPE_TB;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	dev_err(&serial->interface->dev,

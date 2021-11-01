@@ -1,5 +1,6 @@
 .. include:: ../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/core-api/index.rst
 
 :翻译:
@@ -8,6 +9,14 @@
 
 .. _cn_core-api_index.rst:
 
+=======
+:Original: :doc:`../../../core-api/irq/index`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_core-api_index.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ===========
 核心API文档
 ===========
@@ -82,17 +91,27 @@ Todolist:
    :maxdepth: 1
 
    cachetlb
+<<<<<<< HEAD
    cpu_hotplug
    genericirq
    memory-hotplug
    protection-keys
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Todolist:
 
 
+<<<<<<< HEAD
    memory-hotplug
    cpu_hotplug
    genericirq
+=======
+   cpu_hotplug
+   memory-hotplug
+   genericirq
+   protection-keys
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 内存管理

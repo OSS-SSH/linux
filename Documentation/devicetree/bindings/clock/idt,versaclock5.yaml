@@ -30,6 +30,7 @@ description: |
     3 -- OUT3
     4 -- OUT4
 
+<<<<<<< HEAD
   The idt,shutdown and idt,output-enable-active properties control the
   SH (en_global_shutdown) and SP bits of the Primary Source and Shutdown
   Register, respectively. Their behavior is summarized by the following
@@ -44,6 +45,8 @@ description: |
 
   The case where SH and SP are both 1 is likely not very interesting.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 maintainers:
   - Luca Ceresoli <luca@lucaceresoli.net>
 
@@ -78,6 +81,7 @@ properties:
     maximum: 22760
     description: Optional load capacitor for XTAL1 and XTAL2
 
+<<<<<<< HEAD
   idt,shutdown:
     $ref: /schemas/types.yaml#/definitions/uint32
     enum: [0, 1]
@@ -98,6 +102,8 @@ properties:
       low. This corresponds to the SP bit of the Primary Source and
       Shutdown Register.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 patternProperties:
   "^OUT[1-4]$":
     type: object
@@ -124,8 +130,11 @@ required:
   - compatible
   - reg
   - '#clock-cells'
+<<<<<<< HEAD
   - idt,shutdown
   - idt,output-enable-active
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 allOf:
   - if:
@@ -175,10 +184,13 @@ examples:
             clocks = <&ref25m>;
             clock-names = "xin";
 
+<<<<<<< HEAD
             /* Set the SD/OE pin's settings */
             idt,shutdown = <0>;
             idt,output-enable-active = <0>;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
             OUT1 {
                 idt,mode = <VC5_CMOSD>;
                 idt,voltage-microvolt = <1800000>;

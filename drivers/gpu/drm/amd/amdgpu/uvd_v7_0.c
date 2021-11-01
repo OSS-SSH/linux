@@ -606,6 +606,7 @@ static int uvd_v7_0_hw_fini(void *handle)
 {
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 
+<<<<<<< HEAD
 	/*
 	 * Proper cleanups before halting the HW engine:
 	 *   - cancel the delayed idle work
@@ -630,6 +631,8 @@ static int uvd_v7_0_hw_fini(void *handle)
 						       AMD_CG_STATE_GATE);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!amdgpu_sriov_vf(adev))
 		uvd_v7_0_stop(adev);
 	else {

@@ -33,8 +33,12 @@
 static bool br_multicast_del_eht_set_entry(struct net_bridge_port_group *pg,
 					   union net_bridge_eht_addr *src_addr,
 					   union net_bridge_eht_addr *h_addr);
+<<<<<<< HEAD
 static void br_multicast_create_eht_set_entry(const struct net_bridge_mcast *brmctx,
 					      struct net_bridge_port_group *pg,
+=======
+static void br_multicast_create_eht_set_entry(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					      union net_bridge_eht_addr *src_addr,
 					      union net_bridge_eht_addr *h_addr,
 					      int filter_mode,
@@ -389,8 +393,12 @@ static void br_multicast_ip_src_to_eht_addr(const struct br_ip *src,
 	}
 }
 
+<<<<<<< HEAD
 static void br_eht_convert_host_filter_mode(const struct net_bridge_mcast *brmctx,
 					    struct net_bridge_port_group *pg,
+=======
+static void br_eht_convert_host_filter_mode(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    union net_bridge_eht_addr *h_addr,
 					    int filter_mode)
 {
@@ -407,15 +415,24 @@ static void br_eht_convert_host_filter_mode(const struct net_bridge_mcast *brmct
 		br_multicast_del_eht_set_entry(pg, &zero_addr, h_addr);
 		break;
 	case MCAST_EXCLUDE:
+<<<<<<< HEAD
 		br_multicast_create_eht_set_entry(brmctx, pg, &zero_addr,
 						  h_addr, MCAST_EXCLUDE,
+=======
+		br_multicast_create_eht_set_entry(pg, &zero_addr, h_addr,
+						  MCAST_EXCLUDE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						  true);
 		break;
 	}
 }
 
+<<<<<<< HEAD
 static void br_multicast_create_eht_set_entry(const struct net_bridge_mcast *brmctx,
 					      struct net_bridge_port_group *pg,
+=======
+static void br_multicast_create_eht_set_entry(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					      union net_bridge_eht_addr *src_addr,
 					      union net_bridge_eht_addr *h_addr,
 					      int filter_mode,
@@ -444,8 +461,13 @@ static void br_multicast_create_eht_set_entry(const struct net_bridge_mcast *brm
 	if (!set_h)
 		goto fail_set_entry;
 
+<<<<<<< HEAD
 	mod_timer(&set_h->timer, jiffies + br_multicast_gmi(brmctx));
 	mod_timer(&eht_set->timer, jiffies + br_multicast_gmi(brmctx));
+=======
+	mod_timer(&set_h->timer, jiffies + br_multicast_gmi(br));
+	mod_timer(&eht_set->timer, jiffies + br_multicast_gmi(br));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return;
 
@@ -502,8 +524,12 @@ static void br_multicast_del_eht_host(struct net_bridge_port_group *pg,
 }
 
 /* create new set entries from reports */
+<<<<<<< HEAD
 static void __eht_create_set_entries(const struct net_bridge_mcast *brmctx,
 				     struct net_bridge_port_group *pg,
+=======
+static void __eht_create_set_entries(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				     union net_bridge_eht_addr *h_addr,
 				     void *srcs,
 				     u32 nsrcs,
@@ -516,8 +542,13 @@ static void __eht_create_set_entries(const struct net_bridge_mcast *brmctx,
 	memset(&eht_src_addr, 0, sizeof(eht_src_addr));
 	for (src_idx = 0; src_idx < nsrcs; src_idx++) {
 		memcpy(&eht_src_addr, srcs + (src_idx * addr_size), addr_size);
+<<<<<<< HEAD
 		br_multicast_create_eht_set_entry(brmctx, pg, &eht_src_addr,
 						  h_addr, filter_mode,
+=======
+		br_multicast_create_eht_set_entry(pg, &eht_src_addr, h_addr,
+						  filter_mode,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						  false);
 	}
 }
@@ -553,8 +584,12 @@ static bool __eht_del_set_entries(struct net_bridge_port_group *pg,
 	return changed;
 }
 
+<<<<<<< HEAD
 static bool br_multicast_eht_allow(const struct net_bridge_mcast *brmctx,
 				   struct net_bridge_port_group *pg,
+=======
+static bool br_multicast_eht_allow(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   union net_bridge_eht_addr *h_addr,
 				   void *srcs,
 				   u32 nsrcs,
@@ -564,8 +599,13 @@ static bool br_multicast_eht_allow(const struct net_bridge_mcast *brmctx,
 
 	switch (br_multicast_eht_host_filter_mode(pg, h_addr)) {
 	case MCAST_INCLUDE:
+<<<<<<< HEAD
 		__eht_create_set_entries(brmctx, pg, h_addr, srcs, nsrcs,
 					 addr_size, MCAST_INCLUDE);
+=======
+		__eht_create_set_entries(pg, h_addr, srcs, nsrcs, addr_size,
+					 MCAST_INCLUDE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case MCAST_EXCLUDE:
 		changed = __eht_del_set_entries(pg, h_addr, srcs, nsrcs,
@@ -576,8 +616,12 @@ static bool br_multicast_eht_allow(const struct net_bridge_mcast *brmctx,
 	return changed;
 }
 
+<<<<<<< HEAD
 static bool br_multicast_eht_block(const struct net_bridge_mcast *brmctx,
 				   struct net_bridge_port_group *pg,
+=======
+static bool br_multicast_eht_block(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   union net_bridge_eht_addr *h_addr,
 				   void *srcs,
 				   u32 nsrcs,
@@ -591,7 +635,11 @@ static bool br_multicast_eht_block(const struct net_bridge_mcast *brmctx,
 						addr_size);
 		break;
 	case MCAST_EXCLUDE:
+<<<<<<< HEAD
 		__eht_create_set_entries(brmctx, pg, h_addr, srcs, nsrcs, addr_size,
+=======
+		__eht_create_set_entries(pg, h_addr, srcs, nsrcs, addr_size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					 MCAST_EXCLUDE);
 		break;
 	}
@@ -600,8 +648,12 @@ static bool br_multicast_eht_block(const struct net_bridge_mcast *brmctx,
 }
 
 /* flush_entries is true when changing mode */
+<<<<<<< HEAD
 static bool __eht_inc_exc(const struct net_bridge_mcast *brmctx,
 			  struct net_bridge_port_group *pg,
+=======
+static bool __eht_inc_exc(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			  union net_bridge_eht_addr *h_addr,
 			  void *srcs,
 			  u32 nsrcs,
@@ -619,10 +671,18 @@ static bool __eht_inc_exc(const struct net_bridge_mcast *brmctx,
 	/* if we're changing mode del host and its entries */
 	if (flush_entries)
 		br_multicast_del_eht_host(pg, h_addr);
+<<<<<<< HEAD
 	__eht_create_set_entries(brmctx, pg, h_addr, srcs, nsrcs, addr_size,
 				 filter_mode);
 	/* we can be missing sets only if we've deleted some entries */
 	if (flush_entries) {
+=======
+	__eht_create_set_entries(pg, h_addr, srcs, nsrcs, addr_size,
+				 filter_mode);
+	/* we can be missing sets only if we've deleted some entries */
+	if (flush_entries) {
+		struct net_bridge *br = pg->key.port->br;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct net_bridge_group_eht_set *eht_set;
 		struct net_bridge_group_src *src_ent;
 		struct hlist_node *tmp;
@@ -653,15 +713,23 @@ static bool __eht_inc_exc(const struct net_bridge_mcast *brmctx,
 							      &eht_src_addr);
 			if (!eht_set)
 				continue;
+<<<<<<< HEAD
 			mod_timer(&eht_set->timer, jiffies + br_multicast_lmqt(brmctx));
+=======
+			mod_timer(&eht_set->timer, jiffies + br_multicast_lmqt(br));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
 	return changed;
 }
 
+<<<<<<< HEAD
 static bool br_multicast_eht_inc(const struct net_bridge_mcast *brmctx,
 				 struct net_bridge_port_group *pg,
+=======
+static bool br_multicast_eht_inc(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 union net_bridge_eht_addr *h_addr,
 				 void *srcs,
 				 u32 nsrcs,
@@ -670,15 +738,25 @@ static bool br_multicast_eht_inc(const struct net_bridge_mcast *brmctx,
 {
 	bool changed;
 
+<<<<<<< HEAD
 	changed = __eht_inc_exc(brmctx, pg, h_addr, srcs, nsrcs, addr_size,
 				MCAST_INCLUDE, to_report);
 	br_eht_convert_host_filter_mode(brmctx, pg, h_addr, MCAST_INCLUDE);
+=======
+	changed = __eht_inc_exc(pg, h_addr, srcs, nsrcs, addr_size,
+				MCAST_INCLUDE, to_report);
+	br_eht_convert_host_filter_mode(pg, h_addr, MCAST_INCLUDE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return changed;
 }
 
+<<<<<<< HEAD
 static bool br_multicast_eht_exc(const struct net_bridge_mcast *brmctx,
 				 struct net_bridge_port_group *pg,
+=======
+static bool br_multicast_eht_exc(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 union net_bridge_eht_addr *h_addr,
 				 void *srcs,
 				 u32 nsrcs,
@@ -687,15 +765,25 @@ static bool br_multicast_eht_exc(const struct net_bridge_mcast *brmctx,
 {
 	bool changed;
 
+<<<<<<< HEAD
 	changed = __eht_inc_exc(brmctx, pg, h_addr, srcs, nsrcs, addr_size,
 				MCAST_EXCLUDE, to_report);
 	br_eht_convert_host_filter_mode(brmctx, pg, h_addr, MCAST_EXCLUDE);
+=======
+	changed = __eht_inc_exc(pg, h_addr, srcs, nsrcs, addr_size,
+				MCAST_EXCLUDE, to_report);
+	br_eht_convert_host_filter_mode(pg, h_addr, MCAST_EXCLUDE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return changed;
 }
 
+<<<<<<< HEAD
 static bool __eht_ip4_handle(const struct net_bridge_mcast *brmctx,
 			     struct net_bridge_port_group *pg,
+=======
+static bool __eht_ip4_handle(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     union net_bridge_eht_addr *h_addr,
 			     void *srcs,
 			     u32 nsrcs,
@@ -705,25 +793,40 @@ static bool __eht_ip4_handle(const struct net_bridge_mcast *brmctx,
 
 	switch (grec_type) {
 	case IGMPV3_ALLOW_NEW_SOURCES:
+<<<<<<< HEAD
 		br_multicast_eht_allow(brmctx, pg, h_addr, srcs, nsrcs,
 				       sizeof(__be32));
 		break;
 	case IGMPV3_BLOCK_OLD_SOURCES:
 		changed = br_multicast_eht_block(brmctx, pg, h_addr, srcs, nsrcs,
+=======
+		br_multicast_eht_allow(pg, h_addr, srcs, nsrcs, sizeof(__be32));
+		break;
+	case IGMPV3_BLOCK_OLD_SOURCES:
+		changed = br_multicast_eht_block(pg, h_addr, srcs, nsrcs,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						 sizeof(__be32));
 		break;
 	case IGMPV3_CHANGE_TO_INCLUDE:
 		to_report = true;
 		fallthrough;
 	case IGMPV3_MODE_IS_INCLUDE:
+<<<<<<< HEAD
 		changed = br_multicast_eht_inc(brmctx, pg, h_addr, srcs, nsrcs,
+=======
+		changed = br_multicast_eht_inc(pg, h_addr, srcs, nsrcs,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					       sizeof(__be32), to_report);
 		break;
 	case IGMPV3_CHANGE_TO_EXCLUDE:
 		to_report = true;
 		fallthrough;
 	case IGMPV3_MODE_IS_EXCLUDE:
+<<<<<<< HEAD
 		changed = br_multicast_eht_exc(brmctx, pg, h_addr, srcs, nsrcs,
+=======
+		changed = br_multicast_eht_exc(pg, h_addr, srcs, nsrcs,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					       sizeof(__be32), to_report);
 		break;
 	}
@@ -732,8 +835,12 @@ static bool __eht_ip4_handle(const struct net_bridge_mcast *brmctx,
 }
 
 #if IS_ENABLED(CONFIG_IPV6)
+<<<<<<< HEAD
 static bool __eht_ip6_handle(const struct net_bridge_mcast *brmctx,
 			     struct net_bridge_port_group *pg,
+=======
+static bool __eht_ip6_handle(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     union net_bridge_eht_addr *h_addr,
 			     void *srcs,
 			     u32 nsrcs,
@@ -743,18 +850,30 @@ static bool __eht_ip6_handle(const struct net_bridge_mcast *brmctx,
 
 	switch (grec_type) {
 	case MLD2_ALLOW_NEW_SOURCES:
+<<<<<<< HEAD
 		br_multicast_eht_allow(brmctx, pg, h_addr, srcs, nsrcs,
 				       sizeof(struct in6_addr));
 		break;
 	case MLD2_BLOCK_OLD_SOURCES:
 		changed = br_multicast_eht_block(brmctx, pg, h_addr, srcs, nsrcs,
+=======
+		br_multicast_eht_allow(pg, h_addr, srcs, nsrcs,
+				       sizeof(struct in6_addr));
+		break;
+	case MLD2_BLOCK_OLD_SOURCES:
+		changed = br_multicast_eht_block(pg, h_addr, srcs, nsrcs,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						 sizeof(struct in6_addr));
 		break;
 	case MLD2_CHANGE_TO_INCLUDE:
 		to_report = true;
 		fallthrough;
 	case MLD2_MODE_IS_INCLUDE:
+<<<<<<< HEAD
 		changed = br_multicast_eht_inc(brmctx, pg, h_addr, srcs, nsrcs,
+=======
+		changed = br_multicast_eht_inc(pg, h_addr, srcs, nsrcs,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					       sizeof(struct in6_addr),
 					       to_report);
 		break;
@@ -762,7 +881,11 @@ static bool __eht_ip6_handle(const struct net_bridge_mcast *brmctx,
 		to_report = true;
 		fallthrough;
 	case MLD2_MODE_IS_EXCLUDE:
+<<<<<<< HEAD
 		changed = br_multicast_eht_exc(brmctx, pg, h_addr, srcs, nsrcs,
+=======
+		changed = br_multicast_eht_exc(pg, h_addr, srcs, nsrcs,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					       sizeof(struct in6_addr),
 					       to_report);
 		break;
@@ -773,8 +896,12 @@ static bool __eht_ip6_handle(const struct net_bridge_mcast *brmctx,
 #endif
 
 /* true means an entry was deleted */
+<<<<<<< HEAD
 bool br_multicast_eht_handle(const struct net_bridge_mcast *brmctx,
 			     struct net_bridge_port_group *pg,
+=======
+bool br_multicast_eht_handle(struct net_bridge_port_group *pg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     void *h_addr,
 			     void *srcs,
 			     u32 nsrcs,
@@ -791,12 +918,21 @@ bool br_multicast_eht_handle(const struct net_bridge_mcast *brmctx,
 	memset(&eht_host_addr, 0, sizeof(eht_host_addr));
 	memcpy(&eht_host_addr, h_addr, addr_size);
 	if (addr_size == sizeof(__be32))
+<<<<<<< HEAD
 		changed = __eht_ip4_handle(brmctx, pg, &eht_host_addr, srcs,
 					   nsrcs, grec_type);
 #if IS_ENABLED(CONFIG_IPV6)
 	else
 		changed = __eht_ip6_handle(brmctx, pg, &eht_host_addr, srcs,
 					   nsrcs, grec_type);
+=======
+		changed = __eht_ip4_handle(pg, &eht_host_addr, srcs, nsrcs,
+					   grec_type);
+#if IS_ENABLED(CONFIG_IPV6)
+	else
+		changed = __eht_ip6_handle(pg, &eht_host_addr, srcs, nsrcs,
+					   grec_type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 out:

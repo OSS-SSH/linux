@@ -614,7 +614,11 @@ page_flags_test(int section, int node, int zone, int last_cpupid,
 	bool append = false;
 	int i;
 
+<<<<<<< HEAD
 	flags &= PAGEFLAGS_MASK;
+=======
+	flags &= BIT(NR_PAGEFLAGS) - 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (flags) {
 		page_flags |= flags;
 		snprintf(cmp_buf + size, BUF_SIZE - size, "%s", name);
@@ -675,8 +679,14 @@ flags(void)
 			"uptodate|dirty|lru|active|swapbacked",
 			cmp_buffer);
 
+<<<<<<< HEAD
 	flags = VM_READ | VM_EXEC | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC;
 	test("read|exec|mayread|maywrite|mayexec", "%pGv", &flags);
+=======
+	flags = VM_READ | VM_EXEC | VM_MAYREAD | VM_MAYWRITE | VM_MAYEXEC
+			| VM_DENYWRITE;
+	test("read|exec|mayread|maywrite|mayexec|denywrite", "%pGv", &flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	gfp = GFP_TRANSHUGE;
 	test("GFP_TRANSHUGE", "%pGg", &gfp);

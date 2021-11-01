@@ -110,7 +110,11 @@ struct fpga_image_info {
  * @initial_header_size: Maximum number of bytes that should be passed into write_init
  * @state: returns an enum value of the FPGA's state
  * @status: returns status of the FPGA, including reconfiguration error code
+<<<<<<< HEAD
  * @write_init: prepare the FPGA to receive configuration data
+=======
+ * @write_init: prepare the FPGA to receive confuration data
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @write: write count bytes of configuration data to the FPGA
  * @write_sg: write the scatter list of configuration data to the FPGA
  * @write_complete: set FPGA to operating state after writing is done

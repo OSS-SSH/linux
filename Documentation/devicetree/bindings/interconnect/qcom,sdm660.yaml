@@ -31,11 +31,19 @@ properties:
 
   clocks:
     minItems: 1
+<<<<<<< HEAD
     maxItems: 7
 
   clock-names:
     minItems: 1
     maxItems: 7
+=======
+    maxItems: 3
+
+  clock-names:
+    minItems: 1
+    maxItems: 3
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 required:
   - compatible
@@ -72,6 +80,7 @@ allOf:
           contains:
             enum:
               - qcom,sdm660-a2noc
+<<<<<<< HEAD
     then:
       properties:
         clocks:
@@ -98,6 +107,8 @@ allOf:
         compatible:
           contains:
             enum:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - qcom,sdm660-bimc
               - qcom,sdm660-cnoc
               - qcom,sdm660-gnoc
@@ -117,7 +128,10 @@ examples:
   - |
       #include <dt-bindings/clock/qcom,rpmcc.h>
       #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
+<<<<<<< HEAD
       #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
       bimc: interconnect@1008000 {
               compatible = "qcom,sdm660-bimc";
@@ -150,6 +164,7 @@ examples:
               compatible = "qcom,sdm660-a2noc";
               reg = <0x01704000 0xc100>;
               #interconnect-cells = <1>;
+<<<<<<< HEAD
               clock-names = "bus",
                             "bus_a",
                             "ipa",
@@ -164,6 +179,11 @@ examples:
                        <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
                        <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
                        <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
+=======
+              clock-names = "bus", "bus_a";
+              clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+                       <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       };
 
       mnoc: interconnect@1745000 {

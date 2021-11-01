@@ -325,10 +325,17 @@ static void move_to_next_cpu(void)
 	if (!cpumask_equal(current_mask, current->cpus_ptr))
 		goto change_mode;
 
+<<<<<<< HEAD
 	cpus_read_lock();
 	cpumask_and(current_mask, cpu_online_mask, tr->tracing_cpumask);
 	next_cpu = cpumask_next(raw_smp_processor_id(), current_mask);
 	cpus_read_unlock();
+=======
+	get_online_cpus();
+	cpumask_and(current_mask, cpu_online_mask, tr->tracing_cpumask);
+	next_cpu = cpumask_next(smp_processor_id(), current_mask);
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (next_cpu >= nr_cpu_ids)
 		next_cpu = cpumask_first(current_mask);
@@ -398,7 +405,11 @@ static void stop_single_kthread(void)
 	struct hwlat_kthread_data *kdata = get_cpu_data();
 	struct task_struct *kthread;
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kthread = kdata->kthread;
 
 	if (!kthread)
@@ -408,7 +419,11 @@ static void stop_single_kthread(void)
 	kdata->kthread = NULL;
 
 out_put_cpus:
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 
@@ -425,14 +440,22 @@ static int start_single_kthread(struct trace_array *tr)
 	struct task_struct *kthread;
 	int next_cpu;
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (kdata->kthread)
 		goto out_put_cpus;
 
 	kthread = kthread_create(kthread_fn, NULL, "hwlatd");
 	if (IS_ERR(kthread)) {
 		pr_err(BANNER "could not start sampling thread\n");
+<<<<<<< HEAD
 		cpus_read_unlock();
+=======
+		put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 	}
 
@@ -452,7 +475,11 @@ static int start_single_kthread(struct trace_array *tr)
 	wake_up_process(kthread);
 
 out_put_cpus:
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -479,10 +506,17 @@ static void stop_per_cpu_kthreads(void)
 {
 	unsigned int cpu;
 
+<<<<<<< HEAD
 	cpus_read_lock();
 	for_each_online_cpu(cpu)
 		stop_cpu_kthread(cpu);
 	cpus_read_unlock();
+=======
+	get_online_cpus();
+	for_each_online_cpu(cpu)
+		stop_cpu_kthread(cpu);
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -515,7 +549,11 @@ static void hwlat_hotplug_workfn(struct work_struct *dummy)
 
 	mutex_lock(&trace_types_lock);
 	mutex_lock(&hwlat_data.lock);
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!hwlat_busy || hwlat_data.thread_mode != MODE_PER_CPU)
 		goto out_unlock;
@@ -526,7 +564,11 @@ static void hwlat_hotplug_workfn(struct work_struct *dummy)
 	start_cpu_kthread(cpu);
 
 out_unlock:
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&hwlat_data.lock);
 	mutex_unlock(&trace_types_lock);
 }
@@ -582,7 +624,11 @@ static int start_per_cpu_kthreads(struct trace_array *tr)
 	unsigned int cpu;
 	int retval;
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Run only on CPUs in which hwlat is allowed to run.
 	 */
@@ -596,12 +642,20 @@ static int start_per_cpu_kthreads(struct trace_array *tr)
 		if (retval)
 			goto out_error;
 	}
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 
 out_error:
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	stop_per_cpu_kthreads();
 	return retval;
 }

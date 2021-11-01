@@ -11,7 +11,10 @@ static struct mptcp_subflow_request_sock *build_req_sock(struct kunit *test)
 			    GFP_USER);
 	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, req);
 	mptcp_token_init_request((struct request_sock *)req);
+<<<<<<< HEAD
 	sock_net_set((struct sock *)req, &init_net);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return req;
 }
 
@@ -23,7 +26,11 @@ static void mptcp_token_test_req_basic(struct kunit *test)
 	KUNIT_ASSERT_EQ(test, 0,
 			mptcp_token_new_request((struct request_sock *)req));
 	KUNIT_EXPECT_NE(test, 0, (int)req->token);
+<<<<<<< HEAD
 	KUNIT_EXPECT_PTR_EQ(test, null_msk, mptcp_token_get_sock(&init_net, req->token));
+=======
+	KUNIT_EXPECT_PTR_EQ(test, null_msk, mptcp_token_get_sock(req->token));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* cleanup */
 	mptcp_token_destroy_request((struct request_sock *)req);
@@ -56,7 +63,10 @@ static struct mptcp_sock *build_msk(struct kunit *test)
 	msk = kunit_kzalloc(test, sizeof(struct mptcp_sock), GFP_USER);
 	KUNIT_EXPECT_NOT_ERR_OR_NULL(test, msk);
 	refcount_set(&((struct sock *)msk)->sk_refcnt, 1);
+<<<<<<< HEAD
 	sock_net_set((struct sock *)msk, &init_net);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return msk;
 }
 
@@ -76,11 +86,19 @@ static void mptcp_token_test_msk_basic(struct kunit *test)
 			mptcp_token_new_connect((struct sock *)icsk));
 	KUNIT_EXPECT_NE(test, 0, (int)ctx->token);
 	KUNIT_EXPECT_EQ(test, ctx->token, msk->token);
+<<<<<<< HEAD
 	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(&init_net, ctx->token));
 	KUNIT_EXPECT_EQ(test, 2, (int)refcount_read(&sk->sk_refcnt));
 
 	mptcp_token_destroy(msk);
 	KUNIT_EXPECT_PTR_EQ(test, null_msk, mptcp_token_get_sock(&init_net, ctx->token));
+=======
+	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(ctx->token));
+	KUNIT_EXPECT_EQ(test, 2, (int)refcount_read(&sk->sk_refcnt));
+
+	mptcp_token_destroy(msk);
+	KUNIT_EXPECT_PTR_EQ(test, null_msk, mptcp_token_get_sock(ctx->token));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void mptcp_token_test_accept(struct kunit *test)
@@ -92,11 +110,19 @@ static void mptcp_token_test_accept(struct kunit *test)
 			mptcp_token_new_request((struct request_sock *)req));
 	msk->token = req->token;
 	mptcp_token_accept(req, msk);
+<<<<<<< HEAD
 	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(&init_net, msk->token));
 
 	/* this is now a no-op */
 	mptcp_token_destroy_request((struct request_sock *)req);
 	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(&init_net, msk->token));
+=======
+	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(msk->token));
+
+	/* this is now a no-op */
+	mptcp_token_destroy_request((struct request_sock *)req);
+	KUNIT_EXPECT_PTR_EQ(test, msk, mptcp_token_get_sock(msk->token));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* cleanup */
 	mptcp_token_destroy(msk);
@@ -118,7 +144,11 @@ static void mptcp_token_test_destroyed(struct kunit *test)
 
 	/* simulate race on removal */
 	refcount_set(&sk->sk_refcnt, 0);
+<<<<<<< HEAD
 	KUNIT_EXPECT_PTR_EQ(test, null_msk, mptcp_token_get_sock(&init_net, msk->token));
+=======
+	KUNIT_EXPECT_PTR_EQ(test, null_msk, mptcp_token_get_sock(msk->token));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* cleanup */
 	mptcp_token_destroy(msk);

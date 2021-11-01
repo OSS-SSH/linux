@@ -23,7 +23,11 @@
 #include "ksize.h"
 
 extern unsigned long switch_to_osf_pal(unsigned long nr,
+<<<<<<< HEAD
 	struct pcb_struct *pcb_va, struct pcb_struct *pcb_pa,
+=======
+	struct pcb_struct * pcb_va, struct pcb_struct * pcb_pa,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long *vptb);
 
 extern void move_stack(unsigned long new_stack);

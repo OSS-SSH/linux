@@ -328,6 +328,7 @@ config IPV6_RPL_LWTUNNEL
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
 config IPV6_IOAM6_LWTUNNEL
 	bool "IPv6: IOAM Pre-allocated Trace insertion support"
 	depends on IPV6
@@ -339,4 +340,6 @@ config IPV6_IOAM6_LWTUNNEL
 
 	  If unsure, say N.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endif # IPV6

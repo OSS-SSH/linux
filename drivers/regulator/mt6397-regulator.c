@@ -32,6 +32,10 @@ struct mt6397_regulator_info {
 	u32 vselctrl_mask;
 	u32 modeset_reg;
 	u32 modeset_mask;
+<<<<<<< HEAD
+=======
+	u32 modeset_shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define MT6397_BUCK(match, vreg, min, max, step, volt_ranges, enreg,	\
@@ -60,6 +64,10 @@ struct mt6397_regulator_info {
 	.vselctrl_mask = BIT(1),					\
 	.modeset_reg = _modeset_reg,					\
 	.modeset_mask = BIT(_modeset_shift),				\
+<<<<<<< HEAD
+=======
+	.modeset_shift = _modeset_shift					\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #define MT6397_LDO(match, vreg, ldo_volt_table, enreg, enbit, vosel,	\
@@ -173,11 +181,19 @@ static int mt6397_regulator_set_mode(struct regulator_dev *rdev,
 		goto err_mode;
 	}
 
+<<<<<<< HEAD
 	dev_dbg(&rdev->dev, "mt6397 buck set_mode %#x, %#x, %#x\n",
 		info->modeset_reg, info->modeset_mask, val);
 
 	val <<= ffs(info->modeset_mask) - 1;
 
+=======
+	dev_dbg(&rdev->dev, "mt6397 buck set_mode %#x, %#x, %#x, %#x\n",
+		info->modeset_reg, info->modeset_mask,
+		info->modeset_shift, val);
+
+	val <<= info->modeset_shift;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = regmap_update_bits(rdev->regmap, info->modeset_reg,
 				 info->modeset_mask, val);
 err_mode:
@@ -202,10 +218,14 @@ static unsigned int mt6397_regulator_get_mode(struct regulator_dev *rdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	regval &= info->modeset_mask;
 	regval >>= ffs(info->modeset_mask) - 1;
 
 	switch (regval) {
+=======
+	switch ((regval & info->modeset_mask) >> info->modeset_shift) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case MT6397_BUCK_MODE_AUTO:
 		return REGULATOR_MODE_NORMAL;
 	case MT6397_BUCK_MODE_FORCE_PWM:

@@ -10,8 +10,11 @@
 #ifndef LINUX_LOCKD_LOCKD_H
 #define LINUX_LOCKD_LOCKD_H
 
+<<<<<<< HEAD
 /* XXX: a lot of this should really be under fs/lockd. */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/in.h>
 #include <linux/in6.h>
 #include <net/ipv6.h>
@@ -156,8 +159,12 @@ struct nlm_rqst {
 struct nlm_file {
 	struct hlist_node	f_list;		/* linked list */
 	struct nfs_fh		f_handle;	/* NFS file handle */
+<<<<<<< HEAD
 	struct file *		f_file[2];	/* VFS file pointers,
 						   indexed by O_ flags */
+=======
+	struct file *		f_file;		/* VFS file pointer */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nlm_share *	f_shares;	/* DOS shares */
 	struct list_head	f_blocks;	/* blocked locks */
 	unsigned int		f_locks;	/* guesstimate # of locks */
@@ -270,7 +277,10 @@ typedef int	  (*nlm_host_match_fn_t)(void *cur, struct nlm_host *ref);
 /*
  * Server-side lock handling
  */
+<<<<<<< HEAD
 int		  lock_to_openmode(struct file_lock *);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 __be32		  nlmsvc_lock(struct svc_rqst *, struct nlm_file *,
 			      struct nlm_host *, struct nlm_lock *, int,
 			      struct nlm_cookie *, int);
@@ -290,7 +300,11 @@ void		  nlmsvc_locks_init_private(struct file_lock *, struct nlm_host *, pid_t);
  * File handling for the server personality
  */
 __be32		  nlm_lookup_file(struct svc_rqst *, struct nlm_file **,
+<<<<<<< HEAD
 					struct nlm_lock *);
+=======
+					struct nfs_fh *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void		  nlm_release_file(struct nlm_file *);
 void		  nlmsvc_release_lockowner(struct nlm_lock *);
 void		  nlmsvc_mark_resources(struct net *);
@@ -305,8 +319,12 @@ int           nlmsvc_unlock_all_by_ip(struct sockaddr *server_addr);
 
 static inline struct inode *nlmsvc_file_inode(struct nlm_file *file)
 {
+<<<<<<< HEAD
 	return locks_inode(file->f_file[O_RDONLY] ?
 			   file->f_file[O_RDONLY] : file->f_file[O_WRONLY]);
+=======
+	return locks_inode(file->f_file);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int __nlm_privileged_request4(const struct sockaddr *sap)

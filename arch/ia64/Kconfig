@@ -9,8 +9,11 @@ menu "Processor type and features"
 config IA64
 	bool
 	select ARCH_HAS_DMA_MARK_CLEAN
+<<<<<<< HEAD
 	select ARCH_HAS_STRNCPY_FROM_USER
 	select ARCH_HAS_STRNLEN_USER
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select ARCH_MIGHT_HAVE_PC_PARPORT
 	select ARCH_MIGHT_HAVE_PC_SERIO
 	select ACPI
@@ -27,6 +30,10 @@ config IA64
 	select HAVE_ASM_MODVERSIONS
 	select HAVE_UNSTABLE_SCHED_CLOCK
 	select HAVE_EXIT_THREAD
+<<<<<<< HEAD
+=======
+	select HAVE_IDE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select HAVE_KPROBES
 	select HAVE_KRETPROBES
 	select HAVE_FTRACE_MCOUNT_RECORD
@@ -388,6 +395,11 @@ config CRASH_DUMP
 	  help
 	    Generate crash dump after being started by kexec.
 
+<<<<<<< HEAD
+=======
+source "drivers/firmware/Kconfig"
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endmenu
 
 menu "Power management and ACPI options"

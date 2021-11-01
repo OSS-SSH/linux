@@ -697,6 +697,16 @@ void nf_conntrack_proto_pernet_init(struct net *net)
 #endif
 }
 
+<<<<<<< HEAD
+=======
+void nf_conntrack_proto_pernet_fini(struct net *net)
+{
+#ifdef CONFIG_NF_CT_PROTO_GRE
+	nf_ct_gre_keymap_flush(net);
+#endif
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 module_param_call(hashsize, nf_conntrack_set_hashsize, param_get_uint,
 		  &nf_conntrack_htable_size, 0600);
 

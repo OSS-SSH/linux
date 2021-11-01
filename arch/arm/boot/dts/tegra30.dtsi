@@ -5,7 +5,10 @@
 #include <dt-bindings/pinctrl/pinctrl-tegra.h>
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 #include <dt-bindings/soc/tegra-pmc.h>
+<<<<<<< HEAD
 #include <dt-bindings/thermal/thermal.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "tegra30-peripherals-opp.dtsi"
 
@@ -801,6 +804,7 @@
 		reset-names = "fuse";
 	};
 
+<<<<<<< HEAD
 	tsensor: tsensor@70014000 {
 		compatible = "nvidia,tegra30-tsensor";
 		reg = <0x70014000 0x500>;
@@ -815,6 +819,8 @@
 		#thermal-sensor-cells = <1>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hda@70030000 {
 		compatible = "nvidia,tegra30-hda";
 		reg = <0x70030000 0x10000>;
@@ -1077,36 +1083,61 @@
 		#address-cells = <1>;
 		#size-cells = <0>;
 
+<<<<<<< HEAD
 		cpu0: cpu@0 {
+=======
+		cpu@0 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <0>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
+<<<<<<< HEAD
 			#cooling-cells = <2>;
 		};
 
 		cpu1: cpu@1 {
+=======
+		};
+
+		cpu@1 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <1>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
+<<<<<<< HEAD
 			#cooling-cells = <2>;
 		};
 
 		cpu2: cpu@2 {
+=======
+		};
+
+		cpu@2 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <2>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
+<<<<<<< HEAD
 			#cooling-cells = <2>;
 		};
 
 		cpu3: cpu@3 {
+=======
+		};
+
+		cpu@3 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			device_type = "cpu";
 			compatible = "arm,cortex-a9";
 			reg = <3>;
 			clocks = <&tegra_car TEGRA30_CLK_CCLK_G>;
+<<<<<<< HEAD
 			#cooling-cells = <2>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 	};
 
@@ -1121,6 +1152,7 @@
 				     <&{/cpus/cpu@2}>,
 				     <&{/cpus/cpu@3}>;
 	};
+<<<<<<< HEAD
 
 	thermal-zones {
 		tsensor0-thermal {
@@ -1181,4 +1213,6 @@
 			};
 		};
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

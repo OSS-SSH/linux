@@ -212,7 +212,10 @@ Userspace to kernel:
   ``ETHTOOL_MSG_FEC_SET``               set FEC settings
   ``ETHTOOL_MSG_MODULE_EEPROM_GET``     read SFP module EEPROM
   ``ETHTOOL_MSG_STATS_GET``             get standard statistics
+<<<<<<< HEAD
   ``ETHTOOL_MSG_PHC_VCLOCKS_GET``       get PHC virtual clocks info
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   ===================================== ================================
 
 Kernel to userspace:
@@ -251,7 +254,10 @@ Kernel to userspace:
   ``ETHTOOL_MSG_FEC_NTF``                  FEC settings
   ``ETHTOOL_MSG_MODULE_EEPROM_GET_REPLY``  read SFP module EEPROM
   ``ETHTOOL_MSG_STATS_GET_REPLY``          standard statistics
+<<<<<<< HEAD
   ``ETHTOOL_MSG_PHC_VCLOCKS_GET_REPLY``    PHC virtual clocks info
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   ======================================== =================================
 
 ``GET`` requests are sent by userspace applications to retrieve device
@@ -595,6 +601,7 @@ Link extended substates:
                                                                        that is not formally
                                                                        supported, which led to
                                                                        signal integrity issues
+<<<<<<< HEAD
 
   ``ETHTOOL_LINK_EXT_SUBSTATE_BSI_SERDES_REFERENCE_CLOCK_LOST``        The external clock signal for
                                                                        SerDes is too weak or
@@ -603,6 +610,8 @@ Link extended substates:
   ``ETHTOOL_LINK_EXT_SUBSTATE_BSI_SERDES_ALOS``                        The received signal for
                                                                        SerDes is too weak because
                                                                        analog loss of signal.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   =================================================================    =============================
 
   Cable issue substates:
@@ -947,14 +956,18 @@ Kernel response contents:
   ``ETHTOOL_A_COALESCE_TX_USECS_HIGH``         u32     delay (us), high Tx
   ``ETHTOOL_A_COALESCE_TX_MAX_FRAMES_HIGH``    u32     max packets, high Tx
   ``ETHTOOL_A_COALESCE_RATE_SAMPLE_INTERVAL``  u32     rate sampling interval
+<<<<<<< HEAD
   ``ETHTOOL_A_COALESCE_USE_CQE_TX``            bool    timer reset mode, Tx
   ``ETHTOOL_A_COALESCE_USE_CQE_RX``            bool    timer reset mode, Rx
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   ===========================================  ======  =======================
 
 Attributes are only included in reply if their value is not zero or the
 corresponding bit in ``ethtool_ops::supported_coalesce_params`` is set (i.e.
 they are declared as supported by driver).
 
+<<<<<<< HEAD
 Timer reset mode (``ETHTOOL_A_COALESCE_USE_CQE_TX`` and
 ``ETHTOOL_A_COALESCE_USE_CQE_RX``) controls the interaction between packet
 arrival and the various time based delay parameters. By default timers are
@@ -966,6 +979,8 @@ Setting the appropriate attribute to 1 will enable ``CQE`` mode, where
 each packet event resets the timer. In this mode timer is used to force
 the interrupt if queue goes idle, while busy queues depend on the packet
 limit to trigger interrupts.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 COALESCE_SET
 ============
@@ -998,8 +1013,11 @@ Request contents:
   ``ETHTOOL_A_COALESCE_TX_USECS_HIGH``         u32     delay (us), high Tx
   ``ETHTOOL_A_COALESCE_TX_MAX_FRAMES_HIGH``    u32     max packets, high Tx
   ``ETHTOOL_A_COALESCE_RATE_SAMPLE_INTERVAL``  u32     rate sampling interval
+<<<<<<< HEAD
   ``ETHTOOL_A_COALESCE_USE_CQE_TX``            bool    timer reset mode, Tx
   ``ETHTOOL_A_COALESCE_USE_CQE_RX``            bool    timer reset mode, Rx
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   ===========================================  ======  =======================
 
 Request is rejected if it attributes declared as unsupported by driver (i.e.
@@ -1502,6 +1520,7 @@ Low and high bounds are inclusive, for example:
  etherStatsPkts512to1023Octets 512  1023
  ============================= ==== ====
 
+<<<<<<< HEAD
 PHC_VCLOCKS_GET
 ===============
 
@@ -1521,6 +1540,8 @@ Kernel response contents:
   ``ETHTOOL_A_PHC_VCLOCKS_INDEX``       s32     PHC index array
   ====================================  ======  ==========================
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Request translation
 ===================
 
@@ -1619,5 +1640,8 @@ are netlink only.
   n/a                                 ``ETHTOOL_MSG_CABLE_TEST_ACT``
   n/a                                 ``ETHTOOL_MSG_CABLE_TEST_TDR_ACT``
   n/a                                 ``ETHTOOL_MSG_TUNNEL_INFO_GET``
+<<<<<<< HEAD
   n/a                                 ``ETHTOOL_MSG_PHC_VCLOCKS_GET``
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   =================================== =====================================

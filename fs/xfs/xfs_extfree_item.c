@@ -629,9 +629,12 @@ xfs_efi_item_recover(
 		error = xfs_trans_free_extent(tp, efdp, extp->ext_start,
 					      extp->ext_len,
 					      &XFS_RMAP_OINFO_ANY_OWNER, false);
+<<<<<<< HEAD
 		if (error == -EFSCORRUPTED)
 			XFS_CORRUPTION_ERROR(__func__, XFS_ERRLEVEL_LOW, mp,
 					extp, sizeof(*extp));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (error)
 			goto abort_error;
 

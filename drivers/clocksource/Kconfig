@@ -234,9 +234,14 @@ config CLKSRC_LPC32XX
 	  Support for the LPC32XX clocksource.
 
 config CLKSRC_PISTACHIO
+<<<<<<< HEAD
 	bool "Clocksource for Pistachio SoC"
 	depends on HAS_IOMEM
 	depends on MIPS || COMPILE_TEST
+=======
+	bool "Clocksource for Pistachio SoC" if COMPILE_TEST
+	depends on HAS_IOMEM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select TIMER_OF
 	help
 	  Enables the clocksource for the Pistachio SoC.

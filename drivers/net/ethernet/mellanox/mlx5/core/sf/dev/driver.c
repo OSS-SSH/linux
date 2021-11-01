@@ -14,7 +14,11 @@ static int mlx5_sf_dev_probe(struct auxiliary_device *adev, const struct auxilia
 	struct devlink *devlink;
 	int err;
 
+<<<<<<< HEAD
 	devlink = mlx5_devlink_alloc(&adev->dev);
+=======
+	devlink = mlx5_devlink_alloc();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!devlink)
 		return -ENOMEM;
 

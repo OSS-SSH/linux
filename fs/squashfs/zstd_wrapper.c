@@ -94,7 +94,11 @@ static int zstd_uncompress(struct squashfs_sb_info *msblk, void *strm,
 			}
 
 			avail = min(length, ((int)bvec->bv_len) - offset);
+<<<<<<< HEAD
 			data = bvec_virt(bvec);
+=======
+			data = page_address(bvec->bv_page) + bvec->bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			length -= avail;
 			in_buf.src = data + offset;
 			in_buf.size = avail;

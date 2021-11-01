@@ -13,6 +13,7 @@
 #include <linux/mfd/rt5033-private.h>
 #include <linux/regulator/of_regulator.h>
 
+<<<<<<< HEAD
 static const struct linear_range rt5033_buck_ranges[] = {
 	REGULATOR_LINEAR_RANGE(1000000, 0, 20, 100000),
 	REGULATOR_LINEAR_RANGE(3000000, 21, 31, 0),
@@ -23,6 +24,8 @@ static const struct linear_range rt5033_ldo_ranges[] = {
 	REGULATOR_LINEAR_RANGE(3000000, 19, 31, 0),
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct regulator_ops rt5033_safe_ldo_ops = {
 	.is_enabled		= regulator_is_enabled_regmap,
 	.enable			= regulator_enable_regmap,
@@ -34,7 +37,12 @@ static const struct regulator_ops rt5033_buck_ops = {
 	.is_enabled		= regulator_is_enabled_regmap,
 	.enable			= regulator_enable_regmap,
 	.disable		= regulator_disable_regmap,
+<<<<<<< HEAD
 	.list_voltage		= regulator_list_voltage_linear_range,
+=======
+	.list_voltage		= regulator_list_voltage_linear,
+	.map_voltage		= regulator_map_voltage_linear,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.get_voltage_sel	= regulator_get_voltage_sel_regmap,
 	.set_voltage_sel	= regulator_set_voltage_sel_regmap,
 };
@@ -49,8 +57,13 @@ static const struct regulator_desc rt5033_supported_regulators[] = {
 		.type		= REGULATOR_VOLTAGE,
 		.owner		= THIS_MODULE,
 		.n_voltages	= RT5033_REGULATOR_BUCK_VOLTAGE_STEP_NUM,
+<<<<<<< HEAD
 		.linear_ranges	= rt5033_buck_ranges,
 		.n_linear_ranges = ARRAY_SIZE(rt5033_buck_ranges),
+=======
+		.min_uV		= RT5033_REGULATOR_BUCK_VOLTAGE_MIN,
+		.uV_step	= RT5033_REGULATOR_BUCK_VOLTAGE_STEP,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.enable_reg	= RT5033_REG_CTRL,
 		.enable_mask	= RT5033_CTRL_EN_BUCK_MASK,
 		.vsel_reg	= RT5033_REG_BUCK_CTRL,
@@ -65,8 +78,13 @@ static const struct regulator_desc rt5033_supported_regulators[] = {
 		.type		= REGULATOR_VOLTAGE,
 		.owner		= THIS_MODULE,
 		.n_voltages	= RT5033_REGULATOR_LDO_VOLTAGE_STEP_NUM,
+<<<<<<< HEAD
 		.linear_ranges	= rt5033_ldo_ranges,
 		.n_linear_ranges = ARRAY_SIZE(rt5033_ldo_ranges),
+=======
+		.min_uV		= RT5033_REGULATOR_LDO_VOLTAGE_MIN,
+		.uV_step	= RT5033_REGULATOR_LDO_VOLTAGE_STEP,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.enable_reg	= RT5033_REG_CTRL,
 		.enable_mask	= RT5033_CTRL_EN_LDO_MASK,
 		.vsel_reg	= RT5033_REG_LDO_CTRL,

@@ -475,6 +475,7 @@ static struct configfs_attribute *pci_epf_attrs[] = {
 	NULL,
 };
 
+<<<<<<< HEAD
 static int pci_epf_vepf_link(struct config_item *epf_pf_item,
 			     struct config_item *epf_vf_item)
 {
@@ -497,6 +498,8 @@ static void pci_epf_vepf_unlink(struct config_item *epf_pf_item,
 	pci_epf_remove_vepf(epf_pf, epf_vf);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void pci_epf_release(struct config_item *item)
 {
 	struct pci_epf_group *epf_group = to_pci_epf_group(item);
@@ -509,8 +512,11 @@ static void pci_epf_release(struct config_item *item)
 }
 
 static struct configfs_item_operations pci_epf_ops = {
+<<<<<<< HEAD
 	.allow_link		= pci_epf_vepf_link,
 	.drop_link		= pci_epf_vepf_unlink,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.release		= pci_epf_release,
 };
 

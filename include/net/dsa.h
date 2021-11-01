@@ -79,13 +79,29 @@ enum dsa_tag_protocol {
 	DSA_TAG_PROTO_SJA1110		= DSA_TAG_PROTO_SJA1110_VALUE,
 };
 
+<<<<<<< HEAD
+=======
+struct packet_type;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct dsa_switch;
 
 struct dsa_device_ops {
 	struct sk_buff *(*xmit)(struct sk_buff *skb, struct net_device *dev);
+<<<<<<< HEAD
 	struct sk_buff *(*rcv)(struct sk_buff *skb, struct net_device *dev);
 	void (*flow_dissect)(const struct sk_buff *skb, __be16 *proto,
 			     int *offset);
+=======
+	struct sk_buff *(*rcv)(struct sk_buff *skb, struct net_device *dev,
+			       struct packet_type *pt);
+	void (*flow_dissect)(const struct sk_buff *skb, __be16 *proto,
+			     int *offset);
+	/* Used to determine which traffic should match the DSA filter in
+	 * eth_type_trans, and which, if any, should bypass it and be processed
+	 * as regular on the master net device.
+	 */
+	bool (*filter)(const struct sk_buff *skb, struct net_device *dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int needed_headroom;
 	unsigned int needed_tailroom;
 	const char *name;
@@ -104,8 +120,13 @@ struct dsa_device_ops {
  * function pointers.
  */
 struct dsa_netdevice_ops {
+<<<<<<< HEAD
 	int (*ndo_eth_ioctl)(struct net_device *dev, struct ifreq *ifr,
 			     int cmd);
+=======
+	int (*ndo_do_ioctl)(struct net_device *dev, struct ifreq *ifr,
+			    int cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define DSA_TAG_DRIVER_ALIAS "dsa_tag-"
@@ -152,9 +173,12 @@ struct dsa_switch_tree {
 	 */
 	struct net_device **lags;
 	unsigned int lags_len;
+<<<<<<< HEAD
 
 	/* Track the largest switch index within a tree */
 	unsigned int last_switch;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define dsa_lags_foreach_id(_id, _dst)				\
@@ -234,7 +258,13 @@ struct dsa_port {
 
 	/* Copies for faster access in master receive hot path */
 	struct dsa_switch_tree *dst;
+<<<<<<< HEAD
 	struct sk_buff *(*rcv)(struct sk_buff *skb, struct net_device *dev);
+=======
+	struct sk_buff *(*rcv)(struct sk_buff *skb, struct net_device *dev,
+			       struct packet_type *pt);
+	bool (*filter)(const struct sk_buff *skb, struct net_device *dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	enum {
 		DSA_PORT_TYPE_UNUSED = 0,
@@ -251,11 +281,16 @@ struct dsa_port {
 	struct device_node	*dn;
 	unsigned int		ageing_time;
 	bool			vlan_filtering;
+<<<<<<< HEAD
 	/* Managed by DSA on user ports and by drivers on CPU and DSA ports */
 	bool			learning;
 	u8			stp_state;
 	struct net_device	*bridge_dev;
 	int			bridge_num;
+=======
+	u8			stp_state;
+	struct net_device	*bridge_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct devlink_port	devlink_port;
 	bool			devlink_port_setup;
 	struct phylink		*pl;
@@ -349,9 +384,12 @@ struct dsa_switch {
 	unsigned int ageing_time_min;
 	unsigned int ageing_time_max;
 
+<<<<<<< HEAD
 	/* Storage for drivers using tag_8021q */
 	struct dsa_8021q_context *tag_8021q_ctx;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* devlink used to represent this switch device */
 	struct devlink		*devlink;
 
@@ -363,9 +401,12 @@ struct dsa_switch {
 	 */
 	bool			vlan_filtering_is_global;
 
+<<<<<<< HEAD
 	/* Keep VLAN filtering enabled on ports not offloading any upper. */
 	bool			needs_standalone_vlan_filtering;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Pass .port_vlan_add and .port_vlan_del to drivers even for bridges
 	 * that have vlan_filtering=0. All drivers should ideally set this (and
 	 * then the option would get removed), but it is unknown whether this
@@ -410,6 +451,7 @@ struct dsa_switch {
 	 */
 	unsigned int		num_lag_ids;
 
+<<<<<<< HEAD
 	/* Drivers that support bridge forwarding offload should set this to
 	 * the maximum number of bridges spanning the same switch tree (or all
 	 * trees, in the case of cross-tree bridging support) that can be
@@ -417,6 +459,8 @@ struct dsa_switch {
 	 */
 	unsigned int		num_fwd_offloading_bridges;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	size_t num_ports;
 };
 
@@ -447,11 +491,14 @@ static inline bool dsa_port_is_user(struct dsa_port *dp)
 	return dp->type == DSA_PORT_TYPE_USER;
 }
 
+<<<<<<< HEAD
 static inline bool dsa_port_is_unused(struct dsa_port *dp)
 {
 	return dp->type == DSA_PORT_TYPE_UNUSED;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool dsa_is_unused_port(struct dsa_switch *ds, int p)
 {
 	return dsa_to_port(ds, p)->type == DSA_PORT_TYPE_UNUSED;
@@ -585,6 +632,7 @@ struct dsa_switch_ops {
 	int	(*change_tag_protocol)(struct dsa_switch *ds, int port,
 				       enum dsa_tag_protocol proto);
 
+<<<<<<< HEAD
 	/* Optional switch-wide initialization and destruction methods */
 	int	(*setup)(struct dsa_switch *ds);
 	void	(*teardown)(struct dsa_switch *ds);
@@ -595,6 +643,10 @@ struct dsa_switch_ops {
 	int	(*port_setup)(struct dsa_switch *ds, int port);
 	void	(*port_teardown)(struct dsa_switch *ds, int port);
 
+=======
+	int	(*setup)(struct dsa_switch *ds);
+	void	(*teardown)(struct dsa_switch *ds);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32	(*get_phy_flags)(struct dsa_switch *ds, int port);
 
 	/*
@@ -713,6 +765,7 @@ struct dsa_switch_ops {
 				    struct net_device *bridge);
 	void	(*port_bridge_leave)(struct dsa_switch *ds, int port,
 				     struct net_device *bridge);
+<<<<<<< HEAD
 	/* Called right after .port_bridge_join() */
 	int	(*port_bridge_tx_fwd_offload)(struct dsa_switch *ds, int port,
 					      struct net_device *bridge,
@@ -721,6 +774,8 @@ struct dsa_switch_ops {
 	void	(*port_bridge_tx_fwd_unoffload)(struct dsa_switch *ds, int port,
 						struct net_device *bridge,
 						int bridge_num);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void	(*port_stp_state_set)(struct dsa_switch *ds, int port,
 				      u8 state);
 	void	(*port_fast_age)(struct dsa_switch *ds, int port);
@@ -730,6 +785,11 @@ struct dsa_switch_ops {
 	int	(*port_bridge_flags)(struct dsa_switch *ds, int port,
 				     struct switchdev_brport_flags flags,
 				     struct netlink_ext_ack *extack);
+<<<<<<< HEAD
+=======
+	int	(*port_set_mrouter)(struct dsa_switch *ds, int port, bool mrouter,
+				    struct netlink_ext_ack *extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * VLAN support
@@ -898,6 +958,7 @@ struct dsa_switch_ops {
 					  const struct switchdev_obj_ring_role_mrp *mrp);
 	int	(*port_mrp_del_ring_role)(struct dsa_switch *ds, int port,
 					  const struct switchdev_obj_ring_role_mrp *mrp);
+<<<<<<< HEAD
 
 	/*
 	 * tag_8021q operations
@@ -905,6 +966,8 @@ struct dsa_switch_ops {
 	int	(*tag_8021q_vlan_add)(struct dsa_switch *ds, int port, u16 vid,
 				      u16 flags);
 	int	(*tag_8021q_vlan_del)(struct dsa_switch *ds, int port, u16 vid);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define DSA_DEVLINK_PARAM_DRIVER(_id, _name, _type, _cmodes)		\
@@ -990,6 +1053,18 @@ static inline bool netdev_uses_dsa(const struct net_device *dev)
 	return false;
 }
 
+<<<<<<< HEAD
+=======
+static inline bool dsa_can_decode(const struct sk_buff *skb,
+				  struct net_device *dev)
+{
+#if IS_ENABLED(CONFIG_NET_DSA)
+	return !dev->dsa_ptr->filter || dev->dsa_ptr->filter(skb, dev);
+#endif
+	return false;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* All DSA tags that push the EtherType to the right (basically all except tail
  * tags, which don't break dissection) can be treated the same from the
  * perspective of the flow dissector.
@@ -1030,8 +1105,13 @@ static inline int __dsa_netdevice_ops_check(struct net_device *dev)
 	return 0;
 }
 
+<<<<<<< HEAD
 static inline int dsa_ndo_eth_ioctl(struct net_device *dev, struct ifreq *ifr,
 				    int cmd)
+=======
+static inline int dsa_ndo_do_ioctl(struct net_device *dev, struct ifreq *ifr,
+				   int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct dsa_netdevice_ops *ops;
 	int err;
@@ -1042,11 +1122,19 @@ static inline int dsa_ndo_eth_ioctl(struct net_device *dev, struct ifreq *ifr,
 
 	ops = dev->dsa_ptr->netdev_ops;
 
+<<<<<<< HEAD
 	return ops->ndo_eth_ioctl(dev, ifr, cmd);
 }
 #else
 static inline int dsa_ndo_eth_ioctl(struct net_device *dev, struct ifreq *ifr,
 				    int cmd)
+=======
+	return ops->ndo_do_ioctl(dev, ifr, cmd);
+}
+#else
+static inline int dsa_ndo_do_ioctl(struct net_device *dev, struct ifreq *ifr,
+				   int cmd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return -EOPNOTSUPP;
 }
@@ -1054,7 +1142,10 @@ static inline int dsa_ndo_eth_ioctl(struct net_device *dev, struct ifreq *ifr,
 
 void dsa_unregister_switch(struct dsa_switch *ds);
 int dsa_register_switch(struct dsa_switch *ds);
+<<<<<<< HEAD
 void dsa_switch_shutdown(struct dsa_switch *ds);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct dsa_switch *dsa_switch_find(int tree_index, int sw_index);
 #ifdef CONFIG_PM_SLEEP
 int dsa_switch_suspend(struct dsa_switch *ds);

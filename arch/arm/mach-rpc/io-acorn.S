@@ -25,4 +25,8 @@ ENTRY(insl)
 ENTRY(outsl)
 		adr	r0, .Liosl_warning
 		mov	r1, lr
+<<<<<<< HEAD
 		b	_printk
+=======
+		b	printk
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

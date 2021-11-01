@@ -49,7 +49,11 @@
 #define MLXCPLD_LPCI2C_NACK_IND		2
 
 #define MLXCPLD_I2C_FREQ_1000KHZ_SET	0x04
+<<<<<<< HEAD
 #define MLXCPLD_I2C_FREQ_400KHZ_SET	0x0c
+=======
+#define MLXCPLD_I2C_FREQ_400KHZ_SET	0x0f
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MLXCPLD_I2C_FREQ_100KHZ_SET	0x42
 
 enum mlxcpld_i2c_frequency {
@@ -495,7 +499,11 @@ mlxcpld_i2c_set_frequency(struct mlxcpld_i2c_priv *priv,
 		return err;
 
 	/* Set frequency only if it is not 100KHz, which is default. */
+<<<<<<< HEAD
 	switch ((regval & data->mask) >> data->bit) {
+=======
+	switch ((data->reg & data->mask) >> data->bit) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case MLXCPLD_I2C_FREQ_1000KHZ:
 		freq = MLXCPLD_I2C_FREQ_1000KHZ_SET;
 		break;

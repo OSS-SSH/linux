@@ -52,7 +52,11 @@
  * IN_USE_BY pattern as part of a collision control scheme (see adf_iov_putmsg).
  */
 
+<<<<<<< HEAD
 #define ADF_PFVF_COMPAT_THIS_VERSION		0x1	/* PF<->VF compat */
+=======
+#define ADF_PFVF_COMPATIBILITY_VERSION		0x1	/* PF<->VF compat */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* PF->VF messages */
 #define ADF_PF2VF_INT				BIT(0)

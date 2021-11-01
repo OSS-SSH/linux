@@ -684,6 +684,7 @@ int bpf_link_create(int prog_fd, int target_fd,
 	iter_info_len = OPTS_GET(opts, iter_info_len, 0);
 	target_btf_id = OPTS_GET(opts, target_btf_id, 0);
 
+<<<<<<< HEAD
 	/* validate we don't have unexpected combinations of non-zero fields */
 	if (iter_info_len || target_btf_id) {
 		if (iter_info_len && target_btf_id)
@@ -691,6 +692,10 @@ int bpf_link_create(int prog_fd, int target_fd,
 		if (!OPTS_ZEROED(opts, target_btf_id))
 			return libbpf_err(-EINVAL);
 	}
+=======
+	if (iter_info_len && target_btf_id)
+		return libbpf_err(-EINVAL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	memset(&attr, 0, sizeof(attr));
 	attr.link_create.prog_fd = prog_fd;
@@ -698,6 +703,7 @@ int bpf_link_create(int prog_fd, int target_fd,
 	attr.link_create.attach_type = attach_type;
 	attr.link_create.flags = OPTS_GET(opts, flags, 0);
 
+<<<<<<< HEAD
 	if (target_btf_id) {
 		attr.link_create.target_btf_id = target_btf_id;
 		goto proceed;
@@ -719,6 +725,16 @@ int bpf_link_create(int prog_fd, int target_fd,
 		break;
 	}
 proceed:
+=======
+	if (iter_info_len) {
+		attr.link_create.iter_info =
+			ptr_to_u64(OPTS_GET(opts, iter_info, (void *)0));
+		attr.link_create.iter_info_len = iter_info_len;
+	} else if (target_btf_id) {
+		attr.link_create.target_btf_id = target_btf_id;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fd = sys_bpf(BPF_LINK_CREATE, &attr, sizeof(attr));
 	return libbpf_err_errno(fd);
 }

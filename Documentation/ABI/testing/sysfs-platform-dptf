@@ -111,6 +111,7 @@ Contact:	linux-acpi@vger.kernel.org
 Description:
 		(RW) The PCH FIVR (Fully Integrated Voltage Regulator) switching frequency in MHz,
 		when FIVR clock is 38.4MHz.
+<<<<<<< HEAD
 
 What:		/sys/bus/platform/devices/INTC1045:00/pch_fivr_switch_frequency/fivr_switching_freq_mhz
 Date:		September, 2021
@@ -151,3 +152,5 @@ Description:
 		[10]	0: No white noise. 1: Add white noise
 			to spread waveform
 		[11]	When 1, future writes are ignored.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

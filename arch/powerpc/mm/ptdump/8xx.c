@@ -75,10 +75,15 @@ static const struct flag_info flag_array[] = {
 };
 
 struct pgtable_level pg_level[5] = {
+<<<<<<< HEAD
 	{ /* pgd */
 		.flag	= flag_array,
 		.num	= ARRAY_SIZE(flag_array),
 	}, { /* p4d */
+=======
+	{
+	}, { /* pgd */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.flag	= flag_array,
 		.num	= ARRAY_SIZE(flag_array),
 	}, { /* pud */

@@ -11,7 +11,11 @@
 
 #define LSR_THRE	0x20
 
+<<<<<<< HEAD
 static inline void putc(const char c)
+=======
+static void putc(const char c)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i;
 
@@ -24,7 +28,11 @@ static inline void putc(const char c)
 	*UART_THR = c;
 }
 
+<<<<<<< HEAD
 static inline void flush(void)
+=======
+static void flush(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 }
 

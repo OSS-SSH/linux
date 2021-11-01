@@ -16,7 +16,10 @@
 #include <linux/btrfs.h>
 #include <linux/uio.h>
 #include <linux/iversion.h>
+<<<<<<< HEAD
 #include <linux/fsverity.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "ctree.h"
 #include "disk-io.h"
 #include "transaction.h"
@@ -734,7 +737,12 @@ int btrfs_drop_extents(struct btrfs_trans_handle *trans,
 	if (args->start >= inode->disk_i_size && !args->replace_extent)
 		modify_tree = 0;
 
+<<<<<<< HEAD
 	update_refs = (root->root_key.objectid != BTRFS_TREE_LOG_OBJECTID);
+=======
+	update_refs = (test_bit(BTRFS_ROOT_SHAREABLE, &root->state) ||
+		       root == fs_info->tree_root);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	while (1) {
 		recow = 0;
 		ret = btrfs_lookup_file_extent(trans, root, path, ino,
@@ -1340,6 +1348,7 @@ static int prepare_uptodate_page(struct inode *inode,
 			unlock_page(page);
 			return -EIO;
 		}
+<<<<<<< HEAD
 
 		/*
 		 * Since btrfs_readpage() will unlock the page before it
@@ -1352,6 +1361,9 @@ static int prepare_uptodate_page(struct inode *inode,
 		 * to store extra bitmap using page->private.
 		 */
 		if (page->mapping != inode->i_mapping || !PagePrivate(page)) {
+=======
+		if (page->mapping != inode->i_mapping) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			unlock_page(page);
 			return -EAGAIN;
 		}
@@ -2703,6 +2715,7 @@ int btrfs_replace_file_extents(struct btrfs_inode *inode,
 						 drop_args.bytes_found);
 		if (ret != -ENOSPC) {
 			/*
+<<<<<<< HEAD
 			 * The only time we don't want to abort is if we are
 			 * attempting to clone a partial inline extent, in which
 			 * case we'll get EOPNOTSUPP.  However if we aren't
@@ -2713,6 +2726,16 @@ int btrfs_replace_file_extents(struct btrfs_inode *inode,
 			if (ret &&
 			    (ret != -EOPNOTSUPP ||
 			     (extent_info && extent_info->is_new_extent)))
+=======
+			 * When cloning we want to avoid transaction aborts when
+			 * nothing was done and we are attempting to clone parts
+			 * of inline extents, in such cases -EOPNOTSUPP is
+			 * returned by __btrfs_drop_extents() without having
+			 * changed anything in the file.
+			 */
+			if (extent_info && !extent_info->is_new_extent &&
+			    ret && ret != -EOPNOTSUPP)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				btrfs_abort_transaction(trans, ret);
 			break;
 		}
@@ -3617,6 +3640,7 @@ static loff_t btrfs_file_llseek(struct file *file, loff_t offset, int whence)
 
 static int btrfs_file_open(struct inode *inode, struct file *filp)
 {
+<<<<<<< HEAD
 	int ret;
 
 	filp->f_mode |= FMODE_NOWAIT | FMODE_BUF_RASYNC;
@@ -3624,6 +3648,9 @@ static int btrfs_file_open(struct inode *inode, struct file *filp)
 	ret = fsverity_file_open(inode, filp);
 	if (ret)
 		return ret;
+=======
+	filp->f_mode |= FMODE_NOWAIT | FMODE_BUF_RASYNC;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return generic_file_open(inode, filp);
 }
 
@@ -3652,9 +3679,12 @@ static ssize_t btrfs_direct_read(struct kiocb *iocb, struct iov_iter *to)
 	struct inode *inode = file_inode(iocb->ki_filp);
 	ssize_t ret;
 
+<<<<<<< HEAD
 	if (fsverity_active(inode))
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (check_direct_read(btrfs_sb(inode->i_sb), to, iocb->ki_pos))
 		return 0;
 

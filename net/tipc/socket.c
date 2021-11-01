@@ -158,7 +158,10 @@ static void tipc_sk_remove(struct tipc_sock *tsk);
 static int __tipc_sendstream(struct socket *sock, struct msghdr *m, size_t dsz);
 static int __tipc_sendmsg(struct socket *sock, struct msghdr *m, size_t dsz);
 static void tipc_sk_push_backlog(struct tipc_sock *tsk, bool nagle_ack);
+<<<<<<< HEAD
 static int tipc_wait_for_connect(struct socket *sock, long *timeo_p);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct proto_ops packet_ops;
 static const struct proto_ops stream_ops;
@@ -1426,7 +1429,11 @@ static int __tipc_sendmsg(struct socket *sock, struct msghdr *m, size_t dlen)
 	if (ua) {
 		if (!tipc_uaddr_valid(ua, m->msg_namelen))
 			return -EINVAL;
+<<<<<<< HEAD
 		atype = ua->addrtype;
+=======
+		 atype = ua->addrtype;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* If socket belongs to a communication group follow other paths */
@@ -1516,6 +1523,7 @@ static int __tipc_sendmsg(struct socket *sock, struct msghdr *m, size_t dlen)
 		rc = 0;
 	}
 
+<<<<<<< HEAD
 	if (unlikely(syn && !rc)) {
 		tipc_set_sk_state(sk, TIPC_CONNECTING);
 		if (dlen && timeout) {
@@ -1523,6 +1531,10 @@ static int __tipc_sendmsg(struct socket *sock, struct msghdr *m, size_t dlen)
 			tipc_wait_for_connect(sock, &timeout);
 		}
 	}
+=======
+	if (unlikely(syn && !rc))
+		tipc_set_sk_state(sk, TIPC_CONNECTING);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return rc ? rc : dlen;
 }
@@ -1570,7 +1582,11 @@ static int __tipc_sendstream(struct socket *sock, struct msghdr *m, size_t dlen)
 		return -EMSGSIZE;
 
 	/* Handle implicit connection setup */
+<<<<<<< HEAD
 	if (unlikely(dest && sk->sk_state == TIPC_OPEN)) {
+=======
+	if (unlikely(dest)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rc = __tipc_sendmsg(sock, m, dlen);
 		if (dlen && dlen == rc) {
 			tsk->peer_caps = tipc_node_get_capabilities(net, dnode);
@@ -1886,7 +1902,10 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
 	bool connected = !tipc_sk_type_connectionless(sk);
 	struct tipc_sock *tsk = tipc_sk(sk);
 	int rc, err, hlen, dlen, copy;
+<<<<<<< HEAD
 	struct tipc_skb_cb *skb_cb;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct sk_buff_head xmitq;
 	struct tipc_msg *hdr;
 	struct sk_buff *skb;
@@ -1910,7 +1929,10 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
 		if (unlikely(rc))
 			goto exit;
 		skb = skb_peek(&sk->sk_receive_queue);
+<<<<<<< HEAD
 		skb_cb = TIPC_SKB_CB(skb);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hdr = buf_msg(skb);
 		dlen = msg_data_sz(hdr);
 		hlen = msg_hdr_sz(hdr);
@@ -1930,6 +1952,7 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
 
 	/* Capture data if non-error msg, otherwise just set return value */
 	if (likely(!err)) {
+<<<<<<< HEAD
 		int offset = skb_cb->bytes_read;
 
 		copy = min_t(int, dlen - offset, buflen);
@@ -1957,6 +1980,20 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
 			goto exit;
 		}
 	}
+=======
+		copy = min_t(int, dlen, buflen);
+		if (unlikely(copy != dlen))
+			m->msg_flags |= MSG_TRUNC;
+		rc = skb_copy_datagram_msg(skb, hlen, m, copy);
+	} else {
+		copy = 0;
+		rc = 0;
+		if (err != TIPC_CONN_SHUTDOWN && connected && !m->msg_control)
+			rc = -ECONNRESET;
+	}
+	if (unlikely(rc))
+		goto exit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Mark message as group event if applicable */
 	if (unlikely(grp_evt)) {
@@ -1979,9 +2016,12 @@ static int tipc_recvmsg(struct socket *sock, struct msghdr *m,
 		tipc_node_distr_xmit(sock_net(sk), &xmitq);
 	}
 
+<<<<<<< HEAD
 	if (skb_cb->bytes_read)
 		goto exit;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tsk_advance_rx_queue(sk);
 
 	if (likely(!connected))
@@ -2423,7 +2463,11 @@ static int tipc_sk_backlog_rcv(struct sock *sk, struct sk_buff *skb)
 static void tipc_sk_enqueue(struct sk_buff_head *inputq, struct sock *sk,
 			    u32 dport, struct sk_buff_head *xmitq)
 {
+<<<<<<< HEAD
 	unsigned long time_limit = jiffies + usecs_to_jiffies(20000);
+=======
+	unsigned long time_limit = jiffies + 2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct sk_buff *skb;
 	unsigned int lim;
 	atomic_t *dcnt;
@@ -2672,7 +2716,11 @@ static int tipc_listen(struct socket *sock, int len)
 static int tipc_wait_for_accept(struct socket *sock, long timeo)
 {
 	struct sock *sk = sock->sk;
+<<<<<<< HEAD
 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+=======
+	DEFINE_WAIT(wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	/* True wake-one mechanism for incoming connections: only
@@ -2681,12 +2729,21 @@ static int tipc_wait_for_accept(struct socket *sock, long timeo)
 	 * anymore, the common case will execute the loop only once.
 	*/
 	for (;;) {
+<<<<<<< HEAD
 		if (timeo && skb_queue_empty(&sk->sk_receive_queue)) {
 			add_wait_queue(sk_sleep(sk), &wait);
 			release_sock(sk);
 			timeo = wait_woken(&wait, TASK_INTERRUPTIBLE, timeo);
 			lock_sock(sk);
 			remove_wait_queue(sk_sleep(sk), &wait);
+=======
+		prepare_to_wait_exclusive(sk_sleep(sk), &wait,
+					  TASK_INTERRUPTIBLE);
+		if (timeo && skb_queue_empty(&sk->sk_receive_queue)) {
+			release_sock(sk);
+			timeo = schedule_timeout(timeo);
+			lock_sock(sk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		err = 0;
 		if (!skb_queue_empty(&sk->sk_receive_queue))
@@ -2698,6 +2755,10 @@ static int tipc_wait_for_accept(struct socket *sock, long timeo)
 		if (signal_pending(current))
 			break;
 	}
+<<<<<<< HEAD
+=======
+	finish_wait(sk_sleep(sk), &wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -2714,10 +2775,16 @@ static int tipc_accept(struct socket *sock, struct socket *new_sock, int flags,
 		       bool kern)
 {
 	struct sock *new_sk, *sk = sock->sk;
+<<<<<<< HEAD
 	struct tipc_sock *new_tsock;
 	struct msghdr m = {NULL,};
 	struct tipc_msg *msg;
 	struct sk_buff *buf;
+=======
+	struct sk_buff *buf;
+	struct tipc_sock *new_tsock;
+	struct tipc_msg *msg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	long timeo;
 	int res;
 
@@ -2763,17 +2830,31 @@ static int tipc_accept(struct socket *sock, struct socket *new_sock, int flags,
 	}
 
 	/*
+<<<<<<< HEAD
 	 * Respond to 'SYN-' by discarding it & returning 'ACK'.
 	 * Respond to 'SYN+' by queuing it on new socket & returning 'ACK'.
 	 */
 	if (!msg_data_sz(msg)) {
 		tsk_advance_rx_queue(sk);
+=======
+	 * Respond to 'SYN-' by discarding it & returning 'ACK'-.
+	 * Respond to 'SYN+' by queuing it on new socket.
+	 */
+	if (!msg_data_sz(msg)) {
+		struct msghdr m = {NULL,};
+
+		tsk_advance_rx_queue(sk);
+		__tipc_sendstream(new_sock, &m, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		__skb_dequeue(&sk->sk_receive_queue);
 		__skb_queue_head(&new_sk->sk_receive_queue, buf);
 		skb_set_owner_r(buf, new_sk);
 	}
+<<<<<<< HEAD
 	__tipc_sendstream(new_sock, &m, 0);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	release_sock(new_sk);
 exit:
 	release_sock(sk);

@@ -173,6 +173,7 @@ struct genericFormat *udf_get_extendedattr(struct inode *inode, uint32_t type,
 		else
 			offset = le32_to_cpu(eahd->appAttrLocation);
 
+<<<<<<< HEAD
 		while (offset + sizeof(*gaf) < iinfo->i_lenEAttr) {
 			uint32_t attrLength;
 
@@ -184,11 +185,19 @@ struct genericFormat *udf_get_extendedattr(struct inode *inode, uint32_t type,
 			    (attrLength > (iinfo->i_lenEAttr - offset)))
 				break;
 
+=======
+		while (offset < iinfo->i_lenEAttr) {
+			gaf = (struct genericFormat *)&ea[offset];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (le32_to_cpu(gaf->attrType) == type &&
 					gaf->attrSubtype == subtype)
 				return gaf;
 			else
+<<<<<<< HEAD
 				offset += attrLength;
+=======
+				offset += le32_to_cpu(gaf->attrLength);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 

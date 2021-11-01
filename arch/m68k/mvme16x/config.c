@@ -436,6 +436,10 @@ int bcd2int (unsigned char b)
 
 int mvme16x_hwclk(int op, struct rtc_time *t)
 {
+<<<<<<< HEAD
+=======
+#warning check me!
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!op) {
 		rtc->ctrl = RTC_READ;
 		t->tm_year = bcd2int (rtc->bcd_year);
@@ -447,9 +451,12 @@ int mvme16x_hwclk(int op, struct rtc_time *t)
 		rtc->ctrl = 0;
 		if (t->tm_year < 70)
 			t->tm_year += 100;
+<<<<<<< HEAD
 	} else {
 		/* FIXME Setting the time is not yet supported */
 		return -EOPNOTSUPP;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return 0;
 }

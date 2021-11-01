@@ -104,7 +104,11 @@ static char version[] __initdata =
  * them to system IRQ numbers. This mapping is card specific and is set to
  * the configuration of the Cirrus Eval board for this chip.
  */
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_CS89x0_ISA)
+=======
+#ifndef CONFIG_CS89x0_PLATFORM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static unsigned int netcard_portlist[] __used __initdata = {
 	0x300, 0x320, 0x340, 0x360, 0x200, 0x220, 0x240,
 	0x260, 0x280, 0x2a0, 0x2c0, 0x2e0, 0
@@ -292,7 +296,11 @@ write_irq(struct net_device *dev, int chip_type, int irq)
 	int i;
 
 	if (chip_type == CS8900) {
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_CS89x0_ISA)
+=======
+#ifndef CONFIG_CS89x0_PLATFORM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Search the mapping table for the corresponding IRQ pin. */
 		for (i = 0; i != ARRAY_SIZE(cs8900_irq_map); i++)
 			if (cs8900_irq_map[i] == irq)
@@ -859,7 +867,11 @@ net_open(struct net_device *dev)
 			goto bad_out;
 		}
 	} else {
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_CS89x0_ISA)
+=======
+#if !defined(CONFIG_CS89x0_PLATFORM)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (((1 << dev->irq) & lp->irq_map) == 0) {
 			pr_err("%s: IRQ %d is not in our map of allowable IRQs, which is %x\n",
 			       dev->name, dev->irq, lp->irq_map);
@@ -1523,7 +1535,11 @@ cs89x0_probe1(struct net_device *dev, void __iomem *ioaddr, int modular)
 			dev->irq = i;
 	} else {
 		i = lp->isa_config & INT_NO_MASK;
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_CS89x0_ISA)
+=======
+#ifndef CONFIG_CS89x0_PLATFORM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (lp->chip_type == CS8900) {
 			/* Translate the IRQ using the IRQ mapping table. */
 			if (i >= ARRAY_SIZE(cs8900_irq_map))
@@ -1576,7 +1592,11 @@ out1:
 	return retval;
 }
 
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_CS89x0_ISA)
+=======
+#ifndef CONFIG_CS89x0_PLATFORM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * This function converts the I/O port address used by the cs89x0_probe() and
  * init_module() functions to the I/O memory address used by the
@@ -1682,7 +1702,15 @@ out:
 	pr_warn("no cs8900 or cs8920 detected.  Be sure to disable PnP with SETUP\n");
 	return ERR_PTR(err);
 }
+<<<<<<< HEAD
 #else
+=======
+#endif
+#endif
+
+#if defined(MODULE) && !defined(CONFIG_CS89x0_PLATFORM)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct net_device *dev_cs89x0;
 
 /* Support the 'debug' module parm even if we're compiled for non-debug to
@@ -1753,9 +1781,15 @@ MODULE_LICENSE("GPL");
  * (hw or software util)
  */
 
+<<<<<<< HEAD
 static int __init cs89x0_isa_init_module(void)
 {
 	struct net_device *dev;
+=======
+int __init init_module(void)
+{
+	struct net_device *dev = alloc_etherdev(sizeof(struct net_local));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct net_local *lp;
 	int ret = 0;
 
@@ -1764,7 +1798,10 @@ static int __init cs89x0_isa_init_module(void)
 #else
 	debug = 0;
 #endif
+<<<<<<< HEAD
 	dev = alloc_etherdev(sizeof(struct net_local));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!dev)
 		return -ENOMEM;
 
@@ -1823,9 +1860,15 @@ out:
 	free_netdev(dev);
 	return ret;
 }
+<<<<<<< HEAD
 module_init(cs89x0_isa_init_module);
 
 static void __exit cs89x0_isa_cleanup_module(void)
+=======
+
+void __exit
+cleanup_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_local *lp = netdev_priv(dev_cs89x0);
 
@@ -1835,11 +1878,17 @@ static void __exit cs89x0_isa_cleanup_module(void)
 	release_region(dev_cs89x0->base_addr, NETCARD_IO_EXTENT);
 	free_netdev(dev_cs89x0);
 }
+<<<<<<< HEAD
 module_exit(cs89x0_isa_cleanup_module);
 #endif /* MODULE */
 #endif /* CONFIG_CS89x0_ISA */
 
 #if IS_ENABLED(CONFIG_CS89x0_PLATFORM)
+=======
+#endif /* MODULE && !CONFIG_CS89x0_PLATFORM */
+
+#ifdef CONFIG_CS89x0_PLATFORM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __init cs89x0_platform_probe(struct platform_device *pdev)
 {
 	struct net_device *dev = alloc_etherdev(sizeof(struct net_local));

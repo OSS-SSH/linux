@@ -12,14 +12,20 @@
  *    Jaswinder Singh (jaswinder.singh@linaro.org)
  */
 
+<<<<<<< HEAD
 #include <linux/kernel.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <sound/core.h>
 #include <sound/pcm.h>
 #include <sound/pcm_params.h>
 #include <sound/control.h>
+<<<<<<< HEAD
 #include <sound/tlv.h>
 #include <linux/usb/audio.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "u_audio.h"
 
@@ -27,12 +33,15 @@
 #define PRD_SIZE_MAX	PAGE_SIZE
 #define MIN_PERIODS	4
 
+<<<<<<< HEAD
 enum {
 	UAC_FBACK_CTRL,
 	UAC_MUTE_CTRL,
 	UAC_VOLUME_CTRL,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Runtime data params for one stream */
 struct uac_rtd_params {
 	struct snd_uac_chip *uac; /* parent chip */
@@ -52,6 +61,7 @@ struct uac_rtd_params {
 
 	struct usb_request *req_fback; /* Feedback endpoint request */
 	bool fb_ep_enabled; /* if the ep is enabled */
+<<<<<<< HEAD
 
   /* Volume/Mute controls and their state */
   int fu_id; /* Feature Unit ID */
@@ -63,6 +73,8 @@ struct uac_rtd_params {
 
   spinlock_t lock; /* lock for control transfers */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct snd_uac_chip {
@@ -96,13 +108,19 @@ static const struct snd_pcm_hardware uac_pcm_hardware = {
 };
 
 static void u_audio_set_fback_frequency(enum usb_device_speed speed,
+<<<<<<< HEAD
 					struct usb_ep *out_ep,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					unsigned long long freq,
 					unsigned int pitch,
 					void *buf)
 {
 	u32 ff = 0;
+<<<<<<< HEAD
 	const struct usb_endpoint_descriptor *ep_desc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Because the pitch base is 1000000, the final divider here
@@ -130,6 +148,7 @@ static void u_audio_set_fback_frequency(enum usb_device_speed speed,
 		 * byte fromat (that is Q16.16)
 		 *
 		 * ff = (freq << 16) / 8000
+<<<<<<< HEAD
 		 *
 		 * Win10 and OSX UAC2 drivers require number of samples per packet
 		 * in order to honor the feedback value.
@@ -137,6 +156,10 @@ static void u_audio_set_fback_frequency(enum usb_device_speed speed,
 		 */
 		ep_desc = out_ep->desc;
 		freq <<= 4 + (ep_desc->bInterval - 1);
+=======
+		 */
+		freq <<= 4;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ff = DIV_ROUND_CLOSEST_ULL((freq * pitch), 1953125);
@@ -257,6 +280,7 @@ static void u_audio_iso_fback_complete(struct usb_ep *ep,
 	int status = req->status;
 
 	/* i/f shutting down */
+<<<<<<< HEAD
 	if (!prm->fb_ep_enabled) {
 		kfree(req->buf);
 		usb_ep_free_request(ep, req);
@@ -264,6 +288,9 @@ static void u_audio_iso_fback_complete(struct usb_ep *ep,
 	}
 
 	if (req->status == -ESHUTDOWN)
+=======
+	if (!prm->fb_ep_enabled || req->status == -ESHUTDOWN)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	/*
@@ -274,7 +301,11 @@ static void u_audio_iso_fback_complete(struct usb_ep *ep,
 		pr_debug("%s: iso_complete status(%d) %d/%d\n",
 			__func__, status, req->actual, req->length);
 
+<<<<<<< HEAD
 	u_audio_set_fback_frequency(audio_dev->gadget->speed, audio_dev->out_ep,
+=======
+	u_audio_set_fback_frequency(audio_dev->gadget->speed,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				    params->c_srate, prm->pitch,
 				    req->buf);
 
@@ -421,6 +452,11 @@ static inline void free_ep(struct uac_rtd_params *prm, struct usb_ep *ep)
 	if (!prm->ep_enabled)
 		return;
 
+<<<<<<< HEAD
+=======
+	prm->ep_enabled = false;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	audio_dev = uac->audio_dev;
 	params = &audio_dev->params;
 
@@ -438,8 +474,11 @@ static inline void free_ep(struct uac_rtd_params *prm, struct usb_ep *ep)
 		}
 	}
 
+<<<<<<< HEAD
 	prm->ep_enabled = false;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (usb_ep_disable(ep))
 		dev_err(uac->card->dev, "%s:%d Error!\n", __func__, __LINE__);
 }
@@ -451,6 +490,7 @@ static inline void free_ep_fback(struct uac_rtd_params *prm, struct usb_ep *ep)
 	if (!prm->fb_ep_enabled)
 		return;
 
+<<<<<<< HEAD
 	if (prm->req_fback) {
 		if (usb_ep_dequeue(ep, prm->req_fback)) {
 			kfree(prm->req_fback->buf);
@@ -461,6 +501,17 @@ static inline void free_ep_fback(struct uac_rtd_params *prm, struct usb_ep *ep)
 
 	prm->fb_ep_enabled = false;
 
+=======
+	prm->fb_ep_enabled = false;
+
+	if (prm->req_fback) {
+		usb_ep_dequeue(ep, prm->req_fback);
+		kfree(prm->req_fback->buf);
+		usb_ep_free_request(ep, prm->req_fback);
+		prm->req_fback = NULL;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (usb_ep_disable(ep))
 		dev_err(uac->card->dev, "%s:%d Error!\n", __func__, __LINE__);
 }
@@ -533,7 +584,11 @@ int u_audio_start_capture(struct g_audio *audio_dev)
 	 * be meauserd at start of playback
 	 */
 	prm->pitch = 1000000;
+<<<<<<< HEAD
 	u_audio_set_fback_frequency(audio_dev->gadget->speed, ep,
+=======
+	u_audio_set_fback_frequency(audio_dev->gadget->speed,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				    params->c_srate, prm->pitch,
 				    req_fback->buf);
 
@@ -631,6 +686,7 @@ void u_audio_stop_playback(struct g_audio *audio_dev)
 }
 EXPORT_SYMBOL_GPL(u_audio_stop_playback);
 
+<<<<<<< HEAD
 int u_audio_get_volume(struct g_audio *audio_dev, int playback, s16 *val)
 {
 	struct snd_uac_chip *uac = audio_dev->uac;
@@ -728,6 +784,8 @@ int u_audio_set_mute(struct g_audio *audio_dev, int playback, int val)
 EXPORT_SYMBOL_GPL(u_audio_set_mute);
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int u_audio_pitch_info(struct snd_kcontrol *kcontrol,
 				   struct snd_ctl_elem_info *uinfo)
 {
@@ -787,6 +845,7 @@ static int u_audio_pitch_put(struct snd_kcontrol *kcontrol,
 	return change;
 }
 
+<<<<<<< HEAD
 static int u_audio_mute_info(struct snd_kcontrol *kcontrol,
 				   struct snd_ctl_elem_info *uinfo)
 {
@@ -939,6 +998,16 @@ static struct snd_kcontrol_new u_audio_controls[]  = {
 		.get =		u_audio_volume_get,
 		.put =		u_audio_volume_put,
 	},
+=======
+static const struct snd_kcontrol_new u_audio_controls[]  = {
+{
+	.iface =        SNDRV_CTL_ELEM_IFACE_PCM,
+	.name =         "Capture Pitch 1000000",
+	.info =         u_audio_pitch_info,
+	.get =          u_audio_pitch_get,
+	.put =          u_audio_pitch_put,
+},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
@@ -950,7 +1019,11 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	struct snd_kcontrol *kctl;
 	struct uac_params *params;
 	int p_chmask, c_chmask;
+<<<<<<< HEAD
 	int i, err;
+=======
+	int err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!g_audio)
 		return -EINVAL;
@@ -968,8 +1041,12 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	if (c_chmask) {
 		struct uac_rtd_params *prm = &uac->c_prm;
 
+<<<<<<< HEAD
     spin_lock_init(&prm->lock);
     uac->c_prm.uac = uac;
+=======
+		uac->c_prm.uac = uac;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		prm->max_psize = g_audio->out_ep_maxpsize;
 
 		prm->reqs = kcalloc(params->req_number,
@@ -992,7 +1069,10 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	if (p_chmask) {
 		struct uac_rtd_params *prm = &uac->p_prm;
 
+<<<<<<< HEAD
 		spin_lock_init(&prm->lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uac->p_prm.uac = uac;
 		prm->max_psize = g_audio->in_ep_maxpsize;
 
@@ -1037,6 +1117,7 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_PLAYBACK, &uac_pcm_ops);
 	snd_pcm_set_ops(pcm, SNDRV_PCM_STREAM_CAPTURE, &uac_pcm_ops);
 
+<<<<<<< HEAD
 	/*
 	 * Create mixer and controls
 	 * Create only if it's required on USB side
@@ -1049,6 +1130,12 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 	if (c_chmask && g_audio->in_ep_fback) {
 		kctl = snd_ctl_new1(&u_audio_controls[UAC_FBACK_CTRL],
 				    &uac->c_prm);
+=======
+	if (c_chmask && g_audio->in_ep_fback) {
+		strscpy(card->mixername, card_name, sizeof(card->driver));
+
+		kctl = snd_ctl_new1(&u_audio_controls[0], &uac->c_prm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!kctl) {
 			err = -ENOMEM;
 			goto snd_fail;
@@ -1062,6 +1149,7 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 			goto snd_fail;
 	}
 
+<<<<<<< HEAD
 	for (i = 0; i <= SNDRV_PCM_STREAM_LAST; i++) {
 		struct uac_rtd_params *prm;
 		struct uac_fu_params *fu;
@@ -1138,6 +1226,8 @@ int g_audio_setup(struct g_audio *g_audio, const char *pcm_name,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	strscpy(card->driver, card_name, sizeof(card->driver));
 	strscpy(card->shortname, card_name, sizeof(card->shortname));
 	sprintf(card->longname, "%s %i", card_name, card->dev->id);

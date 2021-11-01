@@ -426,7 +426,11 @@ static int do_ieee1394_entry(const char *filename,
 	return 1;
 }
 
+<<<<<<< HEAD
 /* Looks like: pci:vNdNsvNsdNbcNscNiN or <prefix>_pci:vNdNsvNsdNbcNscNiN. */
+=======
+/* Looks like: pci:vNdNsvNsdNbcNscNiN. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int do_pci_entry(const char *filename,
 			void *symval, char *alias)
 {
@@ -440,6 +444,7 @@ static int do_pci_entry(const char *filename,
 	DEF_FIELD(symval, pci_device_id, subdevice);
 	DEF_FIELD(symval, pci_device_id, class);
 	DEF_FIELD(symval, pci_device_id, class_mask);
+<<<<<<< HEAD
 	DEF_FIELD(symval, pci_device_id, override_only);
 
 	switch (override_only) {
@@ -455,6 +460,10 @@ static int do_pci_entry(const char *filename,
 		return 0;
 	}
 
+=======
+
+	strcpy(alias, "pci:");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ADD(alias, "v", vendor != PCI_ANY_ID, vendor);
 	ADD(alias, "d", device != PCI_ANY_ID, device);
 	ADD(alias, "sv", subvendor != PCI_ANY_ID, subvendor);

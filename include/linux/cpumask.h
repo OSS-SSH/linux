@@ -983,6 +983,7 @@ cpumap_print_to_pagebuf(bool list, char *buf, const struct cpumask *mask)
 				      nr_cpu_ids);
 }
 
+<<<<<<< HEAD
 /**
  * cpumap_print_bitmask_to_buf  - copies the cpumask into the buffer as
  *	hex values of cpumask
@@ -1022,6 +1023,8 @@ cpumap_print_list_to_buf(char *buf, const struct cpumask *mask,
 				   nr_cpu_ids, off, count) - 1;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if NR_CPUS <= BITS_PER_LONG
 #define CPU_MASK_ALL							\
 (cpumask_t) { {								\

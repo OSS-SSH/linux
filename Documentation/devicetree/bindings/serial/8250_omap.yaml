@@ -79,7 +79,10 @@ properties:
   power-domains: true
   clock-frequency: true
   current-speed: true
+<<<<<<< HEAD
   overrun-throttle-ms: true
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 required:
   - compatible
@@ -91,11 +94,18 @@ additionalProperties: false
 if:
   properties:
     compatible:
+<<<<<<< HEAD
       contains:
         enum:
           - ti,omap2-uart
           - ti,omap3-uart
           - ti,omap4-uart
+=======
+      oneOf:
+        - const: ti,omap2-uart
+        - const: ti,omap3-uart
+        - const: ti,omap4-uart
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 then:
   properties:

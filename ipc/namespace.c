@@ -42,7 +42,11 @@ static struct ipc_namespace *create_ipc_ns(struct user_namespace *user_ns,
 		goto fail;
 
 	err = -ENOMEM;
+<<<<<<< HEAD
 	ns = kzalloc(sizeof(struct ipc_namespace), GFP_KERNEL_ACCOUNT);
+=======
+	ns = kzalloc(sizeof(struct ipc_namespace), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ns == NULL)
 		goto fail_dec;
 

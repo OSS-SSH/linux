@@ -16,8 +16,11 @@
 static int bmc150_accel_probe(struct spi_device *spi)
 {
 	struct regmap *regmap;
+<<<<<<< HEAD
 	const char *name = NULL;
 	enum bmc150_type type = BOSCH_UNKNOWN;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const struct spi_device_id *id = spi_get_device_id(spi);
 
 	regmap = devm_regmap_init_spi(spi, &bmc150_regmap_conf);
@@ -26,12 +29,16 @@ static int bmc150_accel_probe(struct spi_device *spi)
 		return PTR_ERR(regmap);
 	}
 
+<<<<<<< HEAD
 	if (id) {
 		name = id->name;
 		type = id->driver_data;
 	}
 
 	return bmc150_accel_core_probe(&spi->dev, regmap, spi->irq, type, name,
+=======
+	return bmc150_accel_core_probe(&spi->dev, regmap, spi->irq, id->name,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				       true);
 }
 
@@ -61,7 +68,10 @@ static const struct spi_device_id bmc150_accel_id[] = {
 	{"bma255"},
 	{"bma280"},
 	{"bmc150_accel"},
+<<<<<<< HEAD
 	{"bmc156_accel", BOSCH_BMC156},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"bmi055_accel"},
 	{}
 };

@@ -368,7 +368,11 @@ static void drm_gem_shmem_vunmap_locked(struct drm_gem_shmem_object *shmem,
 }
 
 /*
+<<<<<<< HEAD
  * drm_gem_shmem_vunmap - Unmap a virtual mapping for a shmem GEM object
+=======
+ * drm_gem_shmem_vunmap - Unmap a virtual mapping fo a shmem GEM object
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @shmem: shmem GEM object
  * @map: Kernel virtual address where the SHMEM GEM object was mapped
  *
@@ -505,13 +509,21 @@ int drm_gem_shmem_dumb_create(struct drm_file *file, struct drm_device *dev,
 
 	if (!args->pitch || !args->size) {
 		args->pitch = min_pitch;
+<<<<<<< HEAD
 		args->size = PAGE_ALIGN(args->pitch * args->height);
+=======
+		args->size = args->pitch * args->height;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		/* ensure sane minimum values */
 		if (args->pitch < min_pitch)
 			args->pitch = min_pitch;
 		if (args->size < args->pitch * args->height)
+<<<<<<< HEAD
 			args->size = PAGE_ALIGN(args->pitch * args->height);
+=======
+			args->size = args->pitch * args->height;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	shmem = drm_gem_shmem_create_with_handle(file, dev, args->size, &args->handle);

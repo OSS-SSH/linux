@@ -547,7 +547,10 @@ class PrinterHelpers(Printer):
             'struct inode',
             'struct socket',
             'struct file',
+<<<<<<< HEAD
             'struct bpf_timer',
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     ]
     known_types = {
             '...',
@@ -595,7 +598,10 @@ class PrinterHelpers(Printer):
             'struct inode',
             'struct socket',
             'struct file',
+<<<<<<< HEAD
             'struct bpf_timer',
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     }
     mapped_types = {
             'u8': '__u8',

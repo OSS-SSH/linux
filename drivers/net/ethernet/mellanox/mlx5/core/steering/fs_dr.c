@@ -133,9 +133,12 @@ static int mlx5_cmd_dr_modify_flow_table(struct mlx5_flow_root_namespace *ns,
 					 struct mlx5_flow_table *ft,
 					 struct mlx5_flow_table *next_ft)
 {
+<<<<<<< HEAD
 	if (mlx5_dr_is_fw_table(ft->flags))
 		return mlx5_fs_cmd_get_fw_cmds()->modify_flow_table(ns, ft, next_ft);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return set_miss_action(ns, ft, next_ft);
 }
 
@@ -490,6 +493,7 @@ static int mlx5_cmd_dr_create_fte(struct mlx5_flow_root_namespace *ns,
 
 		actions[num_actions++] = term_actions->dest;
 	} else if (num_term_actions > 1) {
+<<<<<<< HEAD
 		bool ignore_flow_level =
 			!!(fte->action.flags & FLOW_ACT_IGNORE_FLOW_LEVEL);
 
@@ -497,6 +501,11 @@ static int mlx5_cmd_dr_create_fte(struct mlx5_flow_root_namespace *ns,
 								term_actions,
 								num_term_actions,
 								ignore_flow_level);
+=======
+		tmp_action = mlx5dr_action_create_mult_dest_tbl(domain,
+								term_actions,
+								num_term_actions);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!tmp_action) {
 			err = -EOPNOTSUPP;
 			goto free_actions;
@@ -564,9 +573,12 @@ static int mlx5_cmd_dr_packet_reformat_alloc(struct mlx5_flow_root_namespace *ns
 	case MLX5_REFORMAT_TYPE_INSERT_HDR:
 		dr_reformat = DR_ACTION_REFORMAT_TYP_INSERT_HDR;
 		break;
+<<<<<<< HEAD
 	case MLX5_REFORMAT_TYPE_REMOVE_HDR:
 		dr_reformat = DR_ACTION_REFORMAT_TYP_REMOVE_HDR;
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		mlx5_core_err(ns->dev, "Packet-reformat not supported(%d)\n",
 			      params->type);
@@ -625,6 +637,18 @@ static void mlx5_cmd_dr_modify_header_dealloc(struct mlx5_flow_root_namespace *n
 	mlx5dr_action_destroy(modify_hdr->action.dr_action);
 }
 
+<<<<<<< HEAD
+=======
+static int mlx5_cmd_dr_update_fte(struct mlx5_flow_root_namespace *ns,
+				  struct mlx5_flow_table *ft,
+				  struct mlx5_flow_group *group,
+				  int modify_mask,
+				  struct fs_fte *fte)
+{
+	return -EOPNOTSUPP;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mlx5_cmd_dr_delete_fte(struct mlx5_flow_root_namespace *ns,
 				  struct mlx5_flow_table *ft,
 				  struct fs_fte *fte)
@@ -649,6 +673,7 @@ static int mlx5_cmd_dr_delete_fte(struct mlx5_flow_root_namespace *ns,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int mlx5_cmd_dr_update_fte(struct mlx5_flow_root_namespace *ns,
 				  struct mlx5_flow_table *ft,
 				  struct mlx5_flow_group *group,
@@ -679,6 +704,8 @@ restore_fte:
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mlx5_cmd_dr_set_peer(struct mlx5_flow_root_namespace *ns,
 				struct mlx5_flow_root_namespace *peer_ns)
 {

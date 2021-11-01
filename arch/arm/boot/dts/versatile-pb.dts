@@ -7,7 +7,11 @@
 
 	amba {
 		/* The Versatile PB is using more SIC IRQ lines than the AB */
+<<<<<<< HEAD
 		sic: interrupt-controller@10003000 {
+=======
+		sic: intc@10003000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			clear-mask = <0xffffffff>;
 			/*
 			 * Valid interrupt lines mask according to

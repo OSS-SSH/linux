@@ -1,5 +1,9 @@
 /* SPDX-License-Identifier: GPL-2.0 */
+<<<<<<< HEAD
 /* Marvell RVU Admin Function Devlink
+=======
+/*  Marvell OcteonTx2 RVU Devlink
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (C) 2020 Marvell.
  *

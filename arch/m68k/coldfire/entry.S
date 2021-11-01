@@ -31,6 +31,10 @@
 #include <asm/thread_info.h>
 #include <asm/errno.h>
 #include <asm/setup.h>
+<<<<<<< HEAD
+=======
+#include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/asm-offsets.h>
 #include <asm/entry.h>
 
@@ -50,6 +54,10 @@ sw_usp:
 .globl system_call
 .globl resume
 .globl ret_from_exception
+<<<<<<< HEAD
+=======
+.globl ret_from_signal
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 .globl sys_call_table
 .globl inthandler
 
@@ -96,6 +104,11 @@ ENTRY(system_call)
 	subql	#4,%sp			/* dummy return address */
 	SAVE_SWITCH_STACK
 	jbsr	syscall_trace_leave
+<<<<<<< HEAD
+=======
+
+ret_from_signal:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	RESTORE_SWITCH_STACK
 	addql	#4,%sp
 

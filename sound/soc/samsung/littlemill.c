@@ -130,7 +130,11 @@ static int littlemill_hw_params(struct snd_pcm_substream *substream,
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct snd_soc_ops littlemill_ops = {
+=======
+static struct snd_soc_ops littlemill_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.hw_params = littlemill_hw_params,
 };
 

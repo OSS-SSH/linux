@@ -229,7 +229,11 @@ static int ad5624r_probe(struct spi_device *spi)
 	if (!indio_dev)
 		return -ENOMEM;
 	st = iio_priv(indio_dev);
+<<<<<<< HEAD
 	st->reg = devm_regulator_get_optional(&spi->dev, "vref");
+=======
+	st->reg = devm_regulator_get(&spi->dev, "vcc");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!IS_ERR(st->reg)) {
 		ret = regulator_enable(st->reg);
 		if (ret)
@@ -240,6 +244,7 @@ static int ad5624r_probe(struct spi_device *spi)
 			goto error_disable_reg;
 
 		voltage_uv = ret;
+<<<<<<< HEAD
 	} else {
 		if (PTR_ERR(st->reg) != -ENODEV)
 			return PTR_ERR(st->reg);
@@ -256,6 +261,8 @@ static int ad5624r_probe(struct spi_device *spi)
 
 			voltage_uv = ret;
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	spi_set_drvdata(spi, indio_dev);

@@ -207,6 +207,7 @@ static int keembay_pwm_probe(struct platform_device *pdev)
 	priv->chip.ops = &keembay_pwm_ops;
 	priv->chip.npwm = KMB_TOTAL_PWM_CHANNELS;
 
+<<<<<<< HEAD
 	ret = devm_pwmchip_add(dev, &priv->chip);
 	if (ret)
 		return dev_err_probe(dev, ret, "Failed to add PWM chip\n");
@@ -214,6 +215,24 @@ static int keembay_pwm_probe(struct platform_device *pdev)
 	return 0;
 }
 
+=======
+	ret = pwmchip_add(&priv->chip);
+	if (ret)
+		return dev_err_probe(dev, ret, "Failed to add PWM chip\n");
+
+	platform_set_drvdata(pdev, priv);
+
+	return 0;
+}
+
+static int keembay_pwm_remove(struct platform_device *pdev)
+{
+	struct keembay_pwm *priv = platform_get_drvdata(pdev);
+
+	return pwmchip_remove(&priv->chip);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct of_device_id keembay_pwm_of_match[] = {
 	{ .compatible = "intel,keembay-pwm" },
 	{ }
@@ -222,6 +241,10 @@ MODULE_DEVICE_TABLE(of, keembay_pwm_of_match);
 
 static struct platform_driver keembay_pwm_driver = {
 	.probe	= keembay_pwm_probe,
+<<<<<<< HEAD
+=======
+	.remove	= keembay_pwm_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver	= {
 		.name = "pwm-keembay",
 		.of_match_table = keembay_pwm_of_match,

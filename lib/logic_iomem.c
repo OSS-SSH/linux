@@ -6,7 +6,10 @@
 #include <linux/types.h>
 #include <linux/slab.h>
 #include <linux/logic_iomem.h>
+<<<<<<< HEAD
 #include <asm/io.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct logic_iomem_region {
 	const struct resource *res;
@@ -79,7 +82,11 @@ static void __iomem *real_ioremap(phys_addr_t offset, size_t size)
 static void real_iounmap(void __iomem *addr)
 {
 	WARN(1, "invalid iounmap for addr 0x%llx\n",
+<<<<<<< HEAD
 	     (unsigned long long __force)addr);
+=======
+	     (unsigned long long)addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif /* CONFIG_LOGIC_IOMEM_FALLBACK */
 
@@ -173,6 +180,7 @@ EXPORT_SYMBOL(iounmap);
 static u##sz real_raw_read ## op(const volatile void __iomem *addr)	\
 {									\
 	WARN(1, "Invalid read" #op " at address %llx\n",		\
+<<<<<<< HEAD
 	     (unsigned long long __force)addr);				\
 	return (u ## sz)~0ULL;						\
 }									\
@@ -182,6 +190,16 @@ static void real_raw_write ## op(u ## sz val,				\
 {									\
 	WARN(1, "Invalid writeq" #op " of 0x%llx at address %llx\n",	\
 	     (unsigned long long)val, (unsigned long long __force)addr);\
+=======
+	     (unsigned long long)addr);					\
+	return (u ## sz)~0ULL;						\
+}									\
+									\
+void real_raw_write ## op(u ## sz val, volatile void __iomem *addr)	\
+{									\
+	WARN(1, "Invalid writeq" #op " of 0x%llx at address %llx\n",	\
+	     (unsigned long long)val, (unsigned long long)addr);	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }									\
 
 MAKE_FALLBACK(b, 8);
@@ -194,14 +212,22 @@ MAKE_FALLBACK(q, 64);
 static void real_memset_io(volatile void __iomem *addr, int value, size_t size)
 {
 	WARN(1, "Invalid memset_io at address 0x%llx\n",
+<<<<<<< HEAD
 	     (unsigned long long __force)addr);
+=======
+	     (unsigned long long)addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void real_memcpy_fromio(void *buffer, const volatile void __iomem *addr,
 			       size_t size)
 {
 	WARN(1, "Invalid memcpy_fromio at address 0x%llx\n",
+<<<<<<< HEAD
 	     (unsigned long long __force)addr);
+=======
+	     (unsigned long long)addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	memset(buffer, 0xff, size);
 }
@@ -210,7 +236,11 @@ static void real_memcpy_toio(volatile void __iomem *addr, const void *buffer,
 			     size_t size)
 {
 	WARN(1, "Invalid memcpy_toio at address 0x%llx\n",
+<<<<<<< HEAD
 	     (unsigned long long __force)addr);
+=======
+	     (unsigned long long)addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif /* CONFIG_LOGIC_IOMEM_FALLBACK */
 

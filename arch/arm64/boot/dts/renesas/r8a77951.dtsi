@@ -11,11 +11,14 @@
 
 #define CPG_AUDIO_CLK_I		R8A7795_CLK_S0D4
 
+<<<<<<< HEAD
 #define SOC_HAS_HDMI1
 #define SOC_HAS_SATA
 #define SOC_HAS_USB2_CH2
 #define SOC_HAS_USB2_CH3
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 / {
 	compatible = "renesas,r8a7795";
 	#address-cells = <2>;

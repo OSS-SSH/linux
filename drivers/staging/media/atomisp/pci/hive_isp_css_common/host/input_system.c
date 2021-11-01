@@ -174,6 +174,11 @@ void input_system_get_state(
 		ctrl_unit_get_state(ID, sub_id,
 				    &state->ctrl_unit_state[sub_id - CTRL_UNIT0_ID]);
 	}
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void receiver_get_state(
@@ -244,6 +249,11 @@ void receiver_get_state(
 			       _HRT_CSS_RECEIVER_BE_IRQ_STATUS_REG_IDX);
 	state->be_irq_clear = receiver_reg_load(ID,
 						_HRT_CSS_RECEIVER_BE_IRQ_CLEAR_REG_IDX);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 bool is_mipi_format_yuv420(
@@ -306,6 +316,11 @@ void receiver_set_compression(
 	reg = ((field_id < 6) ? (val << (field_id * 5)) : (val << ((
 		    field_id - 6) * 5)));
 	receiver_reg_store(ID, addr, reg);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void receiver_port_enable(
@@ -324,6 +339,10 @@ void receiver_port_enable(
 
 	receiver_port_reg_store(ID, port_ID,
 				_HRT_CSS_RECEIVER_DEVICE_READY_REG_IDX, reg);
+<<<<<<< HEAD
+=======
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 bool is_receiver_port_enabled(
@@ -342,6 +361,10 @@ void receiver_irq_enable(
 {
 	receiver_port_reg_store(ID,
 				port_ID, _HRT_CSS_RECEIVER_IRQ_ENABLE_REG_IDX, irq_info);
+<<<<<<< HEAD
+=======
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 rx_irq_info_t receiver_get_irq_info(
@@ -359,6 +382,10 @@ void receiver_irq_clear(
 {
 	receiver_port_reg_store(ID,
 				port_ID, _HRT_CSS_RECEIVER_IRQ_STATUS_REG_IDX, irq_info);
+<<<<<<< HEAD
+=======
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void capture_unit_get_state(
@@ -419,6 +446,11 @@ static inline void capture_unit_get_state(
 	state->FSM_State_Info = input_system_sub_system_reg_load(ID,
 				sub_id,
 				CAPT_FSM_STATE_INFO_REG_ID);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void acquisition_unit_get_state(
@@ -467,6 +499,11 @@ static inline void acquisition_unit_get_state(
 	state->Int_Cntr_Info = input_system_sub_system_reg_load(ID,
 			       sub_id,
 			       ACQ_INT_CNTR_INFO_REG_ID);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void ctrl_unit_get_state(
@@ -548,6 +585,11 @@ static inline void ctrl_unit_get_state(
 	state->capt_reserve_one_mem_region = input_system_sub_system_reg_load(ID,
 					     sub_id,
 					     ISYS_CTRL_CAPT_RESERVE_ONE_MEM_REGION_REG_ID);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void mipi_port_get_state(
@@ -582,6 +624,11 @@ static inline void mipi_port_get_state(
 		state->lane_sync_count[i] = (uint8_t)((state->sync_count) >> (i * 8));
 		state->lane_rx_count[i] = (uint8_t)((state->rx_count) >> (i * 8));
 	}
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void rx_channel_get_state(
@@ -635,6 +682,11 @@ static inline void rx_channel_get_state(
 		state->comp[i] = (mipi_compressor_t)(val & 0x07);
 		state->pred[i] = (mipi_predictor_t)((val & 0x18) >> 3);
 	}
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 // MW: "2400" in the name is not good, but this is to avoid a naming conflict
@@ -653,6 +705,11 @@ static void receiver_rst(
 	}
 
 	// AM: Additional actions for stopping receiver?
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 //Single function to reset all the devices mapped via GP_DEVICE.
@@ -701,6 +758,11 @@ static void gp_device_rst(const gp_device_ID_t		ID)
 	//	gp_device_reg_store(ID, _REG_GP_SYNCGEN_FRAME_CNT_ADDR, ZERO);
 	gp_device_reg_store(ID, _REG_GP_SOFT_RESET_ADDR,
 			    ZERO); // AM: Maybe this soft reset is not safe.
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void input_selector_cfg_for_sensor(const gp_device_ID_t ID)
@@ -717,6 +779,11 @@ static void input_selector_cfg_for_sensor(const gp_device_ID_t ID)
 	gp_device_reg_store(ID, _REG_GP_ISEL_SBAND_SEL_ADDR, ZERO);
 	gp_device_reg_store(ID, _REG_GP_ISEL_SYNC_SEL_ADDR, ZERO);
 	gp_device_reg_store(ID, _REG_GP_SOFT_RESET_ADDR, ZERO);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void input_switch_rst(const gp_device_ID_t ID)
@@ -735,6 +802,11 @@ static void input_switch_rst(const gp_device_ID_t ID)
 	gp_device_reg_store(ID,
 			    _REG_GP_IFMT_input_switch_fsync_lut,
 			    ZERO);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void input_switch_cfg(
@@ -759,6 +831,11 @@ static void input_switch_cfg(
 	gp_device_reg_store(ID,
 			    _REG_GP_IFMT_input_switch_fsync_lut,
 			    cfg->vsync_data_reg);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void input_system_network_rst(const input_system_ID_t ID)
@@ -814,6 +891,11 @@ static void input_system_network_rst(const input_system_ID_t ID)
 						  ISYS_CTRL_INIT_REG_ID,
 						  1U); //AM: Is there any named constant?
 	}
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 // Function that resets current configuration.
@@ -872,10 +954,24 @@ static input_system_err_t input_system_configure_channel(
 			error = input_system_configure_channel_sensor(channel);
 			break;
 		case INPUT_SYSTEM_SOURCE_TPG:
+<<<<<<< HEAD
 		case INPUT_SYSTEM_SOURCE_PRBS:
 		case INPUT_SYSTEM_SOURCE_FIFO:
 		default:
 			return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+=======
+			return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+			break;
+		case INPUT_SYSTEM_SOURCE_PRBS:
+			return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+			break;
+		case INPUT_SYSTEM_SOURCE_FIFO:
+			return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+			break;
+		default:
+			return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+			break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		if (error != INPUT_SYSTEM_ERR_NO_ERROR) return error;
@@ -957,6 +1053,10 @@ static input_system_err_t input_buffer_configuration(void)
 			default:
 				config.csi_buffer_flags[port] |= INPUT_SYSTEM_CFG_FLAG_CONFLICT;
 				return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+<<<<<<< HEAD
+=======
+				break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 
 			// Check acquisition buffer specified but set it later since it has to be unique.
@@ -993,6 +1093,10 @@ static input_system_err_t input_buffer_configuration(void)
 
 			default:
 				return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+<<<<<<< HEAD
+=======
+				break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		} else {
 			config.csi_buffer_flags[port] = INPUT_SYSTEM_CFG_FLAG_BLOCKED;
@@ -1041,6 +1145,11 @@ static void capture_unit_configure(
 					  sub_id,
 					  CAPT_NUM_MEM_REGIONS_REG_ID,
 					  cfg->nof_mem_regs);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void acquisition_unit_configure(
@@ -1064,6 +1173,11 @@ static void acquisition_unit_configure(
 					  sub_id,
 					  ACQ_MEM_REGION_SIZE_REG_ID,
 					  cfg->mem_reg_size);
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void ctrl_unit_configure(
@@ -1130,6 +1244,10 @@ static void ctrl_unit_configure(
 					  sub_id,
 					  ISYS_CTRL_CAPT_RESERVE_ONE_MEM_REGION_REG_ID,
 					  0);
+<<<<<<< HEAD
+=======
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void input_system_network_configure(
@@ -1187,6 +1305,11 @@ static void input_system_network_configure(
 				    sub_id,
 				    &cfg->ctrl_unit_cfg[sub_id - CTRL_UNIT0_ID]);
 	}
+<<<<<<< HEAD
+=======
+
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static input_system_err_t configuration_to_registers(void)
@@ -1260,12 +1383,26 @@ static input_system_err_t configuration_to_registers(void)
 		break;
 
 	case INPUT_SYSTEM_SOURCE_TPG:
+<<<<<<< HEAD
 	case INPUT_SYSTEM_SOURCE_PRBS:
+=======
+
+		break;
+
+	case INPUT_SYSTEM_SOURCE_PRBS:
+
+		break;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case INPUT_SYSTEM_SOURCE_FIFO:
 		break;
 
 	default:
 		return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+<<<<<<< HEAD
+=======
+		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	} // end of switch (source_type)
 
@@ -1641,12 +1778,27 @@ static input_system_err_t input_system_configure_channel_sensor(
 
 		break;
 	case INPUT_SYSTEM_FIFO_CAPTURE_WITH_COUNTING:
+<<<<<<< HEAD
 	case INPUT_SYSTEM_XMEM_CAPTURE:
 	case INPUT_SYSTEM_XMEM_ACQUIRE:
 	default:
 		return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
 	}
 
+=======
+		return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+		break;
+	case INPUT_SYSTEM_XMEM_CAPTURE:
+		return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+		break;
+	case INPUT_SYSTEM_XMEM_ACQUIRE:
+		return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+		break;
+	default:
+		return INPUT_SYSTEM_ERR_PARAMETER_NOT_SUPPORTED;
+		break;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return INPUT_SYSTEM_ERR_NO_ERROR;
 }
 

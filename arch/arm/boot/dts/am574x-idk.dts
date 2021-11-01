@@ -36,6 +36,7 @@
 	pinctrl-2 = <&mmc2_pins_default>;
 };
 
+<<<<<<< HEAD
 &emif1 {
 	status = "okay";
 };
@@ -46,4 +47,12 @@
 
 &pruss2_mdio {
 	status = "disabled";
+=======
+&m_can0 {
+	status = "disabled";
+};
+
+&emif1 {
+	status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

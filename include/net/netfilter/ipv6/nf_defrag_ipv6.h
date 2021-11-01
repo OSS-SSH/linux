@@ -17,6 +17,10 @@ struct inet_frags_ctl;
 struct nft_ct_frag6_pernet {
 	struct ctl_table_header *nf_frag_frags_hdr;
 	struct fqdir	*fqdir;
+<<<<<<< HEAD
+=======
+	unsigned int users;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #endif /* _NF_DEFRAG_IPV6_H */

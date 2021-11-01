@@ -210,14 +210,23 @@ static int dsa_master_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
 		break;
 	}
 
+<<<<<<< HEAD
 	if (dev->netdev_ops->ndo_eth_ioctl)
 		err = dev->netdev_ops->ndo_eth_ioctl(dev, ifr, cmd);
+=======
+	if (dev->netdev_ops->ndo_do_ioctl)
+		err = dev->netdev_ops->ndo_do_ioctl(dev, ifr, cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
 
 static const struct dsa_netdevice_ops dsa_netdev_ops = {
+<<<<<<< HEAD
 	.ndo_eth_ioctl = dsa_master_ioctl,
+=======
+	.ndo_do_ioctl = dsa_master_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int dsa_master_ethtool_setup(struct net_device *dev)

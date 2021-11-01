@@ -25,7 +25,10 @@
 #include <sound/core.h>
 #include <sound/initval.h>
 #include "hda_controller.h"
+<<<<<<< HEAD
 #include "hda_local.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define CREATE_TRACE_POINTS
 #include "hda_controller_trace.h"
@@ -670,6 +673,19 @@ static int azx_pcm_open(struct snd_pcm_substream *substream)
 	return err;
 }
 
+<<<<<<< HEAD
+=======
+static int azx_pcm_mmap(struct snd_pcm_substream *substream,
+			struct vm_area_struct *area)
+{
+	struct azx_pcm *apcm = snd_pcm_substream_chip(substream);
+	struct azx *chip = apcm->chip;
+	if (chip->ops->pcm_mmap_prepare)
+		chip->ops->pcm_mmap_prepare(substream, area);
+	return snd_pcm_lib_default_mmap(substream, area);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct snd_pcm_ops azx_pcm_ops = {
 	.open = azx_pcm_open,
 	.close = azx_pcm_close,
@@ -679,6 +695,10 @@ static const struct snd_pcm_ops azx_pcm_ops = {
 	.trigger = azx_pcm_trigger,
 	.pointer = azx_pcm_pointer,
 	.get_time_info =  azx_get_time_info,
+<<<<<<< HEAD
+=======
+	.mmap = azx_pcm_mmap,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static void azx_pcm_free(struct snd_pcm *pcm)
@@ -743,7 +763,11 @@ int snd_hda_attach_pcm_stream(struct hda_bus *_bus, struct hda_codec *codec,
 	if (size > MAX_PREALLOC_SIZE)
 		size = MAX_PREALLOC_SIZE;
 	if (chip->uc_buffer)
+<<<<<<< HEAD
 		type = SNDRV_DMA_TYPE_DEV_WC_SG;
+=======
+		type = SNDRV_DMA_TYPE_DEV_UC_SG;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	snd_pcm_set_managed_buffer_all(pcm, type, chip->card->dev,
 				       size, MAX_PREALLOC_SIZE);
 	return 0;
@@ -1249,6 +1273,7 @@ EXPORT_SYMBOL_GPL(azx_probe_codecs);
 int azx_codec_configure(struct azx *chip)
 {
 	struct hda_codec *codec, *next;
+<<<<<<< HEAD
 	int success = 0;
 
 	list_for_each_codec(codec, &chip->bus) {
@@ -1267,6 +1292,19 @@ int azx_codec_configure(struct azx *chip)
 	}
 
 	return success ? 0 : -ENODEV;
+=======
+
+	/* use _safe version here since snd_hda_codec_configure() deregisters
+	 * the device upon error and deletes itself from the bus list.
+	 */
+	list_for_each_codec_safe(codec, next, &chip->bus) {
+		snd_hda_codec_configure(codec);
+	}
+
+	if (!azx_bus(chip)->num_codecs)
+		return -ENODEV;
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(azx_codec_configure);
 

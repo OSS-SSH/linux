@@ -84,7 +84,11 @@ static int __init ttynull_init(void)
 
 	ret = tty_register_driver(driver);
 	if (ret < 0) {
+<<<<<<< HEAD
 		tty_driver_kref_put(driver);
+=======
+		put_tty_driver(driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tty_port_destroy(&ttynull_port);
 		return ret;
 	}
@@ -99,7 +103,11 @@ static void __exit ttynull_exit(void)
 {
 	unregister_console(&ttynull_console);
 	tty_unregister_driver(ttynull_driver);
+<<<<<<< HEAD
 	tty_driver_kref_put(ttynull_driver);
+=======
+	put_tty_driver(ttynull_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tty_port_destroy(&ttynull_port);
 }
 

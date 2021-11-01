@@ -54,7 +54,11 @@
 static DEFINE_MUTEX(smack_ipv6_lock);
 static LIST_HEAD(smk_ipv6_port_list);
 struct kmem_cache *smack_rule_cache;
+<<<<<<< HEAD
 int smack_enabled __initdata;
+=======
+int smack_enabled;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define A(s) {"smack"#s, sizeof("smack"#s) - 1, Opt_##s}
 static struct {
@@ -2016,7 +2020,11 @@ static int smk_curacc_on_task(struct task_struct *p, int access,
 				const char *caller)
 {
 	struct smk_audit_info ad;
+<<<<<<< HEAD
 	struct smack_known *skp = smk_of_task_struct_obj(p);
+=======
+	struct smack_known *skp = smk_of_task_struct_subj(p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc;
 
 	smk_ad_init(&ad, caller, LSM_AUDIT_DATA_TASK);
@@ -3480,7 +3488,11 @@ static void smack_d_instantiate(struct dentry *opt_dentry, struct inode *inode)
  */
 static int smack_getprocattr(struct task_struct *p, char *name, char **value)
 {
+<<<<<<< HEAD
 	struct smack_known *skp = smk_of_task_struct_obj(p);
+=======
+	struct smack_known *skp = smk_of_task_struct_subj(p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	char *cp;
 	int slen;
 

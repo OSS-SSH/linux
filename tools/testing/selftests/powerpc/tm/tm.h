@@ -10,9 +10,12 @@
 #include <asm/tm.h>
 
 #include "utils.h"
+<<<<<<< HEAD
 #include "reg.h"
 
 #define TM_RETRIES 100
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline bool have_htm(void)
 {
@@ -34,6 +37,7 @@ static inline bool have_htm_nosc(void)
 #endif
 }
 
+<<<<<<< HEAD
 /*
  * Transactional Memory was removed in ISA 3.1. A synthetic TM implementation
  * is provided on P10 for threads running in P8/P9 compatibility  mode. The
@@ -67,6 +71,8 @@ static inline bool htm_is_synthetic(void)
 	return i == TM_RETRIES;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline long failure_code(void)
 {
 	return __builtin_get_texasru() >> 24;

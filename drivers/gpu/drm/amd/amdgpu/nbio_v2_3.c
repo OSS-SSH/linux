@@ -508,6 +508,7 @@ static void nbio_v2_3_apply_l1_link_width_reconfig_wa(struct amdgpu_device *adev
 	WREG32_PCIE(smnPCIE_LC_LINK_WIDTH_CNTL, reg_data);
 }
 
+<<<<<<< HEAD
 static void nbio_v2_3_clear_doorbell_interrupt(struct amdgpu_device *adev)
 {
 	uint32_t reg, reg_data;
@@ -528,6 +529,8 @@ static void nbio_v2_3_clear_doorbell_interrupt(struct amdgpu_device *adev)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 const struct amdgpu_nbio_funcs nbio_v2_3_funcs = {
 	.get_hdp_flush_req_offset = nbio_v2_3_get_hdp_flush_req_offset,
 	.get_hdp_flush_done_offset = nbio_v2_3_get_hdp_flush_done_offset,
@@ -551,5 +554,8 @@ const struct amdgpu_nbio_funcs nbio_v2_3_funcs = {
 	.program_aspm =  nbio_v2_3_program_aspm,
 	.apply_lc_spc_mode_wa = nbio_v2_3_apply_lc_spc_mode_wa,
 	.apply_l1_link_width_reconfig_wa = nbio_v2_3_apply_l1_link_width_reconfig_wa,
+<<<<<<< HEAD
 	.clear_doorbell_interrupt = nbio_v2_3_clear_doorbell_interrupt,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

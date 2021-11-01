@@ -13,6 +13,10 @@ struct nvkm_client {
 	struct nvkm_client_notify *notify[32];
 	struct rb_root objroot;
 
+<<<<<<< HEAD
+=======
+	bool super;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void *data;
 	int (*ntfy)(const void *, u32, const void *, u32);
 

@@ -215,11 +215,14 @@ enum {
 
 	XFRM_MSG_MAPPING,
 #define XFRM_MSG_MAPPING XFRM_MSG_MAPPING
+<<<<<<< HEAD
 
 	XFRM_MSG_SETDEFAULT,
 #define XFRM_MSG_SETDEFAULT XFRM_MSG_SETDEFAULT
 	XFRM_MSG_GETDEFAULT,
 #define XFRM_MSG_GETDEFAULT XFRM_MSG_GETDEFAULT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__XFRM_MSG_MAX
 };
 #define XFRM_MSG_MAX (__XFRM_MSG_MAX - 1)
@@ -513,6 +516,7 @@ struct xfrm_user_offload {
 #define XFRM_OFFLOAD_IPV6	1
 #define XFRM_OFFLOAD_INBOUND	2
 
+<<<<<<< HEAD
 struct xfrm_userpolicy_default {
 #define XFRM_USERPOLICY_UNSPEC	0
 #define XFRM_USERPOLICY_BLOCK	1
@@ -522,6 +526,8 @@ struct xfrm_userpolicy_default {
 	__u8				out;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef __KERNEL__
 /* backwards compatibility for userspace */
 #define XFRMGRP_ACQUIRE		1

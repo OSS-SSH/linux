@@ -67,7 +67,11 @@ static void cpu_group_map(cpumask_t *dst, struct mask_info *info, unsigned int c
 	static cpumask_t mask;
 
 	cpumask_clear(&mask);
+<<<<<<< HEAD
 	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
+=======
+	if (!cpu_online(cpu))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 	cpumask_set_cpu(cpu, &mask);
 	switch (topology_mode) {
@@ -88,7 +92,11 @@ static void cpu_group_map(cpumask_t *dst, struct mask_info *info, unsigned int c
 	case TOPOLOGY_MODE_SINGLE:
 		break;
 	}
+<<<<<<< HEAD
 	cpumask_and(&mask, &mask, &cpu_setup_mask);
+=======
+	cpumask_and(&mask, &mask, cpu_online_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	cpumask_copy(dst, &mask);
 }
@@ -99,16 +107,27 @@ static void cpu_thread_map(cpumask_t *dst, unsigned int cpu)
 	int i;
 
 	cpumask_clear(&mask);
+<<<<<<< HEAD
 	if (!cpumask_test_cpu(cpu, &cpu_setup_mask))
+=======
+	if (!cpu_online(cpu))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 	cpumask_set_cpu(cpu, &mask);
 	if (topology_mode != TOPOLOGY_MODE_HW)
 		goto out;
 	cpu -= cpu % (smp_cpu_mtid + 1);
+<<<<<<< HEAD
 	for (i = 0; i <= smp_cpu_mtid; i++) {
 		if (cpumask_test_cpu(cpu + i, &cpu_setup_mask))
 			cpumask_set_cpu(cpu + i, &mask);
 	}
+=======
+	for (i = 0; i <= smp_cpu_mtid; i++)
+		if (cpu_present(cpu + i))
+			cpumask_set_cpu(cpu + i, &mask);
+	cpumask_and(&mask, &mask, cpu_online_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	cpumask_copy(dst, &mask);
 }
@@ -406,7 +425,11 @@ static ssize_t dispatching_store(struct device *dev,
 	if (val != 0 && val != 1)
 		return -EINVAL;
 	rc = 0;
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_lock(&smp_cpu_state_mutex);
 	if (cpu_management == val)
 		goto out;
@@ -417,7 +440,11 @@ static ssize_t dispatching_store(struct device *dev,
 	topology_expect_change();
 out:
 	mutex_unlock(&smp_cpu_state_mutex);
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc ? rc : count;
 }
 static DEVICE_ATTR_RW(dispatching);
@@ -569,7 +596,10 @@ void __init topology_init_early(void)
 	alloc_masks(info, &book_info, 2);
 	alloc_masks(info, &drawer_info, 3);
 out:
+<<<<<<< HEAD
 	cpumask_set_cpu(0, &cpu_setup_mask);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__arch_update_cpu_topology();
 	__arch_update_dedicated_flag(NULL);
 }

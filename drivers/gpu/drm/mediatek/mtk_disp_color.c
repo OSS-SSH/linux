@@ -133,8 +133,11 @@ static int mtk_disp_color_probe(struct platform_device *pdev)
 
 static int mtk_disp_color_remove(struct platform_device *pdev)
 {
+<<<<<<< HEAD
 	component_del(&pdev->dev, &mtk_disp_color_component_ops);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

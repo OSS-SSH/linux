@@ -26,6 +26,11 @@ config NDS32
 	select GENERIC_LIB_LSHRDI3
 	select GENERIC_LIB_MULDI3
 	select GENERIC_LIB_UCMPDI2
+<<<<<<< HEAD
+=======
+	select GENERIC_STRNCPY_FROM_USER
+	select GENERIC_STRNLEN_USER
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select GENERIC_TIME_VSYSCALL
 	select HANDLE_DOMAIN_IRQ
 	select HAVE_ARCH_TRACEHOOK
@@ -46,7 +51,10 @@ config NDS32
 	select HAVE_FTRACE_MCOUNT_RECORD
 	select HAVE_DYNAMIC_FTRACE
 	select SET_FS
+<<<<<<< HEAD
 	select TRACE_IRQFLAGS_SUPPORT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Andes(nds32) Linux support.
 
@@ -63,6 +71,12 @@ config GENERIC_LOCKBREAK
 	def_bool y
 	depends on PREEMPTION
 
+<<<<<<< HEAD
+=======
+config TRACE_IRQFLAGS_SUPPORT
+	def_bool y
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config STACKTRACE_SUPPORT
 	def_bool y
 

@@ -165,7 +165,11 @@ void ima_process_queued_keys(void)
 						   entry->keyring_name,
 						   KEY_CHECK, 0,
 						   entry->keyring_name,
+<<<<<<< HEAD
 						   false, NULL, 0);
+=======
+						   false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		list_del(&entry->list);
 		ima_free_key_entry(entry);
 	}

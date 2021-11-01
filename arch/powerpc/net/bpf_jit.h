@@ -24,6 +24,7 @@
 #define EMIT(instr)		PLANT_INSTR(image, ctx->idx, instr)
 
 /* Long jump; (unconditional 'branch') */
+<<<<<<< HEAD
 #define PPC_JMP(dest)							      \
 	do {								      \
 		long offset = (long)(dest) - (ctx->idx * 4);		      \
@@ -34,10 +35,15 @@
 		EMIT(PPC_INST_BRANCH | (offset & 0x03fffffc));		      \
 	} while (0)
 
+=======
+#define PPC_JMP(dest)		EMIT(PPC_INST_BRANCH |			      \
+				     (((dest) - (ctx->idx * 4)) & 0x03fffffc))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* blr; (unconditional 'branch' with link) to absolute address */
 #define PPC_BL_ABS(dest)	EMIT(PPC_INST_BL |			      \
 				     (((dest) - (unsigned long)(image + ctx->idx)) & 0x03fffffc))
 /* "cond" here covers BO:BI fields. */
+<<<<<<< HEAD
 #define PPC_BCC_SHORT(cond, dest)					      \
 	do {								      \
 		long offset = (long)(dest) - (ctx->idx * 4);		      \
@@ -48,6 +54,12 @@
 		EMIT(PPC_INST_BRANCH_COND | (((cond) & 0x3ff) << 16) | (offset & 0xfffc));					\
 	} while (0)
 
+=======
+#define PPC_BCC_SHORT(cond, dest)	EMIT(PPC_INST_BRANCH_COND |	      \
+					     (((cond) & 0x3ff) << 16) |	      \
+					     (((dest) - (ctx->idx * 4)) &     \
+					      0xfffc))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Sign-extended 32-bit immediate load */
 #define PPC_LI32(d, i)		do {					      \
 		if ((int)(uintptr_t)(i) >= -32768 &&			      \
@@ -92,6 +104,14 @@
 #define PPC_FUNC_ADDR(d,i) do { PPC_LI32(d, i); } while(0)
 #endif
 
+<<<<<<< HEAD
+=======
+static inline bool is_nearbranch(int offset)
+{
+	return (offset < 32768) && (offset >= -32768);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * The fly in the ointment of code size changing from pass to pass is
  * avoided by padding the short branch case with a NOP.	 If code size differs
@@ -100,7 +120,11 @@
  * state.
  */
 #define PPC_BCC(cond, dest)	do {					      \
+<<<<<<< HEAD
 		if (is_offset_in_cond_branch_range((long)(dest) - (ctx->idx * 4))) {	\
+=======
+		if (is_nearbranch((dest) - (ctx->idx * 4))) {		      \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			PPC_BCC_SHORT(cond, dest);			      \
 			EMIT(PPC_RAW_NOP());				      \
 		} else {						      \

@@ -12,14 +12,18 @@
 
 static void rtw_wow_show_wakeup_reason(struct rtw_dev *rtwdev)
 {
+<<<<<<< HEAD
 	struct cfg80211_wowlan_nd_info nd_info;
 	struct cfg80211_wowlan_wakeup wakeup = {
 		.pattern_idx = -1,
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 reason;
 
 	reason = rtw_read8(rtwdev, REG_WOWLAN_WAKE_REASON);
 
+<<<<<<< HEAD
 	switch (reason) {
 	case RTW_WOW_RSN_RX_DEAUTH:
 		wakeup.disconnect = true;
@@ -60,6 +64,24 @@ static void rtw_wow_show_wakeup_reason(struct rtw_dev *rtwdev)
 	}
 	ieee80211_report_wowlan_wakeup(rtwdev->wow.wow_vif, &wakeup,
 				       GFP_KERNEL);
+=======
+	if (reason == RTW_WOW_RSN_RX_DEAUTH)
+		rtw_dbg(rtwdev, RTW_DBG_WOW, "WOW: Rx deauth\n");
+	else if (reason == RTW_WOW_RSN_DISCONNECT)
+		rtw_dbg(rtwdev, RTW_DBG_WOW, "WOW: AP is off\n");
+	else if (reason == RTW_WOW_RSN_RX_MAGIC_PKT)
+		rtw_dbg(rtwdev, RTW_DBG_WOW, "WOW: Rx magic packet\n");
+	else if (reason == RTW_WOW_RSN_RX_GTK_REKEY)
+		rtw_dbg(rtwdev, RTW_DBG_WOW, "WOW: Rx gtk rekey\n");
+	else if (reason == RTW_WOW_RSN_RX_PTK_REKEY)
+		rtw_dbg(rtwdev, RTW_DBG_WOW, "WOW: Rx ptk rekey\n");
+	else if (reason == RTW_WOW_RSN_RX_PATTERN_MATCH)
+		rtw_dbg(rtwdev, RTW_DBG_WOW, "WOW: Rx pattern match packet\n");
+	else if (reason == RTW_WOW_RSN_RX_NLO)
+		rtw_dbg(rtwdev, RTW_DBG_WOW, "Rx NLO\n");
+	else
+		rtw_warn(rtwdev, "Unknown wakeup reason %x\n", reason);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void rtw_wow_pattern_write_cam(struct rtw_dev *rtwdev, u8 addr,
@@ -311,6 +333,7 @@ static void rtw_wow_rx_dma_start(struct rtw_dev *rtwdev)
 
 static int rtw_wow_check_fw_status(struct rtw_dev *rtwdev, bool wow_enable)
 {
+<<<<<<< HEAD
 	int ret;
 	u8 check;
 	u32 check_dis;
@@ -331,6 +354,17 @@ static int rtw_wow_check_fw_status(struct rtw_dev *rtwdev, bool wow_enable)
 					!check_dis, 1000, 100000, false, rtwdev,
 					REG_RXPKT_NUM, BIT_RW_RELEASE);
 		if (ret)
+=======
+	/* wait 100ms for wow firmware to finish work */
+	msleep(100);
+
+	if (wow_enable) {
+		if (rtw_read8(rtwdev, REG_WOWLAN_WAKE_REASON))
+			goto wow_fail;
+	} else {
+		if (rtw_read32_mask(rtwdev, REG_FE1IMR, BIT_FS_RXDONE) ||
+		    rtw_read32_mask(rtwdev, REG_RXPKT_NUM, BIT_RW_RELEASE))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto wow_fail;
 	}
 
@@ -471,6 +505,7 @@ static void rtw_wow_fw_media_status(struct rtw_dev *rtwdev, bool connect)
 	rtw_iterate_stas_atomic(rtwdev, rtw_wow_fw_media_status_iter, &data);
 }
 
+<<<<<<< HEAD
 static int rtw_wow_config_wow_fw_rsvd_page(struct rtw_dev *rtwdev)
 {
 	struct ieee80211_vif *wow_vif = rtwdev->wow.wow_vif;
@@ -487,15 +522,47 @@ static int rtw_wow_config_wow_fw_rsvd_page(struct rtw_dev *rtwdev)
 }
 
 static int rtw_wow_config_normal_fw_rsvd_page(struct rtw_dev *rtwdev)
+=======
+static void rtw_wow_config_pno_rsvd_page(struct rtw_dev *rtwdev,
+					 struct rtw_vif *rtwvif)
+{
+	rtw_add_rsvd_page_pno(rtwdev, rtwvif);
+}
+
+static void rtw_wow_config_linked_rsvd_page(struct rtw_dev *rtwdev,
+					   struct rtw_vif *rtwvif)
+{
+	rtw_add_rsvd_page_sta(rtwdev, rtwvif);
+}
+
+static void rtw_wow_config_rsvd_page(struct rtw_dev *rtwdev,
+				     struct rtw_vif *rtwvif)
+{
+	rtw_remove_rsvd_page(rtwdev, rtwvif);
+
+	if (rtw_wow_mgd_linked(rtwdev)) {
+		rtw_wow_config_linked_rsvd_page(rtwdev, rtwvif);
+	} else if (test_bit(RTW_FLAG_WOWLAN, rtwdev->flags) &&
+		   rtw_wow_no_link(rtwdev)) {
+		rtw_wow_config_pno_rsvd_page(rtwdev, rtwvif);
+	}
+}
+
+static int rtw_wow_dl_fw_rsvd_page(struct rtw_dev *rtwdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ieee80211_vif *wow_vif = rtwdev->wow.wow_vif;
 	struct rtw_vif *rtwvif = (struct rtw_vif *)wow_vif->drv_priv;
 
+<<<<<<< HEAD
 	rtw_remove_rsvd_page(rtwdev, rtwvif);
 	rtw_add_rsvd_page_sta(rtwdev, rtwvif);
 
 	if (rtw_wow_no_link(rtwdev))
 		return 0;
+=======
+	rtw_wow_config_rsvd_page(rtwdev, rtwvif);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return rtw_fw_download_rsvd_page(rtwdev);
 }
@@ -693,7 +760,11 @@ static int rtw_wow_enable(struct rtw_dev *rtwdev)
 
 	set_bit(RTW_FLAG_WOWLAN, rtwdev->flags);
 
+<<<<<<< HEAD
 	ret = rtw_wow_config_wow_fw_rsvd_page(rtwdev);
+=======
+	ret = rtw_wow_dl_fw_rsvd_page(rtwdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		rtw_err(rtwdev, "failed to download wowlan rsvd page\n");
 		goto error;
@@ -766,7 +837,11 @@ static int rtw_wow_disable(struct rtw_dev *rtwdev)
 		goto out;
 	}
 
+<<<<<<< HEAD
 	ret = rtw_wow_config_normal_fw_rsvd_page(rtwdev);
+=======
+	ret = rtw_wow_dl_fw_rsvd_page(rtwdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		rtw_err(rtwdev, "failed to download normal rsvd page\n");
 

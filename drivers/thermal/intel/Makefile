@@ -12,4 +12,7 @@ obj-$(CONFIG_INTEL_BXT_PMIC_THERMAL) += intel_bxt_pmic_thermal.o
 obj-$(CONFIG_INTEL_PCH_THERMAL)	+= intel_pch_thermal.o
 obj-$(CONFIG_INTEL_TCC_COOLING)	+= intel_tcc_cooling.o
 obj-$(CONFIG_X86_THERMAL_VECTOR) += therm_throt.o
+<<<<<<< HEAD
 obj-$(CONFIG_INTEL_MENLOW)	+= intel_menlow.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

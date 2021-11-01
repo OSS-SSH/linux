@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
+<<<<<<< HEAD
+=======
+ * fs/cifs/winucase.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (c) Jeffrey Layton <jlayton@redhat.com>, 2013
  *

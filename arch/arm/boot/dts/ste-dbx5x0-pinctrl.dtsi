@@ -163,6 +163,7 @@
 	};
 
 	i2c2 {
+<<<<<<< HEAD
 		i2c2_b_1_default: i2c2_b_1_default {
 			default_mux {
 				function = "i2c2";
@@ -181,6 +182,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		i2c2_b_2_default: i2c2_b_2_default {
 			default_mux {
 				function = "i2c2";

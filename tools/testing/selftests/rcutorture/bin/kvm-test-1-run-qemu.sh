@@ -39,6 +39,7 @@ echo ' ---' `date`: Starting kernel, PID $$
 grep '^#' $resdir/qemu-cmd | sed -e 's/^# //' > $T/qemu-cmd-settings
 . $T/qemu-cmd-settings
 
+<<<<<<< HEAD
 # Decorate qemu-cmd with affinity, redirection, backgrounding, and PID capture
 taskset_command=
 if test -n "$TORTURE_AFFINITY"
@@ -49,17 +50,27 @@ sed -e 's/^[^#].*$/'"$taskset_command"'& 2>\&1 \&/' < $resdir/qemu-cmd > $T/qemu
 echo 'qemu_pid=$!' >> $T/qemu-cmd
 echo 'echo $qemu_pid > $resdir/qemu-pid' >> $T/qemu-cmd
 echo 'taskset -c -p $qemu_pid > $resdir/qemu-affinity' >> $T/qemu-cmd
+=======
+# Decorate qemu-cmd with redirection, backgrounding, and PID capture
+sed -e 's/$/ 2>\&1 \&/' < $resdir/qemu-cmd > $T/qemu-cmd
+echo 'echo $! > $resdir/qemu_pid' >> $T/qemu-cmd
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 # In case qemu refuses to run...
 echo "NOTE: $QEMU either did not run or was interactive" > $resdir/console.log
 
 # Attempt to run qemu
 kstarttime=`gawk 'BEGIN { print systime() }' < /dev/null`
+<<<<<<< HEAD
 ( . $T/qemu-cmd; wait `cat  $resdir/qemu-pid`; echo $? > $resdir/qemu-retval ) &
+=======
+( . $T/qemu-cmd; wait `cat  $resdir/qemu_pid`; echo $? > $resdir/qemu-retval ) &
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 commandcompleted=0
 if test -z "$TORTURE_KCONFIG_GDB_ARG"
 then
 	sleep 10 # Give qemu's pid a chance to reach the file
+<<<<<<< HEAD
 	if test -s "$resdir/qemu-pid"
 	then
 		qemu_pid=`cat "$resdir/qemu-pid"`
@@ -67,6 +78,15 @@ then
 	else
 		qemu_pid=""
 		echo Monitoring qemu job at yet-as-unknown pid `date`
+=======
+	if test -s "$resdir/qemu_pid"
+	then
+		qemu_pid=`cat "$resdir/qemu_pid"`
+		echo Monitoring qemu job at pid $qemu_pid
+	else
+		qemu_pid=""
+		echo Monitoring qemu job at yet-as-unknown pid
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fi
 fi
 if test -n "$TORTURE_KCONFIG_GDB_ARG"
@@ -89,9 +109,15 @@ then
 fi
 while :
 do
+<<<<<<< HEAD
 	if test -z "$qemu_pid" && test -s "$resdir/qemu-pid"
 	then
 		qemu_pid=`cat "$resdir/qemu-pid"`
+=======
+	if test -z "$qemu_pid" -a -s "$resdir/qemu_pid"
+	then
+		qemu_pid=`cat "$resdir/qemu_pid"`
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fi
 	kruntime=`gawk 'BEGIN { print systime() - '"$kstarttime"' }' < /dev/null`
 	if test -z "$qemu_pid" || kill -0 "$qemu_pid" > /dev/null 2>&1
@@ -122,6 +148,7 @@ do
 		break
 	fi
 done
+<<<<<<< HEAD
 if test -z "$qemu_pid" && test -s "$resdir/qemu-pid"
 then
 	qemu_pid=`cat "$resdir/qemu-pid"`
@@ -131,13 +158,28 @@ then
 	if ! test -f "$resdir/../STOP.1"
 	then
 		echo Grace period for qemu job at pid $qemu_pid `date`
+=======
+if test -z "$qemu_pid" -a -s "$resdir/qemu_pid"
+then
+	qemu_pid=`cat "$resdir/qemu_pid"`
+fi
+if test $commandcompleted -eq 0 -a -n "$qemu_pid"
+then
+	if ! test -f "$resdir/../STOP.1"
+	then
+		echo Grace period for qemu job at pid $qemu_pid
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fi
 	oldline="`tail $resdir/console.log`"
 	while :
 	do
 		if test -f "$resdir/../STOP.1"
 		then
+<<<<<<< HEAD
 			echo "PID $qemu_pid killed due to run STOP.1 request `date`" >> $resdir/Warnings 2>&1
+=======
+			echo "PID $qemu_pid killed due to run STOP.1 request" >> $resdir/Warnings 2>&1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			kill -KILL $qemu_pid
 			break
 		fi
@@ -159,6 +201,7 @@ then
 		then
 			last_ts=0
 		fi
+<<<<<<< HEAD
 		if test "$newline" != "$oldline" && test "$last_ts" -lt $((seconds + $TORTURE_SHUTDOWN_GRACE)) && test "$last_ts" -gt "$TORTURE_SHUTDOWN_GRACE"
 		then
 			must_continue=yes
@@ -170,6 +213,15 @@ then
 		if test $must_continue = no && test $kruntime -ge $((seconds + $TORTURE_SHUTDOWN_GRACE))
 		then
 			echo "!!! PID $qemu_pid hung at $kruntime vs. $seconds seconds `date`" >> $resdir/Warnings 2>&1
+=======
+		if test "$newline" != "$oldline" -a "$last_ts" -lt $((seconds + $TORTURE_SHUTDOWN_GRACE))
+		then
+			must_continue=yes
+		fi
+		if test $must_continue = no -a $kruntime -ge $((seconds + $TORTURE_SHUTDOWN_GRACE))
+		then
+			echo "!!! PID $qemu_pid hung at $kruntime vs. $seconds seconds" >> $resdir/Warnings 2>&1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			kill -KILL $qemu_pid
 			break
 		fi
@@ -183,3 +235,8 @@ fi
 
 # Tell the script that this run is done.
 rm -f $resdir/build.run
+<<<<<<< HEAD
+=======
+
+parse-console.sh $resdir/console.log $title
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

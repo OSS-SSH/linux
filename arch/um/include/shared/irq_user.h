@@ -7,6 +7,10 @@
 #define __IRQ_USER_H__
 
 #include <sysdep/ptrace.h>
+<<<<<<< HEAD
+=======
+#include <stdbool.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 enum um_irq_type {
 	IRQ_READ,

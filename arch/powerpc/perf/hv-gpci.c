@@ -175,7 +175,11 @@ static unsigned long single_gpci_request(u32 req, u32 starting_index,
 	 */
 	count = 0;
 	for (i = offset; i < offset + length; i++)
+<<<<<<< HEAD
 		count |= (u64)(arg->bytes[i]) << ((length - 1 - (i - offset)) * 8);
+=======
+		count |= arg->bytes[i] << (i - offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*value = count;
 out:

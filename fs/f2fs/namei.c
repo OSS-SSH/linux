@@ -1323,6 +1323,7 @@ static const char *f2fs_encrypted_get_link(struct dentry *dentry,
 	return target;
 }
 
+<<<<<<< HEAD
 static int f2fs_encrypted_symlink_getattr(struct user_namespace *mnt_userns,
 					  const struct path *path,
 					  struct kstat *stat, u32 request_mask,
@@ -1336,6 +1337,11 @@ static int f2fs_encrypted_symlink_getattr(struct user_namespace *mnt_userns,
 const struct inode_operations f2fs_encrypted_symlink_inode_operations = {
 	.get_link	= f2fs_encrypted_get_link,
 	.getattr	= f2fs_encrypted_symlink_getattr,
+=======
+const struct inode_operations f2fs_encrypted_symlink_inode_operations = {
+	.get_link	= f2fs_encrypted_get_link,
+	.getattr	= f2fs_getattr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.setattr	= f2fs_setattr,
 	.listxattr	= f2fs_listxattr,
 };

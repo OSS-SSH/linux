@@ -47,6 +47,7 @@ struct fscrypt_name {
 #define FSCRYPT_SET_CONTEXT_MAX_SIZE	40
 
 #ifdef CONFIG_FS_ENCRYPTION
+<<<<<<< HEAD
 
 /*
  * If set, the fscrypt bounce page pool won't be allocated (unless another
@@ -169,6 +170,29 @@ struct fscrypt_operations {
 	 * filesystem is using -- one per block device.  (There may be duplicate
 	 * entries in this array, as block devices can share a request_queue.)
 	 */
+=======
+/*
+ * fscrypt superblock flags
+ */
+#define FS_CFLG_OWN_PAGES (1U << 1)
+
+/*
+ * crypto operations for filesystems
+ */
+struct fscrypt_operations {
+	unsigned int flags;
+	const char *key_prefix;
+	int (*get_context)(struct inode *inode, void *ctx, size_t len);
+	int (*set_context)(struct inode *inode, const void *ctx, size_t len,
+			   void *fs_data);
+	const union fscrypt_policy *(*get_dummy_policy)(struct super_block *sb);
+	bool (*empty_dir)(struct inode *inode);
+	unsigned int max_namelen;
+	bool (*has_stable_inodes)(struct super_block *sb);
+	void (*get_ino_and_lblk_bits)(struct super_block *sb,
+				      int *ino_bits_ret, int *lblk_bits_ret);
+	int (*get_num_devices)(struct super_block *sb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*get_devices)(struct super_block *sb,
 			    struct request_queue **devs);
 };
@@ -354,7 +378,10 @@ int __fscrypt_encrypt_symlink(struct inode *inode, const char *target,
 const char *fscrypt_get_symlink(struct inode *inode, const void *caddr,
 				unsigned int max_size,
 				struct delayed_call *done);
+<<<<<<< HEAD
 int fscrypt_symlink_getattr(const struct path *path, struct kstat *stat);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void fscrypt_set_ops(struct super_block *sb,
 				   const struct fscrypt_operations *s_cop)
 {
@@ -685,12 +712,15 @@ static inline const char *fscrypt_get_symlink(struct inode *inode,
 	return ERR_PTR(-EOPNOTSUPP);
 }
 
+<<<<<<< HEAD
 static inline int fscrypt_symlink_getattr(const struct path *path,
 					  struct kstat *stat)
 {
 	return -EOPNOTSUPP;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void fscrypt_set_ops(struct super_block *sb,
 				   const struct fscrypt_operations *s_cop)
 {

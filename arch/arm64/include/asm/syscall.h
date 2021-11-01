@@ -29,6 +29,7 @@ static inline void syscall_rollback(struct task_struct *task,
 	regs->regs[0] = regs->orig_x0;
 }
 
+<<<<<<< HEAD
 static inline long syscall_get_return_value(struct task_struct *task,
 					    struct pt_regs *regs)
 {
@@ -46,6 +47,24 @@ static inline long syscall_get_error(struct task_struct *task,
 	unsigned long error = syscall_get_return_value(task, regs);
 
 	return IS_ERR_VALUE(error) ? error : 0;
+=======
+
+static inline long syscall_get_error(struct task_struct *task,
+				     struct pt_regs *regs)
+{
+	unsigned long error = regs->regs[0];
+
+	if (is_compat_thread(task_thread_info(task)))
+		error = sign_extend64(error, 31);
+
+	return IS_ERR_VALUE(error) ? error : 0;
+}
+
+static inline long syscall_get_return_value(struct task_struct *task,
+					    struct pt_regs *regs)
+{
+	return regs->regs[0];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void syscall_set_return_value(struct task_struct *task,

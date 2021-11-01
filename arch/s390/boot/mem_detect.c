@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: GPL-2.0
 #include <linux/errno.h>
 #include <linux/init.h>
+<<<<<<< HEAD
 #include <asm/setup.h>
 #include <asm/processor.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/sclp.h>
 #include <asm/sections.h>
 #include <asm/mem_detect.h>
@@ -26,9 +29,15 @@ static void *mem_detect_alloc_extended(void)
 {
 	unsigned long offset = ALIGN(mem_safe_offset(), sizeof(u64));
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && initrd_data.start && initrd_data.size &&
 	    initrd_data.start < offset + ENTRIES_EXTENDED_MAX)
 		offset = ALIGN(initrd_data.start + initrd_data.size, sizeof(u64));
+=======
+	if (IS_ENABLED(CONFIG_BLK_DEV_INITRD) && INITRD_START && INITRD_SIZE &&
+	    INITRD_START < offset + ENTRIES_EXTENDED_MAX)
+		offset = ALIGN(INITRD_START + INITRD_SIZE, sizeof(u64));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return (void *)offset;
 }

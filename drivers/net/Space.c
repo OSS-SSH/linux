@@ -30,6 +30,7 @@
 #include <linux/netlink.h>
 #include <net/Space.h>
 
+<<<<<<< HEAD
 /*
  * This structure holds boot-time configured netdevice settings. They
  * are then used in the device probing.
@@ -172,6 +173,8 @@ static int __init ether_boot_setup(char *str)
 __setup("ether=", ether_boot_setup);
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* A unified ethernet device probe.  This is the easiest way to have every
  * ethernet adaptor have the name "eth[0123...]".
  */
@@ -219,15 +222,48 @@ static struct devprobe2 isa_probes[] __initdata = {
 #ifdef CONFIG_SMC9194
 	{smc_init, 0},
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_CS89x0_ISA
 	{cs89x0_probe, 0},
 #endif
+=======
+#ifdef CONFIG_CS89x0
+#ifndef CONFIG_CS89x0_PLATFORM
+	{cs89x0_probe, 0},
+#endif
+#endif
+#if defined(CONFIG_MVME16x_NET) || defined(CONFIG_BVME6000_NET)	/* Intel */
+	{i82596_probe, 0},					/* I82596 */
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_NI65
 	{ni65_probe, 0},
 #endif
 	{NULL, 0},
 };
 
+<<<<<<< HEAD
+=======
+static struct devprobe2 m68k_probes[] __initdata = {
+#ifdef CONFIG_ATARILANCE	/* Lance-based Atari ethernet boards */
+	{atarilance_probe, 0},
+#endif
+#ifdef CONFIG_SUN3LANCE         /* sun3 onboard Lance chip */
+	{sun3lance_probe, 0},
+#endif
+#ifdef CONFIG_SUN3_82586        /* sun3 onboard Intel 82586 chip */
+	{sun3_82586_probe, 0},
+#endif
+#ifdef CONFIG_APNE		/* A1200 PCMCIA NE2000 */
+	{apne_probe, 0},
+#endif
+#ifdef CONFIG_MVME147_NET	/* MVME147 internal Ethernet */
+	{mvme147lance_probe, 0},
+#endif
+	{NULL, 0},
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Unified ethernet device probe, segmented per architecture and
  * per bus interface. This drives the legacy devices only for now.
  */
@@ -239,7 +275,12 @@ static void __init ethif_probe2(int unit)
 	if (base_addr == 1)
 		return;
 
+<<<<<<< HEAD
 	probe_list2(unit, isa_probes, base_addr == 0);
+=======
+	(void)(probe_list2(unit, m68k_probes, base_addr == 0) &&
+		probe_list2(unit, isa_probes, base_addr == 0));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*  Statically configured drivers -- order matters here. */
@@ -247,6 +288,13 @@ static int __init net_olddevs_init(void)
 {
 	int num;
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_SBNI
+	for (num = 0; num < 8; ++num)
+		sbni_probe(num);
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (num = 0; num < 8; ++num)
 		ethif_probe2(num);
 
@@ -255,6 +303,12 @@ static int __init net_olddevs_init(void)
 	cops_probe(1);
 	cops_probe(2);
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_LTPC
+	ltpc_probe();
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

@@ -57,7 +57,12 @@ static inline void *u64_to_ptr(__u64 ptr)
 #define HELP_SPEC_PROGRAM						\
 	"PROG := { id PROG_ID | pinned FILE | tag PROG_TAG | name PROG_NAME }"
 #define HELP_SPEC_OPTIONS						\
+<<<<<<< HEAD
 	"OPTIONS := { {-j|--json} [{-p|--pretty}] | {-d|--debug}"
+=======
+	"OPTIONS := { {-j|--json} [{-p|--pretty}] | {-f|--bpffs} |\n"	\
+	"\t            {-m|--mapcompat} | {-n|--nomount} }"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define HELP_SPEC_MAP							\
 	"MAP := { id MAP_ID | pinned FILE | name MAP_NAME }"
 #define HELP_SPEC_LINK							\

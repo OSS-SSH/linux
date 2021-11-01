@@ -32,6 +32,14 @@ struct ts73xx_fpga_priv {
 	struct device	*dev;
 };
 
+<<<<<<< HEAD
+=======
+static enum fpga_mgr_states ts73xx_fpga_state(struct fpga_manager *mgr)
+{
+	return FPGA_MGR_STATE_UNKNOWN;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ts73xx_fpga_write_init(struct fpga_manager *mgr,
 				  struct fpga_image_info *info,
 				  const char *buf, size_t count)
@@ -93,6 +101,10 @@ static int ts73xx_fpga_write_complete(struct fpga_manager *mgr,
 }
 
 static const struct fpga_manager_ops ts73xx_fpga_ops = {
+<<<<<<< HEAD
+=======
+	.state		= ts73xx_fpga_state,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.write_init	= ts73xx_fpga_write_init,
 	.write		= ts73xx_fpga_write,
 	.write_complete	= ts73xx_fpga_write_complete,

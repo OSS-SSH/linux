@@ -47,32 +47,56 @@
 					spi-rx-bus-width = <4>;
 					m25p,fast-read;
 
+<<<<<<< HEAD
 					at91bootstrap@0 {
+=======
+					at91bootstrap@00000000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						label = "at91bootstrap";
 						reg = <0x00000000 0x00040000>;
 					};
 
+<<<<<<< HEAD
 					bootloader@40000 {
+=======
+					bootloader@00040000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						label = "bootloader";
 						reg = <0x00040000 0x000c0000>;
 					};
 
+<<<<<<< HEAD
 					bootloaderenvred@100000 {
+=======
+					bootloaderenvred@00100000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						label = "bootloader env redundant";
 						reg = <0x00100000 0x00040000>;
 					};
 
+<<<<<<< HEAD
 					bootloaderenv@140000 {
+=======
+					bootloaderenv@00140000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						label = "bootloader env";
 						reg = <0x00140000 0x00040000>;
 					};
 
+<<<<<<< HEAD
 					dtb@180000 {
+=======
+					dtb@00180000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						label = "device tree";
 						reg = <0x00180000 0x00080000>;
 					};
 
+<<<<<<< HEAD
 					kernel@200000 {
+=======
+					kernel@00200000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						label = "kernel";
 						reg = <0x00200000 0x00600000>;
 					};

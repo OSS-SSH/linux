@@ -299,11 +299,14 @@ static void gdlm_put_lock(struct gfs2_glock *gl)
 	gfs2_sbstats_inc(gl, GFS2_LKS_DCOUNT);
 	gfs2_update_request_times(gl);
 
+<<<<<<< HEAD
 	/* don't want to call dlm if we've unmounted the lock protocol */
 	if (test_bit(DFL_UNMOUNT, &ls->ls_recover_flags)) {
 		gfs2_glock_free(gl);
 		return;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* don't want to skip dlm_unlock writing the lvb when lock has one */
 
 	if (test_bit(SDF_SKIP_DLM_UNLOCK, &sdp->sd_flags) &&

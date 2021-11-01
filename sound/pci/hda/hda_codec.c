@@ -791,7 +791,10 @@ void snd_hda_codec_cleanup_for_unbind(struct hda_codec *codec)
 	snd_array_free(&codec->nids);
 	remove_conn_list(codec);
 	snd_hdac_regmap_exit(&codec->core);
+<<<<<<< HEAD
 	codec->configured = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(snd_hda_codec_cleanup_for_unbind);
 
@@ -2982,6 +2985,7 @@ const struct dev_pm_ops hda_codec_driver_pm = {
 			   NULL)
 };
 
+<<<<<<< HEAD
 /* suspend the codec at shutdown; called from driver's shutdown callback */
 void snd_hda_codec_shutdown(struct hda_codec *codec)
 {
@@ -2994,6 +2998,8 @@ void snd_hda_codec_shutdown(struct hda_codec *codec)
 	pm_runtime_disable(hda_codec_dev(codec));
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * add standard channel maps if not specified
  */

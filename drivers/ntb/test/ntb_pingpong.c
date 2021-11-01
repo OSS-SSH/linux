@@ -187,7 +187,11 @@ static void pp_ping(struct pp_ctx *pp)
 
 static void pp_pong(struct pp_ctx *pp)
 {
+<<<<<<< HEAD
 	u32 msg_data, spad_data;
+=======
+	u32 msg_data = -1, spad_data = -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int pidx = 0;
 
 	/* Read pong data */

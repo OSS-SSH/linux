@@ -266,9 +266,12 @@ int smu_v11_0_check_fw_version(struct smu_context *smu)
 	case CHIP_BEIGE_GOBY:
 		smu->smc_driver_if_version = SMU11_DRIVER_IF_VERSION_Beige_Goby;
 		break;
+<<<<<<< HEAD
 	case CHIP_CYAN_SKILLFISH:
 		smu->smc_driver_if_version = SMU11_DRIVER_IF_VERSION_Cyan_Skillfish;
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		dev_err(smu->adev->dev, "smu unsupported asic type:%d.\n", smu->adev->asic_type);
 		smu->smc_driver_if_version = SMU11_DRIVER_IF_VERSION_INV;
@@ -425,6 +428,7 @@ int smu_v11_0_init_smc_tables(struct smu_context *smu)
 			ret = -ENOMEM;
 			goto err3_out;
 		}
+<<<<<<< HEAD
 
 		smu_table->user_overdrive_table =
 			kzalloc(tables[SMU_TABLE_OVERDRIVE].size, GFP_KERNEL);
@@ -433,12 +437,17 @@ int smu_v11_0_init_smc_tables(struct smu_context *smu)
 			goto err4_out;
 		}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
 
+<<<<<<< HEAD
 err4_out:
 	kfree(smu_table->boot_overdrive_table);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err3_out:
 	kfree(smu_table->overdrive_table);
 err2_out:
@@ -455,14 +464,20 @@ int smu_v11_0_fini_smc_tables(struct smu_context *smu)
 	struct smu_dpm_context *smu_dpm = &smu->smu_dpm;
 
 	kfree(smu_table->gpu_metrics_table);
+<<<<<<< HEAD
 	kfree(smu_table->user_overdrive_table);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(smu_table->boot_overdrive_table);
 	kfree(smu_table->overdrive_table);
 	kfree(smu_table->max_sustainable_clocks);
 	kfree(smu_table->driver_pptable);
 	kfree(smu_table->clocks_table);
 	smu_table->gpu_metrics_table = NULL;
+<<<<<<< HEAD
 	smu_table->user_overdrive_table = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	smu_table->boot_overdrive_table = NULL;
 	smu_table->overdrive_table = NULL;
 	smu_table->max_sustainable_clocks = NULL;
@@ -1200,13 +1215,25 @@ smu_v11_0_set_fan_static_mode(struct smu_context *smu, uint32_t mode)
 }
 
 int
+<<<<<<< HEAD
 smu_v11_0_set_fan_speed_pwm(struct smu_context *smu, uint32_t speed)
+=======
+smu_v11_0_set_fan_speed_percent(struct smu_context *smu, uint32_t speed)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct amdgpu_device *adev = smu->adev;
 	uint32_t duty100, duty;
 	uint64_t tmp64;
 
+<<<<<<< HEAD
 	speed = MIN(speed, 255);
+=======
+	if (speed > 100)
+		speed = 100;
+
+	if (smu_v11_0_auto_fan_control(smu, 0))
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	duty100 = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_FDO_CTRL1),
 				CG_FDO_CTRL1, FMAX_DUTY100);
@@ -1214,7 +1241,11 @@ smu_v11_0_set_fan_speed_pwm(struct smu_context *smu, uint32_t speed)
 		return -EINVAL;
 
 	tmp64 = (uint64_t)speed * duty100;
+<<<<<<< HEAD
 	do_div(tmp64, 255);
+=======
+	do_div(tmp64, 100);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	duty = (uint32_t)tmp64;
 
 	WREG32_SOC15(THM, 0, mmCG_FDO_CTRL0,
@@ -1224,6 +1255,7 @@ smu_v11_0_set_fan_speed_pwm(struct smu_context *smu, uint32_t speed)
 	return smu_v11_0_set_fan_static_mode(smu, FDO_PWM_MODE_STATIC);
 }
 
+<<<<<<< HEAD
 int smu_v11_0_set_fan_speed_rpm(struct smu_context *smu,
 				uint32_t speed)
 {
@@ -1317,6 +1349,8 @@ int smu_v11_0_get_fan_speed_rpm(struct smu_context *smu,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int
 smu_v11_0_set_fan_control_mode(struct smu_context *smu,
 			       uint32_t mode)
@@ -1325,9 +1359,13 @@ smu_v11_0_set_fan_control_mode(struct smu_context *smu,
 
 	switch (mode) {
 	case AMD_FAN_CTRL_NONE:
+<<<<<<< HEAD
 		ret = smu_v11_0_auto_fan_control(smu, 0);
 		if (!ret)
 			ret = smu_v11_0_set_fan_speed_pwm(smu, 255);
+=======
+		ret = smu_v11_0_set_fan_speed_percent(smu, 100);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case AMD_FAN_CTRL_MANUAL:
 		ret = smu_v11_0_auto_fan_control(smu, 0);
@@ -1634,7 +1672,10 @@ int smu_v11_0_baco_set_state(struct smu_context *smu, enum smu_baco_state state)
 		case CHIP_SIENNA_CICHLID:
 		case CHIP_NAVY_FLOUNDER:
 		case CHIP_DIMGREY_CAVEFISH:
+<<<<<<< HEAD
 		case CHIP_BEIGE_GOBY:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (amdgpu_runtime_pm == 2)
 				ret = smu_cmn_send_smc_msg_with_param(smu,
 								      SMU_MSG_EnterBaco,
@@ -2207,6 +2248,7 @@ int smu_v11_0_deep_sleep_control(struct smu_context *smu,
 
 	return ret;
 }
+<<<<<<< HEAD
 
 int smu_v11_0_restore_user_od_settings(struct smu_context *smu)
 {
@@ -2220,3 +2262,5 @@ int smu_v11_0_restore_user_od_settings(struct smu_context *smu)
 
 	return ret;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

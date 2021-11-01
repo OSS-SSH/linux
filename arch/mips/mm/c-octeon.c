@@ -30,7 +30,11 @@
 unsigned long long cache_err_dcache[NR_CPUS];
 EXPORT_SYMBOL_GPL(cache_err_dcache);
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Octeon automatically flushes the dcache on tlb changes, so
  * from Linux's viewpoint it acts much like a physically
  * tagged cache. No flushing is needed
@@ -56,8 +60,13 @@ static void local_octeon_flush_icache_range(unsigned long start,
 }
 
 /**
+<<<<<<< HEAD
  * octeon_flush_icache_all_cores -  Flush caches as necessary for all cores
  * affected by a vma. If no vma is supplied, all cores are flushed.
+=======
+ * Flush caches as necessary for all cores affected by a
+ * vma. If no vma is supplied, all cores are flushed.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * @vma:    VMA to flush or NULL to flush all icaches.
  */
@@ -92,7 +101,11 @@ static void octeon_flush_icache_all_cores(struct vm_area_struct *vma)
 }
 
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Called to flush the icache on all cores
  */
 static void octeon_flush_icache_all(void)
@@ -102,7 +115,12 @@ static void octeon_flush_icache_all(void)
 
 
 /**
+<<<<<<< HEAD
  * octeon_flush_cache_mm - flush all memory associated with a memory context.
+=======
+ * Called to flush all memory associated with a memory
+ * context.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * @mm:	    Memory context to flush
  */
@@ -115,7 +133,11 @@ static void octeon_flush_cache_mm(struct mm_struct *mm)
 }
 
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Flush a range of kernel addresses out of the icache
  *
  */
@@ -126,11 +148,19 @@ static void octeon_flush_icache_range(unsigned long start, unsigned long end)
 
 
 /**
+<<<<<<< HEAD
  * octeon_flush_cache_range - Flush a range out of a vma
  *
  * @vma:    VMA to flush
  * @start:  beginning address for flush
  * @end:    ending address for flush
+=======
+ * Flush a range out of a vma
+ *
+ * @vma:    VMA to flush
+ * @start:
+ * @end:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static void octeon_flush_cache_range(struct vm_area_struct *vma,
 				     unsigned long start, unsigned long end)
@@ -141,11 +171,19 @@ static void octeon_flush_cache_range(struct vm_area_struct *vma,
 
 
 /**
+<<<<<<< HEAD
  * octeon_flush_cache_page - Flush a specific page of a vma
  *
  * @vma:    VMA to flush page for
  * @page:   Page to flush
  * @pfn:    Page frame number
+=======
+ * Flush a specific page of a vma
+ *
+ * @vma:    VMA to flush page for
+ * @page:   Page to flush
+ * @pfn:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static void octeon_flush_cache_page(struct vm_area_struct *vma,
 				    unsigned long page, unsigned long pfn)
@@ -159,7 +197,11 @@ static void octeon_flush_kernel_vmap_range(unsigned long vaddr, int size)
 	BUG();
 }
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Probe Octeon's caches
  *
  */
@@ -255,7 +297,11 @@ static void  octeon_cache_error_setup(void)
 	set_handler(0x100, &except_vec2_octeon, 0x80);
 }
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Setup the Octeon cache flush routines
  *
  */
@@ -340,7 +386,11 @@ asmlinkage void cache_parity_error_octeon_recoverable(void)
 	co_cache_error_call_notifiers(0);
 }
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Called when the the exception is not recoverable
  */
 

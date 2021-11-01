@@ -25,11 +25,14 @@
 #include <linux/types.h>
 #include <uapi/drm/drm_fourcc.h>
 
+<<<<<<< HEAD
 /**
  * DRM_FORMAT_MAX_PLANES - maximum number of planes a DRM format can have
  */
 #define DRM_FORMAT_MAX_PLANES	4u
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * DRM formats are little endian.  Define host endian variants for the
  * most common formats here, to reduce the #ifdefs needed in drivers.
@@ -83,7 +86,11 @@ struct drm_format_info {
 		 * triplet @char_per_block, @block_w, @block_h for better
 		 * describing the pixel format.
 		 */
+<<<<<<< HEAD
 		u8 cpp[DRM_FORMAT_MAX_PLANES];
+=======
+		u8 cpp[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/**
 		 * @char_per_block:
@@ -109,7 +116,11 @@ struct drm_format_info {
 		 * information from their drm_mode_config.get_format_info hook
 		 * if they want the core to be validating the pitch.
 		 */
+<<<<<<< HEAD
 		u8 char_per_block[DRM_FORMAT_MAX_PLANES];
+=======
+		u8 char_per_block[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	/**
@@ -118,7 +129,11 @@ struct drm_format_info {
 	 * Block width in pixels, this is intended to be accessed through
 	 * drm_format_info_block_width()
 	 */
+<<<<<<< HEAD
 	u8 block_w[DRM_FORMAT_MAX_PLANES];
+=======
+	u8 block_w[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/**
 	 * @block_h:
@@ -126,7 +141,11 @@ struct drm_format_info {
 	 * Block height in pixels, this is intended to be accessed through
 	 * drm_format_info_block_height()
 	 */
+<<<<<<< HEAD
 	u8 block_h[DRM_FORMAT_MAX_PLANES];
+=======
+	u8 block_h[4];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/** @hsub: Horizontal chroma subsampling factor */
 	u8 hsub;

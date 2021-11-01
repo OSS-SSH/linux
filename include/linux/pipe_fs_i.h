@@ -48,7 +48,10 @@ struct pipe_buffer {
  *	@files: number of struct file referring this pipe (protected by ->i_lock)
  *	@r_counter: reader counter
  *	@w_counter: writer counter
+<<<<<<< HEAD
  *	@poll_usage: is this pipe used for epoll, which has crazy wakeups?
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *	@fasync_readers: reader side fasync
  *	@fasync_writers: writer side fasync
  *	@bufs: the circular array of pipe buffers
@@ -71,7 +74,10 @@ struct pipe_inode_info {
 	unsigned int files;
 	unsigned int r_counter;
 	unsigned int w_counter;
+<<<<<<< HEAD
 	unsigned int poll_usage;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct page *tmp_page;
 	struct fasync_struct *fasync_readers;
 	struct fasync_struct *fasync_writers;

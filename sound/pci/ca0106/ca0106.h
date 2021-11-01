@@ -667,6 +667,10 @@ struct snd_ca0106 {
 	struct pci_dev *pci;
 
 	unsigned long port;
+<<<<<<< HEAD
+=======
+	struct resource *res_port;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int irq;
 
 	unsigned int serial;            /* serial number */
@@ -687,7 +691,11 @@ struct snd_ca0106 {
 	u8 i2c_capture_volume[4][2];
 	int capture_mic_line_in;
 
+<<<<<<< HEAD
 	struct snd_dma_buffer *buffer;
+=======
+	struct snd_dma_buffer buffer;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct snd_ca_midi midi;
 	struct snd_ca_midi midi2;

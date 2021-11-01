@@ -6,8 +6,13 @@
 
 /* dummy for now */
 
+<<<<<<< HEAD
 #define map_page_into_agp(page)		do { } while (0)
 #define unmap_page_from_agp(page)	do { } while (0)
+=======
+#define map_page_into_agp(page) 
+#define unmap_page_from_agp(page) 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define flush_agp_cache() mb()
 
 /* GATT allocation. Returns/accepts GATT kernel virtual address. */

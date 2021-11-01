@@ -13,7 +13,10 @@
 #include <linux/of.h>
 #include <linux/of_address.h>
 #include <linux/platform_device.h>
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/slab.h>
 #include <linux/sys_soc.h>
 
@@ -211,8 +214,11 @@ static int tegra_fuse_probe(struct platform_device *pdev)
 	platform_set_drvdata(pdev, fuse);
 	fuse->dev = &pdev->dev;
 
+<<<<<<< HEAD
 	pm_runtime_enable(&pdev->dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (fuse->soc->probe) {
 		err = fuse->soc->probe(fuse);
 		if (err < 0)
@@ -249,6 +255,7 @@ static int tegra_fuse_probe(struct platform_device *pdev)
 	return 0;
 
 restore:
+<<<<<<< HEAD
 	fuse->clk = NULL;
 	fuse->base = base;
 	pm_runtime_disable(&pdev->dev);
@@ -309,11 +316,20 @@ static const struct dev_pm_ops tegra_fuse_pm = {
 	SET_SYSTEM_SLEEP_PM_OPS(tegra_fuse_suspend, tegra_fuse_resume)
 };
 
+=======
+	fuse->base = base;
+	return err;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct platform_driver tegra_fuse_driver = {
 	.driver = {
 		.name = "tegra-fuse",
 		.of_match_table = tegra_fuse_match,
+<<<<<<< HEAD
 		.pm = &tegra_fuse_pm,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.suppress_bind_attrs = true,
 	},
 	.probe = tegra_fuse_probe,

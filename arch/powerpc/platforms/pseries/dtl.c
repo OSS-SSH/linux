@@ -11,10 +11,17 @@
 #include <linux/spinlock.h>
 #include <asm/smp.h>
 #include <linux/uaccess.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 #include <asm/firmware.h>
 #include <asm/dtl.h>
 #include <asm/lppaca.h>
+=======
+#include <asm/firmware.h>
+#include <asm/dtl.h>
+#include <asm/lppaca.h>
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/plpar_wrappers.h>
 #include <asm/machdep.h>
 
@@ -338,7 +345,11 @@ static int dtl_init(void)
 
 	/* set up common debugfs structure */
 
+<<<<<<< HEAD
 	dtl_dir = debugfs_create_dir("dtl", arch_debugfs_dir);
+=======
+	dtl_dir = debugfs_create_dir("dtl", powerpc_debugfs_root);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	debugfs_create_x8("dtl_event_mask", 0600, dtl_dir, &dtl_event_mask);
 	debugfs_create_u32("dtl_buf_entries", 0400, dtl_dir, &dtl_buf_entries);

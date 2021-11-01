@@ -890,7 +890,11 @@ static inline void cmd_frob(struct Command_Entry *cmd, struct scsi_cmnd *Cmnd,
 		cmd->control_flags |= CFLAG_WRITE;
 	else
 		cmd->control_flags |= CFLAG_READ;
+<<<<<<< HEAD
 	cmd->time_out = scsi_cmd_to_rq(Cmnd)->timeout / HZ;
+=======
+	cmd->time_out = Cmnd->request->timeout/HZ;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memcpy(cmd->cdb, Cmnd->cmnd, Cmnd->cmd_len);
 }
 

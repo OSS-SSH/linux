@@ -19,6 +19,7 @@
 #include "utils.h"
 #include "tm.h"
 
+<<<<<<< HEAD
 #ifndef PPC_FEATURE2_SCV
 #define PPC_FEATURE2_SCV               0x00100000 /* scv syscall */
 #endif
@@ -27,17 +28,28 @@ extern int getppid_tm_active(void);
 extern int getppid_tm_suspended(void);
 extern int getppid_scv_tm_active(void);
 extern int getppid_scv_tm_suspended(void);
+=======
+extern int getppid_tm_active(void);
+extern int getppid_tm_suspended(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 unsigned retries = 0;
 
 #define TEST_DURATION 10 /* seconds */
+<<<<<<< HEAD
 
 pid_t getppid_tm(bool scv, bool suspend)
+=======
+#define TM_RETRIES 100
+
+pid_t getppid_tm(bool suspend)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i;
 	pid_t pid;
 
 	for (i = 0; i < TM_RETRIES; i++) {
+<<<<<<< HEAD
 		if (suspend) {
 			if (scv)
 				pid = getppid_scv_tm_suspended();
@@ -49,6 +61,12 @@ pid_t getppid_tm(bool scv, bool suspend)
 			else
 				pid = getppid_tm_active();
 		}
+=======
+		if (suspend)
+			pid = getppid_tm_suspended();
+		else
+			pid = getppid_tm_active();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (pid >= 0)
 			return pid;
@@ -79,7 +97,10 @@ int tm_syscall(void)
 	struct timeval end, now;
 
 	SKIP_IF(!have_htm_nosc());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	setbuf(stdout, NULL);
 
@@ -95,12 +116,17 @@ int tm_syscall(void)
 		 * Test a syscall within a suspended transaction and verify
 		 * that it succeeds.
 		 */
+<<<<<<< HEAD
 		FAIL_IF(getppid_tm(false, true) == -1); /* Should succeed. */
+=======
+		FAIL_IF(getppid_tm(true) == -1); /* Should succeed. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * Test a syscall within an active transaction and verify that
 		 * it fails with the correct failure code.
 		 */
+<<<<<<< HEAD
 		FAIL_IF(getppid_tm(false, false) != -1);  /* Should fail... */
 		FAIL_IF(!failure_is_persistent()); /* ...persistently... */
 		FAIL_IF(!failure_is_syscall());    /* ...with code syscall. */
@@ -113,6 +139,11 @@ int tm_syscall(void)
 			FAIL_IF(!failure_is_syscall());    /* ...with code syscall. */
 		}
 
+=======
+		FAIL_IF(getppid_tm(false) != -1);  /* Should fail... */
+		FAIL_IF(!failure_is_persistent()); /* ...persistently... */
+		FAIL_IF(!failure_is_syscall());    /* ...with code syscall. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		gettimeofday(&now, 0);
 	}
 

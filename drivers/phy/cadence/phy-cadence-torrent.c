@@ -24,15 +24,23 @@
 #include <linux/reset.h>
 #include <linux/regmap.h>
 
+<<<<<<< HEAD
 #define REF_CLK_19_2MHZ		19200000
 #define REF_CLK_25MHZ		25000000
 #define REF_CLK_100MHZ		100000000
+=======
+#define REF_CLK_19_2MHz		19200000
+#define REF_CLK_25MHz		25000000
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define MAX_NUM_LANES		4
 #define DEFAULT_MAX_BIT_RATE	8100 /* in Mbps */
 
 #define NUM_SSC_MODE		3
+<<<<<<< HEAD
 #define NUM_REF_CLK		3
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define NUM_PHY_TYPE		6
 
 #define POLL_TIMEOUT_US		5000
@@ -51,10 +59,13 @@
 #define TORRENT_PHY_PCS_COMMON_OFFSET(block_offset)	\
 				(0xC000 << (block_offset))
 
+<<<<<<< HEAD
 #define TORRENT_PHY_PCS_LANE_CDB_OFFSET(ln, block_offset, reg_offset)	\
 				((0xD000 << (block_offset)) +		\
 				(((ln) << 8) << (reg_offset)))
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define TORRENT_PHY_PMA_COMMON_OFFSET(block_offset)	\
 				(0xE000 << (block_offset))
 
@@ -107,7 +118,10 @@
 #define CMN_PLL0_FRACDIVH_M0		0x0092U
 #define CMN_PLL0_HIGH_THR_M0		0x0093U
 #define CMN_PLL0_DSM_DIAG_M0		0x0094U
+<<<<<<< HEAD
 #define CMN_PLL0_DSM_FBH_OVRD_M0	0x0095U
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define CMN_PLL0_SS_CTRL1_M0		0x0098U
 #define CMN_PLL0_SS_CTRL2_M0            0x0099U
 #define CMN_PLL0_SS_CTRL3_M0            0x009AU
@@ -227,9 +241,12 @@
 #define PHY_PIPE_USB3_GEN2_POST_CFG0	0x0022U
 #define PHY_PIPE_USB3_GEN2_POST_CFG1	0x0023U
 
+<<<<<<< HEAD
 /* PHY PCS lane registers */
 #define PHY_PCS_ISO_LINK_CTRL		0x000BU
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* PHY PMA common registers */
 #define PHY_PMA_CMN_CTRL1		0x0000U
 #define PHY_PMA_CMN_CTRL2		0x0001U
@@ -254,9 +271,12 @@ static const struct reg_field phy_pma_pll_raw_ctrl =
 static const struct reg_field phy_reset_ctrl =
 				REG_FIELD(PHY_RESET, 8, 8);
 
+<<<<<<< HEAD
 static const struct reg_field phy_pcs_iso_link_ctrl_1 =
 				REG_FIELD(PHY_PCS_ISO_LINK_CTRL, 1, 1);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct reg_field phy_pipe_cmn_ctrl1_0 = REG_FIELD(PHY_PIPE_CMN_CTRL1, 0, 0);
 
 #define REFCLK_OUT_NUM_CMN_CONFIG	5
@@ -286,12 +306,15 @@ enum cdns_torrent_phy_type {
 	TYPE_USB,
 };
 
+<<<<<<< HEAD
 enum cdns_torrent_ref_clk {
 	CLK_19_2_MHZ,
 	CLK_25_MHZ,
 	CLK_100_MHZ
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum cdns_torrent_ssc_mode {
 	NO_SSC,
 	EXTERNAL_SSC,
@@ -315,7 +338,11 @@ struct cdns_torrent_phy {
 	struct reset_control *apb_rst;
 	struct device *dev;
 	struct clk *clk;
+<<<<<<< HEAD
 	enum cdns_torrent_ref_clk ref_clk_rate;
+=======
+	unsigned long ref_clk_rate;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct cdns_torrent_inst phys[MAX_NUM_LANES];
 	int nsubnodes;
 	const struct cdns_torrent_data *init_data;
@@ -325,14 +352,20 @@ struct cdns_torrent_phy {
 	struct regmap *regmap_phy_pma_common_cdb;
 	struct regmap *regmap_tx_lane_cdb[MAX_NUM_LANES];
 	struct regmap *regmap_rx_lane_cdb[MAX_NUM_LANES];
+<<<<<<< HEAD
 	struct regmap *regmap_phy_pcs_lane_cdb[MAX_NUM_LANES];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct regmap *regmap_dptx_phy_reg;
 	struct regmap_field *phy_pll_cfg;
 	struct regmap_field *phy_pma_cmn_ctrl_1;
 	struct regmap_field *phy_pma_cmn_ctrl_2;
 	struct regmap_field *phy_pma_pll_raw_ctrl;
 	struct regmap_field *phy_reset_ctrl;
+<<<<<<< HEAD
 	struct regmap_field *phy_pcs_iso_link_ctrl_1[MAX_NUM_LANES];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct clk *clks[CDNS_TORRENT_REFCLK_DRIVER + 1];
 	struct clk_onecell_data clk_data;
 };
@@ -354,6 +387,60 @@ struct cdns_torrent_derived_refclk {
 #define to_cdns_torrent_derived_refclk(_hw)	\
 			container_of(_hw, struct cdns_torrent_derived_refclk, hw)
 
+<<<<<<< HEAD
+=======
+static int cdns_torrent_phy_init(struct phy *phy);
+static int cdns_torrent_dp_init(struct phy *phy);
+static int cdns_torrent_dp_run(struct cdns_torrent_phy *cdns_phy,
+			       u32 num_lanes);
+static
+int cdns_torrent_dp_wait_pma_cmn_ready(struct cdns_torrent_phy *cdns_phy);
+static void cdns_torrent_dp_pma_cfg(struct cdns_torrent_phy *cdns_phy,
+				    struct cdns_torrent_inst *inst);
+static
+void cdns_torrent_dp_pma_cmn_cfg_19_2mhz(struct cdns_torrent_phy *cdns_phy);
+static
+void cdns_torrent_dp_pma_cmn_vco_cfg_19_2mhz(struct cdns_torrent_phy *cdns_phy,
+					     u32 rate, bool ssc);
+static
+void cdns_torrent_dp_pma_cmn_cfg_25mhz(struct cdns_torrent_phy *cdns_phy);
+static
+void cdns_torrent_dp_pma_cmn_vco_cfg_25mhz(struct cdns_torrent_phy *cdns_phy,
+					   u32 rate, bool ssc);
+static void cdns_torrent_dp_pma_lane_cfg(struct cdns_torrent_phy *cdns_phy,
+					 unsigned int lane);
+static void cdns_torrent_dp_pma_cmn_rate(struct cdns_torrent_phy *cdns_phy,
+					 u32 rate, u32 num_lanes);
+static int cdns_torrent_dp_configure(struct phy *phy,
+				     union phy_configure_opts *opts);
+static int cdns_torrent_dp_set_power_state(struct cdns_torrent_phy *cdns_phy,
+					   u32 num_lanes,
+					   enum phy_powerstate powerstate);
+static int cdns_torrent_phy_on(struct phy *phy);
+static int cdns_torrent_phy_off(struct phy *phy);
+
+static const struct phy_ops cdns_torrent_phy_ops = {
+	.init		= cdns_torrent_phy_init,
+	.configure	= cdns_torrent_dp_configure,
+	.power_on	= cdns_torrent_phy_on,
+	.power_off	= cdns_torrent_phy_off,
+	.owner		= THIS_MODULE,
+};
+
+static int cdns_torrent_noop_phy_on(struct phy *phy)
+{
+	/* Give 5ms to 10ms delay for the PIPE clock to be stable */
+	usleep_range(5000, 10000);
+
+	return 0;
+}
+
+static const struct phy_ops noop_ops = {
+	.power_on	= cdns_torrent_noop_phy_on,
+	.owner		= THIS_MODULE,
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct cdns_reg_pairs {
 	u32 val;
 	u32 off;
@@ -373,12 +460,21 @@ struct cdns_torrent_data {
 						[NUM_SSC_MODE];
 	struct cdns_torrent_vals *pcs_cmn_vals[NUM_PHY_TYPE][NUM_PHY_TYPE]
 					      [NUM_SSC_MODE];
+<<<<<<< HEAD
 	struct cdns_torrent_vals *cmn_vals[NUM_REF_CLK][NUM_PHY_TYPE]
 					  [NUM_PHY_TYPE][NUM_SSC_MODE];
 	struct cdns_torrent_vals *tx_ln_vals[NUM_REF_CLK][NUM_PHY_TYPE]
 					    [NUM_PHY_TYPE][NUM_SSC_MODE];
 	struct cdns_torrent_vals *rx_ln_vals[NUM_REF_CLK][NUM_PHY_TYPE]
 					    [NUM_PHY_TYPE][NUM_SSC_MODE];
+=======
+	struct cdns_torrent_vals *cmn_vals[NUM_PHY_TYPE][NUM_PHY_TYPE]
+					  [NUM_SSC_MODE];
+	struct cdns_torrent_vals *tx_ln_vals[NUM_PHY_TYPE][NUM_PHY_TYPE]
+					    [NUM_SSC_MODE];
+	struct cdns_torrent_vals *rx_ln_vals[NUM_PHY_TYPE][NUM_PHY_TYPE]
+					    [NUM_SSC_MODE];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct cdns_regmap_cdb_context {
@@ -467,6 +563,7 @@ static const struct regmap_config cdns_torrent_common_cdb_config = {
 	.reg_read = cdns_regmap_read,
 };
 
+<<<<<<< HEAD
 #define TORRENT_PHY_PCS_LANE_CDB_REGMAP_CONF(n) \
 { \
 	.name = "torrent_phy_pcs_lane" n "_cdb", \
@@ -483,6 +580,8 @@ static const struct regmap_config cdns_torrent_phy_pcs_lane_cdb_config[] = {
 	TORRENT_PHY_PCS_LANE_CDB_REGMAP_CONF("3"),
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct regmap_config cdns_torrent_phy_pcs_cmn_cdb_config = {
 	.name = "torrent_phy_pcs_cmn_cdb",
 	.reg_stride = 1,
@@ -601,6 +700,7 @@ static const struct coefficients vltg_coeff[4][4] = {
 	}
 };
 
+<<<<<<< HEAD
 static const char *cdns_torrent_get_phy_type(enum cdns_torrent_phy_type phy_type)
 {
 	switch (phy_type) {
@@ -1058,10 +1158,378 @@ static int cdns_torrent_dp_set_power_state(struct cdns_torrent_phy *cdns_phy,
 				       POLL_TIMEOUT_US);
 	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_POWER_STATE_REQ, 0x00000000);
 	ndelay(100);
+=======
+/*
+ * Enable or disable PLL for selected lanes.
+ */
+static int cdns_torrent_dp_set_pll_en(struct cdns_torrent_phy *cdns_phy,
+				      struct phy_configure_opts_dp *dp,
+				      bool enable)
+{
+	u32 rd_val;
+	u32 ret;
+	struct regmap *regmap = cdns_phy->regmap_dptx_phy_reg;
+
+	/*
+	 * Used to determine, which bits to check for or enable in
+	 * PHY_PMA_XCVR_PLLCLK_EN register.
+	 */
+	u32 pll_bits;
+	/* Used to enable or disable lanes. */
+	u32 pll_val;
+
+	/* Select values of registers and mask, depending on enabled lane
+	 * count.
+	 */
+	switch (dp->lanes) {
+	/* lane 0 */
+	case (1):
+		pll_bits = 0x00000001;
+		break;
+	/* lanes 0-1 */
+	case (2):
+		pll_bits = 0x00000003;
+		break;
+	/* lanes 0-3, all */
+	default:
+		pll_bits = 0x0000000F;
+		break;
+	}
+
+	if (enable)
+		pll_val = pll_bits;
+	else
+		pll_val = 0x00000000;
+
+	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_PLLCLK_EN, pll_val);
+
+	/* Wait for acknowledgment from PHY. */
+	ret = regmap_read_poll_timeout(regmap,
+				       PHY_PMA_XCVR_PLLCLK_EN_ACK,
+				       rd_val,
+				       (rd_val & pll_bits) == pll_val,
+				       0, POLL_TIMEOUT_US);
+	ndelay(100);
+	return ret;
+}
+
+/*
+ * Perform register operations related to setting link rate, once powerstate is
+ * set and PLL disable request was processed.
+ */
+static int cdns_torrent_dp_configure_rate(struct cdns_torrent_phy *cdns_phy,
+					  struct phy_configure_opts_dp *dp)
+{
+	u32 ret;
+	u32 read_val;
+
+	/* Disable the cmn_pll0_en before re-programming the new data rate. */
+	regmap_field_write(cdns_phy->phy_pma_pll_raw_ctrl, 0x0);
+
+	/*
+	 * Wait for PLL ready de-assertion.
+	 * For PLL0 - PHY_PMA_CMN_CTRL2[2] == 1
+	 */
+	ret = regmap_field_read_poll_timeout(cdns_phy->phy_pma_cmn_ctrl_2,
+					     read_val,
+					     ((read_val >> 2) & 0x01) != 0,
+					     0, POLL_TIMEOUT_US);
+	if (ret)
+		return ret;
+	ndelay(200);
+
+	/* DP Rate Change - VCO Output settings. */
+	if (cdns_phy->ref_clk_rate == REF_CLK_19_2MHz) {
+		/* PMA common configuration 19.2MHz */
+		cdns_torrent_dp_pma_cmn_vco_cfg_19_2mhz(cdns_phy, dp->link_rate,
+							dp->ssc);
+		cdns_torrent_dp_pma_cmn_cfg_19_2mhz(cdns_phy);
+	} else if (cdns_phy->ref_clk_rate == REF_CLK_25MHz) {
+		/* PMA common configuration 25MHz */
+		cdns_torrent_dp_pma_cmn_vco_cfg_25mhz(cdns_phy, dp->link_rate,
+						      dp->ssc);
+		cdns_torrent_dp_pma_cmn_cfg_25mhz(cdns_phy);
+	}
+	cdns_torrent_dp_pma_cmn_rate(cdns_phy, dp->link_rate, dp->lanes);
+
+	/* Enable the cmn_pll0_en. */
+	regmap_field_write(cdns_phy->phy_pma_pll_raw_ctrl, 0x3);
+
+	/*
+	 * Wait for PLL ready assertion.
+	 * For PLL0 - PHY_PMA_CMN_CTRL2[0] == 1
+	 */
+	ret = regmap_field_read_poll_timeout(cdns_phy->phy_pma_cmn_ctrl_2,
+					     read_val,
+					     (read_val & 0x01) != 0,
+					     0, POLL_TIMEOUT_US);
+	return ret;
+}
+
+/*
+ * Verify, that parameters to configure PHY with are correct.
+ */
+static int cdns_torrent_dp_verify_config(struct cdns_torrent_inst *inst,
+					 struct phy_configure_opts_dp *dp)
+{
+	u8 i;
+
+	/* If changing link rate was required, verify it's supported. */
+	if (dp->set_rate) {
+		switch (dp->link_rate) {
+		case 1620:
+		case 2160:
+		case 2430:
+		case 2700:
+		case 3240:
+		case 4320:
+		case 5400:
+		case 8100:
+			/* valid bit rate */
+			break;
+		default:
+			return -EINVAL;
+		}
+	}
+
+	/* Verify lane count. */
+	switch (dp->lanes) {
+	case 1:
+	case 2:
+	case 4:
+		/* valid lane count. */
+		break;
+	default:
+		return -EINVAL;
+	}
+
+	/* Check against actual number of PHY's lanes. */
+	if (dp->lanes > inst->num_lanes)
+		return -EINVAL;
+
+	/*
+	 * If changing voltages is required, check swing and pre-emphasis
+	 * levels, per-lane.
+	 */
+	if (dp->set_voltages) {
+		/* Lane count verified previously. */
+		for (i = 0; i < dp->lanes; i++) {
+			if (dp->voltage[i] > 3 || dp->pre[i] > 3)
+				return -EINVAL;
+
+			/* Sum of voltage swing and pre-emphasis levels cannot
+			 * exceed 3.
+			 */
+			if (dp->voltage[i] + dp->pre[i] > 3)
+				return -EINVAL;
+		}
+	}
+
+	return 0;
+}
+
+/* Set power state A0 and PLL clock enable to 0 on enabled lanes. */
+static void cdns_torrent_dp_set_a0_pll(struct cdns_torrent_phy *cdns_phy,
+				       u32 num_lanes)
+{
+	struct regmap *regmap = cdns_phy->regmap_dptx_phy_reg;
+	u32 pwr_state = cdns_torrent_dp_read(regmap,
+					     PHY_PMA_XCVR_POWER_STATE_REQ);
+	u32 pll_clk_en = cdns_torrent_dp_read(regmap,
+					      PHY_PMA_XCVR_PLLCLK_EN);
+
+	/* Lane 0 is always enabled. */
+	pwr_state &= ~(PMA_XCVR_POWER_STATE_REQ_LN_MASK <<
+		       PHY_POWER_STATE_LN_0);
+	pll_clk_en &= ~0x01U;
+
+	if (num_lanes > 1) {
+		/* lane 1 */
+		pwr_state &= ~(PMA_XCVR_POWER_STATE_REQ_LN_MASK <<
+			       PHY_POWER_STATE_LN_1);
+		pll_clk_en &= ~(0x01U << 1);
+	}
+
+	if (num_lanes > 2) {
+		/* lanes 2 and 3 */
+		pwr_state &= ~(PMA_XCVR_POWER_STATE_REQ_LN_MASK <<
+			       PHY_POWER_STATE_LN_2);
+		pwr_state &= ~(PMA_XCVR_POWER_STATE_REQ_LN_MASK <<
+			       PHY_POWER_STATE_LN_3);
+		pll_clk_en &= ~(0x01U << 2);
+		pll_clk_en &= ~(0x01U << 3);
+	}
+
+	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_POWER_STATE_REQ, pwr_state);
+	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_PLLCLK_EN, pll_clk_en);
+}
+
+/* Configure lane count as required. */
+static int cdns_torrent_dp_set_lanes(struct cdns_torrent_phy *cdns_phy,
+				     struct phy_configure_opts_dp *dp)
+{
+	u32 value;
+	u32 ret;
+	struct regmap *regmap = cdns_phy->regmap_dptx_phy_reg;
+	u8 lane_mask = (1 << dp->lanes) - 1;
+
+	value = cdns_torrent_dp_read(regmap, PHY_RESET);
+	/* clear pma_tx_elec_idle_ln_* bits. */
+	value &= ~PMA_TX_ELEC_IDLE_MASK;
+	/* Assert pma_tx_elec_idle_ln_* for disabled lanes. */
+	value |= ((~lane_mask) << PMA_TX_ELEC_IDLE_SHIFT) &
+		 PMA_TX_ELEC_IDLE_MASK;
+	cdns_torrent_dp_write(regmap, PHY_RESET, value);
+
+	/* reset the link by asserting phy_l00_reset_n low */
+	cdns_torrent_dp_write(regmap, PHY_RESET,
+			      value & (~PHY_L00_RESET_N_MASK));
+
+	/*
+	 * Assert lane reset on unused lanes and lane 0 so they remain in reset
+	 * and powered down when re-enabling the link
+	 */
+	value = (value & 0x0000FFF0) | (0x0000000E & lane_mask);
+	cdns_torrent_dp_write(regmap, PHY_RESET, value);
+
+	cdns_torrent_dp_set_a0_pll(cdns_phy, dp->lanes);
+
+	/* release phy_l0*_reset_n based on used laneCount */
+	value = (value & 0x0000FFF0) | (0x0000000F & lane_mask);
+	cdns_torrent_dp_write(regmap, PHY_RESET, value);
+
+	/* Wait, until PHY gets ready after releasing PHY reset signal. */
+	ret = cdns_torrent_dp_wait_pma_cmn_ready(cdns_phy);
+	if (ret)
+		return ret;
+
+	ndelay(100);
+
+	/* release pma_xcvr_pllclk_en_ln_*, only for the master lane */
+	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_PLLCLK_EN, 0x0001);
+
+	ret = cdns_torrent_dp_run(cdns_phy, dp->lanes);
 
 	return ret;
 }
 
+/* Configure link rate as required. */
+static int cdns_torrent_dp_set_rate(struct cdns_torrent_phy *cdns_phy,
+				    struct phy_configure_opts_dp *dp)
+{
+	u32 ret;
+
+	ret = cdns_torrent_dp_set_power_state(cdns_phy, dp->lanes,
+					      POWERSTATE_A3);
+	if (ret)
+		return ret;
+	ret = cdns_torrent_dp_set_pll_en(cdns_phy, dp, false);
+	if (ret)
+		return ret;
+	ndelay(200);
+
+	ret = cdns_torrent_dp_configure_rate(cdns_phy, dp);
+	if (ret)
+		return ret;
+	ndelay(200);
+
+	ret = cdns_torrent_dp_set_pll_en(cdns_phy, dp, true);
+	if (ret)
+		return ret;
+	ret = cdns_torrent_dp_set_power_state(cdns_phy, dp->lanes,
+					      POWERSTATE_A2);
+	if (ret)
+		return ret;
+	ret = cdns_torrent_dp_set_power_state(cdns_phy, dp->lanes,
+					      POWERSTATE_A0);
+	if (ret)
+		return ret;
+	ndelay(900);
+
+	return ret;
+}
+
+/* Configure voltage swing and pre-emphasis for all enabled lanes. */
+static void cdns_torrent_dp_set_voltages(struct cdns_torrent_phy *cdns_phy,
+					 struct phy_configure_opts_dp *dp)
+{
+	u8 lane;
+	u16 val;
+
+	for (lane = 0; lane < dp->lanes; lane++) {
+		val = cdns_torrent_phy_read(cdns_phy->regmap_tx_lane_cdb[lane],
+					    TX_DIAG_ACYA);
+		/*
+		 * Write 1 to register bit TX_DIAG_ACYA[0] to freeze the
+		 * current state of the analog TX driver.
+		 */
+		val |= TX_DIAG_ACYA_HBDC_MASK;
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       TX_DIAG_ACYA, val);
+
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       TX_TXCC_CTRL, 0x08A4);
+		val = vltg_coeff[dp->voltage[lane]][dp->pre[lane]].diag_tx_drv;
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       DRV_DIAG_TX_DRV, val);
+		val = vltg_coeff[dp->voltage[lane]][dp->pre[lane]].mgnfs_mult;
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       TX_TXCC_MGNFS_MULT_000,
+				       val);
+		val = vltg_coeff[dp->voltage[lane]][dp->pre[lane]].cpost_mult;
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       TX_TXCC_CPOST_MULT_00,
+				       val);
+
+		val = cdns_torrent_phy_read(cdns_phy->regmap_tx_lane_cdb[lane],
+					    TX_DIAG_ACYA);
+		/*
+		 * Write 0 to register bit TX_DIAG_ACYA[0] to allow the state of
+		 * analog TX driver to reflect the new programmed one.
+		 */
+		val &= ~TX_DIAG_ACYA_HBDC_MASK;
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       TX_DIAG_ACYA, val);
+	}
+};
+
+static int cdns_torrent_dp_configure(struct phy *phy,
+				     union phy_configure_opts *opts)
+{
+	struct cdns_torrent_inst *inst = phy_get_drvdata(phy);
+	struct cdns_torrent_phy *cdns_phy = dev_get_drvdata(phy->dev.parent);
+	int ret;
+
+	ret = cdns_torrent_dp_verify_config(inst, &opts->dp);
+	if (ret) {
+		dev_err(&phy->dev, "invalid params for phy configure\n");
+		return ret;
+	}
+
+	if (opts->dp.set_lanes) {
+		ret = cdns_torrent_dp_set_lanes(cdns_phy, &opts->dp);
+		if (ret) {
+			dev_err(&phy->dev, "cdns_torrent_dp_set_lanes failed\n");
+			return ret;
+		}
+	}
+
+	if (opts->dp.set_rate) {
+		ret = cdns_torrent_dp_set_rate(cdns_phy, &opts->dp);
+		if (ret) {
+			dev_err(&phy->dev, "cdns_torrent_dp_set_rate failed\n");
+			return ret;
+		}
+	}
+
+	if (opts->dp.set_voltages)
+		cdns_torrent_dp_set_voltages(cdns_phy, &opts->dp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	return ret;
+}
+
+<<<<<<< HEAD
 static int cdns_torrent_dp_run(struct cdns_torrent_phy *cdns_phy, u32 num_lanes)
 {
 	unsigned int read_val;
@@ -1090,11 +1558,81 @@ static int cdns_torrent_dp_run(struct cdns_torrent_phy *cdns_phy, u32 num_lanes)
 
 	ret = cdns_torrent_dp_set_power_state(cdns_phy, num_lanes,
 					      POWERSTATE_A0);
+=======
+static int cdns_torrent_dp_init(struct phy *phy)
+{
+	unsigned char lane_bits;
+	int ret;
+	struct cdns_torrent_inst *inst = phy_get_drvdata(phy);
+	struct cdns_torrent_phy *cdns_phy = dev_get_drvdata(phy->dev.parent);
+	struct regmap *regmap = cdns_phy->regmap_dptx_phy_reg;
+
+	switch (cdns_phy->ref_clk_rate) {
+	case REF_CLK_19_2MHz:
+	case REF_CLK_25MHz:
+		/* Valid Ref Clock Rate */
+		break;
+	default:
+		dev_err(cdns_phy->dev, "Unsupported Ref Clock Rate\n");
+		return -EINVAL;
+	}
+
+	cdns_torrent_dp_write(regmap, PHY_AUX_CTRL, 0x0003); /* enable AUX */
+
+	/* PHY PMA registers configuration function */
+	cdns_torrent_dp_pma_cfg(cdns_phy, inst);
+
+	/*
+	 * Set lines power state to A0
+	 * Set lines pll clk enable to 0
+	 */
+	cdns_torrent_dp_set_a0_pll(cdns_phy, inst->num_lanes);
+
+	/*
+	 * release phy_l0*_reset_n and pma_tx_elec_idle_ln_* based on
+	 * used lanes
+	 */
+	lane_bits = (1 << inst->num_lanes) - 1;
+	cdns_torrent_dp_write(regmap, PHY_RESET,
+			      ((0xF & ~lane_bits) << 4) | (0xF & lane_bits));
+
+	/* release pma_xcvr_pllclk_en_ln_*, only for the master lane */
+	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_PLLCLK_EN, 0x0001);
+
+	/* PHY PMA registers configuration functions */
+	/* Initialize PHY with max supported link rate, without SSC. */
+	if (cdns_phy->ref_clk_rate == REF_CLK_19_2MHz)
+		cdns_torrent_dp_pma_cmn_vco_cfg_19_2mhz(cdns_phy,
+							cdns_phy->max_bit_rate,
+							false);
+	else if (cdns_phy->ref_clk_rate == REF_CLK_25MHz)
+		cdns_torrent_dp_pma_cmn_vco_cfg_25mhz(cdns_phy,
+						      cdns_phy->max_bit_rate,
+						      false);
+	cdns_torrent_dp_pma_cmn_rate(cdns_phy, cdns_phy->max_bit_rate,
+				     inst->num_lanes);
+
+	/* take out of reset */
+	regmap_field_write(cdns_phy->phy_reset_ctrl, 0x1);
+
+	cdns_torrent_phy_on(phy);
+
+	ret = cdns_torrent_dp_wait_pma_cmn_ready(cdns_phy);
+	if (ret)
+		return ret;
+
+	ret = cdns_torrent_dp_run(cdns_phy, inst->num_lanes);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
 
+<<<<<<< HEAD
 static int cdns_torrent_dp_wait_pma_cmn_ready(struct cdns_torrent_phy *cdns_phy)
+=======
+static
+int cdns_torrent_dp_wait_pma_cmn_ready(struct cdns_torrent_phy *cdns_phy)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned int reg;
 	int ret;
@@ -1111,6 +1649,7 @@ static int cdns_torrent_dp_wait_pma_cmn_ready(struct cdns_torrent_phy *cdns_phy)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void cdns_torrent_dp_pma_cmn_rate(struct cdns_torrent_phy *cdns_phy,
 					 u32 rate, u32 num_lanes)
 {
@@ -1588,10 +2127,602 @@ static int cdns_torrent_dp_start(struct cdns_torrent_phy *cdns_phy,
 		return ret;
 
 	ret = cdns_torrent_dp_run(cdns_phy, inst->num_lanes);
+=======
+static void cdns_torrent_dp_pma_cfg(struct cdns_torrent_phy *cdns_phy,
+				    struct cdns_torrent_inst *inst)
+{
+	unsigned int i;
+
+	if (cdns_phy->ref_clk_rate == REF_CLK_19_2MHz)
+		/* PMA common configuration 19.2MHz */
+		cdns_torrent_dp_pma_cmn_cfg_19_2mhz(cdns_phy);
+	else if (cdns_phy->ref_clk_rate == REF_CLK_25MHz)
+		/* PMA common configuration 25MHz */
+		cdns_torrent_dp_pma_cmn_cfg_25mhz(cdns_phy);
+
+	/* PMA lane configuration to deal with multi-link operation */
+	for (i = 0; i < inst->num_lanes; i++)
+		cdns_torrent_dp_pma_lane_cfg(cdns_phy, i);
+}
+
+static
+void cdns_torrent_dp_pma_cmn_cfg_19_2mhz(struct cdns_torrent_phy *cdns_phy)
+{
+	struct regmap *regmap = cdns_phy->regmap_common_cdb;
+
+	/* refclock registers - assumes 19.2 MHz refclock */
+	cdns_torrent_phy_write(regmap, CMN_SSM_BIAS_TMR, 0x0014);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM0_PLLPRE_TMR, 0x0027);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM0_PLLLOCK_TMR, 0x00A1);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM1_PLLPRE_TMR, 0x0027);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM1_PLLLOCK_TMR, 0x00A1);
+	cdns_torrent_phy_write(regmap, CMN_BGCAL_INIT_TMR, 0x0060);
+	cdns_torrent_phy_write(regmap, CMN_BGCAL_ITER_TMR, 0x0060);
+	cdns_torrent_phy_write(regmap, CMN_IBCAL_INIT_TMR, 0x0014);
+	cdns_torrent_phy_write(regmap, CMN_TXPUCAL_INIT_TMR, 0x0018);
+	cdns_torrent_phy_write(regmap, CMN_TXPUCAL_ITER_TMR, 0x0005);
+	cdns_torrent_phy_write(regmap, CMN_TXPDCAL_INIT_TMR, 0x0018);
+	cdns_torrent_phy_write(regmap, CMN_TXPDCAL_ITER_TMR, 0x0005);
+	cdns_torrent_phy_write(regmap, CMN_RXCAL_INIT_TMR, 0x0240);
+	cdns_torrent_phy_write(regmap, CMN_RXCAL_ITER_TMR, 0x0005);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_INIT_TMR, 0x0002);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_ITER_TMR, 0x0002);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_REFTIM_START, 0x000B);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_PLLCNT_START, 0x0137);
+
+	/* PLL registers */
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL0_CP_PADJ_M0, 0x0509);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL0_CP_IADJ_M0, 0x0F00);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL0_FILT_PADJ_M0, 0x0F08);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_DSM_DIAG_M0, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL1_CP_PADJ_M0, 0x0509);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL1_CP_IADJ_M0, 0x0F00);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL1_FILT_PADJ_M0, 0x0F08);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_DSM_DIAG_M0, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_INIT_TMR, 0x00C0);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_ITER_TMR, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_INIT_TMR, 0x00C0);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_ITER_TMR, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_REFTIM_START, 0x0260);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_TCTRL, 0x0003);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_REFTIM_START, 0x0260);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_TCTRL, 0x0003);
+}
+
+/*
+ * Set registers responsible for enabling and configuring SSC, with second and
+ * third register values provided by parameters.
+ */
+static
+void cdns_torrent_dp_enable_ssc_19_2mhz(struct cdns_torrent_phy *cdns_phy,
+					u32 ctrl2_val, u32 ctrl3_val)
+{
+	struct regmap *regmap = cdns_phy->regmap_common_cdb;
+
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL1_M0, 0x0001);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL1_M0, ctrl2_val);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL1_M0, ctrl3_val);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL4_M0, 0x0003);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL1_M0, 0x0001);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL1_M0, ctrl2_val);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL1_M0, ctrl3_val);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL4_M0, 0x0003);
+}
+
+static
+void cdns_torrent_dp_pma_cmn_vco_cfg_19_2mhz(struct cdns_torrent_phy *cdns_phy,
+					     u32 rate, bool ssc)
+{
+	struct regmap *regmap = cdns_phy->regmap_common_cdb;
+
+	/* Assumes 19.2 MHz refclock */
+	switch (rate) {
+	/* Setting VCO for 10.8GHz */
+	case 2700:
+	case 5400:
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_INTDIV_M0, 0x0119);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVL_M0, 0x4000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_HIGH_THR_M0, 0x00BC);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL0_CTRL_M0, 0x0012);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_INTDIV_M0, 0x0119);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVL_M0, 0x4000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_HIGH_THR_M0, 0x00BC);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL1_CTRL_M0, 0x0012);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_19_2mhz(cdns_phy, 0x033A,
+							   0x006A);
+		break;
+	/* Setting VCO for 9.72GHz */
+	case 1620:
+	case 2430:
+	case 3240:
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_INTDIV_M0, 0x01FA);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVL_M0, 0x4000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_HIGH_THR_M0, 0x0152);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL0_CTRL_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_INTDIV_M0, 0x01FA);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVL_M0, 0x4000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_HIGH_THR_M0, 0x0152);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL1_CTRL_M0, 0x0002);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_19_2mhz(cdns_phy, 0x05DD,
+							   0x0069);
+		break;
+	/* Setting VCO for 8.64GHz */
+	case 2160:
+	case 4320:
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_INTDIV_M0, 0x01C2);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVL_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_HIGH_THR_M0, 0x012C);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL0_CTRL_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_INTDIV_M0, 0x01C2);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVL_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_HIGH_THR_M0, 0x012C);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL1_CTRL_M0, 0x0002);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_19_2mhz(cdns_phy, 0x0536,
+							   0x0069);
+		break;
+	/* Setting VCO for 8.1GHz */
+	case 8100:
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_INTDIV_M0, 0x01A5);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVL_M0, 0xE000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_HIGH_THR_M0, 0x011A);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL0_CTRL_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_INTDIV_M0, 0x01A5);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVL_M0, 0xE000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_HIGH_THR_M0, 0x011A);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PDIAG_PLL1_CTRL_M0, 0x0002);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_19_2mhz(cdns_phy, 0x04D7,
+							   0x006A);
+		break;
+	}
+
+	if (ssc) {
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_VCOCAL_PLLCNT_START, 0x025E);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_LOCK_PLLCNT_THR, 0x0005);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_VCOCAL_PLLCNT_START, 0x025E);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_LOCK_PLLCNT_THR, 0x0005);
+	} else {
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_VCOCAL_PLLCNT_START, 0x0260);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_VCOCAL_PLLCNT_START, 0x0260);
+		/* Set reset register values to disable SSC */
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_SS_CTRL1_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_SS_CTRL2_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_SS_CTRL3_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_SS_CTRL4_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_LOCK_PLLCNT_THR, 0x0003);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_SS_CTRL1_M0, 0x0002);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_SS_CTRL2_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_SS_CTRL3_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_SS_CTRL4_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_LOCK_PLLCNT_THR, 0x0003);
+	}
+
+	cdns_torrent_phy_write(regmap, CMN_PLL0_LOCK_REFCNT_START, 0x0099);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_LOCK_PLLCNT_START, 0x0099);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_LOCK_REFCNT_START, 0x0099);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_LOCK_PLLCNT_START, 0x0099);
+}
+
+static
+void cdns_torrent_dp_pma_cmn_cfg_25mhz(struct cdns_torrent_phy *cdns_phy)
+{
+	struct regmap *regmap = cdns_phy->regmap_common_cdb;
+
+	/* refclock registers - assumes 25 MHz refclock */
+	cdns_torrent_phy_write(regmap, CMN_SSM_BIAS_TMR, 0x0019);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM0_PLLPRE_TMR, 0x0032);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM0_PLLLOCK_TMR, 0x00D1);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM1_PLLPRE_TMR, 0x0032);
+	cdns_torrent_phy_write(regmap, CMN_PLLSM1_PLLLOCK_TMR, 0x00D1);
+	cdns_torrent_phy_write(regmap, CMN_BGCAL_INIT_TMR, 0x007D);
+	cdns_torrent_phy_write(regmap, CMN_BGCAL_ITER_TMR, 0x007D);
+	cdns_torrent_phy_write(regmap, CMN_IBCAL_INIT_TMR, 0x0019);
+	cdns_torrent_phy_write(regmap, CMN_TXPUCAL_INIT_TMR, 0x001E);
+	cdns_torrent_phy_write(regmap, CMN_TXPUCAL_ITER_TMR, 0x0006);
+	cdns_torrent_phy_write(regmap, CMN_TXPDCAL_INIT_TMR, 0x001E);
+	cdns_torrent_phy_write(regmap, CMN_TXPDCAL_ITER_TMR, 0x0006);
+	cdns_torrent_phy_write(regmap, CMN_RXCAL_INIT_TMR, 0x02EE);
+	cdns_torrent_phy_write(regmap, CMN_RXCAL_ITER_TMR, 0x0006);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_INIT_TMR, 0x0002);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_ITER_TMR, 0x0002);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_REFTIM_START, 0x000E);
+	cdns_torrent_phy_write(regmap, CMN_SD_CAL_PLLCNT_START, 0x012B);
+
+	/* PLL registers */
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL0_CP_PADJ_M0, 0x0509);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL0_CP_IADJ_M0, 0x0F00);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL0_FILT_PADJ_M0, 0x0F08);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_DSM_DIAG_M0, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL1_CP_PADJ_M0, 0x0509);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL1_CP_IADJ_M0, 0x0F00);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL1_FILT_PADJ_M0, 0x0F08);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_DSM_DIAG_M0, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_INIT_TMR, 0x00FA);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_ITER_TMR, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_INIT_TMR, 0x00FA);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_ITER_TMR, 0x0004);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_REFTIM_START, 0x0317);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_VCOCAL_TCTRL, 0x0003);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_REFTIM_START, 0x0317);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_VCOCAL_TCTRL, 0x0003);
+}
+
+/*
+ * Set registers responsible for enabling and configuring SSC, with second
+ * register value provided by a parameter.
+ */
+static void cdns_torrent_dp_enable_ssc_25mhz(struct cdns_torrent_phy *cdns_phy,
+					     u32 ctrl2_val)
+{
+	struct regmap *regmap = cdns_phy->regmap_common_cdb;
+
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL1_M0, 0x0001);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL1_M0, ctrl2_val);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL1_M0, 0x007F);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL4_M0, 0x0003);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL1_M0, 0x0001);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL1_M0, ctrl2_val);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL1_M0, 0x007F);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL4_M0, 0x0003);
+}
+
+static
+void cdns_torrent_dp_pma_cmn_vco_cfg_25mhz(struct cdns_torrent_phy *cdns_phy,
+					   u32 rate, bool ssc)
+{
+	struct regmap *regmap = cdns_phy->regmap_common_cdb;
+
+	/* Assumes 25 MHz refclock */
+	switch (rate) {
+	/* Setting VCO for 10.8GHz */
+	case 2700:
+	case 5400:
+		cdns_torrent_phy_write(regmap, CMN_PLL0_INTDIV_M0, 0x01B0);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVL_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_HIGH_THR_M0, 0x0120);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_INTDIV_M0, 0x01B0);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVL_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_HIGH_THR_M0, 0x0120);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_25mhz(cdns_phy, 0x0423);
+		break;
+	/* Setting VCO for 9.72GHz */
+	case 1620:
+	case 2430:
+	case 3240:
+		cdns_torrent_phy_write(regmap, CMN_PLL0_INTDIV_M0, 0x0184);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVL_M0, 0xCCCD);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_HIGH_THR_M0, 0x0104);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_INTDIV_M0, 0x0184);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVL_M0, 0xCCCD);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_HIGH_THR_M0, 0x0104);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_25mhz(cdns_phy, 0x03B9);
+		break;
+	/* Setting VCO for 8.64GHz */
+	case 2160:
+	case 4320:
+		cdns_torrent_phy_write(regmap, CMN_PLL0_INTDIV_M0, 0x0159);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVL_M0, 0x999A);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_HIGH_THR_M0, 0x00E7);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_INTDIV_M0, 0x0159);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVL_M0, 0x999A);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_HIGH_THR_M0, 0x00E7);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_25mhz(cdns_phy, 0x034F);
+		break;
+	/* Setting VCO for 8.1GHz */
+	case 8100:
+		cdns_torrent_phy_write(regmap, CMN_PLL0_INTDIV_M0, 0x0144);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVL_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_HIGH_THR_M0, 0x00D8);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_INTDIV_M0, 0x0144);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVL_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_FRACDIVH_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_HIGH_THR_M0, 0x00D8);
+		if (ssc)
+			cdns_torrent_dp_enable_ssc_25mhz(cdns_phy, 0x031A);
+		break;
+	}
+
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL0_CTRL_M0, 0x0002);
+	cdns_torrent_phy_write(regmap, CMN_PDIAG_PLL1_CTRL_M0, 0x0002);
+
+	if (ssc) {
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_VCOCAL_PLLCNT_START, 0x0315);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_LOCK_PLLCNT_THR, 0x0005);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_VCOCAL_PLLCNT_START, 0x0315);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_LOCK_PLLCNT_THR, 0x0005);
+	} else {
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_VCOCAL_PLLCNT_START, 0x0317);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_VCOCAL_PLLCNT_START, 0x0317);
+		/* Set reset register values to disable SSC */
+		cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL1_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL2_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL3_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL0_SS_CTRL4_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL0_LOCK_PLLCNT_THR, 0x0003);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL1_M0, 0x0002);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL2_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL3_M0, 0x0000);
+		cdns_torrent_phy_write(regmap, CMN_PLL1_SS_CTRL4_M0, 0x0000);
+		cdns_torrent_phy_write(regmap,
+				       CMN_PLL1_LOCK_PLLCNT_THR, 0x0003);
+	}
+
+	cdns_torrent_phy_write(regmap, CMN_PLL0_LOCK_REFCNT_START, 0x00C7);
+	cdns_torrent_phy_write(regmap, CMN_PLL0_LOCK_PLLCNT_START, 0x00C7);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_LOCK_REFCNT_START, 0x00C7);
+	cdns_torrent_phy_write(regmap, CMN_PLL1_LOCK_PLLCNT_START, 0x00C7);
+}
+
+static void cdns_torrent_dp_pma_cmn_rate(struct cdns_torrent_phy *cdns_phy,
+					 u32 rate, u32 num_lanes)
+{
+	unsigned int clk_sel_val = 0;
+	unsigned int hsclk_div_val = 0;
+	unsigned int i;
+
+	/* 16'h0000 for single DP link configuration */
+	regmap_field_write(cdns_phy->phy_pll_cfg, 0x0);
+
+	switch (rate) {
+	case 1620:
+		clk_sel_val = 0x0f01;
+		hsclk_div_val = 2;
+		break;
+	case 2160:
+	case 2430:
+	case 2700:
+		clk_sel_val = 0x0701;
+		hsclk_div_val = 1;
+		break;
+	case 3240:
+		clk_sel_val = 0x0b00;
+		hsclk_div_val = 2;
+		break;
+	case 4320:
+	case 5400:
+		clk_sel_val = 0x0301;
+		hsclk_div_val = 0;
+		break;
+	case 8100:
+		clk_sel_val = 0x0200;
+		hsclk_div_val = 0;
+		break;
+	}
+
+	cdns_torrent_phy_write(cdns_phy->regmap_common_cdb,
+			       CMN_PDIAG_PLL0_CLK_SEL_M0, clk_sel_val);
+	cdns_torrent_phy_write(cdns_phy->regmap_common_cdb,
+			       CMN_PDIAG_PLL1_CLK_SEL_M0, clk_sel_val);
+
+	/* PMA lane configuration to deal with multi-link operation */
+	for (i = 0; i < num_lanes; i++)
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[i],
+				       XCVR_DIAG_HSCLK_DIV, hsclk_div_val);
+}
+
+static void cdns_torrent_dp_pma_lane_cfg(struct cdns_torrent_phy *cdns_phy,
+					 unsigned int lane)
+{
+	/* Per lane, refclock-dependent receiver detection setting */
+	if (cdns_phy->ref_clk_rate == REF_CLK_19_2MHz)
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       TX_RCVDET_ST_TMR, 0x0780);
+	else if (cdns_phy->ref_clk_rate == REF_CLK_25MHz)
+		cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+				       TX_RCVDET_ST_TMR, 0x09C4);
+
+	/* Writing Tx/Rx Power State Controllers registers */
+	cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+			       TX_PSC_A0, 0x00FB);
+	cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+			       TX_PSC_A2, 0x04AA);
+	cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+			       TX_PSC_A3, 0x04AA);
+	cdns_torrent_phy_write(cdns_phy->regmap_rx_lane_cdb[lane],
+			       RX_PSC_A0, 0x0000);
+	cdns_torrent_phy_write(cdns_phy->regmap_rx_lane_cdb[lane],
+			       RX_PSC_A2, 0x0000);
+	cdns_torrent_phy_write(cdns_phy->regmap_rx_lane_cdb[lane],
+			       RX_PSC_A3, 0x0000);
+
+	cdns_torrent_phy_write(cdns_phy->regmap_rx_lane_cdb[lane],
+			       RX_PSC_CAL, 0x0000);
+
+	cdns_torrent_phy_write(cdns_phy->regmap_rx_lane_cdb[lane],
+			       RX_REE_GCSM1_CTRL, 0x0000);
+	cdns_torrent_phy_write(cdns_phy->regmap_rx_lane_cdb[lane],
+			       RX_REE_GCSM2_CTRL, 0x0000);
+	cdns_torrent_phy_write(cdns_phy->regmap_rx_lane_cdb[lane],
+			       RX_REE_PERGCSM_CTRL, 0x0000);
+
+	cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+			       XCVR_DIAG_BIDI_CTRL, 0x000F);
+	cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+			       XCVR_DIAG_PLLDRC_CTRL, 0x0001);
+	cdns_torrent_phy_write(cdns_phy->regmap_tx_lane_cdb[lane],
+			       XCVR_DIAG_HSCLK_SEL, 0x0000);
+}
+
+static int cdns_torrent_dp_set_power_state(struct cdns_torrent_phy *cdns_phy,
+					   u32 num_lanes,
+					   enum phy_powerstate powerstate)
+{
+	/* Register value for power state for a single byte. */
+	u32 value_part;
+	u32 value;
+	u32 mask;
+	u32 read_val;
+	u32 ret;
+	struct regmap *regmap = cdns_phy->regmap_dptx_phy_reg;
+
+	switch (powerstate) {
+	case (POWERSTATE_A0):
+		value_part = 0x01U;
+		break;
+	case (POWERSTATE_A2):
+		value_part = 0x04U;
+		break;
+	default:
+		/* Powerstate A3 */
+		value_part = 0x08U;
+		break;
+	}
+
+	/* Select values of registers and mask, depending on enabled
+	 * lane count.
+	 */
+	switch (num_lanes) {
+	/* lane 0 */
+	case (1):
+		value = value_part;
+		mask = 0x0000003FU;
+		break;
+	/* lanes 0-1 */
+	case (2):
+		value = (value_part
+			 | (value_part << 8));
+		mask = 0x00003F3FU;
+		break;
+	/* lanes 0-3, all */
+	default:
+		value = (value_part
+			 | (value_part << 8)
+			 | (value_part << 16)
+			 | (value_part << 24));
+		mask = 0x3F3F3F3FU;
+		break;
+	}
+
+	/* Set power state A<n>. */
+	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_POWER_STATE_REQ, value);
+	/* Wait, until PHY acknowledges power state completion. */
+	ret = regmap_read_poll_timeout(regmap, PHY_PMA_XCVR_POWER_STATE_ACK,
+				       read_val, (read_val & mask) == value, 0,
+				       POLL_TIMEOUT_US);
+	cdns_torrent_dp_write(regmap, PHY_PMA_XCVR_POWER_STATE_REQ, 0x00000000);
+	ndelay(100);
 
 	return ret;
 }
 
+static int cdns_torrent_dp_run(struct cdns_torrent_phy *cdns_phy, u32 num_lanes)
+{
+	unsigned int read_val;
+	int ret;
+	struct regmap *regmap = cdns_phy->regmap_dptx_phy_reg;
+
+	/*
+	 * waiting for ACK of pma_xcvr_pllclk_en_ln_*, only for the
+	 * master lane
+	 */
+	ret = regmap_read_poll_timeout(regmap, PHY_PMA_XCVR_PLLCLK_EN_ACK,
+				       read_val, read_val & 1,
+				       0, POLL_TIMEOUT_US);
+	if (ret == -ETIMEDOUT) {
+		dev_err(cdns_phy->dev,
+			"timeout waiting for link PLL clock enable ack\n");
+		return ret;
+	}
+
+	ndelay(100);
+
+	ret = cdns_torrent_dp_set_power_state(cdns_phy, num_lanes,
+					      POWERSTATE_A2);
+	if (ret)
+		return ret;
+
+	ret = cdns_torrent_dp_set_power_state(cdns_phy, num_lanes,
+					      POWERSTATE_A0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	return ret;
+}
+
+<<<<<<< HEAD
 static int cdns_torrent_dp_init(struct phy *phy)
 {
 	struct cdns_torrent_inst *inst = phy_get_drvdata(phy);
@@ -1613,6 +2744,8 @@ static int cdns_torrent_dp_init(struct phy *phy)
 	return cdns_torrent_dp_start(cdns_phy, inst, phy);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int cdns_torrent_derived_refclk_enable(struct clk_hw *hw)
 {
 	struct cdns_torrent_derived_refclk *derived_refclk = to_cdns_torrent_derived_refclk(hw);
@@ -1715,6 +2848,59 @@ static int cdns_torrent_derived_refclk_register(struct cdns_torrent_phy *cdns_ph
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static int cdns_torrent_phy_on(struct phy *phy)
+{
+	struct cdns_torrent_inst *inst = phy_get_drvdata(phy);
+	struct cdns_torrent_phy *cdns_phy = dev_get_drvdata(phy->dev.parent);
+	u32 read_val;
+	int ret;
+
+	if (cdns_phy->nsubnodes == 1) {
+		/* Take the PHY lane group out of reset */
+		reset_control_deassert(inst->lnk_rst);
+
+		/* Take the PHY out of reset */
+		ret = reset_control_deassert(cdns_phy->phy_rst);
+		if (ret)
+			return ret;
+	}
+
+	/*
+	 * Wait for cmn_ready assertion
+	 * PHY_PMA_CMN_CTRL1[0] == 1
+	 */
+	ret = regmap_field_read_poll_timeout(cdns_phy->phy_pma_cmn_ctrl_1,
+					     read_val, read_val, 1000,
+					     PLL_LOCK_TIMEOUT);
+	if (ret) {
+		dev_err(cdns_phy->dev, "Timeout waiting for CMN ready\n");
+		return ret;
+	}
+
+	mdelay(10);
+
+	return 0;
+}
+
+static int cdns_torrent_phy_off(struct phy *phy)
+{
+	struct cdns_torrent_inst *inst = phy_get_drvdata(phy);
+	struct cdns_torrent_phy *cdns_phy = dev_get_drvdata(phy->dev.parent);
+	int ret;
+
+	if (cdns_phy->nsubnodes != 1)
+		return 0;
+
+	ret = reset_control_assert(cdns_phy->phy_rst);
+	if (ret)
+		return ret;
+
+	return reset_control_assert(inst->lnk_rst);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct regmap *cdns_regmap_init(struct device *dev, void __iomem *base,
 				       u32 block_offset,
 				       u8 reg_offset_shift,
@@ -1755,7 +2941,10 @@ static int cdns_torrent_regfield_init(struct cdns_torrent_phy *cdns_phy)
 	struct device *dev = cdns_phy->dev;
 	struct regmap_field *field;
 	struct regmap *regmap;
+<<<<<<< HEAD
 	int i;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	regmap = cdns_phy->regmap_phy_pcs_common_cdb;
 	field = devm_regmap_field_alloc(dev, regmap, phy_pll_cfg);
@@ -1789,6 +2978,7 @@ static int cdns_torrent_regfield_init(struct cdns_torrent_phy *cdns_phy)
 	}
 	cdns_phy->phy_pma_pll_raw_ctrl = field;
 
+<<<<<<< HEAD
 	for (i = 0; i < MAX_NUM_LANES; i++) {
 		regmap = cdns_phy->regmap_phy_pcs_lane_cdb[i];
 		field = devm_regmap_field_alloc(dev, regmap, phy_pcs_iso_link_ctrl_1);
@@ -1799,6 +2989,8 @@ static int cdns_torrent_regfield_init(struct cdns_torrent_phy *cdns_phy)
 		cdns_phy->phy_pcs_iso_link_ctrl_1[i] = field;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1859,6 +3051,7 @@ static int cdns_torrent_regmap_init(struct cdns_torrent_phy *cdns_phy)
 			return PTR_ERR(regmap);
 		}
 		cdns_phy->regmap_rx_lane_cdb[i] = regmap;
+<<<<<<< HEAD
 
 		block_offset = TORRENT_PHY_PCS_LANE_CDB_OFFSET(i, block_offset_shift,
 							       reg_offset_shift);
@@ -1870,6 +3063,8 @@ static int cdns_torrent_regmap_init(struct cdns_torrent_phy *cdns_phy)
 			return PTR_ERR(regmap);
 		}
 		cdns_phy->regmap_phy_pcs_lane_cdb[i] = regmap;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	block_offset = TORRENT_COMMON_CDB_OFFSET;
@@ -1910,7 +3105,10 @@ static int cdns_torrent_phy_init(struct phy *phy)
 	struct cdns_torrent_phy *cdns_phy = dev_get_drvdata(phy->dev.parent);
 	const struct cdns_torrent_data *init_data = cdns_phy->init_data;
 	struct cdns_torrent_vals *cmn_vals, *tx_ln_vals, *rx_ln_vals;
+<<<<<<< HEAD
 	enum cdns_torrent_ref_clk ref_clk = cdns_phy->ref_clk_rate;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct cdns_torrent_vals *link_cmn_vals, *xcvr_diag_vals;
 	struct cdns_torrent_inst *inst = phy_get_drvdata(phy);
 	enum cdns_torrent_phy_type phy_type = inst->phy_type;
@@ -1924,6 +3122,12 @@ static int cdns_torrent_phy_init(struct phy *phy)
 	if (cdns_phy->nsubnodes > 1)
 		return 0;
 
+<<<<<<< HEAD
+=======
+	if (phy_type == TYPE_DP)
+		return cdns_torrent_dp_init(phy);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/**
 	 * Spread spectrum generation is not required or supported
 	 * for SGMII/QSGMII
@@ -1973,7 +3177,11 @@ static int cdns_torrent_phy_init(struct phy *phy)
 	}
 
 	/* PMA common registers configurations */
+<<<<<<< HEAD
 	cmn_vals = init_data->cmn_vals[ref_clk][phy_type][TYPE_NONE][ssc];
+=======
+	cmn_vals = init_data->cmn_vals[phy_type][TYPE_NONE][ssc];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (cmn_vals) {
 		reg_pairs = cmn_vals->reg_pairs;
 		num_regs = cmn_vals->num_regs;
@@ -1984,7 +3192,11 @@ static int cdns_torrent_phy_init(struct phy *phy)
 	}
 
 	/* PMA TX lane registers configurations */
+<<<<<<< HEAD
 	tx_ln_vals = init_data->tx_ln_vals[ref_clk][phy_type][TYPE_NONE][ssc];
+=======
+	tx_ln_vals = init_data->tx_ln_vals[phy_type][TYPE_NONE][ssc];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (tx_ln_vals) {
 		reg_pairs = tx_ln_vals->reg_pairs;
 		num_regs = tx_ln_vals->num_regs;
@@ -1997,7 +3209,11 @@ static int cdns_torrent_phy_init(struct phy *phy)
 	}
 
 	/* PMA RX lane registers configurations */
+<<<<<<< HEAD
 	rx_ln_vals = init_data->rx_ln_vals[ref_clk][phy_type][TYPE_NONE][ssc];
+=======
+	rx_ln_vals = init_data->rx_ln_vals[phy_type][TYPE_NONE][ssc];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rx_ln_vals) {
 		reg_pairs = rx_ln_vals->reg_pairs;
 		num_regs = rx_ln_vals->num_regs;
@@ -2009,6 +3225,7 @@ static int cdns_torrent_phy_init(struct phy *phy)
 		}
 	}
 
+<<<<<<< HEAD
 	if (phy_type == TYPE_DP)
 		return cdns_torrent_dp_init(phy);
 
@@ -2036,12 +3253,20 @@ static const struct phy_ops noop_ops = {
 	.owner		= THIS_MODULE,
 };
 
+=======
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static
 int cdns_torrent_phy_configure_multilink(struct cdns_torrent_phy *cdns_phy)
 {
 	const struct cdns_torrent_data *init_data = cdns_phy->init_data;
 	struct cdns_torrent_vals *cmn_vals, *tx_ln_vals, *rx_ln_vals;
+<<<<<<< HEAD
 	enum cdns_torrent_ref_clk ref_clk = cdns_phy->ref_clk_rate;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct cdns_torrent_vals *link_cmn_vals, *xcvr_diag_vals;
 	enum cdns_torrent_phy_type phy_t1, phy_t2, tmp_phy_type;
 	struct cdns_torrent_vals *pcs_cmn_vals;
@@ -2130,7 +3355,11 @@ int cdns_torrent_phy_configure_multilink(struct cdns_torrent_phy *cdns_phy)
 		}
 
 		/* PMA common registers configurations */
+<<<<<<< HEAD
 		cmn_vals = init_data->cmn_vals[ref_clk][phy_t1][phy_t2][ssc];
+=======
+		cmn_vals = init_data->cmn_vals[phy_t1][phy_t2][ssc];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (cmn_vals) {
 			reg_pairs = cmn_vals->reg_pairs;
 			num_regs = cmn_vals->num_regs;
@@ -2141,7 +3370,11 @@ int cdns_torrent_phy_configure_multilink(struct cdns_torrent_phy *cdns_phy)
 		}
 
 		/* PMA TX lane registers configurations */
+<<<<<<< HEAD
 		tx_ln_vals = init_data->tx_ln_vals[ref_clk][phy_t1][phy_t2][ssc];
+=======
+		tx_ln_vals = init_data->tx_ln_vals[phy_t1][phy_t2][ssc];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (tx_ln_vals) {
 			reg_pairs = tx_ln_vals->reg_pairs;
 			num_regs = tx_ln_vals->num_regs;
@@ -2154,7 +3387,11 @@ int cdns_torrent_phy_configure_multilink(struct cdns_torrent_phy *cdns_phy)
 		}
 
 		/* PMA RX lane registers configurations */
+<<<<<<< HEAD
 		rx_ln_vals = init_data->rx_ln_vals[ref_clk][phy_t1][phy_t2][ssc];
+=======
+		rx_ln_vals = init_data->rx_ln_vals[phy_t1][phy_t2][ssc];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rx_ln_vals) {
 			reg_pairs = rx_ln_vals->reg_pairs;
 			num_regs = rx_ln_vals->num_regs;
@@ -2232,7 +3469,10 @@ static int cdns_torrent_reset(struct cdns_torrent_phy *cdns_phy)
 static int cdns_torrent_clk(struct cdns_torrent_phy *cdns_phy)
 {
 	struct device *dev = cdns_phy->dev;
+<<<<<<< HEAD
 	unsigned long ref_clk_rate;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	cdns_phy->clk = devm_clk_get(dev, "refclk");
@@ -2247,13 +3487,19 @@ static int cdns_torrent_clk(struct cdns_torrent_phy *cdns_phy)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	ref_clk_rate = clk_get_rate(cdns_phy->clk);
 	if (!ref_clk_rate) {
+=======
+	cdns_phy->ref_clk_rate = clk_get_rate(cdns_phy->clk);
+	if (!(cdns_phy->ref_clk_rate)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(cdns_phy->dev, "Failed to get ref clock rate\n");
 		clk_disable_unprepare(cdns_phy->clk);
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	switch (ref_clk_rate) {
 	case REF_CLK_19_2MHZ:
 		cdns_phy->ref_clk_rate = CLK_19_2_MHZ;
@@ -2270,6 +3516,8 @@ static int cdns_torrent_clk(struct cdns_torrent_phy *cdns_phy)
 		return -EINVAL;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -2468,9 +3716,16 @@ static int cdns_torrent_phy_probe(struct platform_device *pdev)
 				init_dp_regmap++;
 			}
 
+<<<<<<< HEAD
 			dev_dbg(dev, "DP max bit rate %d.%03d Gbps\n",
 				cdns_phy->max_bit_rate / 1000,
 				cdns_phy->max_bit_rate % 1000);
+=======
+			dev_info(dev, "%d lanes, max bit rate %d.%03d Gbps\n",
+				 cdns_phy->phys[node].num_lanes,
+				 cdns_phy->max_bit_rate / 1000,
+				 cdns_phy->max_bit_rate % 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			gphy->attrs.bus_width = cdns_phy->phys[node].num_lanes;
 			gphy->attrs.max_link_rate = cdns_phy->max_bit_rate;
@@ -2478,6 +3733,7 @@ static int cdns_torrent_phy_probe(struct platform_device *pdev)
 		}
 
 		cdns_phy->phys[node].phy = gphy;
+<<<<<<< HEAD
 		phy_set_drvdata(gphy, &cdns_phy->phys[node]);
 
 		node++;
@@ -2745,6 +4001,64 @@ static struct cdns_torrent_vals sl_dp_100_no_ssc_rx_ln_vals = {
 	.reg_pairs = sl_dp_100_no_ssc_rx_ln_regs,
 	.num_regs = ARRAY_SIZE(sl_dp_100_no_ssc_rx_ln_regs),
 };
+=======
+		phy_set_drvdata(gphy, &cdns_phy->phys[node]);
+
+		node++;
+	}
+	cdns_phy->nsubnodes = node;
+
+	if (total_num_lanes > MAX_NUM_LANES) {
+		dev_err(dev, "Invalid lane configuration\n");
+		ret = -EINVAL;
+		goto put_lnk_rst;
+	}
+
+	if (cdns_phy->nsubnodes > 1 && !already_configured) {
+		ret = cdns_torrent_phy_configure_multilink(cdns_phy);
+		if (ret)
+			goto put_lnk_rst;
+	}
+
+	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+	if (IS_ERR(phy_provider)) {
+		ret = PTR_ERR(phy_provider);
+		goto put_lnk_rst;
+	}
+
+	return 0;
+
+put_child:
+	node++;
+put_lnk_rst:
+	for (i = 0; i < node; i++)
+		reset_control_put(cdns_phy->phys[i].lnk_rst);
+	of_node_put(child);
+	reset_control_assert(cdns_phy->apb_rst);
+	clk_disable_unprepare(cdns_phy->clk);
+clk_cleanup:
+	cdns_torrent_clk_cleanup(cdns_phy);
+	return ret;
+}
+
+static int cdns_torrent_phy_remove(struct platform_device *pdev)
+{
+	struct cdns_torrent_phy *cdns_phy = platform_get_drvdata(pdev);
+	int i;
+
+	reset_control_assert(cdns_phy->phy_rst);
+	reset_control_assert(cdns_phy->apb_rst);
+	for (i = 0; i < cdns_phy->nsubnodes; i++) {
+		reset_control_assert(cdns_phy->phys[i].lnk_rst);
+		reset_control_put(cdns_phy->phys[i].lnk_rst);
+	}
+
+	clk_disable_unprepare(cdns_phy->clk);
+	cdns_torrent_clk_cleanup(cdns_phy);
+
+	return 0;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* USB and SGMII/QSGMII link configuration */
 static struct cdns_reg_pairs usb_sgmii_link_cmn_regs[] = {
@@ -3484,11 +4798,14 @@ static const struct cdns_torrent_data cdns_map_torrent = {
 	.block_offset_shift = 0x2,
 	.reg_offset_shift = 0x2,
 	.link_cmn_vals = {
+<<<<<<< HEAD
 		[TYPE_DP] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = &sl_dp_link_cmn_vals,
 			},
 		},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		[TYPE_PCIE] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = NULL,
@@ -3565,11 +4882,14 @@ static const struct cdns_torrent_data cdns_map_torrent = {
 		},
 	},
 	.xcvr_diag_vals = {
+<<<<<<< HEAD
 		[TYPE_DP] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = &sl_dp_xcvr_diag_ln_vals,
 			},
 		},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		[TYPE_PCIE] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = NULL,
@@ -3670,6 +4990,7 @@ static const struct cdns_torrent_data cdns_map_torrent = {
 		},
 	},
 	.cmn_vals = {
+<<<<<<< HEAD
 		[CLK_19_2_MHZ] = {
 			[TYPE_DP] = {
 				[TYPE_NONE] = {
@@ -3763,10 +5084,85 @@ static const struct cdns_torrent_data cdns_map_torrent = {
 					[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
 					[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
 				},
+=======
+		[TYPE_PCIE] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = &sl_pcie_100_int_ssc_cmn_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &pcie_100_int_ssc_cmn_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &pcie_100_int_ssc_cmn_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &pcie_100_int_ssc_cmn_vals,
+			},
+		},
+		[TYPE_SGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sl_sgmii_100_no_ssc_cmn_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sgmii_100_int_ssc_cmn_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_cmn_vals,
+			},
+		},
+		[TYPE_QSGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sl_qsgmii_100_no_ssc_cmn_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &qsgmii_100_int_ssc_cmn_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+			},
+		},
+		[TYPE_USB] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &usb_100_int_ssc_cmn_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			},
 		},
 	},
 	.tx_ln_vals = {
+<<<<<<< HEAD
 		[CLK_19_2_MHZ] = {
 			[TYPE_DP] = {
 				[TYPE_NONE] = {
@@ -3860,10 +5256,85 @@ static const struct cdns_torrent_data cdns_map_torrent = {
 					[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
 					[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
 				},
+=======
+		[TYPE_PCIE] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+		},
+		[TYPE_SGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &sgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_tx_ln_vals,
+			},
+		},
+		[TYPE_QSGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_tx_ln_vals,
+			},
+		},
+		[TYPE_USB] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			},
 		},
 	},
 	.rx_ln_vals = {
+<<<<<<< HEAD
 		[CLK_19_2_MHZ] = {
 			[TYPE_DP] = {
 				[TYPE_NONE] = {
@@ -3957,6 +5428,80 @@ static const struct cdns_torrent_data cdns_map_torrent = {
 					[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
 					[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
 				},
+=======
+		[TYPE_PCIE] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+		},
+		[TYPE_SGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+			},
+		},
+		[TYPE_QSGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+			},
+		},
+		[TYPE_USB] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			},
 		},
 	},
@@ -3966,11 +5511,14 @@ static const struct cdns_torrent_data ti_j721e_map_torrent = {
 	.block_offset_shift = 0x0,
 	.reg_offset_shift = 0x1,
 	.link_cmn_vals = {
+<<<<<<< HEAD
 		[TYPE_DP] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = &sl_dp_link_cmn_vals,
 			},
 		},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		[TYPE_PCIE] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = NULL,
@@ -4047,11 +5595,14 @@ static const struct cdns_torrent_data ti_j721e_map_torrent = {
 		},
 	},
 	.xcvr_diag_vals = {
+<<<<<<< HEAD
 		[TYPE_DP] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = &sl_dp_xcvr_diag_ln_vals,
 			},
 		},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		[TYPE_PCIE] = {
 			[TYPE_NONE] = {
 				[NO_SSC] = NULL,
@@ -4152,6 +5703,7 @@ static const struct cdns_torrent_data ti_j721e_map_torrent = {
 		},
 	},
 	.cmn_vals = {
+<<<<<<< HEAD
 		[CLK_19_2_MHZ] = {
 			[TYPE_DP] = {
 				[TYPE_NONE] = {
@@ -4245,10 +5797,85 @@ static const struct cdns_torrent_data ti_j721e_map_torrent = {
 					[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
 					[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
 				},
+=======
+		[TYPE_PCIE] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = &sl_pcie_100_int_ssc_cmn_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &pcie_100_int_ssc_cmn_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &pcie_100_int_ssc_cmn_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &pcie_100_int_ssc_cmn_vals,
+			},
+		},
+		[TYPE_SGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sl_sgmii_100_no_ssc_cmn_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sgmii_100_int_ssc_cmn_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_cmn_vals,
+			},
+		},
+		[TYPE_QSGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sl_qsgmii_100_no_ssc_cmn_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &qsgmii_100_int_ssc_cmn_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_cmn_vals,
+			},
+		},
+		[TYPE_USB] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &usb_100_int_ssc_cmn_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[EXTERNAL_SSC] = &sl_usb_100_no_ssc_cmn_vals,
+				[INTERNAL_SSC] = &sl_usb_100_int_ssc_cmn_vals,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			},
 		},
 	},
 	.tx_ln_vals = {
+<<<<<<< HEAD
 		[CLK_19_2_MHZ] = {
 			[TYPE_DP] = {
 				[TYPE_NONE] = {
@@ -4342,10 +5969,85 @@ static const struct cdns_torrent_data ti_j721e_map_torrent = {
 					[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
 					[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
 				},
+=======
+		[TYPE_PCIE] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = NULL,
+				[EXTERNAL_SSC] = NULL,
+				[INTERNAL_SSC] = NULL,
+			},
+		},
+		[TYPE_SGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &ti_sgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &ti_sgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &ti_sgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &ti_sgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &ti_sgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &ti_sgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &ti_sgmii_100_no_ssc_tx_ln_vals,
+			},
+		},
+		[TYPE_QSGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &ti_qsgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &ti_qsgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &ti_qsgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &ti_qsgmii_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &ti_qsgmii_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &ti_qsgmii_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &ti_qsgmii_100_no_ssc_tx_ln_vals,
+			},
+		},
+		[TYPE_USB] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_tx_ln_vals,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			},
 		},
 	},
 	.rx_ln_vals = {
+<<<<<<< HEAD
 		[CLK_19_2_MHZ] = {
 			[TYPE_DP] = {
 				[TYPE_NONE] = {
@@ -4439,6 +6141,80 @@ static const struct cdns_torrent_data ti_j721e_map_torrent = {
 					[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
 					[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
 				},
+=======
+		[TYPE_PCIE] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &pcie_100_no_ssc_rx_ln_vals,
+			},
+		},
+		[TYPE_SGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &sgmii_100_no_ssc_rx_ln_vals,
+			},
+		},
+		[TYPE_QSGMII] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_USB] = {
+				[NO_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &qsgmii_100_no_ssc_rx_ln_vals,
+			},
+		},
+		[TYPE_USB] = {
+			[TYPE_NONE] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_PCIE] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_SGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+			},
+			[TYPE_QSGMII] = {
+				[NO_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[EXTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+				[INTERNAL_SSC] = &usb_100_no_ssc_rx_ln_vals,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			},
 		},
 	},

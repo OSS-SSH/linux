@@ -107,8 +107,11 @@ static DEFINE_RAW_SPINLOCK(cpu_map_lock);
 
 #endif
 
+<<<<<<< HEAD
 static DEFINE_STATIC_KEY_FALSE(needs_rmw_access);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * The GIC mapping of CPU interfaces does not necessarily match
  * the logical CPU numbering.  Let's use a mapping as returned
@@ -776,6 +779,7 @@ static int gic_pm_init(struct gic_chip_data *gic)
 #endif
 
 #ifdef CONFIG_SMP
+<<<<<<< HEAD
 static void rmw_writeb(u8 bval, void __iomem *addr)
 {
 	static DEFINE_RAW_SPINLOCK(rmw_lock);
@@ -795,6 +799,8 @@ static void rmw_writeb(u8 bval, void __iomem *addr)
 	raw_spin_unlock_irqrestore(&rmw_lock, flags);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
 			    bool force)
 {
@@ -809,10 +815,14 @@ static int gic_set_affinity(struct irq_data *d, const struct cpumask *mask_val,
 	if (cpu >= NR_GIC_CPU_IF || cpu >= nr_cpu_ids)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (static_branch_unlikely(&needs_rmw_access))
 		rmw_writeb(gic_cpu_map[cpu], reg);
 	else
 		writeb_relaxed(gic_cpu_map[cpu], reg);
+=======
+	writeb_relaxed(gic_cpu_map[cpu], reg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	irq_data_update_effective_affinity(d, cpumask_of(cpu));
 
 	return IRQ_SET_MASK_OK_DONE;
@@ -1399,6 +1409,7 @@ static bool gic_check_eoimode(struct device_node *node, void __iomem **base)
 	return true;
 }
 
+<<<<<<< HEAD
 static bool gic_enable_rmw_access(void *data)
 {
 	/*
@@ -1423,6 +1434,8 @@ static const struct gic_quirk gic_quirks[] = {
 	{ },
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int gic_of_setup(struct gic_chip_data *gic, struct device_node *node)
 {
 	if (!gic || !node)
@@ -1439,8 +1452,11 @@ static int gic_of_setup(struct gic_chip_data *gic, struct device_node *node)
 	if (of_property_read_u32(node, "cpu-offset", &gic->percpu_offset))
 		gic->percpu_offset = 0;
 
+<<<<<<< HEAD
 	gic_enable_of_quirks(node, gic_quirks, gic);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 error:

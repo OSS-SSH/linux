@@ -111,11 +111,19 @@ static int dpaa2_switch_flower_parse_key(struct flow_cls_offload *cls,
 	return 0;
 }
 
+<<<<<<< HEAD
 int dpaa2_switch_acl_entry_add(struct dpaa2_switch_filter_block *filter_block,
 			       struct dpaa2_switch_acl_entry *entry)
 {
 	struct dpsw_acl_entry_cfg *acl_entry_cfg = &entry->cfg;
 	struct ethsw_core *ethsw = filter_block->ethsw;
+=======
+int dpaa2_switch_acl_entry_add(struct dpaa2_switch_acl_tbl *acl_tbl,
+			       struct dpaa2_switch_acl_entry *entry)
+{
+	struct dpsw_acl_entry_cfg *acl_entry_cfg = &entry->cfg;
+	struct ethsw_core *ethsw = acl_tbl->ethsw;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct dpsw_acl_key *acl_key = &entry->key;
 	struct device *dev = ethsw->dev;
 	u8 *cmd_buff;
@@ -136,7 +144,11 @@ int dpaa2_switch_acl_entry_add(struct dpaa2_switch_filter_block *filter_block,
 	}
 
 	err = dpsw_acl_add_entry(ethsw->mc_io, 0, ethsw->dpsw_handle,
+<<<<<<< HEAD
 				 filter_block->acl_id, acl_entry_cfg);
+=======
+				 acl_tbl->id, acl_entry_cfg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dma_unmap_single(dev, acl_entry_cfg->key_iova, sizeof(cmd_buff),
 			 DMA_TO_DEVICE);
@@ -150,6 +162,7 @@ int dpaa2_switch_acl_entry_add(struct dpaa2_switch_filter_block *filter_block,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int
 dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
 			      struct dpaa2_switch_acl_entry *entry)
@@ -157,6 +170,14 @@ dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
 	struct dpsw_acl_entry_cfg *acl_entry_cfg = &entry->cfg;
 	struct dpsw_acl_key *acl_key = &entry->key;
 	struct ethsw_core *ethsw = block->ethsw;
+=======
+static int dpaa2_switch_acl_entry_remove(struct dpaa2_switch_acl_tbl *acl_tbl,
+					 struct dpaa2_switch_acl_entry *entry)
+{
+	struct dpsw_acl_entry_cfg *acl_entry_cfg = &entry->cfg;
+	struct dpsw_acl_key *acl_key = &entry->key;
+	struct ethsw_core *ethsw = acl_tbl->ethsw;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct device *dev = ethsw->dev;
 	u8 *cmd_buff;
 	int err;
@@ -176,7 +197,11 @@ dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
 	}
 
 	err = dpsw_acl_remove_entry(ethsw->mc_io, 0, ethsw->dpsw_handle,
+<<<<<<< HEAD
 				    block->acl_id, acl_entry_cfg);
+=======
+				    acl_tbl->id, acl_entry_cfg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dma_unmap_single(dev, acl_entry_cfg->key_iova, sizeof(cmd_buff),
 			 DMA_TO_DEVICE);
@@ -191,19 +216,32 @@ dpaa2_switch_acl_entry_remove(struct dpaa2_switch_filter_block *block,
 }
 
 static int
+<<<<<<< HEAD
 dpaa2_switch_acl_entry_add_to_list(struct dpaa2_switch_filter_block *block,
+=======
+dpaa2_switch_acl_entry_add_to_list(struct dpaa2_switch_acl_tbl *acl_tbl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   struct dpaa2_switch_acl_entry *entry)
 {
 	struct dpaa2_switch_acl_entry *tmp;
 	struct list_head *pos, *n;
 	int index = 0;
 
+<<<<<<< HEAD
 	if (list_empty(&block->acl_entries)) {
 		list_add(&entry->list, &block->acl_entries);
 		return index;
 	}
 
 	list_for_each_safe(pos, n, &block->acl_entries) {
+=======
+	if (list_empty(&acl_tbl->entries)) {
+		list_add(&entry->list, &acl_tbl->entries);
+		return index;
+	}
+
+	list_for_each_safe(pos, n, &acl_tbl->entries) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tmp = list_entry(pos, struct dpaa2_switch_acl_entry, list);
 		if (entry->prio < tmp->prio)
 			break;
@@ -214,13 +252,21 @@ dpaa2_switch_acl_entry_add_to_list(struct dpaa2_switch_filter_block *block,
 }
 
 static struct dpaa2_switch_acl_entry*
+<<<<<<< HEAD
 dpaa2_switch_acl_entry_get_by_index(struct dpaa2_switch_filter_block *block,
+=======
+dpaa2_switch_acl_entry_get_by_index(struct dpaa2_switch_acl_tbl *acl_tbl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				    int index)
 {
 	struct dpaa2_switch_acl_entry *tmp;
 	int i = 0;
 
+<<<<<<< HEAD
 	list_for_each_entry(tmp, &block->acl_entries, list) {
+=======
+	list_for_each_entry(tmp, &acl_tbl->entries, list) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (i == index)
 			return tmp;
 		++i;
@@ -230,38 +276,66 @@ dpaa2_switch_acl_entry_get_by_index(struct dpaa2_switch_filter_block *block,
 }
 
 static int
+<<<<<<< HEAD
 dpaa2_switch_acl_entry_set_precedence(struct dpaa2_switch_filter_block *block,
+=======
+dpaa2_switch_acl_entry_set_precedence(struct dpaa2_switch_acl_tbl *acl_tbl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				      struct dpaa2_switch_acl_entry *entry,
 				      int precedence)
 {
 	int err;
 
+<<<<<<< HEAD
 	err = dpaa2_switch_acl_entry_remove(block, entry);
+=======
+	err = dpaa2_switch_acl_entry_remove(acl_tbl, entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return err;
 
 	entry->cfg.precedence = precedence;
+<<<<<<< HEAD
 	return dpaa2_switch_acl_entry_add(block, entry);
 }
 
 static int
 dpaa2_switch_acl_tbl_add_entry(struct dpaa2_switch_filter_block *block,
 			       struct dpaa2_switch_acl_entry *entry)
+=======
+	return dpaa2_switch_acl_entry_add(acl_tbl, entry);
+}
+
+static int dpaa2_switch_acl_tbl_add_entry(struct dpaa2_switch_acl_tbl *acl_tbl,
+					  struct dpaa2_switch_acl_entry *entry)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct dpaa2_switch_acl_entry *tmp;
 	int index, i, precedence, err;
 
 	/* Add the new ACL entry to the linked list and get its index */
+<<<<<<< HEAD
 	index = dpaa2_switch_acl_entry_add_to_list(block, entry);
+=======
+	index = dpaa2_switch_acl_entry_add_to_list(acl_tbl, entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Move up in priority the ACL entries to make space
 	 * for the new filter.
 	 */
+<<<<<<< HEAD
 	precedence = DPAA2_ETHSW_PORT_MAX_ACL_ENTRIES - block->num_acl_rules - 1;
 	for (i = 0; i < index; i++) {
 		tmp = dpaa2_switch_acl_entry_get_by_index(block, i);
 
 		err = dpaa2_switch_acl_entry_set_precedence(block, tmp,
+=======
+	precedence = DPAA2_ETHSW_PORT_MAX_ACL_ENTRIES - acl_tbl->num_rules - 1;
+	for (i = 0; i < index; i++) {
+		tmp = dpaa2_switch_acl_entry_get_by_index(acl_tbl, i);
+
+		err = dpaa2_switch_acl_entry_set_precedence(acl_tbl, tmp,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 							    precedence);
 		if (err)
 			return err;
@@ -271,19 +345,32 @@ dpaa2_switch_acl_tbl_add_entry(struct dpaa2_switch_filter_block *block,
 
 	/* Add the new entry to hardware */
 	entry->cfg.precedence = precedence;
+<<<<<<< HEAD
 	err = dpaa2_switch_acl_entry_add(block, entry);
 	block->num_acl_rules++;
+=======
+	err = dpaa2_switch_acl_entry_add(acl_tbl, entry);
+	acl_tbl->num_rules++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
 
 static struct dpaa2_switch_acl_entry *
+<<<<<<< HEAD
 dpaa2_switch_acl_tbl_find_entry_by_cookie(struct dpaa2_switch_filter_block *block,
+=======
+dpaa2_switch_acl_tbl_find_entry_by_cookie(struct dpaa2_switch_acl_tbl *acl_tbl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					  unsigned long cookie)
 {
 	struct dpaa2_switch_acl_entry *tmp, *n;
 
+<<<<<<< HEAD
 	list_for_each_entry_safe(tmp, n, &block->acl_entries, list) {
+=======
+	list_for_each_entry_safe(tmp, n, &acl_tbl->entries, list) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (tmp->cookie == cookie)
 			return tmp;
 	}
@@ -291,13 +378,21 @@ dpaa2_switch_acl_tbl_find_entry_by_cookie(struct dpaa2_switch_filter_block *bloc
 }
 
 static int
+<<<<<<< HEAD
 dpaa2_switch_acl_entry_get_index(struct dpaa2_switch_filter_block *block,
+=======
+dpaa2_switch_acl_entry_get_index(struct dpaa2_switch_acl_tbl *acl_tbl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 struct dpaa2_switch_acl_entry *entry)
 {
 	struct dpaa2_switch_acl_entry *tmp, *n;
 	int index = 0;
 
+<<<<<<< HEAD
 	list_for_each_entry_safe(tmp, n, &block->acl_entries, list) {
+=======
+	list_for_each_entry_safe(tmp, n, &acl_tbl->entries, list) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (tmp->cookie == entry->cookie)
 			return index;
 		index++;
@@ -305,6 +400,7 @@ dpaa2_switch_acl_entry_get_index(struct dpaa2_switch_filter_block *block,
 	return -ENOENT;
 }
 
+<<<<<<< HEAD
 static struct dpaa2_switch_mirror_entry *
 dpaa2_switch_mirror_find_entry_by_cookie(struct dpaa2_switch_filter_block *block,
 					 unsigned long cookie)
@@ -320,11 +416,16 @@ dpaa2_switch_mirror_find_entry_by_cookie(struct dpaa2_switch_filter_block *block
 
 static int
 dpaa2_switch_acl_tbl_remove_entry(struct dpaa2_switch_filter_block *block,
+=======
+static int
+dpaa2_switch_acl_tbl_remove_entry(struct dpaa2_switch_acl_tbl *acl_tbl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  struct dpaa2_switch_acl_entry *entry)
 {
 	struct dpaa2_switch_acl_entry *tmp;
 	int index, i, precedence, err;
 
+<<<<<<< HEAD
 	index = dpaa2_switch_acl_entry_get_index(block, entry);
 
 	/* Remove from hardware the ACL entry */
@@ -333,6 +434,16 @@ dpaa2_switch_acl_tbl_remove_entry(struct dpaa2_switch_filter_block *block,
 		return err;
 
 	block->num_acl_rules--;
+=======
+	index = dpaa2_switch_acl_entry_get_index(acl_tbl, entry);
+
+	/* Remove from hardware the ACL entry */
+	err = dpaa2_switch_acl_entry_remove(acl_tbl, entry);
+	if (err)
+		return err;
+
+	acl_tbl->num_rules--;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Remove it from the list also */
 	list_del(&entry->list);
@@ -340,8 +451,13 @@ dpaa2_switch_acl_tbl_remove_entry(struct dpaa2_switch_filter_block *block,
 	/* Move down in priority the entries over the deleted one */
 	precedence = entry->cfg.precedence;
 	for (i = index - 1; i >= 0; i--) {
+<<<<<<< HEAD
 		tmp = dpaa2_switch_acl_entry_get_by_index(block, i);
 		err = dpaa2_switch_acl_entry_set_precedence(block, tmp,
+=======
+		tmp = dpaa2_switch_acl_entry_get_by_index(acl_tbl, i);
+		err = dpaa2_switch_acl_entry_set_precedence(acl_tbl, tmp,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 							    precedence);
 		if (err)
 			return err;
@@ -354,10 +470,17 @@ dpaa2_switch_acl_tbl_remove_entry(struct dpaa2_switch_filter_block *block,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int dpaa2_switch_tc_parse_action_acl(struct ethsw_core *ethsw,
 					    struct flow_action_entry *cls_act,
 					    struct dpsw_acl_result *dpsw_act,
 					    struct netlink_ext_ack *extack)
+=======
+static int dpaa2_switch_tc_parse_action(struct ethsw_core *ethsw,
+					struct flow_action_entry *cls_act,
+					struct dpsw_acl_result *dpsw_act,
+					struct netlink_ext_ack *extack)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err = 0;
 
@@ -389,6 +512,7 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 static int
 dpaa2_switch_block_add_mirror(struct dpaa2_switch_filter_block *block,
 			      struct dpaa2_switch_mirror_entry *entry,
@@ -483,16 +607,33 @@ dpaa2_switch_block_remove_mirror(struct dpaa2_switch_filter_block *block,
 
 static int
 dpaa2_switch_cls_flower_replace_acl(struct dpaa2_switch_filter_block *block,
+=======
+int dpaa2_switch_cls_flower_replace(struct dpaa2_switch_acl_tbl *acl_tbl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				    struct flow_cls_offload *cls)
 {
 	struct flow_rule *rule = flow_cls_offload_flow_rule(cls);
 	struct netlink_ext_ack *extack = cls->common.extack;
+<<<<<<< HEAD
 	struct dpaa2_switch_acl_entry *acl_entry;
 	struct ethsw_core *ethsw = block->ethsw;
 	struct flow_action_entry *act;
 	int err;
 
 	if (dpaa2_switch_acl_tbl_is_full(block)) {
+=======
+	struct ethsw_core *ethsw = acl_tbl->ethsw;
+	struct dpaa2_switch_acl_entry *acl_entry;
+	struct flow_action_entry *act;
+	int err;
+
+	if (!flow_offload_has_one_action(&rule->action)) {
+		NL_SET_ERR_MSG(extack, "Only singular actions are supported");
+		return -EOPNOTSUPP;
+	}
+
+	if (dpaa2_switch_acl_tbl_is_full(acl_tbl)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		NL_SET_ERR_MSG(extack, "Maximum filter capacity reached");
 		return -ENOMEM;
 	}
@@ -506,15 +647,24 @@ dpaa2_switch_cls_flower_replace_acl(struct dpaa2_switch_filter_block *block,
 		goto free_acl_entry;
 
 	act = &rule->action.entries[0];
+<<<<<<< HEAD
 	err = dpaa2_switch_tc_parse_action_acl(ethsw, act,
 					       &acl_entry->cfg.result, extack);
+=======
+	err = dpaa2_switch_tc_parse_action(ethsw, act,
+					   &acl_entry->cfg.result, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto free_acl_entry;
 
 	acl_entry->prio = cls->common.prio;
 	acl_entry->cookie = cls->cookie;
 
+<<<<<<< HEAD
 	err = dpaa2_switch_acl_tbl_add_entry(block, acl_entry);
+=======
+	err = dpaa2_switch_acl_tbl_add_entry(acl_tbl, acl_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto free_acl_entry;
 
@@ -526,6 +676,7 @@ free_acl_entry:
 	return err;
 }
 
+<<<<<<< HEAD
 static int dpaa2_switch_flower_parse_mirror_key(struct flow_cls_offload *cls,
 						u16 *vlan)
 {
@@ -686,11 +837,39 @@ dpaa2_switch_cls_matchall_replace_acl(struct dpaa2_switch_filter_block *block,
 {
 	struct netlink_ext_ack *extack = cls->common.extack;
 	struct ethsw_core *ethsw = block->ethsw;
+=======
+int dpaa2_switch_cls_flower_destroy(struct dpaa2_switch_acl_tbl *acl_tbl,
+				    struct flow_cls_offload *cls)
+{
+	struct dpaa2_switch_acl_entry *entry;
+
+	entry = dpaa2_switch_acl_tbl_find_entry_by_cookie(acl_tbl, cls->cookie);
+	if (!entry)
+		return 0;
+
+	return dpaa2_switch_acl_tbl_remove_entry(acl_tbl, entry);
+}
+
+int dpaa2_switch_cls_matchall_replace(struct dpaa2_switch_acl_tbl *acl_tbl,
+				      struct tc_cls_matchall_offload *cls)
+{
+	struct netlink_ext_ack *extack = cls->common.extack;
+	struct ethsw_core *ethsw = acl_tbl->ethsw;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct dpaa2_switch_acl_entry *acl_entry;
 	struct flow_action_entry *act;
 	int err;
 
+<<<<<<< HEAD
 	if (dpaa2_switch_acl_tbl_is_full(block)) {
+=======
+	if (!flow_offload_has_one_action(&cls->rule->action)) {
+		NL_SET_ERR_MSG(extack, "Only singular actions are supported");
+		return -EOPNOTSUPP;
+	}
+
+	if (dpaa2_switch_acl_tbl_is_full(acl_tbl)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		NL_SET_ERR_MSG(extack, "Maximum filter capacity reached");
 		return -ENOMEM;
 	}
@@ -700,15 +879,24 @@ dpaa2_switch_cls_matchall_replace_acl(struct dpaa2_switch_filter_block *block,
 		return -ENOMEM;
 
 	act = &cls->rule->action.entries[0];
+<<<<<<< HEAD
 	err = dpaa2_switch_tc_parse_action_acl(ethsw, act,
 					       &acl_entry->cfg.result, extack);
+=======
+	err = dpaa2_switch_tc_parse_action(ethsw, act,
+					   &acl_entry->cfg.result, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto free_acl_entry;
 
 	acl_entry->prio = cls->common.prio;
 	acl_entry->cookie = cls->cookie;
 
+<<<<<<< HEAD
 	err = dpaa2_switch_acl_tbl_add_entry(block, acl_entry);
+=======
+	err = dpaa2_switch_acl_tbl_add_entry(acl_tbl, acl_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto free_acl_entry;
 
@@ -720,6 +908,7 @@ free_acl_entry:
 	return err;
 }
 
+<<<<<<< HEAD
 static int
 dpaa2_switch_cls_matchall_replace_mirror(struct dpaa2_switch_filter_block *block,
 					 struct tc_cls_matchall_offload *cls)
@@ -875,4 +1064,16 @@ int dpaa2_switch_cls_matchall_destroy(struct dpaa2_switch_filter_block *block,
 							mirror_entry);
 
 	return 0;
+=======
+int dpaa2_switch_cls_matchall_destroy(struct dpaa2_switch_acl_tbl *acl_tbl,
+				      struct tc_cls_matchall_offload *cls)
+{
+	struct dpaa2_switch_acl_entry *entry;
+
+	entry = dpaa2_switch_acl_tbl_find_entry_by_cookie(acl_tbl, cls->cookie);
+	if (!entry)
+		return 0;
+
+	return  dpaa2_switch_acl_tbl_remove_entry(acl_tbl, entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

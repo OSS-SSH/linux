@@ -18,8 +18,11 @@
 #define VBOXSF_SBI(sb)	((struct vboxsf_sbi *)(sb)->s_fs_info)
 #define VBOXSF_I(i)	container_of(i, struct vboxsf_inode, vfs_inode)
 
+<<<<<<< HEAD
 struct vboxsf_handle;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct vboxsf_options {
 	unsigned long ttl;
 	kuid_t uid;
@@ -82,11 +85,14 @@ extern const struct file_operations vboxsf_reg_fops;
 extern const struct address_space_operations vboxsf_reg_aops;
 extern const struct dentry_operations vboxsf_dentry_ops;
 
+<<<<<<< HEAD
 /* from file.c */
 struct vboxsf_handle *vboxsf_create_sf_handle(struct inode *inode,
 					      u64 handle, u32 access_flags);
 void vboxsf_release_sf_handle(struct inode *inode, struct vboxsf_handle *sf_handle);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* from utils.c */
 struct inode *vboxsf_new_inode(struct super_block *sb);
 int vboxsf_init_inode(struct vboxsf_sbi *sbi, struct inode *inode,

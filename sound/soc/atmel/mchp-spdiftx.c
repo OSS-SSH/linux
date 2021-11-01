@@ -80,7 +80,11 @@
 #define SPDIFTX_MR_VALID1			BIT(24)
 #define SPDIFTX_MR_VALID2			BIT(25)
 
+<<<<<<< HEAD
 /* Disable Null Frame on underrun */
+=======
+/* Disable Null Frame on underrrun */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define SPDIFTX_MR_DNFR_MASK		GENMASK(27, 27)
 #define SPDIFTX_MR_DNFR_INVALID		(0 << 27)
 #define SPDIFTX_MR_DNFR_VALID		(1 << 27)

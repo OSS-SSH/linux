@@ -45,7 +45,10 @@ struct pmu_events_map {
 };
 
 struct pmu_sys_events {
+<<<<<<< HEAD
 	const char *name;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct pmu_event *table;
 };
 

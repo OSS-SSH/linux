@@ -26,7 +26,10 @@
 #include <linux/slab.h>
 #include <linux/power_supply.h>
 #include <linux/pm_runtime.h>
+<<<<<<< HEAD
 #include <linux/suspend.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <acpi/video.h>
 #include <acpi/actbl.h>
 
@@ -854,8 +857,13 @@ int amdgpu_acpi_init(struct amdgpu_device *adev)
 		if (amdgpu_device_has_dc_support(adev)) {
 #if defined(CONFIG_DRM_AMD_DC)
 			struct amdgpu_display_manager *dm = &adev->dm;
+<<<<<<< HEAD
 			if (dm->backlight_dev[0])
 				atif->bd = dm->backlight_dev[0];
+=======
+			if (dm->backlight_dev)
+				atif->bd = dm->backlight_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 		} else {
 			struct drm_encoder *tmp;
@@ -1032,18 +1040,31 @@ void amdgpu_acpi_detect(void)
 }
 
 /**
+<<<<<<< HEAD
  * amdgpu_acpi_is_s0ix_active
+=======
+ * amdgpu_acpi_is_s0ix_supported
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * @adev: amdgpu_device_pointer
  *
  * returns true if supported, false if not.
  */
+<<<<<<< HEAD
 bool amdgpu_acpi_is_s0ix_active(struct amdgpu_device *adev)
 {
 #if IS_ENABLED(CONFIG_AMD_PMC) && IS_ENABLED(CONFIG_SUSPEND)
 	if (acpi_gbl_FADT.flags & ACPI_FADT_LOW_POWER_S0) {
 		if (adev->flags & AMD_IS_APU)
 			return pm_suspend_target_state == PM_SUSPEND_TO_IDLE;
+=======
+bool amdgpu_acpi_is_s0ix_supported(struct amdgpu_device *adev)
+{
+#if defined(CONFIG_AMD_PMC) || defined(CONFIG_AMD_PMC_MODULE)
+	if (acpi_gbl_FADT.flags & ACPI_FADT_LOW_POWER_S0) {
+		if (adev->flags & AMD_IS_APU)
+			return true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 #endif
 	return false;

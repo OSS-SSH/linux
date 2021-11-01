@@ -100,11 +100,16 @@ struct tmp421_data {
 	s16 temp[4];
 };
 
+<<<<<<< HEAD
 static int temp_from_raw(u16 reg, bool extended)
+=======
+static int temp_from_s16(s16 reg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	/* Mask out status bits */
 	int temp = reg & ~0xf;
 
+<<<<<<< HEAD
 	if (extended)
 		temp = temp - 64 * 256;
 	else
@@ -117,12 +122,33 @@ static int tmp421_update_device(struct tmp421_data *data)
 {
 	struct i2c_client *client = data->client;
 	int ret = 0;
+=======
+	return (temp * 1000 + 128) / 256;
+}
+
+static int temp_from_u16(u16 reg)
+{
+	/* Mask out status bits */
+	int temp = reg & ~0xf;
+
+	/* Add offset for extended temperature range. */
+	temp -= 64 * 256;
+
+	return (temp * 1000 + 128) / 256;
+}
+
+static struct tmp421_data *tmp421_update_device(struct device *dev)
+{
+	struct tmp421_data *data = dev_get_drvdata(dev);
+	struct i2c_client *client = data->client;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i;
 
 	mutex_lock(&data->update_lock);
 
 	if (time_after(jiffies, data->last_updated + (HZ / 2)) ||
 	    !data->valid) {
+<<<<<<< HEAD
 		ret = i2c_smbus_read_byte_data(client, TMP421_CONFIG_REG_1);
 		if (ret < 0)
 			goto exit;
@@ -138,11 +164,22 @@ static int tmp421_update_device(struct tmp421_data *data)
 			if (ret < 0)
 				goto exit;
 			data->temp[i] |= ret;
+=======
+		data->config = i2c_smbus_read_byte_data(client,
+			TMP421_CONFIG_REG_1);
+
+		for (i = 0; i < data->channels; i++) {
+			data->temp[i] = i2c_smbus_read_byte_data(client,
+				TMP421_TEMP_MSB[i]) << 8;
+			data->temp[i] |= i2c_smbus_read_byte_data(client,
+				TMP421_TEMP_LSB[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		data->last_updated = jiffies;
 		data->valid = 1;
 	}
 
+<<<<<<< HEAD
 exit:
 	mutex_unlock(&data->update_lock);
 
@@ -152,11 +189,17 @@ exit:
 	}
 
 	return 0;
+=======
+	mutex_unlock(&data->update_lock);
+
+	return data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int tmp421_read(struct device *dev, enum hwmon_sensor_types type,
 		       u32 attr, int channel, long *val)
 {
+<<<<<<< HEAD
 	struct tmp421_data *tmp421 = dev_get_drvdata(dev);
 	int ret = 0;
 
@@ -175,6 +218,23 @@ static int tmp421_read(struct device *dev, enum hwmon_sensor_types type,
 		 * and the conversion result may be incorrect
 		 */
 		*val = !!(tmp421->temp[channel] & 0x03);
+=======
+	struct tmp421_data *tmp421 = tmp421_update_device(dev);
+
+	switch (attr) {
+	case hwmon_temp_input:
+		if (tmp421->config & TMP421_CONFIG_RANGE)
+			*val = temp_from_u16(tmp421->temp[channel]);
+		else
+			*val = temp_from_s16(tmp421->temp[channel]);
+		return 0;
+	case hwmon_temp_fault:
+		/*
+		 * The OPEN bit signals a fault. This is bit 0 of the temperature
+		 * register (low byte).
+		 */
+		*val = tmp421->temp[channel] & 0x01;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 	default:
 		return -EOPNOTSUPP;
@@ -187,6 +247,12 @@ static umode_t tmp421_is_visible(const void *data, enum hwmon_sensor_types type,
 {
 	switch (attr) {
 	case hwmon_temp_fault:
+<<<<<<< HEAD
+=======
+		if (channel == 0)
+			return 0;
+		return 0444;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case hwmon_temp_input:
 		return 0444;
 	default:

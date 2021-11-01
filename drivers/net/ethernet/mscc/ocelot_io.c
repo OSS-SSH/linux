@@ -21,7 +21,11 @@ u32 __ocelot_read_ix(struct ocelot *ocelot, u32 reg, u32 offset)
 		    ocelot->map[target][reg & REG_MASK] + offset, &val);
 	return val;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(__ocelot_read_ix);
+=======
+EXPORT_SYMBOL(__ocelot_read_ix);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void __ocelot_write_ix(struct ocelot *ocelot, u32 val, u32 reg, u32 offset)
 {
@@ -32,7 +36,11 @@ void __ocelot_write_ix(struct ocelot *ocelot, u32 val, u32 reg, u32 offset)
 	regmap_write(ocelot->targets[target],
 		     ocelot->map[target][reg & REG_MASK] + offset, val);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(__ocelot_write_ix);
+=======
+EXPORT_SYMBOL(__ocelot_write_ix);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void __ocelot_rmw_ix(struct ocelot *ocelot, u32 val, u32 mask, u32 reg,
 		     u32 offset)
@@ -45,7 +53,11 @@ void __ocelot_rmw_ix(struct ocelot *ocelot, u32 val, u32 mask, u32 reg,
 			   ocelot->map[target][reg & REG_MASK] + offset,
 			   mask, val);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(__ocelot_rmw_ix);
+=======
+EXPORT_SYMBOL(__ocelot_rmw_ix);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 u32 ocelot_port_readl(struct ocelot_port *port, u32 reg)
 {
@@ -58,7 +70,11 @@ u32 ocelot_port_readl(struct ocelot_port *port, u32 reg)
 	regmap_read(port->target, ocelot->map[target][reg & REG_MASK], &val);
 	return val;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ocelot_port_readl);
+=======
+EXPORT_SYMBOL(ocelot_port_readl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void ocelot_port_writel(struct ocelot_port *port, u32 val, u32 reg)
 {
@@ -69,7 +85,11 @@ void ocelot_port_writel(struct ocelot_port *port, u32 val, u32 reg)
 
 	regmap_write(port->target, ocelot->map[target][reg & REG_MASK], val);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ocelot_port_writel);
+=======
+EXPORT_SYMBOL(ocelot_port_writel);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void ocelot_port_rmwl(struct ocelot_port *port, u32 val, u32 mask, u32 reg)
 {
@@ -77,7 +97,11 @@ void ocelot_port_rmwl(struct ocelot_port *port, u32 val, u32 mask, u32 reg)
 
 	ocelot_port_writel(port, (cur & (~mask)) | val, reg);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ocelot_port_rmwl);
+=======
+EXPORT_SYMBOL(ocelot_port_rmwl);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 u32 __ocelot_target_read_ix(struct ocelot *ocelot, enum ocelot_target target,
 			    u32 reg, u32 offset)
@@ -128,7 +152,11 @@ int ocelot_regfields_init(struct ocelot *ocelot,
 
 	return 0;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ocelot_regfields_init);
+=======
+EXPORT_SYMBOL(ocelot_regfields_init);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct regmap_config ocelot_regmap_config = {
 	.reg_bits	= 32,
@@ -148,4 +176,8 @@ struct regmap *ocelot_regmap_init(struct ocelot *ocelot, struct resource *res)
 
 	return devm_regmap_init_mmio(ocelot->dev, regs, &ocelot_regmap_config);
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ocelot_regmap_init);
+=======
+EXPORT_SYMBOL(ocelot_regmap_init);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

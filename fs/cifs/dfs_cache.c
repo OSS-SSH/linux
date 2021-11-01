@@ -19,7 +19,10 @@
 #include "cifs_debug.h"
 #include "cifs_unicode.h"
 #include "smb2glob.h"
+<<<<<<< HEAD
 #include "dns_resolve.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "dfs_cache.h"
 
@@ -912,7 +915,10 @@ static int get_targets(struct cache_entry *ce, struct dfs_cache_tgt_list *tl)
 
 err_free_it:
 	list_for_each_entry_safe(it, nit, head, it_list) {
+<<<<<<< HEAD
 		list_del(&it->it_list);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kfree(it->it_name);
 		kfree(it);
 	}
@@ -1295,6 +1301,7 @@ int dfs_cache_get_tgt_share(char *path, const struct dfs_cache_tgt_iterator *it,
 	return 0;
 }
 
+<<<<<<< HEAD
 static bool target_share_equal(struct TCP_Server_Info *server, const char *s1, const char *s2)
 {
 	char unc[sizeof("\\\\") + SERVER_NAME_LENGTH] = {0};
@@ -1483,6 +1490,8 @@ int dfs_cache_remount_fs(struct cifs_sb_info *cifs_sb)
 	return rc;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Refresh all active dfs mounts regardless of whether they are in cache or not.
  * (cache can be cleared)
@@ -1493,6 +1502,10 @@ static void refresh_mounts(struct cifs_ses **sessions)
 	struct cifs_ses *ses;
 	struct cifs_tcon *tcon, *ntcon;
 	struct list_head tcons;
+<<<<<<< HEAD
+=======
+	unsigned int xid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	INIT_LIST_HEAD(&tcons);
 
@@ -1510,8 +1523,49 @@ static void refresh_mounts(struct cifs_ses **sessions)
 	spin_unlock(&cifs_tcp_ses_lock);
 
 	list_for_each_entry_safe(tcon, ntcon, &tcons, ulist) {
+<<<<<<< HEAD
 		list_del_init(&tcon->ulist);
 		refresh_tcon(sessions, tcon, false);
+=======
+		const char *path = tcon->dfs_path + 1;
+		struct cache_entry *ce;
+		struct dfs_info3_param *refs = NULL;
+		int numrefs = 0;
+		bool needs_refresh = false;
+		int rc = 0;
+
+		list_del_init(&tcon->ulist);
+
+		ses = find_ipc_from_server_path(sessions, path);
+		if (IS_ERR(ses))
+			goto next_tcon;
+
+		down_read(&htable_rw_lock);
+		ce = lookup_cache_entry(path);
+		needs_refresh = IS_ERR(ce) || cache_entry_expired(ce);
+		up_read(&htable_rw_lock);
+
+		if (!needs_refresh)
+			goto next_tcon;
+
+		xid = get_xid();
+		rc = get_dfs_referral(xid, ses, path, &refs, &numrefs);
+		free_xid(xid);
+
+		/* Create or update a cache entry with the new referral */
+		if (!rc) {
+			down_write(&htable_rw_lock);
+			ce = lookup_cache_entry(path);
+			if (IS_ERR(ce))
+				add_cache_entry_locked(refs, numrefs);
+			else if (cache_entry_expired(ce))
+				update_cache_entry_locked(ce, refs, numrefs);
+			up_write(&htable_rw_lock);
+		}
+
+next_tcon:
+		free_dfs_info_array(refs, numrefs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cifs_put_tcon(tcon);
 	}
 }

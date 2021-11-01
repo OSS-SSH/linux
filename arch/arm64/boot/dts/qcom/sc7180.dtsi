@@ -110,11 +110,14 @@
 			no-map;
 		};
 
+<<<<<<< HEAD
 		ipa_fw_mem: memory@8b700000 {
 			reg = <0 0x8b700000 0 0x10000>;
 			no-map;
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rmtfs_mem: memory@94600000 {
 			compatible = "qcom,rmtfs-mem";
 			reg = <0x0 0x94600000 0x0 0x200000>;
@@ -673,7 +676,11 @@
 
 		qfprom: efuse@784000 {
 			compatible = "qcom,sc7180-qfprom", "qcom,qfprom";
+<<<<<<< HEAD
 			reg = <0 0x00784000 0 0x7a0>,
+=======
+			reg = <0 0x00784000 0 0x8ff>,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			      <0 0x00780000 0 0x7a0>,
 			      <0 0x00782000 0 0x100>,
 			      <0 0x00786000 0 0x1fff>;
@@ -791,8 +798,11 @@
 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -845,8 +855,11 @@
 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -899,8 +912,11 @@
 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -935,8 +951,11 @@
 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -989,8 +1008,11 @@
 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1025,8 +1047,11 @@
 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1092,8 +1117,11 @@
 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1146,8 +1174,11 @@
 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1182,8 +1213,11 @@
 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1236,8 +1270,11 @@
 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1272,8 +1309,11 @@
 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1326,8 +1366,11 @@
 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
 				interconnect-names = "qup-core", "qup-config",
 							"qup-memory";
+<<<<<<< HEAD
 				power-domains = <&rpmhpd SC7180_CX>;
 				required-opps = <&rpmhpd_opp_low_svs>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -2785,7 +2828,11 @@
 					<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_USB3 0>;
 			interconnect-names = "usb-ddr", "apps-usb";
 
+<<<<<<< HEAD
 			usb_1_dwc3: dwc3@a600000 {
+=======
+			usb_1_dwc3: usb@a600000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				compatible = "snps,dwc3";
 				reg = <0 0x0a600000 0 0xe000>;
 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
@@ -2957,6 +3004,7 @@
 							remote-endpoint = <&dsi0_in>;
 						};
 					};
+<<<<<<< HEAD
 
 					port@2 {
 						reg = <2>;
@@ -2964,6 +3012,8 @@
 							remote-endpoint = <&dp_in>;
 						};
 					};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				};
 
 				mdp_opp_table: mdp-opp-table {
@@ -3013,9 +3063,12 @@
 					      "iface",
 					      "bus";
 
+<<<<<<< HEAD
 				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>, <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
 				assigned-clock-parents = <&dsi_phy 0>, <&dsi_phy 1>;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				operating-points-v2 = <&dsi_opp_table>;
 				power-domains = <&rpmhpd SC7180_CX>;
 
@@ -3083,6 +3136,7 @@
 
 				status = "disabled";
 			};
+<<<<<<< HEAD
 
 			mdss_dp: displayport-controller@ae90000 {
 				compatible = "qcom,sc7180-dp";
@@ -3152,6 +3206,8 @@
 					};
 				};
 			};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		dispcc: clock-controller@af00000 {
@@ -3564,6 +3620,7 @@
 			#power-domain-cells = <1>;
 		};
 
+<<<<<<< HEAD
 		lpass_cpu: lpass@62d87000 {
 			compatible = "qcom,sc7180-lpass-cpu";
 
@@ -3578,6 +3635,19 @@
 
 			status = "disabled";
 
+=======
+		lpass_cpu: lpass@62f00000 {
+			compatible = "qcom,sc7180-lpass-cpu";
+
+			reg = <0 0x62f00000 0 0x29000>;
+			reg-names = "lpass-lpaif";
+
+			iommus = <&apps_smmu 0x1020 0>,
+				<&apps_smmu 0x1021 0>;
+
+			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
 				 <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
 				 <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
@@ -3594,9 +3664,14 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 
+<<<<<<< HEAD
 			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
 					<GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>;
 			interrupt-names = "lpass-irq-lpaif", "lpass-irq-hdmi";
+=======
+			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "lpass-irq-lpaif";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		};
 
 		lpass_hm: clock-controller@63000000 {

@@ -37,7 +37,10 @@ struct aspeed_lpc_ctrl {
 	u32			pnor_size;
 	u32			pnor_base;
 	bool			fwh2ahb;
+<<<<<<< HEAD
 	struct regmap		*scu;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct aspeed_lpc_ctrl *file_aspeed_lpc_ctrl(struct file *file)
@@ -52,7 +55,11 @@ static int aspeed_lpc_ctrl_mmap(struct file *file, struct vm_area_struct *vma)
 	unsigned long vsize = vma->vm_end - vma->vm_start;
 	pgprot_t prot = vma->vm_page_prot;
 
+<<<<<<< HEAD
 	if (vma->vm_pgoff + vma_pages(vma) > lpc_ctrl->mem_size >> PAGE_SHIFT)
+=======
+	if (vma->vm_pgoff + vsize > lpc_ctrl->mem_base + lpc_ctrl->mem_size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	/* ast2400/2500 AHB accesses are not cache coherent */
@@ -184,6 +191,7 @@ static long aspeed_lpc_ctrl_ioctl(struct file *file, unsigned int cmd,
 
 		/*
 		 * Switch to FWH2AHB mode, AST2600 only.
+<<<<<<< HEAD
 		 */
 		if (lpc_ctrl->fwh2ahb) {
 			/*
@@ -200,6 +208,15 @@ static long aspeed_lpc_ctrl_ioctl(struct file *file, unsigned int cmd,
 			 */
 			regmap_write(lpc_ctrl->regmap, HICR6, SW_FWH2AHB);
 		}
+=======
+		 *
+		 * The other bits in this register are interrupt status bits
+		 * that are cleared by writing 1. As we don't want to clear
+		 * them, set only the bit of interest.
+		 */
+		if (lpc_ctrl->fwh2ahb)
+			regmap_write(lpc_ctrl->regmap, HICR6, SW_FWH2AHB);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * Enable LPC FHW cycles. This is required for the host to
@@ -295,6 +312,7 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	if (of_device_is_compatible(dev->of_node, "aspeed,ast2600-lpc-ctrl")) {
 		lpc_ctrl->fwh2ahb = true;
 
@@ -305,6 +323,8 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lpc_ctrl->clk = devm_clk_get(dev, NULL);
 	if (IS_ERR(lpc_ctrl->clk)) {
 		dev_err(dev, "couldn't get clock\n");
@@ -316,6 +336,12 @@ static int aspeed_lpc_ctrl_probe(struct platform_device *pdev)
 		return rc;
 	}
 
+<<<<<<< HEAD
+=======
+	if (of_device_is_compatible(dev->of_node, "aspeed,ast2600-lpc-ctrl"))
+		lpc_ctrl->fwh2ahb = true;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lpc_ctrl->miscdev.minor = MISC_DYNAMIC_MINOR;
 	lpc_ctrl->miscdev.name = DEVICE_NAME;
 	lpc_ctrl->miscdev.fops = &aspeed_lpc_ctrl_fops;

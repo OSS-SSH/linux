@@ -412,8 +412,12 @@ EXPORT_SYMBOL(truncate_inode_pages_range);
  * @mapping: mapping to truncate
  * @lstart: offset from which to truncate
  *
+<<<<<<< HEAD
  * Called under (and serialised by) inode->i_rwsem and
  * mapping->invalidate_lock.
+=======
+ * Called under (and serialised by) inode->i_mutex.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Note: When this function returns, there can be a page in the process of
  * deletion (inside __delete_from_page_cache()) in the specified range.  Thus
@@ -430,7 +434,11 @@ EXPORT_SYMBOL(truncate_inode_pages);
  * truncate_inode_pages_final - truncate *all* pages before inode dies
  * @mapping: mapping to truncate
  *
+<<<<<<< HEAD
  * Called under (and serialized by) inode->i_rwsem.
+=======
+ * Called under (and serialized by) inode->i_mutex.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Filesystems have to use this in the .evict_inode path to inform the
  * VM that this is the final truncate and the inode is going away.
@@ -484,9 +492,14 @@ static unsigned long __invalidate_mapping_pages(struct address_space *mapping,
 			index = indices[i];
 
 			if (xa_is_value(page)) {
+<<<<<<< HEAD
 				count += invalidate_exceptional_entry(mapping,
 								      index,
 								      page);
+=======
+				invalidate_exceptional_entry(mapping, index,
+							     page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				continue;
 			}
 			index += thp_nr_pages(page) - 1;
@@ -514,6 +527,7 @@ static unsigned long __invalidate_mapping_pages(struct address_space *mapping,
 }
 
 /**
+<<<<<<< HEAD
  * invalidate_mapping_pages - Invalidate all clean, unlocked cache of one inode
  * @mapping: the address_space which holds the cache to invalidate
  * @start: the offset 'from' which to invalidate
@@ -526,6 +540,21 @@ static unsigned long __invalidate_mapping_pages(struct address_space *mapping,
  * their use and writeback state, use truncate_inode_pages().
  *
  * Return: the number of the cache entries that were invalidated
+=======
+ * invalidate_mapping_pages - Invalidate all the unlocked pages of one inode
+ * @mapping: the address_space which holds the pages to invalidate
+ * @start: the offset 'from' which to invalidate
+ * @end: the offset 'to' which to invalidate (inclusive)
+ *
+ * This function only removes the unlocked pages, if you want to
+ * remove all the pages of one inode, you must call truncate_inode_pages.
+ *
+ * invalidate_mapping_pages() will not block on IO activity. It will not
+ * invalidate pages which are dirty, locked, under writeback or mapped into
+ * pagetables.
+ *
+ * Return: the number of the pages that were invalidated
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 unsigned long invalidate_mapping_pages(struct address_space *mapping,
 		pgoff_t start, pgoff_t end)
@@ -561,19 +590,32 @@ void invalidate_mapping_pagevec(struct address_space *mapping,
 static int
 invalidate_complete_page2(struct address_space *mapping, struct page *page)
 {
+<<<<<<< HEAD
+=======
+	unsigned long flags;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (page->mapping != mapping)
 		return 0;
 
 	if (page_has_private(page) && !try_to_release_page(page, GFP_KERNEL))
 		return 0;
 
+<<<<<<< HEAD
 	xa_lock_irq(&mapping->i_pages);
+=======
+	xa_lock_irqsave(&mapping->i_pages, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (PageDirty(page))
 		goto failed;
 
 	BUG_ON(page_has_private(page));
 	__delete_from_page_cache(page, NULL);
+<<<<<<< HEAD
 	xa_unlock_irq(&mapping->i_pages);
+=======
+	xa_unlock_irqrestore(&mapping->i_pages, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (mapping->a_ops->freepage)
 		mapping->a_ops->freepage(page);
@@ -581,7 +623,11 @@ invalidate_complete_page2(struct address_space *mapping, struct page *page)
 	put_page(page);	/* pagecache ref */
 	return 1;
 failed:
+<<<<<<< HEAD
 	xa_unlock_irq(&mapping->i_pages);
+=======
+	xa_unlock_irqrestore(&mapping->i_pages, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -747,7 +793,11 @@ EXPORT_SYMBOL(truncate_pagecache);
  * setattr function when ATTR_SIZE is passed in.
  *
  * Must be called with a lock serializing truncates and writes (generally
+<<<<<<< HEAD
  * i_rwsem but e.g. xfs uses a different lock) and before all filesystem
+=======
+ * i_mutex but e.g. xfs uses a different lock) and before all filesystem
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * specific block truncation has been performed.
  */
 void truncate_setsize(struct inode *inode, loff_t newsize)
@@ -776,7 +826,11 @@ EXPORT_SYMBOL(truncate_setsize);
  *
  * The function must be called after i_size is updated so that page fault
  * coming after we unlock the page will already see the new i_size.
+<<<<<<< HEAD
  * The function must be called while we still hold i_rwsem - this not only
+=======
+ * The function must be called while we still hold i_mutex - this not only
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * makes sure i_size is stable but also that userspace cannot observe new
  * i_size value before we are prepared to store mmap writes at new inode size.
  */

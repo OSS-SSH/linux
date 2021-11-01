@@ -1004,6 +1004,7 @@ static unsigned char dasd_eckd_path_access(void *conf_data, int conf_len)
 static void dasd_eckd_store_conf_data(struct dasd_device *device,
 				      struct dasd_conf_data *conf_data, int chp)
 {
+<<<<<<< HEAD
 	struct dasd_eckd_private *private = device->private;
 	struct channel_path_desc_fmt0 *chp_desc;
 	struct subchannel_id sch_id;
@@ -1021,6 +1022,17 @@ static void dasd_eckd_store_conf_data(struct dasd_device *device,
 		dasd_eckd_identify_conf_parts(private);
 	}
 	ccw_device_get_schid(device->cdev, &sch_id);
+=======
+	struct channel_path_desc_fmt0 *chp_desc;
+	struct subchannel_id sch_id;
+
+	ccw_device_get_schid(device->cdev, &sch_id);
+	/*
+	 * path handling and read_conf allocate data
+	 * free it before replacing the pointer
+	 */
+	kfree(device->path[chp].conf_data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	device->path[chp].conf_data = conf_data;
 	device->path[chp].cssid = sch_id.cssid;
 	device->path[chp].ssid = sch_id.ssid;
@@ -1028,7 +1040,10 @@ static void dasd_eckd_store_conf_data(struct dasd_device *device,
 	if (chp_desc)
 		device->path[chp].chpid = chp_desc->chpid;
 	kfree(chp_desc);
+<<<<<<< HEAD
 	kfree(cdp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void dasd_eckd_clear_conf_data(struct dasd_device *device)
@@ -3276,7 +3291,11 @@ static int dasd_eckd_ese_read(struct dasd_ccw_req *cqr, struct irb *irb)
 	end_blk = (curr_trk + 1) * recs_per_trk;
 
 	rq_for_each_segment(bv, req, iter) {
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
+=======
+		dst = page_address(bv.bv_page) + bv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (off = 0; off < bv.bv_len; off += blksize) {
 			if (first_blk + blk_count >= end_blk) {
 				cqr->proc_bytes = blk_count * blksize;
@@ -4008,7 +4027,11 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_cmd_single(
 			      last_rec - recid + 1, cmd, basedev, blksize);
 	}
 	rq_for_each_segment(bv, req, iter) {
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
+=======
+		dst = page_address(bv.bv_page) + bv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (dasd_page_cache) {
 			char *copy = kmem_cache_alloc(dasd_page_cache,
 						      GFP_DMA | __GFP_NOWARN);
@@ -4175,7 +4198,11 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_cmd_track(
 	idaw_dst = NULL;
 	idaw_len = 0;
 	rq_for_each_segment(bv, req, iter) {
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
+=======
+		dst = page_address(bv.bv_page) + bv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		seg_len = bv.bv_len;
 		while (seg_len) {
 			if (new_track) {
@@ -4518,7 +4545,11 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_tpm_track(
 		new_track = 1;
 		recid = first_rec;
 		rq_for_each_segment(bv, req, iter) {
+<<<<<<< HEAD
 			dst = bvec_virt(&bv);
+=======
+			dst = page_address(bv.bv_page) + bv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			seg_len = bv.bv_len;
 			while (seg_len) {
 				if (new_track) {
@@ -4551,7 +4582,11 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_tpm_track(
 		}
 	} else {
 		rq_for_each_segment(bv, req, iter) {
+<<<<<<< HEAD
 			dst = bvec_virt(&bv);
+=======
+			dst = page_address(bv.bv_page) + bv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			last_tidaw = itcw_add_tidaw(itcw, 0x00,
 						    dst, bv.bv_len);
 			if (IS_ERR(last_tidaw)) {
@@ -4787,7 +4822,11 @@ static struct dasd_ccw_req *dasd_eckd_build_cp_raw(struct dasd_device *startdev,
 			idaws = idal_create_words(idaws, rawpadpage, PAGE_SIZE);
 	}
 	rq_for_each_segment(bv, req, iter) {
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
+=======
+		dst = page_address(bv.bv_page) + bv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		seg_len = bv.bv_len;
 		if (cmd == DASD_ECKD_CCW_READ_TRACK)
 			memset(dst, 0, seg_len);
@@ -4848,7 +4887,11 @@ dasd_eckd_free_cp(struct dasd_ccw_req *cqr, struct request *req)
 	if (private->uses_cdl == 0 || recid > 2*blk_per_trk)
 		ccw++;
 	rq_for_each_segment(bv, req, iter) {
+<<<<<<< HEAD
 		dst = bvec_virt(&bv);
+=======
+		dst = page_address(bv.bv_page) + bv.bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (off = 0; off < bv.bv_len; off += blksize) {
 			/* Skip locate record. */
 			if (private->uses_cdl && recid <= 2*blk_per_trk)

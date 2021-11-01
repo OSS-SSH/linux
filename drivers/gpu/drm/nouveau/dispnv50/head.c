@@ -50,9 +50,17 @@ nv50_head_flush_clr(struct nv50_head *head,
 }
 
 void
+<<<<<<< HEAD
 nv50_head_flush_set_wndw(struct nv50_head *head, struct nv50_head_atom *asyh)
 {
 	if (asyh->set.curs   ) head->func->curs_set(head, asyh);
+=======
+nv50_head_flush_set(struct nv50_head *head, struct nv50_head_atom *asyh)
+{
+	if (asyh->set.view   ) head->func->view    (head, asyh);
+	if (asyh->set.mode   ) head->func->mode    (head, asyh);
+	if (asyh->set.core   ) head->func->core_set(head, asyh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (asyh->set.olut   ) {
 		asyh->olut.offset = nv50_lut_load(&head->olut,
 						  asyh->olut.buffer,
@@ -60,6 +68,7 @@ nv50_head_flush_set_wndw(struct nv50_head *head, struct nv50_head_atom *asyh)
 						  asyh->olut.load);
 		head->func->olut_set(head, asyh);
 	}
+<<<<<<< HEAD
 }
 
 void
@@ -68,6 +77,9 @@ nv50_head_flush_set(struct nv50_head *head, struct nv50_head_atom *asyh)
 	if (asyh->set.view   ) head->func->view    (head, asyh);
 	if (asyh->set.mode   ) head->func->mode    (head, asyh);
 	if (asyh->set.core   ) head->func->core_set(head, asyh);
+=======
+	if (asyh->set.curs   ) head->func->curs_set(head, asyh);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (asyh->set.base   ) head->func->base    (head, asyh);
 	if (asyh->set.ovly   ) head->func->ovly    (head, asyh);
 	if (asyh->set.dither ) head->func->dither  (head, asyh);

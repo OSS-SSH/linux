@@ -82,6 +82,7 @@ int acpi_pci_bus_find_domain_nr(struct pci_bus *bus)
 
 int pcibios_root_bridge_prepare(struct pci_host_bridge *bridge)
 {
+<<<<<<< HEAD
 	struct pci_config_window *cfg;
 	struct acpi_device *adev;
 	struct device *bus_dev;
@@ -105,6 +106,16 @@ int pcibios_root_bridge_prepare(struct pci_host_bridge *bridge)
 
 	ACPI_COMPANION_SET(&bridge->dev, adev);
 	set_dev_node(bus_dev, acpi_get_node(acpi_device_handle(adev)));
+=======
+	if (!acpi_disabled) {
+		struct pci_config_window *cfg = bridge->bus->sysdata;
+		struct acpi_device *adev = to_acpi_device(cfg->parent);
+		struct device *bus_dev = &bridge->bus->dev;
+
+		ACPI_COMPANION_SET(&bridge->dev, adev);
+		set_dev_node(bus_dev, acpi_get_node(acpi_device_handle(adev)));
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

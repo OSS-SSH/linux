@@ -183,6 +183,14 @@ void __pgd_error(const char *file, int line, unsigned long val)
 }
 
 extern char *exception_vector, *exception_vector_end;
+<<<<<<< HEAD
+=======
+void __init trap_init(void)
+{
+	return;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __init early_trap_init(void)
 {
 	unsigned long ivb = 0;

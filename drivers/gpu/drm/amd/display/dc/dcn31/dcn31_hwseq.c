@@ -47,7 +47,10 @@
 #include "dce/dmub_outbox.h"
 #include "dc_link_dp.h"
 #include "inc/link_dpcd.h"
+<<<<<<< HEAD
 #include "dcn10/dcn10_hw_sequencer.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define DC_LOGGER_INIT(logger)
 
@@ -226,7 +229,10 @@ void dcn31_init_hw(struct dc *dc)
 	if (dc->config.power_down_display_on_boot) {
 		struct dc_link *edp_links[MAX_NUM_EDP];
 		struct dc_link *edp_link;
+<<<<<<< HEAD
 		bool power_down = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		get_edp_links(dc, edp_links, &edp_num);
 		if (edp_num) {
@@ -240,11 +246,17 @@ void dcn31_init_hw(struct dc *dc)
 					dc->hwss.edp_backlight_control(edp_link, false);
 					dc->hwss.power_down(dc);
 					dc->hwss.edp_power_control(edp_link, false);
+<<<<<<< HEAD
 					power_down = true;
 				}
 			}
 		}
 		if (!power_down) {
+=======
+				}
+			}
+		} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			for (i = 0; i < dc->link_count; i++) {
 				struct dc_link *link = dc->links[i];
 
@@ -394,7 +406,11 @@ void dcn31_update_info_frame(struct pipe_ctx *pipe_ctx)
 	is_hdmi_tmds = dc_is_hdmi_tmds_signal(pipe_ctx->stream->signal);
 	is_dp = dc_is_dp_signal(pipe_ctx->stream->signal);
 
+<<<<<<< HEAD
 	if (!is_hdmi_tmds && !is_dp)
+=======
+	if (!is_hdmi_tmds)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (is_hdmi_tmds)
@@ -407,6 +423,7 @@ void dcn31_update_info_frame(struct pipe_ctx *pipe_ctx)
 			&pipe_ctx->stream_res.encoder_info_frame);
 	}
 }
+<<<<<<< HEAD
 void dcn31_z10_save_init(struct dc *dc)
 {
 	union dmub_rb_cmd cmd;
@@ -419,6 +436,8 @@ void dcn31_z10_save_init(struct dc *dc)
 	dc_dmub_srv_cmd_execute(dc->ctx->dmub_srv);
 	dc_dmub_srv_wait_idle(dc->ctx->dmub_srv);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void dcn31_z10_restore(struct dc *dc)
 {

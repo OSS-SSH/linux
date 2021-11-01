@@ -253,8 +253,13 @@ static int rvin_try_format(struct rvin_dev *vin, u32 which,
 	int ret;
 
 	sd_state = v4l2_subdev_alloc_state(sd);
+<<<<<<< HEAD
 	if (IS_ERR(sd_state))
 		return PTR_ERR(sd_state);
+=======
+	if (sd_state == NULL)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!rvin_format_from_pixel(vin, pix->pixelformat))
 		pix->pixelformat = RVIN_DEFAULT_FORMAT;

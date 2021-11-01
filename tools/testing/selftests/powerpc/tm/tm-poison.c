@@ -20,6 +20,10 @@
 #include <sched.h>
 #include <sys/types.h>
 #include <signal.h>
+<<<<<<< HEAD
+=======
+#include <inttypes.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "tm.h"
 
@@ -33,7 +37,10 @@ int tm_poison_test(void)
 	bool fail_vr = false;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cpu = pick_online_cpu();
 	FAIL_IF(cpu < 0);

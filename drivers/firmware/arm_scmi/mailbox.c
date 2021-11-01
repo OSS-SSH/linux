@@ -43,7 +43,11 @@ static void rx_callback(struct mbox_client *cl, void *m)
 {
 	struct scmi_mailbox *smbox = client_to_scmi_mailbox(cl);
 
+<<<<<<< HEAD
 	scmi_rx_callback(smbox->cinfo, shmem_read_header(smbox->shmem), NULL);
+=======
+	scmi_rx_callback(smbox->cinfo, shmem_read_header(smbox->shmem));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static bool mailbox_chan_available(struct device *dev, int idx)

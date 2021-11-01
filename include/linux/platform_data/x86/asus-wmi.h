@@ -61,7 +61,10 @@
 #define ASUS_WMI_DEVID_THROTTLE_THERMAL_POLICY 0x00120075
 
 /* Misc */
+<<<<<<< HEAD
 #define ASUS_WMI_DEVID_PANEL_OD		0x00050019
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ASUS_WMI_DEVID_CAMERA		0x00060013
 #define ASUS_WMI_DEVID_LID_FLIP		0x00060062
 
@@ -90,12 +93,15 @@
 /* Keyboard dock */
 #define ASUS_WMI_DEVID_KBD_DOCK		0x00120063
 
+<<<<<<< HEAD
 /* dgpu on/off */
 #define ASUS_WMI_DEVID_EGPU		0x00090019
 
 /* dgpu on/off */
 #define ASUS_WMI_DEVID_DGPU		0x00090020
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* DSTS masks */
 #define ASUS_WMI_DSTS_STATUS_BIT	0x00000001
 #define ASUS_WMI_DSTS_UNKNOWN_BIT	0x00000002

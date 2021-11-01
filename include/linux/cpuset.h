@@ -15,7 +15,10 @@
 #include <linux/cpumask.h>
 #include <linux/nodemask.h>
 #include <linux/mm.h>
+<<<<<<< HEAD
 #include <linux/mmu_context.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/jump_label.h>
 
 #ifdef CONFIG_CPUSETS
@@ -59,7 +62,11 @@ extern void cpuset_wait_for_hotplug(void);
 extern void cpuset_read_lock(void);
 extern void cpuset_read_unlock(void);
 extern void cpuset_cpus_allowed(struct task_struct *p, struct cpumask *mask);
+<<<<<<< HEAD
 extern bool cpuset_cpus_allowed_fallback(struct task_struct *p);
+=======
+extern void cpuset_cpus_allowed_fallback(struct task_struct *p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern nodemask_t cpuset_mems_allowed(struct task_struct *p);
 #define cpuset_current_mems_allowed (current->mems_allowed)
 void cpuset_init_current_mems_allowed(void);
@@ -185,12 +192,20 @@ static inline void cpuset_read_unlock(void) { }
 static inline void cpuset_cpus_allowed(struct task_struct *p,
 				       struct cpumask *mask)
 {
+<<<<<<< HEAD
 	cpumask_copy(mask, task_cpu_possible_mask(p));
 }
 
 static inline bool cpuset_cpus_allowed_fallback(struct task_struct *p)
 {
 	return false;
+=======
+	cpumask_copy(mask, cpu_possible_mask);
+}
+
+static inline void cpuset_cpus_allowed_fallback(struct task_struct *p)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline nodemask_t cpuset_mems_allowed(struct task_struct *p)

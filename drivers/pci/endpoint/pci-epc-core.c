@@ -137,29 +137,43 @@ EXPORT_SYMBOL_GPL(pci_epc_get_next_free_bar);
  * @epc: the features supported by *this* EPC device will be returned
  * @func_no: the features supported by the EPC device specific to the
  *	     endpoint function with func_no will be returned
+<<<<<<< HEAD
  * @vfunc_no: the features supported by the EPC device specific to the
  *	     virtual endpoint function with vfunc_no will be returned
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Invoke to get the features provided by the EPC which may be
  * specific to an endpoint function. Returns pci_epc_features on success
  * and NULL for any failures.
  */
 const struct pci_epc_features *pci_epc_get_features(struct pci_epc *epc,
+<<<<<<< HEAD
 						    u8 func_no, u8 vfunc_no)
+=======
+						    u8 func_no)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct pci_epc_features *epc_features;
 
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
 		return NULL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->get_features)
 		return NULL;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	epc_features = epc->ops->get_features(epc, func_no, vfunc_no);
+=======
+	epc_features = epc->ops->get_features(epc, func_no);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return epc_features;
@@ -210,14 +224,22 @@ EXPORT_SYMBOL_GPL(pci_epc_start);
 /**
  * pci_epc_raise_irq() - interrupt the host system
  * @epc: the EPC device which has to interrupt the host
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @type: specify the type of interrupt; legacy, MSI or MSI-X
  * @interrupt_num: the MSI or MSI-X interrupt number
  *
  * Invoke to raise an legacy, MSI or MSI-X interrupt
  */
+<<<<<<< HEAD
 int pci_epc_raise_irq(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+=======
+int pci_epc_raise_irq(struct pci_epc *epc, u8 func_no,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		      enum pci_epc_irq_type type, u16 interrupt_num)
 {
 	int ret;
@@ -225,14 +247,21 @@ int pci_epc_raise_irq(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->raise_irq)
 		return 0;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	ret = epc->ops->raise_irq(epc, func_no, vfunc_no, type, interrupt_num);
+=======
+	ret = epc->ops->raise_irq(epc, func_no, type, interrupt_num);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return ret;
@@ -244,7 +273,10 @@ EXPORT_SYMBOL_GPL(pci_epc_raise_irq);
  *                         MSI data
  * @epc: the EPC device which has the MSI capability
  * @func_no: the physical endpoint function number in the EPC device
+<<<<<<< HEAD
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @phys_addr: the physical address of the outbound region
  * @interrupt_num: the MSI interrupt number
  * @entry_size: Size of Outbound address region for each interrupt
@@ -260,25 +292,39 @@ EXPORT_SYMBOL_GPL(pci_epc_raise_irq);
  * physical address (in outbound region) of the other interface to ring
  * doorbell.
  */
+<<<<<<< HEAD
 int pci_epc_map_msi_irq(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 			phys_addr_t phys_addr, u8 interrupt_num, u32 entry_size,
 			u32 *msi_data, u32 *msi_addr_offset)
+=======
+int pci_epc_map_msi_irq(struct pci_epc *epc, u8 func_no, phys_addr_t phys_addr,
+			u8 interrupt_num, u32 entry_size, u32 *msi_data,
+			u32 *msi_addr_offset)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int ret;
 
 	if (IS_ERR_OR_NULL(epc))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->map_msi_irq)
 		return -EINVAL;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	ret = epc->ops->map_msi_irq(epc, func_no, vfunc_no, phys_addr,
 				    interrupt_num, entry_size, msi_data,
 				    msi_addr_offset);
+=======
+	ret = epc->ops->map_msi_irq(epc, func_no, phys_addr, interrupt_num,
+				    entry_size, msi_data, msi_addr_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return ret;
@@ -288,26 +334,41 @@ EXPORT_SYMBOL_GPL(pci_epc_map_msi_irq);
 /**
  * pci_epc_get_msi() - get the number of MSI interrupt numbers allocated
  * @epc: the EPC device to which MSI interrupts was requested
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
  *
  * Invoke to get the number of MSI interrupts allocated by the RC
  */
 int pci_epc_get_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+=======
+ * @func_no: the endpoint function number in the EPC device
+ *
+ * Invoke to get the number of MSI interrupts allocated by the RC
+ */
+int pci_epc_get_msi(struct pci_epc *epc, u8 func_no)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int interrupt;
 
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
 		return 0;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->get_msi)
 		return 0;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	interrupt = epc->ops->get_msi(epc, func_no, vfunc_no);
+=======
+	interrupt = epc->ops->get_msi(epc, func_no);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	if (interrupt < 0)
@@ -322,13 +383,21 @@ EXPORT_SYMBOL_GPL(pci_epc_get_msi);
 /**
  * pci_epc_set_msi() - set the number of MSI interrupt numbers required
  * @epc: the EPC device on which MSI has to be configured
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @interrupts: number of MSI interrupts required by the EPF
  *
  * Invoke to set the required number of MSI interrupts.
  */
+<<<<<<< HEAD
 int pci_epc_set_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no, u8 interrupts)
+=======
+int pci_epc_set_msi(struct pci_epc *epc, u8 func_no, u8 interrupts)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int ret;
 	u8 encode_int;
@@ -337,16 +406,23 @@ int pci_epc_set_msi(struct pci_epc *epc, u8 func_no, u8 vfunc_no, u8 interrupts)
 	    interrupts > 32)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->set_msi)
 		return 0;
 
 	encode_int = order_base_2(interrupts);
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	ret = epc->ops->set_msi(epc, func_no, vfunc_no, encode_int);
+=======
+	ret = epc->ops->set_msi(epc, func_no, encode_int);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return ret;
@@ -356,26 +432,41 @@ EXPORT_SYMBOL_GPL(pci_epc_set_msi);
 /**
  * pci_epc_get_msix() - get the number of MSI-X interrupt numbers allocated
  * @epc: the EPC device to which MSI-X interrupts was requested
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
  *
  * Invoke to get the number of MSI-X interrupts allocated by the RC
  */
 int pci_epc_get_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no)
+=======
+ * @func_no: the endpoint function number in the EPC device
+ *
+ * Invoke to get the number of MSI-X interrupts allocated by the RC
+ */
+int pci_epc_get_msix(struct pci_epc *epc, u8 func_no)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int interrupt;
 
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
 		return 0;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->get_msix)
 		return 0;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	interrupt = epc->ops->get_msix(epc, func_no, vfunc_no);
+=======
+	interrupt = epc->ops->get_msix(epc, func_no);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	if (interrupt < 0)
@@ -388,16 +479,25 @@ EXPORT_SYMBOL_GPL(pci_epc_get_msix);
 /**
  * pci_epc_set_msix() - set the number of MSI-X interrupt numbers required
  * @epc: the EPC device on which MSI-X has to be configured
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @interrupts: number of MSI-X interrupts required by the EPF
  * @bir: BAR where the MSI-X table resides
  * @offset: Offset pointing to the start of MSI-X table
  *
  * Invoke to set the required number of MSI-X interrupts.
  */
+<<<<<<< HEAD
 int pci_epc_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 		     u16 interrupts, enum pci_barno bir, u32 offset)
+=======
+int pci_epc_set_msix(struct pci_epc *epc, u8 func_no, u16 interrupts,
+		     enum pci_barno bir, u32 offset)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int ret;
 
@@ -405,15 +505,22 @@ int pci_epc_set_msix(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	    interrupts < 1 || interrupts > 2048)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->set_msix)
 		return 0;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	ret = epc->ops->set_msix(epc, func_no, vfunc_no, interrupts - 1, bir,
 				 offset);
+=======
+	ret = epc->ops->set_msix(epc, func_no, interrupts - 1, bir, offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return ret;
@@ -423,26 +530,41 @@ EXPORT_SYMBOL_GPL(pci_epc_set_msix);
 /**
  * pci_epc_unmap_addr() - unmap CPU address from PCI address
  * @epc: the EPC device on which address is allocated
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @phys_addr: physical address of the local system
  *
  * Invoke to unmap the CPU address from PCI address.
  */
+<<<<<<< HEAD
 void pci_epc_unmap_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+=======
+void pci_epc_unmap_addr(struct pci_epc *epc, u8 func_no,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			phys_addr_t phys_addr)
 {
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
 		return;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->unmap_addr)
 		return;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	epc->ops->unmap_addr(epc, func_no, vfunc_no, phys_addr);
+=======
+	epc->ops->unmap_addr(epc, func_no, phys_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 }
 EXPORT_SYMBOL_GPL(pci_epc_unmap_addr);
@@ -450,15 +572,23 @@ EXPORT_SYMBOL_GPL(pci_epc_unmap_addr);
 /**
  * pci_epc_map_addr() - map CPU address to PCI address
  * @epc: the EPC device on which address is allocated
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @phys_addr: physical address of the local system
  * @pci_addr: PCI address to which the physical address should be mapped
  * @size: the size of the allocation
  *
  * Invoke to map CPU address with PCI address.
  */
+<<<<<<< HEAD
 int pci_epc_map_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+=======
+int pci_epc_map_addr(struct pci_epc *epc, u8 func_no,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		     phys_addr_t phys_addr, u64 pci_addr, size_t size)
 {
 	int ret;
@@ -466,15 +596,22 @@ int pci_epc_map_addr(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->map_addr)
 		return 0;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	ret = epc->ops->map_addr(epc, func_no, vfunc_no, phys_addr, pci_addr,
 				 size);
+=======
+	ret = epc->ops->map_addr(epc, func_no, phys_addr, pci_addr, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return ret;
@@ -484,13 +621,21 @@ EXPORT_SYMBOL_GPL(pci_epc_map_addr);
 /**
  * pci_epc_clear_bar() - reset the BAR
  * @epc: the EPC device for which the BAR has to be cleared
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @epf_bar: the struct epf_bar that contains the BAR information
  *
  * Invoke to reset the BAR of the endpoint device.
  */
+<<<<<<< HEAD
 void pci_epc_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+=======
+void pci_epc_clear_bar(struct pci_epc *epc, u8 func_no,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       struct pci_epf_bar *epf_bar)
 {
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions ||
@@ -498,14 +643,21 @@ void pci_epc_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	     epf_bar->flags & PCI_BASE_ADDRESS_MEM_TYPE_64))
 		return;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->clear_bar)
 		return;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	epc->ops->clear_bar(epc, func_no, vfunc_no, epf_bar);
+=======
+	epc->ops->clear_bar(epc, func_no, epf_bar);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 }
 EXPORT_SYMBOL_GPL(pci_epc_clear_bar);
@@ -513,13 +665,21 @@ EXPORT_SYMBOL_GPL(pci_epc_clear_bar);
 /**
  * pci_epc_set_bar() - configure BAR in order for host to assign PCI addr space
  * @epc: the EPC device on which BAR has to be configured
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @epf_bar: the struct epf_bar that contains the BAR information
  *
  * Invoke to configure the BAR of the endpoint device.
  */
+<<<<<<< HEAD
 int pci_epc_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+=======
+int pci_epc_set_bar(struct pci_epc *epc, u8 func_no,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    struct pci_epf_bar *epf_bar)
 {
 	int ret;
@@ -534,14 +694,21 @@ int pci_epc_set_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	     !(flags & PCI_BASE_ADDRESS_MEM_TYPE_64)))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->set_bar)
 		return 0;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	ret = epc->ops->set_bar(epc, func_no, vfunc_no, epf_bar);
+=======
+	ret = epc->ops->set_bar(epc, func_no, epf_bar);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return ret;
@@ -551,8 +718,12 @@ EXPORT_SYMBOL_GPL(pci_epc_set_bar);
 /**
  * pci_epc_write_header() - write standard configuration header
  * @epc: the EPC device to which the configuration header should be written
+<<<<<<< HEAD
  * @func_no: the physical endpoint function number in the EPC device
  * @vfunc_no: the virtual endpoint function number in the physical function
+=======
+ * @func_no: the endpoint function number in the EPC device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @header: standard configuration header fields
  *
  * Invoke to write the configuration header to the endpoint controller. Every
@@ -560,7 +731,11 @@ EXPORT_SYMBOL_GPL(pci_epc_set_bar);
  * configuration header would be written. The callback function should write
  * the header fields to this dedicated location.
  */
+<<<<<<< HEAD
 int pci_epc_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
+=======
+int pci_epc_write_header(struct pci_epc *epc, u8 func_no,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			 struct pci_epf_header *header)
 {
 	int ret;
@@ -568,6 +743,7 @@ int pci_epc_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	if (IS_ERR_OR_NULL(epc) || func_no >= epc->max_functions)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (vfunc_no > 0 && (!epc->max_vfs || vfunc_no > epc->max_vfs[func_no]))
 		return -EINVAL;
 
@@ -575,11 +751,17 @@ int pci_epc_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
 	if (vfunc_no > 1)
 		return -EINVAL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc->ops->write_header)
 		return 0;
 
 	mutex_lock(&epc->lock);
+<<<<<<< HEAD
 	ret = epc->ops->write_header(epc, func_no, vfunc_no, header);
+=======
+	ret = epc->ops->write_header(epc, func_no, header);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&epc->lock);
 
 	return ret;
@@ -604,7 +786,11 @@ int pci_epc_add_epf(struct pci_epc *epc, struct pci_epf *epf,
 	u32 func_no;
 	int ret = 0;
 
+<<<<<<< HEAD
 	if (IS_ERR_OR_NULL(epc) || epf->is_vf)
+=======
+	if (IS_ERR_OR_NULL(epc))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	if (type == PRIMARY_INTERFACE && epf->epc)

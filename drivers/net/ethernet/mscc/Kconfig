@@ -16,7 +16,11 @@ config MSCC_OCELOT_SWITCH_LIB
 	select NET_DEVLINK
 	select REGMAP_MMIO
 	select PACKING
+<<<<<<< HEAD
 	select PHYLINK
+=======
+	select PHYLIB
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tristate
 	help
 	  This is a hardware support library for Ocelot network switches. It is
@@ -24,7 +28,10 @@ config MSCC_OCELOT_SWITCH_LIB
 
 config MSCC_OCELOT_SWITCH
 	tristate "Ocelot switch driver"
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	depends on BRIDGE || BRIDGE=n
 	depends on NET_SWITCHDEV
 	depends on HAS_IOMEM

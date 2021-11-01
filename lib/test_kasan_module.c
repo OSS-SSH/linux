@@ -15,11 +15,20 @@
 
 #include "../mm/kasan/kasan.h"
 
+<<<<<<< HEAD
+=======
+#define OOB_TAG_OFF (IS_ENABLED(CONFIG_KASAN_GENERIC) ? 0 : KASAN_GRANULE_SIZE)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static noinline void __init copy_user_test(void)
 {
 	char *kmem;
 	char __user *usermem;
+<<<<<<< HEAD
 	size_t size = 128 - KASAN_GRANULE_SIZE;
+=======
+	size_t size = 10;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int __maybe_unused unused;
 
 	kmem = kmalloc(size, GFP_KERNEL);
@@ -36,6 +45,7 @@ static noinline void __init copy_user_test(void)
 	}
 
 	pr_info("out-of-bounds in copy_from_user()\n");
+<<<<<<< HEAD
 	unused = copy_from_user(kmem, usermem, size + 1);
 
 	pr_info("out-of-bounds in copy_to_user()\n");
@@ -55,6 +65,27 @@ static noinline void __init copy_user_test(void)
 
 	pr_info("out-of-bounds in strncpy_from_user()\n");
 	unused = strncpy_from_user(kmem, usermem, size + 1);
+=======
+	unused = copy_from_user(kmem, usermem, size + 1 + OOB_TAG_OFF);
+
+	pr_info("out-of-bounds in copy_to_user()\n");
+	unused = copy_to_user(usermem, kmem, size + 1 + OOB_TAG_OFF);
+
+	pr_info("out-of-bounds in __copy_from_user()\n");
+	unused = __copy_from_user(kmem, usermem, size + 1 + OOB_TAG_OFF);
+
+	pr_info("out-of-bounds in __copy_to_user()\n");
+	unused = __copy_to_user(usermem, kmem, size + 1 + OOB_TAG_OFF);
+
+	pr_info("out-of-bounds in __copy_from_user_inatomic()\n");
+	unused = __copy_from_user_inatomic(kmem, usermem, size + 1 + OOB_TAG_OFF);
+
+	pr_info("out-of-bounds in __copy_to_user_inatomic()\n");
+	unused = __copy_to_user_inatomic(usermem, kmem, size + 1 + OOB_TAG_OFF);
+
+	pr_info("out-of-bounds in strncpy_from_user()\n");
+	unused = strncpy_from_user(kmem, usermem, size + 1 + OOB_TAG_OFF);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	vm_munmap((unsigned long)usermem, PAGE_SIZE);
 	kfree(kmem);
@@ -71,7 +102,11 @@ static noinline void __init kasan_rcu_reclaim(struct rcu_head *rp)
 						struct kasan_rcu_info, rcu);
 
 	kfree(fp);
+<<<<<<< HEAD
 	((volatile struct kasan_rcu_info *)fp)->i;
+=======
+	fp->i = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static noinline void __init kasan_rcu_uaf(void)

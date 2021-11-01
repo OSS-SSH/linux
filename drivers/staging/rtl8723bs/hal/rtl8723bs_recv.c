@@ -4,6 +4,10 @@
  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
  *
  ******************************************************************************/
+<<<<<<< HEAD
+=======
+#define _RTL8723BS_RECV_C_
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <drv_types.h>
 #include <rtw_debug.h>
@@ -129,7 +133,11 @@ static void update_recvframe_phyinfo(union recv_frame *precvframe,
 
 	/* rtl8723b_query_rx_phy_status(precvframe, pphy_status); */
 	/* spin_lock_bh(&p_hal_data->odm_stainfo_lock); */
+<<<<<<< HEAD
 	odm_phy_status_query(&p_hal_data->odmpriv, p_phy_info,
+=======
+	ODM_PhyStatusQuery(&p_hal_data->odmpriv, p_phy_info,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   (u8 *)pphy_status, &(pkt_info));
 	if (psta)
 		psta->rssi = pattrib->phy_info.RecvSignalPower;

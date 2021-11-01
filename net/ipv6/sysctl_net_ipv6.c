@@ -21,7 +21,10 @@
 #ifdef CONFIG_NETLABEL
 #include <net/calipso.h>
 #endif
+<<<<<<< HEAD
 #include <linux/ioam6.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int two = 2;
 static int three = 3;
@@ -29,8 +32,11 @@ static int flowlabel_reflect_max = 0x7;
 static int auto_flowlabels_max = IP6_AUTO_FLOW_LABEL_MAX;
 static u32 rt6_multipath_hash_fields_all_mask =
 	FIB_MULTIPATH_HASH_FIELD_ALL_MASK;
+<<<<<<< HEAD
 static u32 ioam6_id_max = IOAM6_DEFAULT_ID;
 static u64 ioam6_id_wide_max = IOAM6_DEFAULT_ID_WIDE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int proc_rt6_multipath_hash_policy(struct ctl_table *table, int write,
 					  void *buffer, size_t *lenp, loff_t *ppos)
@@ -199,6 +205,7 @@ static struct ctl_table ipv6_table_template[] = {
 		.extra1         = SYSCTL_ZERO,
 		.extra2         = &two,
 	},
+<<<<<<< HEAD
 	{
 		.procname	= "ioam6_id",
 		.data		= &init_net.ipv6.sysctl.ioam6_id,
@@ -215,6 +222,8 @@ static struct ctl_table ipv6_table_template[] = {
 		.proc_handler	= proc_doulongvec_minmax,
 		.extra2		= &ioam6_id_wide_max,
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ }
 };
 

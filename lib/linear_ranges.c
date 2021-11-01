@@ -241,6 +241,7 @@ int linear_range_get_selector_high(const struct linear_range *r,
 }
 EXPORT_SYMBOL_GPL(linear_range_get_selector_high);
 
+<<<<<<< HEAD
 /**
  * linear_range_get_selector_within - return linear range selector for value
  * @r:		pointer to linear range where selector is looked from
@@ -272,5 +273,7 @@ void linear_range_get_selector_within(const struct linear_range *r,
 }
 EXPORT_SYMBOL_GPL(linear_range_get_selector_within);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_DESCRIPTION("linear-ranges helper");
 MODULE_LICENSE("GPL");

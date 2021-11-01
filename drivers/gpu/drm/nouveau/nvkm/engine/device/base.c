@@ -2602,7 +2602,10 @@ nv172_chipset = {
 	.top      = { 0x00000001, ga100_top_new },
 	.disp     = { 0x00000001, ga102_disp_new },
 	.dma      = { 0x00000001, gv100_dma_new },
+<<<<<<< HEAD
 	.fifo     = { 0x00000001, ga102_fifo_new },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct nvkm_device_chip
@@ -2623,6 +2626,7 @@ nv174_chipset = {
 	.top      = { 0x00000001, ga100_top_new },
 	.disp     = { 0x00000001, ga102_disp_new },
 	.dma      = { 0x00000001, gv100_dma_new },
+<<<<<<< HEAD
 	.fifo     = { 0x00000001, ga102_fifo_new },
 };
 
@@ -2645,6 +2649,8 @@ nv177_chipset = {
 	.disp     = { 0x00000001, ga102_disp_new },
 	.dma      = { 0x00000001, gv100_dma_new },
 	.fifo     = { 0x00000001, ga102_fifo_new },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int
@@ -3072,7 +3078,10 @@ nvkm_device_ctor(const struct nvkm_device_func *func,
 		case 0x168: device->chip = &nv168_chipset; break;
 		case 0x172: device->chip = &nv172_chipset; break;
 		case 0x174: device->chip = &nv174_chipset; break;
+<<<<<<< HEAD
 		case 0x177: device->chip = &nv177_chipset; break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		default:
 			if (nvkm_boolopt(device->cfgopt, "NvEnableUnsupportedChipsets", false)) {
 				switch (device->chipset) {

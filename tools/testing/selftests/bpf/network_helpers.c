@@ -66,6 +66,7 @@ int settimeo(int fd, int timeout_ms)
 
 #define save_errno_close(fd) ({ int __save = errno; close(fd); errno = __save; })
 
+<<<<<<< HEAD
 static int __start_server(int type, const struct sockaddr *addr,
 			  socklen_t addrlen, int timeout_ms, bool reuseport)
 {
@@ -73,6 +74,19 @@ static int __start_server(int type, const struct sockaddr *addr,
 	int fd;
 
 	fd = socket(addr->sa_family, type, 0);
+=======
+int start_server(int family, int type, const char *addr_str, __u16 port,
+		 int timeout_ms)
+{
+	struct sockaddr_storage addr = {};
+	socklen_t len;
+	int fd;
+
+	if (make_sockaddr(family, addr_str, port, &addr, &len))
+		return -1;
+
+	fd = socket(family, type, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (fd < 0) {
 		log_err("Failed to create server socket");
 		return -1;
@@ -81,6 +95,7 @@ static int __start_server(int type, const struct sockaddr *addr,
 	if (settimeo(fd, timeout_ms))
 		goto error_close;
 
+<<<<<<< HEAD
 	if (reuseport &&
 	    setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, &on, sizeof(on))) {
 		log_err("Failed to set SO_REUSEPORT");
@@ -88,6 +103,9 @@ static int __start_server(int type, const struct sockaddr *addr,
 	}
 
 	if (bind(fd, addr, addrlen) < 0) {
+=======
+	if (bind(fd, (const struct sockaddr *)&addr, len) < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		log_err("Failed to bind socket");
 		goto error_close;
 	}
@@ -106,6 +124,7 @@ error_close:
 	return -1;
 }
 
+<<<<<<< HEAD
 int start_server(int family, int type, const char *addr_str, __u16 port,
 		 int timeout_ms)
 {
@@ -169,6 +188,8 @@ void free_fds(int *fds, unsigned int nr_close_fds)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int fastopen_connect(int server_fd, const char *data, unsigned int data_len,
 		     int timeout_ms)
 {
@@ -208,6 +229,7 @@ error_close:
 
 static int connect_fd_to_addr(int fd,
 			      const struct sockaddr_storage *addr,
+<<<<<<< HEAD
 			      socklen_t addrlen, const bool must_fail)
 {
 	int ret;
@@ -228,23 +250,37 @@ static int connect_fd_to_addr(int fd,
 			log_err("Failed to connect to server");
 			return -1;
 		}
+=======
+			      socklen_t addrlen)
+{
+	if (connect(fd, (const struct sockaddr *)addr, addrlen)) {
+		log_err("Failed to connect to server");
+		return -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct network_helper_opts default_opts;
 
 int connect_to_fd_opts(int server_fd, const struct network_helper_opts *opts)
+=======
+int connect_to_fd(int server_fd, int timeout_ms)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sockaddr_storage addr;
 	struct sockaddr_in *addr_in;
 	socklen_t addrlen, optlen;
 	int fd, type;
 
+<<<<<<< HEAD
 	if (!opts)
 		opts = &default_opts;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	optlen = sizeof(type);
 	if (getsockopt(server_fd, SOL_SOCKET, SO_TYPE, &type, &optlen)) {
 		log_err("getsockopt(SOL_TYPE)");
@@ -264,6 +300,7 @@ int connect_to_fd_opts(int server_fd, const struct network_helper_opts *opts)
 		return -1;
 	}
 
+<<<<<<< HEAD
 	if (settimeo(fd, opts->timeout_ms))
 		goto error_close;
 
@@ -273,6 +310,12 @@ int connect_to_fd_opts(int server_fd, const struct network_helper_opts *opts)
 		goto error_close;
 
 	if (connect_fd_to_addr(fd, &addr, addrlen, opts->must_fail))
+=======
+	if (settimeo(fd, timeout_ms))
+		goto error_close;
+
+	if (connect_fd_to_addr(fd, &addr, addrlen))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto error_close;
 
 	return fd;
@@ -282,6 +325,7 @@ error_close:
 	return -1;
 }
 
+<<<<<<< HEAD
 int connect_to_fd(int server_fd, int timeout_ms)
 {
 	struct network_helper_opts opts = {
@@ -291,6 +335,8 @@ int connect_to_fd(int server_fd, int timeout_ms)
 	return connect_to_fd_opts(server_fd, &opts);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int connect_fd_to_fd(int client_fd, int server_fd, int timeout_ms)
 {
 	struct sockaddr_storage addr;
@@ -304,7 +350,11 @@ int connect_fd_to_fd(int client_fd, int server_fd, int timeout_ms)
 		return -1;
 	}
 
+<<<<<<< HEAD
 	if (connect_fd_to_addr(client_fd, &addr, len, false))
+=======
+	if (connect_fd_to_addr(client_fd, &addr, len))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -1;
 
 	return 0;
@@ -316,7 +366,10 @@ int make_sockaddr(int family, const char *addr_str, __u16 port,
 	if (family == AF_INET) {
 		struct sockaddr_in *sin = (void *)addr;
 
+<<<<<<< HEAD
 		memset(addr, 0, sizeof(*sin));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sin->sin_family = AF_INET;
 		sin->sin_port = htons(port);
 		if (addr_str &&
@@ -330,7 +383,10 @@ int make_sockaddr(int family, const char *addr_str, __u16 port,
 	} else if (family == AF_INET6) {
 		struct sockaddr_in6 *sin6 = (void *)addr;
 
+<<<<<<< HEAD
 		memset(addr, 0, sizeof(*sin6));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		sin6->sin6_family = AF_INET6;
 		sin6->sin6_port = htons(port);
 		if (addr_str &&
@@ -344,6 +400,7 @@ int make_sockaddr(int family, const char *addr_str, __u16 port,
 	}
 	return -1;
 }
+<<<<<<< HEAD
 
 char *ping_command(int family)
 {
@@ -356,3 +413,5 @@ char *ping_command(int family)
 	}
 	return "ping";
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -30,7 +30,10 @@
 #include <linux/crash_dump.h>
 #include <linux/hugetlb.h>
 #include <linux/acpi_iort.h>
+<<<<<<< HEAD
 #include <linux/kmemleak.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm/boot.h>
 #include <asm/fixmap.h>
@@ -75,7 +78,10 @@ phys_addr_t arm64_dma_phys_limit __ro_after_init;
 static void __init reserve_crashkernel(void)
 {
 	unsigned long long crash_base, crash_size;
+<<<<<<< HEAD
 	unsigned long long crash_max = arm64_dma_phys_limit;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	ret = parse_crashkernel(boot_command_line, memblock_phys_mem_size(),
@@ -86,6 +92,7 @@ static void __init reserve_crashkernel(void)
 
 	crash_size = PAGE_ALIGN(crash_size);
 
+<<<<<<< HEAD
 	/* User specifies base address explicitly. */
 	if (crash_base)
 		crash_max = crash_base + crash_size;
@@ -98,15 +105,47 @@ static void __init reserve_crashkernel(void)
 			crash_size);
 		return;
 	}
+=======
+	if (crash_base == 0) {
+		/* Current arm64 boot protocol requires 2MB alignment */
+		crash_base = memblock_find_in_range(0, arm64_dma_phys_limit,
+				crash_size, SZ_2M);
+		if (crash_base == 0) {
+			pr_warn("cannot allocate crashkernel (size:0x%llx)\n",
+				crash_size);
+			return;
+		}
+	} else {
+		/* User specifies base address explicitly. */
+		if (!memblock_is_region_memory(crash_base, crash_size)) {
+			pr_warn("cannot reserve crashkernel: region is not memory\n");
+			return;
+		}
+
+		if (memblock_is_region_reserved(crash_base, crash_size)) {
+			pr_warn("cannot reserve crashkernel: region overlaps reserved memory\n");
+			return;
+		}
+
+		if (!IS_ALIGNED(crash_base, SZ_2M)) {
+			pr_warn("cannot reserve crashkernel: base address is not 2MB aligned\n");
+			return;
+		}
+	}
+	memblock_reserve(crash_base, crash_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pr_info("crashkernel reserved: 0x%016llx - 0x%016llx (%lld MB)\n",
 		crash_base, crash_base + crash_size, crash_size >> 20);
 
+<<<<<<< HEAD
 	/*
 	 * The crashkernel memory will be removed from the kernel linear
 	 * map. Inform kmemleak so that it won't try to access it.
 	 */
 	kmemleak_ignore_phys(crash_base);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	crashk_res.start = crash_base;
 	crashk_res.end = crash_base + crash_size - 1;
 }
@@ -116,6 +155,60 @@ static void __init reserve_crashkernel(void)
 }
 #endif /* CONFIG_KEXEC_CORE */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRASH_DUMP
+static int __init early_init_dt_scan_elfcorehdr(unsigned long node,
+		const char *uname, int depth, void *data)
+{
+	const __be32 *reg;
+	int len;
+
+	if (depth != 1 || strcmp(uname, "chosen") != 0)
+		return 0;
+
+	reg = of_get_flat_dt_prop(node, "linux,elfcorehdr", &len);
+	if (!reg || (len < (dt_root_addr_cells + dt_root_size_cells)))
+		return 1;
+
+	elfcorehdr_addr = dt_mem_next_cell(dt_root_addr_cells, &reg);
+	elfcorehdr_size = dt_mem_next_cell(dt_root_size_cells, &reg);
+
+	return 1;
+}
+
+/*
+ * reserve_elfcorehdr() - reserves memory for elf core header
+ *
+ * This function reserves the memory occupied by an elf core header
+ * described in the device tree. This region contains all the
+ * information about primary kernel's core image and is used by a dump
+ * capture kernel to access the system memory on primary kernel.
+ */
+static void __init reserve_elfcorehdr(void)
+{
+	of_scan_flat_dt(early_init_dt_scan_elfcorehdr, NULL);
+
+	if (!elfcorehdr_size)
+		return;
+
+	if (memblock_is_region_reserved(elfcorehdr_addr, elfcorehdr_size)) {
+		pr_warn("elfcorehdr is overlapped\n");
+		return;
+	}
+
+	memblock_reserve(elfcorehdr_addr, elfcorehdr_size);
+
+	pr_info("Reserving %lldKB of memory at 0x%llx for elfcorehdr\n",
+		elfcorehdr_size >> 10, elfcorehdr_addr);
+}
+#else
+static void __init reserve_elfcorehdr(void)
+{
+}
+#endif /* CONFIG_CRASH_DUMP */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Return the maximum physical address for a zone accessible by the given bits
  * limit. If DRAM starts above 32-bit, expand the zone to the maximum
@@ -160,6 +253,7 @@ static void __init zone_sizes_init(unsigned long min, unsigned long max)
 	free_area_init(max_zone_pfns);
 }
 
+<<<<<<< HEAD
 int pfn_valid(unsigned long pfn)
 {
 	phys_addr_t addr = PFN_PHYS(pfn);
@@ -197,6 +291,8 @@ int pfn_valid(unsigned long pfn)
 }
 EXPORT_SYMBOL(pfn_valid);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int pfn_is_map_memory(unsigned long pfn)
 {
 	phys_addr_t addr = PFN_PHYS(pfn);
@@ -226,6 +322,7 @@ static int __init early_mem(char *p)
 }
 early_param("mem", early_mem);
 
+<<<<<<< HEAD
 void __init arm64_memblock_init(void)
 {
 	s64 linear_region_size = PAGE_END - _PAGE_OFFSET(vabits_actual);
@@ -243,6 +340,46 @@ void __init arm64_memblock_init(void)
 		pr_info("Capping linear region to 51 bits for KVM in nVHE mode on LVA capable hardware.\n");
 		linear_region_size = min_t(u64, linear_region_size, BIT(51));
 	}
+=======
+static int __init early_init_dt_scan_usablemem(unsigned long node,
+		const char *uname, int depth, void *data)
+{
+	struct memblock_region *usablemem = data;
+	const __be32 *reg;
+	int len;
+
+	if (depth != 1 || strcmp(uname, "chosen") != 0)
+		return 0;
+
+	reg = of_get_flat_dt_prop(node, "linux,usable-memory-range", &len);
+	if (!reg || (len < (dt_root_addr_cells + dt_root_size_cells)))
+		return 1;
+
+	usablemem->base = dt_mem_next_cell(dt_root_addr_cells, &reg);
+	usablemem->size = dt_mem_next_cell(dt_root_size_cells, &reg);
+
+	return 1;
+}
+
+static void __init fdt_enforce_memory_region(void)
+{
+	struct memblock_region reg = {
+		.size = 0,
+	};
+
+	of_scan_flat_dt(early_init_dt_scan_usablemem, &reg);
+
+	if (reg.size)
+		memblock_cap_memory_range(reg.base, reg.size);
+}
+
+void __init arm64_memblock_init(void)
+{
+	const s64 linear_region_size = PAGE_END - _PAGE_OFFSET(vabits_actual);
+
+	/* Handle linux,usable-memory-range property */
+	fdt_enforce_memory_region();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Remove memory above our supported physical address size */
 	memblock_remove(1ULL << PHYS_MASK_SHIFT, ULLONG_MAX);
@@ -352,6 +489,11 @@ void __init arm64_memblock_init(void)
 
 	early_init_fdt_scan_reserved_mem();
 
+<<<<<<< HEAD
+=======
+	reserve_elfcorehdr();
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	high_memory = __va(memblock_end_of_DRAM() - 1) + 1;
 }
 

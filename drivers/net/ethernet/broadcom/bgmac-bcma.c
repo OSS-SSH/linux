@@ -129,8 +129,11 @@ static int bgmac_probe(struct bcma_device *core)
 	bcma_set_drvdata(core, bgmac);
 
 	err = of_get_mac_address(bgmac->dev->of_node, bgmac->net_dev->dev_addr);
+<<<<<<< HEAD
 	if (err == -EPROBE_DEFER)
 		return err;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* If no MAC address assigned via device tree, check SPROM */
 	if (err) {

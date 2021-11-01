@@ -706,7 +706,13 @@ static int nt35510_power_on(struct nt35510 *nt)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	nt35510_read_id(nt);
+=======
+	ret = nt35510_read_id(nt);
+	if (ret)
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Set up stuff in  manufacturer control, page 1 */
 	ret = nt35510_send_long(nt, dsi, MCS_CMD_MAUCCTR,

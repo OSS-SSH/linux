@@ -435,6 +435,7 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
 &gpio0 {
 	gpio-line-names =
 		"UART3_CTS", /* M17 */
@@ -578,10 +579,17 @@
 		"",
 		"";
 
+=======
+&gpio3 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ls-buf-en-hog {
 		gpio-hog;
 		gpios = <10 GPIO_ACTIVE_HIGH>;
 		output-high;
+<<<<<<< HEAD
+=======
+		line-name = "LS_BUF_EN";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 };
 

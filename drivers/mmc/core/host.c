@@ -75,8 +75,12 @@ static void mmc_host_classdev_release(struct device *dev)
 {
 	struct mmc_host *host = cls_dev_to_mmc_host(dev);
 	wakeup_source_unregister(host->ws);
+<<<<<<< HEAD
 	if (of_alias_get_id(host->parent->of_node, "mmc") < 0)
 		ida_simple_remove(&mmc_host_ida, host->index);
+=======
+	ida_simple_remove(&mmc_host_ida, host->index);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(host);
 }
 
@@ -96,10 +100,13 @@ void mmc_unregister_host_class(void)
 	class_unregister(&mmc_host_class);
 }
 
+<<<<<<< HEAD
 /**
  * mmc_retune_enable() - enter a transfer mode that requires retuning
  * @host: host which should retune now
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void mmc_retune_enable(struct mmc_host *host)
 {
 	host->can_retune = 1;
@@ -131,18 +138,26 @@ void mmc_retune_unpause(struct mmc_host *host)
 }
 EXPORT_SYMBOL(mmc_retune_unpause);
 
+<<<<<<< HEAD
 /**
  * mmc_retune_disable() - exit a transfer mode that requires retuning
  * @host: host which should not retune anymore
  *
  * It is not meant for temporarily preventing retuning!
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void mmc_retune_disable(struct mmc_host *host)
 {
 	mmc_retune_unpause(host);
 	host->can_retune = 0;
 	del_timer_sync(&host->retune_timer);
+<<<<<<< HEAD
 	mmc_retune_clear(host);
+=======
+	host->retune_now = 0;
+	host->need_retune = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void mmc_retune_timer_stop(struct mmc_host *host)
@@ -512,7 +527,11 @@ static int mmc_first_nonreserved_index(void)
  */
 struct mmc_host *mmc_alloc_host(int extra, struct device *dev)
 {
+<<<<<<< HEAD
 	int index;
+=======
+	int err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mmc_host *host;
 	int alias_id, min_idx, max_idx;
 
@@ -525,6 +544,7 @@ struct mmc_host *mmc_alloc_host(int extra, struct device *dev)
 
 	alias_id = of_alias_get_id(dev->of_node, "mmc");
 	if (alias_id >= 0) {
+<<<<<<< HEAD
 		index = alias_id;
 	} else {
 		min_idx = mmc_first_nonreserved_index();
@@ -538,6 +558,22 @@ struct mmc_host *mmc_alloc_host(int extra, struct device *dev)
 	}
 
 	host->index = index;
+=======
+		min_idx = alias_id;
+		max_idx = alias_id + 1;
+	} else {
+		min_idx = mmc_first_nonreserved_index();
+		max_idx = 0;
+	}
+
+	err = ida_simple_get(&mmc_host_ida, min_idx, max_idx, GFP_KERNEL);
+	if (err < 0) {
+		kfree(host);
+		return NULL;
+	}
+
+	host->index = err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev_set_name(&host->class_dev, "mmc%d", host->index);
 	host->ws = wakeup_source_register(NULL, dev_name(&host->class_dev));

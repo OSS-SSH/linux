@@ -300,6 +300,19 @@ static int exynos_drm_bind(struct device *dev)
 
 	drm_mode_config_reset(drm);
 
+<<<<<<< HEAD
+=======
+	/*
+	 * enable drm irq mode.
+	 * - with irq_enabled = true, we can use the vblank feature.
+	 *
+	 * P.S. note that we wouldn't use drm irq handler but
+	 *	just specific driver own one instead because
+	 *	drm framework supports only one irq handler.
+	 */
+	drm->irq_enabled = true;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* init kms poll for handling hpd */
 	drm_kms_helper_poll_init(drm);
 

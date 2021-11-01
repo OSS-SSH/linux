@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /* Marvell RPM CN10K driver
+=======
+/*  Marvell RPM CN10K driver
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Copyright (C) 2020 Marvell.
  */
@@ -10,6 +14,7 @@
 #include "cgx.h"
 #include "rvu_reg.h"
 
+<<<<<<< HEAD
 /* RVU LMTST */
 #define LMT_TBL_OP_READ		0
 #define LMT_TBL_OP_WRITE	1
@@ -282,6 +287,13 @@ int rvu_set_channels_base(struct rvu *rvu)
 	u16 sdp_chan_base, cgx_chan_base, cpt_chan_base;
 	struct rvu_hwinfo *hw = rvu->hw;
 	u64 nix_const, nix_const1;
+=======
+int rvu_set_channels_base(struct rvu *rvu)
+{
+	struct rvu_hwinfo *hw = rvu->hw;
+	u16 cpt_chan_base;
+	u64 nix_const;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int blkaddr;
 
 	blkaddr = rvu_get_blkaddr(rvu, BLKTYPE_NIX, 0);
@@ -289,7 +301,10 @@ int rvu_set_channels_base(struct rvu *rvu)
 		return blkaddr;
 
 	nix_const = rvu_read64(rvu, blkaddr, NIX_AF_CONST);
+<<<<<<< HEAD
 	nix_const1 = rvu_read64(rvu, blkaddr, NIX_AF_CONST1);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	hw->cgx = (nix_const >> 12) & 0xFULL;
 	hw->lmac_per_cgx = (nix_const >> 8) & 0xFULL;
@@ -312,6 +327,7 @@ int rvu_set_channels_base(struct rvu *rvu)
 	 * channels such that all channel numbers are contiguous
 	 * leaving no holes. This way the new CPT channels can be
 	 * accomodated. The order of channel numbers assigned is
+<<<<<<< HEAD
 	 * LBK, SDP, CGX and CPT. Also the base channel number
 	 * of a block must be multiple of number of channels
 	 * of the block.
@@ -330,6 +346,16 @@ int rvu_set_channels_base(struct rvu *rvu)
 
 	cpt_chan_base = hw->cgx_chan_base + hw->cgx_links * nr_cgx_chans;
 	hw->cpt_chan_base = ALIGN(cpt_chan_base, nr_cpt_chans);
+=======
+	 * LBK, SDP, CGX and CPT.
+	 */
+	hw->sdp_chan_base = hw->lbk_chan_base + hw->lbk_links *
+				((nix_const >> 16) & 0xFFULL);
+	hw->cgx_chan_base = hw->sdp_chan_base + hw->sdp_links * SDP_CHANNELS;
+
+	cpt_chan_base = hw->cgx_chan_base + hw->cgx_links *
+				(nix_const & 0xFFULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Out of 4096 channels start CPT from 2048 so
 	 * that MSB for CPT channels is always set
@@ -433,7 +459,10 @@ err_put:
 
 static void __rvu_nix_set_channels(struct rvu *rvu, int blkaddr)
 {
+<<<<<<< HEAD
 	u64 nix_const1 = rvu_read64(rvu, blkaddr, NIX_AF_CONST1);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 nix_const = rvu_read64(rvu, blkaddr, NIX_AF_CONST);
 	u16 cgx_chans, lbk_chans, sdp_chans, cpt_chans;
 	struct rvu_hwinfo *hw = rvu->hw;
@@ -443,7 +472,11 @@ static void __rvu_nix_set_channels(struct rvu *rvu, int blkaddr)
 
 	cgx_chans = nix_const & 0xFFULL;
 	lbk_chans = (nix_const >> 16) & 0xFFULL;
+<<<<<<< HEAD
 	sdp_chans = nix_const1 & 0xFFFULL;
+=======
+	sdp_chans = SDP_CHANNELS;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cpt_chans = (nix_const >> 32) & 0xFFFULL;
 
 	start = hw->cgx_chan_base;

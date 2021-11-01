@@ -159,6 +159,7 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
 	const struct qcom_cc_desc *desc;
 	int ret;
 
+<<<<<<< HEAD
 	ret = devm_pm_runtime_enable(&pdev->dev);
 	if (ret)
 		return ret;
@@ -166,11 +167,21 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
 	ret = devm_pm_clk_create(&pdev->dev);
 	if (ret)
 		return ret;
+=======
+	pm_runtime_enable(&pdev->dev);
+	ret = pm_clk_create(&pdev->dev);
+	if (ret)
+		goto disable_pm_runtime;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = pm_clk_add(&pdev->dev, NULL);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto destroy_pm_clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	q6sstop_regmap_config.name = "q6sstop_tcsr";
@@ -178,14 +189,38 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
 
 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
 	if (ret)
+<<<<<<< HEAD
 		return ret;
+=======
+		goto destroy_pm_clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	q6sstop_regmap_config.name = "q6sstop_cc";
 	desc = &q6sstop_qcs404_desc;
 
 	ret = qcom_cc_probe_by_index(pdev, 0, desc);
 	if (ret)
+<<<<<<< HEAD
 		return ret;
+=======
+		goto destroy_pm_clk;
+
+	return 0;
+
+destroy_pm_clk:
+	pm_clk_destroy(&pdev->dev);
+
+disable_pm_runtime:
+	pm_runtime_disable(&pdev->dev);
+
+	return ret;
+}
+
+static int q6sstopcc_qcs404_remove(struct platform_device *pdev)
+{
+	pm_clk_destroy(&pdev->dev);
+	pm_runtime_disable(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -196,6 +231,10 @@ static const struct dev_pm_ops q6sstopcc_pm_ops = {
 
 static struct platform_driver q6sstopcc_qcs404_driver = {
 	.probe		= q6sstopcc_qcs404_probe,
+<<<<<<< HEAD
+=======
+	.remove		= q6sstopcc_qcs404_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver		= {
 		.name	= "qcs404-q6sstopcc",
 		.of_match_table = q6sstopcc_qcs404_match_table,

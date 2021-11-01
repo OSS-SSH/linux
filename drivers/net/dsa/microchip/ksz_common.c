@@ -419,10 +419,15 @@ int ksz_switch_register(struct ksz_device *dev,
 				if (of_property_read_u32(port, "reg",
 							 &port_num))
 					continue;
+<<<<<<< HEAD
 				if (!(dev->port_mask & BIT(port_num))) {
 					of_node_put(port);
 					return -EINVAL;
 				}
+=======
+				if (!(dev->port_mask & BIT(port_num)))
+					return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				of_get_phy_mode(port,
 						&dev->ports[port_num].interface);
 			}
@@ -449,10 +454,15 @@ EXPORT_SYMBOL(ksz_switch_register);
 void ksz_switch_remove(struct ksz_device *dev)
 {
 	/* timer started */
+<<<<<<< HEAD
 	if (dev->mib_read_interval) {
 		dev->mib_read_interval = 0;
 		cancel_delayed_work_sync(&dev->mib_read);
 	}
+=======
+	if (dev->mib_read_interval)
+		cancel_delayed_work_sync(&dev->mib_read);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev->dev_ops->exit(dev);
 	dsa_unregister_switch(dev->ds);

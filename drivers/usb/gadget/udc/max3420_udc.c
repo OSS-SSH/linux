@@ -1255,6 +1255,7 @@ static int max3420_probe(struct spi_device *spi)
 	err = devm_request_irq(&spi->dev, irq, max3420_irq_handler, 0,
 			       "max3420", udc);
 	if (err < 0)
+<<<<<<< HEAD
 		goto del_gadget;
 
 	udc->thread_task = kthread_create(max3420_thread, udc,
@@ -1263,6 +1264,14 @@ static int max3420_probe(struct spi_device *spi)
 		err = PTR_ERR(udc->thread_task);
 		goto del_gadget;
 	}
+=======
+		return err;
+
+	udc->thread_task = kthread_create(max3420_thread, udc,
+					  "max3420-thread");
+	if (IS_ERR(udc->thread_task))
+		return PTR_ERR(udc->thread_task);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	irq = of_irq_get_byname(spi->dev.of_node, "vbus");
 	if (irq <= 0) { /* no vbus irq implies self-powered design */
@@ -1282,6 +1291,7 @@ static int max3420_probe(struct spi_device *spi)
 		err = devm_request_irq(&spi->dev, irq,
 				       max3420_vbus_handler, 0, "vbus", udc);
 		if (err < 0)
+<<<<<<< HEAD
 			goto del_gadget;
 	}
 
@@ -1290,6 +1300,12 @@ static int max3420_probe(struct spi_device *spi)
 del_gadget:
 	usb_del_gadget_udc(&udc->gadget);
 	return err;
+=======
+			return err;
+	}
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int max3420_remove(struct spi_device *spi)

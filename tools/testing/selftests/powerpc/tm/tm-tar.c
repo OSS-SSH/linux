@@ -26,7 +26,10 @@ int test_tar(void)
 	int i;
 
 	SKIP_IF(!have_htm());
+<<<<<<< HEAD
 	SKIP_IF(htm_is_synthetic());
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SKIP_IF(!is_ppc64le());
 
 	for (i = 0; i < num_loops; i++)

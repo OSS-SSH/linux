@@ -35,6 +35,7 @@ struct nvdimm_drvdata {
 	struct kref kref;
 };
 
+<<<<<<< HEAD
 static inline const u8 *nsl_ref_name(struct nvdimm_drvdata *ndd,
 				     struct nd_namespace_label *nd_label)
 {
@@ -185,6 +186,8 @@ bool nsl_validate_type_guid(struct nvdimm_drvdata *ndd,
 enum nvdimm_claim_class nsl_get_claim_class(struct nvdimm_drvdata *ndd,
 					    struct nd_namespace_label *nd_label);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct nd_region_data {
 	int ns_count;
 	int ns_active;

@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: GPL-2.0-only
 /*
  * HID driver for CMedia CM6533 audio jack controls
+<<<<<<< HEAD
  * and HS100B mute buttons
  *
  * Copyright (C) 2015 Ben Chen <ben_chen@bizlinktech.com>
  * Copyright (C) 2021 Thomas Weißschuh <linux@weissschuh.net>
+=======
+ *
+ * Copyright (C) 2015 Ben Chen <ben_chen@bizlinktech.com>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/device.h>
@@ -13,14 +18,19 @@
 #include "hid-ids.h"
 
 MODULE_AUTHOR("Ben Chen");
+<<<<<<< HEAD
 MODULE_AUTHOR("Thomas Weißschuh");
 MODULE_DESCRIPTION("CM6533 HID jack controls and HS100B mute button");
+=======
+MODULE_DESCRIPTION("CM6533 HID jack controls");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_LICENSE("GPL");
 
 #define CM6533_JD_TYPE_COUNT      1
 #define CM6533_JD_RAWEV_LEN	 16
 #define CM6533_JD_SFX_OFFSET	  8
 
+<<<<<<< HEAD
 #define HS100B_RDESC_ORIG_SIZE   60
 
 /* Fixed report descriptor of HS-100B audio chip
@@ -60,6 +70,8 @@ static __u8 hs100b_rdesc_fixed[] = {
 	0xC0                /*  End Collection                  */
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
 *
 *CM6533 audio jack HID raw events:
@@ -198,6 +210,7 @@ static struct hid_driver cmhid_driver = {
 	.remove = cmhid_remove,
 	.input_mapping = cmhid_input_mapping,
 };
+<<<<<<< HEAD
 
 static __u8 *cmhid_hs100b_report_fixup(struct hid_device *hid, __u8 *rdesc,
 				       unsigned int *rsize)
@@ -244,3 +257,7 @@ static void cmedia_exit(void)
 		hid_unregister_driver(&cmhid_hs100b_driver);
 }
 module_exit(cmedia_exit);
+=======
+module_hid_driver(cmhid_driver);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

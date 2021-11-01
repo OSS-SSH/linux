@@ -38,7 +38,11 @@
 #define NCI_OP_PROP_SET_PDATA_OID		0x23
 
 struct fdp_nci_info {
+<<<<<<< HEAD
 	const struct nfc_phy_ops *phy_ops;
+=======
+	struct nfc_phy_ops *phy_ops;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct fdp_i2c_phy *phy;
 	struct nci_dev *ndev;
 
@@ -52,7 +56,11 @@ struct fdp_nci_info {
 	u32 limited_otp_version;
 	u8 key_index;
 
+<<<<<<< HEAD
 	const u8 *fw_vsc_cfg;
+=======
+	u8 *fw_vsc_cfg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 clock_type;
 	u32 clock_freq;
 
@@ -65,7 +73,11 @@ struct fdp_nci_info {
 	wait_queue_head_t setup_wq;
 };
 
+<<<<<<< HEAD
 static const u8 nci_core_get_config_otp_ram_version[5] = {
+=======
+static u8 nci_core_get_config_otp_ram_version[5] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	0x04,
 	NCI_PARAM_ID_FW_RAM_VERSION,
 	NCI_PARAM_ID_FW_OTP_VERSION,
@@ -111,7 +123,11 @@ static inline int fdp_nci_patch_cmd(struct nci_dev *ndev, u8 type)
 }
 
 static inline int fdp_nci_set_production_data(struct nci_dev *ndev, u8 len,
+<<<<<<< HEAD
 					      const char *data)
+=======
+					      char *data)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return nci_prop_cmd(ndev, NCI_OP_PROP_SET_PDATA_OID, len, data);
 }
@@ -236,7 +252,11 @@ static int fdp_nci_send_patch(struct nci_dev *ndev, u8 conn_id, u8 type)
 
 static int fdp_nci_open(struct nci_dev *ndev)
 {
+<<<<<<< HEAD
 	const struct fdp_nci_info *info = nci_get_drvdata(ndev);
+=======
+	struct fdp_nci_info *info = nci_get_drvdata(ndev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return info->phy_ops->enable(info->phy);
 }
@@ -260,7 +280,11 @@ static int fdp_nci_request_firmware(struct nci_dev *ndev)
 {
 	struct fdp_nci_info *info = nci_get_drvdata(ndev);
 	struct device *dev = &info->phy->i2c_dev->dev;
+<<<<<<< HEAD
 	const u8 *data;
+=======
+	u8 *data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int r;
 
 	r = request_firmware(&info->ram_patch, FDP_RAM_PATCH_NAME, dev);
@@ -269,15 +293,24 @@ static int fdp_nci_request_firmware(struct nci_dev *ndev)
 		return r;
 	}
 
+<<<<<<< HEAD
 	data = info->ram_patch->data;
+=======
+	data = (u8 *) info->ram_patch->data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	info->ram_patch_version =
 		data[FDP_FW_HEADER_SIZE] |
 		(data[FDP_FW_HEADER_SIZE + 1] << 8) |
 		(data[FDP_FW_HEADER_SIZE + 2] << 16) |
 		(data[FDP_FW_HEADER_SIZE + 3] << 24);
 
+<<<<<<< HEAD
 	dev_dbg(dev, "RAM patch version: %d, size: %zu\n",
 		  info->ram_patch_version, info->ram_patch->size);
+=======
+	dev_dbg(dev, "RAM patch version: %d, size: %d\n",
+		  info->ram_patch_version, (int) info->ram_patch->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 	r = request_firmware(&info->otp_patch, FDP_OTP_PATCH_NAME, dev);
@@ -293,8 +326,13 @@ static int fdp_nci_request_firmware(struct nci_dev *ndev)
 		(data[FDP_FW_HEADER_SIZE+2] << 16) |
 		(data[FDP_FW_HEADER_SIZE+3] << 24);
 
+<<<<<<< HEAD
 	dev_dbg(dev, "OTP patch version: %d, size: %zu\n",
 		 info->otp_patch_version, info->otp_patch->size);
+=======
+	dev_dbg(dev, "OTP patch version: %d, size: %d\n",
+		 info->otp_patch_version, (int) info->otp_patch->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -610,9 +648,14 @@ static int fdp_nci_core_get_config_rsp_packet(struct nci_dev *ndev,
 {
 	struct fdp_nci_info *info = nci_get_drvdata(ndev);
 	struct device *dev = &info->phy->i2c_dev->dev;
+<<<<<<< HEAD
 	const struct nci_core_get_config_rsp *rsp = (void *) skb->data;
 	unsigned int i;
 	const u8 *p;
+=======
+	struct nci_core_get_config_rsp *rsp = (void *) skb->data;
+	u8 i, *p;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (rsp->status == NCI_STATUS_OK) {
 
@@ -652,7 +695,11 @@ static int fdp_nci_core_get_config_rsp_packet(struct nci_dev *ndev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct nci_driver_ops fdp_core_ops[] = {
+=======
+static struct nci_driver_ops fdp_core_ops[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{
 		.opcode = NCI_OP_CORE_GET_CONFIG_RSP,
 		.rsp = fdp_nci_core_get_config_rsp_packet,
@@ -663,7 +710,11 @@ static const struct nci_driver_ops fdp_core_ops[] = {
 	},
 };
 
+<<<<<<< HEAD
 static const struct nci_driver_ops fdp_prop_ops[] = {
+=======
+static struct nci_driver_ops fdp_prop_ops[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{
 		.opcode = nci_opcode_pack(NCI_GID_PROP, NCI_OP_PROP_PATCH_OID),
 		.rsp = fdp_nci_prop_patch_rsp_packet,
@@ -676,7 +727,11 @@ static const struct nci_driver_ops fdp_prop_ops[] = {
 	},
 };
 
+<<<<<<< HEAD
 static const struct nci_ops nci_ops = {
+=======
+static struct nci_ops nci_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.open = fdp_nci_open,
 	.close = fdp_nci_close,
 	.send = fdp_nci_send,
@@ -688,10 +743,17 @@ static const struct nci_ops nci_ops = {
 	.n_core_ops = ARRAY_SIZE(fdp_core_ops),
 };
 
+<<<<<<< HEAD
 int fdp_nci_probe(struct fdp_i2c_phy *phy, const struct nfc_phy_ops *phy_ops,
 			struct nci_dev **ndevp, int tx_headroom,
 			int tx_tailroom, u8 clock_type, u32 clock_freq,
 			const u8 *fw_vsc_cfg)
+=======
+int fdp_nci_probe(struct fdp_i2c_phy *phy, struct nfc_phy_ops *phy_ops,
+			struct nci_dev **ndevp, int tx_headroom,
+			int tx_tailroom, u8 clock_type, u32 clock_freq,
+			u8 *fw_vsc_cfg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct device *dev = &phy->i2c_dev->dev;
 	struct fdp_nci_info *info;
@@ -719,7 +781,10 @@ int fdp_nci_probe(struct fdp_i2c_phy *phy, const struct nfc_phy_ops *phy_ops,
 		    NFC_PROTO_NFC_DEP_MASK |
 		    NFC_PROTO_ISO15693_MASK;
 
+<<<<<<< HEAD
 	BUILD_BUG_ON(ARRAY_SIZE(fdp_prop_ops) > NCI_MAX_PROPRIETARY_CMD);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ndev = nci_allocate_device(&nci_ops, protocols, tx_headroom,
 				   tx_tailroom);
 	if (!ndev) {

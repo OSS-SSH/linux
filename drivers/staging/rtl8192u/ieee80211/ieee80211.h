@@ -303,7 +303,11 @@ struct ieee_param {
 		struct {
 			u32 len;
 			u8 reserved[32];
+<<<<<<< HEAD
 			u8 data[];
+=======
+			u8 data[0];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} wpa_ie;
 		struct{
 			int command;
@@ -316,7 +320,11 @@ struct ieee_param {
 			u8 idx;
 			u8 seq[8]; /* sequence counter (set: RX, get: TX) */
 			u16 key_len;
+<<<<<<< HEAD
 			u8 key[];
+=======
+			u8 key[0];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} crypt;
 	} u;
 };

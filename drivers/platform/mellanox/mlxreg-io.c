@@ -98,7 +98,11 @@ mlxreg_io_get_reg(void *regmap, struct mlxreg_core_data *data, u32 in_val,
 			if (ret)
 				goto access_error;
 
+<<<<<<< HEAD
 			*regval |= rol32(val, regsize * i * 8);
+=======
+			*regval |= rol32(val, regsize * i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -141,7 +145,11 @@ mlxreg_io_attr_store(struct device *dev, struct device_attribute *attr,
 		return -EINVAL;
 
 	/* Convert buffer to input value. */
+<<<<<<< HEAD
 	ret = kstrtou32(buf, 0, &input_val);
+=======
+	ret = kstrtou32(buf, len, &input_val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 

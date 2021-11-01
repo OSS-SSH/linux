@@ -49,7 +49,10 @@ static int __init parse_tag_acorn(const struct tag *tag)
 		fallthrough;	/* ??? */
 	case 256:
 		vram_size += PAGE_SIZE * 256;
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}

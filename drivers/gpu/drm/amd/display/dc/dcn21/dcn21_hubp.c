@@ -833,7 +833,11 @@ static struct hubp_funcs dcn21_hubp_funcs = {
 	.dmdata_set_attributes = hubp2_dmdata_set_attributes,
 	.dmdata_load = hubp2_dmdata_load,
 	.dmdata_status_done = hubp2_dmdata_status_done,
+<<<<<<< HEAD
 	.hubp_read_state = hubp2_read_state,
+=======
+	.hubp_read_state = hubp1_read_state,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.hubp_clear_underflow = hubp1_clear_underflow,
 	.hubp_set_flip_control_surface_gsl = hubp2_set_flip_control_surface_gsl,
 	.hubp_init = hubp21_init,

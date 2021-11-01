@@ -154,6 +154,11 @@ FEXPORT(__raw_copy_from_user)
 EXPORT_SYMBOL(__raw_copy_from_user)
 FEXPORT(__raw_copy_to_user)
 EXPORT_SYMBOL(__raw_copy_to_user)
+<<<<<<< HEAD
+=======
+FEXPORT(__raw_copy_in_user)
+EXPORT_SYMBOL(__raw_copy_in_user)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Note: dst & src may be unaligned, len may be 0
 	 * Temps

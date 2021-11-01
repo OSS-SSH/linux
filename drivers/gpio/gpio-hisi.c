@@ -186,8 +186,13 @@ static void hisi_gpio_irq_handler(struct irq_desc *desc)
 
 	chained_irq_enter(irq_c, desc);
 	for_each_set_bit(hwirq, &irq_msk, HISI_GPIO_LINE_NUM_MAX)
+<<<<<<< HEAD
 		generic_handle_domain_irq(hisi_gpio->chip.irq.domain,
 					  hwirq);
+=======
+		generic_handle_irq(irq_find_mapping(hisi_gpio->chip.irq.domain,
+						    hwirq));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	chained_irq_exit(irq_c, desc);
 }
 

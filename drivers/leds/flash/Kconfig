@@ -2,6 +2,7 @@
 
 if LEDS_CLASS_FLASH
 
+<<<<<<< HEAD
 config LEDS_AAT1290
 	tristate "LED support for the AAT1290"
 	depends on V4L2_FLASH_LED_CLASS || !V4L2_FLASH_LED_CLASS
@@ -48,6 +49,8 @@ config LEDS_MAX77693
 	  multifunction device. It has build in control for two leds in flash
 	  and torch mode.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config LEDS_RT4505
 	tristate "LED support for RT4505 flashlight controller"
 	depends on I2C && OF
@@ -70,6 +73,7 @@ config LEDS_RT8515
 	  To compile this driver as a module, choose M here: the module
 	  will be called leds-rt8515.
 
+<<<<<<< HEAD
 config LEDS_SGM3140
 	tristate "LED support for the SGM3140"
 	depends on V4L2_FLASH_LED_CLASS || !V4L2_FLASH_LED_CLASS
@@ -77,4 +81,6 @@ config LEDS_SGM3140
 	  This option enables support for the SGM3140 500mA Buck/Boost Charge
 	  Pump LED Driver.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endif # LEDS_CLASS_FLASH

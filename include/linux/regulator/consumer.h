@@ -222,12 +222,23 @@ void regulator_bulk_unregister_supply_alias(struct device *dev,
 int devm_regulator_register_supply_alias(struct device *dev, const char *id,
 					 struct device *alias_dev,
 					 const char *alias_id);
+<<<<<<< HEAD
+=======
+void devm_regulator_unregister_supply_alias(struct device *dev,
+					    const char *id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int devm_regulator_bulk_register_supply_alias(struct device *dev,
 					      const char *const *id,
 					      struct device *alias_dev,
 					      const char *const *alias_id,
 					      int num_id);
+<<<<<<< HEAD
+=======
+void devm_regulator_bulk_unregister_supply_alias(struct device *dev,
+						 const char *const *id,
+						 int num_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* regulator output control and status */
 int __must_check regulator_enable(struct regulator *regulator);
@@ -403,6 +414,14 @@ static inline int devm_regulator_register_supply_alias(struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static inline void devm_regulator_unregister_supply_alias(struct device *dev,
+							  const char *id)
+{
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int devm_regulator_bulk_register_supply_alias(struct device *dev,
 						const char *const *id,
 						struct device *alias_dev,
@@ -412,6 +431,14 @@ static inline int devm_regulator_bulk_register_supply_alias(struct device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static inline void devm_regulator_bulk_unregister_supply_alias(
+	struct device *dev, const char *const *id, int num_id)
+{
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int regulator_enable(struct regulator *regulator)
 {
 	return 0;

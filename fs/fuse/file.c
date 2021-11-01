@@ -198,11 +198,19 @@ void fuse_finish_open(struct inode *inode, struct file *file)
 	struct fuse_file *ff = file->private_data;
 	struct fuse_conn *fc = get_fuse_conn(inode);
 
+<<<<<<< HEAD
+=======
+	if (!(ff->open_flags & FOPEN_KEEP_CACHE))
+		invalidate_inode_pages2(inode->i_mapping);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ff->open_flags & FOPEN_STREAM)
 		stream_open(inode, file);
 	else if (ff->open_flags & FOPEN_NONSEEKABLE)
 		nonseekable_open(inode, file);
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (fc->atomic_o_trunc && (file->f_flags & O_TRUNC)) {
 		struct fuse_inode *fi = get_fuse_inode(inode);
 
@@ -210,6 +218,7 @@ void fuse_finish_open(struct inode *inode, struct file *file)
 		fi->attr_version = atomic64_inc_return(&fc->attr_version);
 		i_size_write(inode, 0);
 		spin_unlock(&fi->lock);
+<<<<<<< HEAD
 		truncate_pagecache(inode, 0);
 		fuse_invalidate_attr(inode);
 		if (fc->writeback_cache)
@@ -218,6 +227,12 @@ void fuse_finish_open(struct inode *inode, struct file *file)
 		invalidate_inode_pages2(inode->i_mapping);
 	}
 
+=======
+		fuse_invalidate_attr(inode);
+		if (fc->writeback_cache)
+			file_update_time(file);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if ((file->f_mode & FMODE_WRITE) && fc->writeback_cache)
 		fuse_link_write_file(file);
 }
@@ -246,7 +261,11 @@ int fuse_open_common(struct inode *inode, struct file *file, bool isdir)
 	}
 
 	if (dax_truncate) {
+<<<<<<< HEAD
 		filemap_invalidate_lock(inode->i_mapping);
+=======
+		down_write(&get_fuse_inode(inode)->i_mmap_sem);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = fuse_dax_break_layouts(inode, 0, 0);
 		if (err)
 			goto out;
@@ -258,7 +277,11 @@ int fuse_open_common(struct inode *inode, struct file *file, bool isdir)
 
 out:
 	if (dax_truncate)
+<<<<<<< HEAD
 		filemap_invalidate_unlock(inode->i_mapping);
+=======
+		up_write(&get_fuse_inode(inode)->i_mmap_sem);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (is_wb_truncate | dax_truncate) {
 		fuse_release_nowrite(inode);
@@ -392,7 +415,10 @@ struct fuse_writepage_args {
 	struct list_head queue_entry;
 	struct fuse_writepage_args *next;
 	struct inode *inode;
+<<<<<<< HEAD
 	struct fuse_sync_bucket *bucket;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct fuse_writepage_args *fuse_find_writeback(struct fuse_inode *fi,
@@ -1612,9 +1638,12 @@ static void fuse_writepage_free(struct fuse_writepage_args *wpa)
 	struct fuse_args_pages *ap = &wpa->ia.ap;
 	int i;
 
+<<<<<<< HEAD
 	if (wpa->bucket)
 		fuse_sync_bucket_dec(wpa->bucket);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < ap->num_pages; i++)
 		__free_page(ap->pages[i]);
 
@@ -1820,7 +1849,12 @@ static void fuse_writepage_end(struct fuse_mount *fm, struct fuse_args *args,
 	fuse_writepage_free(wpa);
 }
 
+<<<<<<< HEAD
 static struct fuse_file *__fuse_write_file_get(struct fuse_inode *fi)
+=======
+static struct fuse_file *__fuse_write_file_get(struct fuse_conn *fc,
+					       struct fuse_inode *fi)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fuse_file *ff = NULL;
 
@@ -1835,20 +1869,35 @@ static struct fuse_file *__fuse_write_file_get(struct fuse_inode *fi)
 	return ff;
 }
 
+<<<<<<< HEAD
 static struct fuse_file *fuse_write_file_get(struct fuse_inode *fi)
 {
 	struct fuse_file *ff = __fuse_write_file_get(fi);
+=======
+static struct fuse_file *fuse_write_file_get(struct fuse_conn *fc,
+					     struct fuse_inode *fi)
+{
+	struct fuse_file *ff = __fuse_write_file_get(fc, fi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WARN_ON(!ff);
 	return ff;
 }
 
 int fuse_write_inode(struct inode *inode, struct writeback_control *wbc)
 {
+<<<<<<< HEAD
+=======
+	struct fuse_conn *fc = get_fuse_conn(inode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct fuse_inode *fi = get_fuse_inode(inode);
 	struct fuse_file *ff;
 	int err;
 
+<<<<<<< HEAD
 	ff = __fuse_write_file_get(fi);
+=======
+	ff = __fuse_write_file_get(fc, fi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = fuse_flush_times(inode, ff);
 	if (ff)
 		fuse_file_put(ff, false, false);
@@ -1875,6 +1924,7 @@ static struct fuse_writepage_args *fuse_writepage_args_alloc(void)
 
 }
 
+<<<<<<< HEAD
 static void fuse_writepage_add_to_bucket(struct fuse_conn *fc,
 					 struct fuse_writepage_args *wpa)
 {
@@ -1889,6 +1939,8 @@ static void fuse_writepage_add_to_bucket(struct fuse_conn *fc,
 	rcu_read_unlock();
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int fuse_writepage_locked(struct page *page)
 {
 	struct address_space *mapping = page->mapping;
@@ -1912,11 +1964,18 @@ static int fuse_writepage_locked(struct page *page)
 		goto err_free;
 
 	error = -EIO;
+<<<<<<< HEAD
 	wpa->ia.ff = fuse_write_file_get(fi);
 	if (!wpa->ia.ff)
 		goto err_nofile;
 
 	fuse_writepage_add_to_bucket(fc, wpa);
+=======
+	wpa->ia.ff = fuse_write_file_get(fc, fi);
+	if (!wpa->ia.ff)
+		goto err_nofile;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fuse_write_args_fill(&wpa->ia, wpa->ia.ff, page_offset(page), 0);
 
 	copy_highpage(tmp_page, page);
@@ -2132,7 +2191,11 @@ static int fuse_writepages_fill(struct page *page,
 
 	if (!data->ff) {
 		err = -EIO;
+<<<<<<< HEAD
 		data->ff = fuse_write_file_get(fi);
+=======
+		data->ff = fuse_write_file_get(fc, fi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!data->ff)
 			goto out_unlock;
 	}
@@ -2167,8 +2230,11 @@ static int fuse_writepages_fill(struct page *page,
 			__free_page(tmp_page);
 			goto out_unlock;
 		}
+<<<<<<< HEAD
 		fuse_writepage_add_to_bucket(fc, wpa);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		data->max_pages = 1;
 
 		ap = &wpa->ia.ap;
@@ -2902,7 +2968,11 @@ fuse_direct_IO(struct kiocb *iocb, struct iov_iter *iter)
 
 static int fuse_writeback_range(struct inode *inode, loff_t start, loff_t end)
 {
+<<<<<<< HEAD
 	int err = filemap_write_and_wait_range(inode->i_mapping, start, -1);
+=======
+	int err = filemap_write_and_wait_range(inode->i_mapping, start, end);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!err)
 		fuse_sync_writes(inode);
@@ -2941,7 +3011,11 @@ static long fuse_file_fallocate(struct file *file, int mode, loff_t offset,
 	if (lock_inode) {
 		inode_lock(inode);
 		if (block_faults) {
+<<<<<<< HEAD
 			filemap_invalidate_lock(inode->i_mapping);
+=======
+			down_write(&fi->i_mmap_sem);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			err = fuse_dax_break_layouts(inode, 0, 0);
 			if (err)
 				goto out;
@@ -2997,7 +3071,11 @@ out:
 		clear_bit(FUSE_I_SIZE_UNSTABLE, &fi->state);
 
 	if (block_faults)
+<<<<<<< HEAD
 		filemap_invalidate_unlock(inode->i_mapping);
+=======
+		up_write(&fi->i_mmap_sem);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (lock_inode)
 		inode_unlock(inode);
@@ -3066,7 +3144,11 @@ static ssize_t __fuse_copy_file_range(struct file *file_in, loff_t pos_in,
 	 * modifications.  Yet this does give less guarantees than if the
 	 * copying was performed with write(2).
 	 *
+<<<<<<< HEAD
 	 * To fix this a mapping->invalidate_lock could be used to prevent new
+=======
+	 * To fix this a i_mmap_sem style lock could be used to prevent new
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * faults while the copy is ongoing.
 	 */
 	err = fuse_writeback_range(inode_out, pos_out, pos_out + len - 1);

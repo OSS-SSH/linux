@@ -1,6 +1,10 @@
 cat <<EOF
 static __always_inline void
+<<<<<<< HEAD
 arch_${atomic}_set_release(${atomic}_t *v, ${int} i)
+=======
+${arch}${atomic}_set_release(${atomic}_t *v, ${int} i)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	smp_store_release(&(v)->counter, i);
 }

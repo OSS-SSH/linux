@@ -263,9 +263,15 @@ static inline bool ipv6_anycast_destination(const struct dst_entry *dst,
 int ip6_fragment(struct net *net, struct sock *sk, struct sk_buff *skb,
 		 int (*output)(struct net *, struct sock *, struct sk_buff *));
 
+<<<<<<< HEAD
 static inline unsigned int ip6_skb_dst_mtu(struct sk_buff *skb)
 {
 	unsigned int mtu;
+=======
+static inline int ip6_skb_dst_mtu(struct sk_buff *skb)
+{
+	int mtu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct ipv6_pinfo *np = skb->sk && !dev_recursion_level() ?
 				inet6_sk(skb->sk) : NULL;
@@ -316,13 +322,21 @@ static inline bool rt6_duplicate_nexthop(struct fib6_info *a, struct fib6_info *
 	       !lwtunnel_cmp_encap(nha->fib_nh_lws, nhb->fib_nh_lws);
 }
 
+<<<<<<< HEAD
 static inline unsigned int ip6_dst_mtu_maybe_forward(const struct dst_entry *dst,
 						     bool forwarding)
+=======
+static inline unsigned int ip6_dst_mtu_forward(const struct dst_entry *dst)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct inet6_dev *idev;
 	unsigned int mtu;
 
+<<<<<<< HEAD
 	if (!forwarding || dst_metric_locked(dst, RTAX_MTU)) {
+=======
+	if (dst_metric_locked(dst, RTAX_MTU)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mtu = dst_metric_raw(dst, RTAX_MTU);
 		if (mtu)
 			goto out;

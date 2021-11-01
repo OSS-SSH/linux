@@ -18,7 +18,12 @@ ifeq ($(CONFIG_ARC_TUNE_MCPU),"")
 cflags-y				+= $(tune-mcpu-def-y)
 else
 tune-mcpu				:= $(shell echo $(CONFIG_ARC_TUNE_MCPU))
+<<<<<<< HEAD
 ifneq ($(call cc-option,$(tune-mcpu)),)
+=======
+tune-mcpu-ok 				:= $(call cc-option-yn, $(tune-mcpu))
+ifeq ($(tune-mcpu-ok),y)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 cflags-y				+= $(tune-mcpu)
 else
 # The flag provided by 'CONFIG_ARC_TUNE_MCPU' option isn't known by this compiler

@@ -28,15 +28,22 @@
 # These tests provide an easy way to flip the expected result of any
 # of these behaviors for testing kernel patches that change them.
 
+<<<<<<< HEAD
 # Kselftest framework requirement - SKIP code is 4.
 ksft_skip=4
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # nettest can be run from PATH or from same directory as this selftest
 if ! which nettest >/dev/null; then
 	PATH=$PWD:$PATH
 	if ! which nettest >/dev/null; then
 		echo "'nettest' command not found; skipping tests"
+<<<<<<< HEAD
 		exit $ksft_skip
+=======
+		exit 0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fi
 fi
 

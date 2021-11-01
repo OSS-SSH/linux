@@ -276,7 +276,11 @@ nouveau_ttm_init(struct nouveau_drm *drm)
 	}
 
 #if IS_ENABLED(CONFIG_SWIOTLB) && IS_ENABLED(CONFIG_X86)
+<<<<<<< HEAD
 	need_swiotlb = is_swiotlb_active(dev->dev);
+=======
+	need_swiotlb = is_swiotlb_active();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 	ret = ttm_device_init(&drm->ttm.bdev, &nouveau_bo_driver, drm->dev->dev,

@@ -1095,7 +1095,11 @@ static irqreturn_t stmpe_irq(int irq, void *data)
 
 	if (variant->id_val == STMPE801_ID ||
 	    variant->id_val == STMPE1600_ID) {
+<<<<<<< HEAD
 		int base = irq_find_mapping(stmpe->domain, 0);
+=======
+		int base = irq_create_mapping(stmpe->domain, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		handle_nested_irq(base);
 		return IRQ_HANDLED;
@@ -1123,7 +1127,11 @@ static irqreturn_t stmpe_irq(int irq, void *data)
 		while (status) {
 			int bit = __ffs(status);
 			int line = bank * 8 + bit;
+<<<<<<< HEAD
 			int nestedirq = irq_find_mapping(stmpe->domain, line);
+=======
+			int nestedirq = irq_create_mapping(stmpe->domain, line);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			handle_nested_irq(nestedirq);
 			status &= ~(1 << bit);

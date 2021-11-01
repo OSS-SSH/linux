@@ -54,10 +54,13 @@
 #define EM_ARCV2	195
 #endif
 
+<<<<<<< HEAD
 #ifndef EM_RISCV
 #define EM_RISCV	243
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static uint32_t (*r)(const uint32_t *);
 static uint16_t (*r2)(const uint16_t *);
 static uint64_t (*r8)(const uint64_t *);
@@ -353,7 +356,10 @@ static int do_file(char const *const fname, void *addr)
 	case EM_ARM:
 	case EM_MICROBLAZE:
 	case EM_MIPS:
+<<<<<<< HEAD
 	case EM_RISCV:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case EM_XTENSA:
 		break;
 	default:

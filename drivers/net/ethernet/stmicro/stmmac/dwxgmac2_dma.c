@@ -371,8 +371,13 @@ static int dwxgmac2_dma_interrupt(void __iomem *ioaddr,
 	return ret;
 }
 
+<<<<<<< HEAD
 static int dwxgmac2_get_hw_feature(void __iomem *ioaddr,
 				   struct dma_features *dma_cap)
+=======
+static void dwxgmac2_get_hw_feature(void __iomem *ioaddr,
+				    struct dma_features *dma_cap)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u32 hw_cap;
 
@@ -445,8 +450,11 @@ static int dwxgmac2_get_hw_feature(void __iomem *ioaddr,
 	dma_cap->frpes = (hw_cap & XGMAC_HWFEAT_FRPES) >> 11;
 	dma_cap->frpbs = (hw_cap & XGMAC_HWFEAT_FRPPB) >> 9;
 	dma_cap->frpsel = (hw_cap & XGMAC_HWFEAT_FRPSEL) >> 3;
+<<<<<<< HEAD
 
 	return 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void dwxgmac2_rx_watchdog(void __iomem *ioaddr, u32 riwt, u32 queue)

@@ -19,7 +19,10 @@
 #define MII_MARVELL_PHY_PAGE		22
 
 #define MII_PHY_LED_CTRL		16
+<<<<<<< HEAD
 #define MII_PHY_LED_POL_CTRL		17
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MII_88E1318S_PHY_LED_TCR	18
 #define MII_88E1318S_PHY_WOL_CTRL	16
 #define MII_M1011_IEVENT		19
@@ -30,6 +33,7 @@
 #define LED2_FORCE_ON					(0x8 << 8)
 #define LEDMASK						GENMASK(11,8)
 
+<<<<<<< HEAD
 #define MII_88E1318S_PHY_LED_POL_LED2		BIT(4)
 
 struct power_off_cfg {
@@ -47,6 +51,13 @@ static void linkstation_mvphy_reg_intn(bool restart)
 
 	if (restart)
 		data = MII_88E1318S_PHY_LED_TCR_FORCE_INT;
+=======
+static struct phy_device *phydev;
+
+static void mvphy_reg_intn(u16 data)
+{
+	int rc = 0, saved_page;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	saved_page = phy_select_page(phydev, MII_MARVELL_LED_PAGE);
 	if (saved_page < 0)
@@ -79,6 +90,7 @@ err:
 		dev_err(&phydev->mdio.dev, "Write register failed, %d\n", rc);
 }
 
+<<<<<<< HEAD
 static void readynas_mvphy_set_reg(bool restart)
 {
 	int rc = 0, saved_page;
@@ -120,11 +132,17 @@ static const struct power_off_cfg readynas_power_off_cfg = {
 	.phy_set_reg = readynas_mvphy_set_reg,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int linkstation_reboot_notifier(struct notifier_block *nb,
 				       unsigned long action, void *unused)
 {
 	if (action == SYS_RESTART)
+<<<<<<< HEAD
 		cfg->phy_set_reg(true);
+=======
+		mvphy_reg_intn(MII_88E1318S_PHY_LED_TCR_FORCE_INT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return NOTIFY_DONE;
 }
@@ -136,12 +154,17 @@ static struct notifier_block linkstation_reboot_nb = {
 static void linkstation_poweroff(void)
 {
 	unregister_reboot_notifier(&linkstation_reboot_nb);
+<<<<<<< HEAD
 	cfg->phy_set_reg(false);
+=======
+	mvphy_reg_intn(0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kernel_restart("Power off");
 }
 
 static const struct of_device_id ls_poweroff_of_match[] = {
+<<<<<<< HEAD
 	{ .compatible = "buffalo,ls421d",
 	  .data = &linkstation_power_off_cfg,
 	},
@@ -151,6 +174,10 @@ static const struct of_device_id ls_poweroff_of_match[] = {
 	{ .compatible = "netgear,readynas-duo-v2",
 	  .data = &readynas_power_off_cfg,
 	},
+=======
+	{ .compatible = "buffalo,ls421d" },
+	{ .compatible = "buffalo,ls421de" },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ },
 };
 
@@ -158,17 +185,24 @@ static int __init linkstation_poweroff_init(void)
 {
 	struct mii_bus *bus;
 	struct device_node *dn;
+<<<<<<< HEAD
 	const struct of_device_id *match;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dn = of_find_matching_node(NULL, ls_poweroff_of_match);
 	if (!dn)
 		return -ENODEV;
 	of_node_put(dn);
 
+<<<<<<< HEAD
 	match = of_match_node(ls_poweroff_of_match, dn);
 	cfg = match->data;
 
 	dn = of_find_node_by_name(NULL, cfg->mdio_node_name);
+=======
+	dn = of_find_node_by_name(NULL, "mdio");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!dn)
 		return -ENODEV;
 

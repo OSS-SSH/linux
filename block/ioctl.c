@@ -16,7 +16,10 @@
 static int blkpg_do_ioctl(struct block_device *bdev,
 			  struct blkpg_partition __user *upart, int op)
 {
+<<<<<<< HEAD
 	struct gendisk *disk = bdev->bd_disk;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct blkpg_partition p;
 	long long start, length;
 
@@ -31,7 +34,11 @@ static int blkpg_do_ioctl(struct block_device *bdev,
 		return -EINVAL;
 
 	if (op == BLKPG_DEL_PARTITION)
+<<<<<<< HEAD
 		return bdev_del_partition(disk, p.pno);
+=======
+		return bdev_del_partition(bdev, p.pno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	start = p.start >> SECTOR_SHIFT;
 	length = p.length >> SECTOR_SHIFT;
@@ -41,9 +48,15 @@ static int blkpg_do_ioctl(struct block_device *bdev,
 		/* check if partition is aligned to blocksize */
 		if (p.start & (bdev_logical_block_size(bdev) - 1))
 			return -EINVAL;
+<<<<<<< HEAD
 		return bdev_add_partition(disk, p.pno, start, length);
 	case BLKPG_RESIZE_PARTITION:
 		return bdev_resize_partition(disk, p.pno, start, length);
+=======
+		return bdev_add_partition(bdev, p.pno, start, length);
+	case BLKPG_RESIZE_PARTITION:
+		return bdev_resize_partition(bdev, p.pno, start, length);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return -EINVAL;
 	}
@@ -470,8 +483,11 @@ static int blkdev_common_ioctl(struct block_device *bdev, fmode_t mode,
 				BLKDEV_DISCARD_SECURE);
 	case BLKZEROOUT:
 		return blk_ioctl_zeroout(bdev, mode, arg);
+<<<<<<< HEAD
 	case BLKGETDISKSEQ:
 		return put_u64(argp, bdev->bd_disk->diskseq);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case BLKREPORTZONE:
 		return blkdev_report_zones_ioctl(bdev, mode, cmd, arg);
 	case BLKRESETZONE:
@@ -507,7 +523,11 @@ static int blkdev_common_ioctl(struct block_device *bdev, fmode_t mode,
 	case BLKFRASET:
 		if(!capable(CAP_SYS_ADMIN))
 			return -EACCES;
+<<<<<<< HEAD
 		bdev->bd_disk->bdi->ra_pages = (arg * 512) / PAGE_SIZE;
+=======
+		bdev->bd_bdi->ra_pages = (arg * 512) / PAGE_SIZE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 	case BLKRRPART:
 		return blkdev_reread_part(bdev, mode);
@@ -557,8 +577,12 @@ int blkdev_ioctl(struct block_device *bdev, fmode_t mode, unsigned cmd,
 	case BLKFRAGET:
 		if (!argp)
 			return -EINVAL;
+<<<<<<< HEAD
 		return put_long(argp,
 			(bdev->bd_disk->bdi->ra_pages * PAGE_SIZE) / 512);
+=======
+		return put_long(argp, (bdev->bd_bdi->ra_pages*PAGE_SIZE) / 512);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case BLKGETSIZE:
 		size = i_size_read(bdev->bd_inode);
 		if ((size >> 9) > ~0UL)
@@ -630,7 +654,11 @@ long compat_blkdev_ioctl(struct file *file, unsigned cmd, unsigned long arg)
 		if (!argp)
 			return -EINVAL;
 		return compat_put_long(argp,
+<<<<<<< HEAD
 			(bdev->bd_disk->bdi->ra_pages * PAGE_SIZE) / 512);
+=======
+			       (bdev->bd_bdi->ra_pages * PAGE_SIZE) / 512);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case BLKGETSIZE:
 		size = i_size_read(bdev->bd_inode);
 		if ((size >> 9) > ~0UL)

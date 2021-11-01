@@ -1915,22 +1915,39 @@ errout_cleanup:
 static int fl_set_parms(struct net *net, struct tcf_proto *tp,
 			struct cls_fl_filter *f, struct fl_flow_mask *mask,
 			unsigned long base, struct nlattr **tb,
+<<<<<<< HEAD
 			struct nlattr *est,
 			struct fl_flow_tmplt *tmplt, u32 flags,
+=======
+			struct nlattr *est, bool ovr,
+			struct fl_flow_tmplt *tmplt, bool rtnl_held,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			struct netlink_ext_ack *extack)
 {
 	int err;
 
+<<<<<<< HEAD
 	err = tcf_exts_validate(net, tp, tb, est, &f->exts, flags, extack);
+=======
+	err = tcf_exts_validate(net, tp, tb, est, &f->exts, ovr, rtnl_held,
+				extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
 	if (tb[TCA_FLOWER_CLASSID]) {
 		f->res.classid = nla_get_u32(tb[TCA_FLOWER_CLASSID]);
+<<<<<<< HEAD
 		if (flags & TCA_ACT_FLAGS_NO_RTNL)
 			rtnl_lock();
 		tcf_bind_filter(tp, &f->res, base);
 		if (flags & TCA_ACT_FLAGS_NO_RTNL)
+=======
+		if (!rtnl_held)
+			rtnl_lock();
+		tcf_bind_filter(tp, &f->res, base);
+		if (!rtnl_held)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			rtnl_unlock();
 	}
 
@@ -1974,11 +1991,18 @@ static int fl_ht_insert_unique(struct cls_fl_filter *fnew,
 static int fl_change(struct net *net, struct sk_buff *in_skb,
 		     struct tcf_proto *tp, unsigned long base,
 		     u32 handle, struct nlattr **tca,
+<<<<<<< HEAD
 		     void **arg, u32 flags,
 		     struct netlink_ext_ack *extack)
 {
 	struct cls_fl_head *head = fl_head_dereference(tp);
 	bool rtnl_held = !(flags & TCA_ACT_FLAGS_NO_RTNL);
+=======
+		     void **arg, bool ovr, bool rtnl_held,
+		     struct netlink_ext_ack *extack)
+{
+	struct cls_fl_head *head = fl_head_dereference(tp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct cls_fl_filter *fold = *arg;
 	struct cls_fl_filter *fnew;
 	struct fl_flow_mask *mask;
@@ -2034,8 +2058,13 @@ static int fl_change(struct net *net, struct sk_buff *in_skb,
 		}
 	}
 
+<<<<<<< HEAD
 	err = fl_set_parms(net, tp, fnew, mask, base, tb, tca[TCA_RATE],
 			   tp->chain->tmplt_priv, flags, extack);
+=======
+	err = fl_set_parms(net, tp, fnew, mask, base, tb, tca[TCA_RATE], ovr,
+			   tp->chain->tmplt_priv, rtnl_held, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto errout;
 
@@ -2188,24 +2217,37 @@ static void fl_walk(struct tcf_proto *tp, struct tcf_walker *arg,
 
 	arg->count = arg->skip;
 
+<<<<<<< HEAD
 	rcu_read_lock();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	idr_for_each_entry_continue_ul(&head->handle_idr, f, tmp, id) {
 		/* don't return filters that are being deleted */
 		if (!refcount_inc_not_zero(&f->refcnt))
 			continue;
+<<<<<<< HEAD
 		rcu_read_unlock();
 
 		if (arg->fn(tp, f, arg) < 0) {
 			__fl_put(f);
 			arg->stop = 1;
 			rcu_read_lock();
+=======
+		if (arg->fn(tp, f, arg) < 0) {
+			__fl_put(f);
+			arg->stop = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		}
 		__fl_put(f);
 		arg->count++;
+<<<<<<< HEAD
 		rcu_read_lock();
 	}
 	rcu_read_unlock();
+=======
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	arg->cookie = id;
 }
 

@@ -268,6 +268,14 @@ static int rtw_pci_init_rx_ring(struct rtw_dev *rtwdev,
 	int i, allocated;
 	int ret = 0;
 
+<<<<<<< HEAD
+=======
+	if (len > TRX_BD_IDX_MASK) {
+		rtw_err(rtwdev, "len %d exceeds maximum RX entries\n", len);
+		return -EINVAL;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	head = dma_alloc_coherent(&pdev->dev, ring_sz, &dma, GFP_KERNEL);
 	if (!head) {
 		rtw_err(rtwdev, "failed to allocate rx ring\n");
@@ -1354,6 +1362,7 @@ static void rtw_pci_clkreq_set(struct rtw_dev *rtwdev, bool enable)
 	rtw_dbi_write8(rtwdev, RTK_PCIE_LINK_CFG, value);
 }
 
+<<<<<<< HEAD
 static void rtw_pci_clkreq_pad_low(struct rtw_dev *rtwdev, bool enable)
 {
 	u8 value;
@@ -1373,6 +1382,8 @@ static void rtw_pci_clkreq_pad_low(struct rtw_dev *rtwdev, bool enable)
 	rtw_dbi_write8(rtwdev, RTK_PCIE_LINK_CFG, value);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void rtw_pci_aspm_set(struct rtw_dev *rtwdev, bool enable)
 {
 	u8 value;
@@ -1514,6 +1525,7 @@ static void rtw_pci_phy_cfg(struct rtw_dev *rtwdev)
 
 static int __maybe_unused rtw_pci_suspend(struct device *dev)
 {
+<<<<<<< HEAD
 	struct ieee80211_hw *hw = dev_get_drvdata(dev);
 	struct rtw_dev *rtwdev = hw->priv;
 	struct rtw_chip_info *chip = rtwdev->chip;
@@ -1521,11 +1533,14 @@ static int __maybe_unused rtw_pci_suspend(struct device *dev)
 
 	if (chip->id == RTW_CHIP_TYPE_8822C && efuse->rfe_option == 6)
 		rtw_pci_clkreq_pad_low(rtwdev, true);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
 static int __maybe_unused rtw_pci_resume(struct device *dev)
 {
+<<<<<<< HEAD
 	struct ieee80211_hw *hw = dev_get_drvdata(dev);
 	struct rtw_dev *rtwdev = hw->priv;
 	struct rtw_chip_info *chip = rtwdev->chip;
@@ -1533,6 +1548,8 @@ static int __maybe_unused rtw_pci_resume(struct device *dev)
 
 	if (chip->id == RTW_CHIP_TYPE_8822C && efuse->rfe_option == 6)
 		rtw_pci_clkreq_pad_low(rtwdev, false);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1729,6 +1746,7 @@ static const struct dmi_system_id rtw88_pci_quirks[] = {
 		},
 		.driver_data = (void *)BIT(QUIRK_DIS_PCI_CAP_ASPM),
 	},
+<<<<<<< HEAD
 	{
 		.callback = disable_pci_caps,
 		.ident = "HP HP Pavilion Laptop 14-ce0xxx",
@@ -1738,6 +1756,8 @@ static const struct dmi_system_id rtw88_pci_quirks[] = {
 		},
 		.driver_data = (void *)BIT(QUIRK_DIS_PCI_CAP_ASPM),
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{}
 };
 

@@ -13,8 +13,21 @@ void i915_gem_object_init_memory_region(struct drm_i915_gem_object *obj,
 {
 	obj->mm.region = intel_memory_region_get(mem);
 
+<<<<<<< HEAD
 	mutex_lock(&mem->objects.lock);
 	list_add(&obj->mm.region_link, &mem->objects.list);
+=======
+	if (obj->base.size <= mem->min_page_size)
+		obj->flags |= I915_BO_ALLOC_CONTIGUOUS;
+
+	mutex_lock(&mem->objects.lock);
+
+	if (obj->flags & I915_BO_ALLOC_VOLATILE)
+		list_add(&obj->mm.region_link, &mem->objects.purgeable);
+	else
+		list_add(&obj->mm.region_link, &mem->objects.list);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&mem->objects.lock);
 }
 
@@ -32,11 +45,17 @@ void i915_gem_object_release_memory_region(struct drm_i915_gem_object *obj)
 struct drm_i915_gem_object *
 i915_gem_object_create_region(struct intel_memory_region *mem,
 			      resource_size_t size,
+<<<<<<< HEAD
 			      resource_size_t page_size,
 			      unsigned int flags)
 {
 	struct drm_i915_gem_object *obj;
 	resource_size_t default_page_size;
+=======
+			      unsigned int flags)
+{
+	struct drm_i915_gem_object *obj;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	/*
@@ -50,6 +69,7 @@ i915_gem_object_create_region(struct intel_memory_region *mem,
 	if (!mem)
 		return ERR_PTR(-ENODEV);
 
+<<<<<<< HEAD
 	default_page_size = mem->min_page_size;
 	if (page_size)
 		default_page_size = page_size;
@@ -58,6 +78,9 @@ i915_gem_object_create_region(struct intel_memory_region *mem,
 	GEM_BUG_ON(default_page_size < PAGE_SIZE);
 
 	size = round_up(size, default_page_size);
+=======
+	size = round_up(size, mem->min_page_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	GEM_BUG_ON(!size);
 	GEM_BUG_ON(!IS_ALIGNED(size, I915_GTT_MIN_ALIGNMENT));
@@ -69,7 +92,11 @@ i915_gem_object_create_region(struct intel_memory_region *mem,
 	if (!obj)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
 	err = mem->ops->init_object(mem, obj, size, page_size, flags);
+=======
+	err = mem->ops->init_object(mem, obj, size, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto err_object_free;
 

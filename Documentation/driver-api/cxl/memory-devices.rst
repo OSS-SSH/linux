@@ -36,6 +36,7 @@ CXL Core
 .. kernel-doc:: drivers/cxl/cxl.h
    :internal:
 
+<<<<<<< HEAD
 .. kernel-doc:: drivers/cxl/core/bus.c
    :doc: cxl core
 
@@ -45,6 +46,11 @@ CXL Core
 .. kernel-doc:: drivers/cxl/core/regs.c
    :doc: cxl registers
 
+=======
+.. kernel-doc:: drivers/cxl/core.c
+   :doc: cxl core
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 External Interfaces
 ===================
 

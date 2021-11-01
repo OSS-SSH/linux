@@ -16,6 +16,7 @@
 #include <linux/spinlock.h>
 #include <linux/atomic.h>
 #include <linux/err.h>
+<<<<<<< HEAD
 
 #ifdef CONFIG_DEBUG_LOCK_ALLOC
 # define __RWSEM_DEP_MAP_INIT(lockname)			\
@@ -29,6 +30,8 @@
 
 #ifndef CONFIG_PREEMPT_RT
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_RWSEM_SPIN_ON_OWNER
 #include <linux/osq_lock.h>
 #endif
@@ -77,6 +80,19 @@ static inline int rwsem_is_locked(struct rw_semaphore *sem)
 
 /* Common initializer macros and functions */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DEBUG_LOCK_ALLOC
+# define __RWSEM_DEP_MAP_INIT(lockname)			\
+	.dep_map = {					\
+		.name = #lockname,			\
+		.wait_type_inner = LD_WAIT_SLEEP,	\
+	},
+#else
+# define __RWSEM_DEP_MAP_INIT(lockname)
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DEBUG_RWSEMS
 # define __RWSEM_DEBUG_INIT(lockname) .magic = &lockname,
 #else
@@ -122,6 +138,7 @@ static inline int rwsem_is_contended(struct rw_semaphore *sem)
 	return !list_empty(&sem->wait_list);
 }
 
+<<<<<<< HEAD
 #else /* !CONFIG_PREEMPT_RT */
 
 #include <linux/rwbase_rt.h>
@@ -169,6 +186,8 @@ static __always_inline int rwsem_is_contended(struct rw_semaphore *sem)
  * the RT specific variant.
  */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * lock for reading
  */

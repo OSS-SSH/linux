@@ -101,7 +101,11 @@ void init_mmu(void)
 
 void init_kio(void)
 {
+<<<<<<< HEAD
 #if XCHAL_HAVE_PTP_MMU && XCHAL_HAVE_SPANNING_WAY && defined(CONFIG_USE_OF)
+=======
+#if XCHAL_HAVE_PTP_MMU && XCHAL_HAVE_SPANNING_WAY && defined(CONFIG_OF)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Update the IO area mapping in case xtensa_kio_paddr has changed
 	 */

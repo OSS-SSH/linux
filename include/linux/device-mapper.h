@@ -31,7 +31,11 @@ enum dm_queue_mode {
 	DM_TYPE_DAX_BIO_BASED	 = 3,
 };
 
+<<<<<<< HEAD
 typedef enum { STATUSTYPE_INFO, STATUSTYPE_TABLE, STATUSTYPE_IMA } status_type_t;
+=======
+typedef enum { STATUSTYPE_INFO, STATUSTYPE_TABLE } status_type_t;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 union map_info {
 	void *ptr;
@@ -151,6 +155,10 @@ typedef size_t (*dm_dax_copy_iter_fn)(struct dm_target *ti, pgoff_t pgoff,
 		void *addr, size_t bytes, struct iov_iter *i);
 typedef int (*dm_dax_zero_page_range_fn)(struct dm_target *ti, pgoff_t pgoff,
 		size_t nr_pages);
+<<<<<<< HEAD
+=======
+#define PAGE_SECTORS (PAGE_SIZE / 512)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void dm_error(const char *message);
 
@@ -602,10 +610,13 @@ void dm_destroy_keyslot_manager(struct blk_keyslot_manager *ksm);
 #define DMEMIT(x...) sz += ((sz >= maxlen) ? \
 			  0 : scnprintf(result + sz, maxlen - sz, x))
 
+<<<<<<< HEAD
 #define DMEMIT_TARGET_NAME_VERSION(y) \
 		DMEMIT("target_name=%s,target_version=%u.%u.%u", \
 		       (y)->name, (y)->version[0], (y)->version[1], (y)->version[2])
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Definitions of return values from target end_io function.
  */

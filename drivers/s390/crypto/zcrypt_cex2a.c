@@ -65,7 +65,11 @@ static struct ap_device_id zcrypt_cex2a_queue_ids[] = {
 
 MODULE_DEVICE_TABLE(ap, zcrypt_cex2a_queue_ids);
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Probe function for CEX2A card devices. It always accepts the AP device
  * since the bus_match already checked the card type.
  * @ap_dev: pointer to the AP device.
@@ -89,7 +93,11 @@ static int zcrypt_cex2a_card_probe(struct ap_device *ap_dev)
 	if (!zc)
 		return -ENOMEM;
 	zc->card = ac;
+<<<<<<< HEAD
 	dev_set_drvdata(&ap_dev->device, zc);
+=======
+	ac->private = zc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (ac->ap_dev.device_type == AP_DEVICE_TYPE_CEX2A) {
 		zc->min_mod_size = CEX2A_MIN_MOD_SIZE;
@@ -118,21 +126,36 @@ static int zcrypt_cex2a_card_probe(struct ap_device *ap_dev)
 
 	rc = zcrypt_card_register(zc);
 	if (rc) {
+<<<<<<< HEAD
+=======
+		ac->private = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		zcrypt_card_free(zc);
 	}
 
 	return rc;
 }
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * This is called to remove the CEX2A card driver information
  * if an AP card device is removed.
  */
 static void zcrypt_cex2a_card_remove(struct ap_device *ap_dev)
 {
+<<<<<<< HEAD
 	struct zcrypt_card *zc = dev_get_drvdata(&ap_dev->device);
 
 	zcrypt_card_unregister(zc);
+=======
+	struct zcrypt_card *zc = to_ap_card(&ap_dev->device)->private;
+
+	if (zc)
+		zcrypt_card_unregister(zc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct ap_driver zcrypt_cex2a_card_driver = {
@@ -142,7 +165,11 @@ static struct ap_driver zcrypt_cex2a_card_driver = {
 	.flags = AP_DRIVER_FLAG_DEFAULT,
 };
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Probe function for CEX2A queue devices. It always accepts the AP device
  * since the bus_match already checked the queue type.
  * @ap_dev: pointer to the AP device.
@@ -174,24 +201,43 @@ static int zcrypt_cex2a_queue_probe(struct ap_device *ap_dev)
 	ap_queue_init_state(aq);
 	ap_queue_init_reply(aq, &zq->reply);
 	aq->request_timeout = CEX2A_CLEANUP_TIME;
+<<<<<<< HEAD
 	dev_set_drvdata(&ap_dev->device, zq);
 	rc = zcrypt_queue_register(zq);
 	if (rc) {
+=======
+	aq->private = zq;
+	rc = zcrypt_queue_register(zq);
+	if (rc) {
+		aq->private = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		zcrypt_queue_free(zq);
 	}
 
 	return rc;
 }
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * This is called to remove the CEX2A queue driver information
  * if an AP queue device is removed.
  */
 static void zcrypt_cex2a_queue_remove(struct ap_device *ap_dev)
 {
+<<<<<<< HEAD
 	struct zcrypt_queue *zq = dev_get_drvdata(&ap_dev->device);
 
 	zcrypt_queue_unregister(zq);
+=======
+	struct ap_queue *aq = to_ap_queue(&ap_dev->device);
+	struct zcrypt_queue *zq = aq->private;
+
+	if (zq)
+		zcrypt_queue_unregister(zq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct ap_driver zcrypt_cex2a_queue_driver = {

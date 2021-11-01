@@ -1529,6 +1529,7 @@ static void ocfs2_truncate_cluster_pages(struct inode *inode, u64 byte_start,
 	}
 }
 
+<<<<<<< HEAD
 /*
  * zero out partial blocks of one cluster.
  *
@@ -1568,6 +1569,8 @@ static int ocfs2_zeroout_partial_cluster(struct inode *inode,
 	return sb_issue_zeroout(sb, p_block, nr_blocks, GFP_NOFS);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ocfs2_zero_partial_clusters(struct inode *inode,
 				       u64 start, u64 len)
 {
@@ -1577,7 +1580,10 @@ static int ocfs2_zero_partial_clusters(struct inode *inode,
 	struct ocfs2_super *osb = OCFS2_SB(inode->i_sb);
 	unsigned int csize = osb->s_clustersize;
 	handle_t *handle;
+<<<<<<< HEAD
 	loff_t isize = i_size_read(inode);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * The "start" and "end" values are NOT necessarily part of
@@ -1598,6 +1604,7 @@ static int ocfs2_zero_partial_clusters(struct inode *inode,
 	if ((start & (csize - 1)) == 0 && (end & (csize - 1)) == 0)
 		goto out;
 
+<<<<<<< HEAD
 	/* No page cache for EOF blocks, issue zero out to disk. */
 	if (end > isize) {
 		/*
@@ -1618,6 +1625,8 @@ static int ocfs2_zero_partial_clusters(struct inode *inode,
 			goto out;
 		end = isize;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	handle = ocfs2_start_trans(osb, OCFS2_INODE_UPDATE_CREDITS);
 	if (IS_ERR(handle)) {
 		ret = PTR_ERR(handle);
@@ -1916,6 +1925,48 @@ out:
 }
 
 /*
+<<<<<<< HEAD
+=======
+ * zero out partial blocks of one cluster.
+ *
+ * start: file offset where zero starts, will be made upper block aligned.
+ * len: it will be trimmed to the end of current cluster if "start + len"
+ *      is bigger than it.
+ */
+static int ocfs2_zeroout_partial_cluster(struct inode *inode,
+					u64 start, u64 len)
+{
+	int ret;
+	u64 start_block, end_block, nr_blocks;
+	u64 p_block, offset;
+	u32 cluster, p_cluster, nr_clusters;
+	struct super_block *sb = inode->i_sb;
+	u64 end = ocfs2_align_bytes_to_clusters(sb, start);
+
+	if (start + len < end)
+		end = start + len;
+
+	start_block = ocfs2_blocks_for_bytes(sb, start);
+	end_block = ocfs2_blocks_for_bytes(sb, end);
+	nr_blocks = end_block - start_block;
+	if (!nr_blocks)
+		return 0;
+
+	cluster = ocfs2_bytes_to_clusters(sb, start);
+	ret = ocfs2_get_clusters(inode, cluster, &p_cluster,
+				&nr_clusters, NULL);
+	if (ret)
+		return ret;
+	if (!p_cluster)
+		return 0;
+
+	offset = start_block - ocfs2_clusters_to_blocks(sb, cluster);
+	p_block = ocfs2_clusters_to_blocks(sb, p_cluster) + offset;
+	return sb_issue_zeroout(sb, p_block, nr_blocks, GFP_NOFS);
+}
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Parts of this function taken from xfs_change_file_space()
  */
 static int __ocfs2_change_file_space(struct file *file, struct inode *inode,
@@ -1956,6 +2007,10 @@ static int __ocfs2_change_file_space(struct file *file, struct inode *inode,
 		goto out_inode_unlock;
 	}
 
+<<<<<<< HEAD
+=======
+	orig_isize = i_size_read(inode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (sr->l_whence) {
 	case 0: /*SEEK_SET*/
 		break;
@@ -1963,7 +2018,11 @@ static int __ocfs2_change_file_space(struct file *file, struct inode *inode,
 		sr->l_start += f_pos;
 		break;
 	case 2: /*SEEK_END*/
+<<<<<<< HEAD
 		sr->l_start += i_size_read(inode);
+=======
+		sr->l_start += orig_isize;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	default:
 		ret = -EINVAL;
@@ -2018,7 +2077,10 @@ static int __ocfs2_change_file_space(struct file *file, struct inode *inode,
 		ret = -EINVAL;
 	}
 
+<<<<<<< HEAD
 	orig_isize = i_size_read(inode);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* zeroout eof blocks in the cluster. */
 	if (!ret && change_size && orig_isize < size) {
 		ret = ocfs2_zeroout_partial_cluster(inode, orig_isize,

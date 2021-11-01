@@ -206,7 +206,11 @@ ATOMIC_OPS(atomic64, xor, s64, ^=, xor, lld, scd)
  * The function returns the old value of @v minus @i.
  */
 #define ATOMIC_SIP_OP(pfx, type, op, ll, sc)				\
+<<<<<<< HEAD
 static __inline__ type arch_##pfx##_sub_if_positive(type i, pfx##_t * v)	\
+=======
+static __inline__ int arch_##pfx##_sub_if_positive(type i, pfx##_t * v)	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {									\
 	type temp, result;						\
 									\

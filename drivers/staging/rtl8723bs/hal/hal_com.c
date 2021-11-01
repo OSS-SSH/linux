@@ -4,6 +4,10 @@
  * Copyright(c) 2007 - 2011 Realtek Corporation. All rights reserved.
  *
  ******************************************************************************/
+<<<<<<< HEAD
+=======
+#define _HAL_COM_C_
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <linux/kernel.h>
 #include <drv_types.h>
@@ -70,7 +74,19 @@ void dump_chip_info(struct hal_version	ChipVersion)
 		cnt += scnprintf(buf + cnt, sizeof(buf) - cnt,
 				"UNKNOWN_CUT(%d)_", ChipVersion.CUTVersion);
 
+<<<<<<< HEAD
 	cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "1T1R_");
+=======
+	if (IS_1T1R(ChipVersion))
+		cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "1T1R_");
+	else if (IS_1T2R(ChipVersion))
+		cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "1T2R_");
+	else if (IS_2T2R(ChipVersion))
+		cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "2T2R_");
+	else
+		cnt += scnprintf(buf + cnt, sizeof(buf) - cnt,
+				"UNKNOWN_RFTYPE(%d)_", ChipVersion.RFType);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cnt += scnprintf(buf + cnt, sizeof(buf) - cnt, "RomVer(%d)\n", ChipVersion.ROMVer);
 }
@@ -135,12 +151,20 @@ u8 hal_com_config_channel_plan(
 	return chnlPlan;
 }
 
+<<<<<<< HEAD
 bool HAL_IsLegalChannel(struct adapter *adapter, u32 Channel)
+=======
+bool HAL_IsLegalChannel(struct adapter *Adapter, u32 Channel)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	bool bLegalChannel = true;
 
 	if ((Channel <= 14) && (Channel >= 1)) {
+<<<<<<< HEAD
 		if (is_supported_24g(adapter->registrypriv.wireless_mode) == false)
+=======
+		if (IsSupported24G(Adapter->registrypriv.wireless_mode) == false)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			bLegalChannel = false;
 	} else {
 		bLegalChannel = false;
@@ -214,6 +238,81 @@ u8 MRateToHwRate(u8 rate)
 	case MGN_MCS7:
 		ret = DESC_RATEMCS7;
 		break;
+<<<<<<< HEAD
+=======
+	case MGN_MCS8:
+		ret = DESC_RATEMCS8;
+		break;
+	case MGN_MCS9:
+		ret = DESC_RATEMCS9;
+		break;
+	case MGN_MCS10:
+		ret = DESC_RATEMCS10;
+		break;
+	case MGN_MCS11:
+		ret = DESC_RATEMCS11;
+		break;
+	case MGN_MCS12:
+		ret = DESC_RATEMCS12;
+		break;
+	case MGN_MCS13:
+		ret = DESC_RATEMCS13;
+		break;
+	case MGN_MCS14:
+		ret = DESC_RATEMCS14;
+		break;
+	case MGN_MCS15:
+		ret = DESC_RATEMCS15;
+		break;
+	case MGN_MCS16:
+		ret = DESC_RATEMCS16;
+		break;
+	case MGN_MCS17:
+		ret = DESC_RATEMCS17;
+		break;
+	case MGN_MCS18:
+		ret = DESC_RATEMCS18;
+		break;
+	case MGN_MCS19:
+		ret = DESC_RATEMCS19;
+		break;
+	case MGN_MCS20:
+		ret = DESC_RATEMCS20;
+		break;
+	case MGN_MCS21:
+		ret = DESC_RATEMCS21;
+		break;
+	case MGN_MCS22:
+		ret = DESC_RATEMCS22;
+		break;
+	case MGN_MCS23:
+		ret = DESC_RATEMCS23;
+		break;
+	case MGN_MCS24:
+		ret = DESC_RATEMCS24;
+		break;
+	case MGN_MCS25:
+		ret = DESC_RATEMCS25;
+		break;
+	case MGN_MCS26:
+		ret = DESC_RATEMCS26;
+		break;
+	case MGN_MCS27:
+		ret = DESC_RATEMCS27;
+		break;
+	case MGN_MCS28:
+		ret = DESC_RATEMCS28;
+		break;
+	case MGN_MCS29:
+		ret = DESC_RATEMCS29;
+		break;
+	case MGN_MCS30:
+		ret = DESC_RATEMCS30;
+		break;
+	case MGN_MCS31:
+		ret = DESC_RATEMCS31;
+		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}
@@ -286,6 +385,81 @@ u8 HwRateToMRate(u8 rate)
 	case DESC_RATEMCS7:
 		ret_rate = MGN_MCS7;
 		break;
+<<<<<<< HEAD
+=======
+	case DESC_RATEMCS8:
+		ret_rate = MGN_MCS8;
+		break;
+	case DESC_RATEMCS9:
+		ret_rate = MGN_MCS9;
+		break;
+	case DESC_RATEMCS10:
+		ret_rate = MGN_MCS10;
+		break;
+	case DESC_RATEMCS11:
+		ret_rate = MGN_MCS11;
+		break;
+	case DESC_RATEMCS12:
+		ret_rate = MGN_MCS12;
+		break;
+	case DESC_RATEMCS13:
+		ret_rate = MGN_MCS13;
+		break;
+	case DESC_RATEMCS14:
+		ret_rate = MGN_MCS14;
+		break;
+	case DESC_RATEMCS15:
+		ret_rate = MGN_MCS15;
+		break;
+	case DESC_RATEMCS16:
+		ret_rate = MGN_MCS16;
+		break;
+	case DESC_RATEMCS17:
+		ret_rate = MGN_MCS17;
+		break;
+	case DESC_RATEMCS18:
+		ret_rate = MGN_MCS18;
+		break;
+	case DESC_RATEMCS19:
+		ret_rate = MGN_MCS19;
+		break;
+	case DESC_RATEMCS20:
+		ret_rate = MGN_MCS20;
+		break;
+	case DESC_RATEMCS21:
+		ret_rate = MGN_MCS21;
+		break;
+	case DESC_RATEMCS22:
+		ret_rate = MGN_MCS22;
+		break;
+	case DESC_RATEMCS23:
+		ret_rate = MGN_MCS23;
+		break;
+	case DESC_RATEMCS24:
+		ret_rate = MGN_MCS24;
+		break;
+	case DESC_RATEMCS25:
+		ret_rate = MGN_MCS25;
+		break;
+	case DESC_RATEMCS26:
+		ret_rate = MGN_MCS26;
+		break;
+	case DESC_RATEMCS27:
+		ret_rate = MGN_MCS27;
+		break;
+	case DESC_RATEMCS28:
+		ret_rate = MGN_MCS28;
+		break;
+	case DESC_RATEMCS29:
+		ret_rate = MGN_MCS29;
+		break;
+	case DESC_RATEMCS30:
+		ret_rate = MGN_MCS30;
+		break;
+	case DESC_RATEMCS31:
+		ret_rate = MGN_MCS31;
+		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}
@@ -545,7 +719,11 @@ u8 rtw_get_mgntframe_raid(struct adapter *adapter, unsigned char network_type)
 
 void rtw_hal_update_sta_rate_mask(struct adapter *padapter, struct sta_info *psta)
 {
+<<<<<<< HEAD
 	u8 i, limit;
+=======
+	u8 i, rf_type, limit;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 tx_ra_bitmap;
 
 	if (!psta)
@@ -561,7 +739,15 @@ void rtw_hal_update_sta_rate_mask(struct adapter *padapter, struct sta_info *pst
 
 	/* n mode ra_bitmap */
 	if (psta->htpriv.ht_option) {
+<<<<<<< HEAD
 		limit = 8; /*   1R */
+=======
+		rtw_hal_get_hwreg(padapter, HW_VAR_RF_TYPE, (u8 *)(&rf_type));
+		if (rf_type == RF_2T2R)
+			limit = 16; /*  2R */
+		else
+			limit = 8; /*   1R */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		for (i = 0; i < limit; i++) {
 			if (psta->htpriv.ht_cap.mcs.rx_mask[i/8] & BIT(i%8))
@@ -666,6 +852,12 @@ void GetHwReg(struct adapter *adapter, u8 variable, u8 *val)
 	case HW_VAR_DM_FLAG:
 		*((u32 *)val) = odm->SupportAbility;
 		break;
+<<<<<<< HEAD
+=======
+	case HW_VAR_RF_TYPE:
+		*((u8 *)val) = hal_data->rf_type;
+		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		netdev_dbg(adapter->pnetdev,
 			   FUNC_ADPT_FMT " variable(%d) not defined!\n",
@@ -763,7 +955,11 @@ u8 GetHalDefVar(
 
 			pmlmepriv = &adapter->mlmepriv;
 			pstapriv = &adapter->stapriv;
+<<<<<<< HEAD
 			psta = rtw_get_stainfo(pstapriv, pmlmepriv->cur_network.network.mac_address);
+=======
+			psta = rtw_get_stainfo(pstapriv, pmlmepriv->cur_network.network.MacAddress);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (psta)
 				*((int *)value) = psta->rssi_stat.UndecoratedSmoothedPWDB;
 		}

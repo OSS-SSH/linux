@@ -71,6 +71,7 @@ static int grts_cb(const void *data, void *private)
 		unsigned int z2 = touch_info[st->ch_map[GRTS_CH_Z2]];
 		unsigned int Rt;
 
+<<<<<<< HEAD
 		if (likely(x && z1)) {
 			Rt = z2;
 			Rt -= z1;
@@ -87,6 +88,21 @@ static int grts_cb(const void *data, void *private)
 			if (Rt < GRTS_DEFAULT_PRESSURE_MAX)
 				press = GRTS_DEFAULT_PRESSURE_MAX - Rt;
 		}
+=======
+		Rt = z2;
+		Rt -= z1;
+		Rt *= st->x_plate_ohms;
+		Rt = DIV_ROUND_CLOSEST(Rt, 16);
+		Rt *= x;
+		Rt /= z1;
+		Rt = DIV_ROUND_CLOSEST(Rt, 256);
+		/*
+		 * On increased pressure the resistance (Rt) is decreasing
+		 * so, convert values to make it looks as real pressure.
+		 */
+		if (Rt < GRTS_DEFAULT_PRESSURE_MAX)
+			press = GRTS_DEFAULT_PRESSURE_MAX - Rt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if ((!x && !y) || (st->pressure && (press < st->pressure_min))) {

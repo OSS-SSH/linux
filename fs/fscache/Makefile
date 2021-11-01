@@ -16,5 +16,10 @@ fscache-y := \
 
 fscache-$(CONFIG_PROC_FS) += proc.o
 fscache-$(CONFIG_FSCACHE_STATS) += stats.o
+<<<<<<< HEAD
+=======
+fscache-$(CONFIG_FSCACHE_HISTOGRAM) += histogram.o
+fscache-$(CONFIG_FSCACHE_OBJECT_LIST) += object-list.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 obj-$(CONFIG_FSCACHE) := fscache.o

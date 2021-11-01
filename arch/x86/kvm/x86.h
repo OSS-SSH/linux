@@ -8,8 +8,11 @@
 #include "kvm_cache_regs.h"
 #include "kvm_emulate.h"
 
+<<<<<<< HEAD
 void kvm_spurious_fault(void);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static __always_inline void kvm_guest_enter_irqoff(void)
 {
 	/*

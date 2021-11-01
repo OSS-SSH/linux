@@ -31,16 +31,22 @@ static int iomap_swapfile_add_extent(struct iomap_swapfile_info *isi)
 {
 	struct iomap *iomap = &isi->iomap;
 	unsigned long nr_pages;
+<<<<<<< HEAD
 	unsigned long max_pages;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint64_t first_ppage;
 	uint64_t first_ppage_reported;
 	uint64_t next_ppage;
 	int error;
 
+<<<<<<< HEAD
 	if (unlikely(isi->nr_pages >= isi->sis->max))
 		return 0;
 	max_pages = isi->sis->max - isi->nr_pages;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Round the start up and the end down so that the physical
 	 * extent aligns to a page boundary.
@@ -53,7 +59,10 @@ static int iomap_swapfile_add_extent(struct iomap_swapfile_info *isi)
 	if (first_ppage >= next_ppage)
 		return 0;
 	nr_pages = next_ppage - first_ppage;
+<<<<<<< HEAD
 	nr_pages = min(nr_pages, max_pages);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Calculate how much swap space we're adding; the first page contains
@@ -94,9 +103,19 @@ static int iomap_swapfile_fail(struct iomap_swapfile_info *isi, const char *str)
  * swap only cares about contiguous page-aligned physical extents and makes no
  * distinction between written and unwritten extents.
  */
+<<<<<<< HEAD
 static loff_t iomap_swapfile_iter(const struct iomap_iter *iter,
 		struct iomap *iomap, struct iomap_swapfile_info *isi)
 {
+=======
+static loff_t iomap_swapfile_activate_actor(struct inode *inode, loff_t pos,
+		loff_t count, void *data, struct iomap *iomap,
+		struct iomap *srcmap)
+{
+	struct iomap_swapfile_info *isi = data;
+	int error;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (iomap->type) {
 	case IOMAP_MAPPED:
 	case IOMAP_UNWRITTEN:
@@ -127,12 +146,20 @@ static loff_t iomap_swapfile_iter(const struct iomap_iter *iter,
 		isi->iomap.length += iomap->length;
 	} else {
 		/* Otherwise, add the retained iomap and store this one. */
+<<<<<<< HEAD
 		int error = iomap_swapfile_add_extent(isi);
+=======
+		error = iomap_swapfile_add_extent(isi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (error)
 			return error;
 		memcpy(&isi->iomap, iomap, sizeof(isi->iomap));
 	}
+<<<<<<< HEAD
 	return iomap_length(iter);
+=======
+	return count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -143,6 +170,7 @@ int iomap_swapfile_activate(struct swap_info_struct *sis,
 		struct file *swap_file, sector_t *pagespan,
 		const struct iomap_ops *ops)
 {
+<<<<<<< HEAD
 	struct inode *inode = swap_file->f_mapping->host;
 	struct iomap_iter iter = {
 		.inode	= inode,
@@ -150,12 +178,22 @@ int iomap_swapfile_activate(struct swap_info_struct *sis,
 		.len	= ALIGN_DOWN(i_size_read(inode), PAGE_SIZE),
 		.flags	= IOMAP_REPORT,
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct iomap_swapfile_info isi = {
 		.sis = sis,
 		.lowest_ppage = (sector_t)-1ULL,
 		.file = swap_file,
 	};
+<<<<<<< HEAD
 	int ret;
+=======
+	struct address_space *mapping = swap_file->f_mapping;
+	struct inode *inode = mapping->host;
+	loff_t pos = 0;
+	loff_t len = ALIGN_DOWN(i_size_read(inode), PAGE_SIZE);
+	loff_t ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Persist all file mapping metadata so that we won't have any
@@ -165,10 +203,22 @@ int iomap_swapfile_activate(struct swap_info_struct *sis,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	while ((ret = iomap_iter(&iter, ops)) > 0)
 		iter.processed = iomap_swapfile_iter(&iter, &iter.iomap, &isi);
 	if (ret < 0)
 		return ret;
+=======
+	while (len > 0) {
+		ret = iomap_apply(inode, pos, len, IOMAP_REPORT,
+				ops, &isi, iomap_swapfile_activate_actor);
+		if (ret <= 0)
+			return ret;
+
+		pos += ret;
+		len -= ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (isi.iomap.length) {
 		ret = iomap_swapfile_add_extent(&isi);

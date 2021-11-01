@@ -303,7 +303,11 @@ struct lola_stream {
 
 struct lola_pcm {
 	unsigned int num_streams;
+<<<<<<< HEAD
 	struct snd_dma_buffer *bdl; /* BDL buffer */
+=======
+	struct snd_dma_buffer bdl; /* BDL buffer */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct lola_stream streams[MAX_STREAM_COUNT];
 };
 
@@ -328,7 +332,11 @@ struct lola {
 	unsigned int last_cmd_nid, last_verb, last_data, last_extdata;
 
 	/* CORB/RIRB buffers */
+<<<<<<< HEAD
 	struct snd_dma_buffer *rb;
+=======
+	struct snd_dma_buffer rb;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* unsolicited events */
 	unsigned int last_unsol_res;
@@ -480,6 +488,10 @@ int lola_codec_flush(struct lola *chip);
 
 /* PCM */
 int lola_create_pcm(struct lola *chip);
+<<<<<<< HEAD
+=======
+void lola_free_pcm(struct lola *chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int lola_init_pcm(struct lola *chip, int dir, int *nidp);
 void lola_pcm_update(struct lola *chip, struct lola_pcm *pcm, unsigned int bits);
 

@@ -623,14 +623,27 @@ static int vt8500_serial_probe(struct platform_device *pdev)
 	struct vt8500_port *vt8500_port;
 	struct resource *mmres, *irqres;
 	struct device_node *np = pdev->dev.of_node;
+<<<<<<< HEAD
+=======
+	const struct of_device_id *match;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const unsigned int *flags;
 	int ret;
 	int port;
 
+<<<<<<< HEAD
 	flags = of_device_get_match_data(&pdev->dev);
 	if (!flags)
 		return -EINVAL;
 
+=======
+	match = of_match_device(wmt_dt_ids, &pdev->dev);
+	if (!match)
+		return -EINVAL;
+
+	flags = match->data;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmres = platform_get_resource(pdev, IORESOURCE_MEM, 0);
 	irqres = platform_get_resource(pdev, IORESOURCE_IRQ, 0);
 	if (!mmres || !irqres)

@@ -309,7 +309,11 @@
 
 				interrupt-parent = <&gpio>;
 				interrupts = <TEGRA194_MAIN_GPIO(H, 2)
+<<<<<<< HEAD
 					      IRQ_TYPE_EDGE_FALLING>;
+=======
+					      IRQ_TYPE_LEVEL_LOW>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				vcc-supply = <&vdd_1v8ls>;
 
 				#thermal-sensor-cells = <1>;

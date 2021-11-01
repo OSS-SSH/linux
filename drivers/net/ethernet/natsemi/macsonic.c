@@ -603,7 +603,11 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 static void mac_sonic_nubus_remove(struct nubus_board *board)
+=======
+static int mac_sonic_nubus_remove(struct nubus_board *board)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *ndev = nubus_get_drvdata(board);
 	struct sonic_local *lp = netdev_priv(ndev);
@@ -613,6 +617,11 @@ static void mac_sonic_nubus_remove(struct nubus_board *board)
 			  SIZEOF_SONIC_DESC * SONIC_BUS_SCALE(lp->dma_bitmode),
 			  lp->descriptors, lp->descriptors_laddr);
 	free_netdev(ndev);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct nubus_driver mac_sonic_nubus_driver = {

@@ -19,6 +19,10 @@ MODULE_DESCRIPTION("iptables filter table");
 #define FILTER_VALID_HOOKS ((1 << NF_INET_LOCAL_IN) | \
 			    (1 << NF_INET_FORWARD) | \
 			    (1 << NF_INET_LOCAL_OUT))
+<<<<<<< HEAD
+=======
+static int __net_init iptable_filter_table_init(struct net *net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct xt_table packet_filter = {
 	.name		= "filter",
@@ -26,6 +30,10 @@ static const struct xt_table packet_filter = {
 	.me		= THIS_MODULE,
 	.af		= NFPROTO_IPV4,
 	.priority	= NF_IP_PRI_FILTER,
+<<<<<<< HEAD
+=======
+	.table_init	= iptable_filter_table_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static unsigned int
@@ -41,7 +49,11 @@ static struct nf_hook_ops *filter_ops __read_mostly;
 static bool forward __read_mostly = true;
 module_param(forward, bool, 0000);
 
+<<<<<<< HEAD
 static int iptable_filter_table_init(struct net *net)
+=======
+static int __net_init iptable_filter_table_init(struct net *net)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ipt_replace *repl;
 	int err;
@@ -60,7 +72,11 @@ static int iptable_filter_table_init(struct net *net)
 
 static int __net_init iptable_filter_net_init(struct net *net)
 {
+<<<<<<< HEAD
 	if (!forward)
+=======
+	if (net == &init_net || !forward)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return iptable_filter_table_init(net);
 
 	return 0;
@@ -84,6 +100,7 @@ static struct pernet_operations iptable_filter_net_ops = {
 
 static int __init iptable_filter_init(void)
 {
+<<<<<<< HEAD
 	int ret = xt_register_template(&packet_filter,
 				       iptable_filter_table_init);
 
@@ -104,12 +121,28 @@ static int __init iptable_filter_init(void)
 	}
 
 	return 0;
+=======
+	int ret;
+
+	filter_ops = xt_hook_ops_alloc(&packet_filter, iptable_filter_hook);
+	if (IS_ERR(filter_ops))
+		return PTR_ERR(filter_ops);
+
+	ret = register_pernet_subsys(&iptable_filter_net_ops);
+	if (ret < 0)
+		kfree(filter_ops);
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void __exit iptable_filter_fini(void)
 {
 	unregister_pernet_subsys(&iptable_filter_net_ops);
+<<<<<<< HEAD
 	xt_unregister_template(&packet_filter);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(filter_ops);
 }
 

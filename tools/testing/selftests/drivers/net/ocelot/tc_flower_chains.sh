@@ -1,6 +1,10 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 # Copyright 2020 NXP
+=======
+# Copyright 2020 NXP Semiconductors
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 WAIT_TIME=1
 NUM_NETIFS=4

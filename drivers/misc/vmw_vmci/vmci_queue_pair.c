@@ -2243,8 +2243,12 @@ int vmci_qp_broker_map(struct vmci_handle handle,
 
 	result = VMCI_SUCCESS;
 
+<<<<<<< HEAD
 	if (context_id != VMCI_HOST_CONTEXT_ID &&
 	    !QPBROKERSTATE_HAS_MEM(entry)) {
+=======
+	if (context_id != VMCI_HOST_CONTEXT_ID) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct vmci_qp_page_store page_store;
 
 		page_store.pages = guest_mem;
@@ -2351,8 +2355,12 @@ int vmci_qp_broker_unmap(struct vmci_handle handle,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	if (context_id != VMCI_HOST_CONTEXT_ID &&
 	    QPBROKERSTATE_HAS_MEM(entry)) {
+=======
+	if (context_id != VMCI_HOST_CONTEXT_ID) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		qp_acquire_queue_mutex(entry->produce_q);
 		result = qp_save_headers(entry);
 		if (result < VMCI_SUCCESS)

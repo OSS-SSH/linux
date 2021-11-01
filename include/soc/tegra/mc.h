@@ -237,13 +237,17 @@ unsigned int tegra_mc_get_emem_device_count(struct tegra_mc *mc);
 
 #ifdef CONFIG_TEGRA_MC
 struct tegra_mc *devm_tegra_memory_controller_get(struct device *dev);
+<<<<<<< HEAD
 int tegra_mc_probe_device(struct tegra_mc *mc, struct device *dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 static inline struct tegra_mc *
 devm_tegra_memory_controller_get(struct device *dev)
 {
 	return ERR_PTR(-ENODEV);
 }
+<<<<<<< HEAD
 
 static inline int
 tegra_mc_probe_device(struct tegra_mc *mc, struct device *dev)
@@ -252,4 +256,10 @@ tegra_mc_probe_device(struct tegra_mc *mc, struct device *dev)
 }
 #endif
 
+=======
+#endif
+
+int tegra_mc_probe_device(struct tegra_mc *mc, struct device *dev);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __SOC_TEGRA_MC_H__ */

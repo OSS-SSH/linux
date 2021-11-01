@@ -107,6 +107,7 @@ int xchk_setup_fscounters(struct xfs_scrub *sc);
 void xchk_ag_free(struct xfs_scrub *sc, struct xchk_ag *sa);
 int xchk_ag_init(struct xfs_scrub *sc, xfs_agnumber_t agno,
 		struct xchk_ag *sa);
+<<<<<<< HEAD
 
 /*
  * Grab all AG resources, treating the inability to grab the perag structure as
@@ -124,6 +125,9 @@ xchk_ag_init_existing(
 	return error == -ENOENT ? -EFSCORRUPTED : error;
 }
 
+=======
+void xchk_perag_get(struct xfs_mount *mp, struct xchk_ag *sa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int xchk_ag_read_headers(struct xfs_scrub *sc, xfs_agnumber_t agno,
 		struct xchk_ag *sa);
 void xchk_ag_btcur_free(struct xchk_ag *sa);

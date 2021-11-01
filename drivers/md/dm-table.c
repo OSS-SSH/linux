@@ -809,9 +809,20 @@ EXPORT_SYMBOL_GPL(dm_table_set_type);
 int device_not_dax_capable(struct dm_target *ti, struct dm_dev *dev,
 			sector_t start, sector_t len, void *data)
 {
+<<<<<<< HEAD
 	int blocksize = *(int *) data;
 
 	return !dax_supported(dev->dax_dev, dev->bdev, blocksize, start, len);
+=======
+	int blocksize = *(int *) data, id;
+	bool rc;
+
+	id = dax_read_lock();
+	rc = !dax_supported(dev->dax_dev, dev->bdev, blocksize, start, len);
+	dax_read_unlock(id);
+
+	return rc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Check devices support synchronous DAX */
@@ -2071,7 +2082,11 @@ int dm_table_set_restrictions(struct dm_table *t, struct request_queue *q,
 	}
 
 	dm_update_keyslot_manager(q, t);
+<<<<<<< HEAD
 	disk_update_readahead(t->md->disk);
+=======
+	blk_queue_update_readahead(q);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

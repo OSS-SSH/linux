@@ -21,7 +21,10 @@ properties:
       - fsl,imx8mn-rpmsg-audio
       - fsl,imx8mm-rpmsg-audio
       - fsl,imx8mp-rpmsg-audio
+<<<<<<< HEAD
       - fsl,imx8ulp-rpmsg-audio
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   model:
     $ref: /schemas/types.yaml#/definitions/string

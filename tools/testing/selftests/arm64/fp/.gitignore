@@ -1,7 +1,13 @@
 fpsimd-test
+<<<<<<< HEAD
 rdvl-sve
 sve-probe-vls
 sve-ptrace
 sve-test
 vec-syscfg
+=======
+sve-probe-vls
+sve-ptrace
+sve-test
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 vlset

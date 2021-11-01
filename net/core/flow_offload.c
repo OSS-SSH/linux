@@ -321,13 +321,20 @@ EXPORT_SYMBOL(flow_block_cb_setup_simple);
 static DEFINE_MUTEX(flow_indr_block_lock);
 static LIST_HEAD(flow_block_indr_list);
 static LIST_HEAD(flow_block_indr_dev_list);
+<<<<<<< HEAD
 static LIST_HEAD(flow_indir_dev_list);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct flow_indr_dev {
 	struct list_head		list;
 	flow_indr_block_bind_cb_t	*cb;
 	void				*cb_priv;
 	refcount_t			refcnt;
+<<<<<<< HEAD
+=======
+	struct rcu_head			rcu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct flow_indr_dev *flow_indr_dev_alloc(flow_indr_block_bind_cb_t *cb,
@@ -346,6 +353,7 @@ static struct flow_indr_dev *flow_indr_dev_alloc(flow_indr_block_bind_cb_t *cb,
 	return indr_dev;
 }
 
+<<<<<<< HEAD
 struct flow_indir_dev_info {
 	void *data;
 	struct net_device *dev;
@@ -373,6 +381,8 @@ static void existing_qdiscs_register(flow_indr_block_bind_cb_t *cb, void *cb_pri
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int flow_indr_dev_register(flow_indr_block_bind_cb_t *cb, void *cb_priv)
 {
 	struct flow_indr_dev *indr_dev;
@@ -394,7 +404,10 @@ int flow_indr_dev_register(flow_indr_block_bind_cb_t *cb, void *cb_priv)
 	}
 
 	list_add(&indr_dev->list, &flow_block_indr_dev_list);
+<<<<<<< HEAD
 	existing_qdiscs_register(cb, cb_priv);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&flow_indr_block_lock);
 
 	return 0;
@@ -491,6 +504,7 @@ out:
 }
 EXPORT_SYMBOL(flow_indr_block_cb_alloc);
 
+<<<<<<< HEAD
 static struct flow_indir_dev_info *find_indir_dev(void *data)
 {
 	struct flow_indir_dev_info *cur;
@@ -544,6 +558,9 @@ static int indir_dev_remove(void *data)
 }
 
 int flow_indr_dev_setup_offload(struct net_device *dev,	struct Qdisc *sch,
+=======
+int flow_indr_dev_setup_offload(struct net_device *dev, struct Qdisc *sch,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				enum tc_setup_type type, void *data,
 				struct flow_block_offload *bo,
 				void (*cleanup)(struct flow_block_cb *block_cb))
@@ -551,12 +568,15 @@ int flow_indr_dev_setup_offload(struct net_device *dev,	struct Qdisc *sch,
 	struct flow_indr_dev *this;
 
 	mutex_lock(&flow_indr_block_lock);
+<<<<<<< HEAD
 
 	if (bo->command == FLOW_BLOCK_BIND)
 		indir_dev_add(data, dev, sch, type, cleanup, bo);
 	else if (bo->command == FLOW_BLOCK_UNBIND)
 		indir_dev_remove(data);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_for_each_entry(this, &flow_block_indr_dev_list, list)
 		this->cb(dev, sch, this->cb_priv, type, bo, data, cleanup);
 

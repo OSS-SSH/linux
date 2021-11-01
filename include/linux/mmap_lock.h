@@ -101,14 +101,24 @@ static inline bool mmap_write_trylock(struct mm_struct *mm)
 
 static inline void mmap_write_unlock(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 	__mmap_lock_trace_released(mm, true);
 	up_write(&mm->mmap_lock);
+=======
+	up_write(&mm->mmap_lock);
+	__mmap_lock_trace_released(mm, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void mmap_write_downgrade(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 	__mmap_lock_trace_acquire_returned(mm, false, true);
 	downgrade_write(&mm->mmap_lock);
+=======
+	downgrade_write(&mm->mmap_lock);
+	__mmap_lock_trace_acquire_returned(mm, false, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void mmap_read_lock(struct mm_struct *mm)
@@ -140,14 +150,33 @@ static inline bool mmap_read_trylock(struct mm_struct *mm)
 
 static inline void mmap_read_unlock(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 	__mmap_lock_trace_released(mm, false);
 	up_read(&mm->mmap_lock);
+=======
+	up_read(&mm->mmap_lock);
+	__mmap_lock_trace_released(mm, false);
+}
+
+static inline bool mmap_read_trylock_non_owner(struct mm_struct *mm)
+{
+	if (mmap_read_trylock(mm)) {
+		rwsem_release(&mm->mmap_lock.dep_map, _RET_IP_);
+		return true;
+	}
+	return false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void mmap_read_unlock_non_owner(struct mm_struct *mm)
 {
+<<<<<<< HEAD
 	__mmap_lock_trace_released(mm, false);
 	up_read_non_owner(&mm->mmap_lock);
+=======
+	up_read_non_owner(&mm->mmap_lock);
+	__mmap_lock_trace_released(mm, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void mmap_assert_locked(struct mm_struct *mm)

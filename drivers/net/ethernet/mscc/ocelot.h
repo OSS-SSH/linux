@@ -12,7 +12,12 @@
 #include <linux/etherdevice.h>
 #include <linux/if_vlan.h>
 #include <linux/net_tstamp.h>
+<<<<<<< HEAD
 #include <linux/phylink.h>
+=======
+#include <linux/phy.h>
+#include <linux/phy/phy.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/platform_device.h>
 #include <linux/regmap.h>
 
@@ -41,9 +46,17 @@ struct ocelot_port_tc {
 struct ocelot_port_private {
 	struct ocelot_port port;
 	struct net_device *dev;
+<<<<<<< HEAD
 	struct phylink *phylink;
 	struct phylink_config phylink_config;
 	u8 chip_port;
+=======
+	struct phy_device *phy;
+	u8 chip_port;
+
+	struct phy *serdes;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct ocelot_port_tc tc;
 };
 
@@ -104,7 +117,11 @@ u32 ocelot_port_readl(struct ocelot_port *port, u32 reg);
 void ocelot_port_writel(struct ocelot_port *port, u32 val, u32 reg);
 
 int ocelot_probe_port(struct ocelot *ocelot, int port, struct regmap *target,
+<<<<<<< HEAD
 		      struct device_node *portnp);
+=======
+		      struct phy_device *phy);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void ocelot_release_port(struct ocelot_port *ocelot_port);
 int ocelot_devlink_init(struct ocelot *ocelot);
 void ocelot_devlink_teardown(struct ocelot *ocelot);

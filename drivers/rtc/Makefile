@@ -15,8 +15,11 @@ rtc-core-$(CONFIG_RTC_INTF_DEV)		+= dev.o
 rtc-core-$(CONFIG_RTC_INTF_PROC)	+= proc.o
 rtc-core-$(CONFIG_RTC_INTF_SYSFS)	+= sysfs.o
 
+<<<<<<< HEAD
 obj-$(CONFIG_RTC_LIB_KUNIT_TEST)	+= lib_test.o
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # Keep the list ordered.
 
 obj-$(CONFIG_RTC_DRV_88PM80X)	+= rtc-88pm80x.o

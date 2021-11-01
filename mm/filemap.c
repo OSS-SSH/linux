@@ -76,9 +76,14 @@
  *      ->swap_lock		(exclusive_swap_page, others)
  *        ->i_pages lock
  *
+<<<<<<< HEAD
  *  ->i_rwsem
  *    ->invalidate_lock		(acquired by fs in truncate path)
  *      ->i_mmap_rwsem		(truncate->unmap_mapping_range)
+=======
+ *  ->i_mutex
+ *    ->i_mmap_rwsem		(truncate->unmap_mapping_range)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *  ->mmap_lock
  *    ->i_mmap_rwsem
@@ -86,10 +91,16 @@
  *        ->i_pages lock	(arch-dependent flush_dcache_mmap_lock)
  *
  *  ->mmap_lock
+<<<<<<< HEAD
  *    ->invalidate_lock		(filemap_fault)
  *      ->lock_page		(filemap_fault, access_process_vm)
  *
  *  ->i_rwsem			(generic_perform_write)
+=======
+ *    ->lock_page		(access_process_vm)
+ *
+ *  ->i_mutex			(generic_perform_write)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *    ->mmap_lock		(fault_in_pages_readable->do_page_fault)
  *
  *  bdi->wb.list_lock
@@ -260,11 +271,20 @@ static void page_cache_free_page(struct address_space *mapping,
 void delete_from_page_cache(struct page *page)
 {
 	struct address_space *mapping = page_mapping(page);
+<<<<<<< HEAD
 
 	BUG_ON(!PageLocked(page));
 	xa_lock_irq(&mapping->i_pages);
 	__delete_from_page_cache(page, NULL);
 	xa_unlock_irq(&mapping->i_pages);
+=======
+	unsigned long flags;
+
+	BUG_ON(!PageLocked(page));
+	xa_lock_irqsave(&mapping->i_pages, flags);
+	__delete_from_page_cache(page, NULL);
+	xa_unlock_irqrestore(&mapping->i_pages, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	page_cache_free_page(mapping, page);
 }
@@ -336,18 +356,30 @@ void delete_from_page_cache_batch(struct address_space *mapping,
 				  struct pagevec *pvec)
 {
 	int i;
+<<<<<<< HEAD
+=======
+	unsigned long flags;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!pagevec_count(pvec))
 		return;
 
+<<<<<<< HEAD
 	xa_lock_irq(&mapping->i_pages);
+=======
+	xa_lock_irqsave(&mapping->i_pages, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < pagevec_count(pvec); i++) {
 		trace_mm_filemap_delete_from_page_cache(pvec->pages[i]);
 
 		unaccount_page_cache_page(mapping, pvec->pages[i]);
 	}
 	page_cache_delete_batch(mapping, pvec);
+<<<<<<< HEAD
 	xa_unlock_irq(&mapping->i_pages);
+=======
+	xa_unlock_irqrestore(&mapping->i_pages, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < pagevec_count(pvec); i++)
 		page_cache_free_page(mapping, pvec->pages[i]);
@@ -378,6 +410,7 @@ static int filemap_check_and_keep_errors(struct address_space *mapping)
 }
 
 /**
+<<<<<<< HEAD
  * filemap_fdatawrite_wbc - start writeback on mapping dirty pages in range
  * @mapping:	address space structure to write
  * @wbc:	the writeback_control controlling the writeout
@@ -404,6 +437,8 @@ int filemap_fdatawrite_wbc(struct address_space *mapping,
 EXPORT_SYMBOL(filemap_fdatawrite_wbc);
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * __filemap_fdatawrite_range - start writeback on mapping dirty pages in range
  * @mapping:	address space structure to write
  * @start:	offset in bytes where the range starts
@@ -423,6 +458,10 @@ EXPORT_SYMBOL(filemap_fdatawrite_wbc);
 int __filemap_fdatawrite_range(struct address_space *mapping, loff_t start,
 				loff_t end, int sync_mode)
 {
+<<<<<<< HEAD
+=======
+	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct writeback_control wbc = {
 		.sync_mode = sync_mode,
 		.nr_to_write = LONG_MAX,
@@ -430,7 +469,18 @@ int __filemap_fdatawrite_range(struct address_space *mapping, loff_t start,
 		.range_end = end,
 	};
 
+<<<<<<< HEAD
 	return filemap_fdatawrite_wbc(mapping, &wbc);
+=======
+	if (!mapping_can_writeback(mapping) ||
+	    !mapping_tagged(mapping, PAGECACHE_TAG_DIRTY))
+		return 0;
+
+	wbc_attach_fdatawrite_inode(&wbc, mapping->host);
+	ret = do_writepages(mapping, &wbc);
+	wbc_detach_inode(&wbc);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int __filemap_fdatawrite(struct address_space *mapping,
@@ -839,6 +889,10 @@ void replace_page_cache_page(struct page *old, struct page *new)
 	void (*freepage)(struct page *) = mapping->a_ops->freepage;
 	pgoff_t offset = old->index;
 	XA_STATE(xas, &mapping->i_pages, offset);
+<<<<<<< HEAD
+=======
+	unsigned long flags;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	VM_BUG_ON_PAGE(!PageLocked(old), old);
 	VM_BUG_ON_PAGE(!PageLocked(new), new);
@@ -850,7 +904,11 @@ void replace_page_cache_page(struct page *old, struct page *new)
 
 	mem_cgroup_migrate(old, new);
 
+<<<<<<< HEAD
 	xas_lock_irq(&xas);
+=======
+	xas_lock_irqsave(&xas, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xas_store(&xas, new);
 
 	old->mapping = NULL;
@@ -863,7 +921,11 @@ void replace_page_cache_page(struct page *old, struct page *new)
 		__dec_lruvec_page_state(old, NR_SHMEM);
 	if (PageSwapBacked(new))
 		__inc_lruvec_page_state(new, NR_SHMEM);
+<<<<<<< HEAD
 	xas_unlock_irq(&xas);
+=======
+	xas_unlock_irqrestore(&xas, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (freepage)
 		freepage(old);
 	put_page(old);
@@ -1025,6 +1087,7 @@ EXPORT_SYMBOL(__page_cache_alloc);
 #endif
 
 /*
+<<<<<<< HEAD
  * filemap_invalidate_lock_two - lock invalidate_lock for two mappings
  *
  * Lock exclusively invalidate_lock of any passed mapping that is not NULL.
@@ -1063,6 +1126,8 @@ void filemap_invalidate_unlock_two(struct address_space *mapping1,
 EXPORT_SYMBOL(filemap_invalidate_unlock_two);
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * In order to wait for pages to become available there must be
  * waitqueues associated with pages. By using a hash table of
  * waitqueues where the bucket discipline is to maintain all
@@ -2423,6 +2488,7 @@ static int filemap_update_page(struct kiocb *iocb,
 {
 	int error;
 
+<<<<<<< HEAD
 	if (iocb->ki_flags & IOCB_NOWAIT) {
 		if (!filemap_invalidate_trylock_shared(mapping))
 			return -EAGAIN;
@@ -2436,17 +2502,31 @@ static int filemap_update_page(struct kiocb *iocb,
 			goto unlock_mapping;
 		if (!(iocb->ki_flags & IOCB_WAITQ)) {
 			filemap_invalidate_unlock_shared(mapping);
+=======
+	if (!trylock_page(page)) {
+		if (iocb->ki_flags & (IOCB_NOWAIT | IOCB_NOIO))
+			return -EAGAIN;
+		if (!(iocb->ki_flags & IOCB_WAITQ)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			put_and_wait_on_page_locked(page, TASK_KILLABLE);
 			return AOP_TRUNCATED_PAGE;
 		}
 		error = __lock_page_async(page, iocb->ki_waitq);
 		if (error)
+<<<<<<< HEAD
 			goto unlock_mapping;
 	}
 
 	error = AOP_TRUNCATED_PAGE;
 	if (!page->mapping)
 		goto unlock;
+=======
+			return error;
+	}
+
+	if (!page->mapping)
+		goto truncated;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	error = 0;
 	if (filemap_range_uptodate(mapping, iocb->ki_pos, iter, page))
@@ -2457,6 +2537,7 @@ static int filemap_update_page(struct kiocb *iocb,
 		goto unlock;
 
 	error = filemap_read_page(iocb->ki_filp, mapping, page);
+<<<<<<< HEAD
 	goto unlock_mapping;
 unlock:
 	unlock_page(page);
@@ -2465,6 +2546,18 @@ unlock_mapping:
 	if (error == AOP_TRUNCATED_PAGE)
 		put_page(page);
 	return error;
+=======
+	if (error == AOP_TRUNCATED_PAGE)
+		put_page(page);
+	return error;
+truncated:
+	unlock_page(page);
+	put_page(page);
+	return AOP_TRUNCATED_PAGE;
+unlock:
+	unlock_page(page);
+	return error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int filemap_create_page(struct file *file,
@@ -2478,6 +2571,7 @@ static int filemap_create_page(struct file *file,
 	if (!page)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	/*
 	 * Protect against truncate / hole punch. Grabbing invalidate_lock here
 	 * assures we cannot instantiate and bring uptodate new pagecache pages
@@ -2491,6 +2585,8 @@ static int filemap_create_page(struct file *file,
 	 * simple.
 	 */
 	filemap_invalidate_lock_shared(mapping);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	error = add_to_page_cache_lru(page, mapping, index,
 			mapping_gfp_constraint(mapping, GFP_KERNEL));
 	if (error == -EEXIST)
@@ -2502,11 +2598,17 @@ static int filemap_create_page(struct file *file,
 	if (error)
 		goto error;
 
+<<<<<<< HEAD
 	filemap_invalidate_unlock_shared(mapping);
 	pagevec_add(pvec, page);
 	return 0;
 error:
 	filemap_invalidate_unlock_shared(mapping);
+=======
+	pagevec_add(pvec, page);
+	return 0;
+error:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	put_page(page);
 	return error;
 }
@@ -3045,7 +3147,10 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
 	pgoff_t max_off;
 	struct page *page;
 	vm_fault_t ret = 0;
+<<<<<<< HEAD
 	bool mapping_locked = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	max_off = DIV_ROUND_UP(i_size_read(inode), PAGE_SIZE);
 	if (unlikely(offset >= max_off))
@@ -3055,6 +3160,7 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
 	 * Do we have something in the page cache already?
 	 */
 	page = find_get_page(mapping, offset);
+<<<<<<< HEAD
 	if (likely(page)) {
 		/*
 		 * We found the page, so try async readahead before waiting for
@@ -3067,12 +3173,22 @@ vm_fault_t filemap_fault(struct vm_fault *vmf)
 			mapping_locked = true;
 		}
 	} else {
+=======
+	if (likely(page) && !(vmf->flags & FAULT_FLAG_TRIED)) {
+		/*
+		 * We found the page, so try async readahead before
+		 * waiting for the lock.
+		 */
+		fpin = do_async_mmap_readahead(vmf, page);
+	} else if (!page) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* No page in the page cache at all */
 		count_vm_event(PGMAJFAULT);
 		count_memcg_event_mm(vmf->vma->vm_mm, PGMAJFAULT);
 		ret = VM_FAULT_MAJOR;
 		fpin = do_sync_mmap_readahead(vmf);
 retry_find:
+<<<<<<< HEAD
 		/*
 		 * See comment in filemap_create_page() why we need
 		 * invalidate_lock
@@ -3081,13 +3197,18 @@ retry_find:
 			filemap_invalidate_lock_shared(mapping);
 			mapping_locked = true;
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		page = pagecache_get_page(mapping, offset,
 					  FGP_CREAT|FGP_FOR_MMAP,
 					  vmf->gfp_mask);
 		if (!page) {
 			if (fpin)
 				goto out_retry;
+<<<<<<< HEAD
 			filemap_invalidate_unlock_shared(mapping);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return VM_FAULT_OOM;
 		}
 	}
@@ -3107,6 +3228,7 @@ retry_find:
 	 * We have a locked page in the page cache, now we need to check
 	 * that it's up-to-date. If not, it is going to be due to an error.
 	 */
+<<<<<<< HEAD
 	if (unlikely(!PageUptodate(page))) {
 		/*
 		 * The page was in cache and uptodate and now it is not.
@@ -3121,6 +3243,10 @@ retry_find:
 		}
 		goto page_not_uptodate;
 	}
+=======
+	if (unlikely(!PageUptodate(page)))
+		goto page_not_uptodate;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * We've made it this far and we had to drop our mmap_lock, now is the
@@ -3131,8 +3257,11 @@ retry_find:
 		unlock_page(page);
 		goto out_retry;
 	}
+<<<<<<< HEAD
 	if (mapping_locked)
 		filemap_invalidate_unlock_shared(mapping);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Found the page and have a reference on it.
@@ -3163,7 +3292,10 @@ page_not_uptodate:
 
 	if (!error || error == AOP_TRUNCATED_PAGE)
 		goto retry_find;
+<<<<<<< HEAD
 	filemap_invalidate_unlock_shared(mapping);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return VM_FAULT_SIGBUS;
 
@@ -3175,8 +3307,11 @@ out_retry:
 	 */
 	if (page)
 		put_page(page);
+<<<<<<< HEAD
 	if (mapping_locked)
 		filemap_invalidate_unlock_shared(mapping);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (fpin)
 		fput(fpin);
 	return ret | VM_FAULT_RETRY;
@@ -3547,8 +3682,11 @@ out:
  *
  * If the page does not get brought uptodate, return -EIO.
  *
+<<<<<<< HEAD
  * The function expects mapping->invalidate_lock to be already held.
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Return: up to date page on success, ERR_PTR() on failure.
  */
 struct page *read_cache_page(struct address_space *mapping,
@@ -3572,8 +3710,11 @@ EXPORT_SYMBOL(read_cache_page);
  *
  * If the page does not get brought uptodate, return -EIO.
  *
+<<<<<<< HEAD
  * The function expects mapping->invalidate_lock to be already held.
  *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Return: up to date page on success, ERR_PTR() on failure.
  */
 struct page *read_cache_page_gfp(struct address_space *mapping,
@@ -3818,12 +3959,20 @@ EXPORT_SYMBOL(generic_perform_write);
  * modification times and calls proper subroutines depending on whether we
  * do direct IO or a standard buffered write.
  *
+<<<<<<< HEAD
  * It expects i_rwsem to be grabbed unless we work on a block device or similar
+=======
+ * It expects i_mutex to be grabbed unless we work on a block device or similar
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * object which does not need locking at all.
  *
  * This function does *not* take care of syncing data in case of O_SYNC write.
  * A caller has to handle it. This is mainly due to the fact that we want to
+<<<<<<< HEAD
  * avoid syncing under i_rwsem.
+=======
+ * avoid syncing under i_mutex.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Return:
  * * number of bytes written, even for truncated writes
@@ -3911,7 +4060,11 @@ EXPORT_SYMBOL(__generic_file_write_iter);
  *
  * This is a wrapper around __generic_file_write_iter() to be used by most
  * filesystems. It takes care of syncing the file in case of O_SYNC file
+<<<<<<< HEAD
  * and acquires i_rwsem as needed.
+=======
+ * and acquires i_mutex as needed.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Return:
  * * negative error code if no data has been written at all of
  *   vfs_fsync_range() failed for a synchronous write

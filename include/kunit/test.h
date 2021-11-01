@@ -613,7 +613,11 @@ void kunit_remove_resource(struct kunit *test, struct kunit_resource *res);
  * and is automatically cleaned up after the test case concludes. See &struct
  * kunit_resource for more information.
  */
+<<<<<<< HEAD
 void *kunit_kmalloc_array(struct kunit *test, size_t n, size_t size, gfp_t gfp);
+=======
+void *kunit_kmalloc_array(struct kunit *test, size_t n, size_t size, gfp_t flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * kunit_kmalloc() - Like kmalloc() except the allocation is *test managed*.
@@ -657,9 +661,15 @@ static inline void *kunit_kzalloc(struct kunit *test, size_t size, gfp_t gfp)
  *
  * See kcalloc() and kunit_kmalloc_array() for more information.
  */
+<<<<<<< HEAD
 static inline void *kunit_kcalloc(struct kunit *test, size_t n, size_t size, gfp_t gfp)
 {
 	return kunit_kmalloc_array(test, n, size, gfp | __GFP_ZERO);
+=======
+static inline void *kunit_kcalloc(struct kunit *test, size_t n, size_t size, gfp_t flags)
+{
+	return kunit_kmalloc_array(test, n, size, flags | __GFP_ZERO);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void kunit_cleanup(struct kunit *test);

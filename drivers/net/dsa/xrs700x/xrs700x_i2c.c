@@ -109,6 +109,7 @@ static int xrs700x_i2c_remove(struct i2c_client *i2c)
 {
 	struct xrs700x *priv = i2c_get_clientdata(i2c);
 
+<<<<<<< HEAD
 	if (!priv)
 		return 0;
 
@@ -131,6 +132,13 @@ static void xrs700x_i2c_shutdown(struct i2c_client *i2c)
 	i2c_set_clientdata(i2c, NULL);
 }
 
+=======
+	xrs700x_switch_remove(priv);
+
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct i2c_device_id xrs700x_i2c_id[] = {
 	{ "xrs700x-switch", 0 },
 	{},
@@ -154,7 +162,10 @@ static struct i2c_driver xrs700x_i2c_driver = {
 	},
 	.probe	= xrs700x_i2c_probe,
 	.remove	= xrs700x_i2c_remove,
+<<<<<<< HEAD
 	.shutdown = xrs700x_i2c_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.id_table = xrs700x_i2c_id,
 };
 

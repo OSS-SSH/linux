@@ -37,10 +37,17 @@
 #include <linux/smp.h>
 #include <linux/console.h>
 #include <linux/kmsg_dump.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 
 #include <asm/emulated_ops.h>
 #include <linux/uaccess.h>
+=======
+
+#include <asm/emulated_ops.h>
+#include <linux/uaccess.h>
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/interrupt.h>
 #include <asm/io.h>
 #include <asm/machdep.h>
@@ -171,6 +178,10 @@ extern void panic_flush_kmsg_start(void)
 
 extern void panic_flush_kmsg_end(void)
 {
+<<<<<<< HEAD
+=======
+	printk_safe_flush_on_panic();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kmsg_dump(KMSG_DUMP_PANIC);
 	bust_spinlocks(0);
 	debug_locks_off();
@@ -340,6 +351,7 @@ static bool exception_common(int signr, struct pt_regs *regs, int code,
 		return false;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * Must not enable interrupts even for user-mode exception, because
 	 * this can be called from machine check, which may be a NMI or IRQ
@@ -351,6 +363,13 @@ static bool exception_common(int signr, struct pt_regs *regs, int code,
 
 	show_signal_msg(signr, regs, code, addr);
 
+=======
+	show_signal_msg(signr, regs, code, addr);
+
+	if (arch_irqs_disabled())
+		interrupt_cond_local_irq_enable(regs);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	current->thread.trap_nr = code;
 
 	return true;
@@ -433,7 +452,11 @@ void hv_nmi_check_nonrecoverable(struct pt_regs *regs)
 	return;
 
 nonrecoverable:
+<<<<<<< HEAD
 	regs_set_unrecoverable(regs);
+=======
+	regs_set_return_msr(regs, regs->msr & ~MSR_RI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 }
 DEFINE_INTERRUPT_HANDLER_NMI(system_reset_exception)
@@ -503,7 +526,11 @@ out:
 		die("Unrecoverable nested System Reset", regs, SIGABRT);
 #endif
 	/* Must die if the interrupt is not recoverable */
+<<<<<<< HEAD
 	if (regs_is_unrecoverable(regs)) {
+=======
+	if (!(regs->msr & MSR_RI)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* For the reason explained in die_mce, nmi_exit before die */
 		nmi_exit();
 		die("Unrecoverable System Reset", regs, SIGABRT);
@@ -555,7 +582,11 @@ static inline int check_io_access(struct pt_regs *regs)
 			printk(KERN_DEBUG "%s bad port %lx at %p\n",
 			       (*nip & 0x100)? "OUT to": "IN from",
 			       regs->gpr[rb] - _IO_BASE, nip);
+<<<<<<< HEAD
 			regs_set_recoverable(regs);
+=======
+			regs_set_return_msr(regs, regs->msr | MSR_RI);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			regs_set_return_ip(regs, extable_fixup(entry));
 			return 1;
 		}
@@ -567,7 +598,11 @@ static inline int check_io_access(struct pt_regs *regs)
 #ifdef CONFIG_PPC_ADV_DEBUG_REGS
 /* On 4xx, the reason for the machine check or program exception
    is in the ESR. */
+<<<<<<< HEAD
 #define get_reason(regs)	((regs)->esr)
+=======
+#define get_reason(regs)	((regs)->dsisr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define REASON_FP		ESR_FP
 #define REASON_ILLEGAL		(ESR_PIL | ESR_PUO)
 #define REASON_PRIVILEGED	ESR_PPR
@@ -796,14 +831,22 @@ void die_mce(const char *str, struct pt_regs *regs, long err)
 	 * do_exit() checks for in_interrupt() and panics in that case, so
 	 * exit the irq/nmi before calling die.
 	 */
+<<<<<<< HEAD
 	if (in_nmi())
 		nmi_exit();
 	else
 		irq_exit();
+=======
+	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64))
+		irq_exit();
+	else
+		nmi_exit();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	die(str, regs, err);
 }
 
 /*
+<<<<<<< HEAD
  * BOOK3S_64 does not usually call this handler as a non-maskable interrupt
  * (it uses its own early real-mode handler to handle the MCE proper
  * and then raises irq_work to call this handler when interrupts are
@@ -812,6 +855,18 @@ void die_mce(const char *str, struct pt_regs *regs, long err)
  * message out.
  */
 static void __machine_check_exception(struct pt_regs *regs)
+=======
+ * BOOK3S_64 does not call this handler as a non-maskable interrupt
+ * (it uses its own early real-mode handler to handle the MCE proper
+ * and then raises irq_work to call this handler when interrupts are
+ * enabled).
+ */
+#ifdef CONFIG_PPC_BOOK3S_64
+DEFINE_INTERRUPT_HANDLER_ASYNC(machine_check_exception)
+#else
+DEFINE_INTERRUPT_HANDLER_NMI(machine_check_exception)
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int recover = 0;
 
@@ -843,6 +898,7 @@ static void __machine_check_exception(struct pt_regs *regs)
 
 bail:
 	/* Must die if the interrupt is not recoverable */
+<<<<<<< HEAD
 	if (regs_is_unrecoverable(regs))
 		die_mce("Unrecoverable Machine check", regs, SIGBUS);
 }
@@ -858,6 +914,16 @@ DEFINE_INTERRUPT_HANDLER_NMI(machine_check_exception)
 	__machine_check_exception(regs);
 
 	return 0;
+=======
+	if (!(regs->msr & MSR_RI))
+		die_mce("Unrecoverable Machine check", regs, SIGBUS);
+
+#ifdef CONFIG_PPC_BOOK3S_64
+	return;
+#else
+	return 0;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 DEFINE_INTERRUPT_HANDLER(SMIException) /* async? */
@@ -1114,7 +1180,11 @@ DEFINE_INTERRUPT_HANDLER(RunModeException)
 	_exception(SIGTRAP, regs, TRAP_UNK, 0);
 }
 
+<<<<<<< HEAD
 static void __single_step_exception(struct pt_regs *regs)
+=======
+DEFINE_INTERRUPT_HANDLER(single_step_exception)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	clear_single_step(regs);
 	clear_br_trace(regs);
@@ -1131,11 +1201,14 @@ static void __single_step_exception(struct pt_regs *regs)
 	_exception(SIGTRAP, regs, TRAP_TRACE, regs->nip);
 }
 
+<<<<<<< HEAD
 DEFINE_INTERRUPT_HANDLER(single_step_exception)
 {
 	__single_step_exception(regs);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * After we have successfully emulated an instruction, we have to
  * check if the instruction was being single-stepped, and if so,
@@ -1145,7 +1218,11 @@ DEFINE_INTERRUPT_HANDLER(single_step_exception)
 static void emulate_single_step(struct pt_regs *regs)
 {
 	if (single_stepping(regs))
+<<<<<<< HEAD
 		__single_step_exception(regs);
+=======
+		single_step_exception(regs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int __parse_fpscr(unsigned long fpscr)
@@ -1492,6 +1569,7 @@ static void do_program_check(struct pt_regs *regs)
 
 		if (!(regs->msr & MSR_PR) &&  /* not user-mode */
 		    report_bug(bugaddr, regs) == BUG_TRAP_TYPE_WARN) {
+<<<<<<< HEAD
 			const struct exception_table_entry *entry;
 
 			entry = search_exception_tables(bugaddr);
@@ -1499,6 +1577,10 @@ static void do_program_check(struct pt_regs *regs)
 				regs_set_return_ip(regs, extable_fixup(entry) + regs->nip - bugaddr);
 				return;
 			}
+=======
+			regs_add_return_ip(regs, 4);
+			return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		_exception(SIGTRAP, regs, TRAP_BRKPT, regs->nip);
 		return;
@@ -2230,6 +2312,14 @@ DEFINE_INTERRUPT_HANDLER(kernel_bad_stack)
 	die("Bad kernel stack pointer", regs, SIGABRT);
 }
 
+<<<<<<< HEAD
+=======
+void __init trap_init(void)
+{
+}
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_PPC_EMULATED_STATS
 
 #define WARN_EMULATED_SETUP(type)	.type = { .name = #type }
@@ -2282,7 +2372,11 @@ static int __init ppc_warn_emulated_init(void)
 	struct ppc_emulated_entry *entries = (void *)&ppc_emulated;
 
 	dir = debugfs_create_dir("emulated_instructions",
+<<<<<<< HEAD
 				 arch_debugfs_dir);
+=======
+				 powerpc_debugfs_root);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	debugfs_create_u32("do_warn", 0644, dir, &ppc_warn_emulated);
 

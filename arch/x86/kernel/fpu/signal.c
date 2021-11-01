@@ -379,6 +379,7 @@ static int __fpu_restore_sig(void __user *buf, void __user *buf_fx,
 				     sizeof(fpu->state.fxsave)))
 			return -EFAULT;
 
+<<<<<<< HEAD
 		if (IS_ENABLED(CONFIG_X86_64)) {
 			/* Reject invalid MXCSR values. */
 			if (fpu->state.fxsave.mxcsr & ~mxcsr_feature_mask)
@@ -387,6 +388,11 @@ static int __fpu_restore_sig(void __user *buf, void __user *buf_fx,
 			/* Mask invalid bits out for historical reasons (broken hardware). */
 			fpu->state.fxsave.mxcsr &= mxcsr_feature_mask;
 		}
+=======
+		/* Reject invalid MXCSR values. */
+		if (fpu->state.fxsave.mxcsr & ~mxcsr_feature_mask)
+			return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* Enforce XFEATURE_MASK_FPSSE when XSAVE is enabled */
 		if (use_xsave())

@@ -168,13 +168,22 @@ static const struct parisc_device_id zalon_tbl[] __initconst = {
 
 MODULE_DEVICE_TABLE(parisc, zalon_tbl);
 
+<<<<<<< HEAD
 static void __exit zalon_remove(struct parisc_device *dev)
+=======
+static int __exit zalon_remove(struct parisc_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct Scsi_Host *host = dev_get_drvdata(&dev->dev);
 
 	scsi_remove_host(host);
 	ncr53c8xx_release(host);
 	free_irq(dev->irq, host);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct parisc_driver zalon_driver __refdata = {

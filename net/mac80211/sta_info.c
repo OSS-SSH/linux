@@ -543,7 +543,11 @@ static int sta_info_insert_check(struct sta_info *sta)
 		return -ENETDOWN;
 
 	if (WARN_ON(ether_addr_equal(sta->sta.addr, sdata->vif.addr) ||
+<<<<<<< HEAD
 		    !is_valid_ether_addr(sta->sta.addr)))
+=======
+		    is_multicast_ether_addr(sta->sta.addr)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	/* The RCU read lock is required by rhashtable due to

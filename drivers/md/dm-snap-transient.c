@@ -95,10 +95,13 @@ static unsigned transient_status(struct dm_exception_store *store,
 		break;
 	case STATUSTYPE_TABLE:
 		DMEMIT(" N %llu", (unsigned long long)store->chunk_size);
+<<<<<<< HEAD
 		break;
 	case STATUSTYPE_IMA:
 		*result = '\0';
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return sz;

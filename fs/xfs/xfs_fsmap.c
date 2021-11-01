@@ -61,7 +61,11 @@ xfs_fsmap_to_internal(
 static int
 xfs_fsmap_owner_to_rmap(
 	struct xfs_rmap_irec	*dest,
+<<<<<<< HEAD
 	const struct xfs_fsmap	*src)
+=======
+	struct xfs_fsmap	*src)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (!(src->fmr_flags & FMR_OF_SPECIAL_OWNER)) {
 		dest->rm_owner = src->fmr_owner;
@@ -111,8 +115,13 @@ xfs_fsmap_owner_to_rmap(
 /* Convert an rmapbt owner into an fsmap owner. */
 static int
 xfs_fsmap_owner_from_rmap(
+<<<<<<< HEAD
 	struct xfs_fsmap		*dest,
 	const struct xfs_rmap_irec	*src)
+=======
+	struct xfs_fsmap	*dest,
+	struct xfs_rmap_irec	*src)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	dest->fmr_flags = 0;
 	if (!XFS_RMAP_NON_INODE_OWNER(src->rm_owner)) {
@@ -171,7 +180,11 @@ struct xfs_getfsmap_info {
 struct xfs_getfsmap_dev {
 	u32			dev;
 	int			(*fn)(struct xfs_trans *tp,
+<<<<<<< HEAD
 				      const struct xfs_fsmap *keys,
+=======
+				      struct xfs_fsmap *keys,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				      struct xfs_getfsmap_info *info);
 };
 
@@ -192,7 +205,11 @@ STATIC int
 xfs_getfsmap_is_shared(
 	struct xfs_trans		*tp,
 	struct xfs_getfsmap_info	*info,
+<<<<<<< HEAD
 	const struct xfs_rmap_irec	*rec,
+=======
+	struct xfs_rmap_irec		*rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool				*stat)
 {
 	struct xfs_mount		*mp = tp->t_mountp;
@@ -202,7 +219,11 @@ xfs_getfsmap_is_shared(
 	int				error;
 
 	*stat = false;
+<<<<<<< HEAD
 	if (!xfs_has_reflink(mp))
+=======
+	if (!xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 	/* rt files will have no perag structure */
 	if (!info->pag)
@@ -245,7 +266,11 @@ STATIC int
 xfs_getfsmap_helper(
 	struct xfs_trans		*tp,
 	struct xfs_getfsmap_info	*info,
+<<<<<<< HEAD
 	const struct xfs_rmap_irec	*rec,
+=======
+	struct xfs_rmap_irec		*rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xfs_daddr_t			rec_daddr)
 {
 	struct xfs_fsmap		fmr;
@@ -347,7 +372,11 @@ out:
 STATIC int
 xfs_getfsmap_datadev_helper(
 	struct xfs_btree_cur		*cur,
+<<<<<<< HEAD
 	const struct xfs_rmap_irec	*rec,
+=======
+	struct xfs_rmap_irec		*rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void				*priv)
 {
 	struct xfs_mount		*mp = cur->bc_mp;
@@ -365,7 +394,11 @@ xfs_getfsmap_datadev_helper(
 STATIC int
 xfs_getfsmap_datadev_bnobt_helper(
 	struct xfs_btree_cur		*cur,
+<<<<<<< HEAD
 	const struct xfs_alloc_rec_incore *rec,
+=======
+	struct xfs_alloc_rec_incore	*rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void				*priv)
 {
 	struct xfs_mount		*mp = cur->bc_mp;
@@ -389,7 +422,11 @@ xfs_getfsmap_datadev_bnobt_helper(
 static void
 xfs_getfsmap_set_irec_flags(
 	struct xfs_rmap_irec	*irec,
+<<<<<<< HEAD
 	const struct xfs_fsmap	*fmr)
+=======
+	struct xfs_fsmap	*fmr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	irec->rm_flags = 0;
 	if (fmr->fmr_flags & FMR_OF_ATTR_FORK)
@@ -404,7 +441,11 @@ xfs_getfsmap_set_irec_flags(
 STATIC int
 xfs_getfsmap_logdev(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
 	const struct xfs_fsmap		*keys,
+=======
+	struct xfs_fsmap		*keys,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_getfsmap_info	*info)
 {
 	struct xfs_mount		*mp = tp->t_mountp;
@@ -451,7 +492,11 @@ xfs_getfsmap_logdev(
 STATIC int
 xfs_getfsmap_rtdev_rtbitmap_helper(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
 	const struct xfs_rtalloc_rec	*rec,
+=======
+	struct xfs_rtalloc_rec		*rec,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void				*priv)
 {
 	struct xfs_mount		*mp = tp->t_mountp;
@@ -473,7 +518,11 @@ xfs_getfsmap_rtdev_rtbitmap_helper(
 STATIC int
 __xfs_getfsmap_rtdev(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
 	const struct xfs_fsmap		*keys,
+=======
+	struct xfs_fsmap		*keys,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int				(*query_fn)(struct xfs_trans *,
 						    struct xfs_getfsmap_info *),
 	struct xfs_getfsmap_info	*info)
@@ -481,14 +530,25 @@ __xfs_getfsmap_rtdev(
 	struct xfs_mount		*mp = tp->t_mountp;
 	xfs_fsblock_t			start_fsb;
 	xfs_fsblock_t			end_fsb;
+<<<<<<< HEAD
 	uint64_t			eofs;
+=======
+	xfs_daddr_t			eofs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int				error = 0;
 
 	eofs = XFS_FSB_TO_BB(mp, mp->m_sb.sb_rblocks);
 	if (keys[0].fmr_physical >= eofs)
 		return 0;
+<<<<<<< HEAD
 	start_fsb = XFS_BB_TO_FSBT(mp, keys[0].fmr_physical);
 	end_fsb = XFS_BB_TO_FSB(mp, min(eofs - 1, keys[1].fmr_physical));
+=======
+	if (keys[1].fmr_physical >= eofs)
+		keys[1].fmr_physical = eofs - 1;
+	start_fsb = XFS_BB_TO_FSBT(mp, keys[0].fmr_physical);
+	end_fsb = XFS_BB_TO_FSB(mp, keys[1].fmr_physical);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Set up search keys */
 	info->low.rm_startblock = start_fsb;
@@ -521,6 +581,7 @@ xfs_getfsmap_rtdev_rtbitmap_query(
 {
 	struct xfs_rtalloc_rec		alow = { 0 };
 	struct xfs_rtalloc_rec		ahigh = { 0 };
+<<<<<<< HEAD
 	struct xfs_mount		*mp = tp->t_mountp;
 	int				error;
 
@@ -534,12 +595,23 @@ xfs_getfsmap_rtdev_rtbitmap_query(
 	ahigh.ar_startext = info->high.rm_startblock;
 	do_div(alow.ar_startext, mp->m_sb.sb_rextsize);
 	if (do_div(ahigh.ar_startext, mp->m_sb.sb_rextsize))
+=======
+	int				error;
+
+	xfs_ilock(tp->t_mountp->m_rbmip, XFS_ILOCK_SHARED);
+
+	alow.ar_startext = info->low.rm_startblock;
+	ahigh.ar_startext = info->high.rm_startblock;
+	do_div(alow.ar_startext, tp->t_mountp->m_sb.sb_rextsize);
+	if (do_div(ahigh.ar_startext, tp->t_mountp->m_sb.sb_rextsize))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ahigh.ar_startext++;
 	error = xfs_rtalloc_query_range(tp, &alow, &ahigh,
 			xfs_getfsmap_rtdev_rtbitmap_helper, info);
 	if (error)
 		goto err;
 
+<<<<<<< HEAD
 	/*
 	 * Report any gaps at the end of the rtbitmap by simulating a null
 	 * rmap starting at the block after the end of the query range.
@@ -547,11 +619,19 @@ xfs_getfsmap_rtdev_rtbitmap_query(
 	info->last = true;
 	ahigh.ar_startext = min(mp->m_sb.sb_rextents, ahigh.ar_startext);
 
+=======
+	/* Report any gaps at the end of the rtbitmap */
+	info->last = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	error = xfs_getfsmap_rtdev_rtbitmap_helper(tp, &ahigh, info);
 	if (error)
 		goto err;
 err:
+<<<<<<< HEAD
 	xfs_iunlock(mp->m_rbmip, XFS_ILOCK_SHARED);
+=======
+	xfs_iunlock(tp->t_mountp->m_rbmip, XFS_ILOCK_SHARED);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return error;
 }
 
@@ -559,7 +639,11 @@ err:
 STATIC int
 xfs_getfsmap_rtdev_rtbitmap(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
 	const struct xfs_fsmap		*keys,
+=======
+	struct xfs_fsmap		*keys,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_getfsmap_info	*info)
 {
 	info->missing_owner = XFS_FMR_OWN_UNKNOWN;
@@ -572,7 +656,11 @@ xfs_getfsmap_rtdev_rtbitmap(
 STATIC int
 __xfs_getfsmap_datadev(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
 	const struct xfs_fsmap		*keys,
+=======
+	struct xfs_fsmap		*keys,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_getfsmap_info	*info,
 	int				(*query_fn)(struct xfs_trans *,
 						    struct xfs_getfsmap_info *,
@@ -587,14 +675,25 @@ __xfs_getfsmap_datadev(
 	xfs_fsblock_t			end_fsb;
 	xfs_agnumber_t			start_ag;
 	xfs_agnumber_t			end_ag;
+<<<<<<< HEAD
 	uint64_t			eofs;
+=======
+	xfs_daddr_t			eofs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int				error = 0;
 
 	eofs = XFS_FSB_TO_BB(mp, mp->m_sb.sb_dblocks);
 	if (keys[0].fmr_physical >= eofs)
 		return 0;
+<<<<<<< HEAD
 	start_fsb = XFS_DADDR_TO_FSB(mp, keys[0].fmr_physical);
 	end_fsb = XFS_DADDR_TO_FSB(mp, min(eofs - 1, keys[1].fmr_physical));
+=======
+	if (keys[1].fmr_physical >= eofs)
+		keys[1].fmr_physical = eofs - 1;
+	start_fsb = XFS_DADDR_TO_FSB(mp, keys[0].fmr_physical);
+	end_fsb = XFS_DADDR_TO_FSB(mp, keys[1].fmr_physical);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Convert the fsmap low/high keys to AG based keys.  Initialize
@@ -722,7 +821,11 @@ xfs_getfsmap_datadev_rmapbt_query(
 STATIC int
 xfs_getfsmap_datadev_rmapbt(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
 	const struct xfs_fsmap		*keys,
+=======
+	struct xfs_fsmap		*keys,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_getfsmap_info	*info)
 {
 	info->missing_owner = XFS_FMR_OWN_FREE;
@@ -757,7 +860,11 @@ xfs_getfsmap_datadev_bnobt_query(
 STATIC int
 xfs_getfsmap_datadev_bnobt(
 	struct xfs_trans		*tp,
+<<<<<<< HEAD
 	const struct xfs_fsmap		*keys,
+=======
+	struct xfs_fsmap		*keys,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct xfs_getfsmap_info	*info)
 {
 	struct xfs_alloc_rec_incore	akeys[2];
@@ -865,7 +972,11 @@ xfs_getfsmap(
 		return -EINVAL;
 
 	use_rmap = capable(CAP_SYS_ADMIN) &&
+<<<<<<< HEAD
 		   xfs_has_rmapbt(mp);
+=======
+		   xfs_sb_version_hasrmapbt(&mp->m_sb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	head->fmh_entries = 0;
 
 	/* Set up our device handlers. */

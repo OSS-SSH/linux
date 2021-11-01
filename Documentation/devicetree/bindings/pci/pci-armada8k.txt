@@ -1,7 +1,11 @@
 * Marvell Armada 7K/8K PCIe interface
 
 This PCIe host controller is based on the Synopsys DesignWare PCIe IP
+<<<<<<< HEAD
 and thus inherits all the common properties defined in snps,dw-pcie.yaml.
+=======
+and thus inherits all the common properties defined in designware-pcie.txt.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Required properties:
 - compatible: "marvell,armada8k-pcie"

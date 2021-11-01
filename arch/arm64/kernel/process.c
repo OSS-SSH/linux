@@ -6,6 +6,12 @@
  * Copyright (C) 1996-2000 Russell King - Converted to ARM.
  * Copyright (C) 2012 ARM Ltd.
  */
+<<<<<<< HEAD
+=======
+
+#include <stdarg.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/compat.h>
 #include <linux/efi.h>
 #include <linux/elf.h>
@@ -57,7 +63,11 @@
 
 #if defined(CONFIG_STACKPROTECTOR) && !defined(CONFIG_STACKPROTECTOR_PER_TASK)
 #include <linux/stackprotector.h>
+<<<<<<< HEAD
 unsigned long __stack_chk_guard __ro_after_init;
+=======
+unsigned long __stack_chk_guard __read_mostly;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 EXPORT_SYMBOL(__stack_chk_guard);
 #endif
 
@@ -160,7 +170,11 @@ static void print_pstate(struct pt_regs *regs)
 	u64 pstate = regs->pstate;
 
 	if (compat_user_mode(regs)) {
+<<<<<<< HEAD
 		printk("pstate: %08llx (%c%c%c%c %c %s %s %c%c%c %cDIT %cSSBS)\n",
+=======
+		printk("pstate: %08llx (%c%c%c%c %c %s %s %c%c%c)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pstate,
 			pstate & PSR_AA32_N_BIT ? 'N' : 'n',
 			pstate & PSR_AA32_Z_BIT ? 'Z' : 'z',
@@ -171,14 +185,22 @@ static void print_pstate(struct pt_regs *regs)
 			pstate & PSR_AA32_E_BIT ? "BE" : "LE",
 			pstate & PSR_AA32_A_BIT ? 'A' : 'a',
 			pstate & PSR_AA32_I_BIT ? 'I' : 'i',
+<<<<<<< HEAD
 			pstate & PSR_AA32_F_BIT ? 'F' : 'f',
 			pstate & PSR_AA32_DIT_BIT ? '+' : '-',
 			pstate & PSR_AA32_SSBS_BIT ? '+' : '-');
+=======
+			pstate & PSR_AA32_F_BIT ? 'F' : 'f');
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		const char *btype_str = btypes[(pstate & PSR_BTYPE_MASK) >>
 					       PSR_BTYPE_SHIFT];
 
+<<<<<<< HEAD
 		printk("pstate: %08llx (%c%c%c%c %c%c%c%c %cPAN %cUAO %cTCO %cDIT %cSSBS BTYPE=%s)\n",
+=======
+		printk("pstate: %08llx (%c%c%c%c %c%c%c%c %cPAN %cUAO %cTCO BTYPE=%s)\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pstate,
 			pstate & PSR_N_BIT ? 'N' : 'n',
 			pstate & PSR_Z_BIT ? 'Z' : 'z',
@@ -191,8 +213,11 @@ static void print_pstate(struct pt_regs *regs)
 			pstate & PSR_PAN_BIT ? '+' : '-',
 			pstate & PSR_UAO_BIT ? '+' : '-',
 			pstate & PSR_TCO_BIT ? '+' : '-',
+<<<<<<< HEAD
 			pstate & PSR_DIT_BIT ? '+' : '-',
 			pstate & PSR_SSBS_BIT ? '+' : '-',
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			btype_str);
 	}
 }
@@ -469,6 +494,7 @@ static void erratum_1418040_thread_switch(struct task_struct *prev,
 	write_sysreg(val, cntkctl_el1);
 }
 
+<<<<<<< HEAD
 /*
  * __switch_to() checks current->thread.sctlr_user as an optimisation. Therefore
  * this function must be called with preemption disabled and the update to
@@ -476,6 +502,18 @@ static void erratum_1418040_thread_switch(struct task_struct *prev,
  * __switch_to() does not see the variable update before the SCTLR_EL1 one.
  */
 void update_sctlr_el1(u64 sctlr)
+=======
+static void compat_thread_switch(struct task_struct *next)
+{
+	if (!is_compat_thread(task_thread_info(next)))
+		return;
+
+	if (static_branch_unlikely(&arm64_mismatched_32bit_el0))
+		set_tsk_thread_flag(next, TIF_NOTIFY_RESUME);
+}
+
+static void update_sctlr_el1(u64 sctlr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	/*
 	 * EnIA must not be cleared while in the kernel as this is necessary for
@@ -487,6 +525,22 @@ void update_sctlr_el1(u64 sctlr)
 	isb();
 }
 
+<<<<<<< HEAD
+=======
+void set_task_sctlr_el1(u64 sctlr)
+{
+	/*
+	 * __switch_to() checks current->thread.sctlr as an
+	 * optimisation. Disable preemption so that it does not see
+	 * the variable update before the SCTLR_EL1 one.
+	 */
+	preempt_disable();
+	current->thread.sctlr_user = sctlr;
+	update_sctlr_el1(sctlr);
+	preempt_enable();
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Thread switching.
  */
@@ -503,6 +557,10 @@ __notrace_funcgraph struct task_struct *__switch_to(struct task_struct *prev,
 	ssbs_thread_switch(next);
 	erratum_1418040_thread_switch(prev, next);
 	ptrauth_thread_switch_user(next);
+<<<<<<< HEAD
+=======
+	compat_thread_switch(next);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Complete any pending TLB or cache maintenance on this CPU in case
@@ -563,6 +621,7 @@ unsigned long arch_align_stack(unsigned long sp)
 	return sp & ~0xf;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 int compat_elf_check_arch(const struct elf32_hdr *hdr)
 {
@@ -585,6 +644,8 @@ int compat_elf_check_arch(const struct elf32_hdr *hdr)
 }
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Called from setup_new_exec() after (COMPAT_)SET_PERSONALITY.
  */
@@ -594,6 +655,7 @@ void arch_setup_new_exec(void)
 
 	if (is_compat_task()) {
 		mmflags = MMCF_AARCH32;
+<<<<<<< HEAD
 
 		/*
 		 * Restrict the CPU affinity mask for a 32-bit task so that
@@ -608,6 +670,10 @@ void arch_setup_new_exec(void)
 			force_compatible_cpus_allowed_ptr(current);
 	} else if (static_branch_unlikely(&arm64_mismatched_32bit_el0)) {
 		relax_compatible_cpus_allowed_ptr(current);
+=======
+		if (static_branch_unlikely(&arm64_mismatched_32bit_el0))
+			set_tsk_thread_flag(current, TIF_NOTIFY_RESUME);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	current->mm->context.flags = mmflags;

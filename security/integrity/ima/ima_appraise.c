@@ -77,9 +77,14 @@ int ima_must_appraise(struct user_namespace *mnt_userns, struct inode *inode,
 		return 0;
 
 	security_task_getsecid_subj(current, &secid);
+<<<<<<< HEAD
 	return ima_match_policy(mnt_userns, inode, current_cred(), secid,
 				func, mask, IMA_APPRAISE | IMA_HASH, NULL,
 				NULL, NULL, NULL);
+=======
+	return ima_match_policy(mnt_userns, inode, current_cred(), secid, func,
+				mask, IMA_APPRAISE | IMA_HASH, NULL, NULL, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int ima_fix_xattr(struct dentry *dentry,
@@ -172,7 +177,11 @@ static void ima_cache_flags(struct integrity_iint_cache *iint,
 	}
 }
 
+<<<<<<< HEAD
 enum hash_algo ima_get_hash_algo(const struct evm_ima_xattr_data *xattr_value,
+=======
+enum hash_algo ima_get_hash_algo(struct evm_ima_xattr_data *xattr_value,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 int xattr_len)
 {
 	struct signature_v2_hdr *sig;
@@ -185,8 +194,12 @@ enum hash_algo ima_get_hash_algo(const struct evm_ima_xattr_data *xattr_value,
 	switch (xattr_value->type) {
 	case EVM_IMA_XATTR_DIGSIG:
 		sig = (typeof(sig))xattr_value;
+<<<<<<< HEAD
 		if (sig->version != 2 || xattr_len <= sizeof(*sig)
 		    || sig->hash_algo >= HASH_ALGO__LAST)
+=======
+		if (sig->version != 2 || xattr_len <= sizeof(*sig))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return ima_hash_algo;
 		return sig->hash_algo;
 		break;
@@ -359,7 +372,11 @@ int ima_check_blacklist(struct integrity_iint_cache *iint,
 		if ((rc == -EPERM) && (iint->flags & IMA_MEASURE))
 			process_buffer_measurement(&init_user_ns, NULL, digest, digestsize,
 						   "blacklisted-hash", NONE,
+<<<<<<< HEAD
 						   pcr, NULL, false, NULL, 0);
+=======
+						   pcr, NULL, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return rc;
@@ -577,6 +594,7 @@ static void ima_reset_appraise_flags(struct inode *inode, int digsig)
 		clear_bit(IMA_DIGSIG, &iint->atomic_flags);
 }
 
+<<<<<<< HEAD
 /**
  * validate_hash_algo() - Block setxattr with unsupported hash algorithms
  * @dentry: object of the setxattr()
@@ -637,6 +655,8 @@ static int validate_hash_algo(struct dentry *dentry,
 	return -EACCES;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int ima_inode_setxattr(struct dentry *dentry, const char *xattr_name,
 		       const void *xattr_value, size_t xattr_value_len)
 {
@@ -654,11 +674,17 @@ int ima_inode_setxattr(struct dentry *dentry, const char *xattr_name,
 		digsig = (xvalue->type == EVM_XATTR_PORTABLE_DIGSIG);
 	}
 	if (result == 1 || evm_revalidate_status(xattr_name)) {
+<<<<<<< HEAD
 		result = validate_hash_algo(dentry, xvalue, xattr_value_len);
 		if (result)
 			return result;
 
 		ima_reset_appraise_flags(d_backing_inode(dentry), digsig);
+=======
+		ima_reset_appraise_flags(d_backing_inode(dentry), digsig);
+		if (result == 1)
+			result = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return result;
 }

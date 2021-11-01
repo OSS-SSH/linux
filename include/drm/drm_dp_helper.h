@@ -30,7 +30,10 @@
 
 struct drm_device;
 struct drm_dp_aux;
+<<<<<<< HEAD
 struct drm_panel;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Unless otherwise noted, all values are from the DP 1.1a spec.  Note that
@@ -1819,6 +1822,7 @@ drm_dp_sink_can_do_video_without_timing_msa(const u8 dpcd[DP_RECEIVER_CAP_SIZE])
 		DP_MSA_TIMING_PAR_IGNORED;
 }
 
+<<<<<<< HEAD
 /**
  * drm_edp_backlight_supported() - Check an eDP DPCD for VESA backlight support
  * @edp_dpcd: The DPCD to check
@@ -1837,6 +1841,8 @@ drm_edp_backlight_supported(const u8 edp_dpcd[EDP_DISPLAY_CTL_CAP_SIZE])
 		(edp_dpcd[2] & DP_EDP_BACKLIGHT_BRIGHTNESS_AUX_SET_CAP);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * DisplayPort AUX channel
  */
@@ -1877,6 +1883,38 @@ struct drm_dp_aux_cec {
 
 /**
  * struct drm_dp_aux - DisplayPort AUX channel
+<<<<<<< HEAD
+=======
+ * @name: user-visible name of this AUX channel and the I2C-over-AUX adapter
+ * @ddc: I2C adapter that can be used for I2C-over-AUX communication
+ * @dev: pointer to struct device that is the parent for this AUX channel
+ * @drm_dev: pointer to the &drm_device that owns this AUX channel. Beware, this
+ * may be %NULL before drm_dp_aux_register() has been called.
+ * @crtc: backpointer to the crtc that is currently using this AUX channel
+ * @hw_mutex: internal mutex used for locking transfers
+ * @crc_work: worker that captures CRCs for each frame
+ * @crc_count: counter of captured frame CRCs
+ * @transfer: transfers a message representing a single AUX transaction
+ *
+ * The @dev field should be set to a pointer to the device that implements the
+ * AUX channel. As well, the @drm_dev field should be set to the &drm_device
+ * that will be using this AUX channel as early as possible. For many graphics
+ * drivers this should happen before drm_dp_aux_init(), however it's perfectly
+ * fine to set this field later so long as it's assigned before calling
+ * drm_dp_aux_register().
+ *
+ * The @name field may be used to specify the name of the I2C adapter. If set to
+ * %NULL, dev_name() of @dev will be used.
+ *
+ * Drivers provide a hardware-specific implementation of how transactions are
+ * executed via the @transfer() function. A pointer to a &drm_dp_aux_msg
+ * structure describing the transaction is passed into this function. Upon
+ * success, the implementation should return the number of payload bytes that
+ * were transferred, or a negative error-code on failure. Helpers propagate
+ * errors from the @transfer() function, with the exception of the %-EBUSY
+ * error, which causes a transaction to be retried. On a short, helpers will
+ * return %-EPROTO to make it simpler to check for failure.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * An AUX channel can also be used to transport I2C messages to a sink. A
  * typical application of that is to access an EDID that's present in the sink
@@ -1887,6 +1925,7 @@ struct drm_dp_aux_cec {
  * transfers by default; if a partial response is received, the adapter will
  * drop down to the size given by the partial response for this transaction
  * only.
+<<<<<<< HEAD
  */
 struct drm_dp_aux {
 	/**
@@ -1977,6 +2016,24 @@ struct drm_dp_aux {
 	ssize_t (*transfer)(struct drm_dp_aux *aux,
 			    struct drm_dp_aux_msg *msg);
 
+=======
+ *
+ * Note that the aux helper code assumes that the @transfer() function only
+ * modifies the reply field of the &drm_dp_aux_msg structure. The retry logic
+ * and i2c helpers assume this is the case.
+ */
+struct drm_dp_aux {
+	const char *name;
+	struct i2c_adapter ddc;
+	struct device *dev;
+	struct drm_device *drm_dev;
+	struct drm_crtc *crtc;
+	struct mutex hw_mutex;
+	struct work_struct crc_work;
+	u8 crc_count;
+	ssize_t (*transfer)(struct drm_dp_aux *aux,
+			    struct drm_dp_aux_msg *msg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/**
 	 * @i2c_nack_count: Counts I2C NACKs, used for DP validation.
 	 */
@@ -2188,6 +2245,7 @@ drm_dp_has_quirk(const struct drm_dp_desc *desc, enum drm_dp_quirk quirk)
 	return desc->quirks & BIT(quirk);
 }
 
+<<<<<<< HEAD
 /**
  * struct drm_edp_backlight_info - Probed eDP backlight info struct
  * @pwmgen_bit_count: The pwmgen bit count
@@ -2233,6 +2291,8 @@ static inline int drm_panel_dp_aux_backlight(struct drm_panel *panel,
 
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DRM_DP_CEC
 void drm_dp_cec_irq(struct drm_dp_aux *aux);
 void drm_dp_cec_register_connector(struct drm_dp_aux *aux,

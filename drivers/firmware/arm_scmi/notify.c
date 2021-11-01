@@ -1457,8 +1457,11 @@ static void scmi_devm_release_notifier(struct device *dev, void *res)
  *
  * Generic devres managed helper to register a notifier_block against a
  * protocol event.
+<<<<<<< HEAD
  *
  * Return: 0 on Success
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static int scmi_devm_notifier_register(struct scmi_device *sdev,
 				       u8 proto_id, u8 evt_id,
@@ -1525,8 +1528,11 @@ static int scmi_devm_notifier_match(struct device *dev, void *res, void *data)
  * Generic devres managed helper to explicitly un-register a notifier_block
  * against a protocol event, which was previously registered using the above
  * @scmi_devm_notifier_register.
+<<<<<<< HEAD
  *
  * Return: 0 on Success
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static int scmi_devm_notifier_unregister(struct scmi_device *sdev,
 					 u8 proto_id, u8 evt_id,

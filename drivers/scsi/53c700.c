@@ -1823,7 +1823,11 @@ NCR_700_queuecommand_lck(struct scsi_cmnd *SCp, void (*done)(struct scsi_cmnd *)
 
 	if ((hostdata->tag_negotiated & (1<<scmd_id(SCp))) &&
 	    SCp->device->simple_tags) {
+<<<<<<< HEAD
 		slot->tag = scsi_cmd_to_rq(SCp)->tag;
+=======
+		slot->tag = SCp->request->tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		CDEBUG(KERN_DEBUG, SCp, "sending out tag %d, slot %p\n",
 		       slot->tag, slot);
 	} else {

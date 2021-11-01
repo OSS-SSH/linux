@@ -352,6 +352,11 @@ static void cs_activate(struct atmel_spi *as, struct spi_device *spi)
 		}
 
 		mr = spi_readl(as, MR);
+<<<<<<< HEAD
+=======
+		if (spi->cs_gpiod)
+			gpiod_set_value(spi->cs_gpiod, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		u32 cpol = (spi->mode & SPI_CPOL) ? SPI_BIT(CPOL) : 0;
 		int i;
@@ -367,6 +372,11 @@ static void cs_activate(struct atmel_spi *as, struct spi_device *spi)
 
 		mr = spi_readl(as, MR);
 		mr = SPI_BFINS(PCS, ~(1 << chip_select), mr);
+<<<<<<< HEAD
+=======
+		if (spi->cs_gpiod)
+			gpiod_set_value(spi->cs_gpiod, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		spi_writel(as, MR, mr);
 	}
 
@@ -396,6 +406,11 @@ static void cs_deactivate(struct atmel_spi *as, struct spi_device *spi)
 
 	if (!spi->cs_gpiod)
 		spi_writel(as, CR, SPI_BIT(LASTXFER));
+<<<<<<< HEAD
+=======
+	else
+		gpiod_set_value(spi->cs_gpiod, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void atmel_spi_lock(struct atmel_spi *as) __acquires(&as->lock)
@@ -1301,7 +1316,11 @@ static int atmel_spi_one_transfer(struct spi_master *master,
 	 * DMA map early, for performance (empties dcache ASAP) and
 	 * better fault reporting.
 	 */
+<<<<<<< HEAD
 	if ((!master->cur_msg->is_dma_mapped)
+=======
+	if ((!master->cur_msg_mapped)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		&& as->use_pdc) {
 		if (atmel_spi_dma_map_xfer(as, xfer) < 0)
 			return -ENOMEM;
@@ -1381,7 +1400,11 @@ static int atmel_spi_one_transfer(struct spi_master *master,
 		}
 	}
 
+<<<<<<< HEAD
 	if (!master->cur_msg->is_dma_mapped
+=======
+	if (!master->cur_msg_mapped
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		&& as->use_pdc)
 		atmel_spi_dma_unmap_xfer(master, xfer);
 
@@ -1477,8 +1500,12 @@ static int atmel_spi_probe(struct platform_device *pdev)
 	master->bus_num = pdev->id;
 	master->num_chipselect = 4;
 	master->setup = atmel_spi_setup;
+<<<<<<< HEAD
 	master->flags = (SPI_MASTER_MUST_RX | SPI_MASTER_MUST_TX |
 			SPI_MASTER_GPIO_SS);
+=======
+	master->flags = (SPI_MASTER_MUST_RX | SPI_MASTER_MUST_TX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	master->transfer_one = atmel_spi_one_transfer;
 	master->set_cs = atmel_spi_set_cs;
 	master->cleanup = atmel_spi_cleanup;

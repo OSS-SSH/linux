@@ -77,6 +77,10 @@
  *  I was thinking that this was a good chip until I found this restriction ;(
  */
 #define SCSI2_SYNC
+<<<<<<< HEAD
+=======
+#undef  SCSI2_TAG
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #undef DEBUG_CONNECT
 #undef DEBUG_MESSAGES
@@ -989,7 +993,11 @@ fas216_reselected_intr(FAS216_Info *info)
 		info->scsi.disconnectable = 0;
 		if (info->SCpnt->device->id  == target &&
 		    info->SCpnt->device->lun == lun &&
+<<<<<<< HEAD
 		    scsi_cmd_to_rq(info->SCpnt)->tag == tag) {
+=======
+		    info->SCpnt->tag         == tag) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			fas216_log(info, LOG_CONNECT, "reconnected previously executing command");
 		} else {
 			queue_add_cmd_tail(&info->queues.disconnected, info->SCpnt);
@@ -1374,7 +1382,10 @@ static void fas216_busservice_intr(FAS216_Info *info, unsigned int stat, unsigne
 		case IS_COMPLETE:
 			break;
 		}
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	default:
 		break;
@@ -1790,9 +1801,14 @@ static void fas216_start_command(FAS216_Info *info, struct scsi_cmnd *SCpnt)
 	/*
 	 * add tag message if required
 	 */
+<<<<<<< HEAD
 	if (SCpnt->device->simple_tags)
 		msgqueue_addmsg(&info->scsi.msgs, 2, SIMPLE_QUEUE_TAG,
 				scsi_cmd_to_rq(SCpnt)->tag);
+=======
+	if (SCpnt->tag)
+		msgqueue_addmsg(&info->scsi.msgs, 2, SIMPLE_QUEUE_TAG, SCpnt->tag);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	do {
 #ifdef SCSI2_SYNC
@@ -1815,8 +1831,25 @@ static void fas216_start_command(FAS216_Info *info, struct scsi_cmnd *SCpnt)
 
 static void fas216_allocate_tag(FAS216_Info *info, struct scsi_cmnd *SCpnt)
 {
+<<<<<<< HEAD
 	set_bit(SCpnt->device->id * 8 +
 		(u8)(SCpnt->device->lun & 0x7), info->busyluns);
+=======
+#ifdef SCSI2_TAG
+	/*
+	 * tagged queuing - allocate a new tag to this command
+	 */
+	if (SCpnt->device->simple_tags && SCpnt->cmnd[0] != REQUEST_SENSE &&
+	    SCpnt->cmnd[0] != INQUIRY) {
+	    SCpnt->device->current_tag += 1;
+		if (SCpnt->device->current_tag == 0)
+		    SCpnt->device->current_tag = 1;
+			SCpnt->tag = SCpnt->device->current_tag;
+	} else
+#endif
+		set_bit(SCpnt->device->id * 8 +
+			(u8)(SCpnt->device->lun & 0x7), info->busyluns);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	info->stats.removes += 1;
 	switch (SCpnt->cmnd[0]) {
@@ -1999,7 +2032,11 @@ static void fas216_rq_sns_done(FAS216_Info *info, struct scsi_cmnd *SCpnt,
 		   "request sense complete, result=0x%04x%02x%02x",
 		   result, SCpnt->SCp.Message, SCpnt->SCp.Status);
 
+<<<<<<< HEAD
 	if (result != DID_OK || SCpnt->SCp.Status != SAM_STAT_GOOD)
+=======
+	if (result != DID_OK || SCpnt->SCp.Status != GOOD)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/*
 		 * Something went wrong.  Make sure that we don't
 		 * have valid data in the sense buffer that could
@@ -2105,6 +2142,10 @@ request_sense:
 	init_SCp(SCpnt);
 	SCpnt->SCp.Message = 0;
 	SCpnt->SCp.Status = 0;
+<<<<<<< HEAD
+=======
+	SCpnt->tag = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SCpnt->host_scribble = (void *)fas216_rq_sns_done;
 
 	/*
@@ -2210,6 +2251,10 @@ static int fas216_queue_command_lck(struct scsi_cmnd *SCpnt,
 	init_SCp(SCpnt);
 
 	info->stats.queues += 1;
+<<<<<<< HEAD
+=======
+	SCpnt->tag = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock(&info->host_lock);
 
@@ -2989,8 +3034,14 @@ void fas216_print_devices(FAS216_Info *info, struct seq_file *m)
 		dev = &info->device[scd->id];
 		seq_printf(m, "     %d/%llu   ", scd->id, scd->lun);
 		if (scd->tagged_supported)
+<<<<<<< HEAD
 			seq_printf(m, "%3sabled ",
 				     scd->simple_tags ? "en" : "dis");
+=======
+			seq_printf(m, "%3sabled(%3d) ",
+				     scd->simple_tags ? "en" : "dis",
+				     scd->current_tag);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			seq_puts(m, "unsupported   ");
 

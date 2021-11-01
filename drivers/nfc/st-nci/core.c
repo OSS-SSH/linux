@@ -9,6 +9,11 @@
 #include <linux/nfc.h>
 #include <net/nfc/nci.h>
 #include <net/nfc/nci_core.h>
+<<<<<<< HEAD
+=======
+#include <linux/gpio.h>
+#include <linux/delay.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "st-nci.h"
 
@@ -84,7 +89,11 @@ static int st_nci_prop_rsp_packet(struct nci_dev *ndev,
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct nci_driver_ops st_nci_prop_ops[] = {
+=======
+static struct nci_driver_ops st_nci_prop_ops[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{
 		.opcode = nci_opcode_pack(NCI_GID_PROPRIETARY,
 					  ST_NCI_CORE_PROP),
@@ -92,7 +101,11 @@ static const struct nci_driver_ops st_nci_prop_ops[] = {
 	},
 };
 
+<<<<<<< HEAD
 static const struct nci_ops st_nci_ops = {
+=======
+static struct nci_ops st_nci_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.init = st_nci_init,
 	.open = st_nci_open,
 	.close = st_nci_close,
@@ -129,7 +142,10 @@ int st_nci_probe(struct llt_ndlc *ndlc, int phy_headroom,
 		| NFC_PROTO_ISO15693_MASK
 		| NFC_PROTO_NFC_DEP_MASK;
 
+<<<<<<< HEAD
 	BUILD_BUG_ON(ARRAY_SIZE(st_nci_prop_ops) > NCI_MAX_PROPRIETARY_CMD);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ndlc->ndev = nci_allocate_device(&st_nci_ops, protocols,
 					phy_headroom, phy_tailroom);
 	if (!ndlc->ndev) {

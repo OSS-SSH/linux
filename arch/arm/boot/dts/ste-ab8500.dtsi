@@ -58,6 +58,7 @@
 					#io-channel-cells = <1>;
 
 					/* GPADC channels */
+<<<<<<< HEAD
 					bat_ctrl: channel@1 {
 						reg = <0x01>;
 					};
@@ -98,6 +99,48 @@
 						reg = <0x0d>;
 					};
 					usb_id: channel@e {
+=======
+					bat_ctrl: channel@01 {
+						reg = <0x01>;
+					};
+					btemp_ball: channel@02 {
+						reg = <0x02>;
+					};
+					main_charger_v: channel@03 {
+						reg = <0x03>;
+					};
+					acc_detect1: channel@04 {
+						reg = <0x04>;
+					};
+					acc_detect2: channel@05 {
+						reg = <0x05>;
+					};
+					adc_aux1: channel@06 {
+						reg = <0x06>;
+					};
+					adc_aux2: channel@07 {
+						reg = <0x07>;
+					};
+					main_batt_v: channel@08 {
+						reg = <0x08>;
+					};
+					vbus_v: channel@09 {
+						reg = <0x09>;
+					};
+					main_charger_c: channel@0a {
+						reg = <0x0a>;
+					};
+					usb_charger_c: channel@0b {
+						reg = <0x0b>;
+					};
+					bk_bat_v: channel@0c {
+						reg = <0x0c>;
+					};
+					die_temp: channel@0d {
+						reg = <0x0d>;
+					};
+					usb_id: channel@0e {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						reg = <0x0e>;
 					};
 					xtal_temp: channel@12 {
@@ -217,7 +260,11 @@
 					battery		= <&ab8500_battery>;
 				};
 
+<<<<<<< HEAD
 				ab8500_usb: ab8500_usb {
+=======
+				ab8500_usb {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					compatible = "stericsson,ab8500-usb";
 					interrupts = <90 IRQ_TYPE_LEVEL_HIGH>,
 						     <96 IRQ_TYPE_LEVEL_HIGH>,
@@ -238,7 +285,10 @@
 					musb_1v8-supply = <&db8500_vsmps2_reg>;
 					clocks = <&prcmu_clk PRCMU_SYSCLK>;
 					clock-names = "sysclk";
+<<<<<<< HEAD
 					#phy-cells = <0>;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				};
 
 				ab8500-ponkey {
@@ -387,10 +437,13 @@
 				vana-supply = <&ab8500_ldo_ana_reg>;
 			};
 		};
+<<<<<<< HEAD
 
 		usb_per5@a03e0000 {
 			phys = <&ab8500_usb>;
 			phy-names = "usb";
 		};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 };

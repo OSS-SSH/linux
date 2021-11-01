@@ -3368,7 +3368,11 @@ This ensures that the device can be closed and the driver unloaded
 without losing data.
 
 This callback is optional. If you do not set ``drain`` in the struct
+<<<<<<< HEAD
 snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
+=======
+snd_rawmidi_ops structure, ALSA will simply wait for 50 milliseconds
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 instead.
 
 Miscellaneous Devices
@@ -4172,6 +4176,7 @@ module license as GPL, etc., otherwise the system is shown as “tainted”.
   MODULE_LICENSE("GPL");
 
 
+<<<<<<< HEAD
 Device-Managed Resources
 ========================
 
@@ -4205,6 +4210,8 @@ the card in that way.  Mixing up with the normal and the managed
 resources may screw up the release order.
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 How To Put Your Driver Into ALSA Tree
 =====================================
 

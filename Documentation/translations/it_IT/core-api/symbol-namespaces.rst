@@ -42,15 +42,26 @@ nomi: EXPORT_SYMBOL_NS() ed EXPORT_SYMBOL_NS_GPL(). Queste macro richiedono un
 argomento aggiuntivo: lo spazio dei nomi.
 Tenete presente che per via dell'espansione delle macro questo argomento deve
 essere un simbolo di preprocessore. Per esempio per esportare il
+<<<<<<< HEAD
 simbolo ``usb_stor_suspend`` nello spazio dei nomi ``USB_STORAGE`` usate::
+=======
+simbolo `usb_stor_suspend` nello spazio dei nomi `USB_STORAGE` usate::
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	EXPORT_SYMBOL_NS(usb_stor_suspend, USB_STORAGE);
 
 Di conseguenza, nella tabella dei simboli del kernel ci sarà una voce
+<<<<<<< HEAD
 rappresentata dalla struttura ``kernel_symbol`` che avrà il campo
 ``namespace`` (spazio dei nomi) impostato. Un simbolo esportato senza uno spazio
 dei nomi avrà questo campo impostato a ``NULL``. Non esiste uno spazio dei nomi
 di base. Il programma ``modpost`` e il codice in kernel/module.c usano lo spazio
+=======
+rappresentata dalla struttura `kernel_symbol` che avrà il campo
+`namespace` (spazio dei nomi) impostato. Un simbolo esportato senza uno spazio
+dei nomi avrà questo campo impostato a `NULL`. Non esiste uno spazio dei nomi
+di base. Il programma `modpost` e il codice in kernel/module.c usano lo spazio
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 dei nomi, rispettivamente, durante la compilazione e durante il caricamento
 di un modulo.
 
@@ -65,7 +76,11 @@ ed EXPORT_SYMBOL_GPL() che non specificano esplicitamente uno spazio dei nomi.
 
 Ci sono molti modi per specificare questo simbolo di preprocessore e il loro
 uso dipende dalle preferenze del manutentore di un sottosistema. La prima
+<<<<<<< HEAD
 possibilità è quella di definire il simbolo nel ``Makefile`` del sottosistema.
+=======
+possibilità è quella di definire il simbolo nel `Makefile` del sottosistema.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Per esempio per esportare tutti i simboli definiti in usb-common nello spazio
 dei nomi USB_COMMON, si può aggiungere la seguente linea in
 drivers/usb/common/Makefile::
@@ -97,7 +112,11 @@ USB_STORAGE usando la seguente dichiarazione::
 
 	MODULE_IMPORT_NS(USB_STORAGE);
 
+<<<<<<< HEAD
 Questo creerà un'etichetta ``modinfo`` per ogni spazio dei nomi
+=======
+Questo creerà un'etichetta `modinfo` per ogni spazio dei nomi
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 importato. Un risvolto di questo fatto è che gli spazi dei
 nomi importati da un modulo possono essere ispezionati tramite
 modinfo::
@@ -116,7 +135,11 @@ mancanti.
 4. Caricare moduli che usano simboli provenienti da spazi dei nomi
 ==================================================================
 
+<<<<<<< HEAD
 Quando un modulo viene caricato (per esempio usando ``insmod``), il kernel
+=======
+Quando un modulo viene caricato (per esempio usando `insmod`), il kernel
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 verificherà la disponibilità di ogni simbolo usato e se lo spazio dei nomi
 che potrebbe contenerli è stato importato. Il comportamento di base del kernel
 è di rifiutarsi di caricare quei moduli che non importano tutti gli spazi dei
@@ -144,6 +167,7 @@ Lo scenario tipico di chi scrive un modulo potrebbe essere::
 
 	- scrivere codice che dipende da un simbolo appartenente ad uno spazio
 	  dei nomi non importato
+<<<<<<< HEAD
 	- eseguire ``make``
 	- aver notato un avviso da modpost che parla di un'importazione
 	  mancante
@@ -151,15 +175,32 @@ Lo scenario tipico di chi scrive un modulo potrebbe essere::
 
 Per i manutentori di sottosistemi che vogliono aggiungere uno spazio dei nomi,
 l'approccio è simile. Di nuovo, eseguendo ``make nsdeps`` aggiungerà le
+=======
+	- eseguire `make`
+	- aver notato un avviso da modpost che parla di un'importazione
+	  mancante
+	- eseguire `make nsdeps` per aggiungere import nel posto giusto
+
+Per i manutentori di sottosistemi che vogliono aggiungere uno spazio dei nomi,
+l'approccio è simile. Di nuovo, eseguendo `make nsdeps` aggiungerà le
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 importazioni mancanti nei moduli inclusi nel kernel::
 
 	- spostare o aggiungere simboli ad uno spazio dei nomi (per esempio
 	  usando EXPORT_SYMBOL_NS())
+<<<<<<< HEAD
 	- eseguire ``make`` (preferibilmente con allmodconfig per coprire tutti
 	  i moduli del kernel)
 	- aver notato un avviso da modpost che parla di un'importazione
 	  mancante
 	- eseguire ``make nsdeps`` per aggiungere import nel posto giusto
+=======
+	- eseguire `make` (preferibilmente con allmodconfig per coprire tutti
+	  i moduli del kernel)
+	- aver notato un avviso da modpost che parla di un'importazione
+	  mancante
+	- eseguire `make nsdeps` per aggiungere import nel posto giusto
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Potete anche eseguire nsdeps per moduli esterni. Solitamente si usa così::
 

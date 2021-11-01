@@ -1202,7 +1202,13 @@ static int fimd_probe(struct platform_device *pdev)
 		return PTR_ERR(ctx->lcd_clk);
 	}
 
+<<<<<<< HEAD
 	ctx->regs = devm_platform_ioremap_resource(pdev, 0);
+=======
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+
+	ctx->regs = devm_ioremap_resource(dev, res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(ctx->regs))
 		return PTR_ERR(ctx->regs);
 

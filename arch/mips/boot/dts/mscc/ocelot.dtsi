@@ -150,6 +150,7 @@
 
 				port0: port@0 {
 					reg = <0>;
+<<<<<<< HEAD
 					status = "disabled";
 				};
 				port1: port@1 {
@@ -191,6 +192,38 @@
 				port10: port@10 {
 					reg = <10>;
 					status = "disabled";
+=======
+				};
+				port1: port@1 {
+					reg = <1>;
+				};
+				port2: port@2 {
+					reg = <2>;
+				};
+				port3: port@3 {
+					reg = <3>;
+				};
+				port4: port@4 {
+					reg = <4>;
+				};
+				port5: port@5 {
+					reg = <5>;
+				};
+				port6: port@6 {
+					reg = <6>;
+				};
+				port7: port@7 {
+					reg = <7>;
+				};
+				port8: port@8 {
+					reg = <8>;
+				};
+				port9: port@9 {
+					reg = <9>;
+				};
+				port10: port@10 {
+					reg = <10>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				};
 			};
 		};

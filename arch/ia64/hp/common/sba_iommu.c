@@ -1459,7 +1459,11 @@ static int sba_map_sg_attrs(struct device *dev, struct scatterlist *sglist,
 		sglist->dma_address = sba_map_page(dev, sg_page(sglist),
 				sglist->offset, sglist->length, dir, attrs);
 		if (dma_mapping_error(dev, sglist->dma_address))
+<<<<<<< HEAD
 			return -EIO;
+=======
+			return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 	}
 
@@ -1486,7 +1490,11 @@ static int sba_map_sg_attrs(struct device *dev, struct scatterlist *sglist,
 	coalesced = sba_coalesce_chunks(ioc, dev, sglist, nents);
 	if (coalesced < 0) {
 		sba_unmap_sg_attrs(dev, sglist, nents, dir, attrs);
+<<<<<<< HEAD
 		return -ENOMEM;
+=======
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/*

@@ -374,10 +374,17 @@ xchk_btree_check_block_owner(
 
 	init_sa = bs->cur->bc_flags & XFS_BTREE_LONG_PTRS;
 	if (init_sa) {
+<<<<<<< HEAD
 		error = xchk_ag_init_existing(bs->sc, agno, &bs->sc->sa);
 		if (!xchk_btree_xref_process_error(bs->sc, bs->cur,
 				level, &error))
 			goto out_free;
+=======
+		error = xchk_ag_init(bs->sc, agno, &bs->sc->sa);
+		if (!xchk_btree_xref_process_error(bs->sc, bs->cur,
+				level, &error))
+			return error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	xchk_xref_is_used_space(bs->sc, agbno, 1);
@@ -393,7 +400,10 @@ xchk_btree_check_block_owner(
 	if (!bs->sc->sa.rmap_cur && btnum == XFS_BTNUM_RMAP)
 		bs->cur = NULL;
 
+<<<<<<< HEAD
 out_free:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (init_sa)
 		xchk_ag_free(bs->sc, &bs->sc->sa);
 
@@ -436,12 +446,20 @@ xchk_btree_check_owner(
 		if (!co)
 			return -ENOMEM;
 		co->level = level;
+<<<<<<< HEAD
 		co->daddr = xfs_buf_daddr(bp);
+=======
+		co->daddr = XFS_BUF_ADDR(bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		list_add_tail(&co->list, &bs->to_check);
 		return 0;
 	}
 
+<<<<<<< HEAD
 	return xchk_btree_check_block_owner(bs, level, xfs_buf_daddr(bp));
+=======
+	return xchk_btree_check_block_owner(bs, level, XFS_BUF_ADDR(bp));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Decide if we want to check minrecs of a btree block in the inode root. */

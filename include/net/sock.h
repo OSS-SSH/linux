@@ -68,7 +68,10 @@
 #include <net/tcp_states.h>
 #include <linux/net_tstamp.h>
 #include <net/l3mdev.h>
+<<<<<<< HEAD
 #include <uapi/linux/socket.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * This structure really needs to be cleaned up.
@@ -307,7 +310,10 @@ struct bpf_local_storage;
   *	@sk_priority: %SO_PRIORITY setting
   *	@sk_type: socket type (%SOCK_STREAM, etc)
   *	@sk_protocol: which protocol this socket belongs in this network family
+<<<<<<< HEAD
   *	@sk_peer_lock: lock protecting @sk_peer_pid and @sk_peer_cred
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   *	@sk_peer_pid: &struct pid for this socket's peer
   *	@sk_peer_cred: %SO_PEERCRED setting
   *	@sk_rcvlowat: %SO_RCVLOWAT setting
@@ -318,9 +324,13 @@ struct bpf_local_storage;
   *	@sk_timer: sock cleanup timer
   *	@sk_stamp: time stamp of last packet received
   *	@sk_stamp_seq: lock for accessing sk_stamp on 32 bit architectures only
+<<<<<<< HEAD
   *	@sk_tsflags: SO_TIMESTAMPING flags
   *	@sk_bind_phc: SO_TIMESTAMPING bind PHC index of PTP virtual clock
   *	              for timestamping
+=======
+  *	@sk_tsflags: SO_TIMESTAMPING socket options
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   *	@sk_tskey: counter to disambiguate concurrent tstamp requests
   *	@sk_zckey: counter to order MSG_ZEROCOPY notifications
   *	@sk_socket: Identd and reporting IO signals
@@ -489,17 +499,25 @@ struct sock {
 	u8			sk_prefer_busy_poll;
 	u16			sk_busy_poll_budget;
 #endif
+<<<<<<< HEAD
 	spinlock_t		sk_peer_lock;
 	struct pid		*sk_peer_pid;
 	const struct cred	*sk_peer_cred;
 
+=======
+	struct pid		*sk_peer_pid;
+	const struct cred	*sk_peer_cred;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	long			sk_rcvtimeo;
 	ktime_t			sk_stamp;
 #if BITS_PER_LONG==32
 	seqlock_t		sk_stamp_seq;
 #endif
 	u16			sk_tsflags;
+<<<<<<< HEAD
 	int			sk_bind_phc;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8			sk_shutdown;
 	u32			sk_tskey;
 	atomic_t		sk_zckey;
@@ -1442,6 +1460,11 @@ static inline int __sk_prot_rehash(struct sock *sk)
 #define RCV_SHUTDOWN	1
 #define SEND_SHUTDOWN	2
 
+<<<<<<< HEAD
+=======
+#define SOCK_SNDBUF_LOCK	1
+#define SOCK_RCVBUF_LOCK	2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define SOCK_BINDADDR_LOCK	4
 #define SOCK_BINDPORT_LOCK	8
 
@@ -1626,6 +1649,7 @@ void release_sock(struct sock *sk);
 				SINGLE_DEPTH_NESTING)
 #define bh_unlock_sock(__sk)	spin_unlock(&((__sk)->sk_lock.slock))
 
+<<<<<<< HEAD
 bool __lock_sock_fast(struct sock *sk) __acquires(&sk->sk_lock.slock);
 
 /**
@@ -1656,6 +1680,9 @@ static inline bool lock_sock_fast_nested(struct sock *sk)
 
 	return __lock_sock_fast(sk);
 }
+=======
+bool lock_sock_fast(struct sock *sk) __acquires(&sk->sk_lock.slock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * unlock_sock_fast - complement of lock_sock_fast
@@ -1672,7 +1699,10 @@ static inline void unlock_sock_fast(struct sock *sk, bool slow)
 		release_sock(sk);
 		__release(&sk->sk_lock.slock);
 	} else {
+<<<<<<< HEAD
 		mutex_release(&sk->sk_lock.dep_map, _RET_IP_);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		spin_unlock_bh(&sk->sk_lock.slock);
 	}
 }
@@ -2281,6 +2311,7 @@ static inline __must_check bool skb_set_owner_sk_safe(struct sk_buff *skb, struc
 	return false;
 }
 
+<<<<<<< HEAD
 static inline void skb_prepare_for_gro(struct sk_buff *skb)
 {
 	if (skb->destructor != sock_wfree) {
@@ -2290,6 +2321,8 @@ static inline void skb_prepare_for_gro(struct sk_buff *skb)
 	skb->slow_gro = 1;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void sk_reset_timer(struct sock *sk, struct timer_list *timer,
 		    unsigned long expires);
 
@@ -2433,11 +2466,14 @@ static inline gfp_t gfp_any(void)
 	return in_softirq() ? GFP_ATOMIC : GFP_KERNEL;
 }
 
+<<<<<<< HEAD
 static inline gfp_t gfp_memcg_charge(void)
 {
 	return in_softirq() ? GFP_NOWAIT : GFP_KERNEL;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline long sock_rcvtimeo(const struct sock *sk, bool noblock)
 {
 	return noblock ? 0 : sk->sk_rcvtimeo;
@@ -2750,7 +2786,10 @@ extern int sysctl_optmem_max;
 extern __u32 sysctl_wmem_default;
 extern __u32 sysctl_rmem_default;
 
+<<<<<<< HEAD
 #define SKB_FRAG_PAGE_ORDER	get_order(32768)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 DECLARE_STATIC_KEY_FALSE(net_high_order_alloc_disable_key);
 
 static inline int sk_get_wmem0(const struct sock *sk, const struct proto *proto)
@@ -2805,8 +2844,12 @@ void sock_def_readable(struct sock *sk);
 
 int sock_bindtoindex(struct sock *sk, int ifindex, bool lock_sk);
 void sock_set_timestamp(struct sock *sk, int optname, bool valbool);
+<<<<<<< HEAD
 int sock_set_timestamping(struct sock *sk, int optname,
 			  struct so_timestamping timestamping);
+=======
+int sock_set_timestamping(struct sock *sk, int optname, int val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void sock_enable_timestamps(struct sock *sk);
 void sock_no_linger(struct sock *sk);

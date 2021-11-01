@@ -664,9 +664,15 @@ extern int kvmppc_xive_connect_vcpu(struct kvm_device *dev,
 				    struct kvm_vcpu *vcpu, u32 cpu);
 extern void kvmppc_xive_cleanup_vcpu(struct kvm_vcpu *vcpu);
 extern int kvmppc_xive_set_mapped(struct kvm *kvm, unsigned long guest_irq,
+<<<<<<< HEAD
 				  unsigned long host_irq);
 extern int kvmppc_xive_clr_mapped(struct kvm *kvm, unsigned long guest_irq,
 				  unsigned long host_irq);
+=======
+				  struct irq_desc *host_desc);
+extern int kvmppc_xive_clr_mapped(struct kvm *kvm, unsigned long guest_irq,
+				  struct irq_desc *host_desc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern u64 kvmppc_xive_get_icp(struct kvm_vcpu *vcpu);
 extern int kvmppc_xive_set_icp(struct kvm_vcpu *vcpu, u64 icpval);
 

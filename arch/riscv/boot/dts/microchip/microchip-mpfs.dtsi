@@ -317,7 +317,11 @@
 			reg = <0x0 0x20112000 0x0 0x2000>;
 			interrupt-parent = <&plic>;
 			interrupts = <70 71 72 73>;
+<<<<<<< HEAD
 			local-mac-address = [00 00 00 00 00 00];
+=======
+			mac-address = [00 00 00 00 00 00];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			clocks = <&clkcfg 5>, <&clkcfg 2>;
 			status = "disabled";
 			clock-names = "pclk", "hclk";

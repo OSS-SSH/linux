@@ -221,7 +221,12 @@ static int load_aout_binary(struct linux_binprm * bprm)
 		}
 
 		error = vm_mmap(bprm->file, N_TXTADDR(ex), ex.a_text,
+<<<<<<< HEAD
 			PROT_READ | PROT_EXEC, MAP_FIXED | MAP_PRIVATE,
+=======
+			PROT_READ | PROT_EXEC,
+			MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			fd_offset);
 
 		if (error != N_TXTADDR(ex))
@@ -229,7 +234,11 @@ static int load_aout_binary(struct linux_binprm * bprm)
 
 		error = vm_mmap(bprm->file, N_DATADDR(ex), ex.a_data,
 				PROT_READ | PROT_WRITE | PROT_EXEC,
+<<<<<<< HEAD
 				MAP_FIXED | MAP_PRIVATE,
+=======
+				MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				fd_offset + ex.a_text);
 		if (error != N_DATADDR(ex))
 			return error;
@@ -308,7 +317,11 @@ static int load_aout_library(struct file *file)
 	/* Now use mmap to map the library into memory. */
 	error = vm_mmap(file, start_addr, ex.a_text + ex.a_data,
 			PROT_READ | PROT_WRITE | PROT_EXEC,
+<<<<<<< HEAD
 			MAP_FIXED | MAP_PRIVATE,
+=======
+			MAP_FIXED | MAP_PRIVATE | MAP_DENYWRITE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			N_TXTOFF(ex));
 	retval = error;
 	if (error != start_addr)

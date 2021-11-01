@@ -882,7 +882,16 @@ int orangefs_getattr(struct user_namespace *mnt_userns, const struct path *path,
 		if (!(request_mask & STATX_SIZE))
 			stat->result_mask &= ~STATX_SIZE;
 
+<<<<<<< HEAD
 		generic_fill_statx_attr(inode, stat);
+=======
+		stat->attributes_mask = STATX_ATTR_IMMUTABLE |
+		    STATX_ATTR_APPEND;
+		if (inode->i_flags & S_IMMUTABLE)
+			stat->attributes |= STATX_ATTR_IMMUTABLE;
+		if (inode->i_flags & S_APPEND)
+			stat->attributes |= STATX_ATTR_APPEND;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return ret;
 }

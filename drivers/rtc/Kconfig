@@ -75,6 +75,7 @@ config RTC_DEBUG
 	  Say yes here to enable debugging support in the RTC framework
 	  and individual RTC drivers.
 
+<<<<<<< HEAD
 config RTC_LIB_KUNIT_TEST
 	tristate "KUnit test for RTC lib functions" if !KUNIT_ALL_TESTS
 	depends on KUNIT
@@ -84,6 +85,8 @@ config RTC_LIB_KUNIT_TEST
 
 	  If unsure, say N.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config RTC_NVMEM
 	bool "RTC non volatile storage support"
 	select NVMEM
@@ -633,7 +636,10 @@ config RTC_DRV_FM3130
 
 config RTC_DRV_RX8010
 	tristate "Epson RX8010SJ"
+<<<<<<< HEAD
 	select REGMAP_I2C
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  If you say yes here you get support for the Epson RX8010SJ RTC
 	  chip.

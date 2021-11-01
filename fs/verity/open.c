@@ -89,7 +89,11 @@ int fsverity_init_merkle_tree_params(struct merkle_tree_params *params,
 	 */
 
 	/* Compute number of levels and the number of blocks in each level */
+<<<<<<< HEAD
 	blocks = ((u64)inode->i_size + params->block_size - 1) >> log_blocksize;
+=======
+	blocks = (inode->i_size + params->block_size - 1) >> log_blocksize;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_debug("Data is %lld bytes (%llu blocks)\n", inode->i_size, blocks);
 	while (blocks > 1) {
 		if (params->num_levels >= FS_VERITY_MAX_LEVELS) {

@@ -74,7 +74,12 @@ static struct vmpressure *work_to_vmpressure(struct work_struct *work)
 
 static struct vmpressure *vmpressure_parent(struct vmpressure *vmpr)
 {
+<<<<<<< HEAD
 	struct mem_cgroup *memcg = vmpressure_to_memcg(vmpr);
+=======
+	struct cgroup_subsys_state *css = vmpressure_to_css(vmpr);
+	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	memcg = parent_mem_cgroup(memcg);
 	if (!memcg)
@@ -239,12 +244,16 @@ static void vmpressure_work_fn(struct work_struct *work)
 void vmpressure(gfp_t gfp, struct mem_cgroup *memcg, bool tree,
 		unsigned long scanned, unsigned long reclaimed)
 {
+<<<<<<< HEAD
 	struct vmpressure *vmpr;
 
 	if (mem_cgroup_disabled())
 		return;
 
 	vmpr = memcg_to_vmpressure(memcg);
+=======
+	struct vmpressure *vmpr = memcg_to_vmpressure(memcg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Here we only want to account pressure that userland is able to

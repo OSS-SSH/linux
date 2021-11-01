@@ -256,13 +256,19 @@ static int xilinx_spi_probe(struct spi_device *spi)
 	return devm_fpga_mgr_register(&spi->dev, mgr);
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_OF
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct of_device_id xlnx_spi_of_match[] = {
 	{ .compatible = "xlnx,fpga-slave-serial", },
 	{}
 };
 MODULE_DEVICE_TABLE(of, xlnx_spi_of_match);
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct spi_driver xilinx_slave_spi_driver = {
 	.driver = {

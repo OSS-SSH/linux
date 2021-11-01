@@ -15,6 +15,10 @@
 #include <linux/gfp.h>
 
 #include <asm/setup.h>
+<<<<<<< HEAD
+=======
+#include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/page.h>
 #include <asm/traps.h>
 #include <asm/machdep.h>

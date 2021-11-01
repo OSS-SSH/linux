@@ -117,6 +117,7 @@ static inline void __fw_state_set(struct fw_priv *fw_priv,
 
 	WRITE_ONCE(fw_st->status, status);
 
+<<<<<<< HEAD
 	if (status == FW_STATUS_DONE || status == FW_STATUS_ABORTED) {
 #ifdef CONFIG_FW_LOADER_USER_HELPER
 		/*
@@ -127,6 +128,10 @@ static inline void __fw_state_set(struct fw_priv *fw_priv,
 #endif
 		complete_all(&fw_st->completion);
 	}
+=======
+	if (status == FW_STATUS_DONE || status == FW_STATUS_ABORTED)
+		complete_all(&fw_st->completion);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline void fw_state_aborted(struct fw_priv *fw_priv)

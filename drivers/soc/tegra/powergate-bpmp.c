@@ -7,6 +7,10 @@
 #include <linux/platform_device.h>
 #include <linux/pm_domain.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
+=======
+#include <linux/version.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <soc/tegra/bpmp.h>
 #include <soc/tegra/bpmp-abi.h>

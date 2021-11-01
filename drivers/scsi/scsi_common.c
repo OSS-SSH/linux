@@ -7,6 +7,7 @@
 #include <linux/kernel.h>
 #include <linux/string.h>
 #include <linux/errno.h>
+<<<<<<< HEAD
 #include <linux/module.h>
 #include <asm/unaligned.h>
 #include <scsi/scsi_common.h>
@@ -19,6 +20,11 @@ const unsigned char scsi_command_size_tbl[8] = {
 };
 EXPORT_SYMBOL(scsi_command_size_tbl);
 
+=======
+#include <asm/unaligned.h>
+#include <scsi/scsi_common.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* NB: These are exposed through /proc/scsi/scsi and form part of the ABI.
  * You may not alter any existing entry (although adding new ones is
  * encouraged once assigned by ANSI/INCITS T10).

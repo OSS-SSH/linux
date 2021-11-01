@@ -45,10 +45,13 @@
  * current job can make progress.
  */
 
+<<<<<<< HEAD
 #include <linux/platform_device.h>
 
 #include <drm/drm_drv.h>
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "vc4_drv.h"
 #include "vc4_regs.h"
 
@@ -196,7 +199,11 @@ vc4_irq_finish_render_job(struct drm_device *dev)
 	schedule_work(&vc4->job_done_work);
 }
 
+<<<<<<< HEAD
 static irqreturn_t
+=======
+irqreturn_t
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 vc4_irq(int irq, void *arg)
 {
 	struct drm_device *dev = arg;
@@ -238,8 +245,13 @@ vc4_irq(int irq, void *arg)
 	return status;
 }
 
+<<<<<<< HEAD
 static void
 vc4_irq_prepare(struct drm_device *dev)
+=======
+void
+vc4_irq_preinstall(struct drm_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vc4_dev *vc4 = to_vc4_dev(dev);
 
@@ -255,22 +267,40 @@ vc4_irq_prepare(struct drm_device *dev)
 	V3D_WRITE(V3D_INTCTL, V3D_DRIVER_IRQS);
 }
 
+<<<<<<< HEAD
 void
 vc4_irq_enable(struct drm_device *dev)
+=======
+int
+vc4_irq_postinstall(struct drm_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vc4_dev *vc4 = to_vc4_dev(dev);
 
 	if (!vc4->v3d)
+<<<<<<< HEAD
 		return;
+=======
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Enable the render done interrupts. The out-of-memory interrupt is
 	 * enabled as soon as we have a binner BO allocated.
 	 */
 	V3D_WRITE(V3D_INTENA, V3D_INT_FLDONE | V3D_INT_FRDONE);
+<<<<<<< HEAD
 }
 
 void
 vc4_irq_disable(struct drm_device *dev)
+=======
+
+	return 0;
+}
+
+void
+vc4_irq_uninstall(struct drm_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vc4_dev *vc4 = to_vc4_dev(dev);
 
@@ -284,11 +314,16 @@ vc4_irq_disable(struct drm_device *dev)
 	V3D_WRITE(V3D_INTCTL, V3D_DRIVER_IRQS);
 
 	/* Finish any interrupt handler still in flight. */
+<<<<<<< HEAD
 	disable_irq(vc4->irq);
+=======
+	disable_irq(dev->irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cancel_work_sync(&vc4->overflow_mem_work);
 }
 
+<<<<<<< HEAD
 int vc4_irq_install(struct drm_device *dev, int irq)
 {
 	int ret;
@@ -315,6 +350,8 @@ void vc4_irq_uninstall(struct drm_device *dev)
 	free_irq(vc4->irq, dev);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /** Reinitializes interrupt registers when a GPU reset is performed. */
 void vc4_irq_reset(struct drm_device *dev)
 {

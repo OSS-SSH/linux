@@ -1110,6 +1110,12 @@ static void print_eth(unsigned char *add, char *str)
 	       add, add + 6, add, add[12], add[13], str);
 }
 
+<<<<<<< HEAD
+=======
+static int io = 0x300;
+static int irq = 10;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct net_device_ops i596_netdev_ops = {
 	.ndo_open 		= i596_open,
 	.ndo_stop		= i596_close,
@@ -1120,7 +1126,11 @@ static const struct net_device_ops i596_netdev_ops = {
 	.ndo_validate_addr	= eth_validate_addr,
 };
 
+<<<<<<< HEAD
 static struct net_device * __init i82596_probe(void)
+=======
+struct net_device * __init i82596_probe(int unit)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *dev;
 	int i;
@@ -1137,6 +1147,17 @@ static struct net_device * __init i82596_probe(void)
 	if (!dev)
 		return ERR_PTR(-ENOMEM);
 
+<<<<<<< HEAD
+=======
+	if (unit >= 0) {
+		sprintf(dev->name, "eth%d", unit);
+		netdev_boot_setup_check(dev);
+	} else {
+		dev->base_addr = io;
+		dev->irq = irq;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef ENABLE_MVME16x_NET
 	if (MACH_IS_MVME16x) {
 		if (mvme16x_config & MVME16x_CONFIG_NO_ETHERNET) {
@@ -1144,7 +1165,11 @@ static struct net_device * __init i82596_probe(void)
 			err = -ENODEV;
 			goto out;
 		}
+<<<<<<< HEAD
 		memcpy(eth_addr, absolute_pointer(0xfffc1f2c), ETH_ALEN); /* YUCK! Get addr from NOVRAM */
+=======
+		memcpy(eth_addr, (void *) 0xfffc1f2c, ETH_ALEN);	/* YUCK! Get addr from NOVRAM */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev->base_addr = MVME_I596_BASE;
 		dev->irq = (unsigned) MVME16x_IRQ_I596;
 		goto found;
@@ -1504,12 +1529,17 @@ static void set_multicast_list(struct net_device *dev)
 	}
 }
 
+<<<<<<< HEAD
+=======
+#ifdef MODULE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct net_device *dev_82596;
 
 static int debug = -1;
 module_param(debug, int, 0);
 MODULE_PARM_DESC(debug, "i82596 debug mask");
 
+<<<<<<< HEAD
 static int __init i82596_init(void)
 {
 	if (debug >= 0)
@@ -1520,6 +1550,17 @@ static int __init i82596_init(void)
 module_init(i82596_init);
 
 static void __exit i82596_cleanup(void)
+=======
+int __init init_module(void)
+{
+	if (debug >= 0)
+		i596_debug = debug;
+	dev_82596 = i82596_probe(-1);
+	return PTR_ERR_OR_ZERO(dev_82596);
+}
+
+void __exit cleanup_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unregister_netdev(dev_82596);
 #ifdef __mc68000__
@@ -1533,4 +1574,9 @@ static void __exit i82596_cleanup(void)
 	free_page ((u32)(dev_82596->mem_start));
 	free_netdev(dev_82596);
 }
+<<<<<<< HEAD
 module_exit(i82596_cleanup);
+=======
+
+#endif				/* MODULE */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

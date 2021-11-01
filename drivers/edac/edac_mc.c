@@ -166,7 +166,10 @@ const char * const edac_mem_types[] = {
 	[MEM_DDR5]	= "Unbuffered-DDR5",
 	[MEM_NVDIMM]	= "Non-volatile-RAM",
 	[MEM_WIO2]	= "Wide-IO-2",
+<<<<<<< HEAD
 	[MEM_HBM2]	= "High-bandwidth-memory-Gen2",
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 EXPORT_SYMBOL_GPL(edac_mem_types);
 

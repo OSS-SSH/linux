@@ -2101,6 +2101,10 @@
 /* Hardware Legacy NVRAM layout */
 #define TG3_NVM_VPD_OFF			0x100
 #define TG3_NVM_VPD_LEN			256
+<<<<<<< HEAD
+=======
+#define TG3_NVM_PCI_VPD_MAX_LEN		512
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Hardware Selfboot NVRAM layout */
 #define TG3_NVM_HWSB_CFG1		0x00000004

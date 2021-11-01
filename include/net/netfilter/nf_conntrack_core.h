@@ -30,6 +30,10 @@ void nf_conntrack_cleanup_net(struct net *net);
 void nf_conntrack_cleanup_net_list(struct list_head *net_exit_list);
 
 void nf_conntrack_proto_pernet_init(struct net *net);
+<<<<<<< HEAD
+=======
+void nf_conntrack_proto_pernet_fini(struct net *net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int nf_conntrack_proto_init(void);
 void nf_conntrack_proto_fini(void);

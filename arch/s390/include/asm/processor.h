@@ -26,8 +26,11 @@
 #define _CIF_MCCK_GUEST		BIT(CIF_MCCK_GUEST)
 #define _CIF_DEDICATED_CPU	BIT(CIF_DEDICATED_CPU)
 
+<<<<<<< HEAD
 #define RESTART_FLAG_CTLREGS	_AC(1 << 0, U)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef __ASSEMBLY__
 
 #include <linux/cpumask.h>

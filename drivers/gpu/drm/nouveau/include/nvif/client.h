@@ -9,6 +9,10 @@ struct nvif_client {
 	const struct nvif_driver *driver;
 	u64 version;
 	u8 route;
+<<<<<<< HEAD
+=======
+	bool super;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 int  nvif_client_ctor(struct nvif_client *parent, const char *name, u64 device,

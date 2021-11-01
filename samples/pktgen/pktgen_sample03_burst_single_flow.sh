@@ -85,7 +85,11 @@ for ((thread = $F_THREAD; thread <= $L_THREAD; thread++)); do
 done
 
 # Run if user hits control-c
+<<<<<<< HEAD
 function print_result() {
+=======
+function control_c() {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     # Print results
     for ((thread = $F_THREAD; thread <= $L_THREAD; thread++)); do
 	dev=${DEV}@${thread}
@@ -94,13 +98,20 @@ function print_result() {
     done
 }
 # trap keyboard interrupt (Ctrl-C)
+<<<<<<< HEAD
 trap true SIGINT
+=======
+trap control_c SIGINT
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 if [ -z "$APPEND" ]; then
     echo "Running... ctrl^C to stop" >&2
     pg_ctrl "start"
+<<<<<<< HEAD
 
     print_result
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 else
     echo "Append mode: config done. Do more or use 'pg_ctrl start' to run"
 fi

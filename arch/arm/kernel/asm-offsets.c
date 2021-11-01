@@ -43,11 +43,18 @@ int main(void)
   BLANK();
   DEFINE(TI_FLAGS,		offsetof(struct thread_info, flags));
   DEFINE(TI_PREEMPT,		offsetof(struct thread_info, preempt_count));
+<<<<<<< HEAD
+=======
+  DEFINE(TI_ADDR_LIMIT,		offsetof(struct thread_info, addr_limit));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   DEFINE(TI_TASK,		offsetof(struct thread_info, task));
   DEFINE(TI_CPU,		offsetof(struct thread_info, cpu));
   DEFINE(TI_CPU_DOMAIN,		offsetof(struct thread_info, cpu_domain));
   DEFINE(TI_CPU_SAVE,		offsetof(struct thread_info, cpu_context));
+<<<<<<< HEAD
   DEFINE(TI_ABI_SYSCALL,	offsetof(struct thread_info, abi_syscall));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   DEFINE(TI_USED_CP,		offsetof(struct thread_info, used_cp));
   DEFINE(TI_TP_VALUE,		offsetof(struct thread_info, tp_value));
   DEFINE(TI_FPSTATE,		offsetof(struct thread_info, fpstate));
@@ -63,6 +70,12 @@ int main(void)
 #ifdef CONFIG_IWMMXT
   DEFINE(TI_IWMMXT_STATE,	offsetof(struct thread_info, fpstate.iwmmxt));
 #endif
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRUNCH
+  DEFINE(TI_CRUNCH_STATE,	offsetof(struct thread_info, crunchstate));
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_STACKPROTECTOR_PER_TASK
   DEFINE(TI_STACK_CANARY,	offsetof(struct thread_info, stack_canary));
 #endif
@@ -88,6 +101,10 @@ int main(void)
   DEFINE(S_OLD_R0,		offsetof(struct pt_regs, ARM_ORIG_r0));
   DEFINE(PT_REGS_SIZE,		sizeof(struct pt_regs));
   DEFINE(SVC_DACR,		offsetof(struct svc_pt_regs, dacr));
+<<<<<<< HEAD
+=======
+  DEFINE(SVC_ADDR_LIMIT,	offsetof(struct svc_pt_regs, addr_limit));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   DEFINE(SVC_REGS_SIZE,		sizeof(struct svc_pt_regs));
   BLANK();
   DEFINE(SIGFRAME_RC3_OFFSET,	offsetof(struct sigframe, retcode[3]));

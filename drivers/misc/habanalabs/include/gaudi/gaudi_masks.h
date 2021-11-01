@@ -449,6 +449,7 @@ enum axi_id {
 #define PCIE_AUX_FLR_CTRL_HW_CTRL_MASK                               0x1
 #define PCIE_AUX_FLR_CTRL_INT_MASK_MASK                              0x2
 
+<<<<<<< HEAD
 #define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_STATUS_0_VALID_SHIFT        0
 #define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_STATUS_0_VALID_MASK         0x1
 #define SYNC_MNGR_W_S_SYNC_MNGR_OBJS_MON_STATUS_0_PENDING_SHIFT      1
@@ -466,4 +467,6 @@ enum axi_id {
 #define TPC0_QM_CP_STS_0_FENCE_IN_PROGRESS_SHIFT                     22
 #define TPC0_QM_CP_STS_0_FENCE_IN_PROGRESS_MASK                      0x400000
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* GAUDI_MASKS_H_ */

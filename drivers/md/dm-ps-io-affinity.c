@@ -170,9 +170,12 @@ static int ioa_status(struct path_selector *ps, struct dm_path *path,
 		pi = path->pscontext;
 		DMEMIT("%*pb ", cpumask_pr_args(pi->cpumask));
 		break;
+<<<<<<< HEAD
 	case STATUSTYPE_IMA:
 		*result = '\0';
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return sz;

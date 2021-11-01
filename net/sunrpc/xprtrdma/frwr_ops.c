@@ -394,7 +394,10 @@ int frwr_send(struct rpcrdma_xprt *r_xprt, struct rpcrdma_req *req)
 	struct rpcrdma_ep *ep = r_xprt->rx_ep;
 	struct rpcrdma_mr *mr;
 	unsigned int num_wrs;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	num_wrs = 1;
 	post_wr = send_wr;
@@ -421,10 +424,14 @@ int frwr_send(struct rpcrdma_xprt *r_xprt, struct rpcrdma_req *req)
 	}
 
 	trace_xprtrdma_post_send(req);
+<<<<<<< HEAD
 	ret = ib_post_send(ep->re_id->qp, post_wr, NULL);
 	if (ret)
 		trace_xprtrdma_post_send_err(r_xprt, req, ret);
 	return ret;
+=======
+	return ib_post_send(ep->re_id->qp, post_wr, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -561,10 +568,13 @@ void frwr_unmap_sync(struct rpcrdma_xprt *r_xprt, struct rpcrdma_req *req)
 
 	/* On error, the MRs get destroyed once the QP has drained. */
 	trace_xprtrdma_post_linv_err(req, rc);
+<<<<<<< HEAD
 
 	/* Force a connection loss to ensure complete recovery.
 	 */
 	rpcrdma_force_disconnect(ep);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -661,8 +671,11 @@ void frwr_unmap_async(struct rpcrdma_xprt *r_xprt, struct rpcrdma_req *req)
 	 * retransmission.
 	 */
 	rpcrdma_unpin_rqst(req->rl_reply);
+<<<<<<< HEAD
 
 	/* Force a connection loss to ensure complete recovery.
 	 */
 	rpcrdma_force_disconnect(ep);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

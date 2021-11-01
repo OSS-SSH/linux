@@ -732,11 +732,19 @@ static inline size_t fdb_nlmsg_size(void)
 		+ nla_total_size(sizeof(u8)); /* NFEA_ACTIVITY_NOTIFY */
 }
 
+<<<<<<< HEAD
 static int br_fdb_replay_one(struct net_bridge *br, struct notifier_block *nb,
 			     const struct net_bridge_fdb_entry *fdb,
 			     unsigned long action, const void *ctx)
 {
 	const struct net_bridge_port *p = READ_ONCE(fdb->dst);
+=======
+static int br_fdb_replay_one(struct notifier_block *nb,
+			     const struct net_bridge_fdb_entry *fdb,
+			     struct net_device *dev, unsigned long action,
+			     const void *ctx)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct switchdev_notifier_fdb_info item;
 	int err;
 
@@ -745,27 +753,45 @@ static int br_fdb_replay_one(struct net_bridge *br, struct notifier_block *nb,
 	item.added_by_user = test_bit(BR_FDB_ADDED_BY_USER, &fdb->flags);
 	item.offloaded = test_bit(BR_FDB_OFFLOADED, &fdb->flags);
 	item.is_local = test_bit(BR_FDB_LOCAL, &fdb->flags);
+<<<<<<< HEAD
 	item.info.dev = (!p || item.is_local) ? br->dev : p->dev;
+=======
+	item.info.dev = dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	item.info.ctx = ctx;
 
 	err = nb->notifier_call(nb, action, &item);
 	return notifier_to_errno(err);
 }
 
+<<<<<<< HEAD
 int br_fdb_replay(const struct net_device *br_dev, const void *ctx, bool adding,
 		  struct notifier_block *nb)
+=======
+int br_fdb_replay(const struct net_device *br_dev, const struct net_device *dev,
+		  const void *ctx, bool adding, struct notifier_block *nb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_bridge_fdb_entry *fdb;
 	struct net_bridge *br;
 	unsigned long action;
 	int err = 0;
 
+<<<<<<< HEAD
 	if (!nb)
 		return 0;
 
 	if (!netif_is_bridge_master(br_dev))
 		return -EINVAL;
 
+=======
+	if (!netif_is_bridge_master(br_dev))
+		return -EINVAL;
+
+	if (!netif_is_bridge_port(dev) && !netif_is_bridge_master(dev))
+		return -EINVAL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	br = netdev_priv(br_dev);
 
 	if (adding)
@@ -776,7 +802,18 @@ int br_fdb_replay(const struct net_device *br_dev, const void *ctx, bool adding,
 	rcu_read_lock();
 
 	hlist_for_each_entry_rcu(fdb, &br->fdb_list, fdb_node) {
+<<<<<<< HEAD
 		err = br_fdb_replay_one(br, nb, fdb, action, ctx);
+=======
+		const struct net_bridge_port *dst = READ_ONCE(fdb->dst);
+		struct net_device *dst_dev;
+
+		dst_dev = dst ? dst->dev : br->dev;
+		if (dst_dev != br_dev && dst_dev != dev)
+			continue;
+
+		err = br_fdb_replay_one(nb, fdb, dst_dev, action, ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			break;
 	}
@@ -785,6 +822,10 @@ int br_fdb_replay(const struct net_device *br_dev, const void *ctx, bool adding,
 
 	return err;
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL_GPL(br_fdb_replay);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void fdb_notify(struct net_bridge *br,
 		       const struct net_bridge_fdb_entry *fdb, int type,
@@ -1011,8 +1052,12 @@ static int fdb_add_entry(struct net_bridge *br, struct net_bridge_port *source,
 
 static int __br_fdb_add(struct ndmsg *ndm, struct net_bridge *br,
 			struct net_bridge_port *p, const unsigned char *addr,
+<<<<<<< HEAD
 			u16 nlh_flags, u16 vid, struct nlattr *nfea_tb[],
 			struct netlink_ext_ack *extack)
+=======
+			u16 nlh_flags, u16 vid, struct nlattr *nfea_tb[])
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err = 0;
 
@@ -1031,11 +1076,14 @@ static int __br_fdb_add(struct ndmsg *ndm, struct net_bridge *br,
 		rcu_read_unlock();
 		local_bh_enable();
 	} else if (ndm->ndm_flags & NTF_EXT_LEARNED) {
+<<<<<<< HEAD
 		if (!p && !(ndm->ndm_state & NUD_PERMANENT)) {
 			NL_SET_ERR_MSG_MOD(extack,
 					   "FDB entry towards bridge must be permanent");
 			return -EINVAL;
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = br_fdb_external_learn_add(br, p, addr, vid, true);
 	} else {
 		spin_lock_bh(&br->hash_lock);
@@ -1108,11 +1156,17 @@ int br_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
 		}
 
 		/* VID was specified, so use it. */
+<<<<<<< HEAD
 		err = __br_fdb_add(ndm, br, p, addr, nlh_flags, vid, nfea_tb,
 				   extack);
 	} else {
 		err = __br_fdb_add(ndm, br, p, addr, nlh_flags, 0, nfea_tb,
 				   extack);
+=======
+		err = __br_fdb_add(ndm, br, p, addr, nlh_flags, vid, nfea_tb);
+	} else {
+		err = __br_fdb_add(ndm, br, p, addr, nlh_flags, 0, nfea_tb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err || !vg || !vg->num_vlans)
 			goto out;
 
@@ -1124,7 +1178,11 @@ int br_fdb_add(struct ndmsg *ndm, struct nlattr *tb[],
 			if (!br_vlan_should_use(v))
 				continue;
 			err = __br_fdb_add(ndm, br, p, addr, nlh_flags, v->vid,
+<<<<<<< HEAD
 					   nfea_tb, extack);
+=======
+					   nfea_tb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (err)
 				goto out;
 		}
@@ -1281,10 +1339,13 @@ int br_fdb_external_learn_add(struct net_bridge *br, struct net_bridge_port *p,
 
 		if (swdev_notify)
 			flags |= BIT(BR_FDB_ADDED_BY_USER);
+<<<<<<< HEAD
 
 		if (!p)
 			flags |= BIT(BR_FDB_LOCAL);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fdb = fdb_create(br, p, addr, vid, flags);
 		if (!fdb) {
 			err = -ENOMEM;
@@ -1311,9 +1372,12 @@ int br_fdb_external_learn_add(struct net_bridge *br, struct net_bridge_port *p,
 		if (swdev_notify)
 			set_bit(BR_FDB_ADDED_BY_USER, &fdb->flags);
 
+<<<<<<< HEAD
 		if (!p)
 			set_bit(BR_FDB_LOCAL, &fdb->flags);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (modified)
 			fdb_notify(br, fdb, RTM_NEWNEIGH, swdev_notify);
 	}

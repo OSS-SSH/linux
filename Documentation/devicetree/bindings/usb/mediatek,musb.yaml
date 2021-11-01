@@ -19,7 +19,10 @@ properties:
       - enum:
           - mediatek,mt8516-musb
           - mediatek,mt2701-musb
+<<<<<<< HEAD
           - mediatek,mt7623-musb
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - const: mediatek,mtk-musb
 
   reg:

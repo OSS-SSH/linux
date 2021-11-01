@@ -301,13 +301,29 @@ static acpi_status ssam_serdev_setup_via_acpi_crs(struct acpi_resource *rsc,
 						  void *ctx)
 {
 	struct serdev_device *serdev = ctx;
+<<<<<<< HEAD
+=======
+	struct acpi_resource_common_serialbus *serial;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct acpi_resource_uart_serialbus *uart;
 	bool flow_control;
 	int status = 0;
 
+<<<<<<< HEAD
 	if (!serdev_acpi_get_uart_resource(rsc, &uart))
 		return AE_OK;
 
+=======
+	if (rsc->type != ACPI_RESOURCE_TYPE_SERIAL_BUS)
+		return AE_OK;
+
+	serial = &rsc->data.common_serial_bus;
+	if (serial->type != ACPI_RESOURCE_SERIAL_TYPE_UART)
+		return AE_OK;
+
+	uart = &rsc->data.uart_serial_bus;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Set up serdev device. */
 	serdev_device_set_baudrate(serdev, uart->default_baud_rate);
 

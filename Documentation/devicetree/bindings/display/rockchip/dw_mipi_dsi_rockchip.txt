@@ -23,7 +23,10 @@ Required properties:
 Optional properties:
 - phys: from general PHY binding: the phandle for the PHY device.
 - phy-names: Should be "dphy" if phys references an external phy.
+<<<<<<< HEAD
 - #phy-cells: Defined when used as ISP phy, should be 0.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 - power-domains: a phandle to mipi dsi power domain node.
 - resets: list of phandle + reset specifier pairs, as described in [3].
 - reset-names: string reset name, must be "apb".

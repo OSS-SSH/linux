@@ -8,7 +8,10 @@
 #include <linux/debugfs.h>
 #include <linux/delay.h>
 #include <linux/iommu.h>
+<<<<<<< HEAD
 #include <linux/interconnect.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/of_device.h>
 #include <linux/pm_runtime.h>
@@ -619,6 +622,7 @@ static int tegra_plane_atomic_check(struct drm_plane *plane,
 	struct tegra_dc *dc = to_tegra_dc(new_plane_state->crtc);
 	int err;
 
+<<<<<<< HEAD
 	plane_state->peak_memory_bandwidth = 0;
 	plane_state->avg_memory_bandwidth = 0;
 
@@ -627,6 +631,11 @@ static int tegra_plane_atomic_check(struct drm_plane *plane,
 		plane_state->total_peak_memory_bandwidth = 0;
 		return 0;
 	}
+=======
+	/* no need for further checks if the plane is being disabled */
+	if (!new_plane_state->crtc)
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = tegra_plane_format(new_plane_state->fb->format->format,
 				 &plane_state->format,
@@ -814,12 +823,15 @@ static struct drm_plane *tegra_primary_plane_create(struct drm_device *drm,
 	formats = dc->soc->primary_formats;
 	modifiers = dc->soc->modifiers;
 
+<<<<<<< HEAD
 	err = tegra_plane_interconnect_init(plane);
 	if (err) {
 		kfree(plane);
 		return ERR_PTR(err);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = drm_universal_plane_init(drm, &plane->base, possible_crtcs,
 				       &tegra_plane_funcs, formats,
 				       num_formats, modifiers, type, NULL);
@@ -857,6 +869,7 @@ static int tegra_cursor_atomic_check(struct drm_plane *plane,
 {
 	struct drm_plane_state *new_plane_state = drm_atomic_get_new_plane_state(state,
 										 plane);
+<<<<<<< HEAD
 	struct tegra_plane_state *plane_state = to_tegra_plane_state(new_plane_state);
 	struct tegra_plane *tegra = to_tegra_plane(plane);
 	int err;
@@ -869,6 +882,14 @@ static int tegra_cursor_atomic_check(struct drm_plane *plane,
 		plane_state->total_peak_memory_bandwidth = 0;
 		return 0;
 	}
+=======
+	struct tegra_plane *tegra = to_tegra_plane(plane);
+	int err;
+
+	/* no need for further checks if the plane is being disabled */
+	if (!new_plane_state->crtc)
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* scaling not supported for cursor */
 	if ((new_plane_state->src_w >> 16 != new_plane_state->crtc_w) ||
@@ -1048,12 +1069,15 @@ static struct drm_plane *tegra_dc_cursor_plane_create(struct drm_device *drm,
 	if (!dc->soc->has_nvdisplay) {
 		num_formats = ARRAY_SIZE(tegra_legacy_cursor_plane_formats);
 		formats = tegra_legacy_cursor_plane_formats;
+<<<<<<< HEAD
 
 		err = tegra_plane_interconnect_init(plane);
 		if (err) {
 			kfree(plane);
 			return ERR_PTR(err);
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		num_formats = ARRAY_SIZE(tegra_cursor_plane_formats);
 		formats = tegra_cursor_plane_formats;
@@ -1173,12 +1197,15 @@ static struct drm_plane *tegra_dc_overlay_plane_create(struct drm_device *drm,
 	num_formats = dc->soc->num_overlay_formats;
 	formats = dc->soc->overlay_formats;
 
+<<<<<<< HEAD
 	err = tegra_plane_interconnect_init(plane);
 	if (err) {
 		kfree(plane);
 		return ERR_PTR(err);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!cursor)
 		type = DRM_PLANE_TYPE_OVERLAY;
 	else
@@ -1602,11 +1629,14 @@ static int tegra_dc_show_stats(struct seq_file *s, void *data)
 	seq_printf(s, "underflow: %lu\n", dc->stats.underflow);
 	seq_printf(s, "overflow: %lu\n", dc->stats.overflow);
 
+<<<<<<< HEAD
 	seq_printf(s, "frames total: %lu\n", dc->stats.frames_total);
 	seq_printf(s, "vblank total: %lu\n", dc->stats.vblank_total);
 	seq_printf(s, "underflow total: %lu\n", dc->stats.underflow_total);
 	seq_printf(s, "overflow total: %lu\n", dc->stats.overflow_total);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1839,6 +1869,7 @@ static int tegra_dc_wait_idle(struct tegra_dc *dc, unsigned long timeout)
 	return -ETIMEDOUT;
 }
 
+<<<<<<< HEAD
 static void
 tegra_crtc_update_memory_bandwidth(struct drm_crtc *crtc,
 				   struct drm_atomic_state *state,
@@ -1936,6 +1967,8 @@ tegra_crtc_update_memory_bandwidth(struct drm_crtc *crtc,
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void tegra_crtc_atomic_disable(struct drm_crtc *crtc,
 				      struct drm_atomic_state *state)
 {
@@ -2117,8 +2150,11 @@ static void tegra_crtc_atomic_begin(struct drm_crtc *crtc,
 {
 	unsigned long flags;
 
+<<<<<<< HEAD
 	tegra_crtc_update_memory_bandwidth(crtc, state, true);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (crtc->state->event) {
 		spin_lock_irqsave(&crtc->dev->event_lock, flags);
 
@@ -2151,6 +2187,7 @@ static void tegra_crtc_atomic_flush(struct drm_crtc *crtc,
 	value = tegra_dc_readl(dc, DC_CMD_STATE_CONTROL);
 }
 
+<<<<<<< HEAD
 static bool tegra_plane_is_cursor(const struct drm_plane_state *state)
 {
 	const struct tegra_dc_soc_info *soc = to_tegra_dc(state->crtc)->soc;
@@ -2352,6 +2389,9 @@ void tegra_crtc_atomic_post_commit(struct drm_crtc *crtc,
 
 static const struct drm_crtc_helper_funcs tegra_crtc_helper_funcs = {
 	.atomic_check = tegra_crtc_atomic_check,
+=======
+static const struct drm_crtc_helper_funcs tegra_crtc_helper_funcs = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.atomic_begin = tegra_crtc_atomic_begin,
 	.atomic_flush = tegra_crtc_atomic_flush,
 	.atomic_enable = tegra_crtc_atomic_enable,
@@ -2370,7 +2410,10 @@ static irqreturn_t tegra_dc_irq(int irq, void *data)
 		/*
 		dev_dbg(dc->dev, "%s(): frame end\n", __func__);
 		*/
+<<<<<<< HEAD
 		dc->stats.frames_total++;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dc->stats.frames++;
 	}
 
@@ -2379,7 +2422,10 @@ static irqreturn_t tegra_dc_irq(int irq, void *data)
 		dev_dbg(dc->dev, "%s(): vertical blank\n", __func__);
 		*/
 		drm_crtc_handle_vblank(&dc->base);
+<<<<<<< HEAD
 		dc->stats.vblank_total++;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dc->stats.vblank++;
 	}
 
@@ -2387,7 +2433,10 @@ static irqreturn_t tegra_dc_irq(int irq, void *data)
 		/*
 		dev_dbg(dc->dev, "%s(): underflow\n", __func__);
 		*/
+<<<<<<< HEAD
 		dc->stats.underflow_total++;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dc->stats.underflow++;
 	}
 
@@ -2395,13 +2444,19 @@ static irqreturn_t tegra_dc_irq(int irq, void *data)
 		/*
 		dev_dbg(dc->dev, "%s(): overflow\n", __func__);
 		*/
+<<<<<<< HEAD
 		dc->stats.overflow_total++;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dc->stats.overflow++;
 	}
 
 	if (status & HEAD_UF_INT) {
 		dev_dbg_ratelimited(dc->dev, "%s(): head underflow\n", __func__);
+<<<<<<< HEAD
 		dc->stats.underflow_total++;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dc->stats.underflow++;
 	}
 
@@ -2682,9 +2737,13 @@ static const struct tegra_dc_soc_info tegra20_dc_soc_info = {
 	.overlay_formats = tegra20_overlay_formats,
 	.modifiers = tegra20_modifiers,
 	.has_win_a_without_filters = true,
+<<<<<<< HEAD
 	.has_win_b_vfilter_mem_client = true,
 	.has_win_c_without_vert_filter = true,
 	.plane_tiled_memory_bandwidth_x2 = false,
+=======
+	.has_win_c_without_vert_filter = true,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct tegra_dc_soc_info tegra30_dc_soc_info = {
@@ -2704,9 +2763,13 @@ static const struct tegra_dc_soc_info tegra30_dc_soc_info = {
 	.overlay_formats = tegra20_overlay_formats,
 	.modifiers = tegra20_modifiers,
 	.has_win_a_without_filters = false,
+<<<<<<< HEAD
 	.has_win_b_vfilter_mem_client = true,
 	.has_win_c_without_vert_filter = false,
 	.plane_tiled_memory_bandwidth_x2 = true,
+=======
+	.has_win_c_without_vert_filter = false,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct tegra_dc_soc_info tegra114_dc_soc_info = {
@@ -2726,9 +2789,13 @@ static const struct tegra_dc_soc_info tegra114_dc_soc_info = {
 	.overlay_formats = tegra114_overlay_formats,
 	.modifiers = tegra20_modifiers,
 	.has_win_a_without_filters = false,
+<<<<<<< HEAD
 	.has_win_b_vfilter_mem_client = false,
 	.has_win_c_without_vert_filter = false,
 	.plane_tiled_memory_bandwidth_x2 = true,
+=======
+	.has_win_c_without_vert_filter = false,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct tegra_dc_soc_info tegra124_dc_soc_info = {
@@ -2748,9 +2815,13 @@ static const struct tegra_dc_soc_info tegra124_dc_soc_info = {
 	.overlay_formats = tegra124_overlay_formats,
 	.modifiers = tegra124_modifiers,
 	.has_win_a_without_filters = false,
+<<<<<<< HEAD
 	.has_win_b_vfilter_mem_client = false,
 	.has_win_c_without_vert_filter = false,
 	.plane_tiled_memory_bandwidth_x2 = false,
+=======
+	.has_win_c_without_vert_filter = false,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct tegra_dc_soc_info tegra210_dc_soc_info = {
@@ -2770,9 +2841,13 @@ static const struct tegra_dc_soc_info tegra210_dc_soc_info = {
 	.overlay_formats = tegra114_overlay_formats,
 	.modifiers = tegra124_modifiers,
 	.has_win_a_without_filters = false,
+<<<<<<< HEAD
 	.has_win_b_vfilter_mem_client = false,
 	.has_win_c_without_vert_filter = false,
 	.plane_tiled_memory_bandwidth_x2 = false,
+=======
+	.has_win_c_without_vert_filter = false,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct tegra_windowgroup_soc tegra186_dc_wgrps[] = {
@@ -2822,7 +2897,10 @@ static const struct tegra_dc_soc_info tegra186_dc_soc_info = {
 	.has_nvdisplay = true,
 	.wgrps = tegra186_dc_wgrps,
 	.num_wgrps = ARRAY_SIZE(tegra186_dc_wgrps),
+<<<<<<< HEAD
 	.plane_tiled_memory_bandwidth_x2 = false,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct tegra_windowgroup_soc tegra194_dc_wgrps[] = {
@@ -2872,7 +2950,10 @@ static const struct tegra_dc_soc_info tegra194_dc_soc_info = {
 	.has_nvdisplay = true,
 	.wgrps = tegra194_dc_wgrps,
 	.num_wgrps = ARRAY_SIZE(tegra194_dc_wgrps),
+<<<<<<< HEAD
 	.plane_tiled_memory_bandwidth_x2 = false,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct of_device_id tegra_dc_of_match[] = {

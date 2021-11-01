@@ -43,8 +43,11 @@
 #include <linux/sched.h>
 #include <linux/cred.h>
 #include <linux/errno.h>
+<<<<<<< HEAD
 #include <linux/freezer.h>
 #include <linux/kthread.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/mm.h>
 #include <linux/memblock.h>
 #include <linux/pagemap.h>
@@ -117,7 +120,11 @@ static struct ctl_table xen_root[] = {
 #define EXTENT_ORDER (fls(XEN_PFN_PER_PAGE) - 1)
 
 /*
+<<<<<<< HEAD
  * balloon_thread() state:
+=======
+ * balloon_process() state:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * BP_DONE: done or nothing to do,
  * BP_WAIT: wait to be rescheduled,
@@ -132,8 +139,11 @@ enum bp_state {
 	BP_ECANCELED
 };
 
+<<<<<<< HEAD
 /* Main waiting point for xen-balloon thread. */
 static DECLARE_WAIT_QUEUE_HEAD(balloon_thread_wq);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static DEFINE_MUTEX(balloon_mutex);
 
@@ -148,6 +158,13 @@ static xen_pfn_t frame_list[PAGE_SIZE / sizeof(xen_pfn_t)];
 static LIST_HEAD(ballooned_pages);
 static DECLARE_WAIT_QUEUE_HEAD(balloon_wq);
 
+<<<<<<< HEAD
+=======
+/* Main work function, always executed in process context. */
+static void balloon_process(struct work_struct *work);
+static DECLARE_DELAYED_WORK(balloon_worker, balloon_process);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* When ballooning out (allocating memory to return to Xen) we don't really
    want the kernel to try too hard since that can trigger the oom killer. */
 #define GFP_BALLOON \
@@ -366,7 +383,11 @@ static void xen_online_page(struct page *page, unsigned int order)
 static int xen_memory_notifier(struct notifier_block *nb, unsigned long val, void *v)
 {
 	if (val == MEM_ONLINE)
+<<<<<<< HEAD
 		wake_up(&balloon_thread_wq);
+=======
+		schedule_delayed_work(&balloon_worker, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return NOTIFY_OK;
 }
@@ -491,6 +512,7 @@ static enum bp_state decrease_reservation(unsigned long nr_pages, gfp_t gfp)
 }
 
 /*
+<<<<<<< HEAD
  * Stop waiting if either state is BP_DONE and ballooning action is
  * needed, or if the credit has changed while state is not BP_DONE.
  */
@@ -504,10 +526,14 @@ static bool balloon_thread_cond(enum bp_state state, long credit)
 
 /*
  * As this is a kthread it is guaranteed to run as a single instance only.
+=======
+ * As this is a work item it is guaranteed to run as a single instance only.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * We may of course race updates of the target counts (which are protected
  * by the balloon lock), or with changes to the Xen hard limit, but we will
  * recover from these in time.
  */
+<<<<<<< HEAD
 static int balloon_thread(void *unused)
 {
 	enum bp_state state = BP_DONE;
@@ -537,6 +563,15 @@ static int balloon_thread(void *unused)
 		if (kthread_should_stop())
 			return 0;
 
+=======
+static void balloon_process(struct work_struct *work)
+{
+	enum bp_state state = BP_DONE;
+	long credit;
+
+
+	do {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mutex_lock(&balloon_mutex);
 
 		credit = current_credit();
@@ -563,7 +598,16 @@ static int balloon_thread(void *unused)
 		mutex_unlock(&balloon_mutex);
 
 		cond_resched();
+<<<<<<< HEAD
 	}
+=======
+
+	} while (credit && state == BP_DONE);
+
+	/* Schedule more work if there is some still to be done. */
+	if (state == BP_EAGAIN)
+		schedule_delayed_work(&balloon_worker, balloon_stats.schedule_delay * HZ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Resets the Xen limit, sets new target, and kicks off processing. */
@@ -571,7 +615,11 @@ void balloon_set_new_target(unsigned long target)
 {
 	/* No need for lock. Not read-modify-write updates. */
 	balloon_stats.target_pages = target;
+<<<<<<< HEAD
 	wake_up(&balloon_thread_wq);
+=======
+	schedule_delayed_work(&balloon_worker, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(balloon_set_new_target);
 
@@ -676,7 +724,11 @@ void free_xenballooned_pages(int nr_pages, struct page **pages)
 
 	/* The balloon may be too large now. Shrink it if needed. */
 	if (current_credit())
+<<<<<<< HEAD
 		wake_up(&balloon_thread_wq);
+=======
+		schedule_delayed_work(&balloon_worker, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_unlock(&balloon_mutex);
 }
@@ -708,8 +760,11 @@ static void __init balloon_add_region(unsigned long start_pfn,
 
 static int __init balloon_init(void)
 {
+<<<<<<< HEAD
 	struct task_struct *task;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!xen_domain())
 		return -ENODEV;
 
@@ -753,12 +808,15 @@ static int __init balloon_init(void)
 	}
 #endif
 
+<<<<<<< HEAD
 	task = kthread_run(balloon_thread, NULL, "xen-balloon");
 	if (IS_ERR(task)) {
 		pr_err("xen-balloon thread could not be started, ballooning will not work!\n");
 		return PTR_ERR(task);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Init the xen-balloon driver. */
 	xen_balloon_init();
 

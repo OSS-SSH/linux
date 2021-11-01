@@ -10,7 +10,10 @@
 #include <kunit/test-bug.h>
 #include <linux/kernel.h>
 #include <linux/kref.h>
+<<<<<<< HEAD
 #include <linux/moduleparam.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/sched/debug.h>
 #include <linux/sched.h>
 
@@ -53,6 +56,7 @@ EXPORT_SYMBOL_GPL(__kunit_fail_current_test);
 #endif
 
 /*
+<<<<<<< HEAD
  * KUnit statistic mode:
  * 0 - disabled
  * 1 - only when there is more than one subtest
@@ -98,6 +102,8 @@ static void kunit_print_test_stats(struct kunit *test,
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Append formatted message to log, size of which is limited to
  * KUNIT_LOG_SIZE bytes (including null terminating byte).
  */
@@ -439,6 +445,7 @@ static void kunit_run_case_catch_errors(struct kunit_suite *suite,
 		test_case->status = KUNIT_SUCCESS;
 }
 
+<<<<<<< HEAD
 static void kunit_print_suite_stats(struct kunit_suite *suite,
 				    struct kunit_result_stats suite_stats,
 				    struct kunit_result_stats param_stats)
@@ -490,18 +497,26 @@ static void kunit_accumulate_stats(struct kunit_result_stats *total,
 	total->total += add.total;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int kunit_run_tests(struct kunit_suite *suite)
 {
 	char param_desc[KUNIT_PARAM_DESC_SIZE];
 	struct kunit_case *test_case;
+<<<<<<< HEAD
 	struct kunit_result_stats suite_stats = { 0 };
 	struct kunit_result_stats total_stats = { 0 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kunit_print_subtest_start(suite);
 
 	kunit_suite_for_each_test_case(suite, test_case) {
 		struct kunit test = { .param_value = NULL, .param_index = 0 };
+<<<<<<< HEAD
 		struct kunit_result_stats param_stats = { 0 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		test_case->status = KUNIT_SKIPPED;
 
 		if (test_case->generate_params) {
@@ -531,6 +546,7 @@ int kunit_run_tests(struct kunit_suite *suite)
 				test.param_value = test_case->generate_params(test.param_value, param_desc);
 				test.param_index++;
 			}
+<<<<<<< HEAD
 
 			kunit_update_stats(&param_stats, test.status);
 
@@ -538,16 +554,25 @@ int kunit_run_tests(struct kunit_suite *suite)
 
 		kunit_print_test_stats(&test, param_stats);
 
+=======
+		} while (test.param_value);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kunit_print_ok_not_ok(&test, true, test_case->status,
 				      kunit_test_case_num(suite, test_case),
 				      test_case->name,
 				      test.status_comment);
+<<<<<<< HEAD
 
 		kunit_update_stats(&suite_stats, test_case->status);
 		kunit_accumulate_stats(&total_stats, param_stats);
 	}
 
 	kunit_print_suite_stats(suite, suite_stats, total_stats);
+=======
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kunit_print_subtest_end(suite);
 
 	return 0;

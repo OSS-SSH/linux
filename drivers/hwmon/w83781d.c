@@ -1571,6 +1571,7 @@ static const struct i2c_device_id w83781d_ids[] = {
 };
 MODULE_DEVICE_TABLE(i2c, w83781d_ids);
 
+<<<<<<< HEAD
 static const struct of_device_id w83781d_of_match[] = {
 	{ .compatible = "winbond,w83781d" },
 	{ .compatible = "winbond,w83781g" },
@@ -1581,11 +1582,16 @@ static const struct of_device_id w83781d_of_match[] = {
 };
 MODULE_DEVICE_TABLE(of, w83781d_of_match);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct i2c_driver w83781d_driver = {
 	.class		= I2C_CLASS_HWMON,
 	.driver = {
 		.name = "w83781d",
+<<<<<<< HEAD
 		.of_match_table = w83781d_of_match,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	.probe_new	= w83781d_probe,
 	.remove		= w83781d_remove,

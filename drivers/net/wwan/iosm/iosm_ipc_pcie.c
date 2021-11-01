@@ -479,7 +479,10 @@ static struct pci_driver iosm_ipc_driver = {
 	},
 	.id_table = iosm_ipc_ids,
 };
+<<<<<<< HEAD
 module_pci_driver(iosm_ipc_driver);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int ipc_pcie_addr_map(struct iosm_pcie *ipc_pcie, unsigned char *data,
 		      size_t size, dma_addr_t *mapping, int direction)
@@ -561,3 +564,24 @@ void ipc_pcie_kfree_skb(struct iosm_pcie *ipc_pcie, struct sk_buff *skb)
 	IPC_CB(skb)->mapping = 0;
 	dev_kfree_skb(skb);
 }
+<<<<<<< HEAD
+=======
+
+static int __init iosm_ipc_driver_init(void)
+{
+	if (pci_register_driver(&iosm_ipc_driver)) {
+		pr_err("registering of IOSM PCIe driver failed");
+		return -1;
+	}
+
+	return 0;
+}
+
+static void __exit iosm_ipc_driver_exit(void)
+{
+	pci_unregister_driver(&iosm_ipc_driver);
+}
+
+module_init(iosm_ipc_driver_init);
+module_exit(iosm_ipc_driver_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

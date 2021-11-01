@@ -480,7 +480,11 @@ static union recv_frame *portctrl(struct adapter *adapter, union recv_frame *pre
 			prtnframe = precv_frame;
 
 			/* get ether_type */
+<<<<<<< HEAD
 			ptr = ptr + pfhdr->attrib.hdrlen + pfhdr->attrib.iv_len + LLC_HEADER_LENGTH;
+=======
+			ptr = ptr+pfhdr->attrib.hdrlen+pfhdr->attrib.iv_len+LLC_HEADER_SIZE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			memcpy(&be_tmp, ptr, 2);
 			ether_type = ntohs(be_tmp);
 
@@ -1485,7 +1489,11 @@ static signed int validate_recv_frame(struct adapter *adapter, union recv_frame 
 			/*  dump eapol */
 			rtw_hal_get_def_var(adapter, HAL_DEF_DBG_DUMP_RXPKT, &(bDumpRxPkt));
 			/*  get ether_type */
+<<<<<<< HEAD
 			memcpy(&eth_type, ptr + pattrib->hdrlen + pattrib->iv_len + LLC_HEADER_LENGTH, 2);
+=======
+			memcpy(&eth_type, ptr + pattrib->hdrlen + pattrib->iv_len + LLC_HEADER_SIZE, 2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			eth_type = ntohs((unsigned short) eth_type);
 #endif
 		}
@@ -1588,7 +1596,11 @@ static int amsdu_to_msdu(struct adapter *padapter, union recv_frame *prframe)
 		/* Offset 12 denote 2 mac address */
 		nSubframe_Length = get_unaligned_be16(pdata + 12);
 
+<<<<<<< HEAD
 		if (a_len < ETH_HLEN + nSubframe_Length)
+=======
+		if (a_len < (ETHERNET_HEADER_SIZE + nSubframe_Length))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 
 		sub_pkt = rtw_os_alloc_msdu_pkt(prframe, nSubframe_Length, pdata);

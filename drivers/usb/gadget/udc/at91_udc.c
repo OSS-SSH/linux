@@ -1876,9 +1876,13 @@ static int at91udc_probe(struct platform_device *pdev)
 	clk_disable(udc->iclk);
 
 	/* request UDC and maybe VBUS irqs */
+<<<<<<< HEAD
 	udc->udp_irq = retval = platform_get_irq(pdev, 0);
 	if (retval < 0)
 		goto err_unprepare_iclk;
+=======
+	udc->udp_irq = platform_get_irq(pdev, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	retval = devm_request_irq(dev, udc->udp_irq, at91_udc_irq, 0,
 				  driver_name, udc);
 	if (retval) {

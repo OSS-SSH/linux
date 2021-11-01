@@ -204,6 +204,12 @@ struct tegra_slink_data {
 	struct dma_async_tx_descriptor		*tx_dma_desc;
 };
 
+<<<<<<< HEAD
+=======
+static int tegra_slink_runtime_suspend(struct device *dev);
+static int tegra_slink_runtime_resume(struct device *dev);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline u32 tegra_slink_readl(struct tegra_slink_data *tspi,
 		unsigned long reg)
 {
@@ -1058,12 +1064,40 @@ static int tegra_slink_probe(struct platform_device *pdev)
 		dev_err(&pdev->dev, "Can not get clock %d\n", ret);
 		goto exit_free_master;
 	}
+<<<<<<< HEAD
+=======
+	ret = clk_prepare(tspi->clk);
+	if (ret < 0) {
+		dev_err(&pdev->dev, "Clock prepare failed %d\n", ret);
+		goto exit_free_master;
+	}
+	ret = clk_enable(tspi->clk);
+	if (ret < 0) {
+		dev_err(&pdev->dev, "Clock enable failed %d\n", ret);
+		goto exit_clk_unprepare;
+	}
+
+	spi_irq = platform_get_irq(pdev, 0);
+	tspi->irq = spi_irq;
+	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
+			tegra_slink_isr_thread, IRQF_ONESHOT,
+			dev_name(&pdev->dev), tspi);
+	if (ret < 0) {
+		dev_err(&pdev->dev, "Failed to register ISR for IRQ %d\n",
+					tspi->irq);
+		goto exit_clk_disable;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	tspi->rst = devm_reset_control_get_exclusive(&pdev->dev, "spi");
 	if (IS_ERR(tspi->rst)) {
 		dev_err(&pdev->dev, "can not get reset\n");
 		ret = PTR_ERR(tspi->rst);
+<<<<<<< HEAD
 		goto exit_free_master;
+=======
+		goto exit_free_irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	tspi->max_buf_size = SLINK_FIFO_DEPTH << 2;
@@ -1071,7 +1105,11 @@ static int tegra_slink_probe(struct platform_device *pdev)
 
 	ret = tegra_slink_init_dma_param(tspi, true);
 	if (ret < 0)
+<<<<<<< HEAD
 		goto exit_free_master;
+=======
+		goto exit_free_irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = tegra_slink_init_dma_param(tspi, false);
 	if (ret < 0)
 		goto exit_rx_dma_free;
@@ -1082,9 +1120,22 @@ static int tegra_slink_probe(struct platform_device *pdev)
 	init_completion(&tspi->xfer_completion);
 
 	pm_runtime_enable(&pdev->dev);
+<<<<<<< HEAD
 	ret = pm_runtime_resume_and_get(&pdev->dev);
 	if (ret) {
 		dev_err(&pdev->dev, "pm runtime get failed, e = %d\n", ret);
+=======
+	if (!pm_runtime_enabled(&pdev->dev)) {
+		ret = tegra_slink_runtime_resume(&pdev->dev);
+		if (ret)
+			goto exit_pm_disable;
+	}
+
+	ret = pm_runtime_get_sync(&pdev->dev);
+	if (ret < 0) {
+		dev_err(&pdev->dev, "pm runtime get failed, e = %d\n", ret);
+		pm_runtime_put_noidle(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto exit_pm_disable;
 	}
 
@@ -1092,6 +1143,7 @@ static int tegra_slink_probe(struct platform_device *pdev)
 	udelay(2);
 	reset_control_deassert(tspi->rst);
 
+<<<<<<< HEAD
 	spi_irq = platform_get_irq(pdev, 0);
 	tspi->irq = spi_irq;
 	ret = request_threaded_irq(tspi->irq, tegra_slink_isr,
@@ -1103,10 +1155,13 @@ static int tegra_slink_probe(struct platform_device *pdev)
 		goto exit_pm_put;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tspi->def_command_reg  = SLINK_M_S;
 	tspi->def_command2_reg = SLINK_CS_ACTIVE_BETWEEN;
 	tegra_slink_writel(tspi, tspi->def_command_reg, SLINK_COMMAND);
 	tegra_slink_writel(tspi, tspi->def_command2_reg, SLINK_COMMAND2);
+<<<<<<< HEAD
 
 	master->dev.of_node = pdev->dev.of_node;
 	ret = spi_register_master(master);
@@ -1129,6 +1184,31 @@ exit_pm_disable:
 	tegra_slink_deinit_dma_param(tspi, false);
 exit_rx_dma_free:
 	tegra_slink_deinit_dma_param(tspi, true);
+=======
+	pm_runtime_put(&pdev->dev);
+
+	master->dev.of_node = pdev->dev.of_node;
+	ret = devm_spi_register_master(&pdev->dev, master);
+	if (ret < 0) {
+		dev_err(&pdev->dev, "can not register to master err %d\n", ret);
+		goto exit_pm_disable;
+	}
+	return ret;
+
+exit_pm_disable:
+	pm_runtime_disable(&pdev->dev);
+	if (!pm_runtime_status_suspended(&pdev->dev))
+		tegra_slink_runtime_suspend(&pdev->dev);
+	tegra_slink_deinit_dma_param(tspi, false);
+exit_rx_dma_free:
+	tegra_slink_deinit_dma_param(tspi, true);
+exit_free_irq:
+	free_irq(spi_irq, tspi);
+exit_clk_disable:
+	clk_disable(tspi->clk);
+exit_clk_unprepare:
+	clk_unprepare(tspi->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 exit_free_master:
 	spi_master_put(master);
 	return ret;
@@ -1139,11 +1219,18 @@ static int tegra_slink_remove(struct platform_device *pdev)
 	struct spi_master *master = platform_get_drvdata(pdev);
 	struct tegra_slink_data	*tspi = spi_master_get_devdata(master);
 
+<<<<<<< HEAD
 	spi_unregister_master(master);
 
 	free_irq(tspi->irq, tspi);
 
 	pm_runtime_disable(&pdev->dev);
+=======
+	free_irq(tspi->irq, tspi);
+
+	clk_disable(tspi->clk);
+	clk_unprepare(tspi->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (tspi->tx_dma_chan)
 		tegra_slink_deinit_dma_param(tspi, false);
@@ -1151,6 +1238,13 @@ static int tegra_slink_remove(struct platform_device *pdev)
 	if (tspi->rx_dma_chan)
 		tegra_slink_deinit_dma_param(tspi, true);
 
+<<<<<<< HEAD
+=======
+	pm_runtime_disable(&pdev->dev);
+	if (!pm_runtime_status_suspended(&pdev->dev))
+		tegra_slink_runtime_suspend(&pdev->dev);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1182,7 +1276,11 @@ static int tegra_slink_resume(struct device *dev)
 }
 #endif
 
+<<<<<<< HEAD
 static int __maybe_unused tegra_slink_runtime_suspend(struct device *dev)
+=======
+static int tegra_slink_runtime_suspend(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct spi_master *master = dev_get_drvdata(dev);
 	struct tegra_slink_data *tspi = spi_master_get_devdata(master);

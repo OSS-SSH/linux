@@ -25,15 +25,23 @@
 do { \
 	unsigned long hwcaps = getauxval(AT_HWCAP); \
 	/* data key instructions are not in NOP space. This prevents a SIGILL */ \
+<<<<<<< HEAD
 	if (!(hwcaps & HWCAP_PACA))					\
 		SKIP(return, "PAUTH not enabled"); \
+=======
+	ASSERT_NE(0, hwcaps & HWCAP_PACA) TH_LOG("PAUTH not enabled"); \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } while (0)
 #define ASSERT_GENERIC_PAUTH_ENABLED() \
 do { \
 	unsigned long hwcaps = getauxval(AT_HWCAP); \
 	/* generic key instructions are not in NOP space. This prevents a SIGILL */ \
+<<<<<<< HEAD
 	if (!(hwcaps & HWCAP_PACG)) \
 		SKIP(return, "Generic PAUTH not enabled");	\
+=======
+	ASSERT_NE(0, hwcaps & HWCAP_PACG) TH_LOG("Generic PAUTH not enabled"); \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } while (0)
 
 void sign_specific(struct signatures *sign, size_t val)
@@ -258,7 +266,11 @@ TEST(single_thread_different_keys)
 	unsigned long hwcaps = getauxval(AT_HWCAP);
 
 	/* generic and data key instructions are not in NOP space. This prevents a SIGILL */
+<<<<<<< HEAD
 	ASSERT_PAUTH_ENABLED();
+=======
+	ASSERT_NE(0, hwcaps & HWCAP_PACA) TH_LOG("PAUTH not enabled");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!(hwcaps & HWCAP_PACG)) {
 		TH_LOG("WARNING: Generic PAUTH not enabled. Skipping generic key checks");
 		nkeys = NKEYS - 1;
@@ -301,7 +313,11 @@ TEST(exec_changed_keys)
 	unsigned long hwcaps = getauxval(AT_HWCAP);
 
 	/* generic and data key instructions are not in NOP space. This prevents a SIGILL */
+<<<<<<< HEAD
 	ASSERT_PAUTH_ENABLED();
+=======
+	ASSERT_NE(0, hwcaps & HWCAP_PACA) TH_LOG("PAUTH not enabled");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!(hwcaps & HWCAP_PACG)) {
 		TH_LOG("WARNING: Generic PAUTH not enabled. Skipping generic key checks");
 		nkeys = NKEYS - 1;

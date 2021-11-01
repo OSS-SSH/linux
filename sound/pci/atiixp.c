@@ -1530,14 +1530,38 @@ static void snd_atiixp_proc_init(struct atiixp *chip)
  * destructor
  */
 
+<<<<<<< HEAD
 static void snd_atiixp_free(struct snd_card *card)
 {
 	snd_atiixp_chip_stop(card->private_data);
+=======
+static int snd_atiixp_free(struct atiixp *chip)
+{
+	if (chip->irq < 0)
+		goto __hw_end;
+	snd_atiixp_chip_stop(chip);
+
+      __hw_end:
+	if (chip->irq >= 0)
+		free_irq(chip->irq, chip);
+	iounmap(chip->remap_addr);
+	pci_release_regions(chip->pci);
+	pci_disable_device(chip->pci);
+	kfree(chip);
+	return 0;
+}
+
+static int snd_atiixp_dev_free(struct snd_device *device)
+{
+	struct atiixp *chip = device->device_data;
+	return snd_atiixp_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
  * constructor for chip instance
  */
+<<<<<<< HEAD
 static int snd_atiixp_init(struct snd_card *card, struct pci_dev *pci)
 {
 	struct atiixp *chip = card->private_data;
@@ -1547,11 +1571,34 @@ static int snd_atiixp_init(struct snd_card *card, struct pci_dev *pci)
 	if (err < 0)
 		return err;
 
+=======
+static int snd_atiixp_create(struct snd_card *card,
+			     struct pci_dev *pci,
+			     struct atiixp **r_chip)
+{
+	static const struct snd_device_ops ops = {
+		.dev_free =	snd_atiixp_dev_free,
+	};
+	struct atiixp *chip;
+	int err;
+
+	err = pci_enable_device(pci);
+	if (err < 0)
+		return err;
+
+	chip = kzalloc(sizeof(*chip), GFP_KERNEL);
+	if (chip == NULL) {
+		pci_disable_device(pci);
+		return -ENOMEM;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_init(&chip->reg_lock);
 	mutex_init(&chip->open_mutex);
 	chip->card = card;
 	chip->pci = pci;
 	chip->irq = -1;
+<<<<<<< HEAD
 	err = pcim_iomap_regions(pci, 1 << 0, "ATI IXP AC97");
 	if (err < 0)
 		return err;
@@ -1561,13 +1608,45 @@ static int snd_atiixp_init(struct snd_card *card, struct pci_dev *pci)
 	if (devm_request_irq(&pci->dev, pci->irq, snd_atiixp_interrupt,
 			     IRQF_SHARED, KBUILD_MODNAME, chip)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+=======
+	err = pci_request_regions(pci, "ATI IXP AC97");
+	if (err < 0) {
+		pci_disable_device(pci);
+		kfree(chip);
+		return err;
+	}
+	chip->addr = pci_resource_start(pci, 0);
+	chip->remap_addr = pci_ioremap_bar(pci, 0);
+	if (chip->remap_addr == NULL) {
+		dev_err(card->dev, "AC'97 space ioremap problem\n");
+		snd_atiixp_free(chip);
+		return -EIO;
+	}
+
+	if (request_irq(pci->irq, snd_atiixp_interrupt, IRQF_SHARED,
+			KBUILD_MODNAME, chip)) {
+		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+		snd_atiixp_free(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 	chip->irq = pci->irq;
 	card->sync_irq = chip->irq;
+<<<<<<< HEAD
 	card->private_free = snd_atiixp_free;
 	pci_set_master(pci);
 
+=======
+	pci_set_master(pci);
+
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, chip, &ops);
+	if (err < 0) {
+		snd_atiixp_free(chip);
+		return err;
+	}
+
+	*r_chip = chip;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1579,6 +1658,7 @@ static int snd_atiixp_probe(struct pci_dev *pci,
 	struct atiixp *chip;
 	int err;
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(&pci->dev, index, id, THIS_MODULE,
 				sizeof(*chip), &card);
 	if (err < 0)
@@ -1594,16 +1674,40 @@ static int snd_atiixp_probe(struct pci_dev *pci,
 	err = snd_atiixp_aclink_reset(chip);
 	if (err < 0)
 		return err;
+=======
+	err = snd_card_new(&pci->dev, index, id, THIS_MODULE, 0, &card);
+	if (err < 0)
+		return err;
+
+	strcpy(card->driver, spdif_aclink ? "ATIIXP" : "ATIIXP-SPDMA");
+	strcpy(card->shortname, "ATI IXP");
+	err = snd_atiixp_create(card, pci, &chip);
+	if (err < 0)
+		goto __error;
+	card->private_data = chip;
+
+	err = snd_atiixp_aclink_reset(chip);
+	if (err < 0)
+		goto __error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	chip->spdif_over_aclink = spdif_aclink;
 
 	err = snd_atiixp_mixer_new(chip, ac97_clock, ac97_quirk);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	err = snd_atiixp_pcm_new(chip);
 	if (err < 0)
 		return err;
+=======
+		goto __error;
+
+	err = snd_atiixp_pcm_new(chip);
+	if (err < 0)
+		goto __error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	
 	snd_atiixp_proc_init(chip);
 
@@ -1617,16 +1721,36 @@ static int snd_atiixp_probe(struct pci_dev *pci,
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	pci_set_drvdata(pci, card);
 	return 0;
+=======
+		goto __error;
+
+	pci_set_drvdata(pci, card);
+	return 0;
+
+ __error:
+	snd_card_free(card);
+	return err;
+}
+
+static void snd_atiixp_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct pci_driver atiixp_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_atiixp_ids,
 	.probe = snd_atiixp_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_atiixp_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver = {
 		.pm = SND_ATIIXP_PM_OPS,
 	},

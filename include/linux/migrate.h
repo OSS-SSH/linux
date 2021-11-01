@@ -19,11 +19,14 @@ struct migration_target_control;
  */
 #define MIGRATEPAGE_SUCCESS		0
 
+<<<<<<< HEAD
 /*
  * Keep sync with:
  * - macro MIGRATE_REASON in include/trace/events/migrate.h
  * - migrate_reason_names[MR_TYPES] in mm/debug.c
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum migrate_reason {
 	MR_COMPACTION,
 	MR_MEMORY_FAILURE,
@@ -33,10 +36,17 @@ enum migrate_reason {
 	MR_NUMA_MISPLACED,
 	MR_CONTIG_RANGE,
 	MR_LONGTERM_PIN,
+<<<<<<< HEAD
 	MR_DEMOTION,
 	MR_TYPES
 };
 
+=======
+	MR_TYPES
+};
+
+/* In mm/debug.c; also keep sync with include/trace/events/migrate.h */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern const char *migrate_reason_names[MR_TYPES];
 
 #ifdef CONFIG_MIGRATION
@@ -46,8 +56,12 @@ extern int migrate_page(struct address_space *mapping,
 			struct page *newpage, struct page *page,
 			enum migrate_mode mode);
 extern int migrate_pages(struct list_head *l, new_page_t new, free_page_t free,
+<<<<<<< HEAD
 		unsigned long private, enum migrate_mode mode, int reason,
 		unsigned int *ret_succeeded);
+=======
+		unsigned long private, enum migrate_mode mode, int reason);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern struct page *alloc_migration_target(struct page *page, unsigned long private);
 extern int isolate_movable_page(struct page *page, isolate_mode_t mode);
 
@@ -57,12 +71,20 @@ extern int migrate_huge_page_move_mapping(struct address_space *mapping,
 				  struct page *newpage, struct page *page);
 extern int migrate_page_move_mapping(struct address_space *mapping,
 		struct page *newpage, struct page *page, int extra_count);
+<<<<<<< HEAD
+=======
+extern void copy_huge_page(struct page *dst, struct page *src);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 
 static inline void putback_movable_pages(struct list_head *l) {}
 static inline int migrate_pages(struct list_head *l, new_page_t new,
 		free_page_t free, unsigned long private, enum migrate_mode mode,
+<<<<<<< HEAD
 		int reason, unsigned int *ret_succeeded)
+=======
+		int reason)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ return -ENOSYS; }
 static inline struct page *alloc_migration_target(struct page *page,
 		unsigned long private)
@@ -82,6 +104,13 @@ static inline int migrate_huge_page_move_mapping(struct address_space *mapping,
 {
 	return -ENOSYS;
 }
+<<<<<<< HEAD
+=======
+
+static inline void copy_huge_page(struct page *dst, struct page *src)
+{
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* CONFIG_MIGRATION */
 
 #ifdef CONFIG_COMPACTION
@@ -172,6 +201,7 @@ struct migrate_vma {
 int migrate_vma_setup(struct migrate_vma *args);
 void migrate_vma_pages(struct migrate_vma *migrate);
 void migrate_vma_finalize(struct migrate_vma *migrate);
+<<<<<<< HEAD
 int next_demotion_node(int node);
 
 #else /* CONFIG_MIGRATION disabled: */
@@ -180,6 +210,8 @@ static inline int next_demotion_node(int node)
 {
 	return NUMA_NO_NODE;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* CONFIG_MIGRATION */
 

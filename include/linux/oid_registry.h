@@ -70,9 +70,12 @@ enum OID {
 
 	OID_spnego,			/* 1.3.6.1.5.5.2 */
 
+<<<<<<< HEAD
 	OID_IAKerb,			/* 1.3.6.1.5.2.5 */
 	OID_PKU2U,			/* 1.3.5.1.5.2.7 */
 	OID_Scram,			/* 1.3.6.1.5.5.14 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	OID_certAuthInfoAccess,		/* 1.3.6.1.5.5.7.1.1 */
 	OID_sha1,			/* 1.3.14.3.2.26 */
 	OID_id_ansip384r1,		/* 1.3.132.0.34 */
@@ -107,10 +110,13 @@ enum OID {
 	OID_authorityKeyIdentifier,	/* 2.5.29.35 */
 	OID_extKeyUsage,		/* 2.5.29.37 */
 
+<<<<<<< HEAD
 	/* Heimdal mechanisms */
 	OID_NetlogonMechanism,		/* 1.2.752.43.14.2 */
 	OID_appleLocalKdcSupported,	/* 1.2.752.43.14.3 */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* EC-RDSA */
 	OID_gostCPSignA,		/* 1.2.643.2.2.35.1 */
 	OID_gostCPSignB,		/* 1.2.643.2.2.35.2 */

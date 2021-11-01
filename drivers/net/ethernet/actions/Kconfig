@@ -2,8 +2,13 @@
 
 config NET_VENDOR_ACTIONS
 	bool "Actions Semi devices"
+<<<<<<< HEAD
 	depends on ARCH_ACTIONS || COMPILE_TEST
 	default ARCH_ACTIONS
+=======
+	default y
+	depends on ARCH_ACTIONS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  If you have a network (Ethernet) card belonging to this class, say Y.
 

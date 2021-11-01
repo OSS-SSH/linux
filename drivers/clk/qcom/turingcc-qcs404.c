@@ -110,6 +110,7 @@ static int turingcc_probe(struct platform_device *pdev)
 {
 	int ret;
 
+<<<<<<< HEAD
 	ret = devm_pm_runtime_enable(&pdev->dev);
 	if (ret)
 		return ret;
@@ -117,16 +118,46 @@ static int turingcc_probe(struct platform_device *pdev)
 	ret = devm_pm_clk_create(&pdev->dev);
 	if (ret)
 		return ret;
+=======
+	pm_runtime_enable(&pdev->dev);
+	ret = pm_clk_create(&pdev->dev);
+	if (ret)
+		goto disable_pm_runtime;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = pm_clk_add(&pdev->dev, NULL);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto destroy_pm_clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = qcom_cc_probe(pdev, &turingcc_desc);
 	if (ret < 0)
+<<<<<<< HEAD
 		return ret;
+=======
+		goto destroy_pm_clk;
+
+	return 0;
+
+destroy_pm_clk:
+	pm_clk_destroy(&pdev->dev);
+
+disable_pm_runtime:
+	pm_runtime_disable(&pdev->dev);
+
+	return ret;
+}
+
+static int turingcc_remove(struct platform_device *pdev)
+{
+	pm_clk_destroy(&pdev->dev);
+	pm_runtime_disable(&pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -143,6 +174,10 @@ MODULE_DEVICE_TABLE(of, turingcc_match_table);
 
 static struct platform_driver turingcc_driver = {
 	.probe		= turingcc_probe,
+<<<<<<< HEAD
+=======
+	.remove		= turingcc_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver		= {
 		.name	= "qcs404-turingcc",
 		.of_match_table = turingcc_match_table,

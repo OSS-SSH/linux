@@ -46,7 +46,11 @@ enum TRI_STATE {
 #define EQ_SIZE (8 * PAGE_SIZE)
 #define LOG2_EQ_THROTTLE 3
 
+<<<<<<< HEAD
 #define MAX_PORTS_IN_MANA_DEV 256
+=======
+#define MAX_PORTS_IN_MANA_DEV 16
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct mana_stats {
 	u64 packets;
@@ -225,8 +229,11 @@ struct mana_tx_comp_oob {
 
 struct mana_rxq;
 
+<<<<<<< HEAD
 #define CQE_POLLING_BUFFER 512
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct mana_cq {
 	struct gdma_queue *gdma_cq;
 
@@ -246,6 +253,7 @@ struct mana_cq {
 	 */
 	struct mana_txq *txq;
 
+<<<<<<< HEAD
 	/* Buffer which the CQ handler can copy the CQE's into. */
 	struct gdma_comp gdma_comp_buf[CQE_POLLING_BUFFER];
 
@@ -253,6 +261,10 @@ struct mana_cq {
 	struct napi_struct napi;
 	int work_done;
 	int budget;
+=======
+	/* Pointer to a buffer which the CQ handler can copy the CQE's into. */
+	struct gdma_comp *gdma_comp_buf;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define GDMA_MAX_RQE_SGES 15
@@ -322,8 +334,11 @@ struct mana_context {
 
 	u16 num_ports;
 
+<<<<<<< HEAD
 	struct mana_eq *eqs;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct net_device *ports[MAX_PORTS_IN_MANA_DEV];
 };
 
@@ -333,6 +348,11 @@ struct mana_port_context {
 
 	u8 mac_addr[ETH_ALEN];
 
+<<<<<<< HEAD
+=======
+	struct mana_eq *eqs;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	enum TRI_STATE rss_state;
 
 	mana_handle_t default_rxobj;
@@ -402,11 +422,19 @@ enum mana_command_code {
 struct mana_query_device_cfg_req {
 	struct gdma_req_hdr hdr;
 
+<<<<<<< HEAD
 	/* MANA Nic Driver Capability flags */
 	u64 mn_drv_cap_flags1;
 	u64 mn_drv_cap_flags2;
 	u64 mn_drv_cap_flags3;
 	u64 mn_drv_cap_flags4;
+=======
+	/* Driver Capability flags */
+	u64 drv_cap_flags1;
+	u64 drv_cap_flags2;
+	u64 drv_cap_flags3;
+	u64 drv_cap_flags4;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	u32 proto_major_ver;
 	u32 proto_minor_ver;
@@ -523,7 +551,11 @@ struct mana_cfg_rx_steer_resp {
 	struct gdma_resp_hdr hdr;
 }; /* HW DATA */
 
+<<<<<<< HEAD
 #define MANA_MAX_NUM_QUEUES 64
+=======
+#define MANA_MAX_NUM_QUEUES 16
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define MANA_SHORT_VPORT_OFFSET_MAX ((1U << 8) - 1)
 

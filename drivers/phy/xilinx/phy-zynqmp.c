@@ -626,9 +626,12 @@ static int xpsgtr_phy_power_on(struct phy *phy)
 	struct xpsgtr_phy *gtr_phy = phy_get_drvdata(phy);
 	int ret = 0;
 
+<<<<<<< HEAD
 	/* Skip initialization if not required. */
 	if (!xpsgtr_phy_init_required(gtr_phy))
 		return ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Wait for the PLL to lock. For DP, only wait on DP0 to avoid
 	 * cumulating waits for both lanes. The user is expected to initialize

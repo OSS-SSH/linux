@@ -1610,7 +1610,11 @@ static void tegra_xudc_ep_context_setup(struct tegra_xudc_ep *ep)
 	u16 maxpacket, maxburst = 0, esit = 0;
 	u32 val;
 
+<<<<<<< HEAD
 	maxpacket = usb_endpoint_maxp(desc);
+=======
+	maxpacket = usb_endpoint_maxp(desc) & 0x7ff;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (xudc->gadget.speed == USB_SPEED_SUPER) {
 		if (!usb_endpoint_xfer_control(desc))
 			maxburst = comp_desc->bMaxBurst;
@@ -1621,7 +1625,11 @@ static void tegra_xudc_ep_context_setup(struct tegra_xudc_ep *ep)
 		   (usb_endpoint_xfer_int(desc) ||
 		    usb_endpoint_xfer_isoc(desc))) {
 		if (xudc->gadget.speed == USB_SPEED_HIGH) {
+<<<<<<< HEAD
 			maxburst = usb_endpoint_maxp_mult(desc) - 1;
+=======
+			maxburst = (usb_endpoint_maxp(desc) >> 11) & 0x3;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (maxburst == 0x3) {
 				dev_warn(xudc->dev,
 					 "invalid endpoint maxburst\n");
@@ -3853,7 +3861,10 @@ static int tegra_xudc_probe(struct platform_device *pdev)
 	return 0;
 
 free_eps:
+<<<<<<< HEAD
 	pm_runtime_disable(&pdev->dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tegra_xudc_free_eps(xudc);
 free_event_ring:
 	tegra_xudc_free_event_ring(xudc);

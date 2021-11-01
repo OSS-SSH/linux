@@ -586,7 +586,10 @@ static int qe_ep_init(struct qe_udc *udc,
 			case USB_SPEED_FULL:
 				if (max <= 1023)
 					break;
+<<<<<<< HEAD
 				fallthrough;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			default:
 				goto en_done;
 			}

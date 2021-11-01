@@ -28,8 +28,12 @@ static void *page_array_alloc(struct inode *inode, int nr)
 	unsigned int size = sizeof(struct page *) * nr;
 
 	if (likely(size <= sbi->page_array_slab_size))
+<<<<<<< HEAD
 		return f2fs_kmem_cache_alloc(sbi->page_array_slab,
 					GFP_F2FS_ZERO, false, F2FS_I_SB(inode));
+=======
+		return kmem_cache_zalloc(sbi->page_array_slab, GFP_NOFS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return f2fs_kzalloc(sbi, size, GFP_NOFS);
 }
 
@@ -899,6 +903,7 @@ static bool cluster_has_invalid_data(struct compress_ctx *cc)
 	return false;
 }
 
+<<<<<<< HEAD
 bool f2fs_sanity_check_cluster(struct dnode_of_data *dn)
 {
 	struct f2fs_sb_info *sbi = F2FS_I_SB(dn->inode);
@@ -947,6 +952,8 @@ out:
 	return true;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __f2fs_cluster_blocks(struct inode *inode,
 				unsigned int cluster_idx, bool compr)
 {
@@ -964,11 +971,14 @@ static int __f2fs_cluster_blocks(struct inode *inode,
 		goto fail;
 	}
 
+<<<<<<< HEAD
 	if (f2fs_sanity_check_cluster(&dn)) {
 		ret = -EFSCORRUPTED;
 		goto fail;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (dn.data_blkaddr == COMPRESS_ADDR) {
 		int i;
 
@@ -1282,7 +1292,11 @@ static int f2fs_write_compressed_pages(struct compress_ctx *cc,
 
 	fio.version = ni.version;
 
+<<<<<<< HEAD
 	cic = f2fs_kmem_cache_alloc(cic_entry_slab, GFP_F2FS_ZERO, false, sbi);
+=======
+	cic = kmem_cache_zalloc(cic_entry_slab, GFP_NOFS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!cic)
 		goto out_put_dnode;
 
@@ -1394,6 +1408,15 @@ out_destroy_crypt:
 
 	for (--i; i >= 0; i--)
 		fscrypt_finalize_bounce_page(&cc->cpages[i]);
+<<<<<<< HEAD
+=======
+	for (i = 0; i < cc->nr_cpages; i++) {
+		if (!cc->cpages[i])
+			continue;
+		f2fs_compress_free_page(cc->cpages[i]);
+		cc->cpages[i] = NULL;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_put_cic:
 	kmem_cache_free(cic_entry_slab, cic);
 out_put_dnode:
@@ -1404,12 +1427,15 @@ out_unlock_op:
 	else
 		f2fs_unlock_op(sbi);
 out_free:
+<<<<<<< HEAD
 	for (i = 0; i < cc->nr_cpages; i++) {
 		if (!cc->cpages[i])
 			continue;
 		f2fs_compress_free_page(cc->cpages[i]);
 		cc->cpages[i] = NULL;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
 	cc->cpages = NULL;
 	return -EAGAIN;
@@ -1560,8 +1586,12 @@ struct decompress_io_ctx *f2fs_alloc_dic(struct compress_ctx *cc)
 	pgoff_t start_idx = start_idx_of_cluster(cc);
 	int i;
 
+<<<<<<< HEAD
 	dic = f2fs_kmem_cache_alloc(dic_entry_slab, GFP_F2FS_ZERO,
 					false, F2FS_I_SB(cc->inode));
+=======
+	dic = kmem_cache_zalloc(dic_entry_slab, GFP_NOFS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!dic)
 		return ERR_PTR(-ENOMEM);
 
@@ -1721,6 +1751,7 @@ void f2fs_put_page_dic(struct page *page)
 	f2fs_put_dic(dic);
 }
 
+<<<<<<< HEAD
 /*
  * check whether cluster blocks are contiguous, and add extent cache entry
  * only if cluster blocks are logically and physically contiguous.
@@ -1745,6 +1776,8 @@ unsigned int f2fs_cluster_blocks_are_contiguous(struct dnode_of_data *dn)
 	return compressed ? i - 1 : i;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 const struct address_space_operations f2fs_compress_aops = {
 	.releasepage = f2fs_release_page,
 	.invalidatepage = f2fs_invalidate_page,

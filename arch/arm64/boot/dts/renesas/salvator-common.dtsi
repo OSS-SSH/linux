@@ -202,11 +202,15 @@
 		label = "rcar-sound";
 
 		dais = <&rsnd_port0	/* ak4613 */
+<<<<<<< HEAD
 			&rsnd_port1	/* HDMI0  */
 #ifdef SOC_HAS_HDMI1
 			&rsnd_port2	/* HDMI1  */
 #endif
 			>;
+=======
+			&rsnd_port1>;	/* HDMI0  */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	vbus0_usb2: regulator-vbus0-usb2 {
@@ -426,6 +430,7 @@
 	remote-endpoint = <&rcar_dw_hdmi0_out>;
 };
 
+<<<<<<< HEAD
 #ifdef SOC_HAS_HDMI1
 &hdmi1 {
 	status = "okay";
@@ -451,6 +456,8 @@
 };
 #endif /* SOC_HAS_HDMI1 */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &hscif1 {
 	pinctrl-0 = <&hscif1_pins>;
 	pinctrl-names = "default";
@@ -847,6 +854,7 @@
 				playback = <&ssi2>;
 			};
 		};
+<<<<<<< HEAD
 
 #ifdef SOC_HAS_HDMI1
 		rsnd_port2: port@2 {
@@ -862,6 +870,8 @@
 			};
 		};
 #endif /* SOC_HAS_HDMI1 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 };
 
@@ -870,12 +880,15 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
 #ifdef SOC_HAS_SATA
 &sata {
 	status = "okay";
 };
 #endif /* SOC_HAS_SATA */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &scif1 {
 	pinctrl-0 = <&scif1_pins>;
 	pinctrl-names = "default";
@@ -1023,6 +1036,7 @@
 
 	status = "okay";
 };
+<<<<<<< HEAD
 
 #ifdef SOC_HAS_USB2_CH2
 &ehci2 {
@@ -1047,3 +1061,5 @@
 	status = "okay";
 };
 #endif /* SOC_HAS_USB2_CH2 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

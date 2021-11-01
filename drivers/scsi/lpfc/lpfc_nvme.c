@@ -216,8 +216,13 @@ lpfc_nvme_remoteport_delete(struct nvme_fc_remote_port *remoteport)
 	/* The register rebind might have occurred before the delete
 	 * downcall.  Guard against this race.
 	 */
+<<<<<<< HEAD
 	if (ndlp->fc4_xpt_flags & NVME_XPT_UNREG_WAIT)
 		ndlp->fc4_xpt_flags &= ~(NVME_XPT_UNREG_WAIT | NVME_XPT_REGD);
+=======
+	if (ndlp->fc4_xpt_flags & NLP_WAIT_FOR_UNREG)
+		ndlp->fc4_xpt_flags &= ~(NLP_WAIT_FOR_UNREG | NVME_XPT_REGD);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_unlock_irq(&ndlp->lock);
 
@@ -931,8 +936,11 @@ lpfc_nvme_io_cmd_wqe_cmpl(struct lpfc_hba *phba, struct lpfc_iocbq *pwqeIn,
 	uint32_t code, status, idx;
 	uint16_t cid, sqhd, data;
 	uint32_t *ptr;
+<<<<<<< HEAD
 	uint32_t lat;
 	bool call_done = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
 	int cpu;
 #endif
@@ -1137,6 +1145,7 @@ out_err:
 		freqpriv = nCmd->private;
 		freqpriv->nvme_buf = NULL;
 		lpfc_ncmd->nvmeCmd = NULL;
+<<<<<<< HEAD
 		call_done = true;
 	}
 	spin_unlock(&lpfc_ncmd->buf_lock);
@@ -1152,6 +1161,12 @@ out_err:
 
 	if (call_done)
 		nCmd->done(nCmd);
+=======
+		spin_unlock(&lpfc_ncmd->buf_lock);
+		nCmd->done(nCmd);
+	} else
+		spin_unlock(&lpfc_ncmd->buf_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Call release with XB=1 to queue the IO into the abort list. */
 	lpfc_release_nvme_buf(phba, lpfc_ncmd);
@@ -1225,10 +1240,13 @@ lpfc_nvme_prep_io_cmd(struct lpfc_vport *vport,
 			/* Word 5 */
 			wqe->fcp_iread.rsrvd5 = 0;
 
+<<<<<<< HEAD
 			/* For a CMF Managed port, iod must be zero'ed */
 			if (phba->cmf_active_mode == LPFC_CFG_MANAGED)
 				bf_set(wqe_iod, &wqe->fcp_iread.wqe_com,
 				       LPFC_WQE_IOD_NONE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			cstat->input_requests++;
 		}
 	} else {
@@ -1489,7 +1507,13 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
 	struct lpfc_nvme_qhandle *lpfc_queue_info;
 	struct lpfc_nvme_fcpreq_priv *freqpriv;
 	struct nvme_common_command *sqe;
+<<<<<<< HEAD
 	uint64_t start = 0;
+=======
+#ifdef CONFIG_SCSI_LPFC_DEBUG_FS
+	uint64_t start = 0;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Validate pointers. LLDD fault handling with transport does
 	 * have timing races.
@@ -1577,6 +1601,7 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
 			expedite = 1;
 	}
 
+<<<<<<< HEAD
 	/* Check if IO qualifies for CMF */
 	if (phba->cmf_active_mode != LPFC_CFG_OFF &&
 	    pnvme_fcreq->io_dir == NVMEFC_FCP_READ &&
@@ -1590,6 +1615,8 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
 		start = ktime_get_ns();
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* The node is shared with FCP IO, make sure the IO pending count does
 	 * not exceed the programmed depth.
 	 */
@@ -1604,7 +1631,11 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
 					 ndlp->cmd_qdepth);
 			atomic_inc(&lport->xmt_fcp_qdepth);
 			ret = -EBUSY;
+<<<<<<< HEAD
 			goto out_fail1;
+=======
+			goto out_fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -1624,7 +1655,11 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
 				 "idx %d DID %x\n",
 				 lpfc_queue_info->index, ndlp->nlp_DID);
 		ret = -EBUSY;
+<<<<<<< HEAD
 		goto out_fail1;
+=======
+		goto out_fail;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 #ifdef CONFIG_SCSI_LPFC_DEBUG_FS
 	if (start) {
@@ -1634,7 +1669,10 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
 		lpfc_ncmd->ts_cmd_start = 0;
 	}
 #endif
+<<<<<<< HEAD
 	lpfc_ncmd->rx_cmd_start = start;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Store the data needed by the driver to issue, abort, and complete
@@ -1716,9 +1754,12 @@ lpfc_nvme_fcp_io_submit(struct nvme_fc_local_port *pnvme_lport,
 	} else
 		cstat->control_requests--;
 	lpfc_release_nvme_buf(phba, lpfc_ncmd);
+<<<<<<< HEAD
  out_fail1:
 	lpfc_update_cmf_cmpl(phba, LPFC_CGN_NOT_SENT,
 			     pnvme_fcreq->payload_length, NULL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  out_fail:
 	return ret;
 }
@@ -2356,7 +2397,11 @@ lpfc_nvme_register_port(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
 		 * race that leaves the WAIT flag set.
 		 */
 		spin_lock_irq(&ndlp->lock);
+<<<<<<< HEAD
 		ndlp->fc4_xpt_flags &= ~NVME_XPT_UNREG_WAIT;
+=======
+		ndlp->fc4_xpt_flags &= ~NLP_WAIT_FOR_UNREG;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ndlp->fc4_xpt_flags |= NVME_XPT_REGD;
 		spin_unlock_irq(&ndlp->lock);
 		rport = remote_port->private;
@@ -2368,7 +2413,11 @@ lpfc_nvme_register_port(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
 			 */
 			spin_lock_irq(&ndlp->lock);
 			ndlp->nrport = NULL;
+<<<<<<< HEAD
 			ndlp->fc4_xpt_flags &= ~NVME_XPT_UNREG_WAIT;
+=======
+			ndlp->fc4_xpt_flags &= ~NLP_WAIT_FOR_UNREG;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			spin_unlock_irq(&ndlp->lock);
 			rport->ndlp = NULL;
 			rport->remoteport = NULL;
@@ -2520,7 +2569,11 @@ lpfc_nvme_unregister_port(struct lpfc_vport *vport, struct lpfc_nodelist *ndlp)
 		 * The transport will update it.
 		 */
 		spin_lock_irq(&vport->phba->hbalock);
+<<<<<<< HEAD
 		ndlp->fc4_xpt_flags |= NVME_XPT_UNREG_WAIT;
+=======
+		ndlp->fc4_xpt_flags |= NLP_WAIT_FOR_UNREG;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		spin_unlock_irq(&vport->phba->hbalock);
 
 		/* Don't let the host nvme transport keep sending keep-alives

@@ -106,9 +106,12 @@ static ssize_t platform_profile_store(struct device *dev,
 	}
 
 	err = cur_profile->profile_set(cur_profile, i);
+<<<<<<< HEAD
 	if (!err)
 		sysfs_notify(acpi_kobj, NULL, "platform_profile");
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&profile_lock);
 	if (err)
 		return err;

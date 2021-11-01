@@ -12,8 +12,11 @@
 #include "i915_gem_object.h"
 #include "i915_scatterlist.h"
 
+<<<<<<< HEAD
 I915_SELFTEST_DECLARE(static bool force_different_devices;)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct drm_i915_gem_object *dma_buf_to_obj(struct dma_buf *buf)
 {
 	return to_intel_bo(buf->priv);
@@ -27,11 +30,22 @@ static struct sg_table *i915_gem_map_dma_buf(struct dma_buf_attachment *attachme
 	struct scatterlist *src, *dst;
 	int ret, i;
 
+<<<<<<< HEAD
+=======
+	ret = i915_gem_object_pin_pages_unlocked(obj);
+	if (ret)
+		goto err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Copy sg so that we make an independent mapping */
 	st = kmalloc(sizeof(struct sg_table), GFP_KERNEL);
 	if (st == NULL) {
 		ret = -ENOMEM;
+<<<<<<< HEAD
 		goto err;
+=======
+		goto err_unpin_pages;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = sg_alloc_table(st, obj->mm.pages->nents, GFP_KERNEL);
@@ -56,6 +70,11 @@ err_free_sg:
 	sg_free_table(st);
 err_free:
 	kfree(st);
+<<<<<<< HEAD
+=======
+err_unpin_pages:
+	i915_gem_object_unpin_pages(obj);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err:
 	return ERR_PTR(ret);
 }
@@ -64,9 +83,19 @@ static void i915_gem_unmap_dma_buf(struct dma_buf_attachment *attachment,
 				   struct sg_table *sg,
 				   enum dma_data_direction dir)
 {
+<<<<<<< HEAD
 	dma_unmap_sgtable(attachment->dev, sg, dir, DMA_ATTR_SKIP_CPU_SYNC);
 	sg_free_table(sg);
 	kfree(sg);
+=======
+	struct drm_i915_gem_object *obj = dma_buf_to_obj(attachment->dmabuf);
+
+	dma_unmap_sgtable(attachment->dev, sg, dir, DMA_ATTR_SKIP_CPU_SYNC);
+	sg_free_table(sg);
+	kfree(sg);
+
+	i915_gem_object_unpin_pages(obj);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int i915_gem_dmabuf_vmap(struct dma_buf *dma_buf, struct dma_buf_map *map)
@@ -160,6 +189,7 @@ retry:
 	return err;
 }
 
+<<<<<<< HEAD
 static int i915_gem_dmabuf_attach(struct dma_buf *dmabuf,
 				  struct dma_buf_attachment *attach)
 {
@@ -200,6 +230,9 @@ static void i915_gem_dmabuf_detach(struct dma_buf *dmabuf,
 static const struct dma_buf_ops i915_dmabuf_ops =  {
 	.attach = i915_gem_dmabuf_attach,
 	.detach = i915_gem_dmabuf_detach,
+=======
+static const struct dma_buf_ops i915_dmabuf_ops =  {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.map_dma_buf = i915_gem_map_dma_buf,
 	.unmap_dma_buf = i915_gem_unmap_dma_buf,
 	.release = drm_gem_dmabuf_release,
@@ -235,8 +268,11 @@ static int i915_gem_object_get_pages_dmabuf(struct drm_i915_gem_object *obj)
 	struct sg_table *pages;
 	unsigned int sg_page_sizes;
 
+<<<<<<< HEAD
 	assert_object_held(obj);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pages = dma_buf_map_attachment(obj->base.import_attach,
 				       DMA_BIDIRECTIONAL);
 	if (IS_ERR(pages))
@@ -274,8 +310,12 @@ struct drm_gem_object *i915_gem_prime_import(struct drm_device *dev,
 	if (dma_buf->ops == &i915_dmabuf_ops) {
 		obj = dma_buf_to_obj(dma_buf);
 		/* is it from our device? */
+<<<<<<< HEAD
 		if (obj->base.dev == dev &&
 		    !I915_SELFTEST_ONLY(force_different_devices)) {
+=======
+		if (obj->base.dev == dev) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/*
 			 * Importing dmabuf exported from out own gem increases
 			 * refcount on gem itself instead of f_count of dmabuf.

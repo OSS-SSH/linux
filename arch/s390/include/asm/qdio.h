@@ -291,6 +291,7 @@ struct qdio_ssqd_desc {
 typedef void qdio_handler_t(struct ccw_device *, unsigned int, int,
 			    int, int, unsigned long);
 
+<<<<<<< HEAD
 /* qdio errors reported through the queue handlers: */
 #define QDIO_ERROR_ACTIVATE			0x0001
 #define QDIO_ERROR_GET_BUF_STATE		0x0002
@@ -300,6 +301,18 @@ typedef void qdio_handler_t(struct ccw_device *, unsigned int, int,
 #define QDIO_ERROR_SLSB_STATE			0x0100
 #define QDIO_ERROR_SLSB_PENDING			0x0200
 
+=======
+/* qdio errors reported to the upper-layer program */
+#define QDIO_ERROR_ACTIVATE			0x0001
+#define QDIO_ERROR_GET_BUF_STATE		0x0002
+#define QDIO_ERROR_SET_BUF_STATE		0x0004
+#define QDIO_ERROR_SLSB_STATE			0x0100
+#define QDIO_ERROR_SLSB_PENDING			0x0200
+
+#define QDIO_ERROR_FATAL			0x00ff
+#define QDIO_ERROR_TEMPORARY			0xff00
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* for qdio_cleanup */
 #define QDIO_FLAG_CLEANUP_USING_CLEAR		0x01
 #define QDIO_FLAG_CLEANUP_USING_HALT		0x02
@@ -311,6 +324,11 @@ typedef void qdio_handler_t(struct ccw_device *, unsigned int, int,
  * @qib_param_field_format: format for qib_parm_field
  * @qib_param_field: pointer to 128 bytes or NULL, if no param field
  * @qib_rflags: rflags to set
+<<<<<<< HEAD
+=======
+ * @input_slib_elements: pointer to no_input_qs * 128 words of data or NULL
+ * @output_slib_elements: pointer to no_output_qs * 128 words of data or NULL
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @no_input_qs: number of input queues
  * @no_output_qs: number of output queues
  * @input_handler: handler to be called for input queues
@@ -327,18 +345,38 @@ struct qdio_initialize {
 	unsigned int qib_param_field_format;
 	unsigned char *qib_param_field;
 	unsigned char qib_rflags;
+<<<<<<< HEAD
+=======
+	unsigned long *input_slib_elements;
+	unsigned long *output_slib_elements;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int no_input_qs;
 	unsigned int no_output_qs;
 	qdio_handler_t *input_handler;
 	qdio_handler_t *output_handler;
 	void (*irq_poll)(struct ccw_device *cdev, unsigned long data);
+<<<<<<< HEAD
+=======
+	unsigned int scan_threshold;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long int_parm;
 	struct qdio_buffer ***input_sbal_addr_array;
 	struct qdio_buffer ***output_sbal_addr_array;
 };
 
+<<<<<<< HEAD
 #define QDIO_FLAG_SYNC_INPUT		0x01
 #define QDIO_FLAG_SYNC_OUTPUT		0x02
+=======
+#define QDIO_STATE_INACTIVE		0x00000002 /* after qdio_cleanup */
+#define QDIO_STATE_ESTABLISHED		0x00000004 /* after qdio_establish */
+#define QDIO_STATE_ACTIVE		0x00000008 /* after qdio_activate */
+#define QDIO_STATE_STOPPED		0x00000010 /* after queues went down */
+
+#define QDIO_FLAG_SYNC_INPUT		0x01
+#define QDIO_FLAG_SYNC_OUTPUT		0x02
+#define QDIO_FLAG_PCI_OUT		0x10
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int qdio_alloc_buffers(struct qdio_buffer **buf, unsigned int count);
 void qdio_free_buffers(struct qdio_buffer **buf, unsigned int count);
@@ -355,6 +393,10 @@ extern int do_QDIO(struct ccw_device *cdev, unsigned int callflags, int q_nr,
 		   unsigned int bufnr, unsigned int count, struct qaob *aob);
 extern int qdio_start_irq(struct ccw_device *cdev);
 extern int qdio_stop_irq(struct ccw_device *cdev);
+<<<<<<< HEAD
+=======
+extern int qdio_get_next_buffers(struct ccw_device *, int, int *, int *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern int qdio_inspect_queue(struct ccw_device *cdev, unsigned int nr,
 			      bool is_input, unsigned int *bufnr,
 			      unsigned int *error);

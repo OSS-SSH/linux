@@ -767,7 +767,10 @@ enum rtl8152_flags {
 	PHY_RESET,
 	SCHEDULE_TASKLET,
 	GREEN_ETHERNET,
+<<<<<<< HEAD
 	RX_EPROTO,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define DEVICE_ID_THINKPAD_THUNDERBOLT3_DOCK_GEN2	0x3082
@@ -1553,8 +1556,12 @@ static int
 rtl8152_set_speed(struct r8152 *tp, u8 autoneg, u32 speed, u8 duplex,
 		  u32 advertising);
 
+<<<<<<< HEAD
 static int __rtl8152_set_mac_address(struct net_device *netdev, void *p,
 				     bool in_resume)
+=======
+static int rtl8152_set_mac_address(struct net_device *netdev, void *p)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct r8152 *tp = netdev_priv(netdev);
 	struct sockaddr *addr = p;
@@ -1563,11 +1570,17 @@ static int __rtl8152_set_mac_address(struct net_device *netdev, void *p,
 	if (!is_valid_ether_addr(addr->sa_data))
 		goto out1;
 
+<<<<<<< HEAD
 	if (!in_resume) {
 		ret = usb_autopm_get_interface(tp->intf);
 		if (ret < 0)
 			goto out1;
 	}
+=======
+	ret = usb_autopm_get_interface(tp->intf);
+	if (ret < 0)
+		goto out1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_lock(&tp->control);
 
@@ -1579,17 +1592,24 @@ static int __rtl8152_set_mac_address(struct net_device *netdev, void *p,
 
 	mutex_unlock(&tp->control);
 
+<<<<<<< HEAD
 	if (!in_resume)
 		usb_autopm_put_interface(tp->intf);
+=======
+	usb_autopm_put_interface(tp->intf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out1:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int rtl8152_set_mac_address(struct net_device *netdev, void *p)
 {
 	return __rtl8152_set_mac_address(netdev, p, false);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Devices containing proper chips can support a persistent
  * host system provided MAC address.
  * Examples of this are Dell TB15 and Dell WD15 docks
@@ -1708,7 +1728,11 @@ static int determine_ethernet_addr(struct r8152 *tp, struct sockaddr *sa)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int set_ethernet_addr(struct r8152 *tp, bool in_resume)
+=======
+static int set_ethernet_addr(struct r8152 *tp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *dev = tp->netdev;
 	struct sockaddr sa;
@@ -1721,7 +1745,11 @@ static int set_ethernet_addr(struct r8152 *tp, bool in_resume)
 	if (tp->version == RTL_VER_01)
 		ether_addr_copy(dev->dev_addr, sa.sa_data);
 	else
+<<<<<<< HEAD
 		ret = __rtl8152_set_mac_address(dev, &sa, in_resume);
+=======
+		ret = rtl8152_set_mac_address(dev, &sa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -1771,6 +1799,7 @@ static void read_bulk_callback(struct urb *urb)
 		rtl_set_unplug(tp);
 		netif_device_detach(tp->netdev);
 		return;
+<<<<<<< HEAD
 	case -EPROTO:
 		urb->actual_length = 0;
 		spin_lock_irqsave(&tp->rx_lock, flags);
@@ -1779,6 +1808,8 @@ static void read_bulk_callback(struct urb *urb)
 		set_bit(RX_EPROTO, &tp->flags);
 		schedule_delayed_work(&tp->schedule, 1);
 		return;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case -ENOENT:
 		return;	/* the urb is in unlink state */
 	case -ETIME:
@@ -2434,7 +2465,10 @@ static int rx_bottom(struct r8152 *tp, int budget)
 	if (list_empty(&tp->rx_done))
 		goto out1;
 
+<<<<<<< HEAD
 	clear_bit(RX_EPROTO, &tp->flags);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INIT_LIST_HEAD(&rx_queue);
 	spin_lock_irqsave(&tp->rx_lock, flags);
 	list_splice_init(&tp->rx_done, &rx_queue);
@@ -2451,7 +2485,11 @@ static int rx_bottom(struct r8152 *tp, int budget)
 
 		agg = list_entry(cursor, struct rx_agg, list);
 		urb = agg->urb;
+<<<<<<< HEAD
 		if (urb->status != 0 || urb->actual_length < ETH_ZLEN)
+=======
+		if (urb->actual_length < ETH_ZLEN)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto submit;
 
 		agg_free = rtl_get_free_rx(tp, GFP_ATOMIC);
@@ -3965,6 +4003,7 @@ static void rtl_clear_bp(struct r8152 *tp, u16 type)
 	case RTL_VER_06:
 		ocp_write_byte(tp, type, PLA_BP_EN, 0);
 		break;
+<<<<<<< HEAD
 	case RTL_VER_14:
 		ocp_write_word(tp, type, USB_BP2_EN, 0);
 
@@ -3977,16 +4016,26 @@ static void rtl_clear_bp(struct r8152 *tp, u16 type)
 		ocp_write_word(tp, type, USB_BP_14, 0);
 		ocp_write_word(tp, type, USB_BP_15, 0);
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case RTL_VER_08:
 	case RTL_VER_09:
 	case RTL_VER_10:
 	case RTL_VER_11:
 	case RTL_VER_12:
 	case RTL_VER_13:
+<<<<<<< HEAD
 	case RTL_VER_15:
 	default:
 		if (type == MCU_TYPE_USB) {
 			ocp_write_word(tp, MCU_TYPE_USB, USB_BP2_EN, 0);
+=======
+	case RTL_VER_14:
+	case RTL_VER_15:
+	default:
+		if (type == MCU_TYPE_USB) {
+			ocp_write_byte(tp, MCU_TYPE_USB, USB_BP2_EN, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			ocp_write_word(tp, MCU_TYPE_USB, USB_BP_8, 0);
 			ocp_write_word(tp, MCU_TYPE_USB, USB_BP_9, 0);
@@ -4352,6 +4401,10 @@ static bool rtl8152_is_fw_mac_ok(struct r8152 *tp, struct fw_mac *mac)
 		case RTL_VER_11:
 		case RTL_VER_12:
 		case RTL_VER_13:
+<<<<<<< HEAD
+=======
+		case RTL_VER_14:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		case RTL_VER_15:
 			fw_reg = 0xf800;
 			bp_ba_addr = PLA_BP_BA;
@@ -4359,6 +4412,7 @@ static bool rtl8152_is_fw_mac_ok(struct r8152 *tp, struct fw_mac *mac)
 			bp_start = PLA_BP_0;
 			max_bp = 8;
 			break;
+<<<<<<< HEAD
 		case RTL_VER_14:
 			fw_reg = 0xf800;
 			bp_ba_addr = PLA_BP_BA;
@@ -4366,6 +4420,8 @@ static bool rtl8152_is_fw_mac_ok(struct r8152 *tp, struct fw_mac *mac)
 			bp_start = PLA_BP_0;
 			max_bp = 16;
 			break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		default:
 			goto out;
 		}
@@ -6653,10 +6709,13 @@ static void rtl_work_func_t(struct work_struct *work)
 	    netif_carrier_ok(tp->netdev))
 		tasklet_schedule(&tp->tx_tl);
 
+<<<<<<< HEAD
 	if (test_and_clear_bit(RX_EPROTO, &tp->flags) &&
 	    !list_empty(&tp->rx_done))
 		napi_schedule(&tp->napi);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&tp->control);
 
 out1:
@@ -6803,10 +6862,16 @@ static int rtl8152_close(struct net_device *netdev)
 		tp->rtl_ops.down(tp);
 
 		mutex_unlock(&tp->control);
+<<<<<<< HEAD
 	}
 
 	if (!res)
 		usb_autopm_put_interface(tp->intf);
+=======
+
+		usb_autopm_put_interface(tp->intf);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	free_all_mem(tp);
 
@@ -8484,7 +8549,11 @@ static int rtl8152_reset_resume(struct usb_interface *intf)
 	clear_bit(SELECTIVE_SUSPEND, &tp->flags);
 	tp->rtl_ops.init(tp);
 	queue_delayed_work(system_long_wq, &tp->hw_phy_work, 0);
+<<<<<<< HEAD
 	set_ethernet_addr(tp, true);
+=======
+	set_ethernet_addr(tp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rtl8152_resume(intf);
 }
 
@@ -8862,9 +8931,13 @@ out:
 }
 
 static int rtl8152_get_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 				struct ethtool_coalesce *coalesce,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
+=======
+				struct ethtool_coalesce *coalesce)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct r8152 *tp = netdev_priv(netdev);
 
@@ -8883,9 +8956,13 @@ static int rtl8152_get_coalesce(struct net_device *netdev,
 }
 
 static int rtl8152_set_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 				struct ethtool_coalesce *coalesce,
 				struct kernel_ethtool_coalesce *kernel_coal,
 				struct netlink_ext_ack *extack)
+=======
+				struct ethtool_coalesce *coalesce)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct r8152 *tp = netdev_priv(netdev);
 	int ret;
@@ -9208,7 +9285,11 @@ static int rtl8152_change_mtu(struct net_device *dev, int new_mtu)
 static const struct net_device_ops rtl8152_netdev_ops = {
 	.ndo_open		= rtl8152_open,
 	.ndo_stop		= rtl8152_close,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= rtl8152_ioctl,
+=======
+	.ndo_do_ioctl		= rtl8152_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_start_xmit		= rtl8152_start_xmit,
 	.ndo_tx_timeout		= rtl8152_tx_timeout,
 	.ndo_set_features	= rtl8152_set_features,
@@ -9689,7 +9770,11 @@ static int rtl8152_probe(struct usb_interface *intf,
 	tp->rtl_fw.retry = true;
 #endif
 	queue_delayed_work(system_long_wq, &tp->hw_phy_work, 0);
+<<<<<<< HEAD
 	set_ethernet_addr(tp, false);
+=======
+	set_ethernet_addr(tp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	usb_set_intfdata(intf, tp);
 

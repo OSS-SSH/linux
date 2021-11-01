@@ -181,8 +181,14 @@ static inline void access_error060 (struct frame *fp)
 static inline unsigned long probe040(int iswrite, unsigned long addr, int wbs)
 {
 	unsigned long mmusr;
+<<<<<<< HEAD
 
 	set_fc(wbs);
+=======
+	mm_segment_t old_fs = get_fs();
+
+	set_fs(MAKE_MM_SEG(wbs));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (iswrite)
 		asm volatile (".chip 68040; ptestw (%0); .chip 68k" : : "a" (addr));
@@ -191,7 +197,11 @@ static inline unsigned long probe040(int iswrite, unsigned long addr, int wbs)
 
 	asm volatile (".chip 68040; movec %%mmusr,%0; .chip 68k" : "=r" (mmusr));
 
+<<<<<<< HEAD
 	set_fc(USER_DATA);
+=======
+	set_fs(old_fs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return mmusr;
 }
@@ -200,8 +210,15 @@ static inline int do_040writeback1(unsigned short wbs, unsigned long wba,
 				   unsigned long wbd)
 {
 	int res = 0;
+<<<<<<< HEAD
 
 	set_fc(wbs);
+=======
+	mm_segment_t old_fs = get_fs();
+
+	/* set_fs can not be moved, otherwise put_user() may oops */
+	set_fs(MAKE_MM_SEG(wbs));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (wbs & WBSIZ_040) {
 	case BA_SIZE_BYTE:
@@ -215,7 +232,13 @@ static inline int do_040writeback1(unsigned short wbs, unsigned long wba,
 		break;
 	}
 
+<<<<<<< HEAD
 	set_fc(USER_DATA);
+=======
+	/* set_fs can not be moved, otherwise put_user() may oops */
+	set_fs(old_fs);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pr_debug("do_040writeback1, res=%d\n", res);
 
@@ -1145,7 +1168,11 @@ asmlinkage void set_esp0(unsigned long ssp)
  */
 asmlinkage void fpsp040_die(void)
 {
+<<<<<<< HEAD
 	force_sigsegv(SIGSEGV);
+=======
+	do_exit(SIGSEGV);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_M68KFPU_EMU

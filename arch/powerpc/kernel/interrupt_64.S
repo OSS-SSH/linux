@@ -12,6 +12,10 @@
 #include <asm/mmu.h>
 #include <asm/ppc_asm.h>
 #include <asm/ptrace.h>
+<<<<<<< HEAD
+=======
+#include <asm/tm.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	.section	".toc","aw"
 SYS_CALL_TABLE:
@@ -54,6 +58,15 @@ COMPAT_SYS_CALL_TABLE:
 	.globl system_call_vectored_\name
 system_call_vectored_\name:
 _ASM_NOKPROBE_SYMBOL(system_call_vectored_\name)
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PPC_TRANSACTIONAL_MEM
+BEGIN_FTR_SECTION
+	extrdi.	r10, r12, 1, (63-MSR_TS_T_LG) /* transaction active? */
+	bne	tabort_syscall
+END_FTR_SECTION_IFSET(CPU_FTR_TM)
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SCV_INTERRUPT_TO_KERNEL
 	mr	r10,r1
 	ld	r1,PACAKSAVE(r13)
@@ -240,6 +253,15 @@ _ASM_NOKPROBE_SYMBOL(system_call_common_real)
 	.globl system_call_common
 system_call_common:
 _ASM_NOKPROBE_SYMBOL(system_call_common)
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PPC_TRANSACTIONAL_MEM
+BEGIN_FTR_SECTION
+	extrdi.	r10, r12, 1, (63-MSR_TS_T_LG) /* transaction active? */
+	bne	tabort_syscall
+END_FTR_SECTION_IFSET(CPU_FTR_TM)
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mr	r10,r1
 	ld	r1,PACAKSAVE(r13)
 	std	r10,0(r1)
@@ -412,6 +434,37 @@ SOFT_MASK_TABLE(.Lsyscall_rst_start, 1b)
 RESTART_TABLE(.Lsyscall_rst_start, .Lsyscall_rst_end, syscall_restart)
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PPC_TRANSACTIONAL_MEM
+tabort_syscall:
+_ASM_NOKPROBE_SYMBOL(tabort_syscall)
+	/* Firstly we need to enable TM in the kernel */
+	mfmsr	r10
+	li	r9, 1
+	rldimi	r10, r9, MSR_TM_LG, 63-MSR_TM_LG
+	mtmsrd	r10, 0
+
+	/* tabort, this dooms the transaction, nothing else */
+	li	r9, (TM_CAUSE_SYSCALL|TM_CAUSE_PERSISTENT)
+	TABORT(R9)
+
+	/*
+	 * Return directly to userspace. We have corrupted user register state,
+	 * but userspace will never see that register state. Execution will
+	 * resume after the tbegin of the aborted transaction with the
+	 * checkpointed register state.
+	 */
+	li	r9, MSR_RI
+	andc	r10, r10, r9
+	mtmsrd	r10, 1
+	mtspr	SPRN_SRR0, r11
+	mtspr	SPRN_SRR1, r12
+	RFI_TO_USER
+	b	.	/* prevent speculative execution */
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * If MSR EE/RI was never enabled, IRQs not reconciled, NVGPRs not
 	 * touched, no exit work created, then this can be used.

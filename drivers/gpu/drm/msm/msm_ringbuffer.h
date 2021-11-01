@@ -7,7 +7,10 @@
 #ifndef __MSM_RINGBUFFER_H__
 #define __MSM_RINGBUFFER_H__
 
+<<<<<<< HEAD
 #include "drm/gpu_scheduler.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "msm_drv.h"
 
 #define rbmemptr(ring, member)  \
@@ -42,6 +45,7 @@ struct msm_ringbuffer {
 	uint32_t *start, *end, *cur, *next;
 
 	/*
+<<<<<<< HEAD
 	 * The job scheduler for this ring.
 	 */
 	struct drm_gpu_scheduler sched;
@@ -54,6 +58,9 @@ struct msm_ringbuffer {
 	 * step we could probably move to letting drm_gpu_scheduler manage
 	 * hangcheck detection and keep track of submit jobs that are in-
 	 * flight.
+=======
+	 * List of in-flight submits on this ring.  Protected by submit_lock.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	struct list_head submits;
 	spinlock_t submit_lock;

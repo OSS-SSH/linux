@@ -8,16 +8,23 @@
 #include <linux/module.h>
 #include <linux/phy.h>
 #include <linux/of.h>
+<<<<<<< HEAD
 #include <linux/bitfield.h>
 
 #define XWAY_MDIO_MIICTRL		0x17	/* mii control */
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define XWAY_MDIO_IMASK			0x19	/* interrupt mask */
 #define XWAY_MDIO_ISTAT			0x1A	/* interrupt status */
 #define XWAY_MDIO_LED			0x1B	/* led control */
 
+<<<<<<< HEAD
 #define XWAY_MDIO_MIICTRL_RXSKEW_MASK	GENMASK(14, 12)
 #define XWAY_MDIO_MIICTRL_TXSKEW_MASK	GENMASK(10, 8)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* bit 15:12 are reserved */
 #define XWAY_MDIO_LED_LED3_EN		BIT(11)	/* Enable the integrated function of LED3 */
 #define XWAY_MDIO_LED_LED2_EN		BIT(10)	/* Enable the integrated function of LED2 */
@@ -162,6 +169,7 @@
 #define PHY_ID_PHY11G_VR9_1_2		0xD565A409
 #define PHY_ID_PHY22F_VR9_1_2		0xD565A419
 
+<<<<<<< HEAD
 static const int xway_internal_delay[] = {0, 500, 1000, 1500, 2000, 2500,
 					 3000, 3500};
 
@@ -229,6 +237,8 @@ static int xway_gphy_rgmii_init(struct phy_device *phydev)
 			  XWAY_MDIO_MIICTRL_TXSKEW_MASK, val);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int xway_gphy_config_init(struct phy_device *phydev)
 {
 	int err;
@@ -276,10 +286,13 @@ static int xway_gphy_config_init(struct phy_device *phydev)
 	phy_write_mmd(phydev, MDIO_MMD_VEND2, XWAY_MMD_LED2H, ledxh);
 	phy_write_mmd(phydev, MDIO_MMD_VEND2, XWAY_MMD_LED2L, ledxl);
 
+<<<<<<< HEAD
 	err = xway_gphy_rgmii_init(phydev);
 	if (err)
 		return err;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

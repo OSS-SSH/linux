@@ -190,6 +190,11 @@ static int __btrfs_add_ordered_extent(struct btrfs_inode *inode, u64 file_offset
 	entry->truncated_len = (u64)-1;
 	entry->qgroup_rsv = ret;
 	entry->physical = (u64)-1;
+<<<<<<< HEAD
+=======
+	entry->disk = NULL;
+	entry->partno = (u8)-1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ASSERT(type == BTRFS_ORDERED_REGULAR ||
 	       type == BTRFS_ORDERED_NOCOW ||
@@ -446,6 +451,10 @@ void btrfs_mark_ordered_io_finished(struct btrfs_inode *inode,
  * 		 Will be also used to store the finished ordered extent.
  * @file_offset: File offset for the finished IO
  * @io_size:	 Length of the finish IO range
+<<<<<<< HEAD
+=======
+ * @uptodate:	 If the IO finishes without problem
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Return true if the ordered extent is finished in the range, and update
  * @cached.
@@ -456,7 +465,11 @@ void btrfs_mark_ordered_io_finished(struct btrfs_inode *inode,
  */
 bool btrfs_dec_test_ordered_pending(struct btrfs_inode *inode,
 				    struct btrfs_ordered_extent **cached,
+<<<<<<< HEAD
 				    u64 file_offset, u64 io_size)
+=======
+				    u64 file_offset, u64 io_size, int uptodate)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct btrfs_ordered_inode_tree *tree = &inode->ordered_tree;
 	struct rb_node *node;
@@ -485,6 +498,11 @@ have_entry:
 		       entry->bytes_left, io_size);
 
 	entry->bytes_left -= io_size;
+<<<<<<< HEAD
+=======
+	if (!uptodate)
+		set_bit(BTRFS_ORDERED_IOERR, &entry->flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (entry->bytes_left == 0) {
 		/*
@@ -1049,7 +1067,10 @@ static int clone_ordered_extent(struct btrfs_ordered_extent *ordered, u64 pos,
 				u64 len)
 {
 	struct inode *inode = ordered->inode;
+<<<<<<< HEAD
 	struct btrfs_fs_info *fs_info = BTRFS_I(inode)->root->fs_info;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 file_offset = ordered->file_offset + pos;
 	u64 disk_bytenr = ordered->disk_bytenr + pos;
 	u64 num_bytes = len;
@@ -1067,6 +1088,7 @@ static int clone_ordered_extent(struct btrfs_ordered_extent *ordered, u64 pos,
 	else
 		type = __ffs(flags_masked);
 
+<<<<<<< HEAD
 	/*
 	 * The splitting extent is already counted and will be added again
 	 * in btrfs_add_ordered_extent_*(). Subtract num_bytes to avoid
@@ -1074,6 +1096,8 @@ static int clone_ordered_extent(struct btrfs_ordered_extent *ordered, u64 pos,
 	 */
 	percpu_counter_add_batch(&fs_info->ordered_bytes, -num_bytes,
 				 fs_info->delalloc_batch);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (test_bit(BTRFS_ORDERED_COMPRESSED, &ordered->flags)) {
 		WARN_ON_ONCE(1);
 		ret = btrfs_add_ordered_extent_compress(BTRFS_I(inode),

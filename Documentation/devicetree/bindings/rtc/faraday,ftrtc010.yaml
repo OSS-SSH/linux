@@ -30,6 +30,10 @@ properties:
     maxItems: 1
 
   clocks:
+<<<<<<< HEAD
+=======
+    minItems: 2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     items:
       - description: PCLK clocks
       - description: EXTCLK clocks. Faraday calls it CLK1HZ and says the clock

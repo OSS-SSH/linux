@@ -12,7 +12,10 @@
 #include <net/devlink.h>
 #include "bnxt_hsi.h"
 #include "bnxt.h"
+<<<<<<< HEAD
 #include "bnxt_hwrm.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "bnxt_vfr.h"
 #include "bnxt_devlink.h"
 #include "bnxt_ethtool.h"
@@ -352,6 +355,7 @@ static void bnxt_copy_from_nvm_data(union devlink_param_value *dst,
 		dst->vu8 = (u8)val32;
 }
 
+<<<<<<< HEAD
 static int bnxt_hwrm_get_nvm_cfg_ver(struct bnxt *bp, u32 *nvm_cfg_ver)
 {
 	struct hwrm_nvm_get_variable_input *req;
@@ -404,6 +408,33 @@ static int bnxt_hwrm_get_nvm_cfg_ver(struct bnxt *bp, u32 *nvm_cfg_ver)
 
 exit:
 	hwrm_req_drop(bp, req);
+=======
+static int bnxt_hwrm_get_nvm_cfg_ver(struct bnxt *bp,
+				     union devlink_param_value *nvm_cfg_ver)
+{
+	struct hwrm_nvm_get_variable_input req = {0};
+	union bnxt_nvm_data *data;
+	dma_addr_t data_dma_addr;
+	int rc;
+
+	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_NVM_GET_VARIABLE, -1, -1);
+	data = dma_alloc_coherent(&bp->pdev->dev, sizeof(*data),
+				  &data_dma_addr, GFP_KERNEL);
+	if (!data)
+		return -ENOMEM;
+
+	req.dest_data_addr = cpu_to_le64(data_dma_addr);
+	req.data_len = cpu_to_le16(BNXT_NVM_CFG_VER_BITS);
+	req.option_num = cpu_to_le16(NVM_OFF_NVM_CFG_VER);
+
+	rc = hwrm_send_message_silent(bp, &req, sizeof(req), HWRM_CMD_TIMEOUT);
+	if (!rc)
+		bnxt_copy_from_nvm_data(nvm_cfg_ver, data,
+					BNXT_NVM_CFG_VER_BITS,
+					BNXT_NVM_CFG_VER_BYTES);
+
+	dma_free_coherent(&bp->pdev->dev, sizeof(*data), data, data_dma_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
@@ -437,12 +468,19 @@ static int bnxt_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
 {
 	struct hwrm_nvm_get_dev_info_output nvm_dev_info;
 	struct bnxt *bp = bnxt_get_bp_from_dl(dl);
+<<<<<<< HEAD
+=======
+	union devlink_param_value nvm_cfg_ver;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct hwrm_ver_get_output *ver_resp;
 	char mgmt_ver[FW_VER_STR_LEN];
 	char roce_ver[FW_VER_STR_LEN];
 	char ncsi_ver[FW_VER_STR_LEN];
 	char buf[32];
+<<<<<<< HEAD
 	u32 ver = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc;
 
 	rc = devlink_info_driver_name_put(req, DRV_MODULE_NAME);
@@ -477,7 +515,11 @@ static int bnxt_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
 		return rc;
 
 	ver_resp = &bp->ver_resp;
+<<<<<<< HEAD
 	sprintf(buf, "%c%d", 'A' + ver_resp->chip_rev, ver_resp->chip_metal);
+=======
+	sprintf(buf, "%X", ver_resp->chip_rev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rc = bnxt_dl_info_put(bp, req, BNXT_VERSION_FIXED,
 			      DEVLINK_INFO_VERSION_GENERIC_ASIC_REV, buf);
 	if (rc)
@@ -496,9 +538,17 @@ static int bnxt_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
 	if (rc)
 		return rc;
 
+<<<<<<< HEAD
 	if (BNXT_PF(bp) && !bnxt_hwrm_get_nvm_cfg_ver(bp, &ver)) {
 		sprintf(buf, "%d.%d.%d", (ver >> 16) & 0xff, (ver >> 8) & 0xff,
 			ver & 0xff);
+=======
+	if (BNXT_PF(bp) && !bnxt_hwrm_get_nvm_cfg_ver(bp, &nvm_cfg_ver)) {
+		u32 ver = nvm_cfg_ver.vu32;
+
+		sprintf(buf, "%d.%d.%d", (ver >> 16) & 0xf, (ver >> 8) & 0xf,
+			ver & 0xf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rc = bnxt_dl_info_put(bp, req, BNXT_VERSION_STORED,
 				      DEVLINK_INFO_VERSION_GENERIC_FW_PSID,
 				      buf);
@@ -588,20 +638,32 @@ static int bnxt_dl_info_get(struct devlink *dl, struct devlink_info_req *req,
 }
 
 static int bnxt_hwrm_nvm_req(struct bnxt *bp, u32 param_id, void *msg,
+<<<<<<< HEAD
 			     union devlink_param_value *val)
 {
 	struct hwrm_nvm_get_variable_input *req = msg;
 	struct bnxt_dl_nvm_param nvm_param;
 	struct hwrm_err_output *resp;
+=======
+			     int msg_len, union devlink_param_value *val)
+{
+	struct hwrm_nvm_get_variable_input *req = msg;
+	struct bnxt_dl_nvm_param nvm_param;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	union bnxt_nvm_data *data;
 	dma_addr_t data_dma_addr;
 	int idx = 0, rc, i;
 
 	/* Get/Set NVM CFG parameter is supported only on PFs */
+<<<<<<< HEAD
 	if (BNXT_VF(bp)) {
 		hwrm_req_drop(bp, req);
 		return -EPERM;
 	}
+=======
+	if (BNXT_VF(bp))
+		return -EPERM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < ARRAY_SIZE(nvm_params); i++) {
 		if (nvm_params[i].id == param_id) {
@@ -610,22 +672,34 @@ static int bnxt_hwrm_nvm_req(struct bnxt *bp, u32 param_id, void *msg,
 		}
 	}
 
+<<<<<<< HEAD
 	if (i == ARRAY_SIZE(nvm_params)) {
 		hwrm_req_drop(bp, req);
 		return -EOPNOTSUPP;
 	}
+=======
+	if (i == ARRAY_SIZE(nvm_params))
+		return -EOPNOTSUPP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (nvm_param.dir_type == BNXT_NVM_PORT_CFG)
 		idx = bp->pf.port_id;
 	else if (nvm_param.dir_type == BNXT_NVM_FUNC_CFG)
 		idx = bp->pf.fw_fid - BNXT_FIRST_PF_FID;
 
+<<<<<<< HEAD
 	data = hwrm_req_dma_slice(bp, req, sizeof(*data), &data_dma_addr);
 
 	if (!data) {
 		hwrm_req_drop(bp, req);
 		return -ENOMEM;
 	}
+=======
+	data = dma_alloc_coherent(&bp->pdev->dev, sizeof(*data),
+				  &data_dma_addr, GFP_KERNEL);
+	if (!data)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	req->dest_data_addr = cpu_to_le64(data_dma_addr);
 	req->data_len = cpu_to_le16(nvm_param.nvm_num_bits);
@@ -634,6 +708,7 @@ static int bnxt_hwrm_nvm_req(struct bnxt *bp, u32 param_id, void *msg,
 	if (idx)
 		req->dimensions = cpu_to_le16(1);
 
+<<<<<<< HEAD
 	resp = hwrm_req_hold(bp, req);
 	if (req->req_type == cpu_to_le16(HWRM_NVM_SET_VARIABLE)) {
 		bnxt_copy_to_nvm_data(data, val, nvm_param.nvm_num_bits,
@@ -641,17 +716,35 @@ static int bnxt_hwrm_nvm_req(struct bnxt *bp, u32 param_id, void *msg,
 		rc = hwrm_req_send(bp, msg);
 	} else {
 		rc = hwrm_req_send_silent(bp, msg);
+=======
+	if (req->req_type == cpu_to_le16(HWRM_NVM_SET_VARIABLE)) {
+		bnxt_copy_to_nvm_data(data, val, nvm_param.nvm_num_bits,
+				      nvm_param.dl_num_bytes);
+		rc = hwrm_send_message(bp, msg, msg_len, HWRM_CMD_TIMEOUT);
+	} else {
+		rc = hwrm_send_message_silent(bp, msg, msg_len,
+					      HWRM_CMD_TIMEOUT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!rc) {
 			bnxt_copy_from_nvm_data(val, data,
 						nvm_param.nvm_num_bits,
 						nvm_param.dl_num_bytes);
 		} else {
+<<<<<<< HEAD
+=======
+			struct hwrm_err_output *resp = bp->hwrm_cmd_resp_addr;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (resp->cmd_err ==
 				NVM_GET_VARIABLE_CMD_ERR_CODE_VAR_NOT_EXIST)
 				rc = -EOPNOTSUPP;
 		}
 	}
+<<<<<<< HEAD
 	hwrm_req_drop(bp, req);
+=======
+	dma_free_coherent(&bp->pdev->dev, sizeof(*data), data, data_dma_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc == -EACCES)
 		netdev_err(bp->dev, "PF does not have admin privileges to modify NVM config\n");
 	return rc;
@@ -660,6 +753,7 @@ static int bnxt_hwrm_nvm_req(struct bnxt *bp, u32 param_id, void *msg,
 static int bnxt_dl_nvm_param_get(struct devlink *dl, u32 id,
 				 struct devlink_param_gset_ctx *ctx)
 {
+<<<<<<< HEAD
 	struct bnxt *bp = bnxt_get_bp_from_dl(dl);
 	struct hwrm_nvm_get_variable_input *req;
 	int rc;
@@ -671,6 +765,17 @@ static int bnxt_dl_nvm_param_get(struct devlink *dl, u32 id,
 	rc = bnxt_hwrm_nvm_req(bp, id, req, &ctx->val);
 	if (!rc && id == BNXT_DEVLINK_PARAM_ID_GRE_VER_CHECK)
 		ctx->val.vbool = !ctx->val.vbool;
+=======
+	struct hwrm_nvm_get_variable_input req = {0};
+	struct bnxt *bp = bnxt_get_bp_from_dl(dl);
+	int rc;
+
+	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_NVM_GET_VARIABLE, -1, -1);
+	rc = bnxt_hwrm_nvm_req(bp, id, &req, sizeof(req), &ctx->val);
+	if (!rc)
+		if (id == BNXT_DEVLINK_PARAM_ID_GRE_VER_CHECK)
+			ctx->val.vbool = !ctx->val.vbool;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return rc;
 }
@@ -678,6 +783,7 @@ static int bnxt_dl_nvm_param_get(struct devlink *dl, u32 id,
 static int bnxt_dl_nvm_param_set(struct devlink *dl, u32 id,
 				 struct devlink_param_gset_ctx *ctx)
 {
+<<<<<<< HEAD
 	struct bnxt *bp = bnxt_get_bp_from_dl(dl);
 	struct hwrm_nvm_set_variable_input *req;
 	int rc;
@@ -685,11 +791,21 @@ static int bnxt_dl_nvm_param_set(struct devlink *dl, u32 id,
 	rc = hwrm_req_init(bp, req, HWRM_NVM_SET_VARIABLE);
 	if (rc)
 		return rc;
+=======
+	struct hwrm_nvm_set_variable_input req = {0};
+	struct bnxt *bp = bnxt_get_bp_from_dl(dl);
+
+	bnxt_hwrm_cmd_hdr_init(bp, &req, HWRM_NVM_SET_VARIABLE, -1, -1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (id == BNXT_DEVLINK_PARAM_ID_GRE_VER_CHECK)
 		ctx->val.vbool = !ctx->val.vbool;
 
+<<<<<<< HEAD
 	return bnxt_hwrm_nvm_req(bp, id, req, &ctx->val);
+=======
+	return bnxt_hwrm_nvm_req(bp, id, &req, sizeof(req), &ctx->val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int bnxt_dl_msix_validate(struct devlink *dl, u32 id,
@@ -779,17 +895,26 @@ static void bnxt_dl_params_unregister(struct bnxt *bp)
 
 int bnxt_dl_register(struct bnxt *bp)
 {
+<<<<<<< HEAD
 	const struct devlink_ops *devlink_ops;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct devlink_port_attrs attrs = {};
 	struct devlink *dl;
 	int rc;
 
 	if (BNXT_PF(bp))
+<<<<<<< HEAD
 		devlink_ops = &bnxt_dl_ops;
 	else
 		devlink_ops = &bnxt_vf_dl_ops;
 
 	dl = devlink_alloc(devlink_ops, sizeof(struct bnxt_dl), &bp->pdev->dev);
+=======
+		dl = devlink_alloc(&bnxt_dl_ops, sizeof(struct bnxt_dl));
+	else
+		dl = devlink_alloc(&bnxt_vf_dl_ops, sizeof(struct bnxt_dl));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!dl) {
 		netdev_warn(bp->dev, "devlink_alloc failed\n");
 		return -ENOMEM;
@@ -802,7 +927,11 @@ int bnxt_dl_register(struct bnxt *bp)
 	    bp->hwrm_spec_code > 0x10803)
 		bp->eswitch_mode = DEVLINK_ESWITCH_MODE_LEGACY;
 
+<<<<<<< HEAD
 	rc = devlink_register(dl);
+=======
+	rc = devlink_register(dl, &bp->pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc) {
 		netdev_warn(bp->dev, "devlink_register failed. rc=%d\n", rc);
 		goto err_dl_free;

@@ -377,23 +377,43 @@ static int hid_submit_ctrl(struct hid_device *hid)
 	len = hid_report_len(report);
 	if (dir == USB_DIR_OUT) {
 		usbhid->urbctrl->pipe = usb_sndctrlpipe(hid_to_usb_dev(hid), 0);
+<<<<<<< HEAD
+=======
+		usbhid->urbctrl->transfer_buffer_length = len;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (raw_report) {
 			memcpy(usbhid->ctrlbuf, raw_report, len);
 			kfree(raw_report);
 			usbhid->ctrl[usbhid->ctrltail].raw_report = NULL;
 		}
 	} else {
+<<<<<<< HEAD
 		int maxpacket;
+=======
+		int maxpacket, padlen;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		usbhid->urbctrl->pipe = usb_rcvctrlpipe(hid_to_usb_dev(hid), 0);
 		maxpacket = usb_maxpacket(hid_to_usb_dev(hid),
 					  usbhid->urbctrl->pipe, 0);
+<<<<<<< HEAD
 		len += (len == 0);	/* Don't allow 0-length reports */
 		len = round_up(len, maxpacket);
 		if (len > usbhid->bufsize)
 			len = usbhid->bufsize;
 	}
 	usbhid->urbctrl->transfer_buffer_length = len;
+=======
+		if (maxpacket > 0) {
+			padlen = DIV_ROUND_UP(len, maxpacket);
+			padlen *= maxpacket;
+			if (padlen > usbhid->bufsize)
+				padlen = usbhid->bufsize;
+		} else
+			padlen = 0;
+		usbhid->urbctrl->transfer_buffer_length = padlen;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	usbhid->urbctrl->dev = hid_to_usb_dev(hid);
 
 	usbhid->cr->bRequestType = USB_TYPE_CLASS | USB_RECIP_INTERFACE | dir;
@@ -501,7 +521,11 @@ static void hid_ctrl(struct urb *urb)
 
 	if (unplug) {
 		usbhid->ctrltail = usbhid->ctrlhead;
+<<<<<<< HEAD
 	} else if (usbhid->ctrlhead != usbhid->ctrltail) {
+=======
+	} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usbhid->ctrltail = (usbhid->ctrltail + 1) & (HID_CONTROL_FIFO_SIZE - 1);
 
 		if (usbhid->ctrlhead != usbhid->ctrltail &&
@@ -1219,6 +1243,7 @@ static void usbhid_stop(struct hid_device *hid)
 	mutex_lock(&usbhid->mutex);
 
 	clear_bit(HID_STARTED, &usbhid->iofl);
+<<<<<<< HEAD
 
 	spin_lock_irq(&usbhid->lock);	/* Sync with error and led handlers */
 	set_bit(HID_DISCONNECTED, &usbhid->iofl);
@@ -1233,6 +1258,11 @@ static void usbhid_stop(struct hid_device *hid)
 	}
 	spin_unlock_irq(&usbhid->lock);
 
+=======
+	spin_lock_irq(&usbhid->lock);	/* Sync with error and led handlers */
+	set_bit(HID_DISCONNECTED, &usbhid->iofl);
+	spin_unlock_irq(&usbhid->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	usb_kill_urb(usbhid->urbin);
 	usb_kill_urb(usbhid->urbout);
 	usb_kill_urb(usbhid->urbctrl);

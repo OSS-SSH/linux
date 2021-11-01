@@ -23,7 +23,11 @@ void i915_perf_fini(struct drm_i915_private *i915);
 void i915_perf_register(struct drm_i915_private *i915);
 void i915_perf_unregister(struct drm_i915_private *i915);
 int i915_perf_ioctl_version(void);
+<<<<<<< HEAD
 int i915_perf_sysctl_register(void);
+=======
+void i915_perf_sysctl_register(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void i915_perf_sysctl_unregister(void);
 
 int i915_perf_open_ioctl(struct drm_device *dev, void *data,

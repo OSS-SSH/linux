@@ -854,9 +854,15 @@ static enum hrtimer_restart cec_pin_timer(struct hrtimer *timer)
 		if (delta > 100 && pin->state != CEC_ST_IDLE) {
 			/* Keep track of timer overruns */
 			pin->timer_sum_overrun += delta;
+<<<<<<< HEAD
 			pin->timer_100us_overruns++;
 			if (delta > 300)
 				pin->timer_300us_overruns++;
+=======
+			pin->timer_100ms_overruns++;
+			if (delta > 300)
+				pin->timer_300ms_overruns++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (delta > pin->timer_max_overrun)
 				pin->timer_max_overrun = delta;
 		}
@@ -1207,6 +1213,7 @@ static void cec_pin_adap_status(struct cec_adapter *adap,
 	seq_printf(file, "cec pin events dropped: %u\n",
 		   pin->work_pin_events_dropped_cnt);
 	seq_printf(file, "irq failed: %d\n", pin->enable_irq_failed);
+<<<<<<< HEAD
 	if (pin->timer_100us_overruns) {
 		seq_printf(file, "timer overruns > 100us: %u of %u\n",
 			   pin->timer_100us_overruns, pin->timer_cnt);
@@ -1216,6 +1223,17 @@ static void cec_pin_adap_status(struct cec_adapter *adap,
 			   pin->timer_max_overrun);
 		seq_printf(file, "avg timer overrun: %u usecs\n",
 			   pin->timer_sum_overrun / pin->timer_100us_overruns);
+=======
+	if (pin->timer_100ms_overruns) {
+		seq_printf(file, "timer overruns > 100ms: %u of %u\n",
+			   pin->timer_100ms_overruns, pin->timer_cnt);
+		seq_printf(file, "timer overruns > 300ms: %u of %u\n",
+			   pin->timer_300ms_overruns, pin->timer_cnt);
+		seq_printf(file, "max timer overrun: %u usecs\n",
+			   pin->timer_max_overrun);
+		seq_printf(file, "avg timer overrun: %u usecs\n",
+			   pin->timer_sum_overrun / pin->timer_100ms_overruns);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	if (pin->rx_start_bit_low_too_short_cnt)
 		seq_printf(file,
@@ -1245,8 +1263,13 @@ static void cec_pin_adap_status(struct cec_adapter *adap,
 	seq_printf(file, "tx detected low drive: %u\n", pin->tx_low_drive_cnt);
 	pin->work_pin_events_dropped_cnt = 0;
 	pin->timer_cnt = 0;
+<<<<<<< HEAD
 	pin->timer_100us_overruns = 0;
 	pin->timer_300us_overruns = 0;
+=======
+	pin->timer_100ms_overruns = 0;
+	pin->timer_300ms_overruns = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pin->timer_max_overrun = 0;
 	pin->timer_sum_overrun = 0;
 	pin->rx_start_bit_low_too_short_cnt = 0;

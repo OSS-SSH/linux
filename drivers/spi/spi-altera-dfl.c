@@ -104,6 +104,16 @@ static const struct regmap_config indirect_regbus_cfg = {
 	.reg_read = indirect_bus_reg_read,
 };
 
+<<<<<<< HEAD
+=======
+static struct spi_board_info m10_bmc_info = {
+	.modalias = "m10-d5005",
+	.max_speed_hz = 12500000,
+	.bus_num = 0,
+	.chip_select = 0,
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void config_spi_master(void __iomem *base, struct spi_master *master)
 {
 	u64 v;
@@ -123,7 +133,10 @@ static void config_spi_master(void __iomem *base, struct spi_master *master)
 
 static int dfl_spi_altera_probe(struct dfl_device *dfl_dev)
 {
+<<<<<<< HEAD
 	struct spi_board_info board_info = { 0 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct device *dev = &dfl_dev->dev;
 	struct spi_master *master;
 	struct altera_spi *hw;
@@ -164,6 +177,7 @@ static int dfl_spi_altera_probe(struct dfl_device *dfl_dev)
 		goto exit;
 	}
 
+<<<<<<< HEAD
 	if (dfl_dev->revision == FME_FEATURE_REV_MAX10_SPI_N5010)
 		strscpy(board_info.modalias, "m10-n5010", SPI_NAME_SIZE);
 	else
@@ -176,6 +190,11 @@ static int dfl_spi_altera_probe(struct dfl_device *dfl_dev)
 	if (!spi_new_device(master, &board_info)) {
 		dev_err(dev, "%s failed to create SPI device: %s\n",
 			__func__, board_info.modalias);
+=======
+	if (!spi_new_device(master,  &m10_bmc_info)) {
+		dev_err(dev, "%s failed to create SPI device: %s\n",
+			__func__, m10_bmc_info.modalias);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;

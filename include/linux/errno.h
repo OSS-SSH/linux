@@ -31,6 +31,9 @@
 #define EJUKEBOX	528	/* Request initiated, but will not complete before timeout */
 #define EIOCBQUEUED	529	/* iocb queued, will get completion event */
 #define ERECALLCONFLICT	530	/* conflict with recalled state */
+<<<<<<< HEAD
 #define ENOGRACE	531	/* NFS file lock reclaim refused */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

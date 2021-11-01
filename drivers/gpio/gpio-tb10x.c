@@ -100,7 +100,11 @@ static irqreturn_t tb10x_gpio_irq_cascade(int irq, void *data)
 	int i;
 
 	for_each_set_bit(i, &bits, 32)
+<<<<<<< HEAD
 		generic_handle_domain_irq(tb10x_gpio->domain, i);
+=======
+		generic_handle_irq(irq_find_mapping(tb10x_gpio->domain, i));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return IRQ_HANDLED;
 }

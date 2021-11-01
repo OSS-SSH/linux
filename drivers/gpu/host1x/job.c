@@ -24,6 +24,7 @@
 #define HOST1X_WAIT_SYNCPT_OFFSET 0x8
 
 struct host1x_job *host1x_job_alloc(struct host1x_channel *ch,
+<<<<<<< HEAD
 				    u32 num_cmdbufs, u32 num_relocs,
 				    bool skip_firewall)
 {
@@ -36,13 +37,27 @@ struct host1x_job *host1x_job_alloc(struct host1x_channel *ch,
 	enable_firewall = IS_ENABLED(CONFIG_TEGRA_HOST1X_FIREWALL) && !skip_firewall;
 
 	if (!enable_firewall)
+=======
+				    u32 num_cmdbufs, u32 num_relocs)
+{
+	struct host1x_job *job = NULL;
+	unsigned int num_unpins = num_relocs;
+	u64 total;
+	void *mem;
+
+	if (!IS_ENABLED(CONFIG_TEGRA_HOST1X_FIREWALL))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		num_unpins += num_cmdbufs;
 
 	/* Check that we're not going to overflow */
 	total = sizeof(struct host1x_job) +
 		(u64)num_relocs * sizeof(struct host1x_reloc) +
 		(u64)num_unpins * sizeof(struct host1x_job_unpin_data) +
+<<<<<<< HEAD
 		(u64)num_cmdbufs * sizeof(struct host1x_job_cmd) +
+=======
+		(u64)num_cmdbufs * sizeof(struct host1x_job_gather) +
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		(u64)num_unpins * sizeof(dma_addr_t) +
 		(u64)num_unpins * sizeof(u32 *);
 	if (total > ULONG_MAX)
@@ -52,8 +67,11 @@ struct host1x_job *host1x_job_alloc(struct host1x_channel *ch,
 	if (!job)
 		return NULL;
 
+<<<<<<< HEAD
 	job->enable_firewall = enable_firewall;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kref_init(&job->ref);
 	job->channel = ch;
 
@@ -63,8 +81,13 @@ struct host1x_job *host1x_job_alloc(struct host1x_channel *ch,
 	mem += num_relocs * sizeof(struct host1x_reloc);
 	job->unpins = num_unpins ? mem : NULL;
 	mem += num_unpins * sizeof(struct host1x_job_unpin_data);
+<<<<<<< HEAD
 	job->cmds = num_cmdbufs ? mem : NULL;
 	mem += num_cmdbufs * sizeof(struct host1x_job_cmd);
+=======
+	job->gathers = num_cmdbufs ? mem : NULL;
+	mem += num_cmdbufs * sizeof(struct host1x_job_gather);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	job->addr_phys = num_unpins ? mem : NULL;
 
 	job->reloc_addr_phys = job->addr_phys;
@@ -85,6 +108,7 @@ static void job_free(struct kref *ref)
 {
 	struct host1x_job *job = container_of(ref, struct host1x_job, ref);
 
+<<<<<<< HEAD
 	if (job->release)
 		job->release(job);
 
@@ -92,6 +116,8 @@ static void job_free(struct kref *ref)
 		host1x_intr_put_ref(job->syncpt->host, job->syncpt->id,
 				    job->waiter, false);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (job->syncpt)
 		host1x_syncpt_put(job->syncpt);
 
@@ -107,12 +133,17 @@ EXPORT_SYMBOL(host1x_job_put);
 void host1x_job_add_gather(struct host1x_job *job, struct host1x_bo *bo,
 			   unsigned int words, unsigned int offset)
 {
+<<<<<<< HEAD
 	struct host1x_job_gather *gather = &job->cmds[job->num_cmds].gather;
+=======
+	struct host1x_job_gather *gather = &job->gathers[job->num_gathers];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	gather->words = words;
 	gather->bo = bo;
 	gather->offset = offset;
 
+<<<<<<< HEAD
 	job->num_cmds++;
 }
 EXPORT_SYMBOL(host1x_job_add_gather);
@@ -132,13 +163,22 @@ void host1x_job_add_wait(struct host1x_job *job, u32 id, u32 thresh,
 }
 EXPORT_SYMBOL(host1x_job_add_wait);
 
+=======
+	job->num_gathers++;
+}
+EXPORT_SYMBOL(host1x_job_add_gather);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static unsigned int pin_job(struct host1x *host, struct host1x_job *job)
 {
 	struct host1x_client *client = job->client;
 	struct device *dev = client->dev;
 	struct host1x_job_gather *g;
 	struct iommu_domain *domain;
+<<<<<<< HEAD
 	struct sg_table *sgt;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int i;
 	int err;
 
@@ -148,6 +188,10 @@ static unsigned int pin_job(struct host1x *host, struct host1x_job *job)
 	for (i = 0; i < job->num_relocs; i++) {
 		struct host1x_reloc *reloc = &job->relocs[i];
 		dma_addr_t phys_addr, *phys;
+<<<<<<< HEAD
+=======
+		struct sg_table *sgt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		reloc->target.bo = host1x_bo_get(reloc->target.bo);
 		if (!reloc->target.bo) {
@@ -220,23 +264,37 @@ static unsigned int pin_job(struct host1x *host, struct host1x_job *job)
 	 * We will copy gathers BO content later, so there is no need to
 	 * hold and pin them.
 	 */
+<<<<<<< HEAD
 	if (job->enable_firewall)
 		return 0;
 
 	for (i = 0; i < job->num_cmds; i++) {
 		size_t gather_size = 0;
 		struct scatterlist *sg;
+=======
+	if (IS_ENABLED(CONFIG_TEGRA_HOST1X_FIREWALL))
+		return 0;
+
+	for (i = 0; i < job->num_gathers; i++) {
+		size_t gather_size = 0;
+		struct scatterlist *sg;
+		struct sg_table *sgt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dma_addr_t phys_addr;
 		unsigned long shift;
 		struct iova *alloc;
 		dma_addr_t *phys;
 		unsigned int j;
 
+<<<<<<< HEAD
 		if (job->cmds[i].is_wait)
 			continue;
 
 		g = &job->cmds[i].gather;
 
+=======
+		g = &job->gathers[i];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		g->bo = host1x_bo_get(g->bo);
 		if (!g->bo) {
 			err = -EINVAL;
@@ -327,7 +385,11 @@ static int do_relocs(struct host1x_job *job, struct host1x_job_gather *g)
 		if (cmdbuf != reloc->cmdbuf.bo)
 			continue;
 
+<<<<<<< HEAD
 		if (job->enable_firewall) {
+=======
+		if (IS_ENABLED(CONFIG_TEGRA_HOST1X_FIREWALL)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			target = (u32 *)job->gather_copy_mapped +
 					reloc->cmdbuf.offset / sizeof(u32) +
 						g->offset / sizeof(u32);
@@ -569,6 +631,7 @@ static inline int copy_gathers(struct device *host, struct host1x_job *job,
 	fw.num_relocs = job->num_relocs;
 	fw.class = job->class;
 
+<<<<<<< HEAD
 	for (i = 0; i < job->num_cmds; i++) {
 		struct host1x_job_gather *g;
 
@@ -576,6 +639,10 @@ static inline int copy_gathers(struct device *host, struct host1x_job *job,
 			continue;
 
 		g = &job->cmds[i].gather;
+=======
+	for (i = 0; i < job->num_gathers; i++) {
+		struct host1x_job_gather *g = &job->gathers[i];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		size += g->words * sizeof(u32);
 	}
@@ -597,6 +664,7 @@ static inline int copy_gathers(struct device *host, struct host1x_job *job,
 
 	job->gather_copy_size = size;
 
+<<<<<<< HEAD
 	for (i = 0; i < job->num_cmds; i++) {
 		struct host1x_job_gather *g;
 		void *gather;
@@ -605,6 +673,12 @@ static inline int copy_gathers(struct device *host, struct host1x_job *job,
 			continue;
 		g = &job->cmds[i].gather;
 
+=======
+	for (i = 0; i < job->num_gathers; i++) {
+		struct host1x_job_gather *g = &job->gathers[i];
+		void *gather;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Copy the gather */
 		gather = host1x_bo_mmap(g->bo);
 		memcpy(job->gather_copy_mapped + offset, gather + g->offset,
@@ -640,25 +714,35 @@ int host1x_job_pin(struct host1x_job *job, struct device *dev)
 	if (err)
 		goto out;
 
+<<<<<<< HEAD
 	if (job->enable_firewall) {
+=======
+	if (IS_ENABLED(CONFIG_TEGRA_HOST1X_FIREWALL)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = copy_gathers(host->dev, job, dev);
 		if (err)
 			goto out;
 	}
 
 	/* patch gathers */
+<<<<<<< HEAD
 	for (i = 0; i < job->num_cmds; i++) {
 		struct host1x_job_gather *g;
 
 		if (job->cmds[i].is_wait)
 			continue;
 		g = &job->cmds[i].gather;
+=======
+	for (i = 0; i < job->num_gathers; i++) {
+		struct host1x_job_gather *g = &job->gathers[i];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* process each gather mem only once */
 		if (g->handled)
 			continue;
 
 		/* copy_gathers() sets gathers base if firewall is enabled */
+<<<<<<< HEAD
 		if (!job->enable_firewall)
 			g->base = job->gather_addr_phys[i];
 
@@ -667,6 +751,15 @@ int host1x_job_pin(struct host1x_job *job, struct device *dev)
 			    job->cmds[j].gather.bo == g->bo) {
 				job->cmds[j].gather.handled = true;
 				job->cmds[j].gather.base = g->base;
+=======
+		if (!IS_ENABLED(CONFIG_TEGRA_HOST1X_FIREWALL))
+			g->base = job->gather_addr_phys[i];
+
+		for (j = i + 1; j < job->num_gathers; j++) {
+			if (job->gathers[j].bo == g->bo) {
+				job->gathers[j].handled = true;
+				job->gathers[j].base = g->base;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 
@@ -694,7 +787,12 @@ void host1x_job_unpin(struct host1x_job *job)
 		struct device *dev = unpin->dev ?: host->dev;
 		struct sg_table *sgt = unpin->sgt;
 
+<<<<<<< HEAD
 		if (!job->enable_firewall && unpin->size && host->domain) {
+=======
+		if (!IS_ENABLED(CONFIG_TEGRA_HOST1X_FIREWALL) &&
+		    unpin->size && host->domain) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			iommu_unmap(host->domain, job->addr_phys[i],
 				    unpin->size);
 			free_iova(&host->iova,

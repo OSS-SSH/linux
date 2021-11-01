@@ -480,11 +480,14 @@ int detach_capi_ctr(struct capi_ctr *ctr)
 
 	ctr_down(ctr, CAPI_CTR_DETACHED);
 
+<<<<<<< HEAD
 	if (ctr->cnr < 1 || ctr->cnr - 1 >= CAPI_MAXCONTR) {
 		err = -EINVAL;
 		goto unlock_out;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (capi_controller[ctr->cnr - 1] != ctr) {
 		err = -EINVAL;
 		goto unlock_out;

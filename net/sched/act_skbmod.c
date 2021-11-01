@@ -6,12 +6,18 @@
 */
 
 #include <linux/module.h>
+<<<<<<< HEAD
 #include <linux/if_arp.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/init.h>
 #include <linux/kernel.h>
 #include <linux/skbuff.h>
 #include <linux/rtnetlink.h>
+<<<<<<< HEAD
 #include <net/inet_ecn.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <net/netlink.h>
 #include <net/pkt_sched.h>
 #include <net/pkt_cls.h>
@@ -22,21 +28,44 @@
 static unsigned int skbmod_net_id;
 static struct tc_action_ops act_skbmod_ops;
 
+<<<<<<< HEAD
+=======
+#define MAX_EDIT_LEN ETH_HLEN
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int tcf_skbmod_act(struct sk_buff *skb, const struct tc_action *a,
 			  struct tcf_result *res)
 {
 	struct tcf_skbmod *d = to_skbmod(a);
+<<<<<<< HEAD
 	int action, max_edit_len, err;
 	struct tcf_skbmod_params *p;
 	u64 flags;
+=======
+	int action;
+	struct tcf_skbmod_params *p;
+	u64 flags;
+	int err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	tcf_lastuse_update(&d->tcf_tm);
 	bstats_cpu_update(this_cpu_ptr(d->common.cpu_bstats), skb);
 
+<<<<<<< HEAD
+=======
+	/* XXX: if you are going to edit more fields beyond ethernet header
+	 * (example when you add IP header replacement or vlan swap)
+	 * then MAX_EDIT_LEN needs to change appropriately
+	*/
+	err = skb_ensure_writable(skb, MAX_EDIT_LEN);
+	if (unlikely(err)) /* best policy is to drop on the floor */
+		goto drop;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	action = READ_ONCE(d->tcf_action);
 	if (unlikely(action == TC_ACT_SHOT))
 		goto drop;
 
+<<<<<<< HEAD
 	max_edit_len = skb_mac_header_len(skb);
 	p = rcu_dereference_bh(d->skbmod_p);
 	flags = p->flags;
@@ -65,6 +94,10 @@ static int tcf_skbmod_act(struct sk_buff *skb, const struct tc_action *a,
 	if (unlikely(err)) /* best policy is to drop on the floor */
 		goto drop;
 
+=======
+	p = rcu_dereference_bh(d->skbmod_p);
+	flags = p->flags;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (flags & SKBMOD_F_DMAC)
 		ether_addr_copy(eth_hdr(skb)->h_dest, p->eth_dst);
 	if (flags & SKBMOD_F_SMAC)
@@ -80,10 +113,13 @@ static int tcf_skbmod_act(struct sk_buff *skb, const struct tc_action *a,
 		ether_addr_copy(eth_hdr(skb)->h_source, (u8 *)tmpaddr);
 	}
 
+<<<<<<< HEAD
 	if (flags & SKBMOD_F_ECN)
 		INET_ECN_set_ce(skb);
 
 out:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return action;
 
 drop:
@@ -100,12 +136,19 @@ static const struct nla_policy skbmod_policy[TCA_SKBMOD_MAX + 1] = {
 
 static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
 			   struct nlattr *est, struct tc_action **a,
+<<<<<<< HEAD
+=======
+			   int ovr, int bind, bool rtnl_held,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   struct tcf_proto *tp, u32 flags,
 			   struct netlink_ext_ack *extack)
 {
 	struct tc_action_net *tn = net_generic(net, skbmod_net_id);
+<<<<<<< HEAD
 	bool ovr = flags & TCA_ACT_FLAGS_REPLACE;
 	bool bind = flags & TCA_ACT_FLAGS_BIND;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nlattr *tb[TCA_SKBMOD_MAX + 1];
 	struct tcf_skbmod_params *p, *p_old;
 	struct tcf_chain *goto_ch = NULL;
@@ -148,8 +191,11 @@ static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
 	index = parm->index;
 	if (parm->flags & SKBMOD_F_SWAPMAC)
 		lflags = SKBMOD_F_SWAPMAC;
+<<<<<<< HEAD
 	if (parm->flags & SKBMOD_F_ECN)
 		lflags = SKBMOD_F_ECN;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = tcf_idr_check_alloc(tn, &index, a, bind);
 	if (err < 0)

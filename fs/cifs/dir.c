@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
+=======
+ *   fs/cifs/dir.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   vfs operations that deal with dentries
  *
@@ -99,7 +103,11 @@ build_path_from_dentry_optional_prefix(struct dentry *direntry, void *page,
 	if (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_USE_PREFIX_PATH)
 		pplen = cifs_sb->prepath ? strlen(cifs_sb->prepath) + 1 : 0;
 
+<<<<<<< HEAD
 	s = dentry_path_raw(direntry, page, PATH_MAX);
+=======
+	s = dentry_path_raw(direntry, page, PAGE_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(s))
 		return s;
 	if (!s[1])	// for root we want "", not "/"

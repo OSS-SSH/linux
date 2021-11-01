@@ -14,7 +14,11 @@
 
 #include <scsi/scsi_transport.h>
 #include <scsi/scsi_transport_sas.h>
+<<<<<<< HEAD
 #include "scsi_sas_internal.h"
+=======
+#include "../scsi_sas_internal.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void sas_host_smp_discover(struct sas_ha_struct *sas_ha, u8 *resp_data,
 				  u8 phy_id)

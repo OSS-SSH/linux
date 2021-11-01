@@ -13,12 +13,16 @@
 #include <linux/tracefs.h>
 
 #include "trace.h"
+<<<<<<< HEAD
 #include "trace_output.h"	/* for trace_event_sem */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "trace_dynevent.h"
 
 static DEFINE_MUTEX(dyn_event_ops_mutex);
 static LIST_HEAD(dyn_event_ops_list);
 
+<<<<<<< HEAD
 bool trace_event_dyn_try_get_ref(struct trace_event_call *dyn_call)
 {
 	struct trace_event_call *call;
@@ -56,6 +60,8 @@ bool trace_event_dyn_busy(struct trace_event_call *call)
 	return atomic_read(&call->refcnt) != 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int dyn_event_register(struct dyn_event_operations *ops)
 {
 	if (!ops || !ops->create || !ops->show || !ops->is_busy ||

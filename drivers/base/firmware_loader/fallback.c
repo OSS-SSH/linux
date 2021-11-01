@@ -89,11 +89,20 @@ static void __fw_load_abort(struct fw_priv *fw_priv)
 {
 	/*
 	 * There is a small window in which user can write to 'loading'
+<<<<<<< HEAD
 	 * between loading done/aborted and disappearance of 'loading'
 	 */
 	if (fw_state_is_aborted(fw_priv) || fw_sysfs_done(fw_priv))
 		return;
 
+=======
+	 * between loading done and disappearance of 'loading'
+	 */
+	if (fw_sysfs_done(fw_priv))
+		return;
+
+	list_del_init(&fw_priv->pending_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fw_state_aborted(fw_priv);
 }
 
@@ -279,6 +288,10 @@ static ssize_t firmware_loading_store(struct device *dev,
 			 * Same logic as fw_load_abort, only the DONE bit
 			 * is ignored and we set ABORT only on failure.
 			 */
+<<<<<<< HEAD
+=======
+			list_del_init(&fw_priv->pending_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (rc) {
 				fw_state_aborted(fw_priv);
 				written = rc;
@@ -511,11 +524,14 @@ static int fw_load_sysfs_fallback(struct fw_sysfs *fw_sysfs, long timeout)
 	}
 
 	mutex_lock(&fw_lock);
+<<<<<<< HEAD
 	if (fw_state_is_aborted(fw_priv)) {
 		mutex_unlock(&fw_lock);
 		retval = -EINTR;
 		goto out;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_add(&fw_priv->pending_list, &pending_fw_head);
 	mutex_unlock(&fw_lock);
 
@@ -538,10 +554,18 @@ static int fw_load_sysfs_fallback(struct fw_sysfs *fw_sysfs, long timeout)
 	if (fw_state_is_aborted(fw_priv)) {
 		if (retval == -ERESTARTSYS)
 			retval = -EINTR;
+<<<<<<< HEAD
 	} else if (fw_priv->is_paged_buf && !fw_priv->data)
 		retval = -ENOMEM;
 
 out:
+=======
+		else
+			retval = -EAGAIN;
+	} else if (fw_priv->is_paged_buf && !fw_priv->data)
+		retval = -ENOMEM;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	device_del(f_dev);
 err_put_dev:
 	put_device(f_dev);

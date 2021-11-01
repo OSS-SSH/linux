@@ -236,8 +236,11 @@
 				     <GIC_SPI 237 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 239 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 			interrupt-names = "tei", "ri", "ti", "spi", "sti",
 					  "naki", "ali", "tmoi";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			clocks = <&cpg CPG_MOD 87>;
 			power-domains = <&cpg>;
 			clock-frequency = <100000>;
@@ -257,8 +260,11 @@
 				     <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 			interrupt-names = "tei", "ri", "ti", "spi", "sti",
 					  "naki", "ali", "tmoi";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			clocks = <&cpg CPG_MOD 86>;
 			power-domains = <&cpg>;
 			clock-frequency = <100000>;
@@ -278,8 +284,11 @@
 				     <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 254 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 255 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 			interrupt-names = "tei", "ri", "ti", "spi", "sti",
 					  "naki", "ali", "tmoi";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			clocks = <&cpg CPG_MOD 85>;
 			power-domains = <&cpg>;
 			clock-frequency = <100000>;
@@ -299,8 +308,11 @@
 				     <GIC_SPI 261 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 262 IRQ_TYPE_LEVEL_HIGH>,
 				     <GIC_SPI 263 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 			interrupt-names = "tei", "ri", "ti", "spi", "sti",
 					  "naki", "ali", "tmoi";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			clocks = <&cpg CPG_MOD 84>;
 			power-domains = <&cpg>;
 			clock-frequency = <100000>;

@@ -46,7 +46,10 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct device *parent = dev->parent;
+<<<<<<< HEAD
 	struct device_node *np = parent->of_node;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct clk_regmap_mux_div *a53cc;
 	struct regmap *regmap;
 	struct clk_init_data init = { };
@@ -62,6 +65,7 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
 	if (!a53cc)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	/* Use an unique name by appending parent's @unit-address */
 	init.name = devm_kasprintf(dev, GFP_KERNEL, "a53mux%s",
 				   strchrnul(np->full_name, '@'));
@@ -72,6 +76,13 @@ static int qcom_apcs_msm8916_clk_probe(struct platform_device *pdev)
 	init.num_parents = ARRAY_SIZE(pdata);
 	init.ops = &clk_regmap_mux_div_ops;
 	init.flags = CLK_IS_CRITICAL | CLK_SET_RATE_PARENT;
+=======
+	init.name = "a53mux";
+	init.parent_data = pdata;
+	init.num_parents = ARRAY_SIZE(pdata);
+	init.ops = &clk_regmap_mux_div_ops;
+	init.flags = CLK_SET_RATE_PARENT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	a53cc->clkr.hw.init = &init;
 	a53cc->clkr.regmap = regmap;

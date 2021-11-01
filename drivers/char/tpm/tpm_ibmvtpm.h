@@ -41,7 +41,11 @@ struct ibmvtpm_dev {
 	wait_queue_head_t wq;
 	u16 res_len;
 	u32 vtpm_version;
+<<<<<<< HEAD
 	u8 tpm_processing_cmd;
+=======
+	bool tpm_processing_cmd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define CRQ_RES_BUF_SIZE	PAGE_SIZE

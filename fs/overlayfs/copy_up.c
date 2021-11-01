@@ -8,7 +8,10 @@
 #include <linux/fs.h>
 #include <linux/slab.h>
 #include <linux/file.h>
+<<<<<<< HEAD
 #include <linux/fileattr.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/splice.h>
 #include <linux/xattr.h>
 #include <linux/security.h>
@@ -63,7 +66,11 @@ int ovl_copy_xattr(struct super_block *sb, struct dentry *old,
 		return list_size;
 	}
 
+<<<<<<< HEAD
 	buf = kvzalloc(list_size, GFP_KERNEL);
+=======
+	buf = kzalloc(list_size, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!buf)
 		return -ENOMEM;
 
@@ -106,12 +113,19 @@ retry:
 		if (size > value_size) {
 			void *new;
 
+<<<<<<< HEAD
 			new = kvmalloc(size, GFP_KERNEL);
+=======
+			new = krealloc(value, size, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (!new) {
 				error = -ENOMEM;
 				break;
 			}
+<<<<<<< HEAD
 			kvfree(value);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			value = new;
 			value_size = size;
 			goto retry;
@@ -126,6 +140,7 @@ retry:
 			error = 0;
 		}
 	}
+<<<<<<< HEAD
 	kvfree(value);
 out:
 	kvfree(buf);
@@ -170,6 +185,14 @@ static int ovl_copy_fileattr(struct inode *inode, struct path *old,
 	return ovl_real_fileattr_set(new, &newfa);
 }
 
+=======
+	kfree(value);
+out:
+	kfree(buf);
+	return error;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ovl_copy_up_data(struct ovl_fs *ofs, struct path *old,
 			    struct path *new, loff_t len)
 {
@@ -371,8 +394,13 @@ out_err:
 	return ERR_PTR(err);
 }
 
+<<<<<<< HEAD
 int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
 		   struct dentry *upper)
+=======
+int ovl_set_origin(struct ovl_fs *ofs, struct dentry *dentry,
+		   struct dentry *lower, struct dentry *upper)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct ovl_fh *fh = NULL;
 	int err;
@@ -391,7 +419,11 @@ int ovl_set_origin(struct ovl_fs *ofs, struct dentry *lower,
 	/*
 	 * Do not fail when upper doesn't support xattrs.
 	 */
+<<<<<<< HEAD
 	err = ovl_check_setxattr(ofs, upper, OVL_XATTR_ORIGIN, fh->buf,
+=======
+	err = ovl_check_setxattr(dentry, upper, OVL_XATTR_ORIGIN, fh->buf,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 fh ? fh->fb.len : 0, 0);
 	kfree(fh);
 
@@ -533,6 +565,7 @@ static int ovl_link_up(struct ovl_copy_up_ctx *c)
 static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 {
 	struct ovl_fs *ofs = OVL_FS(c->dentry->d_sb);
+<<<<<<< HEAD
 	struct inode *inode = d_inode(c->dentry);
 	struct path upperpath, datapath;
 	int err;
@@ -543,11 +576,25 @@ static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 
 	upperpath.dentry = temp;
 
+=======
+	int err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Copy up data first and then xattrs. Writing data after
 	 * xattrs will remove security.capability xattr automatically.
 	 */
 	if (S_ISREG(c->stat.mode) && !c->metacopy) {
+<<<<<<< HEAD
+=======
+		struct path upperpath, datapath;
+
+		ovl_path_upper(c->dentry, &upperpath);
+		if (WARN_ON(upperpath.dentry != NULL))
+			return -EIO;
+		upperpath.dentry = temp;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ovl_path_lowerdata(c->dentry, &datapath);
 		err = ovl_copy_up_data(ofs, &datapath, &upperpath,
 				       c->stat.size);
@@ -559,6 +606,7 @@ static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 	if (inode->i_flags & OVL_COPY_I_FLAGS_MASK) {
 		/*
 		 * Copy the fileattr inode flags that are the source of already
@@ -569,6 +617,8 @@ static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 			return err;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Store identifier of lower inode in upper inode xattr to
 	 * allow lookup of the copy up origin inode.
@@ -577,13 +627,21 @@ static int ovl_copy_up_inode(struct ovl_copy_up_ctx *c, struct dentry *temp)
 	 * hard link.
 	 */
 	if (c->origin) {
+<<<<<<< HEAD
 		err = ovl_set_origin(ofs, c->lowerpath.dentry, temp);
+=======
+		err = ovl_set_origin(ofs, c->dentry, c->lowerpath.dentry, temp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 	}
 
 	if (c->metacopy) {
+<<<<<<< HEAD
 		err = ovl_check_setxattr(ofs, temp, OVL_XATTR_METACOPY,
+=======
+		err = ovl_check_setxattr(c->dentry, temp, OVL_XATTR_METACOPY,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					 NULL, 0, -EOPNOTSUPP);
 		if (err)
 			return err;

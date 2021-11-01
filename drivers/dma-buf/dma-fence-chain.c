@@ -137,7 +137,10 @@ static void dma_fence_chain_cb(struct dma_fence *f, struct dma_fence_cb *cb)
 	struct dma_fence_chain *chain;
 
 	chain = container_of(cb, typeof(*chain), cb);
+<<<<<<< HEAD
 	init_irq_work(&chain->work, dma_fence_chain_irq_work);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	irq_work_queue(&chain->work);
 	dma_fence_put(f);
 }
@@ -240,6 +243,10 @@ void dma_fence_chain_init(struct dma_fence_chain *chain,
 	rcu_assign_pointer(chain->prev, prev);
 	chain->fence = fence;
 	chain->prev_seqno = 0;
+<<<<<<< HEAD
+=======
+	init_irq_work(&chain->work, dma_fence_chain_irq_work);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Try to reuse the context of the previous chain node. */
 	if (prev_chain && __dma_fence_is_later(seqno, prev->seqno, prev->ops)) {

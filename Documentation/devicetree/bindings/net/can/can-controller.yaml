@@ -13,6 +13,7 @@ properties:
   $nodename:
     pattern: "^can(@.*)?$"
 
+<<<<<<< HEAD
   termination-gpios:
     description: GPIO pin to enable CAN bus termination.
     maxItems: 1
@@ -22,6 +23,8 @@ properties:
     minimum: 1
     maximum: 65535
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 additionalProperties: true
 
 ...

@@ -65,4 +65,10 @@ xchk_xattr_dstmap(
 			BITS_TO_LONGS(sc->mp->m_attr_geo->blksize);
 }
 
+<<<<<<< HEAD
+=======
+int xchk_setup_xattr_buf(struct xfs_scrub *sc, size_t value_size,
+		xfs_km_flags_t flags);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif	/* __XFS_SCRUB_ATTR_H__ */

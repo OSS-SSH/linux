@@ -2841,7 +2841,11 @@ static int __init synclink_cs_init(void)
 err_unreg_tty:
 	tty_unregister_driver(serial_driver);
 err_put_tty:
+<<<<<<< HEAD
 	tty_driver_kref_put(serial_driver);
+=======
+	put_tty_driver(serial_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err:
 	return rc;
 }
@@ -2850,7 +2854,11 @@ static void __exit synclink_cs_exit(void)
 {
 	pcmcia_unregister_driver(&mgslpc_driver);
 	tty_unregister_driver(serial_driver);
+<<<<<<< HEAD
 	tty_driver_kref_put(serial_driver);
+=======
+	put_tty_driver(serial_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 module_init(synclink_cs_init);
@@ -4050,6 +4058,7 @@ static int hdlcdev_close(struct net_device *dev)
  * called by network layer to process IOCTL call to network device
  *
  * dev  pointer to network device structure
+<<<<<<< HEAD
  * ifs  pointer to network interface settings structure
  *
  * returns 0 if success, otherwise error code
@@ -4059,6 +4068,18 @@ static int hdlcdev_wan_ioctl(struct net_device *dev, struct if_settings *ifs)
 	const size_t size = sizeof(sync_serial_settings);
 	sync_serial_settings new_line;
 	sync_serial_settings __user *line = ifs->ifs_ifsu.sync;
+=======
+ * ifr  pointer to network interface request structure
+ * cmd  IOCTL command code
+ *
+ * returns 0 if success, otherwise error code
+ */
+static int hdlcdev_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
+{
+	const size_t size = sizeof(sync_serial_settings);
+	sync_serial_settings new_line;
+	sync_serial_settings __user *line = ifr->ifr_settings.ifs_ifsu.sync;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	MGSLPC_INFO *info = dev_to_port(dev);
 	unsigned int flags;
 
@@ -4069,6 +4090,7 @@ static int hdlcdev_wan_ioctl(struct net_device *dev, struct if_settings *ifs)
 	if (info->port.count)
 		return -EBUSY;
 
+<<<<<<< HEAD
 	memset(&new_line, 0, size);
 
 	switch (ifs->type) {
@@ -4077,6 +4099,19 @@ static int hdlcdev_wan_ioctl(struct net_device *dev, struct if_settings *ifs)
 		ifs->type = IF_IFACE_SYNC_SERIAL;
 		if (ifs->size < size) {
 			ifs->size = size; /* data size wanted */
+=======
+	if (cmd != SIOCWANDEV)
+		return hdlc_ioctl(dev, ifr, cmd);
+
+	memset(&new_line, 0, size);
+
+	switch(ifr->ifr_settings.type) {
+	case IF_GET_IFACE: /* return current sync_serial_settings */
+
+		ifr->ifr_settings.type = IF_IFACE_SYNC_SERIAL;
+		if (ifr->ifr_settings.size < size) {
+			ifr->ifr_settings.size = size; /* data size wanted */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENOBUFS;
 		}
 
@@ -4144,8 +4179,14 @@ static int hdlcdev_wan_ioctl(struct net_device *dev, struct if_settings *ifs)
 			tty_kref_put(tty);
 		}
 		return 0;
+<<<<<<< HEAD
 	default:
 		return hdlc_ioctl(dev, ifs);
+=======
+
+	default:
+		return hdlc_ioctl(dev, ifr, cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -4220,7 +4261,11 @@ static const struct net_device_ops hdlcdev_ops = {
 	.ndo_open       = hdlcdev_open,
 	.ndo_stop       = hdlcdev_close,
 	.ndo_start_xmit = hdlc_start_xmit,
+<<<<<<< HEAD
 	.ndo_siocwandev = hdlcdev_wan_ioctl,
+=======
+	.ndo_do_ioctl   = hdlcdev_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout = hdlcdev_tx_timeout,
 };
 

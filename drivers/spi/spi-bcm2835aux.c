@@ -143,12 +143,20 @@ static void bcm2835aux_debugfs_remove(struct bcm2835aux_spi *bs)
 }
 #endif /* CONFIG_DEBUG_FS */
 
+<<<<<<< HEAD
 static inline u32 bcm2835aux_rd(struct bcm2835aux_spi *bs, unsigned int reg)
+=======
+static inline u32 bcm2835aux_rd(struct bcm2835aux_spi *bs, unsigned reg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return readl(bs->regs + reg);
 }
 
+<<<<<<< HEAD
 static inline void bcm2835aux_wr(struct bcm2835aux_spi *bs, unsigned int reg,
+=======
+static inline void bcm2835aux_wr(struct bcm2835aux_spi *bs, unsigned reg,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 u32 val)
 {
 	writel(val, bs->regs + reg);

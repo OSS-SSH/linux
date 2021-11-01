@@ -143,8 +143,11 @@ struct virtio_mem {
 	 * add_memory_driver_managed().
 	 */
 	const char *resource_name;
+<<<<<<< HEAD
 	/* Memory group identification. */
 	int mgid;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * We don't want to add too much memory if it's not getting onlined,
@@ -628,8 +631,13 @@ static int virtio_mem_add_memory(struct virtio_mem *vm, uint64_t addr,
 		addr + size - 1);
 	/* Memory might get onlined immediately. */
 	atomic64_add(size, &vm->offline_size);
+<<<<<<< HEAD
 	rc = add_memory_driver_managed(vm->mgid, addr, size, vm->resource_name,
 				       MHP_MERGE_RESOURCE | MHP_NID_IS_MGID);
+=======
+	rc = add_memory_driver_managed(vm->nid, addr, size, vm->resource_name,
+				       MHP_MERGE_RESOURCE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc) {
 		atomic64_sub(size, &vm->offline_size);
 		dev_warn(&vm->vdev->dev, "adding memory failed: %d\n", rc);
@@ -679,7 +687,11 @@ static int virtio_mem_remove_memory(struct virtio_mem *vm, uint64_t addr,
 
 	dev_dbg(&vm->vdev->dev, "removing memory: 0x%llx - 0x%llx\n", addr,
 		addr + size - 1);
+<<<<<<< HEAD
 	rc = remove_memory(addr, size);
+=======
+	rc = remove_memory(vm->nid, addr, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!rc) {
 		atomic64_sub(size, &vm->offline_size);
 		/*
@@ -722,7 +734,11 @@ static int virtio_mem_offline_and_remove_memory(struct virtio_mem *vm,
 		"offlining and removing memory: 0x%llx - 0x%llx\n", addr,
 		addr + size - 1);
 
+<<<<<<< HEAD
 	rc = offline_and_remove_memory(addr, size);
+=======
+	rc = offline_and_remove_memory(vm->nid, addr, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!rc) {
 		atomic64_sub(size, &vm->offline_size);
 		/*
@@ -1244,6 +1260,7 @@ static void virtio_mem_online_page_cb(struct page *page, unsigned int order)
 			do_online = virtio_mem_bbm_get_bb_state(vm, id) !=
 				    VIRTIO_MEM_BBM_BB_FAKE_OFFLINE;
 		}
+<<<<<<< HEAD
 
 		/*
 		 * virtio_mem_set_fake_offline() might sleep, we don't need
@@ -1252,11 +1269,17 @@ static void virtio_mem_online_page_cb(struct page *page, unsigned int order)
 		 */
 		rcu_read_unlock();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (do_online)
 			generic_online_page(page, order);
 		else
 			virtio_mem_set_fake_offline(PFN_DOWN(addr), 1 << order,
 						    false);
+<<<<<<< HEAD
+=======
+		rcu_read_unlock();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	}
 	rcu_read_unlock();
@@ -2571,7 +2594,10 @@ static bool virtio_mem_has_memory_added(struct virtio_mem *vm)
 static int virtio_mem_probe(struct virtio_device *vdev)
 {
 	struct virtio_mem *vm;
+<<<<<<< HEAD
 	uint64_t unit_pages;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int rc;
 
 	BUILD_BUG_ON(sizeof(struct virtio_mem_req) != 24);
@@ -2606,6 +2632,7 @@ static int virtio_mem_probe(struct virtio_device *vdev)
 	if (rc)
 		goto out_del_vq;
 
+<<<<<<< HEAD
 	/* use a single dynamic memory group to cover the whole memory device */
 	if (vm->in_sbm)
 		unit_pages = PHYS_PFN(memory_block_size_bytes());
@@ -2616,6 +2643,8 @@ static int virtio_mem_probe(struct virtio_device *vdev)
 		goto out_del_resource;
 	vm->mgid = rc;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * If we still have memory plugged, we have to unplug all memory first.
 	 * Registering our parent resource makes sure that this memory isn't
@@ -2630,7 +2659,11 @@ static int virtio_mem_probe(struct virtio_device *vdev)
 	vm->memory_notifier.notifier_call = virtio_mem_memory_notifier_cb;
 	rc = register_memory_notifier(&vm->memory_notifier);
 	if (rc)
+<<<<<<< HEAD
 		goto out_unreg_group;
+=======
+		goto out_del_resource;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rc = register_virtio_mem_device(vm);
 	if (rc)
 		goto out_unreg_mem;
@@ -2644,8 +2677,11 @@ static int virtio_mem_probe(struct virtio_device *vdev)
 	return 0;
 out_unreg_mem:
 	unregister_memory_notifier(&vm->memory_notifier);
+<<<<<<< HEAD
 out_unreg_group:
 	memory_group_unregister(vm->mgid);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_del_resource:
 	virtio_mem_delete_resource(vm);
 out_del_vq:
@@ -2710,7 +2746,10 @@ static void virtio_mem_remove(struct virtio_device *vdev)
 	} else {
 		virtio_mem_delete_resource(vm);
 		kfree_const(vm->resource_name);
+<<<<<<< HEAD
 		memory_group_unregister(vm->mgid);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* remove all tracking data - no locking needed */

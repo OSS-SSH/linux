@@ -689,7 +689,11 @@ static int ks8851_net_ioctl(struct net_device *dev, struct ifreq *req, int cmd)
 static const struct net_device_ops ks8851_netdev_ops = {
 	.ndo_open		= ks8851_net_open,
 	.ndo_stop		= ks8851_net_stop,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= ks8851_net_ioctl,
+=======
+	.ndo_do_ioctl		= ks8851_net_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_start_xmit		= ks8851_start_xmit,
 	.ndo_set_mac_address	= ks8851_set_mac_address,
 	.ndo_set_rx_mode	= ks8851_set_rx_mode,
@@ -1057,7 +1061,10 @@ int ks8851_suspend(struct device *dev)
 
 	return 0;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ks8851_suspend);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int ks8851_resume(struct device *dev)
 {
@@ -1071,7 +1078,10 @@ int ks8851_resume(struct device *dev)
 
 	return 0;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ks8851_resume);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 static int ks8851_register_mdiobus(struct ks8851_net *ks, struct device *dev)
@@ -1245,7 +1255,10 @@ err_reg:
 err_reg_io:
 	return ret;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ks8851_probe_common);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int ks8851_remove_common(struct device *dev)
 {
@@ -1264,8 +1277,11 @@ int ks8851_remove_common(struct device *dev)
 
 	return 0;
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL_GPL(ks8851_remove_common);
 
 MODULE_DESCRIPTION("KS8851 Network driver");
 MODULE_AUTHOR("Ben Dooks <ben@simtec.co.uk>");
 MODULE_LICENSE("GPL");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

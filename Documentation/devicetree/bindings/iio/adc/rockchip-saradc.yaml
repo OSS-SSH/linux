@@ -20,7 +20,10 @@ properties:
               - rockchip,px30-saradc
               - rockchip,rk3308-saradc
               - rockchip,rk3328-saradc
+<<<<<<< HEAD
               - rockchip,rk3568-saradc
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
               - rockchip,rv1108-saradc
           - const: rockchip,rk3399-saradc
 

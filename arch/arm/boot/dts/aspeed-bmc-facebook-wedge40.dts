@@ -23,6 +23,13 @@
 	status = "disabled";
 };
 
+<<<<<<< HEAD
+=======
+&adc {
+	status = "okay";
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &pwm_tacho {
 	status = "okay";
 	pinctrl-names = "default";

@@ -429,8 +429,13 @@ cleanup:
 				dd->f_put_tid(dd, &tidbase[tid],
 					      RCVHQ_RCV_TYPE_EXPECTED,
 					      dd->tidinvalid);
+<<<<<<< HEAD
 				dma_unmap_page(&dd->pcidev->dev, phys,
 					       PAGE_SIZE, DMA_FROM_DEVICE);
+=======
+				pci_unmap_page(dd->pcidev, phys, PAGE_SIZE,
+					       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dd->pageshadow[ctxttid + tid] = NULL;
 			}
 		}
@@ -544,8 +549,13 @@ static int qib_tid_free(struct qib_ctxtdata *rcd, unsigned subctxt,
 			 */
 			dd->f_put_tid(dd, &tidbase[tid],
 				      RCVHQ_RCV_TYPE_EXPECTED, dd->tidinvalid);
+<<<<<<< HEAD
 			dma_unmap_page(&dd->pcidev->dev, phys, PAGE_SIZE,
 				       DMA_FROM_DEVICE);
+=======
+			pci_unmap_page(dd->pcidev, phys, PAGE_SIZE,
+				       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			qib_release_user_pages(&p, 1);
 		}
 	}
@@ -1781,8 +1791,13 @@ static void unlock_expected_tids(struct qib_ctxtdata *rcd)
 		phys = dd->physshadow[i];
 		dd->physshadow[i] = dd->tidinvalid;
 		dd->pageshadow[i] = NULL;
+<<<<<<< HEAD
 		dma_unmap_page(&dd->pcidev->dev, phys, PAGE_SIZE,
 			       DMA_FROM_DEVICE);
+=======
+		pci_unmap_page(dd->pcidev, phys, PAGE_SIZE,
+			       PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		qib_release_user_pages(&p, 1);
 		cnt++;
 	}

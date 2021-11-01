@@ -2226,7 +2226,12 @@ static void nl802154_post_doit(const struct genl_ops *ops, struct sk_buff *skb,
 		if (ops->internal_flags & NL802154_FLAG_NEED_WPAN_DEV) {
 			struct wpan_dev *wpan_dev = info->user_ptr[1];
 
+<<<<<<< HEAD
 			dev_put(wpan_dev->netdev);
+=======
+			if (wpan_dev->netdev)
+				dev_put(wpan_dev->netdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} else {
 			dev_put(info->user_ptr[1]);
 		}

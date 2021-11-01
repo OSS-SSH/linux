@@ -82,6 +82,7 @@ static inline bool cpu_timer_enqueue(struct timerqueue_head *head,
 	return timerqueue_add(head, &ctmr->node);
 }
 
+<<<<<<< HEAD
 static inline bool cpu_timer_queued(struct cpu_timer *ctmr)
 {
 	return !!ctmr->head;
@@ -95,6 +96,14 @@ static inline bool cpu_timer_dequeue(struct cpu_timer *ctmr)
 		return true;
 	}
 	return false;
+=======
+static inline void cpu_timer_dequeue(struct cpu_timer *ctmr)
+{
+	if (ctmr->head) {
+		timerqueue_del(ctmr->head, &ctmr->node);
+		ctmr->head = NULL;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline u64 cpu_timer_getexpires(struct cpu_timer *ctmr)

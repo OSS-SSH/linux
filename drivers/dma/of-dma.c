@@ -67,12 +67,17 @@ static struct dma_chan *of_dma_router_xlate(struct of_phandle_args *dma_spec,
 		return NULL;
 
 	ofdma_target = of_dma_find_controller(&dma_spec_target);
+<<<<<<< HEAD
 	if (!ofdma_target) {
 		ofdma->dma_router->route_free(ofdma->dma_router->dev,
 					      route_data);
 		chan = ERR_PTR(-EPROBE_DEFER);
 		goto err;
 	}
+=======
+	if (!ofdma_target)
+		return NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	chan = ofdma_target->of_dma_xlate(&dma_spec_target, ofdma_target);
 	if (IS_ERR_OR_NULL(chan)) {
@@ -93,7 +98,10 @@ static struct dma_chan *of_dma_router_xlate(struct of_phandle_args *dma_spec,
 		}
 	}
 
+<<<<<<< HEAD
 err:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Need to put the node back since the ofdma->of_dma_route_allocate
 	 * has taken it for generating the new, translated dma_spec

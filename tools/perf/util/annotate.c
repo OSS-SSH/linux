@@ -1833,7 +1833,11 @@ static int symbol__disassemble_bpf(struct symbol *sym,
 	ret = 0;
 out:
 	free(prog_linfo);
+<<<<<<< HEAD
 	btf__free(btf);
+=======
+	free(btf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fclose(s);
 	bfd_close(bfdf);
 	return ret;
@@ -2192,10 +2196,15 @@ int symbol__annotate(struct map_symbol *ms, struct evsel *evsel,
 		return errno;
 
 	args.arch = arch = arch__find(arch_name);
+<<<<<<< HEAD
 	if (arch == NULL) {
 		pr_err("%s: unsupported arch %s\n", __func__, arch_name);
 		return ENOTSUP;
 	}
+=======
+	if (arch == NULL)
+		return ENOTSUP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (parch)
 		*parch = arch;
@@ -2789,6 +2798,7 @@ int symbol__tty_annotate2(struct map_symbol *ms, struct evsel *evsel,
 	struct rb_root source_line = RB_ROOT;
 	struct hists *hists = evsel__hists(evsel);
 	char buf[1024];
+<<<<<<< HEAD
 	int err;
 
 	err = symbol__annotate2(ms, evsel, opts, NULL);
@@ -2800,6 +2810,11 @@ int symbol__tty_annotate2(struct map_symbol *ms, struct evsel *evsel,
 		ui__error("Couldn't annotate %s:\n%s", sym->name, msg);
 		return -1;
 	}
+=======
+
+	if (symbol__annotate2(ms, evsel, opts, NULL) < 0)
+		return -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (opts->print_lines) {
 		srcline_full_filename = opts->full_path;
@@ -2823,6 +2838,7 @@ int symbol__tty_annotate(struct map_symbol *ms, struct evsel *evsel,
 	struct dso *dso = ms->map->dso;
 	struct symbol *sym = ms->sym;
 	struct rb_root source_line = RB_ROOT;
+<<<<<<< HEAD
 	int err;
 
 	err = symbol__annotate(ms, evsel, opts, NULL);
@@ -2834,6 +2850,11 @@ int symbol__tty_annotate(struct map_symbol *ms, struct evsel *evsel,
 		ui__error("Couldn't annotate %s:\n%s", sym->name, msg);
 		return -1;
 	}
+=======
+
+	if (symbol__annotate(ms, evsel, opts, NULL) < 0)
+		return -1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	symbol__calc_percent(sym, evsel);
 

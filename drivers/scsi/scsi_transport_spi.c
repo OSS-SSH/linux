@@ -1230,7 +1230,11 @@ int spi_populate_tag_msg(unsigned char *msg, struct scsi_cmnd *cmd)
 {
         if (cmd->flags & SCMD_TAGGED) {
 		*msg++ = SIMPLE_QUEUE_TAG;
+<<<<<<< HEAD
 		*msg++ = scsi_cmd_to_rq(cmd)->tag;
+=======
+        	*msg++ = cmd->request->tag;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         	return 2;
 	}
 

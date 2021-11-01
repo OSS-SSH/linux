@@ -866,6 +866,18 @@ config I2C_PCA_PLATFORM
 	  This driver can also be built as a module.  If so, the module
 	  will be called i2c-pca-platform.
 
+<<<<<<< HEAD
+=======
+config I2C_PMCMSP
+	tristate "PMC MSP I2C TWI Controller"
+	depends on PMC_MSP || COMPILE_TEST
+	help
+	  This driver supports the PMC TWI controller on MSP devices.
+
+	  This driver can also be built as module. If so, the module
+	  will be called i2c-pmcmsp.
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config I2C_PNX
 	tristate "I2C bus support for Philips PNX and NXP LPC targets"
 	depends on ARCH_LPC32XX || COMPILE_TEST
@@ -1393,6 +1405,7 @@ config I2C_FSI
 	  This driver can also be built as a module. If so, the module will be
 	  called as i2c-fsi.
 
+<<<<<<< HEAD
 config I2C_VIRTIO
         tristate "Virtio I2C Adapter"
         select VIRTIO
@@ -1404,4 +1417,6 @@ config I2C_VIRTIO
           This driver can also be built as a module. If so, the module
           will be called i2c-virtio.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endmenu

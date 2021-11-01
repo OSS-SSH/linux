@@ -2,6 +2,11 @@
 /*
  * Support for Vishay VCNL3020 proximity sensor on i2c bus.
  * Based on Vishay VCNL4000 driver code.
+<<<<<<< HEAD
+=======
+ *
+ * TODO: interrupts.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/module.h>
@@ -9,10 +14,16 @@
 #include <linux/err.h>
 #include <linux/delay.h>
 #include <linux/regmap.h>
+<<<<<<< HEAD
 #include <linux/interrupt.h>
 
 #include <linux/iio/iio.h>
 #include <linux/iio/events.h>
+=======
+
+#include <linux/iio/iio.h>
+#include <linux/iio/sysfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define VCNL3020_PROD_ID	0x21
 
@@ -36,6 +47,7 @@
 					* measurement
 					*/
 
+<<<<<<< HEAD
 /* Enables periodic proximity measurement */
 #define VCNL_PS_EN		BIT(1)
 
@@ -51,6 +63,8 @@
 #define VCNL_INT_TH_HI		BIT(0)	/* High threshold hit */
 #define VCNL_INT_TH_LOW		BIT(1)	/* Low threshold hit */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define VCNL_ON_DEMAND_TIMEOUT_US	100000
 #define VCNL_POLL_US			20000
 
@@ -71,14 +85,20 @@ static const int vcnl3020_prox_sampling_frequency[][2] = {
  * @dev:	vcnl3020 device.
  * @rev:	revision id.
  * @lock:	lock for protecting access to device hardware registers.
+<<<<<<< HEAD
  * @buf:	DMA safe __be16 buffer.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct vcnl3020_data {
 	struct regmap *regmap;
 	struct device *dev;
 	u8 rev;
 	struct mutex lock;
+<<<<<<< HEAD
 	__be16 buf ____cacheline_aligned;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**
@@ -156,6 +176,7 @@ static int vcnl3020_init(struct vcnl3020_data *data)
 					       vcnl3020_led_current_property);
 };
 
+<<<<<<< HEAD
 static bool vcnl3020_is_in_periodic_mode(struct vcnl3020_data *data)
 {
 	int rc;
@@ -171,10 +192,13 @@ static bool vcnl3020_is_in_periodic_mode(struct vcnl3020_data *data)
 	return !!(cmd & VCNL_PS_SELFTIMED_EN);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int vcnl3020_measure_proximity(struct vcnl3020_data *data, int *val)
 {
 	int rc;
 	unsigned int reg;
+<<<<<<< HEAD
 
 	mutex_lock(&data->lock);
 
@@ -184,6 +208,12 @@ static int vcnl3020_measure_proximity(struct vcnl3020_data *data, int *val)
 		goto err_unlock;
 	}
 
+=======
+	__be16 res;
+
+	mutex_lock(&data->lock);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rc = regmap_write(data->regmap, VCNL_COMMAND, VCNL_PS_OD);
 	if (rc)
 		goto err_unlock;
@@ -199,12 +229,21 @@ static int vcnl3020_measure_proximity(struct vcnl3020_data *data, int *val)
 	}
 
 	/* high & low result bytes read */
+<<<<<<< HEAD
 	rc = regmap_bulk_read(data->regmap, VCNL_PS_RESULT_HI, &data->buf,
 			      sizeof(data->buf));
 	if (rc)
 		goto err_unlock;
 
 	*val = be16_to_cpu(data->buf);
+=======
+	rc = regmap_bulk_read(data->regmap, VCNL_PS_RESULT_HI, &res,
+			      sizeof(res));
+	if (rc)
+		goto err_unlock;
+
+	*val = be16_to_cpu(res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err_unlock:
 	mutex_unlock(&data->lock);
@@ -236,6 +275,7 @@ static int vcnl3020_write_proxy_samp_freq(struct vcnl3020_data *data, int val,
 {
 	unsigned int i;
 	int index = -1;
+<<<<<<< HEAD
 	int rc;
 
 	mutex_lock(&data->lock);
@@ -245,6 +285,8 @@ static int vcnl3020_write_proxy_samp_freq(struct vcnl3020_data *data, int val,
 		rc = -EBUSY;
 		goto err_unlock;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < ARRAY_SIZE(vcnl3020_prox_sampling_frequency); i++) {
 		if (val == vcnl3020_prox_sampling_frequency[i][0] &&
@@ -254,6 +296,7 @@ static int vcnl3020_write_proxy_samp_freq(struct vcnl3020_data *data, int val,
 		}
 	}
 
+<<<<<<< HEAD
 	if (index < 0) {
 		rc = -EINVAL;
 		goto err_unlock;
@@ -490,14 +533,25 @@ static const struct iio_event_spec vcnl3020_event_spec[] = {
 	},
 };
 
+=======
+	if (index < 0)
+		return -EINVAL;
+
+	return regmap_write(data->regmap, VCNL_PROXIMITY_RATE, index);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct iio_chan_spec vcnl3020_channels[] = {
 	{
 		.type = IIO_PROXIMITY,
 		.info_mask_separate = BIT(IIO_CHAN_INFO_RAW) |
 				      BIT(IIO_CHAN_INFO_SAMP_FREQ),
 		.info_mask_separate_available = BIT(IIO_CHAN_INFO_SAMP_FREQ),
+<<<<<<< HEAD
 		.event_spec = vcnl3020_event_spec,
 		.num_event_specs = ARRAY_SIZE(vcnl3020_event_spec),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 };
 
@@ -528,11 +582,24 @@ static int vcnl3020_write_raw(struct iio_dev *indio_dev,
 			      struct iio_chan_spec const *chan,
 			      int val, int val2, long mask)
 {
+<<<<<<< HEAD
+=======
+	int rc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct vcnl3020_data *data = iio_priv(indio_dev);
 
 	switch (mask) {
 	case IIO_CHAN_INFO_SAMP_FREQ:
+<<<<<<< HEAD
 		return vcnl3020_write_proxy_samp_freq(data, val, val2);
+=======
+		rc = iio_device_claim_direct_mode(indio_dev);
+		if (rc)
+			return rc;
+		rc = vcnl3020_write_proxy_samp_freq(data, val, val2);
+		iio_device_release_direct_mode(indio_dev);
+		return rc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return -EINVAL;
 	}
@@ -558,10 +625,13 @@ static const struct iio_info vcnl3020_info = {
 	.read_raw = vcnl3020_read_raw,
 	.write_raw = vcnl3020_write_raw,
 	.read_avail = vcnl3020_read_avail,
+<<<<<<< HEAD
 	.read_event_value = vcnl3020_read_event,
 	.write_event_value = vcnl3020_write_event,
 	.read_event_config = vcnl3020_read_event_config,
 	.write_event_config = vcnl3020_write_event_config,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct regmap_config vcnl3020_regmap_config = {
@@ -570,6 +640,7 @@ static const struct regmap_config vcnl3020_regmap_config = {
 	.max_register	= VCNL_PS_MOD_ADJ,
 };
 
+<<<<<<< HEAD
 static irqreturn_t vcnl3020_handle_irq_thread(int irq, void *p)
 {
 	struct iio_dev *indio_dev = p;
@@ -601,6 +672,8 @@ static irqreturn_t vcnl3020_handle_irq_thread(int irq, void *p)
 	return IRQ_HANDLED;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int vcnl3020_probe(struct i2c_client *client)
 {
 	struct vcnl3020_data *data;
@@ -633,6 +706,7 @@ static int vcnl3020_probe(struct i2c_client *client)
 	indio_dev->name = "vcnl3020";
 	indio_dev->modes = INDIO_DIRECT_MODE;
 
+<<<<<<< HEAD
 	if (client->irq) {
 		rc = devm_request_threaded_irq(&client->dev, client->irq,
 					       NULL, vcnl3020_handle_irq_thread,
@@ -646,6 +720,8 @@ static int vcnl3020_probe(struct i2c_client *client)
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return devm_iio_device_register(&client->dev, indio_dev);
 }
 

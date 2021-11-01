@@ -542,7 +542,11 @@ nfsd_file_close_inode_sync(struct inode *inode)
 }
 
 /**
+<<<<<<< HEAD
  * nfsd_file_close_inode - attempt a delayed close of a nfsd_file
+=======
+ * nfsd_file_close_inode_sync - attempt to forcibly close a nfsd_file
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @inode: inode of the file to attempt to remove
  *
  * Walk the whole hash bucket, looking for any files that correspond to "inode".

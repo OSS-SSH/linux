@@ -970,8 +970,16 @@ static int hdmi_create_connector(struct drm_encoder *encoder)
 	drm_connector_helper_add(connector, &hdmi_connector_helper_funcs);
 	drm_connector_attach_encoder(connector, encoder);
 
+<<<<<<< HEAD
 	if (hdata->bridge)
 		ret = drm_bridge_attach(encoder, hdata->bridge, NULL, 0);
+=======
+	if (hdata->bridge) {
+		ret = drm_bridge_attach(encoder, hdata->bridge, NULL, 0);
+		if (ret)
+			DRM_DEV_ERROR(hdata->dev, "Failed to attach bridge\n");
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cec_fill_conn_info_from_drm(&conn_info, connector);
 
@@ -1957,6 +1965,10 @@ static int hdmi_probe(struct platform_device *pdev)
 	struct hdmi_audio_infoframe *audio_infoframe;
 	struct device *dev = &pdev->dev;
 	struct hdmi_context *hdata;
+<<<<<<< HEAD
+=======
+	struct resource *res;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	hdata = devm_kzalloc(dev, sizeof(struct hdmi_context), GFP_KERNEL);
@@ -1978,7 +1990,12 @@ static int hdmi_probe(struct platform_device *pdev)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	hdata->regs = devm_platform_ioremap_resource(pdev, 0);
+=======
+	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+	hdata->regs = devm_ioremap_resource(dev, res);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(hdata->regs)) {
 		ret = PTR_ERR(hdata->regs);
 		return ret;

@@ -228,7 +228,11 @@ cbq_classify(struct sk_buff *skb, struct Qdisc *sch, int *qerr)
 		/*
 		 * Step 2+n. Apply classifier.
 		 */
+<<<<<<< HEAD
 		result = tcf_classify(skb, NULL, fl, &res, true);
+=======
+		result = tcf_classify(skb, fl, &res, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!fl || result < 0)
 			goto fallback;
 
@@ -1614,7 +1618,11 @@ cbq_change_class(struct Qdisc *sch, u32 classid, u32 parentid, struct nlattr **t
 	err = tcf_block_get(&cl->block, &cl->filter_list, sch, extack);
 	if (err) {
 		kfree(cl);
+<<<<<<< HEAD
 		goto failure;
+=======
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (tca[TCA_RATE]) {

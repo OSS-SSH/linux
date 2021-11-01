@@ -22,6 +22,7 @@
 			 : [rs]"r" (ioaddr));           \
 	(result);                                       \
 })
+<<<<<<< HEAD
 /*
  * STEORL store to memory with release semantics.
  * This will avoid using DMB barrier after each LMTST
@@ -33,6 +34,14 @@
 			 "steorl %x[rf],[%[rs]]"		\
 			 : [rf] "+r"(val)		\
 			 : [rs] "r"(addr));		\
+=======
+#define cn10k_lmt_flush(val, addr)			\
+({							\
+	__asm__ volatile(".cpu  generic+lse\n"		\
+			 "steor %x[rf],[%[rs]]"		\
+			 : [rf]"+r"(val)		\
+			 : [rs]"r"(addr));		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 })
 #else
 #define otx2_lmt_flush(ioaddr)          ({ 0; })

@@ -22,8 +22,11 @@
 #include <linux/workqueue.h>
 #include <linux/proc_fs.h>
 #include <linux/pgtable.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/processor.h>
 #include <asm/mmu.h>
 #include <asm/page.h>
@@ -41,6 +44,10 @@
 #include <asm/kexec.h>
 #include <asm/fadump.h>
 #include <asm/asm-prototypes.h>
+<<<<<<< HEAD
+=======
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/dtl.h>
 
 #include "pseries.h"
@@ -262,7 +269,11 @@ static int cpu_relative_dispatch_distance(int last_disp_cpu, int cur_disp_cpu)
 	if (!last_disp_cpu_assoc || !cur_disp_cpu_assoc)
 		return -EIO;
 
+<<<<<<< HEAD
 	return cpu_relative_distance(last_disp_cpu_assoc, cur_disp_cpu_assoc);
+=======
+	return cpu_distance(last_disp_cpu_assoc, cur_disp_cpu_assoc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int cpu_home_node_dispatch_distance(int disp_cpu)
@@ -282,7 +293,11 @@ static int cpu_home_node_dispatch_distance(int disp_cpu)
 	if (!disp_cpu_assoc || !vcpu_assoc)
 		return -EIO;
 
+<<<<<<< HEAD
 	return cpu_relative_distance(disp_cpu_assoc, vcpu_assoc);
+=======
+	return cpu_distance(disp_cpu_assoc, vcpu_assoc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void update_vcpu_disp_stat(int disp_cpu)
@@ -802,8 +817,12 @@ static long pSeries_lpar_hpte_remove(unsigned long hpte_group)
 	return -1;
 }
 
+<<<<<<< HEAD
 /* Called during kexec sequence with MMU off */
 static notrace void manual_hpte_clear_all(void)
+=======
+static void manual_hpte_clear_all(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned long size_bytes = 1UL << ppc64_pft_size;
 	unsigned long hpte_count = size_bytes >> 4;
@@ -836,8 +855,12 @@ static notrace void manual_hpte_clear_all(void)
 	}
 }
 
+<<<<<<< HEAD
 /* Called during kexec sequence with MMU off */
 static notrace int hcall_hpte_clear_all(void)
+=======
+static int hcall_hpte_clear_all(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int rc;
 
@@ -848,8 +871,12 @@ static notrace int hcall_hpte_clear_all(void)
 	return rc;
 }
 
+<<<<<<< HEAD
 /* Called during kexec sequence with MMU off */
 static notrace void pseries_hpte_clear_all(void)
+=======
+static void pseries_hpte_clear_all(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int rc;
 
@@ -2020,7 +2047,11 @@ static int __init vpa_debugfs_init(void)
 	if (!firmware_has_feature(FW_FEATURE_SPLPAR))
 		return 0;
 
+<<<<<<< HEAD
 	vpa_dir = debugfs_create_dir("vpa", arch_debugfs_dir);
+=======
+	vpa_dir = debugfs_create_dir("vpa", powerpc_debugfs_root);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* set up the per-cpu vpa file*/
 	for_each_possible_cpu(i) {

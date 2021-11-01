@@ -207,8 +207,11 @@ config DRM_I915_LOW_LEVEL_TRACEPOINTS
 	  This provides the ability to precisely monitor engine utilisation
 	  and also analyze the request dependency resolving timeline.
 
+<<<<<<< HEAD
 	  Recommended for driver developers only.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	  If in doubt, say "N".
 
 config DRM_I915_DEBUG_VBLANK_EVADE
@@ -222,8 +225,11 @@ config DRM_I915_DEBUG_VBLANK_EVADE
 	  is exceeded, even if there isn't an actual risk of missing
 	  the vblank.
 
+<<<<<<< HEAD
 	  Recommended for driver developers only.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	  If in doubt, say "N".
 
 config DRM_I915_DEBUG_RUNTIME_PM
@@ -236,6 +242,9 @@ config DRM_I915_DEBUG_RUNTIME_PM
 	  runtime PM functionality. This may introduce overhead during
 	  driver loading, suspend and resume operations.
 
+<<<<<<< HEAD
 	  Recommended for driver developers only.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	  If in doubt, say "N"

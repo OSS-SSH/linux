@@ -7,14 +7,24 @@
  * Denis Ciocca <denis.ciocca@st.com>
  */
 
+<<<<<<< HEAD
 #include <linux/i2c.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
+=======
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/slab.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/iio/iio.h>
 #include <linux/regmap.h>
 
 #include <linux/iio/common/st_sensors_i2c.h>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ST_SENSORS_I2C_MULTIREAD	0x80
 
 static const struct regmap_config st_sensors_i2c_regmap_config = {

@@ -2,6 +2,7 @@
 
 .. include:: ../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/riscv/patch-acceptance.rst
 
 :翻译:
@@ -10,6 +11,14 @@
 
 .. _cn_riscv_patch-acceptance:
 
+=======
+:Original: :doc:`../../../riscv/patch-acceptance`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_riscv_patch-acceptance:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 arch/riscv 开发者维护指南
 =========================
 

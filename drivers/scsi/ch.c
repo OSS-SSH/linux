@@ -618,12 +618,15 @@ ch_checkrange(scsi_changer *ch, unsigned int type, unsigned int unit)
 	return 0;
 }
 
+<<<<<<< HEAD
 struct changer_element_status32 {
 	int		ces_type;
 	compat_uptr_t	ces_data;
 };
 #define CHIOGSTATUS32  _IOW('c', 8, struct changer_element_status32)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static long ch_ioctl(struct file *file,
 		    unsigned int cmd, unsigned long arg)
 {
@@ -754,6 +757,7 @@ static long ch_ioctl(struct file *file,
 
 		return ch_gstatus(ch, ces.ces_type, ces.ces_data);
 	}
+<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 	case CHIOGSTATUS32:
 	{
@@ -768,6 +772,9 @@ static long ch_ioctl(struct file *file,
 				  compat_ptr(ces32.ces_data));
 	}
 #endif
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case CHIOGELEM:
 	{
 		struct changer_get_element cge;
@@ -877,11 +884,66 @@ static long ch_ioctl(struct file *file,
 	}
 
 	default:
+<<<<<<< HEAD
 		return scsi_ioctl(ch->device, NULL, file->f_mode, cmd, argp);
+=======
+		return scsi_ioctl(ch->device, cmd, argp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	}
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_COMPAT
+
+struct changer_element_status32 {
+	int		ces_type;
+	compat_uptr_t	ces_data;
+};
+#define CHIOGSTATUS32  _IOW('c', 8,struct changer_element_status32)
+
+static long ch_ioctl_compat(struct file * file,
+			    unsigned int cmd, unsigned long arg)
+{
+	scsi_changer *ch = file->private_data;
+	int retval = scsi_ioctl_block_when_processing_errors(ch->device, cmd,
+							file->f_flags & O_NDELAY);
+	if (retval)
+		return retval;
+
+	switch (cmd) {
+	case CHIOGPARAMS:
+	case CHIOGVPARAMS:
+	case CHIOPOSITION:
+	case CHIOMOVE:
+	case CHIOEXCHANGE:
+	case CHIOGELEM:
+	case CHIOINITELEM:
+	case CHIOSVOLTAG:
+		/* compatible */
+		return ch_ioctl(file, cmd, (unsigned long)compat_ptr(arg));
+	case CHIOGSTATUS32:
+	{
+		struct changer_element_status32 ces32;
+		unsigned char __user *data;
+
+		if (copy_from_user(&ces32, (void __user *)arg, sizeof (ces32)))
+			return -EFAULT;
+		if (ces32.ces_type < 0 || ces32.ces_type >= CH_TYPES)
+			return -EINVAL;
+
+		data = compat_ptr(ces32.ces_data);
+		return ch_gstatus(ch, ces32.ces_type, data);
+	}
+	default:
+		return scsi_compat_ioctl(ch->device, cmd, compat_ptr(arg));
+
+	}
+}
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* ------------------------------------------------------------------------ */
 
 static int ch_probe(struct device *dev)
@@ -986,7 +1048,13 @@ static const struct file_operations changer_fops = {
 	.open		= ch_open,
 	.release	= ch_release,
 	.unlocked_ioctl	= ch_ioctl,
+<<<<<<< HEAD
 	.compat_ioctl	= compat_ptr_ioctl,
+=======
+#ifdef CONFIG_COMPAT
+	.compat_ioctl	= ch_ioctl_compat,
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.llseek		= noop_llseek,
 };
 

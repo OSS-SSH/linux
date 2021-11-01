@@ -570,9 +570,12 @@ static void bpf_tail_call_direct_fixup(struct bpf_prog *prog)
 
 	for (i = 0; i < prog->aux->size_poke_tab; i++) {
 		poke = &prog->aux->poke_tab[i];
+<<<<<<< HEAD
 		if (poke->aux && poke->aux != prog->aux)
 			continue;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		WARN_ON_ONCE(READ_ONCE(poke->tailcall_target_stable));
 
 		if (poke->reason != BPF_POKE_REASON_TAIL_CALL)
@@ -1219,6 +1222,7 @@ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image,
 			}
 			break;
 
+<<<<<<< HEAD
 			/* speculation barrier */
 		case BPF_ST | BPF_NOSPEC:
 			if (boot_cpu_has(X86_FEATURE_XMM2))
@@ -1226,6 +1230,8 @@ static int do_jit(struct bpf_prog *bpf_prog, int *addrs, u8 *image,
 				EMIT3(0x0F, 0xAE, 0xE8);
 			break;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* ST: *(u8*)(dst_reg + off) = imm */
 		case BPF_ST | BPF_MEM | BPF_B:
 			if (is_ereg(dst_reg))
@@ -1341,10 +1347,16 @@ st:			if (is_imm8(insn->off))
 			if (insn->imm == (BPF_AND | BPF_FETCH) ||
 			    insn->imm == (BPF_OR | BPF_FETCH) ||
 			    insn->imm == (BPF_XOR | BPF_FETCH)) {
+<<<<<<< HEAD
 				bool is64 = BPF_SIZE(insn->code) == BPF_DW;
 				u32 real_src_reg = src_reg;
 				u32 real_dst_reg = dst_reg;
 				u8 *branch_target;
+=======
+				u8 *branch_target;
+				bool is64 = BPF_SIZE(insn->code) == BPF_DW;
+				u32 real_src_reg = src_reg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				/*
 				 * Can't be implemented with a single x86 insn.
@@ -1355,13 +1367,20 @@ st:			if (is_imm8(insn->off))
 				emit_mov_reg(&prog, true, BPF_REG_AX, BPF_REG_0);
 				if (src_reg == BPF_REG_0)
 					real_src_reg = BPF_REG_AX;
+<<<<<<< HEAD
 				if (dst_reg == BPF_REG_0)
 					real_dst_reg = BPF_REG_AX;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				branch_target = prog;
 				/* Load old value */
 				emit_ldx(&prog, BPF_SIZE(insn->code),
+<<<<<<< HEAD
 					 BPF_REG_0, real_dst_reg, insn->off);
+=======
+					 BPF_REG_0, dst_reg, insn->off);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				/*
 				 * Perform the (commutative) operation locally,
 				 * put the result in the AUX_REG.
@@ -1372,8 +1391,12 @@ st:			if (is_imm8(insn->off))
 				      add_2reg(0xC0, AUX_REG, real_src_reg));
 				/* Attempt to swap in new value */
 				err = emit_atomic(&prog, BPF_CMPXCHG,
+<<<<<<< HEAD
 						  real_dst_reg, AUX_REG,
 						  insn->off,
+=======
+						  dst_reg, AUX_REG, insn->off,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						  BPF_SIZE(insn->code));
 				if (WARN_ON(err))
 					return err;
@@ -1387,10 +1410,18 @@ st:			if (is_imm8(insn->off))
 				/* Restore R0 after clobbering RAX */
 				emit_mov_reg(&prog, true, BPF_REG_0, BPF_REG_AX);
 				break;
+<<<<<<< HEAD
 			}
 
 			err = emit_atomic(&prog, insn->imm, dst_reg, src_reg,
 					  insn->off, BPF_SIZE(insn->code));
+=======
+
+			}
+
+			err = emit_atomic(&prog, insn->imm, dst_reg, src_reg,
+						  insn->off, BPF_SIZE(insn->code));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (err)
 				return err;
 			break;
@@ -1747,7 +1778,11 @@ static void restore_regs(const struct btf_func_model *m, u8 **prog, int nr_args,
 }
 
 static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
+<<<<<<< HEAD
 			   struct bpf_prog *p, int stack_size, bool save_ret)
+=======
+			   struct bpf_prog *p, int stack_size, bool mod_ret)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u8 *prog = *pprog;
 	u8 *jmp_insn;
@@ -1780,6 +1815,7 @@ static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
 	if (emit_call(&prog, p->bpf_func, prog))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	/*
 	 * BPF_TRAMP_MODIFY_RETURN trampolines can modify the return
 	 * of the previous call which is then passed on the stack to
@@ -1789,6 +1825,13 @@ static int invoke_bpf_prog(const struct btf_func_model *m, u8 **pprog,
 	 * value of BPF_PROG_TYPE_STRUCT_OPS prog.
 	 */
 	if (save_ret)
+=======
+	/* BPF_TRAMP_MODIFY_RETURN trampolines can modify the return
+	 * of the previous call which is then passed on the stack to
+	 * the next BPF program.
+	 */
+	if (mod_ret)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		emit_stx(&prog, BPF_DW, BPF_REG_FP, BPF_REG_0, -8);
 
 	/* replace 2 nops with JE insn, since jmp target is known */
@@ -1835,15 +1878,23 @@ static int emit_cond_near_jump(u8 **pprog, void *func, void *ip, u8 jmp_cond)
 }
 
 static int invoke_bpf(const struct btf_func_model *m, u8 **pprog,
+<<<<<<< HEAD
 		      struct bpf_tramp_progs *tp, int stack_size,
 		      bool save_ret)
+=======
+		      struct bpf_tramp_progs *tp, int stack_size)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int i;
 	u8 *prog = *pprog;
 
 	for (i = 0; i < tp->nr_progs; i++) {
+<<<<<<< HEAD
 		if (invoke_bpf_prog(m, &prog, tp->progs[i], stack_size,
 				    save_ret))
+=======
+		if (invoke_bpf_prog(m, &prog, tp->progs[i], stack_size, false))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EINVAL;
 	}
 	*pprog = prog;
@@ -1886,6 +1937,7 @@ static int invoke_bpf_mod_ret(const struct btf_func_model *m, u8 **pprog,
 	return 0;
 }
 
+<<<<<<< HEAD
 static bool is_valid_bpf_tramp_flags(unsigned int flags)
 {
 	if ((flags & BPF_TRAMP_F_RESTORE_REGS) &&
@@ -1903,6 +1955,8 @@ static bool is_valid_bpf_tramp_flags(unsigned int flags)
 	return true;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Example:
  * __be16 eth_type_trans(struct sk_buff *skb, struct net_device *dev);
  * its 'struct btf_func_model' will be nr_args=2
@@ -1975,12 +2029,16 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
 	struct bpf_tramp_progs *fmod_ret = &tprogs[BPF_TRAMP_MODIFY_RETURN];
 	u8 **branches = NULL;
 	u8 *prog;
+<<<<<<< HEAD
 	bool save_ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* x86-64 supports up to 6 arguments. 7+ can be added in the future */
 	if (nr_args > 6)
 		return -ENOTSUPP;
 
+<<<<<<< HEAD
 	if (!is_valid_bpf_tramp_flags(flags))
 		return -EINVAL;
 
@@ -1991,6 +2049,14 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
 
 	if (flags & BPF_TRAMP_F_IP_ARG)
 		stack_size += 8; /* room for IP address argument */
+=======
+	if ((flags & BPF_TRAMP_F_RESTORE_REGS) &&
+	    (flags & BPF_TRAMP_F_SKIP_FRAME))
+		return -EINVAL;
+
+	if (flags & BPF_TRAMP_F_CALL_ORIG)
+		stack_size += 8; /* room for return value of orig_call */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (flags & BPF_TRAMP_F_SKIP_FRAME)
 		/* skip patched call instruction and point orig_call to actual
@@ -2005,6 +2071,7 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
 	EMIT4(0x48, 0x83, 0xEC, stack_size); /* sub rsp, stack_size */
 	EMIT1(0x53);		 /* push rbx */
 
+<<<<<<< HEAD
 	if (flags & BPF_TRAMP_F_IP_ARG) {
 		/* Store IP address of the traced function:
 		 * mov rax, QWORD PTR [rbp + 8]
@@ -2021,6 +2088,8 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
 		stack_size -= 8;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	save_regs(m, &prog, nr_args, stack_size);
 
 	if (flags & BPF_TRAMP_F_CALL_ORIG) {
@@ -2033,8 +2102,12 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
 	}
 
 	if (fentry->nr_progs)
+<<<<<<< HEAD
 		if (invoke_bpf(m, &prog, fentry, stack_size,
 			       flags & BPF_TRAMP_F_RET_FENTRY_RET))
+=======
+		if (invoke_bpf(m, &prog, fentry, stack_size))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EINVAL;
 
 	if (fmod_ret->nr_progs) {
@@ -2081,7 +2154,11 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
 	}
 
 	if (fexit->nr_progs)
+<<<<<<< HEAD
 		if (invoke_bpf(m, &prog, fexit, stack_size, false)) {
+=======
+		if (invoke_bpf(m, &prog, fexit, stack_size)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			ret = -EINVAL;
 			goto cleanup;
 		}
@@ -2101,10 +2178,16 @@ int arch_prepare_bpf_trampoline(struct bpf_tramp_image *im, void *image, void *i
 			ret = -EINVAL;
 			goto cleanup;
 		}
+<<<<<<< HEAD
 	}
 	/* restore return value of orig_call or fentry prog back into RAX */
 	if (save_ret)
 		emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, -8);
+=======
+		/* restore original return value back into RAX */
+		emit_ldx(&prog, BPF_DW, BPF_REG_0, BPF_REG_FP, -8);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	EMIT1(0x5B); /* pop rbx */
 	EMIT1(0xC9); /* leave */

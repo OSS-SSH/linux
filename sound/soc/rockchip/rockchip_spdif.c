@@ -58,8 +58,11 @@ static const struct of_device_id rk_spdif_match[] __maybe_unused = {
 	  .data = (void *)RK_SPDIF_RK3366 },
 	{ .compatible = "rockchip,rk3399-spdif",
 	  .data = (void *)RK_SPDIF_RK3366 },
+<<<<<<< HEAD
 	{ .compatible = "rockchip,rk3568-spdif",
 	  .data = (void *)RK_SPDIF_RK3366 },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{},
 };
 MODULE_DEVICE_TABLE(of, rk_spdif_match);
@@ -105,8 +108,13 @@ static int __maybe_unused rk_spdif_runtime_resume(struct device *dev)
 }
 
 static int rk_spdif_hw_params(struct snd_pcm_substream *substream,
+<<<<<<< HEAD
 			      struct snd_pcm_hw_params *params,
 			      struct snd_soc_dai *dai)
+=======
+				  struct snd_pcm_hw_params *params,
+				  struct snd_soc_dai *dai)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct rk_spdif_dev *spdif = snd_soc_dai_get_drvdata(dai);
 	unsigned int val = SPDIF_CFGR_HALFWORD_ENABLE;
@@ -139,15 +147,25 @@ static int rk_spdif_hw_params(struct snd_pcm_substream *substream,
 	}
 
 	ret = regmap_update_bits(spdif->regmap, SPDIF_CFGR,
+<<<<<<< HEAD
 				 SPDIF_CFGR_CLK_DIV_MASK |
 				 SPDIF_CFGR_HALFWORD_ENABLE |
 				 SDPIF_CFGR_VDW_MASK, val);
+=======
+		SPDIF_CFGR_CLK_DIV_MASK | SPDIF_CFGR_HALFWORD_ENABLE |
+		SDPIF_CFGR_VDW_MASK,
+		val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
 
 static int rk_spdif_trigger(struct snd_pcm_substream *substream,
+<<<<<<< HEAD
 			    int cmd, struct snd_soc_dai *dai)
+=======
+				int cmd, struct snd_soc_dai *dai)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct rk_spdif_dev *spdif = snd_soc_dai_get_drvdata(dai);
 	int ret;
@@ -157,31 +175,53 @@ static int rk_spdif_trigger(struct snd_pcm_substream *substream,
 	case SNDRV_PCM_TRIGGER_RESUME:
 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
 		ret = regmap_update_bits(spdif->regmap, SPDIF_DMACR,
+<<<<<<< HEAD
 					 SPDIF_DMACR_TDE_ENABLE |
 					 SPDIF_DMACR_TDL_MASK,
 					 SPDIF_DMACR_TDE_ENABLE |
 					 SPDIF_DMACR_TDL(16));
+=======
+				   SPDIF_DMACR_TDE_ENABLE |
+				   SPDIF_DMACR_TDL_MASK,
+				   SPDIF_DMACR_TDE_ENABLE |
+				   SPDIF_DMACR_TDL(16));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (ret != 0)
 			return ret;
 
 		ret = regmap_update_bits(spdif->regmap, SPDIF_XFER,
+<<<<<<< HEAD
 					 SPDIF_XFER_TXS_START,
 					 SPDIF_XFER_TXS_START);
+=======
+				   SPDIF_XFER_TXS_START,
+				   SPDIF_XFER_TXS_START);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	case SNDRV_PCM_TRIGGER_SUSPEND:
 	case SNDRV_PCM_TRIGGER_STOP:
 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
 		ret = regmap_update_bits(spdif->regmap, SPDIF_DMACR,
+<<<<<<< HEAD
 					 SPDIF_DMACR_TDE_ENABLE,
 					 SPDIF_DMACR_TDE_DISABLE);
+=======
+				   SPDIF_DMACR_TDE_ENABLE,
+				   SPDIF_DMACR_TDE_DISABLE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (ret != 0)
 			return ret;
 
 		ret = regmap_update_bits(spdif->regmap, SPDIF_XFER,
+<<<<<<< HEAD
 					 SPDIF_XFER_TXS_START,
 					 SPDIF_XFER_TXS_STOP);
+=======
+				   SPDIF_XFER_TXS_START,
+				   SPDIF_XFER_TXS_STOP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	default:
 		ret = -EINVAL;
@@ -249,7 +289,10 @@ static bool rk_spdif_rd_reg(struct device *dev, unsigned int reg)
 	case SPDIF_INTCR:
 	case SPDIF_INTSR:
 	case SPDIF_XFER:
+<<<<<<< HEAD
 	case SPDIF_SMPDR:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 	default:
 		return false;
@@ -261,7 +304,10 @@ static bool rk_spdif_volatile_reg(struct device *dev, unsigned int reg)
 	switch (reg) {
 	case SPDIF_INTSR:
 	case SPDIF_SDBLR:
+<<<<<<< HEAD
 	case SPDIF_SMPDR:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 	default:
 		return false;
@@ -295,7 +341,11 @@ static int rk_spdif_probe(struct platform_device *pdev)
 		grf = syscon_regmap_lookup_by_phandle(np, "rockchip,grf");
 		if (IS_ERR(grf)) {
 			dev_err(&pdev->dev,
+<<<<<<< HEAD
 				"rockchip_spdif missing 'rockchip,grf'\n");
+=======
+				"rockchip_spdif missing 'rockchip,grf' \n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return PTR_ERR(grf);
 		}
 

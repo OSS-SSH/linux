@@ -421,13 +421,22 @@ static int serdev_drv_probe(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static void serdev_drv_remove(struct device *dev)
+=======
+static int serdev_drv_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct serdev_device_driver *sdrv = to_serdev_device_driver(dev->driver);
 	if (sdrv->remove)
 		sdrv->remove(to_serdev_device(dev));
 
 	dev_pm_domain_detach(dev, true);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct bus_type serdev_bus_type = {
@@ -562,6 +571,7 @@ struct acpi_serdev_lookup {
 	int index;
 };
 
+<<<<<<< HEAD
 /**
  * serdev_acpi_get_uart_resource - Gets UARTSerialBus resource if type matches
  * @ares:	ACPI resource
@@ -589,18 +599,32 @@ bool serdev_acpi_get_uart_resource(struct acpi_resource *ares,
 }
 EXPORT_SYMBOL_GPL(serdev_acpi_get_uart_resource);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int acpi_serdev_parse_resource(struct acpi_resource *ares, void *data)
 {
 	struct acpi_serdev_lookup *lookup = data;
 	struct acpi_resource_uart_serialbus *sb;
 	acpi_status status;
 
+<<<<<<< HEAD
 	if (!serdev_acpi_get_uart_resource(ares, &sb))
+=======
+	if (ares->type != ACPI_RESOURCE_TYPE_SERIAL_BUS)
+		return 1;
+
+	if (ares->data.common_serial_bus.type != ACPI_RESOURCE_SERIAL_TYPE_UART)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 
 	if (lookup->index != -1 && lookup->n++ != lookup->index)
 		return 1;
 
+<<<<<<< HEAD
+=======
+	sb = &ares->data.uart_serial_bus;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	status = acpi_get_handle(lookup->device_handle,
 				 sb->resource_source.string_ptr,
 				 &lookup->controller_handle);
@@ -608,7 +632,11 @@ static int acpi_serdev_parse_resource(struct acpi_resource *ares, void *data)
 		return 1;
 
 	/*
+<<<<<<< HEAD
 	 * NOTE: Ideally, we would also want to retrieve other properties here,
+=======
+	 * NOTE: Ideally, we would also want to retreive other properties here,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * once setting them before opening the device is supported by serdev.
 	 */
 

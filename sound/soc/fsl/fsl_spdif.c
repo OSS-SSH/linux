@@ -1434,6 +1434,7 @@ static int fsl_spdif_probe(struct platform_device *pdev)
 	pm_runtime_enable(&pdev->dev);
 	regcache_cache_only(spdif_priv->regmap, true);
 
+<<<<<<< HEAD
 	/*
 	 * Register platform component before registering cpu dai for there
 	 * is not defer probe for platform component in snd_soc_add_pcm_runtime().
@@ -1448,6 +1449,18 @@ static int fsl_spdif_probe(struct platform_device *pdev)
 					      &spdif_priv->cpu_dai_drv, 1);
 	if (ret) {
 		dev_err(&pdev->dev, "failed to register DAI: %d\n", ret);
+=======
+	ret = devm_snd_soc_register_component(&pdev->dev, &fsl_spdif_component,
+					      &spdif_priv->cpu_dai_drv, 1);
+	if (ret) {
+		dev_err(&pdev->dev, "failed to register DAI: %d\n", ret);
+		goto err_pm_disable;
+	}
+
+	ret = imx_pcm_dma_init(pdev, IMX_SPDIF_DMABUF_SIZE);
+	if (ret) {
+		dev_err_probe(&pdev->dev, ret, "imx_pcm_dma_init failed\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto err_pm_disable;
 	}
 

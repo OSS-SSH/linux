@@ -45,6 +45,7 @@ allow_join_initial_addr_port - BOOLEAN
 	This is a per-namespace sysctl.
 
 	Default: 1
+<<<<<<< HEAD
 
 stale_loss_cnt - INTEGER
 	The number of MPTCP-level retransmission intervals with no traffic and
@@ -57,3 +58,5 @@ stale_loss_cnt - INTEGER
 	This is a per-namespace sysctl.
 
 	Default: 4
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

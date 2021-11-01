@@ -729,7 +729,11 @@ static struct snd_soc_component_driver cygnus_soc_platform = {
 int cygnus_soc_platform_register(struct device *dev,
 				 struct cygnus_audio *cygaud)
 {
+<<<<<<< HEAD
 	int rc;
+=======
+	int rc = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev_dbg(dev, "%s Enter\n", __func__);
 

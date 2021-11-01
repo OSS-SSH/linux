@@ -240,6 +240,12 @@ int ceph_lock(struct file *file, int cmd, struct file_lock *fl)
 
 	if (!(fl->fl_flags & FL_POSIX))
 		return -ENOLCK;
+<<<<<<< HEAD
+=======
+	/* No mandatory locks */
+	if (__mandatory_lock(file->f_mapping->host) && fl->fl_type != F_UNLCK)
+		return -ENOLCK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dout("ceph_lock, fl_owner: %p\n", fl->fl_owner);
 

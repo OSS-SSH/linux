@@ -3,7 +3,11 @@
 # Makefile for PTP 1588 clock support.
 #
 
+<<<<<<< HEAD
 ptp-y					:= ptp_clock.o ptp_chardev.o ptp_sysfs.o ptp_vclock.o
+=======
+ptp-y					:= ptp_clock.o ptp_chardev.o ptp_sysfs.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ptp_kvm-$(CONFIG_X86)			:= ptp_kvm_x86.o ptp_kvm_common.o
 ptp_kvm-$(CONFIG_HAVE_ARM_SMCCC)	:= ptp_kvm_arm.o ptp_kvm_common.o
 obj-$(CONFIG_PTP_1588_CLOCK)		+= ptp.o

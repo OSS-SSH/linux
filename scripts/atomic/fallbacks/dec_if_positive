@@ -1,14 +1,24 @@
 cat <<EOF
 static __always_inline ${ret}
+<<<<<<< HEAD
 arch_${atomic}_dec_if_positive(${atomic}_t *v)
 {
 	${int} dec, c = arch_${atomic}_read(v);
+=======
+${arch}${atomic}_dec_if_positive(${atomic}_t *v)
+{
+	${int} dec, c = ${arch}${atomic}_read(v);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	do {
 		dec = c - 1;
 		if (unlikely(dec < 0))
 			break;
+<<<<<<< HEAD
 	} while (!arch_${atomic}_try_cmpxchg(v, &c, dec));
+=======
+	} while (!${arch}${atomic}_try_cmpxchg(v, &c, dec));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return dec;
 }

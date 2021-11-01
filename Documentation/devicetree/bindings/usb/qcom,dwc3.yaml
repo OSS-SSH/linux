@@ -17,7 +17,10 @@ properties:
           - qcom,msm8998-dwc3
           - qcom,sc7180-dwc3
           - qcom,sc7280-dwc3
+<<<<<<< HEAD
           - qcom,sdm660-dwc3
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
           - qcom,sdm845-dwc3
           - qcom,sdx55-dwc3
           - qcom,sm4250-dwc3

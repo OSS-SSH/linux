@@ -504,7 +504,11 @@
 					reg = <MT8173_POWER_DOMAIN_USB>;
 					#power-domain-cells = <0>;
 				};
+<<<<<<< HEAD
 				mfg_async: power-domain@MT8173_POWER_DOMAIN_MFG_ASYNC {
+=======
+				power-domain@MT8173_POWER_DOMAIN_MFG_ASYNC {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					reg = <MT8173_POWER_DOMAIN_MFG_ASYNC>;
 					clocks = <&clk26m>;
 					clock-names = "mfg";

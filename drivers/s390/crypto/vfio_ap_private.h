@@ -18,7 +18,10 @@
 #include <linux/delay.h>
 #include <linux/mutex.h>
 #include <linux/kvm_host.h>
+<<<<<<< HEAD
 #include <linux/vfio.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "ap_bus.h"
 
@@ -80,13 +83,23 @@ struct ap_matrix {
  * @kvm:	the struct holding guest's state
  */
 struct ap_matrix_mdev {
+<<<<<<< HEAD
 	struct vfio_device vdev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head node;
 	struct ap_matrix matrix;
 	struct notifier_block group_notifier;
 	struct notifier_block iommu_notifier;
+<<<<<<< HEAD
 	struct kvm *kvm;
 	crypto_hook pqap_hook;
+=======
+	bool kvm_busy;
+	wait_queue_head_t wait_for_kvm;
+	struct kvm *kvm;
+	struct kvm_s390_module_hook pqap_hook;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mdev_device *mdev;
 };
 

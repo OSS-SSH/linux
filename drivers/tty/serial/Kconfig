@@ -959,7 +959,11 @@ config SERIAL_VT8500_CONSOLE
 
 config SERIAL_OMAP
 	tristate "OMAP serial port support"
+<<<<<<< HEAD
 	depends on (ARCH_OMAP2PLUS && !SERIAL_8250_OMAP) || COMPILE_TEST
+=======
+	depends on ARCH_OMAP2PLUS || COMPILE_TEST
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select SERIAL_CORE
 	help
 	  If you have a machine based on an Texas Instruments OMAP CPU you
@@ -1382,7 +1386,11 @@ config SERIAL_ST_ASC
 	select SERIAL_CORE
 	depends on ARM || COMPILE_TEST
 	help
+<<<<<<< HEAD
 	  This driver is for the on-chip Asynchronous Serial Controller on
+=======
+	  This driver is for the on-chip Asychronous Serial Controller on
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	  STMicroelectronics STi SoCs.
 	  ASC is embedded in ST COMMS IP block. It supports Rx & Tx functionality.
 	  It support all industry standard baud rates.

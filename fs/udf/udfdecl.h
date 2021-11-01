@@ -130,10 +130,13 @@ static inline unsigned int udf_dir_entry_len(struct fileIdentDesc *cfi)
 		le16_to_cpu(cfi->lengthOfImpUse) + cfi->lengthFileIdent,
 		UDF_NAME_PAD);
 }
+<<<<<<< HEAD
 static inline uint8_t *udf_get_fi_ident(struct fileIdentDesc *fi)
 {
 	return ((uint8_t *)(fi + 1)) + le16_to_cpu(fi->lengthOfImpUse);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* file.c */
 extern long udf_ioctl(struct file *, unsigned int, unsigned long);

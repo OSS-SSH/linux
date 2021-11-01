@@ -2,6 +2,7 @@
 .. include:: ../disclaimer-zh_CN.rst
 
 :Original: Documentation/core-api/printk-basics.rst
+<<<<<<< HEAD
 
 :翻译:
 
@@ -9,6 +10,13 @@
 
 .. _cn_printk-basics.rst:
 
+=======
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_printk-basics.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ==================
 使用printk记录消息
 ==================

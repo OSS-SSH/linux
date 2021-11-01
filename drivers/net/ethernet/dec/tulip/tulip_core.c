@@ -1271,7 +1271,11 @@ static const struct net_device_ops tulip_netdev_ops = {
 	.ndo_tx_timeout		= tulip_tx_timeout,
 	.ndo_stop		= tulip_close,
 	.ndo_get_stats		= tulip_get_stats,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= private_ioctl,
+=======
+	.ndo_do_ioctl 		= private_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_rx_mode	= set_rx_mode,
 	.ndo_set_mac_address	= eth_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,

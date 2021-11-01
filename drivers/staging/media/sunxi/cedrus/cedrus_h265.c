@@ -247,8 +247,11 @@ static void cedrus_h265_setup(struct cedrus_ctx *ctx,
 	const struct v4l2_ctrl_hevc_slice_params *slice_params;
 	const struct v4l2_ctrl_hevc_decode_params *decode_params;
 	const struct v4l2_hevc_pred_weight_table *pred_weight_table;
+<<<<<<< HEAD
 	unsigned int width_in_ctb_luma, ctb_size_luma;
 	unsigned int log2_max_luma_coding_block_size;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dma_addr_t src_buf_addr;
 	dma_addr_t src_buf_end_addr;
 	u32 chroma_log2_weight_denom;
@@ -262,6 +265,7 @@ static void cedrus_h265_setup(struct cedrus_ctx *ctx,
 	decode_params = run->h265.decode_params;
 	pred_weight_table = &slice_params->pred_weight_table;
 
+<<<<<<< HEAD
 	log2_max_luma_coding_block_size =
 		sps->log2_min_luma_coding_block_size_minus3 + 3 +
 		sps->log2_diff_max_min_luma_coding_block_size;
@@ -269,10 +273,20 @@ static void cedrus_h265_setup(struct cedrus_ctx *ctx,
 	width_in_ctb_luma =
 		DIV_ROUND_UP(sps->pic_width_in_luma_samples, ctb_size_luma);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* MV column buffer size and allocation. */
 	if (!ctx->codec.h265.mv_col_buf_size) {
 		unsigned int num_buffers =
 			run->dst->vb2_buf.vb2_queue->num_buffers;
+<<<<<<< HEAD
+=======
+		unsigned int log2_max_luma_coding_block_size =
+			sps->log2_min_luma_coding_block_size_minus3 + 3 +
+			sps->log2_diff_max_min_luma_coding_block_size;
+		unsigned int ctb_size_luma =
+			1UL << log2_max_luma_coding_block_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * Each CTB requires a MV col buffer with a specific unit size.
@@ -326,17 +340,26 @@ static void cedrus_h265_setup(struct cedrus_ctx *ctx,
 	reg = VE_DEC_H265_BITS_END_ADDR_BASE(src_buf_end_addr);
 	cedrus_write(dev, VE_DEC_H265_BITS_END_ADDR, reg);
 
+<<<<<<< HEAD
 	/* Coding tree block address */
 	reg = VE_DEC_H265_DEC_CTB_ADDR_X(slice_params->slice_segment_addr % width_in_ctb_luma);
 	reg |= VE_DEC_H265_DEC_CTB_ADDR_Y(slice_params->slice_segment_addr / width_in_ctb_luma);
+=======
+	/* Coding tree block address: start at the beginning. */
+	reg = VE_DEC_H265_DEC_CTB_ADDR_X(0) | VE_DEC_H265_DEC_CTB_ADDR_Y(0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cedrus_write(dev, VE_DEC_H265_DEC_CTB_ADDR, reg);
 
 	cedrus_write(dev, VE_DEC_H265_TILE_START_CTB, 0);
 	cedrus_write(dev, VE_DEC_H265_TILE_END_CTB, 0);
 
 	/* Clear the number of correctly-decoded coding tree blocks. */
+<<<<<<< HEAD
 	if (ctx->fh.m2m_ctx->new_frame)
 		cedrus_write(dev, VE_DEC_H265_DEC_CTB_NUM, 0);
+=======
+	cedrus_write(dev, VE_DEC_H265_DEC_CTB_NUM, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Initialize bitstream access. */
 	cedrus_write(dev, VE_DEC_H265_TRIGGER, VE_DEC_H265_TRIGGER_INIT_SWDEC);
@@ -488,8 +511,13 @@ static void cedrus_h265_setup(struct cedrus_ctx *ctx,
 				V4L2_HEVC_SLICE_PARAMS_FLAG_DEPENDENT_SLICE_SEGMENT,
 				slice_params->flags);
 
+<<<<<<< HEAD
 	if (ctx->fh.m2m_ctx->new_frame)
 		reg |= VE_DEC_H265_DEC_SLICE_HDR_INFO0_FLAG_FIRST_SLICE_SEGMENT_IN_PIC;
+=======
+	/* FIXME: For multi-slice support. */
+	reg |= VE_DEC_H265_DEC_SLICE_HDR_INFO0_FLAG_FIRST_SLICE_SEGMENT_IN_PIC;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cedrus_write(dev, VE_DEC_H265_DEC_SLICE_HDR_INFO0, reg);
 

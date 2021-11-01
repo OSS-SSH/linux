@@ -2,6 +2,7 @@
 
 .. include:: ../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/cpu-freq/cpufreq-stats.rst
 
 :翻译:
@@ -10,6 +11,14 @@
 
 .. _cn_cpufreq-stats.rst:
 
+=======
+:Original: :doc:`../../../cpu-freq/cpufreq-stats`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_cpufreq-stats.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ==========================================
 sysfs CPUFreq Stats的一般说明
 ==========================================

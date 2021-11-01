@@ -1,8 +1,18 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /* Marvell RVU Admin Function driver
  *
  * Copyright (C) 2018 Marvell.
  *
+=======
+/* Marvell OcteonTx2 RVU Admin Function driver
+ *
+ * Copyright (C) 2018 Marvell International Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/module.h>
@@ -67,21 +77,33 @@ static void rvu_setup_hw_capabilities(struct rvu *rvu)
 	hw->cap.nix_shaping = true;
 	hw->cap.nix_tx_link_bp = true;
 	hw->cap.nix_rx_multicast = true;
+<<<<<<< HEAD
 	hw->cap.nix_shaper_toggle_wait = false;
 	hw->rvu = rvu;
 
 	if (is_rvu_pre_96xx_C0(rvu)) {
+=======
+	hw->rvu = rvu;
+
+	if (is_rvu_96xx_B0(rvu)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hw->cap.nix_fixed_txschq_mapping = true;
 		hw->cap.nix_txsch_per_cgx_lmac = 4;
 		hw->cap.nix_txsch_per_lbk_lmac = 132;
 		hw->cap.nix_txsch_per_sdp_lmac = 76;
 		hw->cap.nix_shaping = false;
 		hw->cap.nix_tx_link_bp = false;
+<<<<<<< HEAD
 		if (is_rvu_96xx_A0(rvu) || is_rvu_95xx_A0(rvu))
 			hw->cap.nix_rx_multicast = false;
 	}
 	if (!is_rvu_pre_96xx_C0(rvu))
 		hw->cap.nix_shaper_toggle_wait = true;
+=======
+		if (is_rvu_96xx_A0(rvu))
+			hw->cap.nix_rx_multicast = false;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!is_rvu_otx2(rvu))
 		hw->cap.per_pf_mbox_regs = true;
@@ -92,8 +114,12 @@ static void rvu_setup_hw_capabilities(struct rvu *rvu)
  */
 int rvu_poll_reg(struct rvu *rvu, u64 block, u64 offset, u64 mask, bool zero)
 {
+<<<<<<< HEAD
 	unsigned long timeout = jiffies + usecs_to_jiffies(20000);
 	bool twice = false;
+=======
+	unsigned long timeout = jiffies + usecs_to_jiffies(10000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void __iomem *reg;
 	u64 reg_val;
 
@@ -108,6 +134,7 @@ again:
 		usleep_range(1, 5);
 		goto again;
 	}
+<<<<<<< HEAD
 	/* In scenarios where CPU is scheduled out before checking
 	 * 'time_before' (above) and gets scheduled in such that
 	 * jiffies are beyond timeout value, then check again if HW is
@@ -117,6 +144,8 @@ again:
 		twice = true;
 		goto again;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return -EBUSY;
 }
 
@@ -211,11 +240,14 @@ int rvu_alloc_bitmap(struct rsrc_bmap *rsrc)
 	return 0;
 }
 
+<<<<<<< HEAD
 void rvu_free_bitmap(struct rsrc_bmap *rsrc)
 {
 	kfree(rsrc->bmap);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Get block LF's HW index from a PF_FUNC's block slot number */
 int rvu_get_lf(struct rvu *rvu, struct rvu_block *block, u16 pcifunc, u16 slot)
 {
@@ -406,10 +438,15 @@ void rvu_get_pf_numvfs(struct rvu *rvu, int pf, int *numvfs, int *hwvf)
 
 	/* Get numVFs attached to this PF and first HWVF */
 	cfg = rvu_read64(rvu, BLKADDR_RVUM, RVU_PRIV_PFX_CFG(pf));
+<<<<<<< HEAD
 	if (numvfs)
 		*numvfs = (cfg >> 12) & 0xFF;
 	if (hwvf)
 		*hwvf = cfg & 0xFFF;
+=======
+	*numvfs = (cfg >> 12) & 0xFF;
+	*hwvf = cfg & 0xFFF;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int rvu_get_hwvf(struct rvu *rvu, int pcifunc)
@@ -513,15 +550,22 @@ int rvu_lf_reset(struct rvu *rvu, struct rvu_block *block, int lf)
 static void rvu_block_reset(struct rvu *rvu, int blkaddr, u64 rst_reg)
 {
 	struct rvu_block *block = &rvu->hw->block[blkaddr];
+<<<<<<< HEAD
 	int err;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!block->implemented)
 		return;
 
 	rvu_write64(rvu, blkaddr, rst_reg, BIT_ULL(0));
+<<<<<<< HEAD
 	err = rvu_poll_reg(rvu, blkaddr, rst_reg, BIT_ULL(63), true);
 	if (err)
 		dev_err(rvu->dev, "HW block:%d reset failed\n", blkaddr);
+=======
+	rvu_poll_reg(rvu, blkaddr, rst_reg, BIT_ULL(63), true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void rvu_reset_all_blocks(struct rvu *rvu)
@@ -942,6 +986,7 @@ static int rvu_setup_hw_resources(struct rvu *rvu)
 	block->lfreset_reg = NPA_AF_LF_RST;
 	sprintf(block->name, "NPA");
 	err = rvu_alloc_bitmap(&block->lf);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev,
 			"%s: Failed to allocate NPA LF bitmap\n", __func__);
@@ -962,6 +1007,18 @@ nix:
 			"%s: Failed to allocate NIX1 LFs bitmap\n", __func__);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+
+nix:
+	err = rvu_setup_nix_hw_resource(rvu, BLKADDR_NIX0);
+	if (err)
+		return err;
+	err = rvu_setup_nix_hw_resource(rvu, BLKADDR_NIX1);
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Init SSO group's bitmap */
 	block = &hw->block[BLKADDR_SSO];
@@ -981,11 +1038,16 @@ nix:
 	block->lfreset_reg = SSO_AF_LF_HWGRP_RST;
 	sprintf(block->name, "SSO GROUP");
 	err = rvu_alloc_bitmap(&block->lf);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev,
 			"%s: Failed to allocate SSO LF bitmap\n", __func__);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 ssow:
 	/* Init SSO workslot's bitmap */
@@ -1005,11 +1067,16 @@ ssow:
 	block->lfreset_reg = SSOW_AF_LF_HWS_RST;
 	sprintf(block->name, "SSOWS");
 	err = rvu_alloc_bitmap(&block->lf);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev,
 			"%s: Failed to allocate SSOW LF bitmap\n", __func__);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 tim:
 	/* Init TIM LF's bitmap */
@@ -1030,6 +1097,7 @@ tim:
 	block->lfreset_reg = TIM_AF_LF_RST;
 	sprintf(block->name, "TIM");
 	err = rvu_alloc_bitmap(&block->lf);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev,
 			"%s: Failed to allocate TIM LF bitmap\n", __func__);
@@ -1049,10 +1117,23 @@ cpt:
 			"%s: Failed to allocate CPT1 LF bitmap\n", __func__);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+
+cpt:
+	err = rvu_setup_cpt_hw_resource(rvu, BLKADDR_CPT0);
+	if (err)
+		return err;
+	err = rvu_setup_cpt_hw_resource(rvu, BLKADDR_CPT1);
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Allocate memory for PFVF data */
 	rvu->pf = devm_kcalloc(rvu->dev, hw->total_pfs,
 			       sizeof(struct rvu_pfvf), GFP_KERNEL);
+<<<<<<< HEAD
 	if (!rvu->pf) {
 		dev_err(rvu->dev,
 			"%s: Failed to allocate memory for PF's rvu_pfvf struct\n", __func__);
@@ -1066,17 +1147,31 @@ cpt:
 			"%s: Failed to allocate memory for VF's rvu_pfvf struct\n", __func__);
 		return -ENOMEM;
 	}
+=======
+	if (!rvu->pf)
+		return -ENOMEM;
+
+	rvu->hwvf = devm_kcalloc(rvu->dev, hw->total_vfs,
+				 sizeof(struct rvu_pfvf), GFP_KERNEL);
+	if (!rvu->hwvf)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_init(&rvu->rsrc_lock);
 
 	rvu_fwdata_init(rvu);
 
 	err = rvu_setup_msix_resources(rvu);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev,
 			"%s: Failed to setup MSIX resources\n", __func__);
 		return err;
 	}
+=======
+	if (err)
+		return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (blkid = 0; blkid < BLK_COUNT; blkid++) {
 		block = &hw->block[blkid];
@@ -1102,6 +1197,7 @@ cpt:
 		goto msix_err;
 
 	err = rvu_npc_init(rvu);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev, "%s: Failed to initialize npc\n", __func__);
 		goto npc_err;
@@ -1112,19 +1208,33 @@ cpt:
 		dev_err(rvu->dev, "%s: Failed to initialize cgx\n", __func__);
 		goto cgx_err;
 	}
+=======
+	if (err)
+		goto npc_err;
+
+	err = rvu_cgx_init(rvu);
+	if (err)
+		goto cgx_err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Assign MACs for CGX mapped functions */
 	rvu_setup_pfvf_macaddress(rvu);
 
 	err = rvu_npa_init(rvu);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev, "%s: Failed to initialize npa\n", __func__);
 		goto npa_err;
 	}
+=======
+	if (err)
+		goto npa_err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rvu_get_lbk_bufsize(rvu);
 
 	err = rvu_nix_init(rvu);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(rvu->dev, "%s: Failed to initialize nix\n", __func__);
 		goto nix_err;
@@ -1135,6 +1245,10 @@ cpt:
 		dev_err(rvu->dev, "%s: Failed to initialize sdp\n", __func__);
 		goto nix_err;
 	}
+=======
+	if (err)
+		goto nix_err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rvu_program_channels(rvu);
 
@@ -1382,16 +1496,26 @@ int rvu_mbox_handler_detach_resources(struct rvu *rvu,
 	return rvu_detach_rsrcs(rvu, detach, detach->hdr.pcifunc);
 }
 
+<<<<<<< HEAD
 int rvu_get_nix_blkaddr(struct rvu *rvu, u16 pcifunc)
+=======
+static int rvu_get_nix_blkaddr(struct rvu *rvu, u16 pcifunc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct rvu_pfvf *pfvf = rvu_get_pfvf(rvu, pcifunc);
 	int blkaddr = BLKADDR_NIX0, vf;
 	struct rvu_pfvf *pf;
 
+<<<<<<< HEAD
 	pf = rvu_get_pfvf(rvu, pcifunc & ~RVU_PFVF_FUNC_MASK);
 
 	/* All CGX mapped PFs are set with assigned NIX block during init */
 	if (is_pf_cgxmapped(rvu, rvu_get_pf(pcifunc))) {
+=======
+	/* All CGX mapped PFs are set with assigned NIX block during init */
+	if (is_pf_cgxmapped(rvu, rvu_get_pf(pcifunc))) {
+		pf = rvu_get_pfvf(rvu, pcifunc & ~RVU_PFVF_FUNC_MASK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		blkaddr = pf->nix_blkaddr;
 	} else if (is_afvf(pcifunc)) {
 		vf = pcifunc - 1;
@@ -1404,10 +1528,13 @@ int rvu_get_nix_blkaddr(struct rvu *rvu, u16 pcifunc)
 			blkaddr = BLKADDR_NIX0;
 	}
 
+<<<<<<< HEAD
 	/* if SDP1 then the blkaddr is NIX1 */
 	if (is_sdp_pfvf(pcifunc) && pf->sdp_info->node_id == 1)
 		blkaddr = BLKADDR_NIX1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (blkaddr) {
 	case BLKADDR_NIX1:
 		pfvf->nix_blkaddr = BLKADDR_NIX1;
@@ -1808,6 +1935,7 @@ int rvu_mbox_handler_msix_offset(struct rvu *rvu, struct msg_req *req,
 	return 0;
 }
 
+<<<<<<< HEAD
 int rvu_mbox_handler_free_rsrc_cnt(struct rvu *rvu, struct msg_req *req,
 				   struct free_rsrcs_rsp *rsp)
 {
@@ -1901,6 +2029,8 @@ out:
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int rvu_mbox_handler_vf_flr(struct rvu *rvu, struct msg_req *req,
 			    struct msg_rsp *rsp)
 {
@@ -2499,7 +2629,10 @@ static void __rvu_flr_handler(struct rvu *rvu, u16 pcifunc)
 	rvu_blklf_teardown(rvu, pcifunc, BLKADDR_SSOW);
 	rvu_blklf_teardown(rvu, pcifunc, BLKADDR_SSO);
 	rvu_blklf_teardown(rvu, pcifunc, BLKADDR_NPA);
+<<<<<<< HEAD
 	rvu_reset_lmt_map_tbl(rvu, pcifunc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rvu_detach_rsrcs(rvu, NULL, pcifunc);
 	mutex_unlock(&rvu->flr_lock);
 }
@@ -2566,12 +2699,20 @@ static void rvu_afvf_queue_flr_work(struct rvu *rvu, int start_vf, int numvfs)
 	for (vf = 0; vf < numvfs; vf++) {
 		if (!(intr & BIT_ULL(vf)))
 			continue;
+<<<<<<< HEAD
 		/* Clear and disable the interrupt */
 		rvupf_write64(rvu, RVU_PF_VFFLR_INTX(reg), BIT_ULL(vf));
 		rvupf_write64(rvu, RVU_PF_VFFLR_INT_ENA_W1CX(reg), BIT_ULL(vf));
 
 		dev = vf + start_vf + rvu->hw->total_pfs;
 		queue_work(rvu->flr_wq, &rvu->flr_wrk[dev].work);
+=======
+		dev = vf + start_vf + rvu->hw->total_pfs;
+		queue_work(rvu->flr_wq, &rvu->flr_wrk[dev].work);
+		/* Clear and disable the interrupt */
+		rvupf_write64(rvu, RVU_PF_VFFLR_INTX(reg), BIT_ULL(vf));
+		rvupf_write64(rvu, RVU_PF_VFFLR_INT_ENA_W1CX(reg), BIT_ULL(vf));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -2587,14 +2728,22 @@ static irqreturn_t rvu_flr_intr_handler(int irq, void *rvu_irq)
 
 	for (pf = 0; pf < rvu->hw->total_pfs; pf++) {
 		if (intr & (1ULL << pf)) {
+<<<<<<< HEAD
+=======
+			/* PF is already dead do only AF related operations */
+			queue_work(rvu->flr_wq, &rvu->flr_wrk[pf].work);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* clear interrupt */
 			rvu_write64(rvu, BLKADDR_RVUM, RVU_AF_PFFLR_INT,
 				    BIT_ULL(pf));
 			/* Disable the interrupt */
 			rvu_write64(rvu, BLKADDR_RVUM, RVU_AF_PFFLR_INT_ENA_W1C,
 				    BIT_ULL(pf));
+<<<<<<< HEAD
 			/* PF is already dead do only AF related operations */
 			queue_work(rvu->flr_wq, &rvu->flr_wrk[pf].work);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -3026,12 +3175,15 @@ static int rvu_enable_sriov(struct rvu *rvu)
 	if (!vfs)
 		return 0;
 
+<<<<<<< HEAD
 	/* LBK channel number 63 is used for switching packets between
 	 * CGX mapped VFs. Hence limit LBK pairs till 62 only.
 	 */
 	if (vfs > 62)
 		vfs = 62;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Save VFs number for reference in VF interrupts handlers.
 	 * Since interrupts might start arriving during SRIOV enablement
 	 * ordinary API cannot be used to get number of enabled VFs.
@@ -3149,6 +3301,7 @@ static int rvu_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	err = rvu_mbox_init(rvu, &rvu->afpf_wq_info, TYPE_AFPF,
 			    rvu->hw->total_pfs, rvu_afpf_mbox_handler,
 			    rvu_afpf_mbox_up_handler);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(dev, "%s: Failed to initialize mbox\n", __func__);
 		goto err_hwsetup;
@@ -3171,21 +3324,45 @@ static int rvu_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 		dev_err(dev, "%s: Failed to register devlink\n", __func__);
 		goto err_irq;
 	}
+=======
+	if (err)
+		goto err_hwsetup;
+
+	err = rvu_flr_init(rvu);
+	if (err)
+		goto err_mbox;
+
+	err = rvu_register_interrupts(rvu);
+	if (err)
+		goto err_flr;
+
+	err = rvu_register_dl(rvu);
+	if (err)
+		goto err_irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rvu_setup_rvum_blk_revid(rvu);
 
 	/* Enable AF's VFs (if any) */
 	err = rvu_enable_sriov(rvu);
+<<<<<<< HEAD
 	if (err) {
 		dev_err(dev, "%s: Failed to enable sriov\n", __func__);
 		goto err_dl;
 	}
+=======
+	if (err)
+		goto err_dl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Initialize debugfs */
 	rvu_dbg_init(rvu);
 
+<<<<<<< HEAD
 	mutex_init(&rvu->rswitch.switch_lock);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 err_dl:
 	rvu_unregister_dl(rvu);

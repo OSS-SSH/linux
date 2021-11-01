@@ -214,6 +214,7 @@ config PCIE_ARTPEC6_EP
 	  Enables support for the PCIe controller in the ARTPEC-6 SoC to work in
 	  endpoint mode. This uses the DesignWare core.
 
+<<<<<<< HEAD
 config PCIE_ROCKCHIP_DW_HOST
 	bool "Rockchip DesignWare PCIe controller"
 	select PCIE_DW
@@ -225,6 +226,8 @@ config PCIE_ROCKCHIP_DW_HOST
 	  Enables support for the DesignWare PCIe controller in the
 	  Rockchip SoC except RK3399.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config PCIE_INTEL_GW
 	bool "Intel Gateway PCIe host controller support"
 	depends on OF && (X86 || COMPILE_TEST)
@@ -236,6 +239,7 @@ config PCIE_INTEL_GW
 	  The PCIe controller uses the DesignWare core plus Intel-specific
 	  hardware wrappers.
 
+<<<<<<< HEAD
 config PCIE_KEEMBAY
 	bool
 
@@ -264,6 +268,8 @@ config PCIE_KEEMBAY_EP
 	  The PCIe controller is based on DesignWare Hardware and uses
 	  DesignWare core functions.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config PCIE_KIRIN
 	depends on OF && (ARM64 || COMPILE_TEST)
 	bool "HiSilicon Kirin series SoCs PCIe controllers"
@@ -325,6 +331,7 @@ config PCIE_TEGRA194_EP
 	  in order to enable device-specific features PCIE_TEGRA194_EP must be
 	  selected. This uses the DesignWare core.
 
+<<<<<<< HEAD
 config PCIE_VISCONTI_HOST
 	bool "Toshiba Visconti PCIe controllers"
 	depends on ARCH_VISCONTI || COMPILE_TEST
@@ -334,6 +341,8 @@ config PCIE_VISCONTI_HOST
 	  Say Y here if you want PCIe controller support on Toshiba Visconti SoC.
 	  This driver supports TMPV7708 SoC.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config PCIE_UNIPHIER
 	bool "Socionext UniPhier PCIe host controllers"
 	depends on ARCH_UNIPHIER || COMPILE_TEST

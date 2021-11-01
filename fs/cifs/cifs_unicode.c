@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 /*
+<<<<<<< HEAD
+=======
+ *   fs/cifs/cifs_unicode.c
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   Copyright (c) International Business Machines  Corp., 2000,2009
  *   Modified by Steve French (sfrench@us.ibm.com)
@@ -357,9 +361,20 @@ cifs_strndup_from_utf16(const char *src, const int maxlen,
 		if (!dst)
 			return NULL;
 		cifs_from_utf16(dst, (__le16 *) src, len, maxlen, codepage,
+<<<<<<< HEAD
 				NO_MAP_UNI_RSVD);
 	} else {
 		dst = kstrndup(src, maxlen, GFP_KERNEL);
+=======
+			       NO_MAP_UNI_RSVD);
+	} else {
+		len = strnlen(src, maxlen);
+		len++;
+		dst = kmalloc(len, GFP_KERNEL);
+		if (!dst)
+			return NULL;
+		strlcpy(dst, src, len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return dst;

@@ -84,6 +84,10 @@ extern struct mutex uld_mutex;
 enum {
 	MAX_NPORTS	= 4,     /* max # of ports */
 	SERNUM_LEN	= 24,    /* Serial # length */
+<<<<<<< HEAD
+=======
+	EC_LEN		= 16,    /* E/C length */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ID_LEN		= 16,    /* ID length */
 	PN_LEN		= 16,    /* Part Number length */
 	MACADDR_LEN	= 12,    /* MAC Address length */
@@ -390,6 +394,10 @@ struct tp_params {
 
 struct vpd_params {
 	unsigned int cclk;
+<<<<<<< HEAD
+=======
+	u8 ec[EC_LEN + 1];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 sn[SERNUM_LEN + 1];
 	u8 id[ID_LEN + 1];
 	u8 pn[PN_LEN + 1];

@@ -1373,7 +1373,11 @@ static void carm_free_disk(struct carm_host *host, unsigned int port_no)
 	if (!disk)
 		return;
 
+<<<<<<< HEAD
 	if (host->state > HST_DEV_ACTIVATE)
+=======
+	if (disk->flags & GENHD_FL_UP)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		del_gendisk(disk);
 	blk_cleanup_disk(disk);
 }

@@ -44,7 +44,10 @@ log_tg(struct sk_buff *skb, const struct xt_action_param *par)
 static int log_tg_check(const struct xt_tgchk_param *par)
 {
 	const struct xt_log_info *loginfo = par->targinfo;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (par->family != NFPROTO_IPV4 && par->family != NFPROTO_IPV6)
 		return -EINVAL;
@@ -59,6 +62,7 @@ static int log_tg_check(const struct xt_tgchk_param *par)
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	ret = nf_logger_find_get(par->family, NF_LOG_TYPE_LOG);
 	if (ret != 0 && !par->nft_compat) {
 		request_module("%s", "nf_log_syslog");
@@ -67,6 +71,9 @@ static int log_tg_check(const struct xt_tgchk_param *par)
 	}
 
 	return ret;
+=======
+	return nf_logger_find_get(par->family, NF_LOG_TYPE_LOG);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void log_tg_destroy(const struct xt_tgdtor_param *par)

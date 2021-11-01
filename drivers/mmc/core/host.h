@@ -21,12 +21,15 @@ int mmc_retune(struct mmc_host *host);
 void mmc_retune_pause(struct mmc_host *host);
 void mmc_retune_unpause(struct mmc_host *host);
 
+<<<<<<< HEAD
 static inline void mmc_retune_clear(struct mmc_host *host)
 {
 	host->retune_now = 0;
 	host->need_retune = 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void mmc_retune_hold_now(struct mmc_host *host)
 {
 	host->retune_now = 0;

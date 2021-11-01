@@ -8,7 +8,10 @@ Translations
    :maxdepth: 1
 
    zh_CN/index
+<<<<<<< HEAD
    zh_TW/index
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
    it_IT/index
    ko_KR/index
    ja_JP/index

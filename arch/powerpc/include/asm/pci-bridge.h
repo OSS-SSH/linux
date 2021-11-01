@@ -126,11 +126,14 @@ struct pci_controller {
 #endif	/* CONFIG_PPC64 */
 
 	void *private_data;
+<<<<<<< HEAD
 
 	/* IRQ domain hierarchy */
 	struct irq_domain	*dev_domain;
 	struct irq_domain	*msi_domain;
 	struct fwnode_handle	*fwnode;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* These are used for config access before all the PCI probing

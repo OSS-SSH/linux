@@ -338,6 +338,7 @@ __setup("rootflags=", root_data_setup);
 __setup("rootfstype=", fs_names_setup);
 __setup("rootdelay=", root_delay_setup);
 
+<<<<<<< HEAD
 /* This can return zero length strings. Caller should check */
 static int __init split_fs_names(char *page, size_t size, char *names)
 {
@@ -353,6 +354,33 @@ static int __init split_fs_names(char *page, size_t size, char *names)
 	}
 
 	return count;
+=======
+static void __init get_fs_names(char *page)
+{
+	char *s = page;
+
+	if (root_fs_names) {
+		strcpy(page, root_fs_names);
+		while (*s++) {
+			if (s[-1] == ',')
+				s[-1] = '\0';
+		}
+	} else {
+		int len = get_filesystem_list(page);
+		char *p, *next;
+
+		page[len] = '\0';
+		for (p = page-1; p; p = next) {
+			next = strchr(++p, '\n');
+			if (*p++ != '\t')
+				continue;
+			while ((*s++ = *p++) != '\n')
+				;
+			s[-1] = '\0';
+		}
+	}
+	*s = '\0';
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int __init do_mount_root(const char *name, const char *fs,
@@ -398,6 +426,7 @@ void __init mount_block_root(char *name, int flags)
 	char *fs_names = page_address(page);
 	char *p;
 	char b[BDEVNAME_SIZE];
+<<<<<<< HEAD
 	int num_fs, i;
 
 	scnprintf(b, BDEVNAME_SIZE, "unknown-block(%u,%u)",
@@ -413,6 +442,15 @@ retry:
 		if (!*p)
 			continue;
 		err = do_mount_root(name, p, flags, root_mount_data);
+=======
+
+	scnprintf(b, BDEVNAME_SIZE, "unknown-block(%u,%u)",
+		  MAJOR(ROOT_DEV), MINOR(ROOT_DEV));
+	get_fs_names(fs_names);
+retry:
+	for (p = fs_names; *p; p += strlen(p)+1) {
+		int err = do_mount_root(name, p, flags, root_mount_data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		switch (err) {
 			case 0:
 				goto out;
@@ -430,6 +468,13 @@ retry:
 		printk("Please append a correct \"root=\" boot option; here are the available partitions:\n");
 
 		printk_all_partitions();
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DEBUG_BLOCK_EXT_DEVT
+		printk("DEBUG_BLOCK_EXT_DEVT is enabled, you need to specify "
+		       "explicit textual name for \"root=\" boot option.\n");
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		panic("VFS: Unable to mount root fs on %s", b);
 	}
 	if (!(flags & SB_RDONLY)) {
@@ -440,7 +485,11 @@ retry:
 	printk("List of all partitions:\n");
 	printk_all_partitions();
 	printk("No filesystem could mount root, tried: ");
+<<<<<<< HEAD
 	for (i = 0, p = fs_names; i < num_fs; i++, p += strlen(p)+1)
+=======
+	for (p = fs_names; *p; p += strlen(p)+1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		printk(" %s", p);
 	printk("\n");
 	panic("VFS: Unable to mount root fs on %s", b);
@@ -524,6 +573,7 @@ static int __init mount_cifs_root(void)
 }
 #endif
 
+<<<<<<< HEAD
 static bool __init fs_is_nodev(char *fstype)
 {
 	struct file_system_type *fs = get_fs_type(fstype);
@@ -564,6 +614,8 @@ static int __init mount_nodev_root(void)
 	return err;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __init mount_root(void)
 {
 #ifdef CONFIG_ROOT_NFS
@@ -580,10 +632,13 @@ void __init mount_root(void)
 		return;
 	}
 #endif
+<<<<<<< HEAD
 	if (ROOT_DEV == 0 && root_device_name && root_fs_names) {
 		if (mount_nodev_root() == 0)
 			return;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_BLOCK
 	{
 		int err = create_dev("/dev/root", ROOT_DEV);

@@ -871,8 +871,11 @@ void hubp1_read_state_common(struct hubp *hubp)
 	struct _vcs_dpi_display_dlg_regs_st *dlg_attr = &s->dlg_attr;
 	struct _vcs_dpi_display_ttu_regs_st *ttu_attr = &s->ttu_attr;
 	struct _vcs_dpi_display_rq_regs_st *rq_regs = &s->rq_regs;
+<<<<<<< HEAD
 	uint32_t aperture_low_msb, aperture_low_lsb;
 	uint32_t aperture_high_msb, aperture_high_lsb;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Requester */
 	REG_GET(HUBPRET_CONTROL,
@@ -883,6 +886,7 @@ void hubp1_read_state_common(struct hubp *hubp)
 			MRQ_EXPANSION_MODE, &rq_regs->mrq_expansion_mode,
 			CRQ_EXPANSION_MODE, &rq_regs->crq_expansion_mode);
 
+<<<<<<< HEAD
 	REG_GET(DCN_VM_SYSTEM_APERTURE_LOW_ADDR_MSB,
 			MC_VM_SYSTEM_APERTURE_LOW_ADDR_MSB, &aperture_low_msb);
 
@@ -899,6 +903,8 @@ void hubp1_read_state_common(struct hubp *hubp)
 	rq_regs->aperture_low_addr = (aperture_low_msb << 26) | (aperture_low_lsb >> 6);
 	rq_regs->aperture_high_addr = (aperture_high_msb << 26) | (aperture_high_lsb >> 6);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* DLG - Per hubp */
 	REG_GET_2(BLANK_OFFSET_0,
 		REFCYC_H_BLANK_END, &dlg_attr->refcyc_h_blank_end,
@@ -1055,6 +1061,7 @@ void hubp1_read_state_common(struct hubp *hubp)
 			QoS_LEVEL_LOW_WM, &s->qos_level_low_wm,
 			QoS_LEVEL_HIGH_WM, &s->qos_level_high_wm);
 
+<<<<<<< HEAD
 	REG_GET(DCSURF_PRIMARY_SURFACE_ADDRESS,
 			PRIMARY_SURFACE_ADDRESS, &s->primary_surface_addr_lo);
 
@@ -1066,6 +1073,8 @@ void hubp1_read_state_common(struct hubp *hubp)
 
 	REG_GET(DCSURF_PRIMARY_META_SURFACE_ADDRESS_HIGH,
 			PRIMARY_META_SURFACE_ADDRESS, &s->primary_meta_addr_hi);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void hubp1_read_state(struct hubp *hubp)

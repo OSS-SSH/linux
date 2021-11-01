@@ -19,12 +19,20 @@ SYSCALL_DEFINE5(pciconfig_read, unsigned long, bus, unsigned long, dfn,
 	u8 byte;
 	u16 word;
 	u32 dword;
+<<<<<<< HEAD
 	int err, cfg_ret;
 
 	err = -EPERM;
 	dev = NULL;
 	if (!capable(CAP_SYS_ADMIN))
 		goto error;
+=======
+	long err;
+	int cfg_ret;
+
+	if (!capable(CAP_SYS_ADMIN))
+		return -EPERM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = -ENODEV;
 	dev = pci_get_domain_bus_and_slot(0, bus, dfn);

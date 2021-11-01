@@ -667,9 +667,15 @@ static void do_handle_IPI(int ipinr)
 		break;
 
 	case IPI_CPU_BACKTRACE:
+<<<<<<< HEAD
 		printk_deferred_enter();
 		nmi_cpu_backtrace(get_irq_regs());
 		printk_deferred_exit();
+=======
+		printk_nmi_enter();
+		nmi_cpu_backtrace(get_irq_regs());
+		printk_nmi_exit();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 
 	default:

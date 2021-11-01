@@ -1,8 +1,16 @@
 // SPDX-License-Identifier: GPL-2.0
 /* Marvell OcteonTx2 CGX driver
  *
+<<<<<<< HEAD
  * Copyright (C) 2018 Marvell.
  *
+=======
+ * Copyright (C) 2018 Marvell International Ltd.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #include <linux/acpi.h>
@@ -83,6 +91,7 @@ bool is_lmac_valid(struct cgx *cgx, int lmac_id)
 	return test_bit(lmac_id, &cgx->lmac_bmap);
 }
 
+<<<<<<< HEAD
 /* Helper function to get sequential index
  * given the enabled LMAC of a CGX
  */
@@ -99,6 +108,8 @@ static int get_sequence_id_of_lmac(struct cgx *cgx, int lmac_id)
 	return id;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct mac_ops *get_mac_ops(void *cgxd)
 {
 	if (!cgxd)
@@ -224,6 +235,7 @@ static u64 mac2u64 (u8 *mac_addr)
 	return mac;
 }
 
+<<<<<<< HEAD
 static void cfg2mac(u64 cfg, u8 *mac_addr)
 {
 	int i, index = 0;
@@ -243,11 +255,21 @@ int cgx_lmac_addr_set(u8 cgx_id, u8 lmac_id, u8 *mac_addr)
 	/* access mac_ops to know csr_offset */
 	mac_ops = cgx_dev->mac_ops;
 
+=======
+int cgx_lmac_addr_set(u8 cgx_id, u8 lmac_id, u8 *mac_addr)
+{
+	struct cgx *cgx_dev = cgx_get_pdata(cgx_id);
+	struct mac_ops *mac_ops;
+	u64 cfg;
+
+	mac_ops = cgx_dev->mac_ops;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* copy 6bytes from macaddr */
 	/* memcpy(&cfg, mac_addr, 6); */
 
 	cfg = mac2u64 (mac_addr);
 
+<<<<<<< HEAD
 	id = get_sequence_id_of_lmac(cgx_dev, lmac_id);
 
 	index = id * lmac->mac_to_index_bmap.max;
@@ -258,11 +280,19 @@ int cgx_lmac_addr_set(u8 cgx_id, u8 lmac_id, u8 *mac_addr)
 	cfg = cgx_read(cgx_dev, lmac_id, CGXX_CMRX_RX_DMAC_CTL0);
 	cfg |= (CGX_DMAC_CTL0_CAM_ENABLE | CGX_DMAC_BCAST_MODE |
 		CGX_DMAC_MCAST_MODE);
+=======
+	cgx_write(cgx_dev, 0, (CGXX_CMRX_RX_DMAC_CAM0 + (lmac_id * 0x8)),
+		  cfg | CGX_DMAC_CAM_ADDR_ENABLE | ((u64)lmac_id << 49));
+
+	cfg = cgx_read(cgx_dev, lmac_id, CGXX_CMRX_RX_DMAC_CTL0);
+	cfg |= CGX_DMAC_CTL0_CAM_ENABLE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cgx_write(cgx_dev, lmac_id, CGXX_CMRX_RX_DMAC_CTL0, cfg);
 
 	return 0;
 }
 
+<<<<<<< HEAD
 u64 cgx_read_dmac_ctrl(void *cgxd, int lmac_id)
 {
 	struct mac_ops *mac_ops;
@@ -475,6 +505,17 @@ u64 cgx_lmac_addr_get(u8 cgx_id, u8 lmac_id)
 	index = id * lmac->mac_to_index_bmap.max;
 
 	cfg = cgx_read(cgx_dev, 0, CGXX_CMRX_RX_DMAC_CAM0 + index * 0x8);
+=======
+u64 cgx_lmac_addr_get(u8 cgx_id, u8 lmac_id)
+{
+	struct cgx *cgx_dev = cgx_get_pdata(cgx_id);
+	struct mac_ops *mac_ops;
+	u64 cfg;
+
+	mac_ops = cgx_dev->mac_ops;
+
+	cfg = cgx_read(cgx_dev, 0, CGXX_CMRX_RX_DMAC_CAM0 + lmac_id * 0x8);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return cfg & CGX_RX_DMAC_ADR_MASK;
 }
 
@@ -530,22 +571,31 @@ int cgx_lmac_internal_loopback(void *cgxd, int lmac_id, bool enable)
 void cgx_lmac_promisc_config(int cgx_id, int lmac_id, bool enable)
 {
 	struct cgx *cgx = cgx_get_pdata(cgx_id);
+<<<<<<< HEAD
 	struct lmac *lmac = lmac_pdata(lmac_id, cgx);
 	u16 max_dmac = lmac->mac_to_index_bmap.max;
 	struct mac_ops *mac_ops;
 	int index, i;
 	u64 cfg = 0;
 	int id;
+=======
+	struct mac_ops *mac_ops;
+	u64 cfg = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!cgx)
 		return;
 
+<<<<<<< HEAD
 	id = get_sequence_id_of_lmac(cgx, lmac_id);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mac_ops = cgx->mac_ops;
 	if (enable) {
 		/* Enable promiscuous mode on LMAC */
 		cfg = cgx_read(cgx, lmac_id, CGXX_CMRX_RX_DMAC_CTL0);
+<<<<<<< HEAD
 		cfg &= ~CGX_DMAC_CAM_ACCEPT;
 		cfg |= (CGX_DMAC_BCAST_MODE | CGX_DMAC_MCAST_MODE);
 		cgx_write(cgx, lmac_id, CGXX_CMRX_RX_DMAC_CTL0, cfg);
@@ -558,11 +608,23 @@ void cgx_lmac_promisc_config(int cgx_id, int lmac_id, bool enable)
 			cgx_write(cgx, 0,
 				  (CGXX_CMRX_RX_DMAC_CAM0 + index * 0x8), cfg);
 		}
+=======
+		cfg &= ~(CGX_DMAC_CAM_ACCEPT | CGX_DMAC_MCAST_MODE);
+		cfg |= CGX_DMAC_BCAST_MODE;
+		cgx_write(cgx, lmac_id, CGXX_CMRX_RX_DMAC_CTL0, cfg);
+
+		cfg = cgx_read(cgx, 0,
+			       (CGXX_CMRX_RX_DMAC_CAM0 + lmac_id * 0x8));
+		cfg &= ~CGX_DMAC_CAM_ADDR_ENABLE;
+		cgx_write(cgx, 0,
+			  (CGXX_CMRX_RX_DMAC_CAM0 + lmac_id * 0x8), cfg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		/* Disable promiscuous mode */
 		cfg = cgx_read(cgx, lmac_id, CGXX_CMRX_RX_DMAC_CTL0);
 		cfg |= CGX_DMAC_CAM_ACCEPT | CGX_DMAC_MCAST_MODE;
 		cgx_write(cgx, lmac_id, CGXX_CMRX_RX_DMAC_CTL0, cfg);
+<<<<<<< HEAD
 		for (i = 0; i < max_dmac; i++) {
 			index = id * max_dmac + i;
 			cfg = cgx_read(cgx, 0,
@@ -575,6 +637,13 @@ void cgx_lmac_promisc_config(int cgx_id, int lmac_id, bool enable)
 					  cfg);
 			}
 		}
+=======
+		cfg = cgx_read(cgx, 0,
+			       (CGXX_CMRX_RX_DMAC_CAM0 + lmac_id * 0x8));
+		cfg |= CGX_DMAC_CAM_ADDR_ENABLE;
+		cgx_write(cgx, 0,
+			  (CGXX_CMRX_RX_DMAC_CAM0 + lmac_id * 0x8), cfg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -1483,6 +1552,7 @@ static int cgx_lmac_init(struct cgx *cgx)
 		}
 
 		lmac->cgx = cgx;
+<<<<<<< HEAD
 		lmac->mac_to_index_bmap.max =
 				MAX_DMAC_ENTRIES_PER_CGX / cgx->lmac_count;
 		err = rvu_alloc_bitmap(&lmac->mac_to_index_bmap);
@@ -1492,24 +1562,39 @@ static int cgx_lmac_init(struct cgx *cgx)
 		/* Reserve first entry for default MAC address */
 		set_bit(0, lmac->mac_to_index_bmap.bmap);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		init_waitqueue_head(&lmac->wq_cmd_cmplt);
 		mutex_init(&lmac->cmd_lock);
 		spin_lock_init(&lmac->event_cb_lock);
 		err = cgx_configure_interrupt(cgx, lmac, lmac->lmac_id, false);
 		if (err)
+<<<<<<< HEAD
 			goto err_bitmap_free;
 
 		/* Add reference */
 		cgx->lmac_idmap[lmac->lmac_id] = lmac;
 		set_bit(lmac->lmac_id, &cgx->lmac_bmap);
 		cgx->mac_ops->mac_pause_frm_config(cgx, lmac->lmac_id, true);
+=======
+			goto err_irq;
+
+		/* Add reference */
+		cgx->lmac_idmap[lmac->lmac_id] = lmac;
+		cgx->mac_ops->mac_pause_frm_config(cgx, lmac->lmac_id, true);
+		set_bit(lmac->lmac_id, &cgx->lmac_bmap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return cgx_lmac_verify_fwi_version(cgx);
 
+<<<<<<< HEAD
 err_bitmap_free:
 	rvu_free_bitmap(&lmac->mac_to_index_bmap);
 err_name_free:
+=======
+err_irq:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(lmac->name);
 err_lmac_free:
 	kfree(lmac);
@@ -1534,7 +1619,10 @@ static int cgx_lmac_exit(struct cgx *cgx)
 			continue;
 		cgx->mac_ops->mac_pause_frm_config(cgx, lmac->lmac_id, false);
 		cgx_configure_interrupt(cgx, lmac, lmac->lmac_id, true);
+<<<<<<< HEAD
 		kfree(lmac->mac_to_index_bmap.bmap);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kfree(lmac->name);
 		kfree(lmac);
 	}

@@ -51,8 +51,12 @@ static struct kmem_cache *create_pid_cachep(unsigned int level)
 	mutex_lock(&pid_caches_mutex);
 	/* Name collision forces to do allocation under mutex. */
 	if (!*pkc)
+<<<<<<< HEAD
 		*pkc = kmem_cache_create(name, len, 0,
 					 SLAB_HWCACHE_ALIGN | SLAB_ACCOUNT, 0);
+=======
+		*pkc = kmem_cache_create(name, len, 0, SLAB_HWCACHE_ALIGN, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&pid_caches_mutex);
 	/* current can fail, but someone else can succeed. */
 	return READ_ONCE(*pkc);
@@ -450,7 +454,11 @@ const struct proc_ns_operations pidns_for_children_operations = {
 
 static __init int pid_namespaces_init(void)
 {
+<<<<<<< HEAD
 	pid_ns_cachep = KMEM_CACHE(pid_namespace, SLAB_PANIC | SLAB_ACCOUNT);
+=======
+	pid_ns_cachep = KMEM_CACHE(pid_namespace, SLAB_PANIC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_CHECKPOINT_RESTORE
 	register_sysctl_paths(kern_path, pid_ns_ctl_table);

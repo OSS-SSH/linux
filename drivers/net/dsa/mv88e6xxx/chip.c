@@ -12,7 +12,10 @@
 
 #include <linux/bitfield.h>
 #include <linux/delay.h>
+<<<<<<< HEAD
 #include <linux/dsa/mv88e6xxx.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/etherdevice.h>
 #include <linux/ethtool.h>
 #include <linux/if_bridge.h>
@@ -750,11 +753,15 @@ static void mv88e6xxx_mac_link_down(struct dsa_switch *ds, int port,
 	ops = chip->info->ops;
 
 	mv88e6xxx_reg_lock(chip);
+<<<<<<< HEAD
 	/* Internal PHYs propagate their configuration directly to the MAC.
 	 * External PHYs depend on whether the PPU is enabled for this port.
 	 */
 	if (((!mv88e6xxx_phy_is_internal(ds, port) &&
 	      !mv88e6xxx_port_ppu_updates(chip, port)) ||
+=======
+	if ((!mv88e6xxx_port_ppu_updates(chip, port) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	     mode == MLO_AN_FIXED) && ops->port_sync_link)
 		err = ops->port_sync_link(chip, port, mode, false);
 	mv88e6xxx_reg_unlock(chip);
@@ -777,12 +784,16 @@ static void mv88e6xxx_mac_link_up(struct dsa_switch *ds, int port,
 	ops = chip->info->ops;
 
 	mv88e6xxx_reg_lock(chip);
+<<<<<<< HEAD
 	/* Internal PHYs propagate their configuration directly to the MAC.
 	 * External PHYs depend on whether the PPU is enabled for this port.
 	 */
 	if ((!mv88e6xxx_phy_is_internal(ds, port) &&
 	     !mv88e6xxx_port_ppu_updates(chip, port)) ||
 	    mode == MLO_AN_FIXED) {
+=======
+	if (!mv88e6xxx_port_ppu_updates(chip, port) || mode == MLO_AN_FIXED) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* FIXME: for an automedia port, should we force the link
 		 * down here - what if the link comes up due to "other" media
 		 * while we're bringing the port up, how is the exclusivity
@@ -1231,6 +1242,7 @@ static u16 mv88e6xxx_port_vlan(struct mv88e6xxx_chip *chip, int dev, int port)
 	bool found = false;
 	u16 pvlan;
 
+<<<<<<< HEAD
 	/* dev is a physical switch */
 	if (dev <= dst->last_switch) {
 		list_for_each_entry(dp, &dst->ports, list) {
@@ -1255,12 +1267,20 @@ static u16 mv88e6xxx_port_vlan(struct mv88e6xxx_chip *chip, int dev, int port)
 				continue;
 
 			br = dp->bridge_dev;
+=======
+	list_for_each_entry(dp, &dst->ports, list) {
+		if (dp->ds->index == dev && dp->index == port) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			found = true;
 			break;
 		}
 	}
 
+<<<<<<< HEAD
 	/* Prevent frames from unknown switch or virtual bridge */
+=======
+	/* Prevent frames from unknown switch or port */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!found)
 		return 0;
 
@@ -1268,6 +1288,10 @@ static u16 mv88e6xxx_port_vlan(struct mv88e6xxx_chip *chip, int dev, int port)
 	if (dp->type == DSA_PORT_TYPE_CPU || dp->type == DSA_PORT_TYPE_DSA)
 		return mv88e6xxx_port_mask(chip);
 
+<<<<<<< HEAD
+=======
+	br = dp->bridge_dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pvlan = 0;
 
 	/* Frames from user ports can egress any local DSA links and CPU ports,
@@ -1687,6 +1711,7 @@ static int mv88e6xxx_port_check_hw_vlan(struct dsa_switch *ds, int port,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int mv88e6xxx_port_commit_pvid(struct mv88e6xxx_chip *chip, int port)
 {
 	struct dsa_port *dp = dsa_to_port(chip->ds, port);
@@ -1711,6 +1736,8 @@ static int mv88e6xxx_port_commit_pvid(struct mv88e6xxx_chip *chip, int port)
 	return mv88e6xxx_port_drop_untagged(chip, port, drop_untagged);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mv88e6xxx_port_vlan_filtering(struct dsa_switch *ds, int port,
 					 bool vlan_filtering,
 					 struct netlink_ext_ack *extack)
@@ -1724,6 +1751,7 @@ static int mv88e6xxx_port_vlan_filtering(struct dsa_switch *ds, int port,
 		return -EOPNOTSUPP;
 
 	mv88e6xxx_reg_lock(chip);
+<<<<<<< HEAD
 
 	err = mv88e6xxx_port_set_8021q_mode(chip, port, mode);
 	if (err)
@@ -1734,6 +1762,9 @@ static int mv88e6xxx_port_vlan_filtering(struct dsa_switch *ds, int port,
 		goto unlock;
 
 unlock:
+=======
+	err = mv88e6xxx_port_set_8021q_mode(chip, port, mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mv88e6xxx_reg_unlock(chip);
 
 	return err;
@@ -1768,6 +1799,7 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
 	u16 fid;
 	int err;
 
+<<<<<<< HEAD
 	/* Ports have two private address databases: one for when the port is
 	 * standalone and one for when the port is under a bridge and the
 	 * 802.1Q mode is disabled. When the port is standalone, DSA wants its
@@ -1777,6 +1809,13 @@ static int mv88e6xxx_port_db_load_purge(struct mv88e6xxx_chip *chip, int port,
 	 */
 	if (vid == 0) {
 		fid = MV88E6XXX_FID_BRIDGED;
+=======
+	/* Null VLAN ID corresponds to the port private database */
+	if (vid == 0) {
+		err = mv88e6xxx_port_get_fid(chip, port, &fid);
+		if (err)
+			return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		err = mv88e6xxx_vtu_get(chip, vid, &vlan);
 		if (err)
@@ -2170,7 +2209,10 @@ static int mv88e6xxx_port_vlan_add(struct dsa_switch *ds, int port,
 	struct mv88e6xxx_chip *chip = ds->priv;
 	bool untagged = vlan->flags & BRIDGE_VLAN_INFO_UNTAGGED;
 	bool pvid = vlan->flags & BRIDGE_VLAN_INFO_PVID;
+<<<<<<< HEAD
 	struct mv88e6xxx_port *p = &chip->ports[port];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool warn;
 	u8 member;
 	int err;
@@ -2204,6 +2246,7 @@ static int mv88e6xxx_port_vlan_add(struct dsa_switch *ds, int port,
 	}
 
 	if (pvid) {
+<<<<<<< HEAD
 		p->bridge_pvid.vid = vlan->vid;
 		p->bridge_pvid.valid = true;
 
@@ -2219,6 +2262,15 @@ static int mv88e6xxx_port_vlan_add(struct dsa_switch *ds, int port,
 			goto out;
 	}
 
+=======
+		err = mv88e6xxx_port_set_pvid(chip, port, vlan->vid);
+		if (err) {
+			dev_err(ds->dev, "p%d: failed to set PVID %d\n",
+				port, vlan->vid);
+			goto out;
+		}
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	mv88e6xxx_reg_unlock(chip);
 
@@ -2232,7 +2284,11 @@ static int mv88e6xxx_port_vlan_leave(struct mv88e6xxx_chip *chip,
 	int i, err;
 
 	if (!vid)
+<<<<<<< HEAD
 		return 0;
+=======
+		return -EOPNOTSUPP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = mv88e6xxx_vtu_get(chip, vid, &vlan);
 	if (err)
@@ -2268,7 +2324,10 @@ static int mv88e6xxx_port_vlan_del(struct dsa_switch *ds, int port,
 				   const struct switchdev_obj_port_vlan *vlan)
 {
 	struct mv88e6xxx_chip *chip = ds->priv;
+<<<<<<< HEAD
 	struct mv88e6xxx_port *p = &chip->ports[port];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 	u16 pvid;
 
@@ -2286,9 +2345,13 @@ static int mv88e6xxx_port_vlan_del(struct dsa_switch *ds, int port,
 		goto unlock;
 
 	if (vlan->vid == pvid) {
+<<<<<<< HEAD
 		p->bridge_pvid.valid = false;
 
 		err = mv88e6xxx_port_commit_pvid(chip, port);
+=======
+		err = mv88e6xxx_port_set_pvid(chip, port, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			goto unlock;
 	}
@@ -2452,6 +2515,7 @@ static int mv88e6xxx_port_bridge_join(struct dsa_switch *ds, int port,
 	int err;
 
 	mv88e6xxx_reg_lock(chip);
+<<<<<<< HEAD
 
 	err = mv88e6xxx_bridge_map(chip, br);
 	if (err)
@@ -2462,6 +2526,9 @@ static int mv88e6xxx_port_bridge_join(struct dsa_switch *ds, int port,
 		goto unlock;
 
 unlock:
+=======
+	err = mv88e6xxx_bridge_map(chip, br);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mv88e6xxx_reg_unlock(chip);
 
 	return err;
@@ -2471,6 +2538,7 @@ static void mv88e6xxx_port_bridge_leave(struct dsa_switch *ds, int port,
 					struct net_device *br)
 {
 	struct mv88e6xxx_chip *chip = ds->priv;
+<<<<<<< HEAD
 	int err;
 
 	mv88e6xxx_reg_lock(chip);
@@ -2485,6 +2553,13 @@ static void mv88e6xxx_port_bridge_leave(struct dsa_switch *ds, int port,
 			"port %d failed to restore standalone pvid: %pe\n",
 			port, ERR_PTR(err));
 
+=======
+
+	mv88e6xxx_reg_lock(chip);
+	if (mv88e6xxx_bridge_map(chip, br) ||
+	    mv88e6xxx_port_vlan_map(chip, port))
+		dev_err(ds->dev, "failed to remap in-chip Port VLAN\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mv88e6xxx_reg_unlock(chip);
 }
 
@@ -2520,6 +2595,7 @@ static void mv88e6xxx_crosschip_bridge_leave(struct dsa_switch *ds,
 	mv88e6xxx_reg_unlock(chip);
 }
 
+<<<<<<< HEAD
 /* Treat the software bridge as a virtual single-port switch behind the
  * CPU and map in the PVT. First dst->last_switch elements are taken by
  * physical switches, so start from beyond that range.
@@ -2558,6 +2634,8 @@ static void mv88e6xxx_bridge_tx_fwd_unoffload(struct dsa_switch *ds, int port,
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mv88e6xxx_software_reset(struct mv88e6xxx_chip *chip)
 {
 	if (chip->info->ops->reset)
@@ -2911,8 +2989,13 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 	/* Port Control 2: don't force a good FCS, set the MTU size to
 	 * 10222 bytes, disable 802.1q tags checking, don't discard tagged or
+=======
+	/* Port Control 2: don't force a good FCS, set the maximum frame size to
+	 * 10240 bytes, disable 802.1q tags checking, don't discard tagged or
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * untagged frames on this port, do a destination address lookup on all
 	 * received packets as usual, disable ARP mirroring and don't send a
 	 * copy of all transmitted/received frames on this port to the CPU.
@@ -2930,6 +3013,7 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
 	if (err)
 		return err;
 
+<<<<<<< HEAD
 	/* Associate MV88E6XXX_VID_BRIDGED with MV88E6XXX_FID_BRIDGED in the
 	 * ATU by virtue of the fact that mv88e6xxx_atu_new() will pick it as
 	 * the first free FID after MV88E6XXX_FID_STANDALONE. This will be used
@@ -2946,6 +3030,10 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
 
 	if (chip->info->ops->port_set_jumbo_size) {
 		err = chip->info->ops->port_set_jumbo_size(chip, port, 10218);
+=======
+	if (chip->info->ops->port_set_jumbo_size) {
+		err = chip->info->ops->port_set_jumbo_size(chip, port, 10240);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 	}
@@ -3016,7 +3104,11 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
 	 * database, and allow bidirectional communication between the
 	 * CPU and DSA port(s), and the other ports.
 	 */
+<<<<<<< HEAD
 	err = mv88e6xxx_port_set_fid(chip, port, MV88E6XXX_FID_STANDALONE);
+=======
+	err = mv88e6xxx_port_set_fid(chip, port, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return err;
 
@@ -3035,10 +3127,17 @@ static int mv88e6xxx_get_max_mtu(struct dsa_switch *ds, int port)
 	struct mv88e6xxx_chip *chip = ds->priv;
 
 	if (chip->info->ops->port_set_jumbo_size)
+<<<<<<< HEAD
 		return 10240 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
 	else if (chip->info->ops->set_max_frame_size)
 		return 1632 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
 	return 1522 - VLAN_ETH_HLEN - EDSA_HLEN - ETH_FCS_LEN;
+=======
+		return 10240;
+	else if (chip->info->ops->set_max_frame_size)
+		return 1632;
+	return 1522;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
@@ -3046,9 +3145,12 @@ static int mv88e6xxx_change_mtu(struct dsa_switch *ds, int port, int new_mtu)
 	struct mv88e6xxx_chip *chip = ds->priv;
 	int ret = 0;
 
+<<<<<<< HEAD
 	if (dsa_is_dsa_port(ds, port) || dsa_is_cpu_port(ds, port))
 		new_mtu += EDSA_HLEN;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mv88e6xxx_reg_lock(chip);
 	if (chip->info->ops->port_set_jumbo_size)
 		ret = chip->info->ops->port_set_jumbo_size(chip, port, new_mtu);
@@ -3165,7 +3267,11 @@ static void mv88e6xxx_teardown(struct dsa_switch *ds)
 {
 	mv88e6xxx_teardown_devlink_params(ds);
 	dsa_devlink_resources_unregister(ds);
+<<<<<<< HEAD
 	mv88e6xxx_teardown_devlink_regions_global(ds);
+=======
+	mv88e6xxx_teardown_devlink_regions(ds);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int mv88e6xxx_setup(struct dsa_switch *ds)
@@ -3178,6 +3284,7 @@ static int mv88e6xxx_setup(struct dsa_switch *ds)
 	chip->ds = ds;
 	ds->slave_mii_bus = mv88e6xxx_default_mdio_bus(chip);
 
+<<<<<<< HEAD
 	/* Since virtual bridges are mapped in the PVT, the number we support
 	 * depends on the physical switch topology. We need to let DSA figure
 	 * that out and therefore we cannot set this at dsa_register_switch()
@@ -3187,6 +3294,8 @@ static int mv88e6xxx_setup(struct dsa_switch *ds)
 		ds->num_fwd_offloading_bridges = MV88E6XXX_MAX_PVT_SWITCHES -
 						 ds->dst->last_switch - 1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mv88e6xxx_reg_lock(chip);
 
 	if (chip->info->ops->setup_errata) {
@@ -3206,10 +3315,13 @@ static int mv88e6xxx_setup(struct dsa_switch *ds)
 		}
 	}
 
+<<<<<<< HEAD
 	err = mv88e6xxx_vtu_setup(chip);
 	if (err)
 		goto unlock;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Setup Switch Port Registers */
 	for (i = 0; i < mv88e6xxx_num_ports(chip); i++) {
 		if (dsa_is_unused_port(ds, i))
@@ -3239,6 +3351,13 @@ static int mv88e6xxx_setup(struct dsa_switch *ds)
 	if (err)
 		goto unlock;
 
+<<<<<<< HEAD
+=======
+	err = mv88e6xxx_vtu_setup(chip);
+	if (err)
+		goto unlock;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = mv88e6xxx_pvt_setup(chip);
 	if (err)
 		goto unlock;
@@ -3309,7 +3428,11 @@ unlock:
 	if (err)
 		goto out_resources;
 
+<<<<<<< HEAD
 	err = mv88e6xxx_setup_devlink_regions_global(ds);
+=======
+	err = mv88e6xxx_setup_devlink_regions(ds);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto out_params;
 
@@ -3323,6 +3446,7 @@ out_resources:
 	return err;
 }
 
+<<<<<<< HEAD
 static int mv88e6xxx_port_setup(struct dsa_switch *ds, int port)
 {
 	return mv88e6xxx_setup_devlink_regions_port(ds, port);
@@ -3333,6 +3457,8 @@ static void mv88e6xxx_port_teardown(struct dsa_switch *ds, int port)
 	mv88e6xxx_teardown_devlink_regions_port(ds, port);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* prod_id for switch families which do not have a PHY model number */
 static const u16 family_prod_id_table[] = {
 	[MV88E6XXX_FAMILY_6341] = MV88E6XXX_PORT_SWITCH_ID_PROD_6341,
@@ -3755,7 +3881,10 @@ static const struct mv88e6xxx_ops mv88e6141_ops = {
 	.port_set_speed_duplex = mv88e6341_port_set_speed_duplex,
 	.port_max_speed_mode = mv88e6341_port_max_speed_mode,
 	.port_tag_remap = mv88e6095_port_tag_remap,
+<<<<<<< HEAD
 	.port_set_policy = mv88e6352_port_set_policy,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.port_set_frame_mode = mv88e6351_port_set_frame_mode,
 	.port_set_ucast_flood = mv88e6352_port_set_ucast_flood,
 	.port_set_mcast_flood = mv88e6352_port_set_mcast_flood,
@@ -3769,7 +3898,11 @@ static const struct mv88e6xxx_ops mv88e6141_ops = {
 	.port_set_cmode = mv88e6341_port_set_cmode,
 	.port_setup_message_port = mv88e6xxx_setup_message_port,
 	.stats_snapshot = mv88e6390_g1_stats_snapshot,
+<<<<<<< HEAD
 	.stats_set_histogram = mv88e6390_g1_stats_set_histogram,
+=======
+	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.stats_get_sset_count = mv88e6320_stats_get_sset_count,
 	.stats_get_strings = mv88e6320_stats_get_strings,
 	.stats_get_stats = mv88e6390_stats_get_stats,
@@ -3779,9 +3912,12 @@ static const struct mv88e6xxx_ops mv88e6141_ops = {
 	.mgmt_rsvd2cpu =  mv88e6390_g1_mgmt_rsvd2cpu,
 	.pot_clear = mv88e6xxx_g2_pot_clear,
 	.reset = mv88e6352_g1_reset,
+<<<<<<< HEAD
 	.rmu_disable = mv88e6390_g1_rmu_disable,
 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
 	.atu_set_hash = mv88e6165_g1_atu_set_hash,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
 	.serdes_power = mv88e6390_serdes_power,
@@ -3795,11 +3931,14 @@ static const struct mv88e6xxx_ops mv88e6141_ops = {
 	.serdes_irq_enable = mv88e6390_serdes_irq_enable,
 	.serdes_irq_status = mv88e6390_serdes_irq_status,
 	.gpio_ops = &mv88e6352_gpio_ops,
+<<<<<<< HEAD
 	.serdes_get_sset_count = mv88e6390_serdes_get_sset_count,
 	.serdes_get_strings = mv88e6390_serdes_get_strings,
 	.serdes_get_stats = mv88e6390_serdes_get_stats,
 	.serdes_get_regs_len = mv88e6390_serdes_get_regs_len,
 	.serdes_get_regs = mv88e6390_serdes_get_regs,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.phylink_validate = mv88e6341_phylink_validate,
 };
 
@@ -3819,6 +3958,10 @@ static const struct mv88e6xxx_ops mv88e6161_ops = {
 	.port_set_ucast_flood = mv88e6352_port_set_ucast_flood,
 	.port_set_mcast_flood = mv88e6352_port_set_mcast_flood,
 	.port_set_ether_type = mv88e6351_port_set_ether_type,
+<<<<<<< HEAD
+=======
+	.port_set_jumbo_size = mv88e6165_port_set_jumbo_size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.port_egress_rate_limiting = mv88e6097_port_egress_rate_limiting,
 	.port_pause_limit = mv88e6097_port_pause_limit,
 	.port_disable_learn_limit = mv88e6xxx_port_disable_learn_limit,
@@ -3843,7 +3986,10 @@ static const struct mv88e6xxx_ops mv88e6161_ops = {
 	.avb_ops = &mv88e6165_avb_ops,
 	.ptp_ops = &mv88e6165_ptp_ops,
 	.phylink_validate = mv88e6185_phylink_validate,
+<<<<<<< HEAD
 	.set_max_frame_size = mv88e6185_g1_set_max_frame_size,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct mv88e6xxx_ops mv88e6165_ops = {
@@ -4564,7 +4710,10 @@ static const struct mv88e6xxx_ops mv88e6341_ops = {
 	.port_set_speed_duplex = mv88e6341_port_set_speed_duplex,
 	.port_max_speed_mode = mv88e6341_port_max_speed_mode,
 	.port_tag_remap = mv88e6095_port_tag_remap,
+<<<<<<< HEAD
 	.port_set_policy = mv88e6352_port_set_policy,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.port_set_frame_mode = mv88e6351_port_set_frame_mode,
 	.port_set_ucast_flood = mv88e6352_port_set_ucast_flood,
 	.port_set_mcast_flood = mv88e6352_port_set_mcast_flood,
@@ -4578,7 +4727,11 @@ static const struct mv88e6xxx_ops mv88e6341_ops = {
 	.port_set_cmode = mv88e6341_port_set_cmode,
 	.port_setup_message_port = mv88e6xxx_setup_message_port,
 	.stats_snapshot = mv88e6390_g1_stats_snapshot,
+<<<<<<< HEAD
 	.stats_set_histogram = mv88e6390_g1_stats_set_histogram,
+=======
+	.stats_set_histogram = mv88e6095_g1_stats_set_histogram,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.stats_get_sset_count = mv88e6320_stats_get_sset_count,
 	.stats_get_strings = mv88e6320_stats_get_strings,
 	.stats_get_stats = mv88e6390_stats_get_stats,
@@ -4588,9 +4741,12 @@ static const struct mv88e6xxx_ops mv88e6341_ops = {
 	.mgmt_rsvd2cpu =  mv88e6390_g1_mgmt_rsvd2cpu,
 	.pot_clear = mv88e6xxx_g2_pot_clear,
 	.reset = mv88e6352_g1_reset,
+<<<<<<< HEAD
 	.rmu_disable = mv88e6390_g1_rmu_disable,
 	.atu_get_hash = mv88e6165_g1_atu_get_hash,
 	.atu_set_hash = mv88e6165_g1_atu_set_hash,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.vtu_getnext = mv88e6352_g1_vtu_getnext,
 	.vtu_loadpurge = mv88e6352_g1_vtu_loadpurge,
 	.serdes_power = mv88e6390_serdes_power,
@@ -4606,11 +4762,14 @@ static const struct mv88e6xxx_ops mv88e6341_ops = {
 	.gpio_ops = &mv88e6352_gpio_ops,
 	.avb_ops = &mv88e6390_avb_ops,
 	.ptp_ops = &mv88e6352_ptp_ops,
+<<<<<<< HEAD
 	.serdes_get_sset_count = mv88e6390_serdes_get_sset_count,
 	.serdes_get_strings = mv88e6390_serdes_get_strings,
 	.serdes_get_stats = mv88e6390_serdes_get_stats,
 	.serdes_get_regs_len = mv88e6390_serdes_get_regs_len,
 	.serdes_get_regs = mv88e6390_serdes_get_regs,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.phylink_validate = mv88e6341_phylink_validate,
 };
 
@@ -5901,6 +6060,10 @@ static int mv88e6xxx_port_bridge_flags(struct dsa_switch *ds, int port,
 				       struct netlink_ext_ack *extack)
 {
 	struct mv88e6xxx_chip *chip = ds->priv;
+<<<<<<< HEAD
+=======
+	bool do_fast_age = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = -EOPNOTSUPP;
 
 	mv88e6xxx_reg_lock(chip);
@@ -5912,6 +6075,12 @@ static int mv88e6xxx_port_bridge_flags(struct dsa_switch *ds, int port,
 		err = mv88e6xxx_port_set_assoc_vector(chip, port, pav);
 		if (err)
 			goto out;
+<<<<<<< HEAD
+=======
+
+		if (!learning)
+			do_fast_age = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (flags.mask & BR_FLOOD) {
@@ -5943,6 +6112,29 @@ static int mv88e6xxx_port_bridge_flags(struct dsa_switch *ds, int port,
 out:
 	mv88e6xxx_reg_unlock(chip);
 
+<<<<<<< HEAD
+=======
+	if (do_fast_age)
+		mv88e6xxx_port_fast_age(ds, port);
+
+	return err;
+}
+
+static int mv88e6xxx_port_set_mrouter(struct dsa_switch *ds, int port,
+				      bool mrouter,
+				      struct netlink_ext_ack *extack)
+{
+	struct mv88e6xxx_chip *chip = ds->priv;
+	int err;
+
+	if (!chip->info->ops->port_set_mcast_flood)
+		return -EOPNOTSUPP;
+
+	mv88e6xxx_reg_lock(chip);
+	err = chip->info->ops->port_set_mcast_flood(chip, port, mrouter);
+	mv88e6xxx_reg_unlock(chip);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -6220,8 +6412,11 @@ static const struct dsa_switch_ops mv88e6xxx_switch_ops = {
 	.change_tag_protocol	= mv88e6xxx_change_tag_protocol,
 	.setup			= mv88e6xxx_setup,
 	.teardown		= mv88e6xxx_teardown,
+<<<<<<< HEAD
 	.port_setup		= mv88e6xxx_port_setup,
 	.port_teardown		= mv88e6xxx_port_teardown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.phylink_validate	= mv88e6xxx_validate,
 	.phylink_mac_link_state	= mv88e6xxx_serdes_pcs_get_state,
 	.phylink_mac_config	= mv88e6xxx_mac_config,
@@ -6249,6 +6444,10 @@ static const struct dsa_switch_ops mv88e6xxx_switch_ops = {
 	.port_bridge_leave	= mv88e6xxx_port_bridge_leave,
 	.port_pre_bridge_flags	= mv88e6xxx_port_pre_bridge_flags,
 	.port_bridge_flags	= mv88e6xxx_port_bridge_flags,
+<<<<<<< HEAD
+=======
+	.port_set_mrouter	= mv88e6xxx_port_set_mrouter,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.port_stp_state_set	= mv88e6xxx_port_stp_state_set,
 	.port_fast_age		= mv88e6xxx_port_fast_age,
 	.port_vlan_filtering	= mv88e6xxx_port_vlan_filtering,
@@ -6277,8 +6476,11 @@ static const struct dsa_switch_ops mv88e6xxx_switch_ops = {
 	.crosschip_lag_change	= mv88e6xxx_crosschip_lag_change,
 	.crosschip_lag_join	= mv88e6xxx_crosschip_lag_join,
 	.crosschip_lag_leave	= mv88e6xxx_crosschip_lag_leave,
+<<<<<<< HEAD
 	.port_bridge_tx_fwd_offload = mv88e6xxx_bridge_tx_fwd_offload,
 	.port_bridge_tx_fwd_unoffload = mv88e6xxx_bridge_tx_fwd_unoffload,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int mv88e6xxx_register_switch(struct mv88e6xxx_chip *chip)
@@ -6495,12 +6697,16 @@ out:
 static void mv88e6xxx_remove(struct mdio_device *mdiodev)
 {
 	struct dsa_switch *ds = dev_get_drvdata(&mdiodev->dev);
+<<<<<<< HEAD
 	struct mv88e6xxx_chip *chip;
 
 	if (!ds)
 		return;
 
 	chip = ds->priv;
+=======
+	struct mv88e6xxx_chip *chip = ds->priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (chip->info->ptp_support) {
 		mv88e6xxx_hwtstamp_free(chip);
@@ -6521,6 +6727,7 @@ static void mv88e6xxx_remove(struct mdio_device *mdiodev)
 		mv88e6xxx_g1_irq_free(chip);
 	else
 		mv88e6xxx_irq_poll_free(chip);
+<<<<<<< HEAD
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
 }
@@ -6535,6 +6742,8 @@ static void mv88e6xxx_shutdown(struct mdio_device *mdiodev)
 	dsa_switch_shutdown(ds);
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct of_device_id mv88e6xxx_of_match[] = {
@@ -6558,7 +6767,10 @@ MODULE_DEVICE_TABLE(of, mv88e6xxx_of_match);
 static struct mdio_driver mv88e6xxx_driver = {
 	.probe	= mv88e6xxx_probe,
 	.remove = mv88e6xxx_remove,
+<<<<<<< HEAD
 	.shutdown = mv88e6xxx_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.mdiodrv.driver = {
 		.name = "mv88e6085",
 		.of_match_table = mv88e6xxx_of_match,

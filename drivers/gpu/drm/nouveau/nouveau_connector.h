@@ -46,6 +46,7 @@ struct nvkm_i2c_port;
 struct dcb_output;
 
 #ifdef CONFIG_DRM_NOUVEAU_BACKLIGHT
+<<<<<<< HEAD
 struct nouveau_backlight {
 	struct backlight_device *dev;
 
@@ -54,6 +55,9 @@ struct nouveau_backlight {
 
 	int id;
 };
+=======
+struct nouveau_backlight;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #define nouveau_conn_atom(p)                                                   \

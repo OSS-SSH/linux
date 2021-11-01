@@ -10,7 +10,10 @@
 #include <sys/utsname.h>
 #include <stdlib.h>
 #include <string.h>
+<<<<<<< HEAD
 #include "strbuf.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct perf_env perf_env;
 
@@ -187,12 +190,18 @@ void perf_env__exit(struct perf_env *env)
 	zfree(&env->cpuid);
 	zfree(&env->cmdline);
 	zfree(&env->cmdline_argv);
+<<<<<<< HEAD
 	zfree(&env->sibling_dies);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	zfree(&env->sibling_cores);
 	zfree(&env->sibling_threads);
 	zfree(&env->pmu_mappings);
 	zfree(&env->cpu);
+<<<<<<< HEAD
 	zfree(&env->cpu_pmu_caps);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	zfree(&env->numa_map);
 
 	for (i = 0; i < env->nr_numa_nodes; i++)
@@ -220,13 +229,18 @@ void perf_env__exit(struct perf_env *env)
 	zfree(&env->hybrid_cpc_nodes);
 }
 
+<<<<<<< HEAD
 void perf_env__init(struct perf_env *env)
+=======
+void perf_env__init(struct perf_env *env __maybe_unused)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 #ifdef HAVE_LIBBPF_SUPPORT
 	env->bpf_progs.infos = RB_ROOT;
 	env->bpf_progs.btfs = RB_ROOT;
 	init_rwsem(&env->bpf_progs.lock);
 #endif
+<<<<<<< HEAD
 	env->kernel_is_64_bit = -1;
 }
 
@@ -249,6 +263,8 @@ int perf_env__kernel_is_64_bit(struct perf_env *env)
 		perf_env__init_kernel_mode(env);
 
 	return env->kernel_is_64_bit;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int perf_env__set_cmdline(struct perf_env *env, int argc, const char *argv[])
@@ -307,6 +323,7 @@ int perf_env__read_cpu_topology_map(struct perf_env *env)
 	return 0;
 }
 
+<<<<<<< HEAD
 int perf_env__read_pmu_mappings(struct perf_env *env)
 {
 	struct perf_pmu *pmu = NULL;
@@ -346,6 +363,8 @@ error:
 	return -1;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int perf_env__read_cpuid(struct perf_env *env)
 {
 	char cpuid[128];
@@ -411,7 +430,11 @@ static const char *normalize_arch(char *arch)
 		return "x86";
 	if (!strcmp(arch, "sun4u") || !strncmp(arch, "sparc", 5))
 		return "sparc";
+<<<<<<< HEAD
 	if (!strncmp(arch, "aarch64", 7) || !strncmp(arch, "arm64", 5))
+=======
+	if (!strcmp(arch, "aarch64") || !strcmp(arch, "arm64"))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return "arm64";
 	if (!strncmp(arch, "arm", 3) || !strcmp(arch, "sa110"))
 		return "arm";
@@ -444,6 +467,7 @@ const char *perf_env__arch(struct perf_env *env)
 	return normalize_arch(arch_name);
 }
 
+<<<<<<< HEAD
 const char *perf_env__cpuid(struct perf_env *env)
 {
 	int status;
@@ -482,6 +506,8 @@ const char *perf_env__pmu_mappings(struct perf_env *env)
 
 	return env->pmu_mappings;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int perf_env__numa_node(struct perf_env *env, int cpu)
 {

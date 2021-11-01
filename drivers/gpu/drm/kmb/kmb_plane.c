@@ -94,10 +94,16 @@ static int kmb_plane_atomic_check(struct drm_plane *plane,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (new_plane_state->crtc_w > KMB_FB_MAX_WIDTH ||
 	    new_plane_state->crtc_h > KMB_FB_MAX_HEIGHT ||
 	    new_plane_state->crtc_w < KMB_FB_MIN_WIDTH ||
 	    new_plane_state->crtc_h < KMB_FB_MIN_HEIGHT)
+=======
+	if (new_plane_state->crtc_w > KMB_MAX_WIDTH || new_plane_state->crtc_h > KMB_MAX_HEIGHT)
+		return -EINVAL;
+	if (new_plane_state->crtc_w < KMB_MIN_WIDTH || new_plane_state->crtc_h < KMB_MIN_HEIGHT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 	can_position = (plane->type == DRM_PLANE_TYPE_OVERLAY);
 	crtc_state =
@@ -278,6 +284,7 @@ static void config_csc(struct kmb_drm_private *kmb, int plane_id)
 	kmb_write_lcd(kmb, LCD_LAYERn_CSC_OFF3(plane_id), csc_coef_lcd[11]);
 }
 
+<<<<<<< HEAD
 static void kmb_plane_set_alpha(struct kmb_drm_private *kmb,
 				const struct drm_plane_state *state,
 				unsigned char plane_id,
@@ -316,6 +323,8 @@ static void kmb_plane_set_alpha(struct kmb_drm_private *kmb,
 	kmb_write_lcd(kmb, LCD_LAYERn_ALPHA(plane_id), plane_alpha);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void kmb_plane_atomic_update(struct drm_plane *plane,
 				    struct drm_atomic_state *state)
 {
@@ -342,12 +351,20 @@ static void kmb_plane_atomic_update(struct drm_plane *plane,
 	fb = new_plane_state->fb;
 	if (!fb)
 		return;
+<<<<<<< HEAD
 
 	num_planes = fb->format->num_planes;
 	kmb_plane = to_kmb_plane(plane);
 
 	kmb = to_kmb(plane->dev);
 	plane_id = kmb_plane->id;
+=======
+	num_planes = fb->format->num_planes;
+	kmb_plane = to_kmb_plane(plane);
+	plane_id = kmb_plane->id;
+
+	kmb = to_kmb(plane->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	spin_lock_irq(&kmb->irq_lock);
 	if (kmb->kmb_under_flow || kmb->kmb_flush_done) {
@@ -440,6 +457,7 @@ static void kmb_plane_atomic_update(struct drm_plane *plane,
 		config_csc(kmb, plane_id);
 	}
 
+<<<<<<< HEAD
 	kmb_plane_set_alpha(kmb, plane->state, plane_id, &val);
 
 	kmb_write_lcd(kmb, LCD_LAYERn_CFG(plane_id), val);
@@ -466,6 +484,22 @@ static void kmb_plane_atomic_update(struct drm_plane *plane,
 		break;
 	case LAYER_3:
 		ctrl |= LCD_CTRL_GL2_ENABLE;
+=======
+	kmb_write_lcd(kmb, LCD_LAYERn_CFG(plane_id), val);
+
+	switch (plane_id) {
+	case LAYER_0:
+		ctrl = LCD_CTRL_VL1_ENABLE;
+		break;
+	case LAYER_1:
+		ctrl = LCD_CTRL_VL2_ENABLE;
+		break;
+	case LAYER_2:
+		ctrl = LCD_CTRL_GL1_ENABLE;
+		break;
+	case LAYER_3:
+		ctrl = LCD_CTRL_GL2_ENABLE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	}
 
@@ -477,6 +511,7 @@ static void kmb_plane_atomic_update(struct drm_plane *plane,
 	 */
 	ctrl |= LCD_CTRL_VHSYNC_IDLE_LVL;
 
+<<<<<<< HEAD
 	kmb_write_lcd(kmb, LCD_CONTROL, ctrl);
 
 	/* Enable pipeline AXI read transactions for the DMA
@@ -487,6 +522,12 @@ static void kmb_plane_atomic_update(struct drm_plane *plane,
 
 	/* FIXME no doc on how to set output format, these values are taken
 	 * from the Myriadx tests
+=======
+	kmb_set_bitmask_lcd(kmb, LCD_CONTROL, ctrl);
+
+	/* FIXME no doc on how to set output format,these values are
+	 * taken from the Myriadx tests
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 	out_format |= LCD_OUTF_FORMAT_RGB888;
 
@@ -542,9 +583,12 @@ struct kmb_plane *kmb_plane_init(struct drm_device *drm)
 	enum drm_plane_type plane_type;
 	const u32 *plane_formats;
 	int num_plane_formats;
+<<<<<<< HEAD
 	unsigned int blend_caps = BIT(DRM_MODE_BLEND_PIXEL_NONE) |
 				  BIT(DRM_MODE_BLEND_PREMULTI)   |
 				  BIT(DRM_MODE_BLEND_COVERAGE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < KMB_MAX_PLANES; i++) {
 		plane = drmm_kzalloc(drm, sizeof(*plane), GFP_KERNEL);
@@ -576,6 +620,7 @@ struct kmb_plane *kmb_plane_init(struct drm_device *drm)
 		drm_dbg(drm, "%s : %d i=%d type=%d",
 			__func__, __LINE__,
 			  i, plane_type);
+<<<<<<< HEAD
 		drm_plane_create_alpha_property(&plane->base_plane);
 
 		drm_plane_create_blend_mode_property(&plane->base_plane,
@@ -586,6 +631,10 @@ struct kmb_plane *kmb_plane_init(struct drm_device *drm)
 		drm_plane_helper_add(&plane->base_plane,
 				     &kmb_plane_helper_funcs);
 
+=======
+		drm_plane_helper_add(&plane->base_plane,
+				     &kmb_plane_helper_funcs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (plane_type == DRM_PLANE_TYPE_PRIMARY) {
 			primary = plane;
 			kmb->plane = plane;
@@ -595,11 +644,14 @@ struct kmb_plane *kmb_plane_init(struct drm_device *drm)
 		plane->id = i;
 	}
 
+<<<<<<< HEAD
 	/* Disable pipeline AXI read transactions for the DMA
 	 * prior to setting graphics layers
 	 */
 	kmb_clr_bitmask_lcd(kmb, LCD_CONTROL, LCD_CTRL_PIPELINE_DMA);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return primary;
 cleanup:
 	drmm_kfree(drm, plane);

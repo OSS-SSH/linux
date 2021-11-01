@@ -64,6 +64,7 @@ properties:
       Indicates if the DSI controller is driving a panel which needs
       2 DSI links.
 
+<<<<<<< HEAD
   assigned-clocks:
     minItems: 2
     maxItems: 2
@@ -76,6 +77,8 @@ properties:
     description: |
       The Byte clock and Pixel clock PLL outputs provided by a DSI PHY block.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   power-domains:
     maxItems: 1
 
@@ -89,8 +92,12 @@ properties:
 
     properties:
       port@0:
+<<<<<<< HEAD
         $ref: "/schemas/graph.yaml#/$defs/port-base"
         unevaluatedProperties: false
+=======
+        $ref: "/schemas/graph.yaml#/properties/port"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         description: |
           Input endpoints of the controller.
         properties:
@@ -105,8 +112,12 @@ properties:
                   enum: [ 0, 1, 2, 3 ]
 
       port@1:
+<<<<<<< HEAD
         $ref: "/schemas/graph.yaml#/$defs/port-base"
         unevaluatedProperties: false
+=======
+        $ref: "/schemas/graph.yaml#/properties/port"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         description: |
           Output endpoints of the controller.
         properties:
@@ -133,8 +144,11 @@ required:
   - clock-names
   - phys
   - phy-names
+<<<<<<< HEAD
   - assigned-clocks
   - assigned-clock-parents
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   - power-domains
   - operating-points-v2
   - ports
@@ -175,9 +189,12 @@ examples:
            phys = <&dsi0_phy>;
            phy-names = "dsi";
 
+<<<<<<< HEAD
            assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>, <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
            assigned-clock-parents = <&dsi_phy 0>, <&dsi_phy 1>;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
            power-domains = <&rpmhpd SC7180_CX>;
            operating-points-v2 = <&dsi_opp_table>;
 

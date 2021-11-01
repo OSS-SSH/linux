@@ -38,5 +38,15 @@ struct device *ep93xx_init_devices(void);
 extern void ep93xx_timer_init(void);
 
 void ep93xx_restart(enum reboot_mode, const char *);
+<<<<<<< HEAD
+=======
+void ep93xx_init_late(void);
+
+#ifdef CONFIG_CRUNCH
+int crunch_init(void);
+#else
+static inline int crunch_init(void) { return 0; }
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

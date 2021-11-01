@@ -43,6 +43,7 @@ enum nfnl_hook_chain_info_attributes {
 };
 #define NFNLA_HOOK_INFO_MAX (__NFNLA_HOOK_INFO_MAX - 1)
 
+<<<<<<< HEAD
 enum nfnl_hook_chain_desc_attributes {
 	NFNLA_CHAIN_UNSPEC,
 	NFNLA_CHAIN_TABLE,
@@ -52,6 +53,8 @@ enum nfnl_hook_chain_desc_attributes {
 };
 #define NFNLA_CHAIN_MAX (__NFNLA_CHAIN_MAX - 1)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * enum nfnl_hook_chaintype - chain type
  *

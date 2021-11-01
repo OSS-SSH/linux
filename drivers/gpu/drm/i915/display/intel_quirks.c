@@ -53,12 +53,15 @@ static void quirk_increase_ddi_disabled_time(struct drm_i915_private *i915)
 	drm_info(&i915->drm, "Applying Increase DDI Disabled quirk\n");
 }
 
+<<<<<<< HEAD
 static void quirk_no_pps_backlight_power_hook(struct drm_i915_private *i915)
 {
 	i915->quirks |= QUIRK_NO_PPS_BACKLIGHT_POWER_HOOK;
 	drm_info(&i915->drm, "Applying no pps backlight power quirk\n");
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct intel_quirk {
 	int device;
 	int subsystem_vendor;
@@ -78,12 +81,15 @@ static int intel_dmi_reverse_brightness(const struct dmi_system_id *id)
 	return 1;
 }
 
+<<<<<<< HEAD
 static int intel_dmi_no_pps_backlight(const struct dmi_system_id *id)
 {
 	DRM_INFO("No pps backlight support on %s\n", id->ident);
 	return 1;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct intel_dmi_quirk intel_dmi_quirks[] = {
 	{
 		.dmi_id_list = &(const struct dmi_system_id[]) {
@@ -108,6 +114,7 @@ static const struct intel_dmi_quirk intel_dmi_quirks[] = {
 		},
 		.hook = quirk_invert_brightness,
 	},
+<<<<<<< HEAD
 	{
 		.dmi_id_list = &(const struct dmi_system_id[]) {
 			{
@@ -130,6 +137,8 @@ static const struct intel_dmi_quirk intel_dmi_quirks[] = {
 		},
 		.hook = quirk_no_pps_backlight_power_hook,
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct intel_quirk intel_quirks[] = {

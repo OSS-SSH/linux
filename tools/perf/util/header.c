@@ -278,7 +278,11 @@ static int do_read_bitmap(struct feat_fd *ff, unsigned long **pset, u64 *psize)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	set = bitmap_zalloc(size);
+=======
+	set = bitmap_alloc(size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!set)
 		return -ENOMEM;
 
@@ -1284,7 +1288,11 @@ static int memory_node__read(struct memory_node *n, unsigned long idx)
 
 	dir = opendir(path);
 	if (!dir) {
+<<<<<<< HEAD
 		pr_warning("failed: can't open memory sysfs data\n");
+=======
+		pr_warning("failed: cant' open memory sysfs data\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -1;
 	}
 
@@ -1294,7 +1302,11 @@ static int memory_node__read(struct memory_node *n, unsigned long idx)
 
 	size++;
 
+<<<<<<< HEAD
 	n->set = bitmap_zalloc(size);
+=======
+	n->set = bitmap_alloc(size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!n->set) {
 		closedir(dir);
 		return -ENOMEM;
@@ -3865,10 +3877,17 @@ static int perf_file_section__process(struct perf_file_section *section,
 static int perf_file_header__read_pipe(struct perf_pipe_file_header *header,
 				       struct perf_header *ph,
 				       struct perf_data* data,
+<<<<<<< HEAD
 				       bool repipe, int repipe_fd)
 {
 	struct feat_fd ff = {
 		.fd = repipe_fd,
+=======
+				       bool repipe)
+{
+	struct feat_fd ff = {
+		.fd = STDOUT_FILENO,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.ph = ph,
 	};
 	ssize_t ret;
@@ -3891,13 +3910,21 @@ static int perf_file_header__read_pipe(struct perf_pipe_file_header *header,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int perf_header__read_pipe(struct perf_session *session, int repipe_fd)
+=======
+static int perf_header__read_pipe(struct perf_session *session)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct perf_header *header = &session->header;
 	struct perf_pipe_file_header f_header;
 
 	if (perf_file_header__read_pipe(&f_header, header, session->data,
+<<<<<<< HEAD
 					session->repipe, repipe_fd) < 0) {
+=======
+					session->repipe) < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pr_debug("incompatible file format\n");
 		return -EINVAL;
 	}
@@ -3995,7 +4022,11 @@ static int evlist__prepare_tracepoint_events(struct evlist *evlist, struct tep_h
 	return 0;
 }
 
+<<<<<<< HEAD
 int perf_session__read_header(struct perf_session *session, int repipe_fd)
+=======
+int perf_session__read_header(struct perf_session *session)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct perf_data *data = session->data;
 	struct perf_header *header = &session->header;
@@ -4016,7 +4047,11 @@ int perf_session__read_header(struct perf_session *session, int repipe_fd)
 	 * We can read 'pipe' data event from regular file,
 	 * check for the pipe header regardless of source.
 	 */
+<<<<<<< HEAD
 	err = perf_header__read_pipe(session, repipe_fd);
+=======
+	err = perf_header__read_pipe(session);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!err || perf_data__is_pipe(data)) {
 		data->is_pipe = true;
 		return err;

@@ -84,7 +84,11 @@ struct rcar_gen3_thermal_tsc {
 	struct thermal_zone_device *zone;
 	struct equation_coefs coef;
 	int tj_t;
+<<<<<<< HEAD
 	unsigned int id; /* thermal channel id */
+=======
+	int id; /* thermal channel id */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct rcar_gen3_thermal_priv {
@@ -190,6 +194,7 @@ static int rcar_gen3_thermal_get_temp(void *devdata, int *temp)
 	return 0;
 }
 
+<<<<<<< HEAD
 static int rcar_gen3_thermal_mcelsius_to_temp(struct rcar_gen3_thermal_tsc *tsc,
 					      int mcelsius)
 {
@@ -248,6 +253,12 @@ static irqreturn_t rcar_gen3_thermal_irq(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
+=======
+static const struct thermal_zone_of_device_ops rcar_gen3_tz_of_ops = {
+	.get_temp	= rcar_gen3_thermal_get_temp,
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct soc_device_attribute r8a7795es1[] = {
 	{ .soc_id = "r8a7795", .revision = "ES1.*" },
 	{ /* sentinel */ }
@@ -264,9 +275,12 @@ static void rcar_gen3_thermal_init_r8a7795es1(struct rcar_gen3_thermal_tsc *tsc)
 
 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQCTL, 0x3F);
 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQMSK, 0);
+<<<<<<< HEAD
 	if (tsc->zone->ops->set_trips)
 		rcar_gen3_thermal_write(tsc, REG_GEN3_IRQEN,
 					IRQ_TEMPD1 | IRQ_TEMP2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rcar_gen3_thermal_write(tsc, REG_GEN3_CTSR,
 				CTSR_PONM | CTSR_AOUT | CTSR_THBGR | CTSR_VMEN);
@@ -292,9 +306,12 @@ static void rcar_gen3_thermal_init(struct rcar_gen3_thermal_tsc *tsc)
 
 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQCTL, 0);
 	rcar_gen3_thermal_write(tsc, REG_GEN3_IRQMSK, 0);
+<<<<<<< HEAD
 	if (tsc->zone->ops->set_trips)
 		rcar_gen3_thermal_write(tsc, REG_GEN3_IRQEN,
 					IRQ_TEMPD1 | IRQ_TEMP2);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	reg_val = rcar_gen3_thermal_read(tsc, REG_GEN3_THCTR);
 	reg_val |= THCTR_THSST;
@@ -363,6 +380,7 @@ static void rcar_gen3_hwmon_action(void *data)
 	thermal_remove_hwmon_sysfs(zone);
 }
 
+<<<<<<< HEAD
 static int rcar_gen3_thermal_request_irqs(struct rcar_gen3_thermal_priv *priv,
 					  struct platform_device *pdev)
 {
@@ -391,6 +409,8 @@ static int rcar_gen3_thermal_request_irqs(struct rcar_gen3_thermal_priv *priv,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int rcar_gen3_thermal_probe(struct platform_device *pdev)
 {
 	struct rcar_gen3_thermal_priv *priv;
@@ -398,8 +418,12 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
 	const int *ths_tj_1 = of_device_get_match_data(dev);
 	struct resource *res;
 	struct thermal_zone_device *zone;
+<<<<<<< HEAD
 	unsigned int i;
 	int ret;
+=======
+	int ret, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* default values if FUSEs are missing */
 	/* TODO: Read values from hardware on supported platforms */
@@ -415,9 +439,12 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
 
 	platform_set_drvdata(pdev, priv);
 
+<<<<<<< HEAD
 	if (rcar_gen3_thermal_request_irqs(priv, pdev))
 		rcar_gen3_tz_of_ops.set_trips = NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pm_runtime_enable(dev);
 	pm_runtime_get_sync(dev);
 
@@ -443,6 +470,12 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
 
 		priv->tscs[i] = tsc;
 
+<<<<<<< HEAD
+=======
+		priv->thermal_init(tsc);
+		rcar_gen3_thermal_calc_coefs(tsc, ptat, thcodes[i], *ths_tj_1);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		zone = devm_thermal_zone_of_sensor_register(dev, i, tsc,
 							    &rcar_gen3_tz_of_ops);
 		if (IS_ERR(zone)) {
@@ -452,9 +485,12 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
 		}
 		tsc->zone = zone;
 
+<<<<<<< HEAD
 		priv->thermal_init(tsc);
 		rcar_gen3_thermal_calc_coefs(tsc, ptat, thcodes[i], *ths_tj_1);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tsc->zone->tzp->no_hwmon = false;
 		ret = thermal_add_hwmon_sysfs(tsc->zone);
 		if (ret)
@@ -468,7 +504,11 @@ static int rcar_gen3_thermal_probe(struct platform_device *pdev)
 		if (ret < 0)
 			goto error_unregister;
 
+<<<<<<< HEAD
 		dev_info(dev, "TSC%u: Loaded %d trip points\n", i, ret);
+=======
+		dev_info(dev, "TSC%d: Loaded %d trip points\n", i, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	priv->num_tscs = i;
@@ -493,12 +533,17 @@ static int __maybe_unused rcar_gen3_thermal_resume(struct device *dev)
 
 	for (i = 0; i < priv->num_tscs; i++) {
 		struct rcar_gen3_thermal_tsc *tsc = priv->tscs[i];
+<<<<<<< HEAD
 		struct thermal_zone_device *zone = tsc->zone;
 
 		priv->thermal_init(tsc);
 		if (zone->ops->set_trips)
 			rcar_gen3_thermal_set_trips(tsc, zone->prev_low_trip,
 						    zone->prev_high_trip);
+=======
+
+		priv->thermal_init(tsc);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;

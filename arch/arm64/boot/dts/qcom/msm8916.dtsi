@@ -489,6 +489,7 @@
 				 <&rpmcc RPM_SMD_SNOC_A_CLK>;
 		};
 
+<<<<<<< HEAD
 		stm: stm@802000 {
 			compatible = "arm,coresight-stm", "arm,primecell";
 			reg = <0x00802000 0x1000>,
@@ -509,6 +510,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* System CTIs */
 		/* CTI 0 - TMC connections */
 		cti0: cti@810000 {
@@ -582,6 +585,7 @@
 						remote-endpoint = <&funnel1_out>;
 					};
 				};
+<<<<<<< HEAD
 
 				port@7 {
 					reg = <7>;
@@ -589,6 +593,8 @@
 						remote-endpoint = <&stm_out>;
 					};
 				};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			};
 
 			out-ports {

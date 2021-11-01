@@ -58,10 +58,13 @@ enum binderfs_stats_mode {
 	binderfs_stats_mode_global,
 };
 
+<<<<<<< HEAD
 struct binder_features {
 	bool oneway_spam_detection;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct constant_table binderfs_param_stats[] = {
 	{ "global", binderfs_stats_mode_global },
 	{}
@@ -73,10 +76,13 @@ static const struct fs_parameter_spec binderfs_fs_parameters[] = {
 	{}
 };
 
+<<<<<<< HEAD
 static struct binder_features binder_features = {
 	.oneway_spam_detection = true,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct binderfs_info *BINDERFS_SB(const struct super_block *sb)
 {
 	return sb->s_fs_info;
@@ -591,6 +597,7 @@ out:
 	return dentry;
 }
 
+<<<<<<< HEAD
 static int binder_features_show(struct seq_file *m, void *unused)
 {
 	bool *feature = m->private;
@@ -618,6 +625,8 @@ static int init_binder_features(struct super_block *sb)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int init_binder_logs(struct super_block *sb)
 {
 	struct dentry *binder_logs_root_dir, *dentry, *proc_log_dir;
@@ -758,10 +767,13 @@ static int binderfs_fill_super(struct super_block *sb, struct fs_context *fc)
 			name++;
 	}
 
+<<<<<<< HEAD
 	ret = init_binder_features(sb);
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (info->mount_opts.stats_mode == binderfs_stats_mode_global)
 		return init_binder_logs(sb);
 

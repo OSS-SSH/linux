@@ -124,9 +124,15 @@
 #define DMAR_MTRR_PHYSMASK8_REG 0x208
 #define DMAR_MTRR_PHYSBASE9_REG 0x210
 #define DMAR_MTRR_PHYSMASK9_REG 0x218
+<<<<<<< HEAD
 #define DMAR_VCCAP_REG		0xe30 /* Virtual command capability register */
 #define DMAR_VCMD_REG		0xe00 /* Virtual command register */
 #define DMAR_VCRSP_REG		0xe10 /* Virtual command response register */
+=======
+#define DMAR_VCCAP_REG		0xe00 /* Virtual command capability register */
+#define DMAR_VCMD_REG		0xe10 /* Virtual command register */
+#define DMAR_VCRSP_REG		0xe20 /* Virtual command response register */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define DMAR_IQER_REG_IQEI(reg)		FIELD_GET(GENMASK_ULL(3, 0), reg)
 #define DMAR_IQER_REG_ITESID(reg)	FIELD_GET(GENMASK_ULL(47, 32), reg)

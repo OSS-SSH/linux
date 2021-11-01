@@ -21,6 +21,7 @@
 		device_type = "memory";
 		reg = <0x80000000 0x40000000>;
 	};
+<<<<<<< HEAD
 
 	reg_brcm: regulator-brcm {
 		compatible = "regulator-fixed";
@@ -42,6 +43,8 @@
 		clocks = <&clks IMX7D_CLKO2_ROOT_DIV>;
 		clock-names = "ext_clock";
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &clks {
@@ -77,6 +80,7 @@
 	status = "okay";
 };
 
+<<<<<<< HEAD
 &usdhc2 {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -98,6 +102,8 @@
 	};
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &usdhc3 {
 	pinctrl-names = "default", "state_100mhz", "state_200mhz", "sleep";
 	pinctrl-0 = <&pinctrl_usdhc3>;
@@ -118,6 +124,7 @@
 };
 
 &iomuxc {
+<<<<<<< HEAD
 	pinctrl_brcm_reg: brcmreggrp {
 		fsl,pins = <
 			/* WIFI_PWR_EN */
@@ -125,6 +132,8 @@
 		>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pinctrl_uart1: uart1grp {
 		fsl,pins = <
 			MX7D_PAD_UART1_TX_DATA__UART1_DCE_TX	0x79
@@ -139,6 +148,7 @@
 		>;
 	};
 
+<<<<<<< HEAD
 	pinctrl_usdhc2: usdhc2grp {
 		fsl,pins = <
 			MX7D_PAD_SD2_CMD__SD2_CMD		0x59
@@ -172,6 +182,8 @@
 		>;
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pinctrl_usdhc3: usdhc3grp {
 		fsl,pins = <
 			MX7D_PAD_SD3_CMD__SD3_CMD		0x59
@@ -225,6 +237,7 @@
 			MX7D_PAD_ENET1_COL__WDOG1_WDOG_ANY	0x74
 		>;
 	};
+<<<<<<< HEAD
 
 	pinctrl_wifi: wifigrp {
 		fsl,pins = <
@@ -234,4 +247,6 @@
 			MX7D_PAD_SD1_WP__CCM_CLKO2		0x00000014
 		>;
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

@@ -315,9 +315,12 @@ Block Devices
 .. kernel-doc:: block/genhd.c
    :export:
 
+<<<<<<< HEAD
 .. kernel-doc:: block/bdev.c
    :export:
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Char devices
 ============
 

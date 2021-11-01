@@ -4,6 +4,7 @@
 # Intel x86 Platform-Specific Drivers
 #
 
+<<<<<<< HEAD
 obj-$(CONFIG_INTEL_ATOMISP2_PDX86)	+= atomisp2/
 obj-$(CONFIG_INTEL_SAR_INT1092)		+= int1092/
 obj-$(CONFIG_INTEL_CHT_INT33FE)		+= int33fe/
@@ -45,3 +46,7 @@ intel_turbo_max_3-y			:= turbo_max_3.o
 obj-$(CONFIG_INTEL_TURBO_MAX_3)		+= intel_turbo_max_3.o
 intel-uncore-frequency-y		:= uncore-frequency.o
 obj-$(CONFIG_INTEL_UNCORE_FREQ_CONTROL)	+= intel-uncore-frequency.o
+=======
+obj-$(CONFIG_INTEL_CHT_INT33FE)		+= int33fe/
+obj-$(CONFIG_INTEL_SKL_INT3472)		+= int3472/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

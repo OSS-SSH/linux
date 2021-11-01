@@ -143,7 +143,11 @@ static inline struct backing_dev_info *inode_to_bdi(struct inode *inode)
 	sb = inode->i_sb;
 #ifdef CONFIG_BLOCK
 	if (sb_is_blkdev_sb(sb))
+<<<<<<< HEAD
 		return I_BDEV(inode)->bd_disk->bdi;
+=======
+		return I_BDEV(inode)->bd_bdi;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	return sb->s_bdi;
 }
@@ -288,6 +292,7 @@ static inline struct bdi_writeback *inode_to_wb(const struct inode *inode)
 	return inode->i_wb;
 }
 
+<<<<<<< HEAD
 static inline struct bdi_writeback *inode_to_wb_wbc(
 				struct inode *inode,
 				struct writeback_control *wbc)
@@ -299,6 +304,8 @@ static inline struct bdi_writeback *inode_to_wb_wbc(
 	return wbc->wb ? wbc->wb : &inode_to_bdi(inode)->wb;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * unlocked_inode_to_wb_begin - begin unlocked inode wb access transaction
  * @inode: target inode
@@ -377,6 +384,7 @@ static inline struct bdi_writeback *inode_to_wb(struct inode *inode)
 	return &inode_to_bdi(inode)->wb;
 }
 
+<<<<<<< HEAD
 static inline struct bdi_writeback *inode_to_wb_wbc(
 				struct inode *inode,
 				struct writeback_control *wbc)
@@ -385,6 +393,8 @@ static inline struct bdi_writeback *inode_to_wb_wbc(
 }
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline struct bdi_writeback *
 unlocked_inode_to_wb_begin(struct inode *inode, struct wb_lock_cookie *cookie)
 {

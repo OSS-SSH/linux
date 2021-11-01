@@ -4,6 +4,7 @@
  * Copyright (c) 2015 System Fabric Works, Inc. All rights reserved.
  */
 
+<<<<<<< HEAD
 #include <linux/crc32.h>
 
 #include "rxe.h"
@@ -70,13 +71,24 @@ static __be32 rxe_crc32(struct rxe_dev *rxe, __be32 crc, void *next, size_t len)
  * Return: the partial ICRC
  */
 static __be32 rxe_icrc_hdr(struct sk_buff *skb, struct rxe_pkt_info *pkt)
+=======
+#include "rxe.h"
+#include "rxe_loc.h"
+
+/* Compute a partial ICRC for all the IB transport headers. */
+u32 rxe_icrc_hdr(struct rxe_pkt_info *pkt, struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned int bth_offset = 0;
 	struct iphdr *ip4h = NULL;
 	struct ipv6hdr *ip6h = NULL;
 	struct udphdr *udph;
 	struct rxe_bth *bth;
+<<<<<<< HEAD
 	__be32 crc;
+=======
+	int crc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int length;
 	int hdr_size = sizeof(struct udphdr) +
 		(skb->protocol == htons(ETH_P_IP) ?
@@ -91,7 +103,11 @@ static __be32 rxe_icrc_hdr(struct sk_buff *skb, struct rxe_pkt_info *pkt)
 	/* This seed is the result of computing a CRC with a seed of
 	 * 0xfffffff and 8 bytes of 0xff representing a masked LRH.
 	 */
+<<<<<<< HEAD
 	crc = (__force __be32)0xdebb20e3;
+=======
+	crc = 0xdebb20e3;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (skb->protocol == htons(ETH_P_IP)) { /* IPv4 */
 		memcpy(pshdr, ip_hdr(skb), hdr_size);
@@ -128,6 +144,7 @@ static __be32 rxe_icrc_hdr(struct sk_buff *skb, struct rxe_pkt_info *pkt)
 			rxe_opcode[pkt->opcode].length - RXE_BTH_BYTES);
 	return crc;
 }
+<<<<<<< HEAD
 
 /**
  * rxe_icrc_check() - Compute ICRC for a packet and compare to the ICRC
@@ -183,3 +200,5 @@ void rxe_icrc_generate(struct sk_buff *skb, struct rxe_pkt_info *pkt)
 				payload_size(pkt) + bth_pad(pkt));
 	*icrcp = ~icrc;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -1,9 +1,13 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /* Marvell RVU Virtual Function ethernet driver
  *
  * Copyright (C) 2020 Marvell.
  *
  */
+=======
+/* Marvell OcteonTx2 RVU Virtual Function ethernet driver */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <linux/etherdevice.h>
 #include <linux/module.h>
@@ -468,6 +472,7 @@ static void otx2vf_reset_task(struct work_struct *work)
 	rtnl_unlock();
 }
 
+<<<<<<< HEAD
 static int otx2vf_set_features(struct net_device *netdev,
 			       netdev_features_t features)
 {
@@ -490,6 +495,8 @@ static int otx2vf_set_features(struct net_device *netdev,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct net_device_ops otx2vf_netdev_ops = {
 	.ndo_open = otx2vf_open,
 	.ndo_stop = otx2vf_stop,
@@ -497,7 +504,10 @@ static const struct net_device_ops otx2vf_netdev_ops = {
 	.ndo_set_rx_mode = otx2vf_set_rx_mode,
 	.ndo_set_mac_address = otx2_set_mac_address,
 	.ndo_change_mtu = otx2vf_change_mtu,
+<<<<<<< HEAD
 	.ndo_set_features = otx2vf_set_features,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_get_stats64 = otx2_get_stats64,
 	.ndo_tx_timeout = otx2_tx_timeout,
 };
@@ -636,7 +646,11 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (err)
 		goto err_detach_rsrc;
 
+<<<<<<< HEAD
 	err = cn10k_lmtst_init(vf);
+=======
+	err = cn10k_vf_lmtst_init(vf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto err_detach_rsrc;
 
@@ -654,14 +668,21 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 				NETIF_F_HW_VLAN_STAG_TX;
 	netdev->features |= netdev->hw_features;
 
+<<<<<<< HEAD
 	netdev->hw_features |= NETIF_F_NTUPLE;
 	netdev->hw_features |= NETIF_F_RXALL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netdev->gso_max_segs = OTX2_MAX_GSO_SEGS;
 	netdev->watchdog_timeo = OTX2_TX_TIMEOUT;
 
 	netdev->netdev_ops = &otx2vf_netdev_ops;
 
+<<<<<<< HEAD
+=======
+	/* MTU range: 68 - 9190 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	netdev->min_mtu = OTX2_MIN_MTU;
 	netdev->max_mtu = otx2_get_max_mtu(vf);
 
@@ -687,6 +708,7 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 	otx2vf_set_ethtool_ops(netdev);
 
+<<<<<<< HEAD
 	err = otx2vf_mcam_flow_init(vf);
 	if (err)
 		goto err_unreg_netdev;
@@ -695,6 +717,8 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (err)
 		goto err_unreg_netdev;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Enable pause frames by default */
 	vf->flags |= OTX2_FLAG_RX_PAUSE_ENABLED;
 	vf->flags |= OTX2_FLAG_TX_PAUSE_ENABLED;
@@ -704,8 +728,13 @@ static int otx2vf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 err_unreg_netdev:
 	unregister_netdev(netdev);
 err_detach_rsrc:
+<<<<<<< HEAD
 	if (test_bit(CN10K_LMTST, &vf->hw.cap_flag))
 		qmem_free(vf->dev, vf->dync_lmt);
+=======
+	if (hw->lmt_base)
+		iounmap(hw->lmt_base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	otx2_detach_resources(&vf->mbox);
 err_disable_mbox_intr:
 	otx2vf_disable_mbox_intr(vf);
@@ -732,14 +761,24 @@ static void otx2vf_remove(struct pci_dev *pdev)
 	vf = netdev_priv(netdev);
 
 	cancel_work_sync(&vf->reset_task);
+<<<<<<< HEAD
 	otx2_unregister_dl(vf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unregister_netdev(netdev);
 	if (vf->otx2_wq)
 		destroy_workqueue(vf->otx2_wq);
 	otx2vf_disable_mbox_intr(vf);
 	otx2_detach_resources(&vf->mbox);
+<<<<<<< HEAD
 	if (test_bit(CN10K_LMTST, &vf->hw.cap_flag))
 		qmem_free(vf->dev, vf->dync_lmt);
+=======
+
+	if (vf->hw.lmt_base)
+		iounmap(vf->hw.lmt_base);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	otx2vf_vfaf_mbox_destroy(vf);
 	pci_free_irq_vectors(vf->pdev);
 	pci_set_drvdata(pdev, NULL);

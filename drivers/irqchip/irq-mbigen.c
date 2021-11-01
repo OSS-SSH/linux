@@ -25,7 +25,11 @@
 /* The maximum IRQ pin number of mbigen chip(start from 0) */
 #define MAXIMUM_IRQ_PIN_NUM		1407
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * In mbigen vector register
  * bit[21:12]:	event id value
  * bit[11:0]:	device id
@@ -39,14 +43,22 @@
 /* offset of vector register in mbigen node */
 #define REG_MBIGEN_VEC_OFFSET		0x200
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * offset of clear register in mbigen node
  * This register is used to clear the status
  * of interrupt
  */
 #define REG_MBIGEN_CLEAR_OFFSET		0xa000
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * offset of interrupt type register
  * This register is used to configure interrupt
  * trigger type

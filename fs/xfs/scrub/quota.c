@@ -42,7 +42,11 @@ xchk_setup_quota(
 	xfs_dqtype_t		dqtype;
 	int			error;
 
+<<<<<<< HEAD
 	if (!XFS_IS_QUOTA_ON(sc->mp))
+=======
+	if (!XFS_IS_QUOTA_RUNNING(sc->mp) || !XFS_IS_QUOTA_ON(sc->mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOENT;
 
 	dqtype = xchk_quota_to_dqtype(sc);
@@ -127,7 +131,11 @@ xchk_quota_item(
 	 * a reflink filesystem we're allowed to exceed physical space
 	 * if there are no quota limits.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_reflink(mp)) {
+=======
+	if (xfs_sb_version_hasreflink(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (mp->m_sb.sb_dblocks < dq->q_blk.count)
 			xchk_fblock_set_warning(sc, XFS_DATA_FORK,
 					offset);

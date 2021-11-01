@@ -15,6 +15,7 @@ config MODULE_SIG_KEY
          then the kernel will automatically generate the private key and
          certificate as described in Documentation/admin-guide/module-signing.rst
 
+<<<<<<< HEAD
 choice
 	prompt "Type of module signing key to be generated"
 	default MODULE_SIG_KEY_TYPE_RSA
@@ -41,6 +42,8 @@ config MODULE_SIG_KEY_TYPE_ECDSA
 
 endchoice
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config SYSTEM_TRUSTED_KEYRING
 	bool "Provide system-wide ring of trusted keys"
 	depends on KEYS

@@ -618,8 +618,13 @@ int xen_alloc_p2m_entry(unsigned long pfn)
 	}
 
 	/* Expanded the p2m? */
+<<<<<<< HEAD
 	if (pfn >= xen_p2m_last_pfn) {
 		xen_p2m_last_pfn = ALIGN(pfn + 1, P2M_PER_PAGE);
+=======
+	if (pfn > xen_p2m_last_pfn) {
+		xen_p2m_last_pfn = pfn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		HYPERVISOR_shared_info->arch.max_pfn = xen_p2m_last_pfn;
 	}
 

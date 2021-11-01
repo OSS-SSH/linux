@@ -971,8 +971,11 @@ EXPORT_SYMBOL_GPL(snd_hda_pick_pin_fixup);
  * When a special model string "nofixup" is given, also no fixup is applied.
  *
  * The function tries to find the matching model name at first, if given.
+<<<<<<< HEAD
  * If the model string contains the SSID alias, try to look up with the given
  * alias ID.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * If nothing matched, try to look up the PCI SSID.
  * If still nothing matched, try to look up the codec SSID.
  */
@@ -984,14 +987,18 @@ void snd_hda_pick_fixup(struct hda_codec *codec,
 	const struct snd_pci_quirk *q;
 	int id = HDA_FIXUP_ID_NOT_SET;
 	const char *name = NULL;
+<<<<<<< HEAD
 	const char *type = NULL;
 	int vendor, device;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (codec->fixup_id != HDA_FIXUP_ID_NOT_SET)
 		return;
 
 	/* when model=nofixup is given, don't pick up any fixups */
 	if (codec->modelname && !strcmp(codec->modelname, "nofixup")) {
+<<<<<<< HEAD
 		id = HDA_FIXUP_ID_NO_FIXUP;
 		fixlist = NULL;
 		codec_dbg(codec, "%s: picked no fixup (nofixup specified)\n",
@@ -1008,10 +1015,30 @@ void snd_hda_pick_fixup(struct hda_codec *codec,
 				codec_dbg(codec, "%s: picked fixup %s (model specified)\n",
 					  codec->core.chip_name, codec->fixup_name);
 				goto found;
+=======
+		codec->fixup_list = NULL;
+		codec->fixup_name = NULL;
+		codec->fixup_id = HDA_FIXUP_ID_NO_FIXUP;
+		codec_dbg(codec, "%s: picked no fixup (nofixup specified)\n",
+			  codec->core.chip_name);
+		return;
+	}
+
+	if (codec->modelname && models) {
+		while (models->name) {
+			if (!strcmp(codec->modelname, models->name)) {
+				codec->fixup_id = models->id;
+				codec->fixup_name = models->name;
+				codec->fixup_list = fixlist;
+				codec_dbg(codec, "%s: picked fixup %s (model specified)\n",
+					  codec->core.chip_name, codec->fixup_name);
+				return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 			models++;
 		}
 	}
+<<<<<<< HEAD
 
 	if (!quirk)
 		return;
@@ -1056,5 +1083,40 @@ void snd_hda_pick_fixup(struct hda_codec *codec,
 	codec->fixup_id = id;
 	codec->fixup_list = fixlist;
 	codec->fixup_name = name;
+=======
+	if (quirk) {
+		q = snd_pci_quirk_lookup(codec->bus->pci, quirk);
+		if (q) {
+			id = q->value;
+#ifdef CONFIG_SND_DEBUG_VERBOSE
+			name = q->name;
+			codec_dbg(codec, "%s: picked fixup %s (PCI SSID%s)\n",
+				  codec->core.chip_name, name, q->subdevice_mask ? "" : " - vendor generic");
+#endif
+		}
+	}
+	if (id < 0 && quirk) {
+		for (q = quirk; q->subvendor || q->subdevice; q++) {
+			unsigned int vendorid =
+				q->subdevice | (q->subvendor << 16);
+			unsigned int mask = 0xffff0000 | q->subdevice_mask;
+			if ((codec->core.subsystem_id & mask) == (vendorid & mask)) {
+				id = q->value;
+#ifdef CONFIG_SND_DEBUG_VERBOSE
+				name = q->name;
+				codec_dbg(codec, "%s: picked fixup %s (codec SSID)\n",
+					  codec->core.chip_name, name);
+#endif
+				break;
+			}
+		}
+	}
+
+	codec->fixup_id = id;
+	if (id >= 0) {
+		codec->fixup_list = fixlist;
+		codec->fixup_name = name;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(snd_hda_pick_fixup);

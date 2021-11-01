@@ -634,7 +634,10 @@ static void tcf_block_offload_init(struct flow_block_offload *bo,
 	bo->block_shared = shared;
 	bo->extack = extack;
 	bo->sch = sch;
+<<<<<<< HEAD
 	bo->cb_list_head = &flow_block->cb_list;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INIT_LIST_HEAD(&bo->cb_list);
 }
 
@@ -1578,11 +1581,29 @@ reset:
 #endif
 }
 
+<<<<<<< HEAD
 int tcf_classify(struct sk_buff *skb,
 		 const struct tcf_block *block,
 		 const struct tcf_proto *tp,
 		 struct tcf_result *res, bool compat_mode)
 {
+=======
+int tcf_classify(struct sk_buff *skb, const struct tcf_proto *tp,
+		 struct tcf_result *res, bool compat_mode)
+{
+	u32 last_executed_chain = 0;
+
+	return __tcf_classify(skb, tp, tp, res, compat_mode,
+			      &last_executed_chain);
+}
+EXPORT_SYMBOL(tcf_classify);
+
+int tcf_classify_ingress(struct sk_buff *skb,
+			 const struct tcf_block *ingress_block,
+			 const struct tcf_proto *tp,
+			 struct tcf_result *res, bool compat_mode)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if !IS_ENABLED(CONFIG_NET_TC_SKB_EXT)
 	u32 last_executed_chain = 0;
 
@@ -1594,6 +1615,7 @@ int tcf_classify(struct sk_buff *skb,
 	struct tc_skb_ext *ext;
 	int ret;
 
+<<<<<<< HEAD
 	if (block) {
 		ext = skb_ext_find(skb, TC_SKB_EXT);
 
@@ -1610,6 +1632,22 @@ int tcf_classify(struct sk_buff *skb,
 			tp = rcu_dereference_bh(fchain->filter_chain);
 			last_executed_chain = fchain->index;
 		}
+=======
+	ext = skb_ext_find(skb, TC_SKB_EXT);
+
+	if (ext && ext->chain) {
+		struct tcf_chain *fchain;
+
+		fchain = tcf_chain_lookup_rcu(ingress_block, ext->chain);
+		if (!fchain)
+			return TC_ACT_SHOT;
+
+		/* Consume, so cloned/redirect skbs won't inherit ext */
+		skb_ext_del(skb, TC_SKB_EXT);
+
+		tp = rcu_dereference_bh(fchain->filter_chain);
+		last_executed_chain = fchain->index;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = __tcf_classify(skb, tp, orig_tp, res, compat_mode,
@@ -1628,7 +1666,11 @@ int tcf_classify(struct sk_buff *skb,
 	return ret;
 #endif
 }
+<<<<<<< HEAD
 EXPORT_SYMBOL(tcf_classify);
+=======
+EXPORT_SYMBOL(tcf_classify_ingress);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct tcf_chain_info {
 	struct tcf_proto __rcu **pprev;
@@ -1863,10 +1905,20 @@ static int tfilter_notify(struct net *net, struct sk_buff *oskb,
 	}
 
 	if (unicast)
+<<<<<<< HEAD
 		err = rtnl_unicast(skb, net, portid);
 	else
 		err = rtnetlink_send(skb, net, portid, RTNLGRP_TC,
 				     n->nlmsg_flags & NLM_F_ECHO);
+=======
+		err = netlink_unicast(net->rtnl, skb, portid, MSG_DONTWAIT);
+	else
+		err = rtnetlink_send(skb, net, portid, RTNLGRP_TC,
+				     n->nlmsg_flags & NLM_F_ECHO);
+
+	if (err > 0)
+		err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -1899,13 +1951,22 @@ static int tfilter_del_notify(struct net *net, struct sk_buff *oskb,
 	}
 
 	if (unicast)
+<<<<<<< HEAD
 		err = rtnl_unicast(skb, net, portid);
+=======
+		err = netlink_unicast(net->rtnl, skb, portid, MSG_DONTWAIT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else
 		err = rtnetlink_send(skb, net, portid, RTNLGRP_TC,
 				     n->nlmsg_flags & NLM_F_ECHO);
 	if (err < 0)
 		NL_SET_ERR_MSG(extack, "Failed to send filter delete notification");
 
+<<<<<<< HEAD
+=======
+	if (err > 0)
+		err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -1950,7 +2011,10 @@ static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
 	int err;
 	int tp_created;
 	bool rtnl_held = false;
+<<<<<<< HEAD
 	u32 flags;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!netlink_ns_capable(skb, net->user_ns, CAP_NET_ADMIN))
 		return -EPERM;
@@ -1971,7 +2035,10 @@ replay:
 	tp = NULL;
 	cl = 0;
 	block = NULL;
+<<<<<<< HEAD
 	flags = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (prio == 0) {
 		/* If no priority is provided by the user,
@@ -2115,12 +2182,18 @@ replay:
 		goto errout;
 	}
 
+<<<<<<< HEAD
 	if (!(n->nlmsg_flags & NLM_F_CREATE))
 		flags |= TCA_ACT_FLAGS_REPLACE;
 	if (!rtnl_held)
 		flags |= TCA_ACT_FLAGS_NO_RTNL;
 	err = tp->ops->change(net, skb, tp, cl, t->tcm_handle, tca, &fh,
 			      flags, extack);
+=======
+	err = tp->ops->change(net, skb, tp, cl, t->tcm_handle, tca, &fh,
+			      n->nlmsg_flags & NLM_F_CREATE ? TCA_ACT_NOREPLACE : TCA_ACT_REPLACE,
+			      rtnl_held, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err == 0) {
 		tfilter_notify(net, skb, n, tp, block, q, parent, fh,
 			       RTM_NEWTFILTER, false, rtnl_held);
@@ -2704,11 +2777,20 @@ static int tc_chain_notify(struct tcf_chain *chain, struct sk_buff *oskb,
 	}
 
 	if (unicast)
+<<<<<<< HEAD
 		err = rtnl_unicast(skb, net, portid);
+=======
+		err = netlink_unicast(net->rtnl, skb, portid, MSG_DONTWAIT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else
 		err = rtnetlink_send(skb, net, portid, RTNLGRP_TC,
 				     flags & NLM_F_ECHO);
 
+<<<<<<< HEAD
+=======
+	if (err > 0)
+		err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -2732,7 +2814,11 @@ static int tc_chain_notify_delete(const struct tcf_proto_ops *tmplt_ops,
 	}
 
 	if (unicast)
+<<<<<<< HEAD
 		return rtnl_unicast(skb, net, portid);
+=======
+		return netlink_unicast(net->rtnl, skb, portid, MSG_DONTWAIT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return rtnetlink_send(skb, net, portid, RTNLGRP_TC, flags & NLM_F_ECHO);
 }
@@ -2895,7 +2981,11 @@ replay:
 		break;
 	case RTM_GETCHAIN:
 		err = tc_chain_notify(chain, skb, n->nlmsg_seq,
+<<<<<<< HEAD
 				      n->nlmsg_flags, n->nlmsg_type, true);
+=======
+				      n->nlmsg_seq, n->nlmsg_type, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err < 0)
 			NL_SET_ERR_MSG(extack, "Failed to send chain notify message");
 		break;
@@ -3026,8 +3116,13 @@ void tcf_exts_destroy(struct tcf_exts *exts)
 EXPORT_SYMBOL(tcf_exts_destroy);
 
 int tcf_exts_validate(struct net *net, struct tcf_proto *tp, struct nlattr **tb,
+<<<<<<< HEAD
 		      struct nlattr *rate_tlv, struct tcf_exts *exts,
 		      u32 flags, struct netlink_ext_ack *extack)
+=======
+		      struct nlattr *rate_tlv, struct tcf_exts *exts, bool ovr,
+		      bool rtnl_held, struct netlink_ext_ack *extack)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 #ifdef CONFIG_NET_CLS_ACT
 	{
@@ -3038,6 +3133,7 @@ int tcf_exts_validate(struct net *net, struct tcf_proto *tp, struct nlattr **tb,
 		if (exts->police && tb[exts->police]) {
 			struct tc_action_ops *a_o;
 
+<<<<<<< HEAD
 			a_o = tc_action_load_ops(tb[exts->police], true,
 						 !(flags & TCA_ACT_FLAGS_NO_RTNL),
 						 extack);
@@ -3047,6 +3143,15 @@ int tcf_exts_validate(struct net *net, struct tcf_proto *tp, struct nlattr **tb,
 			act = tcf_action_init_1(net, tp, tb[exts->police],
 						rate_tlv, a_o, init_res, flags,
 						extack);
+=======
+			a_o = tc_action_load_ops("police", tb[exts->police], rtnl_held, extack);
+			if (IS_ERR(a_o))
+				return PTR_ERR(a_o);
+			act = tcf_action_init_1(net, tp, tb[exts->police],
+						rate_tlv, "police", ovr,
+						TCA_ACT_BIND, a_o, init_res,
+						rtnl_held, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			module_put(a_o->owner);
 			if (IS_ERR(act))
 				return PTR_ERR(act);
@@ -3058,10 +3163,17 @@ int tcf_exts_validate(struct net *net, struct tcf_proto *tp, struct nlattr **tb,
 		} else if (exts->action && tb[exts->action]) {
 			int err;
 
+<<<<<<< HEAD
 			flags |= TCA_ACT_FLAGS_BIND;
 			err = tcf_action_init(net, tp, tb[exts->action],
 					      rate_tlv, exts->actions, init_res,
 					      &attr_size, flags, extack);
+=======
+			err = tcf_action_init(net, tp, tb[exts->action],
+					      rate_tlv, NULL, ovr, TCA_ACT_BIND,
+					      exts->actions, init_res,
+					      &attr_size, rtnl_held, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (err < 0)
 				return err;
 			exts->nr_actions = err;
@@ -3825,7 +3937,11 @@ struct sk_buff *tcf_qevent_handle(struct tcf_qevent *qe, struct Qdisc *sch, stru
 
 	fl = rcu_dereference_bh(qe->filter_chain);
 
+<<<<<<< HEAD
 	switch (tcf_classify(skb, NULL, fl, &cl_res, false)) {
+=======
+	switch (tcf_classify(skb, fl, &cl_res, false)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case TC_ACT_SHOT:
 		qdisc_qstats_drop(sch);
 		__qdisc_drop(skb, to_free);

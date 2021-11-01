@@ -439,9 +439,46 @@ static umode_t iscsi_iface_attr_is_visible(struct kobject *kobj,
 	struct device *dev = container_of(kobj, struct device, kobj);
 	struct iscsi_iface *iface = iscsi_dev_to_iface(dev);
 	struct iscsi_transport *t = iface->transport;
+<<<<<<< HEAD
 	int param = -1;
 
 	if (attr == &dev_attr_iface_def_taskmgmt_tmo.attr)
+=======
+	int param;
+	int param_type;
+
+	if (attr == &dev_attr_iface_enabled.attr)
+		param = ISCSI_NET_PARAM_IFACE_ENABLE;
+	else if (attr == &dev_attr_iface_vlan_id.attr)
+		param = ISCSI_NET_PARAM_VLAN_ID;
+	else if (attr == &dev_attr_iface_vlan_priority.attr)
+		param = ISCSI_NET_PARAM_VLAN_PRIORITY;
+	else if (attr == &dev_attr_iface_vlan_enabled.attr)
+		param = ISCSI_NET_PARAM_VLAN_ENABLED;
+	else if (attr == &dev_attr_iface_mtu.attr)
+		param = ISCSI_NET_PARAM_MTU;
+	else if (attr == &dev_attr_iface_port.attr)
+		param = ISCSI_NET_PARAM_PORT;
+	else if (attr == &dev_attr_iface_ipaddress_state.attr)
+		param = ISCSI_NET_PARAM_IPADDR_STATE;
+	else if (attr == &dev_attr_iface_delayed_ack_en.attr)
+		param = ISCSI_NET_PARAM_DELAYED_ACK_EN;
+	else if (attr == &dev_attr_iface_tcp_nagle_disable.attr)
+		param = ISCSI_NET_PARAM_TCP_NAGLE_DISABLE;
+	else if (attr == &dev_attr_iface_tcp_wsf_disable.attr)
+		param = ISCSI_NET_PARAM_TCP_WSF_DISABLE;
+	else if (attr == &dev_attr_iface_tcp_wsf.attr)
+		param = ISCSI_NET_PARAM_TCP_WSF;
+	else if (attr == &dev_attr_iface_tcp_timer_scale.attr)
+		param = ISCSI_NET_PARAM_TCP_TIMER_SCALE;
+	else if (attr == &dev_attr_iface_tcp_timestamp_en.attr)
+		param = ISCSI_NET_PARAM_TCP_TIMESTAMP_EN;
+	else if (attr == &dev_attr_iface_cache_id.attr)
+		param = ISCSI_NET_PARAM_CACHE_ID;
+	else if (attr == &dev_attr_iface_redirect_en.attr)
+		param = ISCSI_NET_PARAM_REDIRECT_EN;
+	else if (attr == &dev_attr_iface_def_taskmgmt_tmo.attr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		param = ISCSI_IFACE_PARAM_DEF_TASKMGMT_TMO;
 	else if (attr == &dev_attr_iface_header_digest.attr)
 		param = ISCSI_IFACE_PARAM_HDRDGST_EN;
@@ -477,6 +514,7 @@ static umode_t iscsi_iface_attr_is_visible(struct kobject *kobj,
 		param = ISCSI_IFACE_PARAM_STRICT_LOGIN_COMP_EN;
 	else if (attr == &dev_attr_iface_initiator_name.attr)
 		param = ISCSI_IFACE_PARAM_INITIATOR_NAME;
+<<<<<<< HEAD
 
 	if (param != -1)
 		return t->attr_is_visible(ISCSI_IFACE_PARAM, param);
@@ -511,6 +549,8 @@ static umode_t iscsi_iface_attr_is_visible(struct kobject *kobj,
 		param = ISCSI_NET_PARAM_CACHE_ID;
 	else if (attr == &dev_attr_iface_redirect_en.attr)
 		param = ISCSI_NET_PARAM_REDIRECT_EN;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else if (iface->iface_type == ISCSI_IFACE_TYPE_IPV4) {
 		if (attr == &dev_attr_ipv4_iface_ipaddress.attr)
 			param = ISCSI_NET_PARAM_IPV4_ADDR;
@@ -601,7 +641,36 @@ static umode_t iscsi_iface_attr_is_visible(struct kobject *kobj,
 		return 0;
 	}
 
+<<<<<<< HEAD
 	return t->attr_is_visible(ISCSI_NET_PARAM, param);
+=======
+	switch (param) {
+	case ISCSI_IFACE_PARAM_DEF_TASKMGMT_TMO:
+	case ISCSI_IFACE_PARAM_HDRDGST_EN:
+	case ISCSI_IFACE_PARAM_DATADGST_EN:
+	case ISCSI_IFACE_PARAM_IMM_DATA_EN:
+	case ISCSI_IFACE_PARAM_INITIAL_R2T_EN:
+	case ISCSI_IFACE_PARAM_DATASEQ_INORDER_EN:
+	case ISCSI_IFACE_PARAM_PDU_INORDER_EN:
+	case ISCSI_IFACE_PARAM_ERL:
+	case ISCSI_IFACE_PARAM_MAX_RECV_DLENGTH:
+	case ISCSI_IFACE_PARAM_FIRST_BURST:
+	case ISCSI_IFACE_PARAM_MAX_R2T:
+	case ISCSI_IFACE_PARAM_MAX_BURST:
+	case ISCSI_IFACE_PARAM_CHAP_AUTH_EN:
+	case ISCSI_IFACE_PARAM_BIDI_CHAP_EN:
+	case ISCSI_IFACE_PARAM_DISCOVERY_AUTH_OPTIONAL:
+	case ISCSI_IFACE_PARAM_DISCOVERY_LOGOUT_EN:
+	case ISCSI_IFACE_PARAM_STRICT_LOGIN_COMP_EN:
+	case ISCSI_IFACE_PARAM_INITIATOR_NAME:
+		param_type = ISCSI_IFACE_PARAM;
+		break;
+	default:
+		param_type = ISCSI_NET_PARAM;
+	}
+
+	return t->attr_is_visible(param_type, param);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct attribute *iscsi_iface_attrs[] = {

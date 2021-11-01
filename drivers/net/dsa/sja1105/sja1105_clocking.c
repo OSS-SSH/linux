@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
+<<<<<<< HEAD
 /* Copyright 2016-2018 NXP
+=======
+/* Copyright (c) 2016-2018, NXP Semiconductors
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Copyright (c) 2018-2019, Vladimir Oltean <olteanv@gmail.com>
  */
 #include <linux/packing.h>

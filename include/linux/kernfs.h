@@ -98,11 +98,14 @@ struct kernfs_elem_dir {
 	 * better directly in kernfs_node but is here to save space.
 	 */
 	struct kernfs_root	*root;
+<<<<<<< HEAD
 	/*
 	 * Monotonic revision counter, used to identify if a directory
 	 * node has changed during negative dentry revalidation.
 	 */
 	unsigned long		rev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct kernfs_elem_symlink {
@@ -193,7 +196,11 @@ struct kernfs_root {
 	u32			id_highbits;
 	struct kernfs_syscall_ops *syscall_ops;
 
+<<<<<<< HEAD
 	/* list of kernfs_super_info of this root, protected by kernfs_rwsem */
+=======
+	/* list of kernfs_super_info of this root, protected by kernfs_mutex */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head	supers;
 
 	wait_queue_head_t	deactivate_waitq;

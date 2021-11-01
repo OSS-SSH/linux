@@ -17,7 +17,11 @@
 #include <linux/err.h>
 #include <linux/percpu.h>
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/siphash.h>
+=======
+#include <linux/jhash.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/moduleparam.h>
 #include <linux/export.h>
 #include <net/net_namespace.h>
@@ -41,7 +45,11 @@ EXPORT_SYMBOL_GPL(nf_ct_expect_hash);
 unsigned int nf_ct_expect_max __read_mostly;
 
 static struct kmem_cache *nf_ct_expect_cachep __read_mostly;
+<<<<<<< HEAD
 static siphash_key_t nf_ct_expect_hashrnd __read_mostly;
+=======
+static unsigned int nf_ct_expect_hashrnd __read_mostly;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* nf_conntrack_expect helper functions */
 void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
@@ -81,6 +89,7 @@ static void nf_ct_expectation_timed_out(struct timer_list *t)
 
 static unsigned int nf_ct_expect_dst_hash(const struct net *n, const struct nf_conntrack_tuple *tuple)
 {
+<<<<<<< HEAD
 	struct {
 		union nf_inet_addr dst_addr;
 		u32 net_mix;
@@ -101,6 +110,17 @@ static unsigned int nf_ct_expect_dst_hash(const struct net *n, const struct nf_c
 	combined.protonum = tuple->dst.protonum;
 
 	hash = siphash(&combined, sizeof(combined), &nf_ct_expect_hashrnd);
+=======
+	unsigned int hash, seed;
+
+	get_random_once(&nf_ct_expect_hashrnd, sizeof(nf_ct_expect_hashrnd));
+
+	seed = nf_ct_expect_hashrnd ^ net_hash_mix(n);
+
+	hash = jhash2(tuple->dst.u3.all, ARRAY_SIZE(tuple->dst.u3.all),
+		      (((tuple->dst.protonum ^ tuple->src.l3num) << 16) |
+		       (__force __u16)tuple->dst.u.all) ^ seed);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return reciprocal_scale(hash, nf_ct_expect_hsize);
 }

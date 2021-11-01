@@ -596,7 +596,11 @@ int cmd_annotate(int argc, const char **argv)
 
 	data.path = input_name;
 
+<<<<<<< HEAD
 	annotate.session = perf_session__new(&data, &annotate.tool);
+=======
+	annotate.session = perf_session__new(&data, false, &annotate.tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(annotate.session))
 		return PTR_ERR(annotate.session);
 

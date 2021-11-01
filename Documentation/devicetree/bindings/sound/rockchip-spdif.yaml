@@ -23,7 +23,10 @@ properties:
       - const: rockchip,rk3366-spdif
       - const: rockchip,rk3368-spdif
       - const: rockchip,rk3399-spdif
+<<<<<<< HEAD
       - const: rockchip,rk3568-spdif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - items:
           - enum:
               - rockchip,rk3188-spdif

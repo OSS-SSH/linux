@@ -1,5 +1,6 @@
 .. include:: ../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/iio/ep93xx_adc.rst
 
 :翻译:
@@ -8,6 +9,14 @@
 
 .. _cn_iio_ep93xx_adc:
 
+=======
+:Original: :doc:`../../../iio/ep93xx_adc`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_iio_ep93xx_adc:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ==================================
 思睿逻辑 EP93xx 模拟数字转换器驱动
 ==================================

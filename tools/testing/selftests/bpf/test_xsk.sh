@@ -63,11 +63,22 @@
 # ----------------
 # Must run with CAP_NET_ADMIN capability.
 #
+<<<<<<< HEAD
 # Run:
 #   sudo ./test_xsk.sh
 #
 # If running from kselftests:
 #   sudo make run_tests
+=======
+# Run (full color-coded output):
+#   sudo ./test_xsk.sh -c
+#
+# If running from kselftests:
+#   sudo make colorconsole=1 run_tests
+#
+# Run (full output without color-coding):
+#   sudo ./test_xsk.sh
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #
 # Run with verbose output:
 #   sudo ./test_xsk.sh -v
@@ -80,6 +91,10 @@
 while getopts "cvD" flag
 do
 	case "${flag}" in
+<<<<<<< HEAD
+=======
+		c) colorconsole=1;;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		v) verbose=1;;
 		D) dump_pkts=1;;
 	esac

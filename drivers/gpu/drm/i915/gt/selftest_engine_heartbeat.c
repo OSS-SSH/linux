@@ -405,6 +405,7 @@ void st_engine_heartbeat_enable(struct intel_engine_cs *engine)
 	engine->props.heartbeat_interval_ms =
 		engine->defaults.heartbeat_interval_ms;
 }
+<<<<<<< HEAD
 
 void st_engine_heartbeat_disable_no_pm(struct intel_engine_cs *engine)
 {
@@ -427,3 +428,5 @@ void st_engine_heartbeat_enable_no_pm(struct intel_engine_cs *engine)
 	engine->props.heartbeat_interval_ms =
 		engine->defaults.heartbeat_interval_ms;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

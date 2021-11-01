@@ -153,7 +153,10 @@ static const struct ieee1394_device_id motu_id_table[] = {
 	SND_MOTU_DEV_ENTRY(0x000001, &snd_motu_spec_828),
 	SND_MOTU_DEV_ENTRY(0x000002, &snd_motu_spec_896),
 	SND_MOTU_DEV_ENTRY(0x000003, &snd_motu_spec_828mk2),
+<<<<<<< HEAD
 	SND_MOTU_DEV_ENTRY(0x000005, &snd_motu_spec_896hd),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SND_MOTU_DEV_ENTRY(0x000009, &snd_motu_spec_traveler),
 	SND_MOTU_DEV_ENTRY(0x00000d, &snd_motu_spec_ultralite),
 	SND_MOTU_DEV_ENTRY(0x00000f, &snd_motu_spec_8pre),

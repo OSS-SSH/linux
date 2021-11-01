@@ -563,7 +563,10 @@ kfd_mem_dmaunmap_userptr(struct kgd_mem *mem,
 
 	dma_unmap_sgtable(adev->dev, ttm->sg, direction, 0);
 	sg_free_table(ttm->sg);
+<<<<<<< HEAD
 	kfree(ttm->sg);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ttm->sg = NULL;
 }
 
@@ -1288,6 +1291,7 @@ int amdgpu_amdkfd_gpuvm_acquire_process_vm(struct kgd_dev *kgd,
 	if (avm->process_info)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	/* Free the original amdgpu allocated pasid,
 	 * will be replaced with kfd allocated pasid.
 	 */
@@ -1304,6 +1308,13 @@ int amdgpu_amdkfd_gpuvm_acquire_process_vm(struct kgd_dev *kgd,
 	ret = amdgpu_vm_set_pasid(adev, avm, pasid);
 	if (ret)
 		return ret;
+=======
+	/* Convert VM into a compute VM */
+	ret = amdgpu_vm_make_compute(adev, avm, pasid);
+	if (ret)
+		return ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Initialize KFD part of the VM and process info */
 	ret = init_kfd_vm(avm, process_info, ef);
 	if (ret)
@@ -1405,7 +1416,12 @@ int amdgpu_amdkfd_gpuvm_alloc_memory_of_gpu(
 		domain = alloc_domain = AMDGPU_GEM_DOMAIN_VRAM;
 		alloc_flags = AMDGPU_GEM_CREATE_VRAM_WIPE_ON_RELEASE;
 		alloc_flags |= (flags & KFD_IOC_ALLOC_MEM_FLAGS_PUBLIC) ?
+<<<<<<< HEAD
 			AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED : 0;
+=======
+			AMDGPU_GEM_CREATE_CPU_ACCESS_REQUIRED :
+			AMDGPU_GEM_CREATE_NO_CPU_ACCESS;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (flags & KFD_IOC_ALLOC_MEM_FLAGS_GTT) {
 		domain = alloc_domain = AMDGPU_GEM_DOMAIN_GTT;
 		alloc_flags = 0;
@@ -1721,12 +1737,15 @@ int amdgpu_amdkfd_gpuvm_map_memory_to_gpu(
 				true);
 	ret = unreserve_bo_and_vms(&ctx, false, false);
 
+<<<<<<< HEAD
 	/* Only apply no TLB flush on Aldebaran to
 	 * workaround regressions on other Asics.
 	 */
 	if (table_freed && (adev->asic_type != CHIP_ALDEBARAN))
 		*table_freed = true;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	goto out;
 
 out_unreserve:

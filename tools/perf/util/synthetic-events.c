@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0-only 
 
+<<<<<<< HEAD
 #include "util/cgroup.h"
 #include "util/data.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "util/debug.h"
 #include "util/dso.h"
 #include "util/event.h"
@@ -18,6 +21,10 @@
 #include "util/synthetic-events.h"
 #include "util/target.h"
 #include "util/time-utils.h"
+<<<<<<< HEAD
+=======
+#include "util/cgroup.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/bitops.h>
 #include <linux/kernel.h>
 #include <linux/string.h>
@@ -2180,6 +2187,7 @@ int perf_event__synthesize_features(struct perf_tool *tool, struct perf_session 
 	free(ff.buf);
 	return ret;
 }
+<<<<<<< HEAD
 
 int perf_event__synthesize_for_pipe(struct perf_tool *tool,
 				    struct perf_session *session,
@@ -2230,3 +2238,5 @@ int perf_event__synthesize_for_pipe(struct perf_tool *tool,
 
 	return ret;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

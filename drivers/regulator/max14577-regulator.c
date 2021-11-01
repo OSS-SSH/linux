@@ -269,3 +269,8 @@ module_exit(max14577_regulator_exit);
 MODULE_AUTHOR("Krzysztof Kozlowski <krzk@kernel.org>");
 MODULE_DESCRIPTION("Maxim 14577/77836 regulator driver");
 MODULE_LICENSE("GPL");
+<<<<<<< HEAD
+=======
+MODULE_ALIAS("platform:max14577-regulator");
+MODULE_ALIAS("platform:max77836-regulator");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

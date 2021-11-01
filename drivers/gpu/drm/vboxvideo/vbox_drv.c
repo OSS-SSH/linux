@@ -43,7 +43,11 @@ static int vbox_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	if (!vbox_check_supported(VBE_DISPI_ID_HGSMI))
 		return -ENODEV;
 
+<<<<<<< HEAD
 	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &driver);
+=======
+	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "vboxvideodrmfb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 
@@ -184,6 +188,10 @@ static const struct drm_driver driver = {
 	.lastclose = drm_fb_helper_lastclose,
 
 	.fops = &vbox_fops,
+<<<<<<< HEAD
+=======
+	.irq_handler = vbox_irq_handler,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.name = DRIVER_NAME,
 	.desc = DRIVER_DESC,
 	.date = DRIVER_DATE,

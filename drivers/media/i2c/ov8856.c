@@ -2304,6 +2304,7 @@ static int ov8856_get_hwcfg(struct ov8856 *ov8856, struct device *dev)
 
 		clk_set_rate(ov8856->xvclk, xvclk_rate);
 		xvclk_rate = clk_get_rate(ov8856->xvclk);
+<<<<<<< HEAD
 
 		ov8856->reset_gpio = devm_gpiod_get_optional(dev, "reset",
 							     GPIOD_OUT_LOW);
@@ -2318,12 +2319,30 @@ static int ov8856_get_hwcfg(struct ov8856 *ov8856, struct device *dev)
 					      ov8856->supplies);
 		if (ret)
 			return ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (xvclk_rate != OV8856_XVCLK_19_2)
 		dev_warn(dev, "external clock rate %u is unsupported",
 			 xvclk_rate);
 
+<<<<<<< HEAD
+=======
+	ov8856->reset_gpio = devm_gpiod_get_optional(dev, "reset",
+						     GPIOD_OUT_LOW);
+	if (IS_ERR(ov8856->reset_gpio))
+		return PTR_ERR(ov8856->reset_gpio);
+
+	for (i = 0; i < ARRAY_SIZE(ov8856_supply_names); i++)
+		ov8856->supplies[i].supply = ov8856_supply_names[i];
+
+	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(ov8856_supply_names),
+				      ov8856->supplies);
+	if (ret)
+		return ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ep = fwnode_graph_get_next_endpoint(fwnode, NULL);
 	if (!ep)
 		return -ENXIO;

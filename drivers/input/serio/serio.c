@@ -778,11 +778,19 @@ static int serio_driver_probe(struct device *dev)
 	return serio_connect_driver(serio, drv);
 }
 
+<<<<<<< HEAD
 static void serio_driver_remove(struct device *dev)
+=======
+static int serio_driver_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct serio *serio = to_serio_port(dev);
 
 	serio_disconnect_driver(serio);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void serio_cleanup(struct serio *serio)

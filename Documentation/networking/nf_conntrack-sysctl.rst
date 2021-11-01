@@ -17,8 +17,14 @@ nf_conntrack_acct - BOOLEAN
 nf_conntrack_buckets - INTEGER
 	Size of hash table. If not specified as parameter during module
 	loading, the default size is calculated by dividing total memory
+<<<<<<< HEAD
 	by 16384 to determine the number of buckets. The hash table will
 	never have fewer than 1024 and never more than 262144 buckets.
+=======
+	by 16384 to determine the number of buckets but the hash table will
+	never have fewer than 32 and limited to 16384 buckets. For systems
+	with more than 4GB of memory it will be 65536 buckets.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	This sysctl is only writeable in the initial net namespace.
 
 nf_conntrack_checksum - BOOLEAN
@@ -99,12 +105,17 @@ nf_conntrack_log_invalid - INTEGER
 	Log invalid packets of a type specified by value.
 
 nf_conntrack_max - INTEGER
+<<<<<<< HEAD
         Maximum number of allowed connection tracking entries. This value is set
         to nf_conntrack_buckets by default.
         Note that connection tracking entries are added to the table twice -- once
         for the original direction and once for the reply direction (i.e., with
         the reversed address). This means that with default settings a maxed-out
         table will have a average hash chain length of 2, not 1.
+=======
+	Size of connection tracking table.  Default value is
+	nf_conntrack_buckets value * 4.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 nf_conntrack_tcp_be_liberal - BOOLEAN
 	- 0 - disabled (default)
@@ -113,12 +124,15 @@ nf_conntrack_tcp_be_liberal - BOOLEAN
 	Be conservative in what you do, be liberal in what you accept from others.
 	If it's non-zero, we mark only out of window RST segments as INVALID.
 
+<<<<<<< HEAD
 nf_conntrack_tcp_ignore_invalid_rst - BOOLEAN
 	- 0 - disabled (default)
 	- 1 - enabled
 
 	If it's 1, we don't mark out of window RST segments as INVALID.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nf_conntrack_tcp_loose - BOOLEAN
 	- 0 - disabled
 	- not 0 - enabled (default)
@@ -187,6 +201,7 @@ nf_conntrack_gre_timeout_stream - INTEGER (seconds)
 	This extended timeout will be used in case there is an GRE stream
 	detected.
 
+<<<<<<< HEAD
 nf_hooks_lwtunnel - BOOLEAN
 	- 0 - disabled (default)
 	- not 0 - enabled
@@ -194,6 +209,8 @@ nf_hooks_lwtunnel - BOOLEAN
 	If this option is enabled, the lightweight tunnel netfilter hooks are
 	enabled. This option cannot be disabled once it is enabled.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nf_flowtable_tcp_timeout - INTEGER (seconds)
         default 30
 
@@ -201,9 +218,25 @@ nf_flowtable_tcp_timeout - INTEGER (seconds)
         TCP connections may be offloaded from nf conntrack to nf flow table.
         Once aged, the connection is returned to nf conntrack with tcp pickup timeout.
 
+<<<<<<< HEAD
+=======
+nf_flowtable_tcp_pickup - INTEGER (seconds)
+        default 120
+
+        TCP connection timeout after being aged from nf flow table offload.
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nf_flowtable_udp_timeout - INTEGER (seconds)
         default 30
 
         Control offload timeout for udp connections.
         UDP connections may be offloaded from nf conntrack to nf flow table.
         Once aged, the connection is returned to nf conntrack with udp pickup timeout.
+<<<<<<< HEAD
+=======
+
+nf_flowtable_udp_pickup - INTEGER (seconds)
+        default 30
+
+        UDP connection timeout after being aged from nf flow table offload.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -366,6 +366,7 @@ static const struct of_device_id at25_of_match[] = {
 };
 MODULE_DEVICE_TABLE(of, at25_of_match);
 
+<<<<<<< HEAD
 static const struct spi_device_id at25_spi_ids[] = {
 	{ .name = "at25",},
 	{ .name = "fm25",},
@@ -373,6 +374,8 @@ static const struct spi_device_id at25_spi_ids[] = {
 };
 MODULE_DEVICE_TABLE(spi, at25_spi_ids);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int at25_probe(struct spi_device *spi)
 {
 	struct at25_data	*at25 = NULL;
@@ -498,7 +501,10 @@ static struct spi_driver at25_driver = {
 		.dev_groups	= sernum_groups,
 	},
 	.probe		= at25_probe,
+<<<<<<< HEAD
 	.id_table	= at25_spi_ids,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 module_spi_driver(at25_driver);

@@ -1867,8 +1867,13 @@ mac80211_hwsim_beacon(struct hrtimer *timer)
 		bcn_int -= data->bcn_delta;
 		data->bcn_delta = 0;
 	}
+<<<<<<< HEAD
 	hrtimer_forward_now(&data->beacon_timer,
 			    ns_to_ktime(bcn_int * NSEC_PER_USEC));
+=======
+	hrtimer_forward(&data->beacon_timer, hrtimer_get_expires(timer),
+			ns_to_ktime(bcn_int * NSEC_PER_USEC));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return HRTIMER_RESTART;
 }
 

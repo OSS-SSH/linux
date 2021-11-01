@@ -6,11 +6,17 @@
  * Author: Georgi Djakov <georgi.djakov@linaro.org>
  */
 
+<<<<<<< HEAD
 #include <linux/clk.h>
 #include <linux/clk-provider.h>
 #include <linux/kernel.h>
 #include <linux/platform_device.h>
 #include <linux/pm_opp.h>
+=======
+#include <linux/clk-provider.h>
+#include <linux/kernel.h>
+#include <linux/platform_device.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/regmap.h>
 #include <linux/module.h>
 
@@ -36,6 +42,7 @@ static const struct regmap_config a53pll_regmap_config = {
 	.fast_io		= true,
 };
 
+<<<<<<< HEAD
 static struct pll_freq_tbl *qcom_a53pll_get_freq_tbl(struct device *dev)
 {
 	struct pll_freq_tbl *freq_tbl;
@@ -89,6 +96,11 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
 {
 	struct device *dev = &pdev->dev;
 	struct device_node *np = dev->of_node;
+=======
+static int qcom_a53pll_probe(struct platform_device *pdev)
+{
+	struct device *dev = &pdev->dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct regmap *regmap;
 	struct resource *res;
 	struct clk_pll *pll;
@@ -116,6 +128,7 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
 	pll->mode_reg = 0x00;
 	pll->status_reg = 0x1c;
 	pll->status_bit = 16;
+<<<<<<< HEAD
 
 	pll->freq_tbl = qcom_a53pll_get_freq_tbl(dev);
 	if (!pll->freq_tbl) {
@@ -132,6 +145,15 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
 	init.parent_names = (const char *[]){ "xo" };
 	init.num_parents = 1;
 	init.ops = &clk_pll_sr2_ops;
+=======
+	pll->freq_tbl = a53pll_freq;
+
+	init.name = "a53pll";
+	init.parent_names = (const char *[]){ "xo" };
+	init.num_parents = 1;
+	init.ops = &clk_pll_sr2_ops;
+	init.flags = CLK_IS_CRITICAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pll->clkr.hw.init = &init;
 
 	ret = devm_clk_register_regmap(dev, &pll->clkr);
@@ -152,7 +174,10 @@ static int qcom_a53pll_probe(struct platform_device *pdev)
 
 static const struct of_device_id qcom_a53pll_match_table[] = {
 	{ .compatible = "qcom,msm8916-a53pll" },
+<<<<<<< HEAD
 	{ .compatible = "qcom,msm8939-a53pll" },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ }
 };
 MODULE_DEVICE_TABLE(of, qcom_a53pll_match_table);

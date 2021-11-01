@@ -1001,9 +1001,20 @@ static inline void mlx5e_handle_csum(struct net_device *netdev,
 		goto csum_unnecessary;
 
 	if (likely(is_last_ethertype_ip(skb, &network_depth, &proto))) {
+<<<<<<< HEAD
 		if (unlikely(get_ip_proto(skb, network_depth, proto) == IPPROTO_SCTP))
 			goto csum_unnecessary;
 
+=======
+		u8 ipproto = get_ip_proto(skb, network_depth, proto);
+
+		if (unlikely(ipproto == IPPROTO_SCTP))
+			goto csum_unnecessary;
+
+		if (unlikely(mlx5_ipsec_is_rx_flow(cqe)))
+			goto csum_none;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		stats->csum_complete++;
 		skb->ip_summed = CHECKSUM_COMPLETE;
 		skb->csum = csum_unfold((__force __sum16)cqe->check_sum);

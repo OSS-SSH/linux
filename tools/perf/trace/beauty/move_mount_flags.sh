@@ -10,7 +10,11 @@ fi
 linux_mount=${linux_header_dir}/mount.h
 
 printf "static const char *move_mount_flags[] = {\n"
+<<<<<<< HEAD
 regex='^[[:space:]]*#[[:space:]]*define[[:space:]]+MOVE_MOUNT_([^_]+_[[:alnum:]_]+)[[:space:]]+(0x[[:xdigit:]]+)[[:space:]]*.*'
+=======
+regex='^[[:space:]]*#[[:space:]]*define[[:space:]]+MOVE_MOUNT_([FT]_[[:alnum:]_]+)[[:space:]]+(0x[[:xdigit:]]+)[[:space:]]*.*'
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 egrep $regex ${linux_mount} | \
 	sed -r "s/$regex/\2 \1/g"	| \
 	xargs printf "\t[ilog2(%s) + 1] = \"%s\",\n"

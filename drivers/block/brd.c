@@ -27,6 +27,12 @@
 
 #include <linux/uaccess.h>
 
+<<<<<<< HEAD
+=======
+#define PAGE_SECTORS_SHIFT	(PAGE_SHIFT - SECTOR_SHIFT)
+#define PAGE_SECTORS		(1 << PAGE_SECTORS_SHIFT)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Each block ramdisk device has a radix_tree brd_pages of pages that stores
  * the pages containing the block device's contents. A brd page's ->index is
@@ -373,6 +379,7 @@ static int brd_alloc(int i)
 	struct gendisk *disk;
 	char buf[DISK_NAME_LEN];
 
+<<<<<<< HEAD
 	mutex_lock(&brd_devices_mutex);
 	list_for_each_entry(brd, &brd_devices, brd_list) {
 		if (brd->brd_number == i) {
@@ -389,6 +396,12 @@ static int brd_alloc(int i)
 	list_add_tail(&brd->brd_list, &brd_devices);
 	mutex_unlock(&brd_devices_mutex);
 
+=======
+	brd = kzalloc(sizeof(*brd), GFP_KERNEL);
+	if (!brd)
+		return -ENOMEM;
+	brd->brd_number		= i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_init(&brd->brd_lock);
 	INIT_RADIX_TREE(&brd->brd_pages, GFP_ATOMIC);
 
@@ -423,30 +436,59 @@ static int brd_alloc(int i)
 	blk_queue_flag_set(QUEUE_FLAG_NONROT, disk->queue);
 	blk_queue_flag_clear(QUEUE_FLAG_ADD_RANDOM, disk->queue);
 	add_disk(disk);
+<<<<<<< HEAD
+=======
+	list_add_tail(&brd->brd_list, &brd_devices);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 
 out_free_dev:
+<<<<<<< HEAD
 	mutex_lock(&brd_devices_mutex);
 	list_del(&brd->brd_list);
 	mutex_unlock(&brd_devices_mutex);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(brd);
 	return -ENOMEM;
 }
 
 static void brd_probe(dev_t dev)
 {
+<<<<<<< HEAD
 	brd_alloc(MINOR(dev) / max_part);
+=======
+	int i = MINOR(dev) / max_part;
+	struct brd_device *brd;
+
+	mutex_lock(&brd_devices_mutex);
+	list_for_each_entry(brd, &brd_devices, brd_list) {
+		if (brd->brd_number == i)
+			goto out_unlock;
+	}
+
+	brd_alloc(i);
+out_unlock:
+	mutex_unlock(&brd_devices_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void brd_del_one(struct brd_device *brd)
 {
+<<<<<<< HEAD
 	del_gendisk(brd->brd_disk);
 	blk_cleanup_disk(brd->brd_disk);
 	brd_free_pages(brd);
 	mutex_lock(&brd_devices_mutex);
 	list_del(&brd->brd_list);
 	mutex_unlock(&brd_devices_mutex);
+=======
+	list_del(&brd->brd_list);
+	del_gendisk(brd->brd_disk);
+	blk_cleanup_disk(brd->brd_disk);
+	brd_free_pages(brd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(brd);
 }
 
@@ -496,21 +538,38 @@ static int __init brd_init(void)
 
 	brd_debugfs_dir = debugfs_create_dir("ramdisk_pages", NULL);
 
+<<<<<<< HEAD
+=======
+	mutex_lock(&brd_devices_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < rd_nr; i++) {
 		err = brd_alloc(i);
 		if (err)
 			goto out_free;
 	}
 
+<<<<<<< HEAD
+=======
+	mutex_unlock(&brd_devices_mutex);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_info("brd: module loaded\n");
 	return 0;
 
 out_free:
+<<<<<<< HEAD
 	unregister_blkdev(RAMDISK_MAJOR, "ramdisk");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	debugfs_remove_recursive(brd_debugfs_dir);
 
 	list_for_each_entry_safe(brd, next, &brd_devices, brd_list)
 		brd_del_one(brd);
+<<<<<<< HEAD
+=======
+	mutex_unlock(&brd_devices_mutex);
+	unregister_blkdev(RAMDISK_MAJOR, "ramdisk");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pr_info("brd: module NOT loaded !!!\n");
 	return err;
@@ -520,12 +579,20 @@ static void __exit brd_exit(void)
 {
 	struct brd_device *brd, *next;
 
+<<<<<<< HEAD
 	unregister_blkdev(RAMDISK_MAJOR, "ramdisk");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	debugfs_remove_recursive(brd_debugfs_dir);
 
 	list_for_each_entry_safe(brd, next, &brd_devices, brd_list)
 		brd_del_one(brd);
 
+<<<<<<< HEAD
+=======
+	unregister_blkdev(RAMDISK_MAJOR, "ramdisk");
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_info("brd: module unloaded\n");
 }
 

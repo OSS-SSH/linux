@@ -238,6 +238,7 @@ properties:
           - const: renesas,r8a77961
 
       - description: Kingfisher (SBEV-RCAR-KF-M03)
+<<<<<<< HEAD
         oneOf:
           - items:
               - const: shimafuji,kingfisher
@@ -261,6 +262,19 @@ properties:
               - enum:
                   - renesas,r8a7795
                   - renesas,r8a77961
+=======
+        items:
+          - const: shimafuji,kingfisher
+          - enum:
+              - renesas,h3ulcb
+              - renesas,m3ulcb
+              - renesas,m3nulcb
+          - enum:
+              - renesas,r8a7795
+              - renesas,r8a7796
+              - renesas,r8a77961
+              - renesas,r8a77965
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
       - description: R-Car M3-N (R8A77965)
         items:
@@ -308,6 +322,7 @@ properties:
           - const: renesas,falcon-cpu
           - const: renesas,r8a779a0
 
+<<<<<<< HEAD
       - description: R-Car H3e-2G (R8A779M1)
         items:
           - enum:
@@ -324,6 +339,8 @@ properties:
           - const: renesas,r8a779m3
           - const: renesas,r8a77961
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - description: RZ/N1D (R9A06G032)
         items:
           - enum:

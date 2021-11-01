@@ -77,7 +77,11 @@ static const char *check[] = {
 	NULL
 };
 
+<<<<<<< HEAD
 static const int block_sizes[] = { 16, 64, 128, 256, 1024, 1420, 4096, 0 };
+=======
+static const int block_sizes[] = { 16, 64, 256, 1024, 1420, 4096, 0 };
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const int aead_sizes[] = { 16, 64, 256, 512, 1024, 1420, 4096, 8192, 0 };
 
 #define XBUFSIZE 8
@@ -290,11 +294,14 @@ static void test_mb_aead_speed(const char *algo, int enc, int secs,
 	}
 
 	ret = crypto_aead_setauthsize(tfm, authsize);
+<<<<<<< HEAD
 	if (ret) {
 		pr_err("alg: aead: Failed to setauthsize for %s: %d\n", algo,
 		       ret);
 		goto out_free_tfm;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < num_mb; ++i)
 		if (testmgr_alloc_buf(data[i].xbuf)) {
@@ -320,7 +327,11 @@ static void test_mb_aead_speed(const char *algo, int enc, int secs,
 	for (i = 0; i < num_mb; ++i) {
 		data[i].req = aead_request_alloc(tfm, GFP_KERNEL);
 		if (!data[i].req) {
+<<<<<<< HEAD
 			pr_err("alg: aead: Failed to allocate request for %s\n",
+=======
+			pr_err("alg: skcipher: Failed to allocate request for %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			       algo);
 			while (i--)
 				aead_request_free(data[i].req);
@@ -572,12 +583,17 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
 	sgout = &sg[9];
 
 	tfm = crypto_alloc_aead(algo, 0, 0);
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(tfm)) {
 		pr_err("alg: aead: Failed to load transform for %s: %ld\n", algo,
 		       PTR_ERR(tfm));
 		goto out_notfm;
 	}
 
+<<<<<<< HEAD
 	ret = crypto_aead_setauthsize(tfm, authsize);
 	if (ret) {
 		pr_err("alg: aead: Failed to setauthsize for %s: %d\n", algo,
@@ -585,6 +601,8 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
 		goto out_noreq;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	crypto_init_wait(&wait);
 	printk(KERN_INFO "\ntesting speed of %s (%s) %s\n", algo,
 			get_driver_name(crypto_aead, tfm), e);
@@ -622,6 +640,7 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
 					break;
 				}
 			}
+<<<<<<< HEAD
 
 			ret = crypto_aead_setkey(tfm, key, *keysize);
 			if (ret) {
@@ -629,6 +648,10 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
 					crypto_aead_get_flags(tfm), ret);
 				goto out;
 			}
+=======
+			ret = crypto_aead_setkey(tfm, key, *keysize);
+			ret = crypto_aead_setauthsize(tfm, authsize);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			iv_len = crypto_aead_ivsize(tfm);
 			if (iv_len)
@@ -638,8 +661,20 @@ static void test_aead_speed(const char *algo, int enc, unsigned int secs,
 			printk(KERN_INFO "test %u (%d bit key, %d byte blocks): ",
 					i, *keysize * 8, bs);
 
+<<<<<<< HEAD
 			memset(tvmem[0], 0xff, PAGE_SIZE);
 
+=======
+
+			memset(tvmem[0], 0xff, PAGE_SIZE);
+
+			if (ret) {
+				pr_err("setkey() failed flags=%x\n",
+						crypto_aead_get_flags(tfm));
+				goto out;
+			}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			sg_init_aead(sg, xbuf, bs + (enc ? 0 : authsize),
 				     assoc, aad_size);
 
@@ -1916,6 +1951,7 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 		ret += tcrypt_test("streebog512");
 		break;
 
+<<<<<<< HEAD
 	case 55:
 		ret += tcrypt_test("gcm(sm4)");
 		break;
@@ -1924,6 +1960,8 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 		ret += tcrypt_test("ccm(sm4)");
 		break;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 100:
 		ret += tcrypt_test("hmac(md5)");
 		break;
@@ -2015,6 +2053,7 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 	case 157:
 		ret += tcrypt_test("authenc(hmac(sha1),ecb(cipher_null))");
 		break;
+<<<<<<< HEAD
 
 	case 158:
 		ret += tcrypt_test("cbcmac(sm4)");
@@ -2024,6 +2063,8 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 		ret += tcrypt_test("cmac(sm4)");
 		break;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 181:
 		ret += tcrypt_test("authenc(hmac(sha1),cbc(des))");
 		break;
@@ -2057,7 +2098,10 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 	case 191:
 		ret += tcrypt_test("ecb(sm4)");
 		ret += tcrypt_test("cbc(sm4)");
+<<<<<<< HEAD
 		ret += tcrypt_test("cfb(sm4)");
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret += tcrypt_test("ctr(sm4)");
 		break;
 	case 200:
@@ -2316,10 +2360,13 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 				speed_template_16);
 		test_cipher_speed("cbc(sm4)", DECRYPT, sec, NULL, 0,
 				speed_template_16);
+<<<<<<< HEAD
 		test_cipher_speed("cfb(sm4)", ENCRYPT, sec, NULL, 0,
 				speed_template_16);
 		test_cipher_speed("cfb(sm4)", DECRYPT, sec, NULL, 0,
 				speed_template_16);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		test_cipher_speed("ctr(sm4)", ENCRYPT, sec, NULL, 0,
 				speed_template_16);
 		test_cipher_speed("ctr(sm4)", DECRYPT, sec, NULL, 0,
@@ -2353,6 +2400,7 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 				NULL, 0, 16, 8, speed_template_16);
 		break;
 
+<<<<<<< HEAD
 	case 222:
 		test_aead_speed("gcm(sm4)", ENCRYPT, sec,
 				NULL, 0, 16, 8, speed_template_16);
@@ -2381,6 +2429,8 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 				   16, 16, aead_speed_template_19, num_mb);
 		break;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 300:
 		if (alg) {
 			test_hash_speed(alg, sec, generic_hash_speed_template);
@@ -2816,6 +2866,7 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 				   speed_template_8_32);
 		break;
 
+<<<<<<< HEAD
 	case 518:
 		test_acipher_speed("ecb(sm4)", ENCRYPT, sec, NULL, 0,
 				speed_template_16);
@@ -2835,6 +2886,8 @@ static int do_test(const char *alg, u32 type, u32 mask, int m, u32 num_mb)
 				speed_template_16);
 		break;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 600:
 		test_mb_skcipher_speed("ecb(aes)", ENCRYPT, sec, NULL, 0,
 				       speed_template_16_24_32, num_mb);

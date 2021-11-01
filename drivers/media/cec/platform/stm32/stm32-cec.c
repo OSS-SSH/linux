@@ -305,16 +305,25 @@ static int stm32_cec_probe(struct platform_device *pdev)
 
 	cec->clk_hdmi_cec = devm_clk_get(&pdev->dev, "hdmi-cec");
 	if (IS_ERR(cec->clk_hdmi_cec) &&
+<<<<<<< HEAD
 	    PTR_ERR(cec->clk_hdmi_cec) == -EPROBE_DEFER) {
 		ret = -EPROBE_DEFER;
 		goto err_unprepare_cec_clk;
 	}
+=======
+	    PTR_ERR(cec->clk_hdmi_cec) == -EPROBE_DEFER)
+		return -EPROBE_DEFER;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!IS_ERR(cec->clk_hdmi_cec)) {
 		ret = clk_prepare(cec->clk_hdmi_cec);
 		if (ret) {
 			dev_err(&pdev->dev, "Can't prepare hdmi-cec clock\n");
+<<<<<<< HEAD
 			goto err_unprepare_cec_clk;
+=======
+			return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -326,17 +335,28 @@ static int stm32_cec_probe(struct platform_device *pdev)
 			CEC_NAME, caps,	CEC_MAX_LOG_ADDRS);
 	ret = PTR_ERR_OR_ZERO(cec->adap);
 	if (ret)
+<<<<<<< HEAD
 		goto err_unprepare_hdmi_cec_clk;
 
 	ret = cec_register_adapter(cec->adap, &pdev->dev);
 	if (ret)
 		goto err_delete_adapter;
+=======
+		return ret;
+
+	ret = cec_register_adapter(cec->adap, &pdev->dev);
+	if (ret) {
+		cec_delete_adapter(cec->adap);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cec_hw_init(cec);
 
 	platform_set_drvdata(pdev, cec);
 
 	return 0;
+<<<<<<< HEAD
 
 err_delete_adapter:
 	cec_delete_adapter(cec->adap);
@@ -347,6 +367,8 @@ err_unprepare_hdmi_cec_clk:
 err_unprepare_cec_clk:
 	clk_unprepare(cec->clk_cec);
 	return ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int stm32_cec_remove(struct platform_device *pdev)

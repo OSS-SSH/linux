@@ -130,7 +130,10 @@ printed after the symbol name with an extra ``b`` appended to the end of the
 specifier.
 
 ::
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	%pS	versatile_init+0x0/0x110 [module_name]
 	%pSb	versatile_init+0x0/0x110 [module_name ed5019fdf5e53be37cb1ba7899292d7e143b259e]
 	%pSRb	versatile_init+0x9/0x110 [module_name ed5019fdf5e53be37cb1ba7899292d7e143b259e]

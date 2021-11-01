@@ -18,7 +18,10 @@
 
 struct drm_i915_gem_object;
 struct intel_fronbuffer;
+<<<<<<< HEAD
 struct intel_memory_region;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * struct i915_lut_handle tracks the fast lookups from handle to vma used
@@ -34,9 +37,16 @@ struct i915_lut_handle {
 
 struct drm_i915_gem_object_ops {
 	unsigned int flags;
+<<<<<<< HEAD
 #define I915_GEM_OBJECT_IS_SHRINKABLE	BIT(1)
 #define I915_GEM_OBJECT_IS_PROXY	BIT(2)
 #define I915_GEM_OBJECT_NO_MMAP		BIT(3)
+=======
+#define I915_GEM_OBJECT_HAS_IOMEM	BIT(1)
+#define I915_GEM_OBJECT_IS_SHRINKABLE	BIT(2)
+#define I915_GEM_OBJECT_IS_PROXY	BIT(3)
+#define I915_GEM_OBJECT_NO_MMAP		BIT(4)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Interface between the GEM object and its backing storage.
 	 * get_pages() is called once prior to the use of the associated set
@@ -61,6 +71,7 @@ struct drm_i915_gem_object_ops {
 		     const struct drm_i915_gem_pread *arg);
 	int (*pwrite)(struct drm_i915_gem_object *obj,
 		      const struct drm_i915_gem_pwrite *arg);
+<<<<<<< HEAD
 	u64 (*mmap_offset)(struct drm_i915_gem_object *obj);
 
 	int (*dmabuf_export)(struct drm_i915_gem_object *obj);
@@ -172,6 +183,15 @@ enum i915_cache_level {
 	I915_CACHE_WT,
 };
 
+=======
+
+	int (*dmabuf_export)(struct drm_i915_gem_object *obj);
+	void (*release)(struct drm_i915_gem_object *obj);
+
+	const char *name; /* friendly name for debug, e.g. lockdep classes */
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum i915_map_type {
 	I915_MAP_WB = 0,
 	I915_MAP_WC,
@@ -185,7 +205,10 @@ enum i915_mmap_type {
 	I915_MMAP_TYPE_WC,
 	I915_MMAP_TYPE_WB,
 	I915_MMAP_TYPE_UC,
+<<<<<<< HEAD
 	I915_MMAP_TYPE_FIXED,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct i915_mmap_offset {
@@ -290,6 +313,7 @@ struct drm_i915_gem_object {
 	unsigned long flags;
 #define I915_BO_ALLOC_CONTIGUOUS BIT(0)
 #define I915_BO_ALLOC_VOLATILE   BIT(1)
+<<<<<<< HEAD
 #define I915_BO_ALLOC_CPU_CLEAR  BIT(2)
 #define I915_BO_ALLOC_USER       BIT(3)
 #define I915_BO_ALLOC_FLAGS (I915_BO_ALLOC_CONTIGUOUS | \
@@ -422,6 +446,25 @@ struct drm_i915_gem_object {
 	 * where the kernel is completely unaware. On such platform we need
 	 * apply the sledgehammer-on-acquire regardless of the @cache_coherent.
 	 */
+=======
+#define I915_BO_ALLOC_STRUCT_PAGE BIT(2)
+#define I915_BO_ALLOC_CPU_CLEAR  BIT(3)
+#define I915_BO_ALLOC_FLAGS (I915_BO_ALLOC_CONTIGUOUS | \
+			     I915_BO_ALLOC_VOLATILE | \
+			     I915_BO_ALLOC_STRUCT_PAGE | \
+			     I915_BO_ALLOC_CPU_CLEAR)
+#define I915_BO_READONLY         BIT(4)
+#define I915_TILING_QUIRK_BIT    5 /* unknown swizzling; do not release! */
+
+	/*
+	 * Is the object to be mapped as read-only to the GPU
+	 * Only honoured if hardware has relevant pte bit
+	 */
+	unsigned int cache_level:3;
+	unsigned int cache_coherent:2;
+#define I915_BO_CACHE_COHERENT_FOR_READ BIT(0)
+#define I915_BO_CACHE_COHERENT_FOR_WRITE BIT(1)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int cache_dirty:1;
 
 	/**
@@ -467,10 +510,16 @@ struct drm_i915_gem_object {
 		struct intel_memory_region *region;
 
 		/**
+<<<<<<< HEAD
 		 * Memory manager resource allocated for this object. Only
 		 * needed for the mock region.
 		 */
 		struct ttm_resource *res;
+=======
+		 * Memory manager node allocated for this object.
+		 */
+		void *st_mm_node;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/**
 		 * Element within memory_region->objects or region->purgeable
@@ -531,12 +580,15 @@ struct drm_i915_gem_object {
 		bool dirty:1;
 	} mm;
 
+<<<<<<< HEAD
 	struct {
 		struct sg_table *cached_io_st;
 		struct i915_gem_object_page_iter get_io_page;
 		bool created:1;
 	} ttm;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/** Record of address bit 17 of each page at last unbind. */
 	unsigned long *bit_17;
 

@@ -9,6 +9,7 @@
 
 #define READ_AND_CONFIG_MP(ic, txt) (ODM_ReadAndConfig_MP_##ic##txt(pDM_Odm))
 #define READ_AND_CONFIG     READ_AND_CONFIG_MP
+<<<<<<< HEAD
 
 static u8 odm_query_rx_pwr_percentage(s8 ant_power)
 {
@@ -48,13 +49,60 @@ s32 odm_signal_scale_mapping(struct dm_odm_t *dm_odm, s32 curr_sig)
 }
 
 static u8 odm_evm_db_to_percentage(s8 value)
+=======
+#define GET_VERSION_MP(ic, txt) (ODM_GetVersion_MP_##ic##txt())
+#define GET_VERSION(ic, txt) (pDM_Odm->bIsMPChip?GET_VERSION_MP(ic, txt):GET_VERSION_TC(ic, txt))
+
+static u8 odm_QueryRxPwrPercentage(s8 AntPower)
+{
+	if ((AntPower <= -100) || (AntPower >= 20))
+		return	0;
+	else if (AntPower >= 0)
+		return	100;
+	else
+		return 100 + AntPower;
+
+}
+
+s32 odm_SignalScaleMapping(struct dm_odm_t *pDM_Odm, s32 CurrSig)
+{
+	s32 RetSig = 0;
+
+	if (pDM_Odm->SupportInterface  == ODM_ITRF_SDIO) {
+		if (CurrSig >= 51 && CurrSig <= 100)
+			RetSig = 100;
+		else if (CurrSig >= 41 && CurrSig <= 50)
+			RetSig = 80 + ((CurrSig - 40)*2);
+		else if (CurrSig >= 31 && CurrSig <= 40)
+			RetSig = 66 + (CurrSig - 30);
+		else if (CurrSig >= 21 && CurrSig <= 30)
+			RetSig = 54 + (CurrSig - 20);
+		else if (CurrSig >= 10 && CurrSig <= 20)
+			RetSig = 42 + (((CurrSig - 10) * 2) / 3);
+		else if (CurrSig >= 5 && CurrSig <= 9)
+			RetSig = 22 + (((CurrSig - 5) * 3) / 2);
+		else if (CurrSig >= 1 && CurrSig <= 4)
+			RetSig = 6 + (((CurrSig - 1) * 3) / 2);
+		else
+			RetSig = CurrSig;
+	}
+
+	return RetSig;
+}
+
+static u8 odm_EVMdbToPercentage(s8 Value)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	/*  */
 	/*  -33dB~0dB to 0%~99% */
 	/*  */
 	s8 ret_val;
 
+<<<<<<< HEAD
 	ret_val = value;
+=======
+	ret_val = Value;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret_val /= 2;
 
 	if (ret_val >= 0)
@@ -71,6 +119,7 @@ static u8 odm_evm_db_to_percentage(s8 value)
 	return ret_val;
 }
 
+<<<<<<< HEAD
 static s8 odm_cck_rssi(u8 lna_idx, u8 vga_idx)
 {
 	s8 rx_pwr_all = 0x00;
@@ -179,10 +228,92 @@ static void odm_rx_phy_status_parsing(struct dm_odm_t *dm_odm,
 		for (i = RF_PATH_A; i < RF_PATH_MAX; i++) {
 			/*  2008/01/30 MH we will judge RF RX path now. */
 			if (dm_odm->RFPathRxEnable & BIT(i))
+=======
+static void odm_RxPhyStatus92CSeries_Parsing(
+	struct dm_odm_t *pDM_Odm,
+	struct odm_phy_info *pPhyInfo,
+	u8 *pPhyStatus,
+	struct odm_packet_info *pPktinfo
+)
+{
+	u8 i, Max_spatial_stream;
+	s8 rx_pwr[4], rx_pwr_all = 0;
+	u8 EVM, PWDB_ALL = 0, PWDB_ALL_BT;
+	u8 RSSI, total_rssi = 0;
+	bool isCCKrate = false;
+	u8 rf_rx_num = 0;
+	u8 LNA_idx, VGA_idx;
+	struct phy_status_rpt_8192cd_t *pPhyStaRpt = (struct phy_status_rpt_8192cd_t *)pPhyStatus;
+
+	isCCKrate = pPktinfo->data_rate <= DESC_RATE11M;
+	pPhyInfo->rx_mimo_signal_quality[ODM_RF_PATH_A] = -1;
+	pPhyInfo->rx_mimo_signal_quality[ODM_RF_PATH_B] = -1;
+
+
+	if (isCCKrate) {
+		u8 cck_agc_rpt;
+
+		pDM_Odm->PhyDbgInfo.NumQryPhyStatusCCK++;
+		/*  */
+		/*  (1)Hardware does not provide RSSI for CCK */
+		/*  (2)PWDB, Average PWDB calculated by hardware (for rate adaptive) */
+		/*  */
+
+		cck_agc_rpt = pPhyStaRpt->cck_agc_rpt_ofdm_cfosho_a;
+
+		/* 2011.11.28 LukeLee: 88E use different LNA & VGA gain table */
+		/* The RSSI formula should be modified according to the gain table */
+		LNA_idx = ((cck_agc_rpt & 0xE0)>>5);
+		VGA_idx = (cck_agc_rpt & 0x1F);
+		rx_pwr_all = odm_CCKRSSI_8723B(LNA_idx, VGA_idx);
+		PWDB_ALL = odm_QueryRxPwrPercentage(rx_pwr_all);
+		if (PWDB_ALL > 100)
+			PWDB_ALL = 100;
+
+		pPhyInfo->rx_pwd_ba11 = PWDB_ALL;
+		pPhyInfo->bt_rx_rssi_percentage = PWDB_ALL;
+		pPhyInfo->recv_signal_power = rx_pwr_all;
+		/*  */
+		/*  (3) Get Signal Quality (EVM) */
+		/*  */
+		/* if (pPktinfo->bPacketMatchBSSID) */
+		{
+			u8 SQ, SQ_rpt;
+
+			if (pPhyInfo->rx_pwd_ba11 > 40 && !pDM_Odm->bInHctTest)
+				SQ = 100;
+			else {
+				SQ_rpt = pPhyStaRpt->cck_sig_qual_ofdm_pwdb_all;
+
+				if (SQ_rpt > 64)
+					SQ = 0;
+				else if (SQ_rpt < 20)
+					SQ = 100;
+				else
+					SQ = ((64-SQ_rpt) * 100) / 44;
+
+			}
+
+			pPhyInfo->signal_quality = SQ;
+			pPhyInfo->rx_mimo_signal_quality[ODM_RF_PATH_A] = SQ;
+			pPhyInfo->rx_mimo_signal_quality[ODM_RF_PATH_B] = -1;
+		}
+	} else { /* is OFDM rate */
+		pDM_Odm->PhyDbgInfo.NumQryPhyStatusOFDM++;
+
+		/*  */
+		/*  (1)Get RSSI for HT rate */
+		/*  */
+
+		for (i = ODM_RF_PATH_A; i < ODM_RF_PATH_MAX; i++) {
+			/*  2008/01/30 MH we will judge RF RX path now. */
+			if (pDM_Odm->RFPathRxEnable & BIT(i))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				rf_rx_num++;
 			/* else */
 				/* continue; */
 
+<<<<<<< HEAD
 			rx_pwr[i] = ((phy_sta_rpt->path_agc[i].gain & 0x3F) * 2) - 110;
 
 			phy_info->rx_pwr[i] = rx_pwr[i];
@@ -242,6 +373,72 @@ static void odm_rx_phy_status_parsing(struct dm_odm_t *dm_odm,
 	} else {
 		if (rf_rx_num != 0) {
 			phy_info->signal_strength = (u8)(odm_signal_scale_mapping(dm_odm, total_rssi /= rf_rx_num));
+=======
+			rx_pwr[i] = ((pPhyStaRpt->path_agc[i].gain&0x3F)*2) - 110;
+
+
+			pPhyInfo->rx_pwr[i] = rx_pwr[i];
+
+			/* Translate DBM to percentage. */
+			RSSI = odm_QueryRxPwrPercentage(rx_pwr[i]);
+			total_rssi += RSSI;
+
+			pPhyInfo->rx_mimo_signal_strength[i] = (u8) RSSI;
+
+			/* Get Rx snr value in DB */
+			pPhyInfo->rx_snr[i] = pDM_Odm->PhyDbgInfo.RxSNRdB[i] = (s32)(pPhyStaRpt->path_rxsnr[i]/2);
+		}
+
+
+		/*  */
+		/*  (2)PWDB, Average PWDB calculated by hardware (for rate adaptive) */
+		/*  */
+		rx_pwr_all = (((pPhyStaRpt->cck_sig_qual_ofdm_pwdb_all) >> 1)&0x7f)-110;
+
+		PWDB_ALL_BT = PWDB_ALL = odm_QueryRxPwrPercentage(rx_pwr_all);
+
+		pPhyInfo->rx_pwd_ba11 = PWDB_ALL;
+		pPhyInfo->bt_rx_rssi_percentage = PWDB_ALL_BT;
+		pPhyInfo->rx_power = rx_pwr_all;
+		pPhyInfo->recv_signal_power = rx_pwr_all;
+
+		{/* pMgntInfo->CustomerID != RT_CID_819x_Lenovo */
+			/*  */
+			/*  (3)EVM of HT rate */
+			/*  */
+			if (pPktinfo->data_rate >= DESC_RATEMCS8 && pPktinfo->data_rate <= DESC_RATEMCS15)
+				Max_spatial_stream = 2; /* both spatial stream make sense */
+			else
+				Max_spatial_stream = 1; /* only spatial stream 1 makes sense */
+
+			for (i = 0; i < Max_spatial_stream; i++) {
+				/*  Do not use shift operation like "rx_evmX >>= 1" because the compilor of free build environment */
+				/*  fill most significant bit to "zero" when doing shifting operation which may change a negative */
+				/*  value to positive one, then the dbm value (which is supposed to be negative)  is not correct anymore. */
+				EVM = odm_EVMdbToPercentage((pPhyStaRpt->stream_rxevm[i]));	/* dbm */
+
+				/* if (pPktinfo->bPacketMatchBSSID) */
+				{
+					if (i == ODM_RF_PATH_A) /*  Fill value in RFD, Get the first spatial stream only */
+						pPhyInfo->signal_quality = (u8)(EVM & 0xff);
+
+					pPhyInfo->rx_mimo_signal_quality[i] = (u8)(EVM & 0xff);
+				}
+			}
+		}
+
+		ODM_ParsingCFO(pDM_Odm, pPktinfo, pPhyStaRpt->path_cfotail);
+
+	}
+
+	/* UI BSS List signal strength(in percentage), make it good looking, from 0~100. */
+	/* It is assigned to the BSS List in GetValueFromBeaconOrProbeRsp(). */
+	if (isCCKrate) {
+		pPhyInfo->signal_strength = (u8)(odm_SignalScaleMapping(pDM_Odm, PWDB_ALL));/* PWDB_ALL; */
+	} else {
+		if (rf_rx_num != 0) {
+			pPhyInfo->signal_strength = (u8)(odm_SignalScaleMapping(pDM_Odm, total_rssi /= rf_rx_num));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 }
@@ -290,6 +487,7 @@ static void odm_Process_RSSIForDM(
 	if (pPktinfo->to_self || pPktinfo->is_beacon) {
 
 		if (!isCCKrate) { /* ofdm rate */
+<<<<<<< HEAD
 			if (pPhyInfo->rx_mimo_signal_strength[RF_PATH_B] == 0) {
 				RSSI_Ave = pPhyInfo->rx_mimo_signal_strength[RF_PATH_A];
 				pDM_Odm->RSSI_A = pPhyInfo->rx_mimo_signal_strength[RF_PATH_A];
@@ -307,6 +505,25 @@ static void odm_Process_RSSIForDM(
 				} else {
 					RSSI_max = pPhyInfo->rx_mimo_signal_strength[RF_PATH_B];
 					RSSI_min = pPhyInfo->rx_mimo_signal_strength[RF_PATH_A];
+=======
+			if (pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_B] == 0) {
+				RSSI_Ave = pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_A];
+				pDM_Odm->RSSI_A = pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_A];
+				pDM_Odm->RSSI_B = 0;
+			} else {
+				pDM_Odm->RSSI_A =  pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_A];
+				pDM_Odm->RSSI_B = pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_B];
+
+				if (
+					pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_A] >
+					pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_B]
+				) {
+					RSSI_max = pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_A];
+					RSSI_min = pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_B];
+				} else {
+					RSSI_max = pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_B];
+					RSSI_min = pPhyInfo->rx_mimo_signal_strength[ODM_RF_PATH_A];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				}
 
 				if ((RSSI_max-RSSI_min) < 3)
@@ -393,6 +610,7 @@ static void odm_Process_RSSIForDM(
 /*  */
 /*  Endianness before calling this API */
 /*  */
+<<<<<<< HEAD
 void odm_phy_status_query(struct dm_odm_t *dm_odm, struct odm_phy_info *phy_info,
 			  u8 *phy_status, struct odm_packet_info *pkt_info)
 {
@@ -401,6 +619,31 @@ void odm_phy_status_query(struct dm_odm_t *dm_odm, struct odm_phy_info *phy_info
 
 	if (!dm_odm->RSSI_test)
 		odm_Process_RSSIForDM(dm_odm, phy_info, pkt_info);
+=======
+static void ODM_PhyStatusQuery_92CSeries(
+	struct dm_odm_t *pDM_Odm,
+	struct odm_phy_info *pPhyInfo,
+	u8 *pPhyStatus,
+	struct odm_packet_info *pPktinfo
+)
+{
+
+	odm_RxPhyStatus92CSeries_Parsing(pDM_Odm, pPhyInfo, pPhyStatus, pPktinfo);
+
+	if (!pDM_Odm->RSSI_test)
+		odm_Process_RSSIForDM(pDM_Odm, pPhyInfo, pPktinfo);
+}
+
+void ODM_PhyStatusQuery(
+	struct dm_odm_t *pDM_Odm,
+	struct odm_phy_info *pPhyInfo,
+	u8 *pPhyStatus,
+	struct odm_packet_info *pPktinfo
+)
+{
+
+	ODM_PhyStatusQuery_92CSeries(pDM_Odm, pPhyInfo, pPhyStatus, pPktinfo);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*  */
@@ -411,7 +654,11 @@ void odm_phy_status_query(struct dm_odm_t *dm_odm, struct odm_phy_info *phy_info
 enum hal_status ODM_ConfigRFWithHeaderFile(
 	struct dm_odm_t *pDM_Odm,
 	enum ODM_RF_Config_Type ConfigType,
+<<<<<<< HEAD
 	enum rf_path eRFPath
+=======
+	enum odm_rf_radio_path_e eRFPath
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 )
 {
 	if (ConfigType == CONFIG_RF_RADIO)

@@ -3496,7 +3496,11 @@ static void irdma_cm_disconn_true(struct irdma_qp *iwqp)
 	     original_hw_tcp_state == IRDMA_TCP_STATE_TIME_WAIT ||
 	     last_ae == IRDMA_AE_RDMAP_ROE_BAD_LLP_CLOSE ||
 	     last_ae == IRDMA_AE_BAD_CLOSE ||
+<<<<<<< HEAD
 	     last_ae == IRDMA_AE_LLP_CONNECTION_RESET || iwdev->rf->reset)) {
+=======
+	     last_ae == IRDMA_AE_LLP_CONNECTION_RESET || iwdev->reset)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		issue_close = 1;
 		iwqp->cm_id = NULL;
 		qp->term_flags = 0;
@@ -4250,7 +4254,11 @@ void irdma_cm_teardown_connections(struct irdma_device *iwdev, u32 *ipaddr,
 				       teardown_entry);
 		attr.qp_state = IB_QPS_ERR;
 		irdma_modify_qp(&cm_node->iwqp->ibqp, &attr, IB_QP_STATE, NULL);
+<<<<<<< HEAD
 		if (iwdev->rf->reset)
+=======
+		if (iwdev->reset)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			irdma_cm_disconn(cm_node->iwqp);
 		irdma_rem_ref_cm_node(cm_node);
 	}

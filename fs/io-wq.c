@@ -14,7 +14,10 @@
 #include <linux/rculist_nulls.h>
 #include <linux/cpu.h>
 #include <linux/tracehook.h>
+<<<<<<< HEAD
 #include <uapi/linux/io_uring.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "io-wq.h"
 
@@ -24,7 +27,12 @@ enum {
 	IO_WORKER_F_UP		= 1,	/* up and active */
 	IO_WORKER_F_RUNNING	= 2,	/* account as running */
 	IO_WORKER_F_FREE	= 4,	/* worker on free list */
+<<<<<<< HEAD
 	IO_WORKER_F_BOUND	= 8,	/* is doing bounded work */
+=======
+	IO_WORKER_F_FIXED	= 8,	/* static idle worker */
+	IO_WORKER_F_BOUND	= 16,	/* is doing bounded work */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum {
@@ -32,7 +40,11 @@ enum {
 };
 
 enum {
+<<<<<<< HEAD
 	IO_ACCT_STALLED_BIT	= 0,	/* stalled on hash */
+=======
+	IO_WQE_FLAG_STALLED	= 1,	/* stalled on hash */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -51,6 +63,7 @@ struct io_worker {
 
 	struct completion ref_done;
 
+<<<<<<< HEAD
 	unsigned long create_state;
 	struct callback_head create_work;
 	int create_index;
@@ -59,6 +72,9 @@ struct io_worker {
 		struct rcu_head rcu;
 		struct work_struct work;
 	};
+=======
+	struct rcu_head rcu;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #if BITS_PER_LONG == 64
@@ -74,24 +90,41 @@ struct io_wqe_acct {
 	unsigned max_workers;
 	int index;
 	atomic_t nr_running;
+<<<<<<< HEAD
 	struct io_wq_work_list work_list;
 	unsigned long flags;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum {
 	IO_WQ_ACCT_BOUND,
 	IO_WQ_ACCT_UNBOUND,
+<<<<<<< HEAD
 	IO_WQ_ACCT_NR,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
  * Per-node worker thread pool
  */
 struct io_wqe {
+<<<<<<< HEAD
 	raw_spinlock_t lock;
 	struct io_wqe_acct acct[2];
 
 	int node;
+=======
+	struct {
+		raw_spinlock_t lock;
+		struct io_wq_work_list work_list;
+		unsigned flags;
+	} ____cacheline_aligned_in_smp;
+
+	int node;
+	struct io_wqe_acct acct[2];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct hlist_nulls_head free_list;
 	struct list_head all_list;
@@ -135,11 +168,15 @@ struct io_cb_cancel_data {
 	bool cancel_all;
 };
 
+<<<<<<< HEAD
 static bool create_io_worker(struct io_wq *wq, struct io_wqe *wqe, int index);
 static void io_wqe_dec_running(struct io_worker *worker);
 static bool io_acct_cancel_pending_work(struct io_wqe *wqe,
 					struct io_wqe_acct *acct,
 					struct io_cb_cancel_data *match);
+=======
+static void create_io_worker(struct io_wq *wq, struct io_wqe *wqe, int index);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static bool io_worker_get(struct io_worker *worker)
 {
@@ -177,11 +214,17 @@ static void io_worker_ref_put(struct io_wq *wq)
 static void io_worker_exit(struct io_worker *worker)
 {
 	struct io_wqe *wqe = worker->wqe;
+<<<<<<< HEAD
+=======
+	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
+	unsigned flags;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (refcount_dec_and_test(&worker->ref))
 		complete(&worker->ref_done);
 	wait_for_completion(&worker->ref_done);
 
+<<<<<<< HEAD
 	raw_spin_lock(&wqe->lock);
 	if (worker->flags & IO_WORKER_F_FREE)
 		hlist_nulls_del_rcu(&worker->nulls_node);
@@ -192,16 +235,41 @@ static void io_worker_exit(struct io_worker *worker)
 	current->flags &= ~PF_IO_WORKER;
 	preempt_enable();
 	raw_spin_unlock(&wqe->lock);
+=======
+	preempt_disable();
+	current->flags &= ~PF_IO_WORKER;
+	flags = worker->flags;
+	worker->flags = 0;
+	if (flags & IO_WORKER_F_RUNNING)
+		atomic_dec(&acct->nr_running);
+	worker->flags = 0;
+	preempt_enable();
+
+	raw_spin_lock_irq(&wqe->lock);
+	if (flags & IO_WORKER_F_FREE)
+		hlist_nulls_del_rcu(&worker->nulls_node);
+	list_del_rcu(&worker->all_list);
+	acct->nr_workers--;
+	raw_spin_unlock_irq(&wqe->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kfree_rcu(worker, rcu);
 	io_worker_ref_put(wqe->wq);
 	do_exit(0);
 }
 
+<<<<<<< HEAD
 static inline bool io_acct_run_queue(struct io_wqe_acct *acct)
 {
 	if (!wq_list_empty(&acct->work_list) &&
 	    !test_bit(IO_ACCT_STALLED_BIT, &acct->flags))
+=======
+static inline bool io_wqe_run_queue(struct io_wqe *wqe)
+	__must_hold(wqe->lock)
+{
+	if (!wq_list_empty(&wqe->work_list) &&
+	    !(wqe->flags & IO_WQE_FLAG_STALLED))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 	return false;
 }
@@ -210,13 +278,18 @@ static inline bool io_acct_run_queue(struct io_wqe_acct *acct)
  * Check head of free list for an available worker. If one isn't available,
  * caller must create one.
  */
+<<<<<<< HEAD
 static bool io_wqe_activate_free_worker(struct io_wqe *wqe,
 					struct io_wqe_acct *acct)
+=======
+static bool io_wqe_activate_free_worker(struct io_wqe *wqe)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__must_hold(RCU)
 {
 	struct hlist_nulls_node *n;
 	struct io_worker *worker;
 
+<<<<<<< HEAD
 	/*
 	 * Iterate free_list and see if we can find an idle worker to
 	 * activate. If a given worker is on the free_list but in the process
@@ -234,6 +307,17 @@ static bool io_wqe_activate_free_worker(struct io_wqe *wqe,
 			return true;
 		}
 		io_worker_release(worker);
+=======
+	n = rcu_dereference(hlist_nulls_first_rcu(&wqe->free_list));
+	if (is_a_nulls(n))
+		return false;
+
+	worker = hlist_nulls_entry(n, struct io_worker, nulls_node);
+	if (io_worker_get(worker)) {
+		wake_up_process(worker->task);
+		io_worker_release(worker);
+		return true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return false;
@@ -243,8 +327,15 @@ static bool io_wqe_activate_free_worker(struct io_wqe *wqe,
  * We need a worker. If we find a free one, we're good. If not, and we're
  * below the max number of workers, create one.
  */
+<<<<<<< HEAD
 static bool io_wqe_create_worker(struct io_wqe *wqe, struct io_wqe_acct *acct)
 {
+=======
+static void io_wqe_wake_worker(struct io_wqe *wqe, struct io_wqe_acct *acct)
+{
+	bool ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Most likely an attempt to queue unbounded work on an io_wq that
 	 * wasn't setup with any unbounded workers.
@@ -252,6 +343,7 @@ static bool io_wqe_create_worker(struct io_wqe *wqe, struct io_wqe_acct *acct)
 	if (unlikely(!acct->max_workers))
 		pr_warn_once("io-wq is not configured for unbound workers");
 
+<<<<<<< HEAD
 	raw_spin_lock(&wqe->lock);
 	if (acct->nr_workers == acct->max_workers) {
 		raw_spin_unlock(&wqe->lock);
@@ -262,6 +354,17 @@ static bool io_wqe_create_worker(struct io_wqe *wqe, struct io_wqe_acct *acct)
 	atomic_inc(&acct->nr_running);
 	atomic_inc(&wqe->wq->worker_refs);
 	return create_io_worker(wqe->wq, wqe, acct->index);
+=======
+	rcu_read_lock();
+	ret = io_wqe_activate_free_worker(wqe);
+	rcu_read_unlock();
+
+	if (!ret && acct->nr_workers < acct->max_workers) {
+		atomic_inc(&acct->nr_running);
+		atomic_inc(&wqe->wq->worker_refs);
+		create_io_worker(wqe->wq, wqe, acct->index);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void io_wqe_inc_running(struct io_worker *worker)
@@ -271,6 +374,7 @@ static void io_wqe_inc_running(struct io_worker *worker)
 	atomic_inc(&acct->nr_running);
 }
 
+<<<<<<< HEAD
 static void create_worker_cb(struct callback_head *cb)
 {
 	struct io_worker *worker;
@@ -304,11 +408,34 @@ static bool io_queue_worker_create(struct io_worker *worker,
 				   task_work_func_t func)
 {
 	struct io_wqe *wqe = worker->wqe;
+=======
+struct create_worker_data {
+	struct callback_head work;
+	struct io_wqe *wqe;
+	int index;
+};
+
+static void create_worker_cb(struct callback_head *cb)
+{
+	struct create_worker_data *cwd;
+	struct io_wq *wq;
+
+	cwd = container_of(cb, struct create_worker_data, work);
+	wq = cwd->wqe->wq;
+	create_io_worker(wq, cwd->wqe, cwd->index);
+	kfree(cwd);
+}
+
+static void io_queue_worker_create(struct io_wqe *wqe, struct io_wqe_acct *acct)
+{
+	struct create_worker_data *cwd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct io_wq *wq = wqe->wq;
 
 	/* raced with exit, just ignore create call */
 	if (test_bit(IO_WQ_BIT_EXIT, &wq->state))
 		goto fail;
+<<<<<<< HEAD
 	if (!io_worker_get(worker))
 		goto fail;
 	/*
@@ -332,6 +459,22 @@ fail:
 	atomic_dec(&acct->nr_running);
 	io_worker_ref_put(wq);
 	return false;
+=======
+
+	cwd = kmalloc(sizeof(*cwd), GFP_ATOMIC);
+	if (cwd) {
+		init_task_work(&cwd->work, create_worker_cb);
+		cwd->wqe = wqe;
+		cwd->index = acct->index;
+		if (!task_work_add(wq->task, &cwd->work, TWA_SIGNAL))
+			return;
+
+		kfree(cwd);
+	}
+fail:
+	atomic_dec(&acct->nr_running);
+	io_worker_ref_put(wq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void io_wqe_dec_running(struct io_worker *worker)
@@ -343,10 +486,17 @@ static void io_wqe_dec_running(struct io_worker *worker)
 	if (!(worker->flags & IO_WORKER_F_UP))
 		return;
 
+<<<<<<< HEAD
 	if (atomic_dec_and_test(&acct->nr_running) && io_acct_run_queue(acct)) {
 		atomic_inc(&acct->nr_running);
 		atomic_inc(&wqe->wq->worker_refs);
 		io_queue_worker_create(worker, acct, create_worker_cb);
+=======
+	if (atomic_dec_and_test(&acct->nr_running) && io_wqe_run_queue(wqe)) {
+		atomic_inc(&acct->nr_running);
+		atomic_inc(&wqe->wq->worker_refs);
+		io_queue_worker_create(wqe, acct);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -358,10 +508,35 @@ static void __io_worker_busy(struct io_wqe *wqe, struct io_worker *worker,
 			     struct io_wq_work *work)
 	__must_hold(wqe->lock)
 {
+<<<<<<< HEAD
+=======
+	bool worker_bound, work_bound;
+
+	BUILD_BUG_ON((IO_WQ_ACCT_UNBOUND ^ IO_WQ_ACCT_BOUND) != 1);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (worker->flags & IO_WORKER_F_FREE) {
 		worker->flags &= ~IO_WORKER_F_FREE;
 		hlist_nulls_del_init_rcu(&worker->nulls_node);
 	}
+<<<<<<< HEAD
+=======
+
+	/*
+	 * If worker is moving from bound to unbound (or vice versa), then
+	 * ensure we update the running accounting.
+	 */
+	worker_bound = (worker->flags & IO_WORKER_F_BOUND) != 0;
+	work_bound = (work->flags & IO_WQ_WORK_UNBOUND) == 0;
+	if (worker_bound != work_bound) {
+		int index = work_bound ? IO_WQ_ACCT_UNBOUND : IO_WQ_ACCT_BOUND;
+		io_wqe_dec_running(worker);
+		worker->flags ^= IO_WORKER_F_BOUND;
+		wqe->acct[index].nr_workers--;
+		wqe->acct[index ^ 1].nr_workers++;
+		io_wqe_inc_running(worker);
+	 }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -389,7 +564,11 @@ static void io_wait_on_hash(struct io_wqe *wqe, unsigned int hash)
 {
 	struct io_wq *wq = wqe->wq;
 
+<<<<<<< HEAD
 	spin_lock_irq(&wq->hash->wait.lock);
+=======
+	spin_lock(&wq->hash->wait.lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (list_empty(&wqe->wait.entry)) {
 		__add_wait_queue(&wq->hash->wait, &wqe->wait);
 		if (!test_bit(hash, &wq->hash->map)) {
@@ -397,26 +576,42 @@ static void io_wait_on_hash(struct io_wqe *wqe, unsigned int hash)
 			list_del_init(&wqe->wait.entry);
 		}
 	}
+<<<<<<< HEAD
 	spin_unlock_irq(&wq->hash->wait.lock);
 }
 
 static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
 					   struct io_worker *worker)
+=======
+	spin_unlock(&wq->hash->wait.lock);
+}
+
+static struct io_wq_work *io_get_next_work(struct io_wqe *wqe)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__must_hold(wqe->lock)
 {
 	struct io_wq_work_node *node, *prev;
 	struct io_wq_work *work, *tail;
 	unsigned int stall_hash = -1U;
+<<<<<<< HEAD
 	struct io_wqe *wqe = worker->wqe;
 
 	wq_list_for_each(node, prev, &acct->work_list) {
+=======
+
+	wq_list_for_each(node, prev, &wqe->work_list) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unsigned int hash;
 
 		work = container_of(node, struct io_wq_work, list);
 
 		/* not hashed, can run anytime */
 		if (!io_wq_is_hashed(work)) {
+<<<<<<< HEAD
 			wq_list_del(&acct->work_list, node, prev);
+=======
+			wq_list_del(&wqe->work_list, node, prev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return work;
 		}
 
@@ -427,7 +622,11 @@ static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
 		/* hashed, can run if not already running */
 		if (!test_and_set_bit(hash, &wqe->wq->hash->map)) {
 			wqe->hash_tail[hash] = NULL;
+<<<<<<< HEAD
 			wq_list_cut(&acct->work_list, &tail->list, prev);
+=======
+			wq_list_cut(&wqe->work_list, &tail->list, prev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return work;
 		}
 		if (stall_hash == -1U)
@@ -437,11 +636,14 @@ static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
 	}
 
 	if (stall_hash != -1U) {
+<<<<<<< HEAD
 		/*
 		 * Set this before dropping the lock to avoid racing with new
 		 * work being added and clearing the stalled bit.
 		 */
 		set_bit(IO_ACCT_STALLED_BIT, &acct->flags);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		raw_spin_unlock(&wqe->lock);
 		io_wait_on_hash(wqe, stall_hash);
 		raw_spin_lock(&wqe->lock);
@@ -468,9 +670,15 @@ static void io_assign_current_work(struct io_worker *worker,
 		cond_resched();
 	}
 
+<<<<<<< HEAD
 	spin_lock(&worker->lock);
 	worker->cur_work = work;
 	spin_unlock(&worker->lock);
+=======
+	spin_lock_irq(&worker->lock);
+	worker->cur_work = work;
+	spin_unlock_irq(&worker->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void io_wqe_enqueue(struct io_wqe *wqe, struct io_wq_work *work);
@@ -478,7 +686,10 @@ static void io_wqe_enqueue(struct io_wqe *wqe, struct io_wq_work *work);
 static void io_worker_handle_work(struct io_worker *worker)
 	__releases(wqe->lock)
 {
+<<<<<<< HEAD
 	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct io_wqe *wqe = worker->wqe;
 	struct io_wq *wq = wqe->wq;
 	bool do_kill = test_bit(IO_WQ_BIT_EXIT, &wq->state);
@@ -493,11 +704,21 @@ get_next:
 		 * can't make progress, any work completion or insertion will
 		 * clear the stalled flag.
 		 */
+<<<<<<< HEAD
 		work = io_get_next_work(acct, worker);
 		if (work)
 			__io_worker_busy(wqe, worker, work);
 
 		raw_spin_unlock(&wqe->lock);
+=======
+		work = io_get_next_work(wqe);
+		if (work)
+			__io_worker_busy(wqe, worker, work);
+		else if (!wq_list_empty(&wqe->work_list))
+			wqe->flags |= IO_WQE_FLAG_STALLED;
+
+		raw_spin_unlock_irq(&wqe->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!work)
 			break;
 		io_assign_current_work(worker, work);
@@ -527,6 +748,7 @@ get_next:
 
 			if (hash != -1U && !next_hashed) {
 				clear_bit(hash, &wq->hash->map);
+<<<<<<< HEAD
 				clear_bit(IO_ACCT_STALLED_BIT, &acct->flags);
 				if (wq_has_sleeper(&wq->hash->wait))
 					wake_up(&wq->hash->wait);
@@ -539,16 +761,35 @@ get_next:
 		} while (work);
 
 		raw_spin_lock(&wqe->lock);
+=======
+				if (wq_has_sleeper(&wq->hash->wait))
+					wake_up(&wq->hash->wait);
+				raw_spin_lock_irq(&wqe->lock);
+				wqe->flags &= ~IO_WQE_FLAG_STALLED;
+				/* skip unnecessary unlock-lock wqe->lock */
+				if (!work)
+					goto get_next;
+				raw_spin_unlock_irq(&wqe->lock);
+			}
+		} while (work);
+
+		raw_spin_lock_irq(&wqe->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} while (1);
 }
 
 static int io_wqe_worker(void *data)
 {
 	struct io_worker *worker = data;
+<<<<<<< HEAD
 	struct io_wqe_acct *acct = io_wqe_get_acct(worker);
 	struct io_wqe *wqe = worker->wqe;
 	struct io_wq *wq = wqe->wq;
 	bool last_timeout = false;
+=======
+	struct io_wqe *wqe = worker->wqe;
+	struct io_wq *wq = wqe->wq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	char buf[TASK_COMM_LEN];
 
 	worker->flags |= (IO_WORKER_F_UP | IO_WORKER_F_RUNNING);
@@ -561,6 +802,7 @@ static int io_wqe_worker(void *data)
 
 		set_current_state(TASK_INTERRUPTIBLE);
 loop:
+<<<<<<< HEAD
 		raw_spin_lock(&wqe->lock);
 		if (io_acct_run_queue(acct)) {
 			io_worker_handle_work(worker);
@@ -576,6 +818,15 @@ loop:
 		last_timeout = false;
 		__io_worker_idle(wqe, worker);
 		raw_spin_unlock(&wqe->lock);
+=======
+		raw_spin_lock_irq(&wqe->lock);
+		if (io_wqe_run_queue(wqe)) {
+			io_worker_handle_work(worker);
+			goto loop;
+		}
+		__io_worker_idle(wqe, worker);
+		raw_spin_unlock_irq(&wqe->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (io_flush_signals())
 			continue;
 		ret = schedule_timeout(WORKER_IDLE_TIMEOUT);
@@ -586,11 +837,23 @@ loop:
 				continue;
 			break;
 		}
+<<<<<<< HEAD
 		last_timeout = !ret;
 	}
 
 	if (test_bit(IO_WQ_BIT_EXIT, &wq->state)) {
 		raw_spin_lock(&wqe->lock);
+=======
+		if (ret)
+			continue;
+		/* timed out, exit unless we're the fixed worker */
+		if (!(worker->flags & IO_WORKER_F_FIXED))
+			break;
+	}
+
+	if (test_bit(IO_WQ_BIT_EXIT, &wq->state)) {
+		raw_spin_lock_irq(&wqe->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		io_worker_handle_work(worker);
 	}
 
@@ -632,6 +895,7 @@ void io_wq_worker_sleeping(struct task_struct *tsk)
 
 	worker->flags &= ~IO_WORKER_F_RUNNING;
 
+<<<<<<< HEAD
 	raw_spin_lock(&worker->wqe->lock);
 	io_wqe_dec_running(worker);
 	raw_spin_unlock(&worker->wqe->lock);
@@ -724,6 +988,14 @@ static void io_workqueue_create(struct work_struct *work)
 }
 
 static bool create_io_worker(struct io_wq *wq, struct io_wqe *wqe, int index)
+=======
+	raw_spin_lock_irq(&worker->wqe->lock);
+	io_wqe_dec_running(worker);
+	raw_spin_unlock_irq(&worker->wqe->lock);
+}
+
+static void create_io_worker(struct io_wq *wq, struct io_wqe *wqe, int index)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct io_wqe_acct *acct = &wqe->acct[index];
 	struct io_worker *worker;
@@ -732,6 +1004,7 @@ static bool create_io_worker(struct io_wq *wq, struct io_wqe *wqe, int index)
 	__set_current_state(TASK_RUNNING);
 
 	worker = kzalloc_node(sizeof(*worker), GFP_KERNEL, wqe->node);
+<<<<<<< HEAD
 	if (!worker) {
 fail:
 		atomic_dec(&acct->nr_running);
@@ -743,10 +1016,18 @@ fail:
 	}
 
 	refcount_set(&worker->ref, 1);
+=======
+	if (!worker)
+		goto fail;
+
+	refcount_set(&worker->ref, 1);
+	worker->nulls_node.pprev = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	worker->wqe = wqe;
 	spin_lock_init(&worker->lock);
 	init_completion(&worker->ref_done);
 
+<<<<<<< HEAD
 	if (index == IO_WQ_ACCT_BOUND)
 		worker->flags |= IO_WORKER_F_BOUND;
 
@@ -762,6 +1043,33 @@ fail:
 	}
 
 	return true;
+=======
+	tsk = create_io_thread(io_wqe_worker, worker, wqe->node);
+	if (IS_ERR(tsk)) {
+		kfree(worker);
+fail:
+		atomic_dec(&acct->nr_running);
+		io_worker_ref_put(wq);
+		return;
+	}
+
+	tsk->pf_io_worker = worker;
+	worker->task = tsk;
+	set_cpus_allowed_ptr(tsk, wqe->cpu_mask);
+	tsk->flags |= PF_NO_SETAFFINITY;
+
+	raw_spin_lock_irq(&wqe->lock);
+	hlist_nulls_add_head_rcu(&worker->nulls_node, &wqe->free_list);
+	list_add_tail_rcu(&worker->all_list, &wqe->all_list);
+	worker->flags |= IO_WORKER_F_FREE;
+	if (index == IO_WQ_ACCT_BOUND)
+		worker->flags |= IO_WORKER_F_BOUND;
+	if (!acct->nr_workers && (worker->flags & IO_WORKER_F_BOUND))
+		worker->flags |= IO_WORKER_F_FIXED;
+	acct->nr_workers++;
+	raw_spin_unlock_irq(&wqe->lock);
+	wake_up_new_task(tsk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -796,6 +1104,14 @@ static bool io_wq_worker_wake(struct io_worker *worker, void *data)
 	return false;
 }
 
+<<<<<<< HEAD
+=======
+static bool io_wq_work_match_all(struct io_wq_work *work, void *data)
+{
+	return true;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void io_run_cancel(struct io_wq_work *work, struct io_wqe *wqe)
 {
 	struct io_wq *wq = wqe->wq;
@@ -809,13 +1125,20 @@ static void io_run_cancel(struct io_wq_work *work, struct io_wqe *wqe)
 
 static void io_wqe_insert_work(struct io_wqe *wqe, struct io_wq_work *work)
 {
+<<<<<<< HEAD
 	struct io_wqe_acct *acct = io_work_get_acct(wqe, work);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int hash;
 	struct io_wq_work *tail;
 
 	if (!io_wq_is_hashed(work)) {
 append:
+<<<<<<< HEAD
 		wq_list_add_tail(&work->list, &acct->work_list);
+=======
+		wq_list_add_tail(&work->list, &wqe->work_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	}
 
@@ -825,17 +1148,22 @@ append:
 	if (!tail)
 		goto append;
 
+<<<<<<< HEAD
 	wq_list_add_after(&work->list, &tail->list, &acct->work_list);
 }
 
 static bool io_wq_work_match_item(struct io_wq_work *work, void *data)
 {
 	return work == data;
+=======
+	wq_list_add_after(&work->list, &tail->list, &wqe->work_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void io_wqe_enqueue(struct io_wqe *wqe, struct io_wq_work *work)
 {
 	struct io_wqe_acct *acct = io_work_get_acct(wqe, work);
+<<<<<<< HEAD
 	unsigned work_flags = work->flags;
 	bool do_create;
 
@@ -845,10 +1173,17 @@ static void io_wqe_enqueue(struct io_wqe *wqe, struct io_wq_work *work)
 	 */
 	if (test_bit(IO_WQ_BIT_EXIT, &wqe->wq->state) ||
 	    (work->flags & IO_WQ_WORK_CANCEL)) {
+=======
+	int work_flags;
+	unsigned long flags;
+
+	if (test_bit(IO_WQ_BIT_EXIT, &wqe->wq->state)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		io_run_cancel(work, wqe);
 		return;
 	}
 
+<<<<<<< HEAD
 	raw_spin_lock(&wqe->lock);
 	io_wqe_insert_work(wqe, work);
 	clear_bit(IO_ACCT_STALLED_BIT, &acct->flags);
@@ -881,6 +1216,17 @@ static void io_wqe_enqueue(struct io_wqe *wqe, struct io_wq_work *work)
 		}
 		raw_spin_unlock(&wqe->lock);
 	}
+=======
+	work_flags = work->flags;
+	raw_spin_lock_irqsave(&wqe->lock, flags);
+	io_wqe_insert_work(wqe, work);
+	wqe->flags &= ~IO_WQE_FLAG_STALLED;
+	raw_spin_unlock_irqrestore(&wqe->lock, flags);
+
+	if ((work_flags & IO_WQ_WORK_CONCURRENT) ||
+	    !atomic_read(&acct->nr_running))
+		io_wqe_wake_worker(wqe, acct);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void io_wq_enqueue(struct io_wq *wq, struct io_wq_work *work)
@@ -905,18 +1251,30 @@ void io_wq_hash_work(struct io_wq_work *work, void *val)
 static bool io_wq_worker_cancel(struct io_worker *worker, void *data)
 {
 	struct io_cb_cancel_data *match = data;
+<<<<<<< HEAD
+=======
+	unsigned long flags;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Hold the lock to avoid ->cur_work going out of scope, caller
 	 * may dereference the passed in work.
 	 */
+<<<<<<< HEAD
 	spin_lock(&worker->lock);
+=======
+	spin_lock_irqsave(&worker->lock, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (worker->cur_work &&
 	    match->fn(worker->cur_work, match->data)) {
 		set_notify_signal(worker->task);
 		match->nr_running++;
 	}
+<<<<<<< HEAD
 	spin_unlock(&worker->lock);
+=======
+	spin_unlock_irqrestore(&worker->lock, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return match->nr_running && !match->cancel_all;
 }
@@ -925,7 +1283,10 @@ static inline void io_wqe_remove_pending(struct io_wqe *wqe,
 					 struct io_wq_work *work,
 					 struct io_wq_work_node *prev)
 {
+<<<<<<< HEAD
 	struct io_wqe_acct *acct = io_work_get_acct(wqe, work);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int hash = io_get_work_hash(work);
 	struct io_wq_work *prev_work = NULL;
 
@@ -937,6 +1298,7 @@ static inline void io_wqe_remove_pending(struct io_wqe *wqe,
 		else
 			wqe->hash_tail[hash] = NULL;
 	}
+<<<<<<< HEAD
 	wq_list_del(&acct->work_list, &work->list, prev);
 }
 
@@ -949,10 +1311,26 @@ static bool io_acct_cancel_pending_work(struct io_wqe *wqe,
 	struct io_wq_work *work;
 
 	wq_list_for_each(node, prev, &acct->work_list) {
+=======
+	wq_list_del(&wqe->work_list, &work->list, prev);
+}
+
+static void io_wqe_cancel_pending_work(struct io_wqe *wqe,
+				       struct io_cb_cancel_data *match)
+{
+	struct io_wq_work_node *node, *prev;
+	struct io_wq_work *work;
+	unsigned long flags;
+
+retry:
+	raw_spin_lock_irqsave(&wqe->lock, flags);
+	wq_list_for_each(node, prev, &wqe->work_list) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		work = container_of(node, struct io_wq_work, list);
 		if (!match->fn(work, match->data))
 			continue;
 		io_wqe_remove_pending(wqe, work, prev);
+<<<<<<< HEAD
 		raw_spin_unlock(&wqe->lock);
 		io_run_cancel(work, wqe);
 		match->nr_pending++;
@@ -979,6 +1357,18 @@ retry:
 		}
 	}
 	raw_spin_unlock(&wqe->lock);
+=======
+		raw_spin_unlock_irqrestore(&wqe->lock, flags);
+		io_run_cancel(work, wqe);
+		match->nr_pending++;
+		if (!match->cancel_all)
+			return;
+
+		/* not safe to continue after unlock */
+		goto retry;
+	}
+	raw_spin_unlock_irqrestore(&wqe->lock, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void io_wqe_cancel_running_work(struct io_wqe *wqe,
@@ -1037,24 +1427,35 @@ static int io_wqe_hash_wake(struct wait_queue_entry *wait, unsigned mode,
 			    int sync, void *key)
 {
 	struct io_wqe *wqe = container_of(wait, struct io_wqe, wait);
+<<<<<<< HEAD
 	int i;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	list_del_init(&wait->entry);
 
 	rcu_read_lock();
+<<<<<<< HEAD
 	for (i = 0; i < IO_WQ_ACCT_NR; i++) {
 		struct io_wqe_acct *acct = &wqe->acct[i];
 
 		if (test_and_clear_bit(IO_ACCT_STALLED_BIT, &acct->flags))
 			io_wqe_activate_free_worker(wqe, acct);
 	}
+=======
+	io_wqe_activate_free_worker(wqe);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rcu_read_unlock();
 	return 1;
 }
 
 struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data)
 {
+<<<<<<< HEAD
 	int ret, node, i;
+=======
+	int ret, node;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct io_wq *wq;
 
 	if (WARN_ON_ONCE(!data->free_work || !data->do_work))
@@ -1089,6 +1490,7 @@ struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data)
 		cpumask_copy(wqe->cpu_mask, cpumask_of_node(node));
 		wq->wqes[node] = wqe;
 		wqe->node = alloc_node;
+<<<<<<< HEAD
 		wqe->acct[IO_WQ_ACCT_BOUND].max_workers = bounded;
 		wqe->acct[IO_WQ_ACCT_UNBOUND].max_workers =
 					task_rlimit(current, RLIMIT_NPROC);
@@ -1103,6 +1505,20 @@ struct io_wq *io_wq_create(unsigned bounded, struct io_wq_data *data)
 		}
 		wqe->wq = wq;
 		raw_spin_lock_init(&wqe->lock);
+=======
+		wqe->acct[IO_WQ_ACCT_BOUND].index = IO_WQ_ACCT_BOUND;
+		wqe->acct[IO_WQ_ACCT_UNBOUND].index = IO_WQ_ACCT_UNBOUND;
+		wqe->acct[IO_WQ_ACCT_BOUND].max_workers = bounded;
+		atomic_set(&wqe->acct[IO_WQ_ACCT_BOUND].nr_running, 0);
+		wqe->acct[IO_WQ_ACCT_UNBOUND].max_workers =
+					task_rlimit(current, RLIMIT_NPROC);
+		atomic_set(&wqe->acct[IO_WQ_ACCT_UNBOUND].nr_running, 0);
+		wqe->wait.func = io_wqe_hash_wake;
+		INIT_LIST_HEAD(&wqe->wait.entry);
+		wqe->wq = wq;
+		raw_spin_lock_init(&wqe->lock);
+		INIT_WQ_LIST(&wqe->work_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		INIT_HLIST_NULLS_HEAD(&wqe->free_list, 0);
 		INIT_LIST_HEAD(&wqe->all_list);
 	}
@@ -1127,12 +1543,21 @@ err_wq:
 
 static bool io_task_work_match(struct callback_head *cb, void *data)
 {
+<<<<<<< HEAD
 	struct io_worker *worker;
 
 	if (cb->func != create_worker_cb && cb->func != create_worker_cont)
 		return false;
 	worker = container_of(cb, struct io_worker, create_work);
 	return worker->wqe->wq == data;
+=======
+	struct create_worker_data *cwd;
+
+	if (cb->func != create_worker_cb)
+		return false;
+	cwd = container_of(cb, struct create_worker_data, work);
+	return cwd->wqe->wq == data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void io_wq_exit_start(struct io_wq *wq)
@@ -1149,6 +1574,7 @@ static void io_wq_exit_workers(struct io_wq *wq)
 		return;
 
 	while ((cb = task_work_cancel_match(wq->task, io_task_work_match, wq)) != NULL) {
+<<<<<<< HEAD
 		struct io_worker *worker;
 		struct io_wqe_acct *acct;
 
@@ -1161,6 +1587,14 @@ static void io_wq_exit_workers(struct io_wq *wq)
 		io_worker_ref_put(wq);
 		clear_bit_unlock(0, &worker->create_state);
 		io_worker_release(worker);
+=======
+		struct create_worker_data *cwd;
+
+		cwd = container_of(cb, struct create_worker_data, work);
+		atomic_dec(&cwd->wqe->acct[cwd->index].nr_running);
+		io_worker_ref_put(wq);
+		kfree(cwd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	rcu_read_lock();
@@ -1272,6 +1706,7 @@ int io_wq_cpu_affinity(struct io_wq *wq, cpumask_var_t mask)
 	return 0;
 }
 
+<<<<<<< HEAD
 /*
  * Set max number of unbounded workers, returns old value. If new_count is 0,
  * then just return the old value.
@@ -1305,6 +1740,8 @@ int io_wq_max_workers(struct io_wq *wq, int *new_count)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static __init int io_wq_init(void)
 {
 	int ret;

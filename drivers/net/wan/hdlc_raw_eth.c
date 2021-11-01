@@ -20,7 +20,11 @@
 #include <linux/rtnetlink.h>
 #include <linux/skbuff.h>
 
+<<<<<<< HEAD
 static int raw_eth_ioctl(struct net_device *dev, struct if_settings *ifs);
+=======
+static int raw_eth_ioctl(struct net_device *dev, struct ifreq *ifr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static netdev_tx_t eth_tx(struct sk_buff *skb, struct net_device *dev)
 {
@@ -48,15 +52,22 @@ static struct hdlc_proto proto = {
 };
 
 
+<<<<<<< HEAD
 static int raw_eth_ioctl(struct net_device *dev, struct if_settings *ifs)
 {
 	raw_hdlc_proto __user *raw_s = ifs->ifs_ifsu.raw_hdlc;
+=======
+static int raw_eth_ioctl(struct net_device *dev, struct ifreq *ifr)
+{
+	raw_hdlc_proto __user *raw_s = ifr->ifr_settings.ifs_ifsu.raw_hdlc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const size_t size = sizeof(raw_hdlc_proto);
 	raw_hdlc_proto new_settings;
 	hdlc_device *hdlc = dev_to_hdlc(dev);
 	unsigned int old_qlen;
 	int result;
 
+<<<<<<< HEAD
 	switch (ifs->type) {
 	case IF_GET_PROTO:
 		if (dev_to_hdlc(dev)->proto != &proto)
@@ -64,6 +75,15 @@ static int raw_eth_ioctl(struct net_device *dev, struct if_settings *ifs)
 		ifs->type = IF_PROTO_HDLC_ETH;
 		if (ifs->size < size) {
 			ifs->size = size; /* data size wanted */
+=======
+	switch (ifr->ifr_settings.type) {
+	case IF_GET_PROTO:
+		if (dev_to_hdlc(dev)->proto != &proto)
+			return -EINVAL;
+		ifr->ifr_settings.type = IF_PROTO_HDLC_ETH;
+		if (ifr->ifr_settings.size < size) {
+			ifr->ifr_settings.size = size; /* data size wanted */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENOBUFS;
 		}
 		if (copy_to_user(raw_s, hdlc->state, size))
@@ -110,7 +130,11 @@ static int raw_eth_ioctl(struct net_device *dev, struct if_settings *ifs)
 }
 
 
+<<<<<<< HEAD
 static int __init hdlc_eth_init(void)
+=======
+static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	register_hdlc_protocol(&proto);
 	return 0;
@@ -118,14 +142,23 @@ static int __init hdlc_eth_init(void)
 
 
 
+<<<<<<< HEAD
 static void __exit hdlc_eth_exit(void)
+=======
+static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unregister_hdlc_protocol(&proto);
 }
 
 
+<<<<<<< HEAD
 module_init(hdlc_eth_init);
 module_exit(hdlc_eth_exit);
+=======
+module_init(mod_init);
+module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_AUTHOR("Krzysztof Halasa <khc@pm.waw.pl>");
 MODULE_DESCRIPTION("Ethernet encapsulation support for generic HDLC");

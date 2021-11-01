@@ -627,7 +627,11 @@ static struct ov2680_reg const ov2680_1296x976_30fps[] = {
 	{0x5706, 0x0c},
 	{0x5707, 0x78},
 	{0x3820, 0xc0},
+<<<<<<< HEAD
 	{0x3821, 0x00}, //mirror/flip
+=======
+	{0x3821, 0x00}, //miror/flip
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	// {0x5090, 0x0c},
 	{}
 };

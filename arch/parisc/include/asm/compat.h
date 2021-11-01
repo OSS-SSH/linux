@@ -8,9 +8,12 @@
 #include <linux/sched.h>
 #include <linux/thread_info.h>
 
+<<<<<<< HEAD
 #define compat_mode_t compat_mode_t
 typedef u16	compat_mode_t;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm-generic/compat.h>
 
 #define COMPAT_USER_HZ 		100
@@ -18,9 +21,19 @@ typedef u16	compat_mode_t;
 
 typedef u32	__compat_uid_t;
 typedef u32	__compat_gid_t;
+<<<<<<< HEAD
 typedef u32	compat_dev_t;
 typedef u16	compat_nlink_t;
 typedef u16	compat_ipc_pid_t;
+=======
+typedef u32	__compat_uid32_t;
+typedef u32	__compat_gid32_t;
+typedef u16	compat_mode_t;
+typedef u32	compat_dev_t;
+typedef u16	compat_nlink_t;
+typedef u16	compat_ipc_pid_t;
+typedef u32	compat_caddr_t;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct compat_stat {
 	compat_dev_t		st_dev;	/* dev_t is 32 bits on parisc */
@@ -95,6 +108,16 @@ struct compat_sigcontext {
 
 #define COMPAT_RLIM_INFINITY 0xffffffff
 
+<<<<<<< HEAD
+=======
+typedef u32		compat_old_sigset_t;	/* at least 32 bits */
+
+#define _COMPAT_NSIG		64
+#define _COMPAT_NSIG_BPW	32
+
+typedef u32		compat_sigset_word;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define COMPAT_OFF_T_MAX	0x7fffffff
 
 struct compat_ipc64_perm {
@@ -163,6 +186,15 @@ struct compat_shmid64_ds {
 #define COMPAT_ELF_NGREG 80
 typedef compat_ulong_t compat_elf_gregset_t[COMPAT_ELF_NGREG];
 
+<<<<<<< HEAD
+=======
+static __inline__ void __user *arch_compat_alloc_user_space(long len)
+{
+	struct pt_regs *regs = &current->thread.regs;
+	return (void __user *)regs->gr[30];
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int __is_compat_task(struct task_struct *t)
 {
 	return test_tsk_thread_flag(t, TIF_32BIT);

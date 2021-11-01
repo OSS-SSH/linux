@@ -14,8 +14,11 @@
 
 /* The I2C_RDWR ioctl code is written by Kolja Waschk <waschk@telos.de> */
 
+<<<<<<< HEAD
 #define pr_fmt(fmt)	KBUILD_MODNAME ": " fmt
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/cdev.h>
 #include <linux/compat.h>
 #include <linux/device.h>
@@ -70,7 +73,12 @@ static struct i2c_dev *get_free_i2c_dev(struct i2c_adapter *adap)
 	struct i2c_dev *i2c_dev;
 
 	if (adap->nr >= I2C_MINORS) {
+<<<<<<< HEAD
 		pr_err("Out of device minors (%d)\n", adap->nr);
+=======
+		printk(KERN_ERR "i2c-dev: Out of device minors (%d)\n",
+		       adap->nr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return ERR_PTR(-ENODEV);
 	}
 
@@ -102,7 +110,11 @@ static ssize_t name_show(struct device *dev,
 
 	if (!i2c_dev)
 		return -ENODEV;
+<<<<<<< HEAD
 	return sysfs_emit(buf, "%s\n", i2c_dev->adap->name);
+=======
+	return sprintf(buf, "%s\n", i2c_dev->adap->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 static DEVICE_ATTR_RO(name);
 
@@ -142,6 +154,7 @@ static ssize_t i2cdev_read(struct file *file, char __user *buf, size_t count,
 	if (count > 8192)
 		count = 8192;
 
+<<<<<<< HEAD
 	tmp = kzalloc(count, GFP_KERNEL);
 	if (tmp == NULL)
 		return -ENOMEM;
@@ -152,6 +165,18 @@ static ssize_t i2cdev_read(struct file *file, char __user *buf, size_t count,
 	if (ret >= 0)
 		if (copy_to_user(buf, tmp, ret))
 			ret = -EFAULT;
+=======
+	tmp = kmalloc(count, GFP_KERNEL);
+	if (tmp == NULL)
+		return -ENOMEM;
+
+	pr_debug("i2c-dev: i2c-%d reading %zu bytes.\n",
+		iminor(file_inode(file)), count);
+
+	ret = i2c_master_recv(client, tmp, count);
+	if (ret >= 0)
+		ret = copy_to_user(buf, tmp, count) ? -EFAULT : ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(tmp);
 	return ret;
 }
@@ -170,7 +195,12 @@ static ssize_t i2cdev_write(struct file *file, const char __user *buf,
 	if (IS_ERR(tmp))
 		return PTR_ERR(tmp);
 
+<<<<<<< HEAD
 	pr_debug("i2c-%d writing %zu bytes.\n", iminor(file_inode(file)), count);
+=======
+	pr_debug("i2c-dev: i2c-%d writing %zu bytes.\n",
+		iminor(file_inode(file)), count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = i2c_master_send(client, tmp, count);
 	kfree(tmp);
@@ -673,7 +703,12 @@ static int i2cdev_attach_adapter(struct device *dev, void *dummy)
 		return res;
 	}
 
+<<<<<<< HEAD
 	pr_debug("adapter [%s] registered as minor %d\n", adap->name, adap->nr);
+=======
+	pr_debug("i2c-dev: adapter [%s] registered as minor %d\n",
+		 adap->name, adap->nr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -692,7 +727,11 @@ static int i2cdev_detach_adapter(struct device *dev, void *dummy)
 
 	put_i2c_dev(i2c_dev, true);
 
+<<<<<<< HEAD
 	pr_debug("adapter [%s] unregistered\n", adap->name);
+=======
+	pr_debug("i2c-dev: adapter [%s] unregistered\n", adap->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -725,7 +764,11 @@ static int __init i2c_dev_init(void)
 {
 	int res;
 
+<<<<<<< HEAD
 	pr_info("i2c /dev entries driver\n");
+=======
+	printk(KERN_INFO "i2c /dev entries driver\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	res = register_chrdev_region(MKDEV(I2C_MAJOR, 0), I2C_MINORS, "i2c");
 	if (res)
@@ -753,7 +796,11 @@ out_unreg_class:
 out_unreg_chrdev:
 	unregister_chrdev_region(MKDEV(I2C_MAJOR, 0), I2C_MINORS);
 out:
+<<<<<<< HEAD
 	pr_err("Driver Initialisation failed\n");
+=======
+	printk(KERN_ERR "%s: Driver Initialisation failed\n", __FILE__);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return res;
 }
 

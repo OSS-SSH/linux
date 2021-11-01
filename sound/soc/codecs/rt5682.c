@@ -43,9 +43,13 @@ static const struct reg_sequence patch_list[] = {
 	{RT5682_DAC_ADC_DIG_VOL1, 0xa020},
 	{RT5682_I2C_CTRL, 0x000f},
 	{RT5682_PLL2_INTERNAL, 0x8266},
+<<<<<<< HEAD
 	{RT5682_SAR_IL_CMD_1, 0x22b7},
 	{RT5682_SAR_IL_CMD_3, 0x0365},
 	{RT5682_SAR_IL_CMD_6, 0x0110},
+=======
+	{RT5682_SAR_IL_CMD_3, 0x8365},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 void rt5682_apply_patch_list(struct rt5682_priv *rt5682, struct device *dev)
@@ -975,6 +979,7 @@ int rt5682_headset_detect(struct snd_soc_component *component, int jack_insert)
 		rt5682_enable_push_button_irq(component, false);
 		snd_soc_component_update_bits(component, RT5682_CBJ_CTRL_1,
 			RT5682_TRIG_JD_MASK, RT5682_TRIG_JD_LOW);
+<<<<<<< HEAD
 		if (!snd_soc_dapm_get_pin_status(dapm, "MICBIAS") &&
 			!snd_soc_dapm_get_pin_status(dapm, "PLL1") &&
 			!snd_soc_dapm_get_pin_status(dapm, "PLL2B"))
@@ -983,6 +988,12 @@ int rt5682_headset_detect(struct snd_soc_component *component, int jack_insert)
 		if (!snd_soc_dapm_get_pin_status(dapm, "Vref2") &&
 			!snd_soc_dapm_get_pin_status(dapm, "PLL1") &&
 			!snd_soc_dapm_get_pin_status(dapm, "PLL2B"))
+=======
+		if (!snd_soc_dapm_get_pin_status(dapm, "MICBIAS"))
+			snd_soc_component_update_bits(component,
+				RT5682_PWR_ANLG_1, RT5682_PWR_MB, 0);
+		if (!snd_soc_dapm_get_pin_status(dapm, "Vref2"))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			snd_soc_component_update_bits(component,
 				RT5682_PWR_ANLG_1, RT5682_PWR_VREF2, 0);
 		snd_soc_component_update_bits(component, RT5682_PWR_ANLG_3,
@@ -1728,6 +1739,11 @@ static const struct snd_soc_dapm_widget rt5682_dapm_widgets[] = {
 	SND_SOC_DAPM_MIXER("Stereo1 ADC MIXR", RT5682_STO1_ADC_DIG_VOL,
 		RT5682_R_MUTE_SFT, 1, rt5682_sto1_adc_r_mix,
 		ARRAY_SIZE(rt5682_sto1_adc_r_mix)),
+<<<<<<< HEAD
+=======
+	SND_SOC_DAPM_SUPPLY("BTN Detection Mode", RT5682_SAR_IL_CMD_1,
+		14, 1, NULL, 0),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* ADC PGA */
 	SND_SOC_DAPM_PGA("Stereo1 ADC MIX", SND_SOC_NOPM, 0, 0, NULL, 0),
@@ -1898,6 +1914,11 @@ static const struct snd_soc_dapm_route rt5682_dapm_routes[] = {
 	{"Stereo1 ADC MIXR", "ADC2 Switch", "Stereo1 ADC R2 Mux"},
 	{"Stereo1 ADC MIXR", NULL, "ADC Stereo1 Filter"},
 
+<<<<<<< HEAD
+=======
+	{"ADC Stereo1 Filter", NULL, "BTN Detection Mode"},
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"Stereo1 ADC MIX", NULL, "Stereo1 ADC MIXL"},
 	{"Stereo1 ADC MIX", NULL, "Stereo1 ADC MIXR"},
 
@@ -2913,11 +2934,15 @@ static void rt5682_remove(struct snd_soc_component *component)
 static int rt5682_suspend(struct snd_soc_component *component)
 {
 	struct rt5682_priv *rt5682 = snd_soc_component_get_drvdata(component);
+<<<<<<< HEAD
 	unsigned int val;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (rt5682->is_sdw)
 		return 0;
 
+<<<<<<< HEAD
 	cancel_delayed_work_sync(&rt5682->jack_detect_work);
 	cancel_delayed_work_sync(&rt5682->jd_check_work);
 	if (rt5682->hs_jack && rt5682->jack_type == SND_JACK_HEADSET) {
@@ -2951,6 +2976,8 @@ static int rt5682_suspend(struct snd_soc_component *component)
 			RT5682_SAR_BUTT_DET_EN | RT5682_SAR_BUTDET_POW_SAV | RT5682_SAR_BUTDET_RST_NORMAL);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	regcache_cache_only(rt5682->regmap, true);
 	regcache_mark_dirty(rt5682->regmap);
 	return 0;
@@ -2966,6 +2993,7 @@ static int rt5682_resume(struct snd_soc_component *component)
 	regcache_cache_only(rt5682->regmap, false);
 	regcache_sync(rt5682->regmap);
 
+<<<<<<< HEAD
 	if (rt5682->hs_jack && rt5682->jack_type == SND_JACK_HEADSET) {
 		snd_soc_component_update_bits(component, RT5682_SAR_IL_CMD_1,
 			RT5682_SAR_BUTDET_MODE_MASK | RT5682_SAR_SEL_MB1_MB2_MASK,
@@ -2977,6 +3005,8 @@ static int rt5682_resume(struct snd_soc_component *component)
 			RT5682_PWR_CBJ, RT5682_PWR_CBJ);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mod_delayed_work(system_power_efficient_wq,
 		&rt5682->jack_detect_work, msecs_to_jiffies(250));
 

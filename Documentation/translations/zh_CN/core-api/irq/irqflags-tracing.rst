@@ -1,5 +1,6 @@
 .. include:: ../../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/core-api/irq/irqflags-tracing.rst
 
 :翻译:
@@ -8,6 +9,14 @@
 
 .. _cn_irqflags-tracing.rst:
 
+=======
+:Original: :doc:`../../../../core-api/irq/irqflags-tracing`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_irqflags-tracing.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =================
 IRQ-flags状态追踪
 =================

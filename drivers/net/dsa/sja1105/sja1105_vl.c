@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /* Copyright 2020 NXP
+=======
+/* Copyright 2020, NXP Semiconductors
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #include <net/tc_act/tc_gate.h>
 #include <linux/dsa/8021q.h>
@@ -496,11 +500,22 @@ int sja1105_vl_redirect(struct sja1105_private *priv, int port,
 	struct sja1105_rule *rule = sja1105_rule_find(priv, cookie);
 	int rc;
 
+<<<<<<< HEAD
 	if (!priv->vlan_aware && key->type != SJA1105_KEY_VLAN_UNAWARE_VL) {
 		NL_SET_ERR_MSG_MOD(extack,
 				   "Can only redirect based on DMAC");
 		return -EOPNOTSUPP;
 	} else if (priv->vlan_aware && key->type != SJA1105_KEY_VLAN_AWARE_VL) {
+=======
+	if (priv->vlan_state == SJA1105_VLAN_UNAWARE &&
+	    key->type != SJA1105_KEY_VLAN_UNAWARE_VL) {
+		NL_SET_ERR_MSG_MOD(extack,
+				   "Can only redirect based on DMAC");
+		return -EOPNOTSUPP;
+	} else if ((priv->vlan_state == SJA1105_VLAN_BEST_EFFORT ||
+		    priv->vlan_state == SJA1105_VLAN_FILTERING_FULL) &&
+		   key->type != SJA1105_KEY_VLAN_AWARE_VL) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		NL_SET_ERR_MSG_MOD(extack,
 				   "Can only redirect based on {DMAC, VID, PCP}");
 		return -EOPNOTSUPP;
@@ -592,11 +607,22 @@ int sja1105_vl_gate(struct sja1105_private *priv, int port,
 		return -ERANGE;
 	}
 
+<<<<<<< HEAD
 	if (!priv->vlan_aware && key->type != SJA1105_KEY_VLAN_UNAWARE_VL) {
 		NL_SET_ERR_MSG_MOD(extack,
 				   "Can only gate based on DMAC");
 		return -EOPNOTSUPP;
 	} else if (priv->vlan_aware && key->type != SJA1105_KEY_VLAN_AWARE_VL) {
+=======
+	if (priv->vlan_state == SJA1105_VLAN_UNAWARE &&
+	    key->type != SJA1105_KEY_VLAN_UNAWARE_VL) {
+		NL_SET_ERR_MSG_MOD(extack,
+				   "Can only gate based on DMAC");
+		return -EOPNOTSUPP;
+	} else if ((priv->vlan_state == SJA1105_VLAN_BEST_EFFORT ||
+		    priv->vlan_state == SJA1105_VLAN_FILTERING_FULL) &&
+		   key->type != SJA1105_KEY_VLAN_AWARE_VL) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		NL_SET_ERR_MSG_MOD(extack,
 				   "Can only gate based on {DMAC, VID, PCP}");
 		return -EOPNOTSUPP;

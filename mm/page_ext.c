@@ -58,6 +58,7 @@
  * can utilize this callback to initialize the state of it correctly.
  */
 
+<<<<<<< HEAD
 #if defined(CONFIG_PAGE_IDLE_FLAG) && !defined(CONFIG_64BIT)
 static bool need_page_idle(void)
 {
@@ -68,11 +69,17 @@ struct page_ext_operations page_idle_ops = {
 };
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct page_ext_operations *page_ext_ops[] = {
 #ifdef CONFIG_PAGE_OWNER
 	&page_owner_ops,
 #endif
+<<<<<<< HEAD
 #if defined(CONFIG_PAGE_IDLE_FLAG) && !defined(CONFIG_64BIT)
+=======
+#if defined(CONFIG_IDLE_PAGE_TRACKING) && !defined(CONFIG_64BIT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	&page_idle_ops,
 #endif
 };

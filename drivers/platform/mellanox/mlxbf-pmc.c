@@ -79,8 +79,12 @@
 #define MLXBF_PMC_L3C_PERF_CNT_HIGH_VAL GENMASK(24, 0)
 
 /**
+<<<<<<< HEAD
  * struct mlxbf_pmc_attribute - Structure to hold attribute and block info
  * for each sysfs entry
+=======
+ * Structure to hold attribute and block info for each sysfs entry
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @dev_attr: Device attribute struct
  * @index: index to identify counter number within a block
  * @nr: block number to which the sysfs belongs
@@ -92,7 +96,11 @@ struct mlxbf_pmc_attribute {
 };
 
 /**
+<<<<<<< HEAD
  * struct mlxbf_pmc_block_info - Structure to hold info for each HW block
+=======
+ * Structure to hold info for each HW block
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * @mmio_base: The VA at which the PMC block is mapped
  * @blk_size: Size of each mapped region
@@ -103,7 +111,11 @@ struct mlxbf_pmc_attribute {
  * @attr_event_list: Attributes for "event_list" sysfs files
  * @attr_enable: Attributes for "enable" sysfs files
  * @block_attr: All attributes needed for the block
+<<<<<<< HEAD
  * @block_attr_grp: Attribute group for the block
+=======
+ * @blcok_attr_grp: Attribute group for the block
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct mlxbf_pmc_block_info {
 	void __iomem *mmio_base;
@@ -119,7 +131,11 @@ struct mlxbf_pmc_block_info {
 };
 
 /**
+<<<<<<< HEAD
  * struct mlxbf_pmc_context - Structure to hold PMC context info
+=======
+ * Structure to hold PMC context info
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * @pdev: The kernel structure representing the device
  * @total_blocks: Total number of blocks
@@ -128,7 +144,11 @@ struct mlxbf_pmc_block_info {
  * @block_name: Block name
  * @block:  Block info
  * @groups:  Attribute groups from each block
+<<<<<<< HEAD
  * @svc_sreg_support: Whether SMCs are used to access performance registers
+=======
+ * @sv_sreg_support: Whether SMCs are used to access performance registers
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @sreg_tbl_perf: Secure register access table number
  * @event_set: Event set to use
  */
@@ -146,7 +166,11 @@ struct mlxbf_pmc_context {
 };
 
 /**
+<<<<<<< HEAD
  * struct mlxbf_pmc_events - Structure to hold supported events for each block
+=======
+ * Structure to hold supported events for each block
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @evt_num: Event number used to program counters
  * @evt_name: Name of the event
  */

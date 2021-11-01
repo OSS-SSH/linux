@@ -92,8 +92,12 @@ struct mlx5_ct_attr {
 struct mlx5_tc_ct_priv *
 mlx5_tc_ct_init(struct mlx5e_priv *priv, struct mlx5_fs_chains *chains,
 		struct mod_hdr_tbl *mod_hdr,
+<<<<<<< HEAD
 		enum mlx5_flow_namespace_type ns_type,
 		struct mlx5e_post_act *post_act);
+=======
+		enum mlx5_flow_namespace_type ns_type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void
 mlx5_tc_ct_clean(struct mlx5_tc_ct_priv *ct_priv);
 
@@ -133,8 +137,12 @@ mlx5e_tc_ct_restore_flow(struct mlx5_tc_ct_priv *ct_priv,
 static inline struct mlx5_tc_ct_priv *
 mlx5_tc_ct_init(struct mlx5e_priv *priv, struct mlx5_fs_chains *chains,
 		struct mod_hdr_tbl *mod_hdr,
+<<<<<<< HEAD
 		enum mlx5_flow_namespace_type ns_type,
 		struct mlx5e_post_act *post_act)
+=======
+		enum mlx5_flow_namespace_type ns_type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return NULL;
 }

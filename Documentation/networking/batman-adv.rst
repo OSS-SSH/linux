@@ -157,7 +157,11 @@ Contact
 Please send us comments, experiences, questions, anything :)
 
 IRC:
+<<<<<<< HEAD
   #batadv on ircs://irc.hackint.org/
+=======
+  #batman on irc.freenode.org
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Mailing-list:
   b.a.t.m.a.n@open-mesh.org (optional subscription at
   https://lists.open-mesh.org/mailman3/postorius/lists/b.a.t.m.a.n.lists.open-mesh.org/)

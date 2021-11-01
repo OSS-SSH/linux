@@ -9,7 +9,10 @@ host1x-y = \
 	job.o \
 	debug.o \
 	mipi.o \
+<<<<<<< HEAD
 	fence.o \
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hw/host1x01.o \
 	hw/host1x02.o \
 	hw/host1x04.o \

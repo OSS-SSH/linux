@@ -29,11 +29,14 @@ typedef union sigval {
 #define __ARCH_SI_ATTRIBUTES
 #endif
 
+<<<<<<< HEAD
 /*
  * Be careful when extending this union.  On 32bit siginfo_t is 32bit
  * aligned.  Which means that a 64bit field or any other field that
  * would increase the alignment of siginfo_t will break the ABI.
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 union __sifields {
 	/* kill() */
 	struct {

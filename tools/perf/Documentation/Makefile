@@ -2,10 +2,13 @@
 include ../../scripts/Makefile.include
 include ../../scripts/utilities.mak
 
+<<<<<<< HEAD
 ARTICLES =
 # with their own formatting rules.
 SP_ARTICLES =
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MAN1_TXT= \
 	$(filter-out $(addsuffix .txt, $(ARTICLES) $(SP_ARTICLES)), \
 		$(wildcard perf-*.txt)) \
@@ -20,6 +23,16 @@ _MAN_HTML=$(patsubst %.txt,%.html,$(MAN_TXT))
 MAN_XML=$(addprefix $(OUTPUT),$(_MAN_XML))
 MAN_HTML=$(addprefix $(OUTPUT),$(_MAN_HTML))
 
+<<<<<<< HEAD
+=======
+ARTICLES =
+# with their own formatting rules.
+SP_ARTICLES =
+API_DOCS = $(patsubst %.txt,%,$(filter-out technical/api-index-skel.txt technical/api-index.txt, $(wildcard technical/api-*.txt)))
+SP_ARTICLES += $(API_DOCS)
+SP_ARTICLES += technical/api-index
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 _DOC_HTML = $(_MAN_HTML)
 _DOC_HTML+=$(patsubst %,%.html,$(ARTICLES) $(SP_ARTICLES))
 DOC_HTML=$(addprefix $(OUTPUT),$(_DOC_HTML))
@@ -170,7 +183,11 @@ ifneq ($(V),1)
 endif
 endif
 
+<<<<<<< HEAD
 all: html man info
+=======
+all: html man
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 html: $(DOC_HTML)
 
@@ -183,6 +200,11 @@ man7: $(DOC_MAN7)
 
 info: $(OUTPUT)perf.info $(OUTPUT)perfman.info
 
+<<<<<<< HEAD
+=======
+pdf: $(OUTPUT)user-manual.pdf
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 install: install-man
 
 check-man-tools:
@@ -220,6 +242,14 @@ install-info: info
 	  echo "No directory found in $(DESTDIR)$(infodir)" >&2 ; \
 	fi
 
+<<<<<<< HEAD
+=======
+install-pdf: pdf
+	$(call QUIET_INSTALL, Documentation-pdf) \
+		$(INSTALL) -d -m 755 $(DESTDIR)$(pdfdir); \
+		$(INSTALL) -m 644 $(OUTPUT)user-manual.pdf $(DESTDIR)$(pdfdir)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #install-html: html
 #	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(DESTDIR)$(htmldir)
 
@@ -234,13 +264,41 @@ $(OUTPUT)doc.dep : $(wildcard *.txt) build-docdep.perl
 
 -include $(OUTPUT)doc.dep
 
+<<<<<<< HEAD
+=======
+_cmds_txt = cmds-ancillaryinterrogators.txt \
+	cmds-ancillarymanipulators.txt \
+	cmds-mainporcelain.txt \
+	cmds-plumbinginterrogators.txt \
+	cmds-plumbingmanipulators.txt \
+	cmds-synchingrepositories.txt \
+	cmds-synchelpers.txt \
+	cmds-purehelpers.txt \
+	cmds-foreignscminterface.txt
+cmds_txt=$(addprefix $(OUTPUT),$(_cmds_txt))
+
+$(cmds_txt): $(OUTPUT)cmd-list.made
+
+$(OUTPUT)cmd-list.made: cmd-list.perl ../command-list.txt $(MAN1_TXT)
+	$(QUIET_GEN)$(RM) $@ && \
+	$(PERL_PATH) ./cmd-list.perl ../command-list.txt $(QUIET_STDERR) && \
+	date >$@
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 CLEAN_FILES =									\
 	$(MAN_XML) $(addsuffix +,$(MAN_XML))					\
 	$(MAN_HTML) $(addsuffix +,$(MAN_HTML))					\
 	$(DOC_HTML) $(DOC_MAN1) $(DOC_MAN5) $(DOC_MAN7)				\
 	$(OUTPUT)*.texi $(OUTPUT)*.texi+ $(OUTPUT)*.texi++			\
+<<<<<<< HEAD
 	$(OUTPUT)perf.info $(OUTPUT)perfman.info $(OUTPUT)doc.dep		\
 	$(OUTPUT)technical/api-*.html $(OUTPUT)technical/api-index.txt
+=======
+	$(OUTPUT)perf.info $(OUTPUT)perfman.info				\
+	$(OUTPUT)howto-index.txt $(OUTPUT)howto/*.html $(OUTPUT)doc.dep		\
+	$(OUTPUT)technical/api-*.html $(OUTPUT)technical/api-index.txt		\
+	$(cmds_txt) $(OUTPUT)*.made
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 clean:
 	$(call QUIET_CLEAN, Documentation) $(RM) $(CLEAN_FILES)
 
@@ -274,6 +332,27 @@ $(OUTPUT)%.xml : %.txt
 XSLT = docbook.xsl
 XSLTOPTS = --xinclude --stringparam html.stylesheet docbook-xsl.css
 
+<<<<<<< HEAD
+=======
+$(OUTPUT)user-manual.html: $(OUTPUT)user-manual.xml
+	$(QUIET_XSLTPROC)xsltproc $(XSLTOPTS) -o $@ $(XSLT) $<
+
+$(OUTPUT)perf.info: $(OUTPUT)user-manual.texi
+	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split -o $@ $(OUTPUT)user-manual.texi
+
+$(OUTPUT)user-manual.texi: $(OUTPUT)user-manual.xml
+	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
+	$(DOCBOOK2X_TEXI) $(OUTPUT)user-manual.xml --encoding=UTF-8 --to-stdout >$@++ && \
+	$(PERL_PATH) fix-texi.perl <$@++ >$@+ && \
+	rm $@++ && \
+	mv $@+ $@
+
+$(OUTPUT)user-manual.pdf: $(OUTPUT)user-manual.xml
+	$(QUIET_DBLATEX)$(RM) $@+ $@ && \
+	$(DBLATEX) -o $@+ -p /etc/asciidoc/dblatex/asciidoc-dblatex.xsl -s /etc/asciidoc/dblatex/asciidoc-dblatex.sty $< && \
+	mv $@+ $@
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 $(OUTPUT)perfman.texi: $(MAN_XML) cat-texi.perl
 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
 	($(foreach xml,$(MAN_XML),$(DOCBOOK2X_TEXI) --encoding=UTF-8 \
@@ -283,18 +362,38 @@ $(OUTPUT)perfman.texi: $(MAN_XML) cat-texi.perl
 	mv $@+ $@
 
 $(OUTPUT)perfman.info: $(OUTPUT)perfman.texi
+<<<<<<< HEAD
 	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split --no-validate -o $@ $*.texi
+=======
+	$(QUIET_MAKEINFO)$(MAKEINFO) --no-split --no-validate $*.texi
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 $(patsubst %.txt,%.texi,$(MAN_TXT)): %.texi : %.xml
 	$(QUIET_DB2TEXI)$(RM) $@+ $@ && \
 	$(DOCBOOK2X_TEXI) --to-stdout $*.xml >$@+ && \
 	mv $@+ $@
 
+<<<<<<< HEAD
+=======
+howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+	$(QUIET_GEN)$(RM) $@+ $@ && \
+	'$(SHELL_PATH_SQ)' ./howto-index.sh $(wildcard howto/*.txt) >$@+ && \
+	mv $@+ $@
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
 	$(QUIET_ASCIIDOC)$(ASCIIDOC) -b $(ASCIIDOC_HTML) $*.txt
 
 WEBDOC_DEST = /pub/software/tools/perf/docs
 
+<<<<<<< HEAD
+=======
+$(patsubst %.txt,%.html,$(wildcard howto/*.txt)): %.html : %.txt
+	$(QUIET_ASCIIDOC)$(RM) $@+ $@ && \
+	sed -e '1,/^$$/d' $< | $(ASCIIDOC) -b $(ASCIIDOC_HTML) - >$@+ && \
+	mv $@+ $@
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # UNIMPLEMENTED
 #install-webdoc : html
 #	'$(SHELL_PATH_SQ)' ./install-webdoc.sh $(WEBDOC_DEST)

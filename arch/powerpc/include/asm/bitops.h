@@ -70,7 +70,11 @@ static inline void fn(unsigned long mask,	\
 	unsigned long *p = (unsigned long *)_p;	\
 	__asm__ __volatile__ (			\
 	prefix					\
+<<<<<<< HEAD
 "1:"	PPC_LLARX "%0,0,%3,0\n"			\
+=======
+"1:"	PPC_LLARX(%0,0,%3,0) "\n"		\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	stringify_in_c(op) "%0,%0,%2\n"		\
 	PPC_STLCX "%0,0,%3\n"			\
 	"bne- 1b\n"				\
@@ -115,13 +119,21 @@ static inline unsigned long fn(			\
 	unsigned long *p = (unsigned long *)_p;		\
 	__asm__ __volatile__ (				\
 	prefix						\
+<<<<<<< HEAD
 "1:"	PPC_LLARX "%0,0,%3,%4\n"			\
+=======
+"1:"	PPC_LLARX(%0,0,%3,eh) "\n"			\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	stringify_in_c(op) "%1,%0,%2\n"			\
 	PPC_STLCX "%1,0,%3\n"				\
 	"bne- 1b\n"					\
 	postfix						\
 	: "=&r" (old), "=&r" (t)			\
+<<<<<<< HEAD
 	: "r" (mask), "r" (p), "i" (IS_ENABLED(CONFIG_PPC64) ? eh : 0)	\
+=======
+	: "r" (mask), "r" (p)				\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	: "cc", "memory");				\
 	return (old & mask);				\
 }
@@ -170,7 +182,11 @@ clear_bit_unlock_return_word(int nr, volatile unsigned long *addr)
 
 	__asm__ __volatile__ (
 	PPC_RELEASE_BARRIER
+<<<<<<< HEAD
 "1:"	PPC_LLARX "%0,0,%3,0\n"
+=======
+"1:"	PPC_LLARX(%0,0,%3,0) "\n"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	"andc %1,%0,%2\n"
 	PPC_STLCX "%1,0,%3\n"
 	"bne- 1b\n"

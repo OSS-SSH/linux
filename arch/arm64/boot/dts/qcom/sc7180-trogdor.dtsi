@@ -247,14 +247,37 @@
 		};
 	};
 
+<<<<<<< HEAD
 	max98360a: audio-codec-0 {
 		compatible = "maxim,max98360a";
+=======
+	max98357a: audio-codec-0 {
+		compatible = "maxim,max98357a";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pinctrl-names = "default";
 		pinctrl-0 = <&amp_en>;
 		sdmode-gpios = <&tlmm 23 GPIO_ACTIVE_HIGH>;
 		#sound-dai-cells = <0>;
 	};
 
+<<<<<<< HEAD
+=======
+	panel: panel {
+		/* Compatible will be filled in per-board */
+		power-supply = <&pp3300_dx_edp>;
+		backlight = <&backlight>;
+		hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
+
+		ports {
+			port {
+				panel_in_edp: endpoint {
+					remote-endpoint = <&sn65dsi86_out>;
+				};
+			};
+		};
+	};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pwmleds {
 		compatible = "pwm-leds";
 		keyboard_backlight: keyboard-backlight {
@@ -296,6 +319,7 @@
 			};
 
 			sound_multimedia1_codec: codec {
+<<<<<<< HEAD
 				sound-dai = <&max98360a>;
 			};
 		};
@@ -309,6 +333,9 @@
 
 			codec {
 				sound-dai = <&mdss_dp>;
+=======
+				sound-dai = <&max98357a>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			};
 		};
 	};
@@ -663,6 +690,7 @@ edp_brij_i2c: &i2c2 {
 				};
 			};
 		};
+<<<<<<< HEAD
 
 		aux-bus {
 			panel: panel {
@@ -678,6 +706,8 @@ edp_brij_i2c: &i2c2 {
 				};
 			};
 		};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 };
 
@@ -780,10 +810,13 @@ hp_i2c: &i2c9 {
 		reg = <MI2S_SECONDARY>;
 		qcom,playback-sd-lines = <0>;
 	};
+<<<<<<< HEAD
 
 	hdmi@5 {
 		reg = <LPASS_DP_RX>;
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &mdp {
@@ -794,6 +827,7 @@ hp_i2c: &i2c9 {
 	status = "okay";
 };
 
+<<<<<<< HEAD
 &mdss_dp {
 	status = "okay";
 	pinctrl-names = "default";
@@ -803,6 +837,8 @@ hp_i2c: &i2c9 {
 	vdda-0p9-supply = <&vdda_usb_ss_dp_core>;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &pm6150_adc {
 	charger-thermistor@4f {
 		reg = <ADC5_AMUX_THM3_100K_PU>;

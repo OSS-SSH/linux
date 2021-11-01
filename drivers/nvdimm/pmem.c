@@ -380,6 +380,10 @@ static int pmem_attach_disk(struct device *dev,
 	struct nd_pfn_sb *pfn_sb;
 	struct pmem_device *pmem;
 	struct request_queue *q;
+<<<<<<< HEAD
+=======
+	struct device *gendev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct gendisk *disk;
 	void *addr;
 	int rc;
@@ -449,11 +453,19 @@ static int pmem_attach_disk(struct device *dev,
 		pmem->pfn_flags |= PFN_MAP;
 		bb_range = pmem->pgmap.range;
 	} else {
+<<<<<<< HEAD
 		addr = devm_memremap(dev, pmem->phys_addr,
 				pmem->size, ARCH_MEMREMAP_PMEM);
 		if (devm_add_action_or_reset(dev, pmem_release_queue,
 					&pmem->pgmap))
 			return -ENOMEM;
+=======
+		if (devm_add_action_or_reset(dev, pmem_release_queue,
+					&pmem->pgmap))
+			return -ENOMEM;
+		addr = devm_memremap(dev, pmem->phys_addr,
+				pmem->size, ARCH_MEMREMAP_PMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		bb_range.start =  res->start;
 		bb_range.end = res->end;
 	}
@@ -488,8 +500,15 @@ static int pmem_attach_disk(struct device *dev,
 	}
 	dax_write_cache(dax_dev, nvdimm_has_cache(nd_region));
 	pmem->dax_dev = dax_dev;
+<<<<<<< HEAD
 
 	device_add_disk(dev, disk, pmem_attribute_groups);
+=======
+	gendev = disk_to_dev(disk);
+	gendev->groups = pmem_attribute_groups;
+
+	device_add_disk(dev, disk, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (devm_add_action_or_reset(dev, pmem_release_disk, pmem))
 		return -ENOMEM;
 

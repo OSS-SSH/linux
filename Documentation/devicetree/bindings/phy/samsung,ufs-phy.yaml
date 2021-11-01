@@ -16,7 +16,10 @@ properties:
   compatible:
     enum:
       - samsung,exynos7-ufs-phy
+<<<<<<< HEAD
       - samsung,exynosautov9-ufs-phy
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   reg:
     maxItems: 1

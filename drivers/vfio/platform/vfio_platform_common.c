@@ -218,6 +218,7 @@ static int vfio_platform_call_reset(struct vfio_platform_device *vdev,
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static void vfio_platform_close_device(struct vfio_device *core_vdev)
 {
 	struct vfio_platform_device *vdev =
@@ -264,6 +265,67 @@ static int vfio_platform_open_device(struct vfio_device *core_vdev)
 			ret, extra_dbg ? extra_dbg : "");
 		goto err_rst;
 	}
+=======
+static void vfio_platform_release(struct vfio_device *core_vdev)
+{
+	struct vfio_platform_device *vdev =
+		container_of(core_vdev, struct vfio_platform_device, vdev);
+
+	mutex_lock(&driver_lock);
+
+	if (!(--vdev->refcnt)) {
+		const char *extra_dbg = NULL;
+		int ret;
+
+		ret = vfio_platform_call_reset(vdev, &extra_dbg);
+		if (ret && vdev->reset_required) {
+			dev_warn(vdev->device, "reset driver is required and reset call failed in release (%d) %s\n",
+				 ret, extra_dbg ? extra_dbg : "");
+			WARN_ON(1);
+		}
+		pm_runtime_put(vdev->device);
+		vfio_platform_regions_cleanup(vdev);
+		vfio_platform_irq_cleanup(vdev);
+	}
+
+	mutex_unlock(&driver_lock);
+}
+
+static int vfio_platform_open(struct vfio_device *core_vdev)
+{
+	struct vfio_platform_device *vdev =
+		container_of(core_vdev, struct vfio_platform_device, vdev);
+	int ret;
+
+	mutex_lock(&driver_lock);
+
+	if (!vdev->refcnt) {
+		const char *extra_dbg = NULL;
+
+		ret = vfio_platform_regions_init(vdev);
+		if (ret)
+			goto err_reg;
+
+		ret = vfio_platform_irq_init(vdev);
+		if (ret)
+			goto err_irq;
+
+		ret = pm_runtime_get_sync(vdev->device);
+		if (ret < 0)
+			goto err_rst;
+
+		ret = vfio_platform_call_reset(vdev, &extra_dbg);
+		if (ret && vdev->reset_required) {
+			dev_warn(vdev->device, "reset driver is required and reset call failed in open (%d) %s\n",
+				 ret, extra_dbg ? extra_dbg : "");
+			goto err_rst;
+		}
+	}
+
+	vdev->refcnt++;
+
+	mutex_unlock(&driver_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 err_rst:
@@ -271,6 +333,11 @@ err_rst:
 	vfio_platform_irq_cleanup(vdev);
 err_irq:
 	vfio_platform_regions_cleanup(vdev);
+<<<<<<< HEAD
+=======
+err_reg:
+	mutex_unlock(&driver_lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -601,8 +668,13 @@ static int vfio_platform_mmap(struct vfio_device *core_vdev, struct vm_area_stru
 
 static const struct vfio_device_ops vfio_platform_ops = {
 	.name		= "vfio-platform",
+<<<<<<< HEAD
 	.open_device	= vfio_platform_open_device,
 	.close_device	= vfio_platform_close_device,
+=======
+	.open		= vfio_platform_open,
+	.release	= vfio_platform_release,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ioctl		= vfio_platform_ioctl,
 	.read		= vfio_platform_read,
 	.write		= vfio_platform_write,
@@ -652,7 +724,11 @@ int vfio_platform_probe_common(struct vfio_platform_device *vdev,
 		ret = vfio_platform_of_probe(vdev, dev);
 
 	if (ret)
+<<<<<<< HEAD
 		goto out_uninit;
+=======
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	vdev->device = dev;
 
@@ -660,7 +736,11 @@ int vfio_platform_probe_common(struct vfio_platform_device *vdev,
 	if (ret && vdev->reset_required) {
 		dev_err(dev, "No reset function found for device %s\n",
 			vdev->name);
+<<<<<<< HEAD
 		goto out_uninit;
+=======
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	group = vfio_iommu_group_get(dev);
@@ -683,8 +763,11 @@ put_iommu:
 	vfio_iommu_group_put(group, dev);
 put_reset:
 	vfio_platform_put_reset(vdev);
+<<<<<<< HEAD
 out_uninit:
 	vfio_uninit_group_dev(&vdev->vdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 EXPORT_SYMBOL_GPL(vfio_platform_probe_common);
@@ -695,7 +778,10 @@ void vfio_platform_remove_common(struct vfio_platform_device *vdev)
 
 	pm_runtime_disable(vdev->device);
 	vfio_platform_put_reset(vdev);
+<<<<<<< HEAD
 	vfio_uninit_group_dev(&vdev->vdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vfio_iommu_group_put(vdev->vdev.dev->iommu_group, vdev->vdev.dev);
 }
 EXPORT_SYMBOL_GPL(vfio_platform_remove_common);

@@ -55,6 +55,7 @@ static int spk_init(struct snd_soc_pcm_runtime *rtd)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int mx8373_enable_spk_pin(struct snd_pcm_substream *substream, bool enable)
 {
 	struct snd_soc_pcm_runtime *rtd = asoc_substream_to_rtd(substream);
@@ -110,10 +111,43 @@ static int mx8373_sdw_hw_free(struct snd_pcm_substream *substream)
 		return ret;
 
 	return mx8373_enable_spk_pin(substream, false);
+=======
+static int max98373_sdw_trigger(struct snd_pcm_substream *substream, int cmd)
+{
+	int ret;
+
+	switch (cmd) {
+	case SNDRV_PCM_TRIGGER_START:
+	case SNDRV_PCM_TRIGGER_RESUME:
+	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+		/* enable max98373 first */
+		ret = max_98373_trigger(substream, cmd);
+		if (ret < 0)
+			break;
+
+		ret = sdw_trigger(substream, cmd);
+		break;
+	case SNDRV_PCM_TRIGGER_STOP:
+	case SNDRV_PCM_TRIGGER_SUSPEND:
+	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+		ret = sdw_trigger(substream, cmd);
+		if (ret < 0)
+			break;
+
+		ret = max_98373_trigger(substream, cmd);
+		break;
+	default:
+		ret = -EINVAL;
+		break;
+	}
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct snd_soc_ops max_98373_sdw_ops = {
 	.startup = sdw_startup,
+<<<<<<< HEAD
 	.prepare = mx8373_sdw_prepare,
 	.trigger = sdw_trigger,
 	.hw_free = mx8373_sdw_hw_free,
@@ -122,6 +156,15 @@ static const struct snd_soc_ops max_98373_sdw_ops = {
 
 int sof_sdw_mx8373_init(struct snd_soc_card *card,
 			const struct snd_soc_acpi_link_adr *link,
+=======
+	.prepare = sdw_prepare,
+	.trigger = max98373_sdw_trigger,
+	.hw_free = sdw_hw_free,
+	.shutdown = sdw_shutdown,
+};
+
+int sof_sdw_mx8373_init(const struct snd_soc_acpi_link_adr *link,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			struct snd_soc_dai_link *dai_links,
 			struct sof_sdw_codec_info *info,
 			bool playback)

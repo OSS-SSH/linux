@@ -35,8 +35,11 @@
 #include "include/irq_service_interface.h"
 #include "dcn20/dcn20_resource.h"
 
+<<<<<<< HEAD
 #include "dml/dcn2x/dcn2x.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "clk_mgr.h"
 #include "dcn10/dcn10_hubp.h"
 #include "dcn10/dcn10_ipp.h"
@@ -111,7 +114,10 @@ struct _vcs_dpi_ip_params_st dcn2_1_ip = {
 	.max_page_table_levels = 4,
 	.pte_chunk_size_kbytes = 2,
 	.meta_chunk_size_kbytes = 2,
+<<<<<<< HEAD
 	.min_meta_chunk_size_bytes = 256,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.writeback_chunk_size_kbytes = 2,
 	.line_buffer_size_bits = 789504,
 	.is_line_buffer_bpp_fixed = 0,
@@ -886,8 +892,12 @@ static const struct dc_debug_options debug_defaults_drv = {
 		.disable_48mhz_pwrdwn = false,
 		.usbc_combo_phy_reset_wa = true,
 		.dmub_command_table = true,
+<<<<<<< HEAD
 		.use_max_lb = true,
 		.optimize_edp_link_rate = true
+=======
+		.use_max_lb = true
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct dc_debug_options debug_defaults_diags = {

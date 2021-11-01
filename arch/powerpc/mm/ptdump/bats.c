@@ -7,7 +7,11 @@
  */
 
 #include <linux/pgtable.h>
+<<<<<<< HEAD
 #include <linux/debugfs.h>
+=======
+#include <asm/debugfs.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/cpu_has_feature.h>
 
 #include "ptdump.h"
@@ -57,7 +61,11 @@ static void bat_show_603(struct seq_file *m, int idx, u32 lower, u32 upper, bool
 
 #define BAT_SHOW_603(_m, _n, _l, _u, _d) bat_show_603(_m, _n, mfspr(_l), mfspr(_u), _d)
 
+<<<<<<< HEAD
 static int bats_show(struct seq_file *m, void *v)
+=======
+static int bats_show_603(struct seq_file *m, void *v)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	seq_puts(m, "---[ Instruction Block Address Translation ]---\n");
 
@@ -88,12 +96,30 @@ static int bats_show(struct seq_file *m, void *v)
 	return 0;
 }
 
+<<<<<<< HEAD
 DEFINE_SHOW_ATTRIBUTE(bats);
+=======
+static int bats_open(struct inode *inode, struct file *file)
+{
+	return single_open(file, bats_show_603, NULL);
+}
+
+static const struct file_operations bats_fops = {
+	.open		= bats_open,
+	.read		= seq_read,
+	.llseek		= seq_lseek,
+	.release	= single_release,
+};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int __init bats_init(void)
 {
 	debugfs_create_file("block_address_translation", 0400,
+<<<<<<< HEAD
 			    arch_debugfs_dir, NULL, &bats_fops);
+=======
+			    powerpc_debugfs_root, NULL, &bats_fops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 device_initcall(bats_init);

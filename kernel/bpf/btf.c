@@ -3046,29 +3046,54 @@ static void btf_struct_log(struct btf_verifier_env *env,
 	btf_verifier_log(env, "size=%u vlen=%u", t->size, btf_type_vlen(t));
 }
 
+<<<<<<< HEAD
 static int btf_find_struct_field(const struct btf *btf, const struct btf_type *t,
 				 const char *name, int sz, int align)
+=======
+/* find 'struct bpf_spin_lock' in map value.
+ * return >= 0 offset if found
+ * and < 0 in case of error
+ */
+int btf_find_spin_lock(const struct btf *btf, const struct btf_type *t)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct btf_member *member;
 	u32 i, off = -ENOENT;
 
+<<<<<<< HEAD
+=======
+	if (!__btf_type_is_struct(t))
+		return -EINVAL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for_each_member(i, t, member) {
 		const struct btf_type *member_type = btf_type_by_id(btf,
 								    member->type);
 		if (!__btf_type_is_struct(member_type))
 			continue;
+<<<<<<< HEAD
 		if (member_type->size != sz)
 			continue;
 		if (strcmp(__btf_name_by_offset(btf, member_type->name_off), name))
 			continue;
 		if (off != -ENOENT)
 			/* only one such field is allowed */
+=======
+		if (member_type->size != sizeof(struct bpf_spin_lock))
+			continue;
+		if (strcmp(__btf_name_by_offset(btf, member_type->name_off),
+			   "bpf_spin_lock"))
+			continue;
+		if (off != -ENOENT)
+			/* only one 'struct bpf_spin_lock' is allowed */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -E2BIG;
 		off = btf_member_bit_offset(t, member);
 		if (off % 8)
 			/* valid C code cannot generate such BTF */
 			return -EINVAL;
 		off /= 8;
+<<<<<<< HEAD
 		if (off % align)
 			return -EINVAL;
 	}
@@ -3098,11 +3123,16 @@ static int btf_find_datasec_var(const struct btf *btf, const struct btf_type *t,
 			return -E2BIG;
 		off = vsi->offset;
 		if (off % align)
+=======
+		if (off % __alignof__(struct bpf_spin_lock))
+			/* valid struct bpf_spin_lock will be 4 byte aligned */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -EINVAL;
 	}
 	return off;
 }
 
+<<<<<<< HEAD
 static int btf_find_field(const struct btf *btf, const struct btf_type *t,
 			  const char *name, int sz, int align)
 {
@@ -3132,6 +3162,8 @@ int btf_find_timer(const struct btf *btf, const struct btf_type *t)
 			      __alignof__(struct bpf_timer));
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __btf_struct_show(const struct btf *btf, const struct btf_type *t,
 			      u32 type_id, void *data, u8 bits_offset,
 			      struct btf_show *show)
@@ -4825,11 +4857,14 @@ bool btf_ctx_access(int off, int size, enum bpf_access_type type,
 		const struct bpf_ctx_arg_aux *ctx_arg_info = &prog->aux->ctx_arg_info[i];
 
 		if (ctx_arg_info->offset == off) {
+<<<<<<< HEAD
 			if (!ctx_arg_info->btf_id) {
 				bpf_log(log,"invalid btf_id for context argument offset %u\n", off);
 				return false;
 			}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			info->reg_type = ctx_arg_info->reg_type;
 			info->btf = btf_vmlinux;
 			info->btf_id = ctx_arg_info->btf_id;
@@ -6213,5 +6248,8 @@ const struct bpf_func_proto bpf_btf_find_by_name_kind_proto = {
 	.arg3_type	= ARG_ANYTHING,
 	.arg4_type	= ARG_ANYTHING,
 };
+<<<<<<< HEAD
 
 BTF_ID_LIST_GLOBAL_SINGLE(btf_task_struct_ids, struct, task_struct)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

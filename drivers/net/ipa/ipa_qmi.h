@@ -39,6 +39,7 @@ struct ipa_qmi {
 	bool indication_sent;
 };
 
+<<<<<<< HEAD
 /**
  * ipa_qmi_setup() - Set up for QMI message exchange
  * @ipa:		IPA pointer
@@ -59,6 +60,9 @@ int ipa_qmi_setup(struct ipa *ipa);
  * ipa_qmi_teardown() - Tear down IPA QMI handles
  * @ipa:		IPA pointer
  */
+=======
+int ipa_qmi_setup(struct ipa *ipa);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void ipa_qmi_teardown(struct ipa *ipa);
 
 #endif /* !_IPA_QMI_H_ */

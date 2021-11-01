@@ -101,6 +101,7 @@ static inline void remap_stack_and_trap(void)
 		"memory");
 }
 
+<<<<<<< HEAD
 static __always_inline void *get_stub_page(void)
 {
 	unsigned long ret;
@@ -113,4 +114,6 @@ static __always_inline void *get_stub_page(void)
 
 	return (void *)ret;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

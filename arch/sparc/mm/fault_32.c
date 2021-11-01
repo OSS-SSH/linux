@@ -83,7 +83,11 @@ static void __do_fault_siginfo(int code, int sig, struct pt_regs *regs,
 		show_signal_msg(regs, sig, code,
 				addr, current);
 
+<<<<<<< HEAD
 	force_sig_fault(sig, code, (void __user *) addr);
+=======
+	force_sig_fault(sig, code, (void __user *) addr, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static unsigned long compute_si_addr(struct pt_regs *regs, int text_fault)

@@ -8,6 +8,10 @@
 #ifndef __OS_H__
 #define __OS_H__
 
+<<<<<<< HEAD
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <irq_user.h>
 #include <longjmp.h>
 #include <mm_id.h>

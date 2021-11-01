@@ -10,7 +10,11 @@
 #include <linux/atomic.h>
 #include <linux/byteorder/generic.h>
 #include <linux/errno.h>
+<<<<<<< HEAD
 #include <linux/kstrtox.h>
+=======
+#include <linux/kernel.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/limits.h>
 #include <linux/math64.h>
 #include <linux/netdevice.h>

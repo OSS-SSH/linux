@@ -24,7 +24,12 @@
 #include <linux/module.h>
 #include <linux/mutex.h>
 #include <linux/pm.h>
+<<<<<<< HEAD
 #include <linux/units.h>
+=======
+
+#define HZ_PER_KHZ 1000
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define AS73211_DRV_NAME "as73211"
 

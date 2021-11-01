@@ -20,7 +20,10 @@
 #include <linux/sched.h>
 #include <linux/slab.h>
 #include <linux/types.h>
+<<<<<<< HEAD
 #include <linux/units.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/unaligned.h>
 
 #define EBU_CLC			0x000
@@ -103,6 +106,10 @@
 
 #define MAX_CS	2
 
+<<<<<<< HEAD
+=======
+#define HZ_PER_MHZ	1000000L
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define USEC_PER_SEC	1000000L
 
 struct ebu_nand_cs {
@@ -631,6 +638,7 @@ static int ebu_nand_probe(struct platform_device *pdev)
 	ebu_host->clk_rate = clk_get_rate(ebu_host->clk);
 
 	ebu_host->dma_tx = dma_request_chan(dev, "tx");
+<<<<<<< HEAD
 	if (IS_ERR(ebu_host->dma_tx)) {
 		ret = dev_err_probe(dev, PTR_ERR(ebu_host->dma_tx),
 				    "failed to request DMA tx chan!.\n");
@@ -651,6 +659,21 @@ static int ebu_nand_probe(struct platform_device *pdev)
 		ret = -EINVAL;
 		goto err_cleanup_dma;
 	}
+=======
+	if (IS_ERR(ebu_host->dma_tx))
+		return dev_err_probe(dev, PTR_ERR(ebu_host->dma_tx),
+				     "failed to request DMA tx chan!.\n");
+
+	ebu_host->dma_rx = dma_request_chan(dev, "rx");
+	if (IS_ERR(ebu_host->dma_rx))
+		return dev_err_probe(dev, PTR_ERR(ebu_host->dma_rx),
+				     "failed to request DMA rx chan!.\n");
+
+	resname = devm_kasprintf(dev, GFP_KERNEL, "addr_sel%d", cs);
+	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, resname);
+	if (!res)
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ebu_host->cs[cs].addr_sel = res->start;
 	writel(ebu_host->cs[cs].addr_sel | EBU_ADDR_MASK(5) | EBU_ADDR_SEL_REGEN,
 	       ebu_host->ebu + EBU_ADDR_SEL(cs));
@@ -660,8 +683,12 @@ static int ebu_nand_probe(struct platform_device *pdev)
 	mtd = nand_to_mtd(&ebu_host->chip);
 	if (!mtd->name) {
 		dev_err(ebu_host->dev, "NAND label property is mandatory\n");
+<<<<<<< HEAD
 		ret = -EINVAL;
 		goto err_cleanup_dma;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	mtd->dev.parent = dev;
@@ -689,7 +716,10 @@ err_clean_nand:
 	nand_cleanup(&ebu_host->chip);
 err_cleanup_dma:
 	ebu_dma_cleanup(ebu_host);
+<<<<<<< HEAD
 err_disable_unprepare_clk:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	clk_disable_unprepare(ebu_host->clk);
 
 	return ret;

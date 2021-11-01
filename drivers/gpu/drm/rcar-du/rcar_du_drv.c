@@ -553,6 +553,7 @@ static int rcar_du_remove(struct platform_device *pdev)
 	struct drm_device *ddev = &rcdu->ddev;
 
 	drm_dev_unregister(ddev);
+<<<<<<< HEAD
 	drm_atomic_helper_shutdown(ddev);
 
 	drm_kms_helper_poll_fini(ddev);
@@ -565,6 +566,14 @@ static void rcar_du_shutdown(struct platform_device *pdev)
 	struct rcar_du_device *rcdu = platform_get_drvdata(pdev);
 
 	drm_atomic_helper_shutdown(&rcdu->ddev);
+=======
+
+	drm_kms_helper_poll_fini(ddev);
+
+	drm_dev_put(ddev);
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int rcar_du_probe(struct platform_device *pdev)
@@ -599,6 +608,11 @@ static int rcar_du_probe(struct platform_device *pdev)
 		goto error;
 	}
 
+<<<<<<< HEAD
+=======
+	rcdu->ddev.irq_enabled = 1;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Register the DRM device with the core and the connectors with
 	 * sysfs.
@@ -621,7 +635,10 @@ error:
 static struct platform_driver rcar_du_platform_driver = {
 	.probe		= rcar_du_probe,
 	.remove		= rcar_du_remove,
+<<<<<<< HEAD
 	.shutdown	= rcar_du_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver		= {
 		.name	= "rcar-du",
 		.pm	= &rcar_du_pm_ops,

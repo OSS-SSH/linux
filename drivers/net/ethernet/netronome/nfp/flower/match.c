@@ -7,16 +7,30 @@
 #include "cmsg.h"
 #include "main.h"
 
+<<<<<<< HEAD
 void
 nfp_flower_compile_meta(struct nfp_flower_meta_tci *ext,
 			struct nfp_flower_meta_tci *msk, u8 key_type)
 {
+=======
+static void
+nfp_flower_compile_meta_tci(struct nfp_flower_meta_tci *ext,
+			    struct nfp_flower_meta_tci *msk,
+			    struct flow_rule *rule, u8 key_type, bool qinq_sup)
+{
+	u16 tmp_tci;
+
+	memset(ext, 0, sizeof(struct nfp_flower_meta_tci));
+	memset(msk, 0, sizeof(struct nfp_flower_meta_tci));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Populate the metadata frame. */
 	ext->nfp_flow_key_layer = key_type;
 	ext->mask_id = ~0;
 
 	msk->nfp_flow_key_layer = key_type;
 	msk->mask_id = ~0;
+<<<<<<< HEAD
 }
 
 void
@@ -27,10 +41,15 @@ nfp_flower_compile_tci(struct nfp_flower_meta_tci *ext,
 	u16 msk_tci, key_tci;
 
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_VLAN)) {
+=======
+
+	if (!qinq_sup && flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_VLAN)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct flow_match_vlan match;
 
 		flow_rule_match_vlan(rule, &match);
 		/* Populate the tci field. */
+<<<<<<< HEAD
 		key_tci = NFP_FLOWER_MASK_VLAN_PRESENT;
 		key_tci |= FIELD_PREP(NFP_FLOWER_MASK_VLAN_PRIO,
 				      match.key->vlan_priority) |
@@ -45,10 +64,26 @@ nfp_flower_compile_tci(struct nfp_flower_meta_tci *ext,
 
 		ext->tci |= cpu_to_be16((key_tci & msk_tci));
 		msk->tci |= cpu_to_be16(msk_tci);
+=======
+		tmp_tci = NFP_FLOWER_MASK_VLAN_PRESENT;
+		tmp_tci |= FIELD_PREP(NFP_FLOWER_MASK_VLAN_PRIO,
+				      match.key->vlan_priority) |
+			   FIELD_PREP(NFP_FLOWER_MASK_VLAN_VID,
+				      match.key->vlan_id);
+		ext->tci = cpu_to_be16(tmp_tci);
+
+		tmp_tci = NFP_FLOWER_MASK_VLAN_PRESENT;
+		tmp_tci |= FIELD_PREP(NFP_FLOWER_MASK_VLAN_PRIO,
+				      match.mask->vlan_priority) |
+			   FIELD_PREP(NFP_FLOWER_MASK_VLAN_VID,
+				      match.mask->vlan_id);
+		msk->tci = cpu_to_be16(tmp_tci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
 static void
+<<<<<<< HEAD
 nfp_flower_compile_meta_tci(struct nfp_flower_meta_tci *ext,
 			    struct nfp_flower_meta_tci *msk,
 			    struct flow_rule *rule, u8 key_type, bool qinq_sup)
@@ -63,12 +98,18 @@ nfp_flower_compile_meta_tci(struct nfp_flower_meta_tci *ext,
 }
 
 void
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_ext_meta(struct nfp_flower_ext_meta *frame, u32 key_ext)
 {
 	frame->nfp_flow_key_layer2 = cpu_to_be32(key_ext);
 }
 
+<<<<<<< HEAD
 int
+=======
+static int
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_port(struct nfp_flower_in_port *frame, u32 cmsg_port,
 			bool mask_version, enum nfp_flower_tun_type tun_type,
 			struct netlink_ext_ack *extack)
@@ -91,6 +132,7 @@ nfp_flower_compile_port(struct nfp_flower_in_port *frame, u32 cmsg_port,
 	return 0;
 }
 
+<<<<<<< HEAD
 void
 nfp_flower_compile_mac(struct nfp_flower_mac_mpls *ext,
 		       struct nfp_flower_mac_mpls *msk,
@@ -122,6 +164,30 @@ nfp_flower_compile_mpls(struct nfp_flower_mac_mpls *ext,
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_MPLS)) {
 		struct flow_match_mpls match;
 		u32 key_mpls, msk_mpls;
+=======
+static int
+nfp_flower_compile_mac(struct nfp_flower_mac_mpls *ext,
+		       struct nfp_flower_mac_mpls *msk, struct flow_rule *rule,
+		       struct netlink_ext_ack *extack)
+{
+	memset(ext, 0, sizeof(struct nfp_flower_mac_mpls));
+	memset(msk, 0, sizeof(struct nfp_flower_mac_mpls));
+
+	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_ETH_ADDRS)) {
+		struct flow_match_eth_addrs match;
+
+		flow_rule_match_eth_addrs(rule, &match);
+		/* Populate mac frame. */
+		ether_addr_copy(ext->mac_dst, &match.key->dst[0]);
+		ether_addr_copy(ext->mac_src, &match.key->src[0]);
+		ether_addr_copy(msk->mac_dst, &match.mask->dst[0]);
+		ether_addr_copy(msk->mac_src, &match.mask->src[0]);
+	}
+
+	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_MPLS)) {
+		struct flow_match_mpls match;
+		u32 t_mpls;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		flow_rule_match_mpls(rule, &match);
 
@@ -132,6 +198,7 @@ nfp_flower_compile_mpls(struct nfp_flower_mac_mpls *ext,
 			return -EOPNOTSUPP;
 		}
 
+<<<<<<< HEAD
 		key_mpls = FIELD_PREP(NFP_FLOWER_MASK_MPLS_LB,
 				      match.key->ls[0].mpls_label) |
 			   FIELD_PREP(NFP_FLOWER_MASK_MPLS_TC,
@@ -150,6 +217,24 @@ nfp_flower_compile_mpls(struct nfp_flower_mac_mpls *ext,
 
 		ext->mpls_lse |= cpu_to_be32((key_mpls & msk_mpls));
 		msk->mpls_lse |= cpu_to_be32(msk_mpls);
+=======
+		t_mpls = FIELD_PREP(NFP_FLOWER_MASK_MPLS_LB,
+				    match.key->ls[0].mpls_label) |
+			 FIELD_PREP(NFP_FLOWER_MASK_MPLS_TC,
+				    match.key->ls[0].mpls_tc) |
+			 FIELD_PREP(NFP_FLOWER_MASK_MPLS_BOS,
+				    match.key->ls[0].mpls_bos) |
+			 NFP_FLOWER_MASK_MPLS_Q;
+		ext->mpls_lse = cpu_to_be32(t_mpls);
+		t_mpls = FIELD_PREP(NFP_FLOWER_MASK_MPLS_LB,
+				    match.mask->ls[0].mpls_label) |
+			 FIELD_PREP(NFP_FLOWER_MASK_MPLS_TC,
+				    match.mask->ls[0].mpls_tc) |
+			 FIELD_PREP(NFP_FLOWER_MASK_MPLS_BOS,
+				    match.mask->ls[0].mpls_bos) |
+			 NFP_FLOWER_MASK_MPLS_Q;
+		msk->mpls_lse = cpu_to_be32(t_mpls);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_BASIC)) {
 		/* Check for mpls ether type and set NFP_FLOWER_MASK_MPLS_Q
 		 * bit, which indicates an mpls ether type but without any
@@ -160,14 +245,20 @@ nfp_flower_compile_mpls(struct nfp_flower_mac_mpls *ext,
 		flow_rule_match_basic(rule, &match);
 		if (match.key->n_proto == cpu_to_be16(ETH_P_MPLS_UC) ||
 		    match.key->n_proto == cpu_to_be16(ETH_P_MPLS_MC)) {
+<<<<<<< HEAD
 			ext->mpls_lse |= cpu_to_be32(NFP_FLOWER_MASK_MPLS_Q);
 			msk->mpls_lse |= cpu_to_be32(NFP_FLOWER_MASK_MPLS_Q);
+=======
+			ext->mpls_lse = cpu_to_be32(NFP_FLOWER_MASK_MPLS_Q);
+			msk->mpls_lse = cpu_to_be32(NFP_FLOWER_MASK_MPLS_Q);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static int
 nfp_flower_compile_mac_mpls(struct nfp_flower_mac_mpls *ext,
 			    struct nfp_flower_mac_mpls *msk,
@@ -183,18 +274,34 @@ nfp_flower_compile_mac_mpls(struct nfp_flower_mac_mpls *ext,
 }
 
 void
+=======
+static void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_tport(struct nfp_flower_tp_ports *ext,
 			 struct nfp_flower_tp_ports *msk,
 			 struct flow_rule *rule)
 {
+<<<<<<< HEAD
+=======
+	memset(ext, 0, sizeof(struct nfp_flower_tp_ports));
+	memset(msk, 0, sizeof(struct nfp_flower_tp_ports));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_PORTS)) {
 		struct flow_match_ports match;
 
 		flow_rule_match_ports(rule, &match);
+<<<<<<< HEAD
 		ext->port_src |= match.key->src & match.mask->src;
 		ext->port_dst |= match.key->dst & match.mask->dst;
 		msk->port_src |= match.mask->src;
 		msk->port_dst |= match.mask->dst;
+=======
+		ext->port_src = match.key->src;
+		ext->port_dst = match.key->dst;
+		msk->port_src = match.mask->src;
+		msk->port_dst = match.mask->dst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -206,18 +313,30 @@ nfp_flower_compile_ip_ext(struct nfp_flower_ip_ext *ext,
 		struct flow_match_basic match;
 
 		flow_rule_match_basic(rule, &match);
+<<<<<<< HEAD
 		ext->proto |= match.key->ip_proto & match.mask->ip_proto;
 		msk->proto |= match.mask->ip_proto;
+=======
+		ext->proto = match.key->ip_proto;
+		msk->proto = match.mask->ip_proto;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_IP)) {
 		struct flow_match_ip match;
 
 		flow_rule_match_ip(rule, &match);
+<<<<<<< HEAD
 		ext->tos |= match.key->tos & match.mask->tos;
 		ext->ttl |= match.key->ttl & match.mask->ttl;
 		msk->tos |= match.mask->tos;
 		msk->ttl |= match.mask->ttl;
+=======
+		ext->tos = match.key->tos;
+		ext->ttl = match.key->ttl;
+		msk->tos = match.mask->tos;
+		msk->ttl = match.mask->ttl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_TCP)) {
@@ -270,6 +389,7 @@ nfp_flower_compile_ip_ext(struct nfp_flower_ip_ext *ext,
 }
 
 static void
+<<<<<<< HEAD
 nfp_flower_fill_vlan(struct flow_match_vlan *match,
 		     struct nfp_flower_vlan *ext,
 		     struct nfp_flower_vlan *msk, bool outer_vlan)
@@ -303,12 +423,37 @@ nfp_flower_fill_vlan(struct flow_match_vlan *match,
 }
 
 void
+=======
+nfp_flower_fill_vlan(struct flow_dissector_key_vlan *key,
+		     struct nfp_flower_vlan *frame,
+		     bool outer_vlan)
+{
+	u16 tci;
+
+	tci = NFP_FLOWER_MASK_VLAN_PRESENT;
+	tci |= FIELD_PREP(NFP_FLOWER_MASK_VLAN_PRIO,
+			  key->vlan_priority) |
+	       FIELD_PREP(NFP_FLOWER_MASK_VLAN_VID,
+			  key->vlan_id);
+
+	if (outer_vlan) {
+		frame->outer_tci = cpu_to_be16(tci);
+		frame->outer_tpid = key->vlan_tpid;
+	} else {
+		frame->inner_tci = cpu_to_be16(tci);
+		frame->inner_tpid = key->vlan_tpid;
+	}
+}
+
+static void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_vlan(struct nfp_flower_vlan *ext,
 			struct nfp_flower_vlan *msk,
 			struct flow_rule *rule)
 {
 	struct flow_match_vlan match;
 
+<<<<<<< HEAD
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_VLAN)) {
 		flow_rule_match_vlan(rule, &match);
 		nfp_flower_fill_vlan(&match, ext, msk, true);
@@ -331,11 +476,44 @@ nfp_flower_compile_ipv4(struct nfp_flower_ipv4 *ext,
 		ext->ipv4_dst |= match.key->dst & match.mask->dst;
 		msk->ipv4_src |= match.mask->src;
 		msk->ipv4_dst |= match.mask->dst;
+=======
+	memset(ext, 0, sizeof(struct nfp_flower_vlan));
+	memset(msk, 0, sizeof(struct nfp_flower_vlan));
+
+	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_VLAN)) {
+		flow_rule_match_vlan(rule, &match);
+		nfp_flower_fill_vlan(match.key, ext, true);
+		nfp_flower_fill_vlan(match.mask, msk, true);
+	}
+	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_CVLAN)) {
+		flow_rule_match_cvlan(rule, &match);
+		nfp_flower_fill_vlan(match.key, ext, false);
+		nfp_flower_fill_vlan(match.mask, msk, false);
+	}
+}
+
+static void
+nfp_flower_compile_ipv4(struct nfp_flower_ipv4 *ext,
+			struct nfp_flower_ipv4 *msk, struct flow_rule *rule)
+{
+	struct flow_match_ipv4_addrs match;
+
+	memset(ext, 0, sizeof(struct nfp_flower_ipv4));
+	memset(msk, 0, sizeof(struct nfp_flower_ipv4));
+
+	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_IPV4_ADDRS)) {
+		flow_rule_match_ipv4_addrs(rule, &match);
+		ext->ipv4_src = match.key->src;
+		ext->ipv4_dst = match.key->dst;
+		msk->ipv4_src = match.mask->src;
+		msk->ipv4_dst = match.mask->dst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	nfp_flower_compile_ip_ext(&ext->ip_ext, &msk->ip_ext, rule);
 }
 
+<<<<<<< HEAD
 void
 nfp_flower_compile_ipv6(struct nfp_flower_ipv6 *ext,
 			struct nfp_flower_ipv6 *msk, struct flow_rule *rule)
@@ -353,11 +531,29 @@ nfp_flower_compile_ipv6(struct nfp_flower_ipv6 *ext,
 			msk->ipv6_src.s6_addr[i] |= match.mask->src.s6_addr[i];
 			msk->ipv6_dst.s6_addr[i] |= match.mask->dst.s6_addr[i];
 		}
+=======
+static void
+nfp_flower_compile_ipv6(struct nfp_flower_ipv6 *ext,
+			struct nfp_flower_ipv6 *msk, struct flow_rule *rule)
+{
+	memset(ext, 0, sizeof(struct nfp_flower_ipv6));
+	memset(msk, 0, sizeof(struct nfp_flower_ipv6));
+
+	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_IPV6_ADDRS)) {
+		struct flow_match_ipv6_addrs match;
+
+		flow_rule_match_ipv6_addrs(rule, &match);
+		ext->ipv6_src = match.key->src;
+		ext->ipv6_dst = match.key->dst;
+		msk->ipv6_src = match.mask->src;
+		msk->ipv6_dst = match.mask->dst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	nfp_flower_compile_ip_ext(&ext->ip_ext, &msk->ip_ext, rule);
 }
 
+<<<<<<< HEAD
 void
 nfp_flower_compile_geneve_opt(u8 *ext, u8 *msk, struct flow_rule *rule)
 {
@@ -372,6 +568,18 @@ nfp_flower_compile_geneve_opt(u8 *ext, u8 *msk, struct flow_rule *rule)
 			msk[i] |= match.mask->data[i];
 		}
 	}
+=======
+static int
+nfp_flower_compile_geneve_opt(void *ext, void *msk, struct flow_rule *rule)
+{
+	struct flow_match_enc_opts match;
+
+	flow_rule_match_enc_opts(rule, &match);
+	memcpy(ext, match.key->data, match.key->len);
+	memcpy(msk, match.mask->data, match.mask->len);
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void
@@ -383,10 +591,17 @@ nfp_flower_compile_tun_ipv4_addrs(struct nfp_flower_tun_ipv4 *ext,
 		struct flow_match_ipv4_addrs match;
 
 		flow_rule_match_enc_ipv4_addrs(rule, &match);
+<<<<<<< HEAD
 		ext->src |= match.key->src & match.mask->src;
 		ext->dst |= match.key->dst & match.mask->dst;
 		msk->src |= match.mask->src;
 		msk->dst |= match.mask->dst;
+=======
+		ext->src = match.key->src;
+		ext->dst = match.key->dst;
+		msk->src = match.mask->src;
+		msk->dst = match.mask->dst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -397,6 +612,7 @@ nfp_flower_compile_tun_ipv6_addrs(struct nfp_flower_tun_ipv6 *ext,
 {
 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_ENC_IPV6_ADDRS)) {
 		struct flow_match_ipv6_addrs match;
+<<<<<<< HEAD
 		int i;
 
 		flow_rule_match_enc_ipv6_addrs(rule, &match);
@@ -408,6 +624,14 @@ nfp_flower_compile_tun_ipv6_addrs(struct nfp_flower_tun_ipv6 *ext,
 			msk->src.s6_addr[i] |= match.mask->src.s6_addr[i];
 			msk->dst.s6_addr[i] |= match.mask->dst.s6_addr[i];
 		}
+=======
+
+		flow_rule_match_enc_ipv6_addrs(rule, &match);
+		ext->src = match.key->src;
+		ext->dst = match.key->dst;
+		msk->src = match.mask->src;
+		msk->dst = match.mask->dst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -420,10 +644,17 @@ nfp_flower_compile_tun_ip_ext(struct nfp_flower_tun_ip_ext *ext,
 		struct flow_match_ip match;
 
 		flow_rule_match_enc_ip(rule, &match);
+<<<<<<< HEAD
 		ext->tos |= match.key->tos & match.mask->tos;
 		ext->ttl |= match.key->ttl & match.mask->ttl;
 		msk->tos |= match.mask->tos;
 		msk->ttl |= match.mask->ttl;
+=======
+		ext->tos = match.key->tos;
+		ext->ttl = match.key->ttl;
+		msk->tos = match.mask->tos;
+		msk->ttl = match.mask->ttl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -436,11 +667,18 @@ nfp_flower_compile_tun_udp_key(__be32 *key, __be32 *key_msk,
 		u32 vni;
 
 		flow_rule_match_enc_keyid(rule, &match);
+<<<<<<< HEAD
 		vni = be32_to_cpu((match.key->keyid & match.mask->keyid)) <<
 		      NFP_FL_TUN_VNI_OFFSET;
 		*key |= cpu_to_be32(vni);
 		vni = be32_to_cpu(match.mask->keyid) << NFP_FL_TUN_VNI_OFFSET;
 		*key_msk |= cpu_to_be32(vni);
+=======
+		vni = be32_to_cpu(match.key->keyid) << NFP_FL_TUN_VNI_OFFSET;
+		*key = cpu_to_be32(vni);
+		vni = be32_to_cpu(match.mask->keyid) << NFP_FL_TUN_VNI_OFFSET;
+		*key_msk = cpu_to_be32(vni);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -452,19 +690,34 @@ nfp_flower_compile_tun_gre_key(__be32 *key, __be32 *key_msk, __be16 *flags,
 		struct flow_match_enc_keyid match;
 
 		flow_rule_match_enc_keyid(rule, &match);
+<<<<<<< HEAD
 		*key |= match.key->keyid & match.mask->keyid;
 		*key_msk |= match.mask->keyid;
+=======
+		*key = match.key->keyid;
+		*key_msk = match.mask->keyid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		*flags = cpu_to_be16(NFP_FL_GRE_FLAG_KEY);
 		*flags_msk = cpu_to_be16(NFP_FL_GRE_FLAG_KEY);
 	}
 }
 
+<<<<<<< HEAD
 void
+=======
+static void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_ipv4_gre_tun(struct nfp_flower_ipv4_gre_tun *ext,
 				struct nfp_flower_ipv4_gre_tun *msk,
 				struct flow_rule *rule)
 {
+<<<<<<< HEAD
+=======
+	memset(ext, 0, sizeof(struct nfp_flower_ipv4_gre_tun));
+	memset(msk, 0, sizeof(struct nfp_flower_ipv4_gre_tun));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* NVGRE is the only supported GRE tunnel type */
 	ext->ethertype = cpu_to_be16(ETH_P_TEB);
 	msk->ethertype = cpu_to_be16(~0);
@@ -475,31 +728,61 @@ nfp_flower_compile_ipv4_gre_tun(struct nfp_flower_ipv4_gre_tun *ext,
 				       &ext->tun_flags, &msk->tun_flags, rule);
 }
 
+<<<<<<< HEAD
 void
+=======
+static void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_ipv4_udp_tun(struct nfp_flower_ipv4_udp_tun *ext,
 				struct nfp_flower_ipv4_udp_tun *msk,
 				struct flow_rule *rule)
 {
+<<<<<<< HEAD
+=======
+	memset(ext, 0, sizeof(struct nfp_flower_ipv4_udp_tun));
+	memset(msk, 0, sizeof(struct nfp_flower_ipv4_udp_tun));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	nfp_flower_compile_tun_ipv4_addrs(&ext->ipv4, &msk->ipv4, rule);
 	nfp_flower_compile_tun_ip_ext(&ext->ip_ext, &msk->ip_ext, rule);
 	nfp_flower_compile_tun_udp_key(&ext->tun_id, &msk->tun_id, rule);
 }
 
+<<<<<<< HEAD
 void
+=======
+static void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_ipv6_udp_tun(struct nfp_flower_ipv6_udp_tun *ext,
 				struct nfp_flower_ipv6_udp_tun *msk,
 				struct flow_rule *rule)
 {
+<<<<<<< HEAD
+=======
+	memset(ext, 0, sizeof(struct nfp_flower_ipv6_udp_tun));
+	memset(msk, 0, sizeof(struct nfp_flower_ipv6_udp_tun));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	nfp_flower_compile_tun_ipv6_addrs(&ext->ipv6, &msk->ipv6, rule);
 	nfp_flower_compile_tun_ip_ext(&ext->ip_ext, &msk->ip_ext, rule);
 	nfp_flower_compile_tun_udp_key(&ext->tun_id, &msk->tun_id, rule);
 }
 
+<<<<<<< HEAD
 void
+=======
+static void
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 nfp_flower_compile_ipv6_gre_tun(struct nfp_flower_ipv6_gre_tun *ext,
 				struct nfp_flower_ipv6_gre_tun *msk,
 				struct flow_rule *rule)
 {
+<<<<<<< HEAD
+=======
+	memset(ext, 0, sizeof(struct nfp_flower_ipv6_gre_tun));
+	memset(msk, 0, sizeof(struct nfp_flower_ipv6_gre_tun));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* NVGRE is the only supported GRE tunnel type */
 	ext->ethertype = cpu_to_be16(ETH_P_TEB);
 	msk->ethertype = cpu_to_be16(~0);
@@ -511,13 +794,21 @@ nfp_flower_compile_ipv6_gre_tun(struct nfp_flower_ipv6_gre_tun *ext,
 }
 
 int nfp_flower_compile_flow_match(struct nfp_app *app,
+<<<<<<< HEAD
 				  struct flow_rule *rule,
+=======
+				  struct flow_cls_offload *flow,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  struct nfp_fl_key_ls *key_ls,
 				  struct net_device *netdev,
 				  struct nfp_fl_payload *nfp_flow,
 				  enum nfp_flower_tun_type tun_type,
 				  struct netlink_ext_ack *extack)
 {
+<<<<<<< HEAD
+=======
+	struct flow_rule *rule = flow_cls_offload_flow_rule(flow);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nfp_flower_priv *priv = app->priv;
 	bool qinq_sup;
 	u32 port_id;
@@ -568,9 +859,15 @@ int nfp_flower_compile_flow_match(struct nfp_app *app,
 	msk += sizeof(struct nfp_flower_in_port);
 
 	if (NFP_FLOWER_LAYER_MAC & key_ls->key_layer) {
+<<<<<<< HEAD
 		err = nfp_flower_compile_mac_mpls((struct nfp_flower_mac_mpls *)ext,
 						  (struct nfp_flower_mac_mpls *)msk,
 						  rule, extack);
+=======
+		err = nfp_flower_compile_mac((struct nfp_flower_mac_mpls *)ext,
+					     (struct nfp_flower_mac_mpls *)msk,
+					     rule, extack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			return err;
 
@@ -681,7 +978,13 @@ int nfp_flower_compile_flow_match(struct nfp_app *app,
 		}
 
 		if (key_ls->key_layer_two & NFP_FLOWER_LAYER2_GENEVE_OP) {
+<<<<<<< HEAD
 			nfp_flower_compile_geneve_opt(ext, msk, rule);
+=======
+			err = nfp_flower_compile_geneve_opt(ext, msk, rule);
+			if (err)
+				return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 

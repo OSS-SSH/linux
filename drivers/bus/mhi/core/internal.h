@@ -690,6 +690,29 @@ void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
 void mhi_reset_chan(struct mhi_controller *mhi_cntrl,
 		    struct mhi_chan *mhi_chan);
 
+<<<<<<< HEAD
+=======
+/* Memory allocation methods */
+static inline void *mhi_alloc_coherent(struct mhi_controller *mhi_cntrl,
+				       size_t size,
+				       dma_addr_t *dma_handle,
+				       gfp_t gfp)
+{
+	void *buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, size, dma_handle,
+				       gfp);
+
+	return buf;
+}
+
+static inline void mhi_free_coherent(struct mhi_controller *mhi_cntrl,
+				     size_t size,
+				     void *vaddr,
+				     dma_addr_t dma_handle)
+{
+	dma_free_coherent(mhi_cntrl->cntrl_dev, size, vaddr, dma_handle);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Event processing methods */
 void mhi_ctrl_ev_task(unsigned long data);
 void mhi_ev_task(unsigned long data);

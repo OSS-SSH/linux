@@ -10,7 +10,10 @@
 #include <linux/device.h>
 #include <linux/err.h>
 #include <linux/module.h>
+<<<<<<< HEAD
 #include <linux/regmap.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/regulator/consumer.h>
 
 #include <linux/iio/common/st_sensors.h>

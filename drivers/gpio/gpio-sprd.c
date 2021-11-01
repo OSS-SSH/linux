@@ -189,7 +189,11 @@ static void sprd_gpio_irq_handler(struct irq_desc *desc)
 	struct gpio_chip *chip = irq_desc_get_handler_data(desc);
 	struct irq_chip *ic = irq_desc_get_chip(desc);
 	struct sprd_gpio *sprd_gpio = gpiochip_get_data(chip);
+<<<<<<< HEAD
 	u32 bank, n;
+=======
+	u32 bank, n, girq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	chained_irq_enter(ic, desc);
 
@@ -198,9 +202,19 @@ static void sprd_gpio_irq_handler(struct irq_desc *desc)
 		unsigned long reg = readl_relaxed(base + SPRD_GPIO_MIS) &
 			SPRD_GPIO_BANK_MASK;
 
+<<<<<<< HEAD
 		for_each_set_bit(n, &reg, SPRD_GPIO_BANK_NR)
 			generic_handle_domain_irq(chip->irq.domain,
 						  bank * SPRD_GPIO_BANK_NR + n);
+=======
+		for_each_set_bit(n, &reg, SPRD_GPIO_BANK_NR) {
+			girq = irq_find_mapping(chip->irq.domain,
+						bank * SPRD_GPIO_BANK_NR + n);
+
+			generic_handle_irq(girq);
+		}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	chained_irq_exit(ic, desc);
 }

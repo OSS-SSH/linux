@@ -355,7 +355,11 @@ void __init numa_reset_distance(void)
 
 	/* numa_distance could be 1LU marking allocation failure, test cnt */
 	if (numa_distance_cnt)
+<<<<<<< HEAD
 		memblock_free_ptr(numa_distance, size);
+=======
+		memblock_free(__pa(numa_distance), size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	numa_distance_cnt = 0;
 	numa_distance = NULL;	/* enable table creation */
 }
@@ -376,14 +380,23 @@ static int __init numa_alloc_distance(void)
 	cnt++;
 	size = cnt * cnt * sizeof(numa_distance[0]);
 
+<<<<<<< HEAD
 	phys = memblock_phys_alloc_range(size, PAGE_SIZE, 0,
 					 PFN_PHYS(max_pfn_mapped));
+=======
+	phys = memblock_find_in_range(0, PFN_PHYS(max_pfn_mapped),
+				      size, PAGE_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!phys) {
 		pr_warn("Warning: can't allocate distance table!\n");
 		/* don't retry until explicitly reset */
 		numa_distance = (void *)1LU;
 		return -ENOMEM;
 	}
+<<<<<<< HEAD
+=======
+	memblock_reserve(phys, size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	numa_distance = __va(phys);
 	numa_distance_cnt = cnt;

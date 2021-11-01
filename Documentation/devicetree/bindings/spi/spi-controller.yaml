@@ -79,7 +79,26 @@ properties:
     description:
       The SPI controller acts as a slave, instead of a master.
 
+<<<<<<< HEAD
   slave:
+=======
+allOf:
+  - if:
+      not:
+        required:
+          - spi-slave
+    then:
+      properties:
+        "#address-cells":
+          const: 1
+    else:
+      properties:
+        "#address-cells":
+          const: 0
+
+patternProperties:
+  "^slave$":
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     type: object
 
     properties:
@@ -90,7 +109,10 @@ properties:
     required:
       - compatible
 
+<<<<<<< HEAD
 patternProperties:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "^.*@[0-9a-f]+$":
     type: object
 
@@ -166,6 +188,7 @@ patternProperties:
       - compatible
       - reg
 
+<<<<<<< HEAD
 allOf:
   - if:
       not:
@@ -180,6 +203,8 @@ allOf:
         "#address-cells":
           const: 0
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 additionalProperties: true
 
 examples:

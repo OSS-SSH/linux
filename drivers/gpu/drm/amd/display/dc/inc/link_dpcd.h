@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2021 Advanced Micro Devices, Inc.
  *
@@ -23,6 +24,8 @@
  *
  */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef __LINK_DPCD_H__
 #define __LINK_DPCD_H__
 #include <inc/core_status.h>

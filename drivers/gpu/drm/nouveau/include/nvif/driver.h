@@ -11,7 +11,11 @@ struct nvif_driver {
 	void (*fini)(void *priv);
 	int (*suspend)(void *priv);
 	int (*resume)(void *priv);
+<<<<<<< HEAD
 	int (*ioctl)(void *priv, void *data, u32 size, void **hack);
+=======
+	int (*ioctl)(void *priv, bool super, void *data, u32 size, void **hack);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void __iomem *(*map)(void *priv, u64 handle, u32 size);
 	void (*unmap)(void *priv, void __iomem *ptr, u32 size);
 	bool keep;

@@ -1,8 +1,12 @@
 /* SPDX-License-Identifier: GPL-2.0 */
 /* Marvell PTP driver
  *
+<<<<<<< HEAD
  * Copyright (C) 2020 Marvell.
  *
+=======
+ * Copyright (C) 2020 Marvell International Ltd.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #ifndef PTP_H

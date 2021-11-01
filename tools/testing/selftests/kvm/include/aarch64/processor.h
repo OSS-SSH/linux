@@ -17,7 +17,10 @@
 #define CPACR_EL1               3, 0,  1, 0, 2
 #define TCR_EL1                 3, 0,  2, 0, 2
 #define MAIR_EL1                3, 0, 10, 2, 0
+<<<<<<< HEAD
 #define MPIDR_EL1               3, 0,  0, 0, 5
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define TTBR0_EL1               3, 0,  2, 0, 0
 #define SCTLR_EL1               3, 0,  1, 0, 0
 #define VBAR_EL1                3, 0, 12, 0, 0
@@ -41,8 +44,11 @@
 			  (0xfful << (4 * 8)) | \
 			  (0xbbul << (5 * 8)))
 
+<<<<<<< HEAD
 #define MPIDR_HWID_BITMASK (0xff00fffffful)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void get_reg(struct kvm_vm *vm, uint32_t vcpuid, uint64_t id, uint64_t *addr)
 {
 	struct kvm_one_reg reg;

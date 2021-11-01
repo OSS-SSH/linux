@@ -16,6 +16,11 @@
 #ifndef __ISP_LOCAL_H_INCLUDED__
 #define __ISP_LOCAL_H_INCLUDED__
 
+<<<<<<< HEAD
+=======
+#include <stdbool.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "isp_global.h"
 
 #include <isp2400_support.h>

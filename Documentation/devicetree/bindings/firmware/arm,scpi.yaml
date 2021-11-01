@@ -131,9 +131,15 @@ properties:
 
         properties:
           compatible:
+<<<<<<< HEAD
             enum:
               - arm,scpi-dvfs-clocks
               - arm,scpi-variable-clocks
+=======
+            oneOf:
+              - const: arm,scpi-dvfs-clocks
+              - const: arm,scpi-variable-clocks
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
           '#clock-cells':
             const: 1

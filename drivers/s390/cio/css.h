@@ -34,6 +34,7 @@
 #define SNID_STATE3_MULTI_PATH	   1
 #define SNID_STATE3_SINGLE_PATH	   0
 
+<<<<<<< HEAD
 /*
  * Conditions used to specify which subchannels need evaluation
  */
@@ -42,6 +43,8 @@ enum css_eval_cond {
 	CSS_EVAL_NOT_ONLINE	/* sch without an online-device */
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct path_state {
 	__u8  state1 : 2;	/* path state value 1 */
 	__u8  state2 : 2;	/* path state value 2 */
@@ -89,7 +92,11 @@ struct css_driver {
 	int (*chp_event)(struct subchannel *, struct chp_link *, int);
 	int (*sch_event)(struct subchannel *, int);
 	int (*probe)(struct subchannel *);
+<<<<<<< HEAD
 	void (*remove)(struct subchannel *);
+=======
+	int (*remove)(struct subchannel *);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*shutdown)(struct subchannel *);
 	int (*settle)(void);
 };
@@ -144,7 +151,11 @@ static inline struct channel_subsystem *css_by_id(u8 cssid)
 /* Helper functions to build lists for the slow path. */
 void css_schedule_eval(struct subchannel_id schid);
 void css_schedule_eval_all(void);
+<<<<<<< HEAD
 void css_schedule_eval_cond(enum css_eval_cond, unsigned long delay);
+=======
+void css_schedule_eval_all_unreg(unsigned long delay);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int css_complete_work(void);
 
 int sch_is_pseudo_sch(struct subchannel *);

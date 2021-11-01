@@ -152,7 +152,12 @@ static const struct drm_plane_funcs hibmc_plane_funcs = {
 };
 
 static const struct drm_plane_helper_funcs hibmc_plane_helper_funcs = {
+<<<<<<< HEAD
 	DRM_GEM_VRAM_PLANE_HELPER_FUNCS,
+=======
+	.prepare_fb	= drm_gem_vram_plane_helper_prepare_fb,
+	.cleanup_fb	= drm_gem_vram_plane_helper_cleanup_fb,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.atomic_check = hibmc_plane_atomic_check,
 	.atomic_update = hibmc_plane_atomic_update,
 };

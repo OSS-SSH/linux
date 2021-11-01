@@ -12,8 +12,12 @@ SYNOPSIS
 
 	**bpftool** [*OPTIONS*] **btf** *COMMAND*
 
+<<<<<<< HEAD
 	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] | {**-d** | **--debug** } |
 		{ **-B** | **--base-btf** } }
+=======
+	*OPTIONS* := { { **-j** | **--json** } [{ **-p** | **--pretty** }] }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	*COMMANDS* := { **dump** | **help** }
 
@@ -74,6 +78,7 @@ OPTIONS
 =======
 	.. include:: common_options.rst
 
+<<<<<<< HEAD
 	-B, --base-btf *FILE*
 		  Pass a base BTF object. Base BTF objects are typically used
 		  with BTF objects for kernel modules. To avoid duplicating
@@ -88,6 +93,8 @@ OPTIONS
 		  this option is optional. When the main BTF object is passed
 		  through other handles, this option becomes necessary.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 EXAMPLES
 ========
 **# bpftool btf dump id 1226**
@@ -232,6 +239,7 @@ All the standard ways to specify map or program are supported:
 **# bpftool btf dump prog tag b88e0a09b1d9759d**
 
 **# bpftool btf dump prog pinned /sys/fs/bpf/prog_name**
+<<<<<<< HEAD
 
 |
 | **# bpftool btf dump file /sys/kernel/btf/i2c_smbus**
@@ -263,3 +271,5 @@ All the standard ways to specify map or program are supported:
   [104859] FUNC 'smbalert_work' type_id=9695 linkage=static
   [104860] FUNC 'smbus_alert' type_id=71367 linkage=static
   [104861] FUNC 'smbus_do_alert' type_id=84827 linkage=static
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

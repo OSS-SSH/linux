@@ -283,7 +283,12 @@ int __kprobes kprobe_fault_handler(struct pt_regs *regs, unsigned int trapnr)
 		 * normal page fault.
 		 */
 		regs->pc = (unsigned long) cur->addr;
+<<<<<<< HEAD
 		BUG_ON(!instruction_pointer(regs));
+=======
+		if (!instruction_pointer(regs))
+			BUG();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (kcb->kprobe_status == KPROBE_REENTER)
 			restore_previous_kprobe(kcb);

@@ -22,6 +22,10 @@ struct btrfs_zoned_device_info {
 	 */
 	u64 zone_size;
 	u8  zone_size_shift;
+<<<<<<< HEAD
+=======
+	u64 max_zone_append_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 nr_zones;
 	unsigned long *seq_zones;
 	unsigned long *empty_zones;

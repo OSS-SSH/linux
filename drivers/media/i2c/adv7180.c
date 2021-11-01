@@ -94,7 +94,10 @@
 #define ADV7180_REG_SHAP_FILTER_CTL_1	0x0017
 #define ADV7180_REG_CTRL_2		0x001d
 #define ADV7180_REG_VSYNC_FIELD_CTL_1	0x0031
+<<<<<<< HEAD
 #define ADV7180_VSYNC_FIELD_CTL_1_NEWAV 0x12
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ADV7180_REG_MANUAL_WIN_CTL_1	0x003d
 #define ADV7180_REG_MANUAL_WIN_CTL_2	0x003e
 #define ADV7180_REG_MANUAL_WIN_CTL_3	0x003f
@@ -206,7 +209,10 @@ struct adv7180_state {
 	struct mutex		mutex; /* mutual excl. when accessing chip */
 	int			irq;
 	struct gpio_desc	*pwdn_gpio;
+<<<<<<< HEAD
 	struct gpio_desc	*rst_gpio;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	v4l2_std_id		curr_norm;
 	bool			powered;
 	bool			streaming;
@@ -218,7 +224,10 @@ struct adv7180_state {
 	struct i2c_client	*vpp_client;
 	const struct adv7180_chip_info *chip_info;
 	enum v4l2_field		field;
+<<<<<<< HEAD
 	bool			force_bt656_4;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 #define to_adv7180_sd(_ctrl) (&container_of(_ctrl->handler,		\
 					    struct adv7180_state,	\
@@ -487,6 +496,7 @@ static void adv7180_set_power_pin(struct adv7180_state *state, bool on)
 	}
 }
 
+<<<<<<< HEAD
 static void adv7180_set_reset_pin(struct adv7180_state *state, bool on)
 {
 	if (!state->rst_gpio)
@@ -500,6 +510,8 @@ static void adv7180_set_reset_pin(struct adv7180_state *state, bool on)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int adv7180_set_power(struct adv7180_state *state, bool on)
 {
 	u8 val;
@@ -979,6 +991,7 @@ static int adv7182_init(struct adv7180_state *state)
 		adv7180_write(state, ADV7180_REG_EXTENDED_OUTPUT_CONTROL, 0x57);
 		adv7180_write(state, ADV7180_REG_CTRL_2, 0xc0);
 	} else {
+<<<<<<< HEAD
 		if (state->chip_info->flags & ADV7180_FLAG_V2) {
 			if (state->force_bt656_4) {
 				/* ITU-R BT.656-4 compatible */
@@ -999,6 +1012,12 @@ static int adv7182_init(struct adv7180_state *state)
 					      0x17);
 			}
 		}
+=======
+		if (state->chip_info->flags & ADV7180_FLAG_V2)
+			adv7180_write(state,
+				      ADV7180_REG_EXTENDED_OUTPUT_CONTROL,
+				      0x17);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			adv7180_write(state,
 				      ADV7180_REG_EXTENDED_OUTPUT_CONTROL,
@@ -1295,7 +1314,10 @@ static int init_device(struct adv7180_state *state)
 	mutex_lock(&state->mutex);
 
 	adv7180_set_power_pin(state, true);
+<<<<<<< HEAD
 	adv7180_set_reset_pin(state, false);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	adv7180_write(state, ADV7180_REG_PWR_MAN, ADV7180_PWR_MAN_RES);
 	usleep_range(5000, 10000);
@@ -1347,7 +1369,10 @@ out_unlock:
 static int adv7180_probe(struct i2c_client *client,
 			 const struct i2c_device_id *id)
 {
+<<<<<<< HEAD
 	struct device_node *np = client->dev.of_node;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct adv7180_state *state;
 	struct v4l2_subdev *sd;
 	int ret;
@@ -1372,6 +1397,7 @@ static int adv7180_probe(struct i2c_client *client,
 		return ret;
 	}
 
+<<<<<<< HEAD
 	state->rst_gpio = devm_gpiod_get_optional(&client->dev, "reset",
 						  GPIOD_OUT_HIGH);
 	if (IS_ERR(state->rst_gpio)) {
@@ -1383,6 +1409,8 @@ static int adv7180_probe(struct i2c_client *client,
 	if (of_property_read_bool(np, "adv,force-bt656-4"))
 		state->force_bt656_4 = true;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (state->chip_info->flags & ADV7180_FLAG_MIPI_CSI2) {
 		state->csi_client = i2c_new_dummy_device(client->adapter,
 				ADV7180_DEFAULT_CSI_I2C_ADDR);
@@ -1437,6 +1465,7 @@ static int adv7180_probe(struct i2c_client *client,
 	if (ret)
 		goto err_free_irq;
 
+<<<<<<< HEAD
 	mutex_lock(&state->mutex);
 	ret = adv7180_read(state, ADV7180_REG_IDENT);
 	mutex_unlock(&state->mutex);
@@ -1450,6 +1479,13 @@ static int adv7180_probe(struct i2c_client *client,
 
 err_v4l2_async_unregister:
 	v4l2_async_unregister_subdev(sd);
+=======
+	v4l_info(client, "chip found @ 0x%02x (%s)\n",
+		 client->addr, client->adapter->name);
+
+	return 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_free_irq:
 	if (state->irq > 0)
 		free_irq(client->irq, state);
@@ -1481,7 +1517,10 @@ static int adv7180_remove(struct i2c_client *client)
 	i2c_unregister_device(state->vpp_client);
 	i2c_unregister_device(state->csi_client);
 
+<<<<<<< HEAD
 	adv7180_set_reset_pin(state, true);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	adv7180_set_power_pin(state, false);
 
 	mutex_destroy(&state->mutex);

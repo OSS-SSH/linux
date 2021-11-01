@@ -227,7 +227,11 @@ unlock:
 }
 
 /**
+<<<<<<< HEAD
  * irq_pm_syscore_resume - enable interrupt lines early
+=======
+ * irq_pm_syscore_ops - enable interrupt lines early
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Enable all interrupt lines with %IRQF_EARLY_RESUME set.
  */

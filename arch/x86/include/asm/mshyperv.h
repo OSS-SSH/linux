@@ -36,6 +36,11 @@ void hyperv_vector_handler(struct pt_regs *regs);
 extern int hyperv_init_cpuhp;
 
 extern void *hv_hypercall_pg;
+<<<<<<< HEAD
+=======
+extern void  __percpu  **hyperv_pcpu_input_arg;
+extern void  __percpu  **hyperv_pcpu_output_arg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 extern u64 hv_current_partition_id;
 
@@ -168,6 +173,11 @@ int hyperv_fill_flush_guest_mapping_list(
 		struct hv_guest_mapping_flush_list *flush,
 		u64 start_gfn, u64 end_gfn);
 
+<<<<<<< HEAD
+=======
+extern bool hv_root_partition;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_X86_64
 void hv_apic_init(void);
 void __init hv_init_spinlocks(void);

@@ -29,8 +29,11 @@
 #include "dmub/dmub_srv.h"
 #include "core_types.h"
 
+<<<<<<< HEAD
 #define DC_TRACE_LEVEL_MESSAGE(...)	do {} while (0) /* do nothing */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MAX_PIPES 6
 
 /*
@@ -98,6 +101,7 @@ static void dmub_psr_get_state(struct dmub_psr *dmub, enum dc_psr_state *state, 
 			// Return invalid state when GPINT times out
 			*state = PSR_STATE_INVALID;
 
+<<<<<<< HEAD
 	} while (++retry_count <= 1000 && *state == PSR_STATE_INVALID);
 
 	// Assert if max retry hit
@@ -111,6 +115,12 @@ static void dmub_psr_get_state(struct dmub_psr *dmub, enum dc_psr_state *state, 
 				WPP_BIT_FLAG_Firmware_PsrState,
 				"Got PSR state from FW. PSR state: %d, Retry count: %d",
 				*state, retry_count);
+=======
+		// Assert if max retry hit
+		if (retry_count >= 1000)
+			ASSERT(0);
+	} while (++retry_count <= 1000 && *state == PSR_STATE_INVALID);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -218,7 +228,11 @@ static void dmub_psr_set_level(struct dmub_psr *dmub, uint16_t psr_level, uint8_
 	cmd.psr_set_level.header.sub_type = DMUB_CMD__PSR_SET_LEVEL;
 	cmd.psr_set_level.header.payload_bytes = sizeof(struct dmub_cmd_psr_set_level_data);
 	cmd.psr_set_level.psr_set_level_data.psr_level = psr_level;
+<<<<<<< HEAD
 	cmd.psr_set_level.psr_set_level_data.cmd_version = DMUB_CMD_PSR_CONTROL_VERSION_1;
+=======
+	cmd.psr_set_level.psr_set_level_data.cmd_version = PSR_VERSION_1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cmd.psr_set_level.psr_set_level_data.panel_inst = panel_inst;
 	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);
 	dc_dmub_srv_cmd_execute(dc->dmub_srv);
@@ -304,7 +318,11 @@ static bool dmub_psr_copy_settings(struct dmub_psr *dmub,
 	copy_settings_data->debug.bitfields.use_hw_lock_mgr		= 1;
 	copy_settings_data->fec_enable_status = (link->fec_state == dc_link_fec_enabled);
 	copy_settings_data->fec_enable_delay_in100us = link->dc->debug.fec_enable_delay_in100us;
+<<<<<<< HEAD
 	copy_settings_data->cmd_version =  DMUB_CMD_PSR_CONTROL_VERSION_1;
+=======
+	copy_settings_data->cmd_version =  PSR_VERSION_1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	copy_settings_data->panel_inst = panel_inst;
 
 	dc_dmub_srv_cmd_queue(dc->dmub_srv, &cmd);

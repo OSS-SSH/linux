@@ -52,6 +52,10 @@ static void *vcpu_worker(void *data)
 	struct timespec start;
 	struct timespec ts_diff;
 
+<<<<<<< HEAD
+=======
+	vcpu_args_set(vm, vcpu_id, 1, vcpu_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	run = vcpu_state(vm, vcpu_id);
 
 	clock_gettime(CLOCK_MONOTONIC, &start);
@@ -179,7 +183,11 @@ static void *uffd_handler_thread_fn(void *arg)
 			return NULL;
 		}
 
+<<<<<<< HEAD
 		if (!(pollfd[0].revents & POLLIN))
+=======
+		if (!pollfd[0].revents & POLLIN)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			continue;
 
 		r = read(uffd, &msg, sizeof(msg));
@@ -292,7 +300,11 @@ static void run_test(enum vm_guest_mode mode, void *arg)
 	int vcpu_id;
 	int r;
 
+<<<<<<< HEAD
 	vm = perf_test_create_vm(mode, nr_vcpus, guest_percpu_mem_size, 1,
+=======
+	vm = perf_test_create_vm(mode, nr_vcpus, guest_percpu_mem_size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				 p->src_type);
 
 	perf_test_args.wr_fract = 1;
@@ -416,7 +428,11 @@ static void help(char *name)
 {
 	puts("");
 	printf("usage: %s [-h] [-m vm_mode] [-u uffd_mode] [-d uffd_delay_usec]\n"
+<<<<<<< HEAD
 	       "          [-b memory] [-s type] [-v vcpus] [-o]\n", name);
+=======
+	       "          [-b memory] [-t type] [-v vcpus] [-o]\n", name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	guest_modes_help();
 	printf(" -u: use userfaultfd to handle vCPU page faults. Mode is a\n"
 	       "     UFFD registration mode: 'MISSING' or 'MINOR'.\n");
@@ -426,7 +442,12 @@ static void help(char *name)
 	printf(" -b: specify the size of the memory region which should be\n"
 	       "     demand paged by each vCPU. e.g. 10M or 3G.\n"
 	       "     Default: 1G\n");
+<<<<<<< HEAD
 	backing_src_help("-s");
+=======
+	printf(" -t: The type of backing memory to use. Default: anonymous\n");
+	backing_src_help();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	printf(" -v: specify the number of vCPUs to run.\n");
 	printf(" -o: Overlap guest memory accesses instead of partitioning\n"
 	       "     them into a separate region of memory for each vCPU.\n");
@@ -438,14 +459,22 @@ int main(int argc, char *argv[])
 {
 	int max_vcpus = kvm_check_cap(KVM_CAP_MAX_VCPUS);
 	struct test_params p = {
+<<<<<<< HEAD
 		.src_type = DEFAULT_VM_MEM_SRC,
+=======
+		.src_type = VM_MEM_SRC_ANONYMOUS,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.partition_vcpu_memory_access = true,
 	};
 	int opt;
 
 	guest_modes_append_default();
 
+<<<<<<< HEAD
 	while ((opt = getopt(argc, argv, "hm:u:d:b:s:v:o")) != -1) {
+=======
+	while ((opt = getopt(argc, argv, "hm:u:d:b:t:v:o")) != -1) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		switch (opt) {
 		case 'm':
 			guest_modes_cmdline(optarg);
@@ -464,7 +493,11 @@ int main(int argc, char *argv[])
 		case 'b':
 			guest_percpu_mem_size = parse_size(optarg);
 			break;
+<<<<<<< HEAD
 		case 's':
+=======
+		case 't':
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			p.src_type = parse_backing_src_type(optarg);
 			break;
 		case 'v':
@@ -484,7 +517,11 @@ int main(int argc, char *argv[])
 
 	if (p.uffd_mode == UFFDIO_REGISTER_MODE_MINOR &&
 	    !backing_src_is_shared(p.src_type)) {
+<<<<<<< HEAD
 		TEST_FAIL("userfaultfd MINOR mode requires shared memory; pick a different -s");
+=======
+		TEST_FAIL("userfaultfd MINOR mode requires shared memory; pick a different -t");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	for_each_guest_mode(run_test, &p);

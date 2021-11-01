@@ -468,7 +468,11 @@ struct dlm_rcom {
 struct dlm_opt_header {
 	uint16_t	t_type;
 	uint16_t	t_length;
+<<<<<<< HEAD
 	uint32_t	t_pad;
+=======
+	uint32_t	o_pad;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* need to be 8 byte aligned */
 	char		t_value[];
 };

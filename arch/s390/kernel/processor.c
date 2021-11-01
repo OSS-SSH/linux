@@ -11,7 +11,10 @@
 #include <linux/cpufeature.h>
 #include <linux/bitops.h>
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/random.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/sched/mm.h>
 #include <linux/init.h>
 #include <linux/seq_file.h>
@@ -24,12 +27,17 @@
 #include <asm/elf.h>
 #include <asm/lowcore.h>
 #include <asm/param.h>
+<<<<<<< HEAD
 #include <asm/sclp.h>
 #include <asm/smp.h>
 
 unsigned long __read_mostly elf_hwcap;
 char elf_platform[ELF_PLATFORM_SIZE];
 
+=======
+#include <asm/smp.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct cpu_info {
 	unsigned int cpu_mhz_dynamic;
 	unsigned int cpu_mhz_static;
@@ -118,6 +126,7 @@ static void show_facilities(struct seq_file *m)
 static void show_cpu_summary(struct seq_file *m, void *v)
 {
 	static const char *hwcap_str[] = {
+<<<<<<< HEAD
 		[HWCAP_NR_ESAN3]	= "esan3",
 		[HWCAP_NR_ZARCH]	= "zarch",
 		[HWCAP_NR_STFLE]	= "stfle",
@@ -145,6 +154,17 @@ static void show_cpu_summary(struct seq_file *m, void *v)
 	int i, cpu;
 
 	BUILD_BUG_ON(ARRAY_SIZE(hwcap_str) != HWCAP_NR_MAX);
+=======
+		"esan3", "zarch", "stfle", "msa", "ldisp", "eimm", "dfp",
+		"edat", "etf3eh", "highgprs", "te", "vx", "vxd", "vxe", "gs",
+		"vxe2", "vxp", "sort", "dflt"
+	};
+	static const char * const int_hwcap_str[] = {
+		"sie"
+	};
+	int i, cpu;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	seq_printf(m, "vendor_id       : IBM/S390\n"
 		   "# processors    : %i\n"
 		   "bogomips per cpu: %lu.%02lu\n",
@@ -155,6 +175,12 @@ static void show_cpu_summary(struct seq_file *m, void *v)
 	for (i = 0; i < ARRAY_SIZE(hwcap_str); i++)
 		if (hwcap_str[i] && (elf_hwcap & (1UL << i)))
 			seq_printf(m, "%s ", hwcap_str[i]);
+<<<<<<< HEAD
+=======
+	for (i = 0; i < ARRAY_SIZE(int_hwcap_str); i++)
+		if (int_hwcap_str[i] && (int_hwcap & (1UL << i)))
+			seq_printf(m, "%s ", int_hwcap_str[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	seq_puts(m, "\n");
 	show_facilities(m);
 	show_cacheinfo(m);
@@ -169,6 +195,7 @@ static void show_cpu_summary(struct seq_file *m, void *v)
 	}
 }
 
+<<<<<<< HEAD
 static int __init setup_hwcaps(void)
 {
 	/* instructions named N3, "backported" to esa-mode */
@@ -304,6 +331,8 @@ static int __init setup_elf_platform(void)
 }
 arch_initcall(setup_elf_platform);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void show_cpu_topology(struct seq_file *m, unsigned long n)
 {
 #ifdef CONFIG_SCHED_TOPOLOGY
@@ -365,7 +394,11 @@ static inline void *c_update(loff_t *pos)
 
 static void *c_start(struct seq_file *m, loff_t *pos)
 {
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return c_update(pos);
 }
 
@@ -377,7 +410,11 @@ static void *c_next(struct seq_file *m, void *v, loff_t *pos)
 
 static void c_stop(struct seq_file *m, void *v)
 {
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 const struct seq_operations cpuinfo_op = {

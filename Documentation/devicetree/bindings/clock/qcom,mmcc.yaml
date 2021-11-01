@@ -22,8 +22,11 @@ properties:
       - qcom,mmcc-msm8660
       - qcom,mmcc-msm8960
       - qcom,mmcc-msm8974
+<<<<<<< HEAD
       - qcom,mmcc-msm8992
       - qcom,mmcc-msm8994
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - qcom,mmcc-msm8996
       - qcom,mmcc-msm8998
       - qcom,mmcc-sdm630

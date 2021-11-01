@@ -136,6 +136,7 @@ static void xrs700x_mdio_remove(struct mdio_device *mdiodev)
 {
 	struct xrs700x *priv = dev_get_drvdata(&mdiodev->dev);
 
+<<<<<<< HEAD
 	if (!priv)
 		return;
 
@@ -154,6 +155,9 @@ static void xrs700x_mdio_shutdown(struct mdio_device *mdiodev)
 	xrs700x_switch_shutdown(priv);
 
 	dev_set_drvdata(&mdiodev->dev, NULL);
+=======
+	xrs700x_switch_remove(priv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct of_device_id __maybe_unused xrs700x_mdio_dt_ids[] = {
@@ -172,7 +176,10 @@ static struct mdio_driver xrs700x_mdio_driver = {
 	},
 	.probe	= xrs700x_mdio_probe,
 	.remove	= xrs700x_mdio_remove,
+<<<<<<< HEAD
 	.shutdown = xrs700x_mdio_shutdown,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 mdio_module_driver(xrs700x_mdio_driver);

@@ -13,7 +13,10 @@
 #include <asm/hw_irq.h>
 #include <asm/ppc-pci.h>
 #include <asm/machdep.h>
+<<<<<<< HEAD
 #include <asm/xive.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "pseries.h"
 
@@ -111,6 +114,24 @@ static int rtas_query_irq_number(struct pci_dn *pdn, int offset)
 	return rtas_ret[0];
 }
 
+<<<<<<< HEAD
+=======
+static void rtas_teardown_msi_irqs(struct pci_dev *pdev)
+{
+	struct msi_desc *entry;
+
+	for_each_pci_msi_entry(entry, pdev) {
+		if (!entry->irq)
+			continue;
+
+		irq_set_msi_desc(entry->irq, NULL);
+		irq_dispose_mapping(entry->irq);
+	}
+
+	rtas_disable_msi(pdev);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int check_req(struct pci_dev *pdev, int nvec, char *prop_name)
 {
 	struct device_node *dn;
@@ -150,12 +171,20 @@ static int check_req_msix(struct pci_dev *pdev, int nvec)
 
 /* Quota calculation */
 
+<<<<<<< HEAD
 static struct device_node *__find_pe_total_msi(struct device_node *node, int *total)
+=======
+static struct device_node *find_pe_total_msi(struct pci_dev *dev, int *total)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct device_node *dn;
 	const __be32 *p;
 
+<<<<<<< HEAD
 	dn = of_node_get(node);
+=======
+	dn = of_node_get(pci_device_to_OF_node(dev));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	while (dn) {
 		p = of_get_property(dn, "ibm,pe-total-#msi", NULL);
 		if (p) {
@@ -171,11 +200,14 @@ static struct device_node *__find_pe_total_msi(struct device_node *node, int *to
 	return NULL;
 }
 
+<<<<<<< HEAD
 static struct device_node *find_pe_total_msi(struct pci_dev *dev, int *total)
 {
 	return __find_pe_total_msi(pci_device_to_OF_node(dev), total);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct device_node *find_pe_dn(struct pci_dev *dev, int *total)
 {
 	struct device_node *dn;
@@ -359,11 +391,20 @@ static void rtas_hack_32bit_msi_gen2(struct pci_dev *pdev)
 	pci_write_config_dword(pdev, pdev->msi_cap + PCI_MSI_ADDRESS_HI, 0);
 }
 
+<<<<<<< HEAD
 static int rtas_prepare_msi_irqs(struct pci_dev *pdev, int nvec_in, int type,
 				 msi_alloc_info_t *arg)
 {
 	struct pci_dn *pdn;
 	int quota, rc;
+=======
+static int rtas_setup_msi_irqs(struct pci_dev *pdev, int nvec_in, int type)
+{
+	struct pci_dn *pdn;
+	int hwirq, virq, i, quota, rc;
+	struct msi_desc *entry;
+	struct msi_msg msg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int nvec = nvec_in;
 	int use_32bit_msi_hack = 0;
 
@@ -441,6 +482,7 @@ again:
 		return rc;
 	}
 
+<<<<<<< HEAD
 	return 0;
 }
 
@@ -651,11 +693,56 @@ static int __pseries_msi_allocate_domains(struct pci_controller *phb,
 		irq_domain_free_fwnode(phb->fwnode);
 		irq_domain_remove(phb->dev_domain);
 		return -ENOMEM;
+=======
+	i = 0;
+	for_each_pci_msi_entry(entry, pdev) {
+		hwirq = rtas_query_irq_number(pdn, i++);
+		if (hwirq < 0) {
+			pr_debug("rtas_msi: error (%d) getting hwirq\n", rc);
+			return hwirq;
+		}
+
+		/*
+		 * Depending on the number of online CPUs in the original
+		 * kernel, it is likely for CPU #0 to be offline in a kdump
+		 * kernel. The associated IRQs in the affinity mappings
+		 * provided by irq_create_affinity_masks() are thus not
+		 * started by irq_startup(), as per-design for managed IRQs.
+		 * This can be a problem with multi-queue block devices driven
+		 * by blk-mq : such a non-started IRQ is very likely paired
+		 * with the single queue enforced by blk-mq during kdump (see
+		 * blk_mq_alloc_tag_set()). This causes the device to remain
+		 * silent and likely hangs the guest at some point.
+		 *
+		 * We don't really care for fine-grained affinity when doing
+		 * kdump actually : simply ignore the pre-computed affinity
+		 * masks in this case and let the default mask with all CPUs
+		 * be used when creating the IRQ mappings.
+		 */
+		if (is_kdump_kernel())
+			virq = irq_create_mapping(NULL, hwirq);
+		else
+			virq = irq_create_mapping_affinity(NULL, hwirq,
+							   entry->affinity);
+
+		if (!virq) {
+			pr_debug("rtas_msi: Failed mapping hwirq %d\n", hwirq);
+			return -ENOSPC;
+		}
+
+		dev_dbg(&pdev->dev, "rtas_msi: allocated virq %d\n", virq);
+		irq_set_msi_desc(virq, entry);
+
+		/* Read config space back so we can restore after reset */
+		__pci_read_msi_msg(entry, &msg);
+		entry->msg = msg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
 }
 
+<<<<<<< HEAD
 int pseries_msi_allocate_domains(struct pci_controller *phb)
 {
 	int count;
@@ -679,6 +766,8 @@ void pseries_msi_free_domains(struct pci_controller *phb)
 		irq_domain_free_fwnode(phb->fwnode);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void rtas_msi_pci_irq_fixup(struct pci_dev *pdev)
 {
 	/* No LSI -> leave MSIs (if any) configured */
@@ -699,6 +788,11 @@ static void rtas_msi_pci_irq_fixup(struct pci_dev *pdev)
 
 static int rtas_msi_init(void)
 {
+<<<<<<< HEAD
+=======
+	struct pci_controller *phb;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	query_token  = rtas_token("ibm,query-interrupt-source-number");
 	change_token = rtas_token("ibm,change-msi");
 
@@ -710,6 +804,19 @@ static int rtas_msi_init(void)
 
 	pr_debug("rtas_msi: Registering RTAS MSI callbacks.\n");
 
+<<<<<<< HEAD
+=======
+	WARN_ON(pseries_pci_controller_ops.setup_msi_irqs);
+	pseries_pci_controller_ops.setup_msi_irqs = rtas_setup_msi_irqs;
+	pseries_pci_controller_ops.teardown_msi_irqs = rtas_teardown_msi_irqs;
+
+	list_for_each_entry(phb, &hose_list, list_node) {
+		WARN_ON(phb->controller_ops.setup_msi_irqs);
+		phb->controller_ops.setup_msi_irqs = rtas_setup_msi_irqs;
+		phb->controller_ops.teardown_msi_irqs = rtas_teardown_msi_irqs;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WARN_ON(ppc_md.pci_irq_fixup);
 	ppc_md.pci_irq_fixup = rtas_msi_pci_irq_fixup;
 

@@ -5429,6 +5429,7 @@ lpfc_idiag_extacc_read(struct file *file, char __user *buf, size_t nbytes,
 	return simple_read_from_buffer(buf, nbytes, ppos, pbuffer, len);
 }
 
+<<<<<<< HEAD
 static int
 lpfc_cgn_buffer_open(struct inode *inode, struct file *file)
 {
@@ -5603,6 +5604,8 @@ lpfc_rx_monitor_release(struct inode *inode, struct file *file)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #undef lpfc_debugfs_op_disc_trc
 static const struct file_operations lpfc_debugfs_op_disc_trc = {
 	.owner =        THIS_MODULE,
@@ -5831,6 +5834,7 @@ static const struct file_operations lpfc_idiag_op_extAcc = {
 	.write =        lpfc_idiag_extacc_write,
 	.release =      lpfc_idiag_cmd_release,
 };
+<<<<<<< HEAD
 #undef lpfc_cgn_buffer_op
 static const struct file_operations lpfc_cgn_buffer_op = {
 	.owner =        THIS_MODULE,
@@ -5848,6 +5852,8 @@ static const struct file_operations lpfc_rx_monitor_op = {
 	.read =         lpfc_rx_monitor_read,
 	.release =      lpfc_rx_monitor_release,
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 /* lpfc_idiag_mbxacc_dump_bsg_mbox - idiag debugfs dump bsg mailbox command
@@ -6098,6 +6104,7 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
 			goto debug_failed;
 		}
 
+<<<<<<< HEAD
 		/* Congestion Info Buffer */
 		scnprintf(name, sizeof(name), "cgn_buffer");
 		phba->debug_cgn_buffer =
@@ -6124,6 +6131,8 @@ lpfc_debugfs_initialize(struct lpfc_vport *vport)
 			goto debug_failed;
 		}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* RAS log */
 		snprintf(name, sizeof(name), "ras_log");
 		phba->debug_ras_log =
@@ -6552,12 +6561,15 @@ lpfc_debugfs_terminate(struct lpfc_vport *vport)
 		debugfs_remove(phba->debug_hbqinfo); /* hbqinfo */
 		phba->debug_hbqinfo = NULL;
 
+<<<<<<< HEAD
 		debugfs_remove(phba->debug_cgn_buffer);
 		phba->debug_cgn_buffer = NULL;
 
 		debugfs_remove(phba->debug_rx_monitor);
 		phba->debug_rx_monitor = NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		debugfs_remove(phba->debug_ras_log);
 		phba->debug_ras_log = NULL;
 

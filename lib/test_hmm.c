@@ -628,8 +628,15 @@ static int dmirror_check_atomic(struct dmirror *dmirror, unsigned long start,
 
 	for (pfn = start >> PAGE_SHIFT; pfn < (end >> PAGE_SHIFT); pfn++) {
 		void *entry;
+<<<<<<< HEAD
 
 		entry = xa_load(&dmirror->pt, pfn);
+=======
+		struct page *page;
+
+		entry = xa_load(&dmirror->pt, pfn);
+		page = xa_untag_pointer(entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (xa_pointer_tag(entry) == DPT_XA_TAG_ATOMIC)
 			return -EPERM;
 	}

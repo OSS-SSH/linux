@@ -6,7 +6,10 @@
 #include <linux/ieee80211.h>
 #include <net/mac80211.h>
 #include "ieee80211_i.h"
+<<<<<<< HEAD
 #include "driver-ops.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void ieee80211_s1g_sta_rate_init(struct sta_info *sta)
 {
@@ -15,6 +18,7 @@ void ieee80211_s1g_sta_rate_init(struct sta_info *sta)
 	sta->rx_stats.last_rate =
 			STA_STATS_FIELD(TYPE, STA_STATS_RATE_TYPE_S1G);
 }
+<<<<<<< HEAD
 
 bool ieee80211_s1g_is_twt_setup(struct sk_buff *skb)
 {
@@ -194,3 +198,5 @@ void ieee80211_s1g_status_twt_action(struct ieee80211_sub_if_data *sdata,
 out:
 	mutex_unlock(&local->sta_mtx);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

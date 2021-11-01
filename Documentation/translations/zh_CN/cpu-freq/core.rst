@@ -1,6 +1,7 @@
 .. SPDX-License-Identifier: GPL-2.0
 .. include:: ../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/cpu-freq/core.rst
 
 :翻译:
@@ -9,6 +10,14 @@
 
 .. _cn_core.rst:
 
+=======
+:Original: :doc:`../../../cpu-freq/core`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_core.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ====================================
 CPUFreq核心和CPUFreq通知器的通用说明
 ====================================

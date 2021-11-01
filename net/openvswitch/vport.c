@@ -507,7 +507,10 @@ void ovs_vport_send(struct vport *vport, struct sk_buff *skb, u8 mac_proto)
 	}
 
 	skb->dev = vport->dev;
+<<<<<<< HEAD
 	skb->tstamp = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vport->ops->send(skb);
 	return;
 

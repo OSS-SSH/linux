@@ -358,7 +358,11 @@ static int am65_cpsw_port_obj_del(struct net_device *ndev, const void *ctx,
 static void am65_cpsw_fdb_offload_notify(struct net_device *ndev,
 					 struct switchdev_notifier_fdb_info *rcv)
 {
+<<<<<<< HEAD
 	struct switchdev_notifier_fdb_info info = {};
+=======
+	struct switchdev_notifier_fdb_info info;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	info.addr = rcv->addr;
 	info.vid = rcv->vid;

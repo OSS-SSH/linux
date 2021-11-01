@@ -10,14 +10,22 @@ description: |+
   SiFive FU740 PCIe host controller is based on the Synopsys DesignWare
   PCI core. It shares common features with the PCIe DesignWare core and
   inherits common properties defined in
+<<<<<<< HEAD
   Documentation/devicetree/bindings/pci/snps,dw-pcie.yaml.
+=======
+  Documentation/devicetree/bindings/pci/designware-pcie.txt.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 maintainers:
   - Paul Walmsley <paul.walmsley@sifive.com>
   - Greentime Hu <greentime.hu@sifive.com>
 
 allOf:
+<<<<<<< HEAD
   - $ref: /schemas/pci/snps,dw-pcie.yaml#
+=======
+  - $ref: /schemas/pci/pci-bus.yaml#
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 properties:
   compatible:

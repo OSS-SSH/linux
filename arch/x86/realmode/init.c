@@ -28,7 +28,11 @@ void __init reserve_real_mode(void)
 	WARN_ON(slab_is_available());
 
 	/* Has to be under 1M so we can execute real-mode AP code. */
+<<<<<<< HEAD
 	mem = memblock_phys_alloc_range(size, PAGE_SIZE, 0, 1<<20);
+=======
+	mem = memblock_find_in_range(0, 1<<20, size, PAGE_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!mem)
 		pr_info("No sub-1M memory is available for the trampoline\n");
 	else

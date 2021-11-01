@@ -92,7 +92,11 @@ static void mobiveil_pcie_isr(struct irq_desc *desc)
 	u32 msi_data, msi_addr_lo, msi_addr_hi;
 	u32 intr_status, msi_status;
 	unsigned long shifted_status;
+<<<<<<< HEAD
 	u32 bit, val, mask;
+=======
+	u32 bit, virq, val, mask;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * The core provides a single interrupt for both INTx/MSI messages.
@@ -114,10 +118,18 @@ static void mobiveil_pcie_isr(struct irq_desc *desc)
 		shifted_status >>= PAB_INTX_START;
 		do {
 			for_each_set_bit(bit, &shifted_status, PCI_NUM_INTX) {
+<<<<<<< HEAD
 				int ret;
 				ret = generic_handle_domain_irq(rp->intx_domain,
 								bit + 1);
 				if (ret)
+=======
+				virq = irq_find_mapping(rp->intx_domain,
+							bit + 1);
+				if (virq)
+					generic_handle_irq(virq);
+				else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					dev_err_ratelimited(dev, "unexpected IRQ, INT%d\n",
 							    bit);
 
@@ -154,7 +166,13 @@ static void mobiveil_pcie_isr(struct irq_desc *desc)
 		dev_dbg(dev, "MSI registers, data: %08x, addr: %08x:%08x\n",
 			msi_data, msi_addr_hi, msi_addr_lo);
 
+<<<<<<< HEAD
 		generic_handle_domain_irq(msi->dev_domain, msi_data);
+=======
+		virq = irq_find_mapping(msi->dev_domain, msi_data);
+		if (virq)
+			generic_handle_irq(virq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		msi_status = readl_relaxed(pcie->apb_csr_base +
 					   MSI_STATUS_OFFSET);

@@ -116,7 +116,10 @@ struct bdi_writeback {
 	struct list_head b_dirty_time;	/* time stamps are dirty */
 	spinlock_t list_lock;		/* protects the b_* lists */
 
+<<<<<<< HEAD
 	atomic_t writeback_inodes;	/* number of inodes under writeback */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct percpu_counter stat[NR_WB_STAT_ITEMS];
 
 	unsigned long congested;	/* WB_[a]sync_congested flags */
@@ -143,7 +146,10 @@ struct bdi_writeback {
 	spinlock_t work_lock;		/* protects work_list & dwork scheduling */
 	struct list_head work_list;
 	struct delayed_work dwork;	/* work item used for writeback */
+<<<<<<< HEAD
 	struct delayed_work bw_dwork;	/* work item used for bandwidth estimate */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	unsigned long dirty_sleep;	/* last wait */
 

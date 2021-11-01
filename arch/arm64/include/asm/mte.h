@@ -16,6 +16,11 @@
 
 #include <asm/pgtable-types.h>
 
+<<<<<<< HEAD
+=======
+extern u64 gcr_kernel_excl;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void mte_clear_page_tags(void *addr);
 unsigned long mte_copy_tags_from_user(void *to, const void __user *from,
 				      unsigned long n);
@@ -41,6 +46,10 @@ void mte_copy_page_tags(void *kto, const void *kfrom);
 void mte_thread_init_user(void);
 void mte_thread_switch(struct task_struct *next);
 void mte_suspend_enter(void);
+<<<<<<< HEAD
+=======
+void mte_suspend_exit(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 long set_mte_ctrl(struct task_struct *task, unsigned long arg);
 long get_mte_ctrl(struct task_struct *task);
 int mte_ptrace_copy_tags(struct task_struct *child, long request,
@@ -69,6 +78,12 @@ static inline void mte_thread_switch(struct task_struct *next)
 static inline void mte_suspend_enter(void)
 {
 }
+<<<<<<< HEAD
+=======
+static inline void mte_suspend_exit(void)
+{
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline long set_mte_ctrl(struct task_struct *task, unsigned long arg)
 {
 	return 0;
@@ -99,17 +114,23 @@ void mte_check_tfsr_el1(void);
 
 static inline void mte_check_tfsr_entry(void)
 {
+<<<<<<< HEAD
 	if (!system_supports_mte())
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mte_check_tfsr_el1();
 }
 
 static inline void mte_check_tfsr_exit(void)
 {
+<<<<<<< HEAD
 	if (!system_supports_mte())
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * The asynchronous faults are sync'ed automatically with
 	 * TFSR_EL1 on kernel entry but for exit an explicit dsb()

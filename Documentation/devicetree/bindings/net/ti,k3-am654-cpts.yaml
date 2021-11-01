@@ -45,9 +45,15 @@ properties:
     pattern: "^cpts@[0-9a-f]+$"
 
   compatible:
+<<<<<<< HEAD
     enum:
       - ti,am65-cpts
       - ti,j721e-cpts
+=======
+    oneOf:
+      - const: ti,am65-cpts
+      - const: ti,j721e-cpts
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   reg:
     maxItems: 1

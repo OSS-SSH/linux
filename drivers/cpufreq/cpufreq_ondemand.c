@@ -418,7 +418,11 @@ static void od_set_powersave_bias(unsigned int powersave_bias)
 	default_powersave_bias = powersave_bias;
 	cpumask_clear(&done);
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+	get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for_each_online_cpu(cpu) {
 		struct cpufreq_policy *policy;
 		struct policy_dbs_info *policy_dbs;
@@ -442,7 +446,11 @@ static void od_set_powersave_bias(unsigned int powersave_bias)
 		od_tuners = dbs_data->tuners;
 		od_tuners->powersave_bias = default_powersave_bias;
 	}
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+	put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void od_register_powersave_bias_handler(unsigned int (*f)

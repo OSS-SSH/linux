@@ -19,14 +19,22 @@
 	chosen { };
 
 	clocks {
+<<<<<<< HEAD
 		xo_board: xo-board {
+=======
+		xo_board: xo_board {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <19200000>;
 			clock-output-names = "xo_board";
 		};
 
+<<<<<<< HEAD
 		sleep_clk: sleep-clk {
+=======
+		sleep_clk: sleep_clk {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			compatible = "fixed-clock";
 			#clock-cells = <0>;
 			clock-frequency = <32764>;
@@ -368,10 +376,17 @@
 		#hwlock-cells = <1>;
 	};
 
+<<<<<<< HEAD
 	memory@80000000 {
 		device_type = "memory";
 		/* We expect the bootloader to fill in the reg */
 		reg = <0x0 0x80000000 0x0 0x0>;
+=======
+	memory {
+		device_type = "memory";
+		/* We expect the bootloader to fill in the reg */
+		reg = <0 0 0 0>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	psci {
@@ -898,8 +913,11 @@
 				phy-names = "hdmi_phy";
 				#sound-dai-cells = <1>;
 
+<<<<<<< HEAD
 				status = "disabled";
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				ports {
 					#address-cells = <1>;
 					#size-cells = <0>;
@@ -933,8 +951,11 @@
 					 <&gcc GCC_HDMI_CLKREF_CLK>;
 				clock-names = "iface",
 					      "ref";
+<<<<<<< HEAD
 
 				status = "disabled";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			};
 		};
 
@@ -972,8 +993,11 @@
 
 			status = "disabled";
 
+<<<<<<< HEAD
 			#cooling-cells = <2>;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			gpu_opp_table: opp-table {
 				compatible  ="operating-points-v2";
 
@@ -1088,21 +1112,33 @@
 
 			camera0_state_on:
 			camera_rear_default: camera-rear-default {
+<<<<<<< HEAD
 				camera0_mclk: mclk0 {
+=======
+				mclk0 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					pins = "gpio13";
 					function = "cam_mclk";
 					drive-strength = <16>;
 					bias-disable;
 				};
 
+<<<<<<< HEAD
 				camera0_rst: rst {
+=======
+				rst {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					pins = "gpio25";
 					function = "gpio";
 					drive-strength = <16>;
 					bias-disable;
 				};
 
+<<<<<<< HEAD
 				camera0_pwdn: pwdn {
+=======
+				pwdn {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					pins = "gpio26";
 					function = "gpio";
 					drive-strength = <16>;
@@ -1143,14 +1179,22 @@
 
 			camera2_state_on:
 			camera_front_default: camera-front-default {
+<<<<<<< HEAD
 				camera2_mclk: mclk2 {
+=======
+				mclk2 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					pins = "gpio15";
 					function = "cam_mclk";
 					drive-strength = <16>;
 					bias-disable;
 				};
 
+<<<<<<< HEAD
 				camera2_rst: rst {
+=======
+				rst {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					pins = "gpio23";
 					function = "gpio";
 					drive-strength = <16>;
@@ -2572,7 +2616,11 @@
 			power-domains = <&gcc USB30_GDSC>;
 			status = "disabled";
 
+<<<<<<< HEAD
 			usb3_dwc3: dwc3@6a00000 {
+=======
+			usb@6a00000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				compatible = "snps,dwc3";
 				reg = <0x06a00000 0xcc00>;
 				interrupts = <0 131 IRQ_TYPE_LEVEL_HIGH>;
@@ -2879,7 +2927,11 @@
 			qcom,select-utmi-as-pipe-clk;
 			status = "disabled";
 
+<<<<<<< HEAD
 			dwc3@7600000 {
+=======
+			usb@7600000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				compatible = "snps,dwc3";
 				reg = <0x07600000 0xcc00>;
 				interrupts = <0 138 IRQ_TYPE_LEVEL_HIGH>;
@@ -3211,6 +3263,7 @@
 				gpu1_alert0: trip-point0 {
 					temperature = <90000>;
 					hysteresis = <2000>;
+<<<<<<< HEAD
 					type = "passive";
 				};
 			};
@@ -3219,6 +3272,9 @@
 				map0 {
 					trip = <&gpu1_alert0>;
 					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+=======
+					type = "hot";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				};
 			};
 		};
@@ -3233,6 +3289,7 @@
 				gpu2_alert0: trip-point0 {
 					temperature = <90000>;
 					hysteresis = <2000>;
+<<<<<<< HEAD
 					type = "passive";
 				};
 			};
@@ -3241,6 +3298,9 @@
 				map0 {
 					trip = <&gpu2_alert0>;
 					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+=======
+					type = "hot";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				};
 			};
 		};

@@ -6,6 +6,7 @@
 #include <linux/module.h>
 #include <linux/init.h>
 #include <linux/pci.h>
+<<<<<<< HEAD
 #include <linux/serial_8250.h>
 #include <linux/clkdev.h>
 #include <linux/clk-provider.h>
@@ -29,6 +30,17 @@ static struct class timecard_class = {
 	.owner		= THIS_MODULE,
 	.name		= "timecard",
 };
+=======
+#include <linux/ptp_clock_kernel.h>
+
+static const struct pci_device_id ptp_ocp_pcidev_id[] = {
+	{ PCI_DEVICE(0x1d9b, 0x0400) },
+	{ 0 }
+};
+MODULE_DEVICE_TABLE(pci, ptp_ocp_pcidev_id);
+
+#define OCP_REGISTER_OFFSET	0x01000000
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct ocp_reg {
 	u32	ctrl;
@@ -43,6 +55,7 @@ struct ocp_reg {
 	u32	__pad1[2];
 	u32	offset_ns;
 	u32	offset_window_ns;
+<<<<<<< HEAD
 	u32	__pad2[2];
 	u32	drift_ns;
 	u32	drift_window_ns;
@@ -51,21 +64,32 @@ struct ocp_reg {
 	u32	servo_offset_i;
 	u32	servo_drift_p;
 	u32	servo_drift_i;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define OCP_CTRL_ENABLE		BIT(0)
 #define OCP_CTRL_ADJUST_TIME	BIT(1)
 #define OCP_CTRL_ADJUST_OFFSET	BIT(2)
+<<<<<<< HEAD
 #define OCP_CTRL_ADJUST_DRIFT	BIT(3)
 #define OCP_CTRL_ADJUST_SERVO	BIT(8)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define OCP_CTRL_READ_TIME_REQ	BIT(30)
 #define OCP_CTRL_READ_TIME_DONE	BIT(31)
 
 #define OCP_STATUS_IN_SYNC	BIT(0)
+<<<<<<< HEAD
 #define OCP_STATUS_IN_HOLDOVER	BIT(1)
 
 #define OCP_SELECT_CLK_NONE	0
 #define OCP_SELECT_CLK_REG	0xfe
+=======
+
+#define OCP_SELECT_CLK_NONE	0
+#define OCP_SELECT_CLK_REG	6
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct tod_reg {
 	u32	ctrl;
@@ -80,6 +104,11 @@ struct tod_reg {
 	u32	leap;
 };
 
+<<<<<<< HEAD
+=======
+#define TOD_REGISTER_OFFSET	0x01050000
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define TOD_CTRL_PROTOCOL	BIT(28)
 #define TOD_CTRL_DISABLE_FMT_A	BIT(17)
 #define TOD_CTRL_DISABLE_FMT_B	BIT(16)
@@ -91,6 +120,7 @@ struct tod_reg {
 #define TOD_STATUS_UTC_VALID	BIT(8)
 #define TOD_STATUS_LEAP_VALID	BIT(16)
 
+<<<<<<< HEAD
 struct ts_reg {
 	u32	enable;
 	u32	error;
@@ -349,6 +379,18 @@ ptp_ocp_clock_val_from_name(const char *name)
 	return -EINVAL;
 }
 
+=======
+struct ptp_ocp {
+	struct pci_dev		*pdev;
+	spinlock_t		lock;
+	void __iomem		*base;
+	struct ocp_reg __iomem	*reg;
+	struct tod_reg __iomem	*tod;
+	struct ptp_clock	*ptp;
+	struct ptp_clock_info	ptp_info;
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 __ptp_ocp_gettime_locked(struct ptp_ocp *bp, struct timespec64 *ts,
 			 struct ptp_system_timestamp *sts)
@@ -463,6 +505,7 @@ ptp_ocp_null_adjfine(struct ptp_clock_info *ptp_info, long scaled_ppm)
 	return -EOPNOTSUPP;
 }
 
+<<<<<<< HEAD
 static int
 ptp_ocp_adjphase(struct ptp_clock_info *ptp_info, s32 phase_ns)
 {
@@ -502,6 +545,8 @@ ptp_ocp_enable(struct ptp_clock_info *ptp_info, struct ptp_clock_request *rq,
 	return err;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct ptp_clock_info ptp_ocp_clock_info = {
 	.owner		= THIS_MODULE,
 	.name		= KBUILD_MODNAME,
@@ -510,6 +555,7 @@ static const struct ptp_clock_info ptp_ocp_clock_info = {
 	.settime64	= ptp_ocp_settime,
 	.adjtime	= ptp_ocp_adjtime,
 	.adjfine	= ptp_ocp_null_adjfine,
+<<<<<<< HEAD
 	.adjphase	= ptp_ocp_adjphase,
 	.enable		= ptp_ocp_enable,
 	.pps		= true,
@@ -561,6 +607,12 @@ ptp_ocp_watchdog(struct timer_list *t)
 
 static int
 ptp_ocp_init_clock(struct ptp_ocp *bp)
+=======
+};
+
+static int
+ptp_ocp_check_clock(struct ptp_ocp *bp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct timespec64 ts;
 	bool sync;
@@ -571,6 +623,7 @@ ptp_ocp_init_clock(struct ptp_ocp *bp)
 	ctrl |= OCP_CTRL_ENABLE;
 	iowrite32(ctrl, &bp->reg->ctrl);
 
+<<<<<<< HEAD
 	/* NO DRIFT Correction */
 	/* offset_p:i 1/8, offset_i: 1/16, drift_p: 0, drift_i: 0 */
 	iowrite32(0x2000, &bp->reg->servo_offset_p);
@@ -582,6 +635,8 @@ ptp_ocp_init_clock(struct ptp_ocp *bp)
 	ctrl |= OCP_CTRL_ADJUST_SERVO;
 	iowrite32(ctrl, &bp->reg->ctrl);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if ((ioread32(&bp->reg->ctrl) & OCP_CTRL_ENABLE) == 0) {
 		dev_err(&bp->pdev->dev, "clock not enabled\n");
 		return -ENODEV;
@@ -597,9 +652,12 @@ ptp_ocp_init_clock(struct ptp_ocp *bp)
 			 ts.tv_sec, ts.tv_nsec,
 			 sync ? "in-sync" : "UNSYNCED");
 
+<<<<<<< HEAD
 	timer_setup(&bp->watchdog, ptp_ocp_watchdog, 0);
 	mod_timer(&bp->watchdog, jiffies + HZ);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -649,6 +707,7 @@ ptp_ocp_tod_info(struct ptp_ocp *bp)
 		 reg & TOD_STATUS_LEAP_VALID ? 1 : 0);
 }
 
+<<<<<<< HEAD
 static int
 ptp_ocp_firstchild(struct device *dev, void *data)
 {
@@ -723,18 +782,31 @@ out:
 static void
 ptp_ocp_info(struct ptp_ocp *bp)
 {
+=======
+static void
+ptp_ocp_info(struct ptp_ocp *bp)
+{
+	static const char * const clock_name[] = {
+		"NO", "TOD", "IRIG", "PPS", "PTP", "RTC", "REGS", "EXT"
+	};
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 version, select;
 
 	version = ioread32(&bp->reg->version);
 	select = ioread32(&bp->reg->select);
 	dev_info(&bp->pdev->dev, "Version %d.%d.%d, clock %s, device ptp%d\n",
 		 version >> 24, (version >> 16) & 0xff, version & 0xffff,
+<<<<<<< HEAD
 		 ptp_ocp_clock_name_from_val(select >> 16),
+=======
+		 clock_name[select & 7],
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 ptp_clock_index(bp->ptp));
 
 	ptp_ocp_tod_info(bp);
 }
 
+<<<<<<< HEAD
 static struct device *
 ptp_ocp_find_flash(struct ptp_ocp *bp)
 {
@@ -1428,10 +1500,24 @@ ptp_ocp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	err = devlink_register(devlink);
 	if (err)
 		goto out_free;
+=======
+static int
+ptp_ocp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+{
+	struct ptp_ocp *bp;
+	int err;
+
+	bp = kzalloc(sizeof(*bp), GFP_KERNEL);
+	if (!bp)
+		return -ENOMEM;
+	bp->pdev = pdev;
+	pci_set_drvdata(pdev, bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = pci_enable_device(pdev);
 	if (err) {
 		dev_err(&pdev->dev, "pci_enable_device\n");
+<<<<<<< HEAD
 		goto out_unregister;
 	}
 
@@ -1454,11 +1540,35 @@ ptp_ocp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	pci_set_master(pdev);
 
 	err = ptp_ocp_register_resources(bp, id->driver_data);
+=======
+		goto out_free;
+	}
+
+	err = pci_request_regions(pdev, KBUILD_MODNAME);
+	if (err) {
+		dev_err(&pdev->dev, "pci_request_region\n");
+		goto out_disable;
+	}
+
+	bp->base = pci_ioremap_bar(pdev, 0);
+	if (!bp->base) {
+		dev_err(&pdev->dev, "io_remap bar0\n");
+		err = -ENOMEM;
+		goto out_release_regions;
+	}
+	bp->reg = bp->base + OCP_REGISTER_OFFSET;
+	bp->tod = bp->base + TOD_REGISTER_OFFSET;
+	bp->ptp_info = ptp_ocp_clock_info;
+	spin_lock_init(&bp->lock);
+
+	err = ptp_ocp_check_clock(bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		goto out;
 
 	bp->ptp = ptp_clock_register(&bp->ptp_info, &pdev->dev);
 	if (IS_ERR(bp->ptp)) {
+<<<<<<< HEAD
 		err = PTR_ERR(bp->ptp);
 		dev_err(&pdev->dev, "ptp_clock_register: %d\n", err);
 		bp->ptp = NULL;
@@ -1471,10 +1581,19 @@ ptp_ocp_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 
 	ptp_ocp_info(bp);
 	ptp_ocp_resource_summary(bp);
+=======
+		dev_err(&pdev->dev, "ptp_clock_register\n");
+		err = PTR_ERR(bp->ptp);
+		goto out;
+	}
+
+	ptp_ocp_info(bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 
 out:
+<<<<<<< HEAD
 	ptp_ocp_detach(bp);
 	pci_set_drvdata(pdev, NULL);
 out_disable:
@@ -1483,6 +1602,15 @@ out_unregister:
 	devlink_unregister(devlink);
 out_free:
 	devlink_free(devlink);
+=======
+	pci_iounmap(pdev, bp->base);
+out_release_regions:
+	pci_release_regions(pdev);
+out_disable:
+	pci_disable_device(pdev);
+out_free:
+	kfree(bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
@@ -1491,6 +1619,7 @@ static void
 ptp_ocp_remove(struct pci_dev *pdev)
 {
 	struct ptp_ocp *bp = pci_get_drvdata(pdev);
+<<<<<<< HEAD
 	struct devlink *devlink = priv_to_devlink(bp);
 
 	ptp_ocp_detach(bp);
@@ -1499,6 +1628,15 @@ ptp_ocp_remove(struct pci_dev *pdev)
 
 	devlink_unregister(devlink);
 	devlink_free(devlink);
+=======
+
+	ptp_clock_unregister(bp->ptp);
+	pci_iounmap(pdev, bp->base);
+	pci_release_regions(pdev);
+	pci_disable_device(pdev);
+	pci_set_drvdata(pdev, NULL);
+	kfree(bp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct pci_driver ptp_ocp_driver = {
@@ -1508,6 +1646,7 @@ static struct pci_driver ptp_ocp_driver = {
 	.remove		= ptp_ocp_remove,
 };
 
+<<<<<<< HEAD
 static int
 ptp_ocp_i2c_notifier_call(struct notifier_block *nb,
 			  unsigned long action, void *data)
@@ -1577,15 +1716,27 @@ out_notifier:
 	class_unregister(&timecard_class);
 out:
 	pr_err(KBUILD_MODNAME ": failed to register %s: %d\n", what, err);
+=======
+static int __init
+ptp_ocp_init(void)
+{
+	int err;
+
+	err = pci_register_driver(&ptp_ocp_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
 static void __exit
 ptp_ocp_fini(void)
 {
+<<<<<<< HEAD
 	bus_unregister_notifier(&i2c_bus_type, &ptp_ocp_i2c_notifier);
 	pci_unregister_driver(&ptp_ocp_driver);
 	class_unregister(&timecard_class);
+=======
+	pci_unregister_driver(&ptp_ocp_driver);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 module_init(ptp_ocp_init);

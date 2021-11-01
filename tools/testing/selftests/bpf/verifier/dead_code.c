@@ -159,6 +159,7 @@
 	.result = ACCEPT,
 	.retval = 2,
 },
+<<<<<<< HEAD
 {
 	"dead code: zero extension",
 	.insns = {
@@ -171,3 +172,5 @@
 	.result = ACCEPT,
 	.retval = 0,
 },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

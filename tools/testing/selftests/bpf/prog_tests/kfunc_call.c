@@ -44,7 +44,11 @@ static void test_subprog(void)
 	ASSERT_OK(err, "bpf_prog_test_run(test1)");
 	ASSERT_EQ(retval, 10, "test1-retval");
 	ASSERT_NEQ(skel->data->active_res, -1, "active_res");
+<<<<<<< HEAD
 	ASSERT_EQ(skel->data->sk_state_res, BPF_TCP_CLOSE, "sk_state_res");
+=======
+	ASSERT_EQ(skel->data->sk_state, BPF_TCP_CLOSE, "sk_state");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kfunc_call_test_subprog__destroy(skel);
 }

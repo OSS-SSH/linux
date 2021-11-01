@@ -84,7 +84,11 @@ struct dsi_pll_10nm {
 #define to_pll_10nm(x)	container_of(x, struct dsi_pll_10nm, clk_hw)
 
 /*
+<<<<<<< HEAD
  * Global list of private DSI PLL struct pointers. We need this for bonded DSI
+=======
+ * Global list of private DSI PLL struct pointers. We need this for Dual DSI
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * mode, where the master PLL's clk_ops needs access the slave's private data
  */
 static struct dsi_pll_10nm *pll_10nm_list[DSI_MAX];

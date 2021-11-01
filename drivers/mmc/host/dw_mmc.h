@@ -14,8 +14,11 @@
 #include <linux/mmc/core.h>
 #include <linux/dmaengine.h>
 #include <linux/reset.h>
+<<<<<<< HEAD
 #include <linux/fault-inject.h>
 #include <linux/hrtimer.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/interrupt.h>
 
 enum dw_mci_state {
@@ -232,11 +235,14 @@ struct dw_mci {
 	struct timer_list       cmd11_timer;
 	struct timer_list       cto_timer;
 	struct timer_list       dto_timer;
+<<<<<<< HEAD
 
 #ifdef CONFIG_FAULT_INJECTION
 	struct fault_attr	fail_data_crc;
 	struct hrtimer		fault_timer;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* DMA ops for Internal/External DMAC interface */

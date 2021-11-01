@@ -3,7 +3,10 @@
 
 #include "i40e.h"
 #include <linux/ptp_classify.h>
+<<<<<<< HEAD
 #include <linux/posix-clock.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* The XL710 timesync is very much like Intel's 82599 design when it comes to
  * the fundamental clock design. However, the clock operations are much simpler
@@ -21,11 +24,15 @@
 #define I40E_PTP_10GB_INCVAL_MULT	2
 #define I40E_PTP_5GB_INCVAL_MULT	2
 #define I40E_PTP_1GB_INCVAL_MULT	20
+<<<<<<< HEAD
 #define I40E_ISGN			0x80000000
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define I40E_PRTTSYN_CTL1_TSYNTYPE_V1  BIT(I40E_PRTTSYN_CTL1_TSYNTYPE_SHIFT)
 #define I40E_PRTTSYN_CTL1_TSYNTYPE_V2  (2 << \
 					I40E_PRTTSYN_CTL1_TSYNTYPE_SHIFT)
+<<<<<<< HEAD
 #define I40E_SUBDEV_ID_25G_PTP_PIN	0xB
 #define to_dev(obj) container_of(obj, struct device, kobj)
 
@@ -267,6 +274,8 @@ static int i40e_ptp_verify(struct ptp_clock_info *ptp, unsigned int pin,
 	}
 	return 0;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * i40e_ptp_read - Read the PHC time from the device
@@ -380,6 +389,7 @@ static int i40e_ptp_adjfreq(struct ptp_clock_info *ptp, s32 ppb)
 }
 
 /**
+<<<<<<< HEAD
  * i40e_ptp_set_1pps_signal_hw - configure 1PPS PTP signal for pins
  * @pf: the PF private data structure
  *
@@ -411,6 +421,8 @@ static void i40e_ptp_set_1pps_signal_hw(struct i40e_pf *pf)
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * i40e_ptp_adjtime - Adjust the PHC time
  * @ptp: The PTP clock structure
  * @delta: Offset in nanoseconds to adjust the PHC time by
@@ -420,6 +432,7 @@ static void i40e_ptp_set_1pps_signal_hw(struct i40e_pf *pf)
 static int i40e_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
 {
 	struct i40e_pf *pf = container_of(ptp, struct i40e_pf, ptp_caps);
+<<<<<<< HEAD
 	struct i40e_hw *hw = &pf->hw;
 
 	mutex_lock(&pf->tmreg_lock);
@@ -449,6 +462,16 @@ static int i40e_ptp_adjtime(struct ptp_clock_info *ptp, s64 delta)
 		i40e_ptp_write(pf, (const struct timespec64 *)&now);
 		i40e_ptp_set_1pps_signal_hw(pf);
 	}
+=======
+	struct timespec64 now, then;
+
+	then = ns_to_timespec64(delta);
+	mutex_lock(&pf->tmreg_lock);
+
+	i40e_ptp_read(pf, &now, NULL);
+	now = timespec64_add(now, then);
+	i40e_ptp_write(pf, (const struct timespec64 *)&now);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_unlock(&pf->tmreg_lock);
 
@@ -479,7 +502,11 @@ static int i40e_ptp_gettimex(struct ptp_clock_info *ptp, struct timespec64 *ts,
 /**
  * i40e_ptp_settime - Set the time of the PHC
  * @ptp: The PTP clock structure
+<<<<<<< HEAD
  * @ts: timespec64 structure that holds the new time value
+=======
+ * @ts: timespec structure that holds the new time value
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Set the device clock to the user input value. The conversion from timespec
  * to ns happens in the write function.
@@ -497,6 +524,7 @@ static int i40e_ptp_settime(struct ptp_clock_info *ptp,
 }
 
 /**
+<<<<<<< HEAD
  * i40e_pps_configure - configure PPS events
  * @ptp: ptp clock
  * @rq: clock request
@@ -636,6 +664,20 @@ static int i40e_ptp_feature_enable(struct ptp_clock_info *ptp,
 	}
 
 	return i40e_ptp_enable_pin(pf, chan, func, on);
+=======
+ * i40e_ptp_feature_enable - Enable/disable ancillary features of the PHC subsystem
+ * @ptp: The PTP clock structure
+ * @rq: The requested feature to change
+ * @on: Enable/disable flag
+ *
+ * The XL710 does not support any of the ancillary features of the PHC
+ * subsystem, so this function may just return.
+ **/
+static int i40e_ptp_feature_enable(struct ptp_clock_info *ptp,
+				   struct ptp_clock_request *rq, int on)
+{
+	return -EOPNOTSUPP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -950,6 +992,7 @@ int i40e_ptp_get_ts_config(struct i40e_pf *pf, struct ifreq *ifr)
 }
 
 /**
+<<<<<<< HEAD
  * i40e_ptp_free_pins - free memory used by PTP pins
  * @pf: Board private structure
  *
@@ -1173,6 +1216,8 @@ int i40e_ptp_alloc_pins(struct i40e_pf *pf)
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * i40e_ptp_set_timestamp_mode - setup hardware for requested timestamp mode
  * @pf: Board private structure
  * @config: hwtstamp settings requested or saved
@@ -1190,6 +1235,7 @@ static int i40e_ptp_set_timestamp_mode(struct i40e_pf *pf,
 	struct i40e_hw *hw = &pf->hw;
 	u32 tsyntype, regval;
 
+<<<<<<< HEAD
 	/* Selects external trigger to cause event */
 	regval = rd32(hw, I40E_PRTTSYN_AUX_0(0));
 	/* Bit 17:16 is EVNTLVL, 01B rising edge */
@@ -1205,6 +1251,8 @@ static int i40e_ptp_set_timestamp_mode(struct i40e_pf *pf,
 
 	INIT_WORK(&pf->ptp_extts0_work, i40e_ptp_extts0_work);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Reserved for future extensions. */
 	if (config->flags)
 		return -EINVAL;
@@ -1348,6 +1396,7 @@ int i40e_ptp_set_ts_config(struct i40e_pf *pf, struct ifreq *ifr)
 }
 
 /**
+<<<<<<< HEAD
  * i40e_init_pin_config - initialize pins.
  * @pf: private board structure
  *
@@ -1387,6 +1436,8 @@ static int i40e_init_pin_config(struct i40e_pf *pf)
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * i40e_ptp_create_clock - Create PTP clock device for userspace
  * @pf: Board private structure
  *
@@ -1406,16 +1457,25 @@ static long i40e_ptp_create_clock(struct i40e_pf *pf)
 		sizeof(pf->ptp_caps.name) - 1);
 	pf->ptp_caps.owner = THIS_MODULE;
 	pf->ptp_caps.max_adj = 999999999;
+<<<<<<< HEAD
+=======
+	pf->ptp_caps.n_ext_ts = 0;
+	pf->ptp_caps.pps = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pf->ptp_caps.adjfreq = i40e_ptp_adjfreq;
 	pf->ptp_caps.adjtime = i40e_ptp_adjtime;
 	pf->ptp_caps.gettimex64 = i40e_ptp_gettimex;
 	pf->ptp_caps.settime64 = i40e_ptp_settime;
+<<<<<<< HEAD
 	if (i40e_is_ptp_pin_dev(&pf->hw)) {
 		int err = i40e_init_pin_config(pf);
 
 		if (err)
 			return err;
 	}
+=======
+	pf->ptp_caps.enable = i40e_ptp_feature_enable;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Attempt to register the clock before enabling the hardware. */
 	pf->ptp_clock = ptp_clock_register(&pf->ptp_caps, &pf->pdev->dev);
@@ -1545,8 +1605,11 @@ void i40e_ptp_init(struct i40e_pf *pf)
 		/* Restore the clock time based on last known value */
 		i40e_ptp_restore_hw_time(pf);
 	}
+<<<<<<< HEAD
 
 	i40e_ptp_set_1pps_signal_hw(pf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1558,9 +1621,12 @@ void i40e_ptp_init(struct i40e_pf *pf)
  **/
 void i40e_ptp_stop(struct i40e_pf *pf)
 {
+<<<<<<< HEAD
 	struct i40e_hw *hw = &pf->hw;
 	u32 regval;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pf->flags &= ~I40E_FLAG_PTP;
 	pf->ptp_tx = false;
 	pf->ptp_rx = false;
@@ -1579,6 +1645,7 @@ void i40e_ptp_stop(struct i40e_pf *pf)
 		dev_info(&pf->pdev->dev, "%s: removed PHC on %s\n", __func__,
 			 pf->vsi[pf->lan_vsi]->netdev->name);
 	}
+<<<<<<< HEAD
 
 	if (i40e_is_ptp_pin_dev(&pf->hw)) {
 		i40e_ptp_set_pin_hw(hw, I40E_SDP3_2, off);
@@ -1596,4 +1663,6 @@ void i40e_ptp_stop(struct i40e_pf *pf)
 	wr32(hw, I40E_PRTTSYN_CTL0, regval);
 
 	i40e_ptp_free_pins(pf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

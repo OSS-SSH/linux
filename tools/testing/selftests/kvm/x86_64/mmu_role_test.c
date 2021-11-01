@@ -71,7 +71,11 @@ static void mmu_role_test(u32 *cpuid_reg, u32 evil_cpuid_val)
 	/* Set up a #PF handler to eat the RSVD #PF and signal all done! */
 	vm_init_descriptor_tables(vm);
 	vcpu_init_descriptor_tables(vm, VCPU_ID);
+<<<<<<< HEAD
 	vm_install_exception_handler(vm, PF_VECTOR, guest_pf_handler);
+=======
+	vm_handle_exception(vm, PF_VECTOR, guest_pf_handler);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	r = _vcpu_run(vm, VCPU_ID);
 	TEST_ASSERT(r == 0, "vcpu_run failed: %d\n", r);

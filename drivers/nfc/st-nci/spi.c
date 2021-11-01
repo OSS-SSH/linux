@@ -198,7 +198,11 @@ static irqreturn_t st_nci_irq_thread_fn(int irq, void *phy_id)
 	return IRQ_HANDLED;
 }
 
+<<<<<<< HEAD
 static const struct nfc_phy_ops spi_phy_ops = {
+=======
+static struct nfc_phy_ops spi_phy_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.write = st_nci_spi_write,
 	.enable = st_nci_spi_enable,
 	.disable = st_nci_spi_disable,
@@ -278,7 +282,10 @@ static int st_nci_spi_remove(struct spi_device *dev)
 
 static struct spi_device_id st_nci_spi_id_table[] = {
 	{ST_NCI_SPI_DRIVER_NAME, 0},
+<<<<<<< HEAD
 	{"st21nfcb-spi", 0},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{}
 };
 MODULE_DEVICE_TABLE(spi, st_nci_spi_id_table);

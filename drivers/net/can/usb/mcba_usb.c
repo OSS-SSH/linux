@@ -653,8 +653,11 @@ static int mcba_usb_start(struct mcba_priv *priv)
 			break;
 		}
 
+<<<<<<< HEAD
 		urb->transfer_dma = buf_dma;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usb_fill_bulk_urb(urb, priv->udev,
 				  usb_rcvbulkpipe(priv->udev, MCBA_USB_EP_IN),
 				  buf, MCBA_USB_RX_BUFF_SIZE,

@@ -1115,7 +1115,11 @@ static int pcs_parse_bits_in_pinctrl_entry(struct pcs_device *pcs,
 {
 	const char *name = "pinctrl-single,bits";
 	struct pcs_func_vals *vals;
+<<<<<<< HEAD
 	int rows, *pins, found = 0, res = -ENOMEM, i, fsel;
+=======
+	int rows, *pins, found = 0, res = -ENOMEM, i, fsel, gsel;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int npins_in_row;
 	struct pcs_function *function = NULL;
 
@@ -1125,11 +1129,14 @@ static int pcs_parse_bits_in_pinctrl_entry(struct pcs_device *pcs,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	if (PCS_HAS_PINCONF) {
 		dev_err(pcs->dev, "pinconf not supported\n");
 		return -ENOTSUPP;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	npins_in_row = pcs->width / pcs->bits_per_pin;
 
 	vals = devm_kzalloc(pcs->dev,
@@ -1217,19 +1224,41 @@ static int pcs_parse_bits_in_pinctrl_entry(struct pcs_device *pcs,
 		goto free_pins;
 	}
 
+<<<<<<< HEAD
 	res = pinctrl_generic_add_group(pcs->pctl, np->name, pins, found, pcs);
 	if (res < 0)
 		goto free_function;
+=======
+	gsel = pinctrl_generic_add_group(pcs->pctl, np->name, pins, found, pcs);
+	if (gsel < 0) {
+		res = gsel;
+		goto free_function;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	(*map)->type = PIN_MAP_TYPE_MUX_GROUP;
 	(*map)->data.mux.group = np->name;
 	(*map)->data.mux.function = np->name;
 
+<<<<<<< HEAD
+=======
+	if (PCS_HAS_PINCONF) {
+		dev_err(pcs->dev, "pinconf not supported\n");
+		goto free_pingroups;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	*num_maps = 1;
 	mutex_unlock(&pcs->mutex);
 
 	return 0;
 
+<<<<<<< HEAD
+=======
+free_pingroups:
+	pinctrl_generic_remove_group(pcs->pctl, gsel);
+	*num_maps = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 free_function:
 	pinmux_generic_remove_function(pcs->pctl, fsel);
 free_pins:
@@ -1486,8 +1515,13 @@ static int pcs_irq_handle(struct pcs_soc_data *pcs_soc)
 		mask = pcs->read(pcswi->reg);
 		raw_spin_unlock(&pcs->lock);
 		if (mask & pcs_soc->irq_status_mask) {
+<<<<<<< HEAD
 			generic_handle_domain_irq(pcs->domain,
 						  pcswi->hwirq);
+=======
+			generic_handle_irq(irq_find_mapping(pcs->domain,
+							    pcswi->hwirq));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			count++;
 		}
 	}

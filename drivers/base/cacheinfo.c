@@ -297,7 +297,10 @@ static void free_cache_attributes(unsigned int cpu)
 
 	kfree(per_cpu_cacheinfo(cpu));
 	per_cpu_cacheinfo(cpu) = NULL;
+<<<<<<< HEAD
 	cache_leaves(cpu) = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int __weak init_cache_level(unsigned int cpu)

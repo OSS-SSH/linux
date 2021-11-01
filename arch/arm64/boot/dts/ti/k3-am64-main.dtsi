@@ -217,12 +217,15 @@
 			reg = <0x4044 0x8>;
 			#phy-cells = <1>;
 		};
+<<<<<<< HEAD
 
 		epwm_tbclk: clock@4140 {
 			compatible = "ti,am64-epwm-tbclk", "syscon";
 			reg = <0x4130 0x4>;
 			#clock-cells = <1>;
 		};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	main_uart0: serial@2800000 {
@@ -865,6 +868,7 @@
 		clock-names = "fck";
 		max-functions = /bits/ 8 <1>;
 	};
+<<<<<<< HEAD
 
 	epwm0: pwm@23000000 {
 		compatible = "ti,am64-epwm", "ti,am3352-ehrpwm";
@@ -973,4 +977,6 @@
 		clocks = <&k3_clks 53 0>;
 		clock-names = "fck";
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

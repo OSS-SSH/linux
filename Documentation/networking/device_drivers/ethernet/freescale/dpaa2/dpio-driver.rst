@@ -1,6 +1,9 @@
 .. include:: <isonum.txt>
 
+<<<<<<< HEAD
 ===================================
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 DPAA2 DPIO (Data Path I/O) Overview
 ===================================
 

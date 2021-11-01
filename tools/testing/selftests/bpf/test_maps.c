@@ -764,8 +764,13 @@ static void test_sockmap(unsigned int tasks, void *data)
 	udp = socket(AF_INET, SOCK_DGRAM, 0);
 	i = 0;
 	err = bpf_map_update_elem(fd, &i, &udp, BPF_ANY);
+<<<<<<< HEAD
 	if (err) {
 		printf("Failed socket update SOCK_DGRAM '%i:%i'\n",
+=======
+	if (!err) {
+		printf("Failed socket SOCK_DGRAM allowed '%i:%i'\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       i, udp);
 		goto out_sockmap;
 	}
@@ -985,7 +990,11 @@ static void test_sockmap(unsigned int tasks, void *data)
 
 		FD_ZERO(&w);
 		FD_SET(sfd[3], &w);
+<<<<<<< HEAD
 		to.tv_sec = 30;
+=======
+		to.tv_sec = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		to.tv_usec = 0;
 		s = select(sfd[3] + 1, &w, NULL, NULL, &to);
 		if (s == -1) {
@@ -1153,17 +1162,23 @@ out_sockmap:
 }
 
 #define MAPINMAP_PROG "./test_map_in_map.o"
+<<<<<<< HEAD
 #define MAPINMAP_INVALID_PROG "./test_map_in_map_invalid.o"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void test_map_in_map(void)
 {
 	struct bpf_object *obj;
 	struct bpf_map *map;
 	int mim_fd, fd, err;
 	int pos = 0;
+<<<<<<< HEAD
 	struct bpf_map_info info = {};
 	__u32 len = sizeof(info);
 	__u32 id = 0;
 	libbpf_print_fn_t old_print_fn;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	obj = bpf_object__open(MAPINMAP_PROG);
 
@@ -1233,6 +1248,7 @@ static void test_map_in_map(void)
 	}
 
 	close(fd);
+<<<<<<< HEAD
 	fd = -1;
 	bpf_object__close(obj);
 
@@ -1299,6 +1315,13 @@ static void test_map_in_map(void)
 out_map_in_map:
 	if (fd >= 0)
 		close(fd);
+=======
+	bpf_object__close(obj);
+	return;
+
+out_map_in_map:
+	close(fd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	exit(1);
 }
 
@@ -1396,22 +1419,32 @@ static void test_map_stress(void)
 #define DO_DELETE 0
 
 #define MAP_RETRIES 20
+<<<<<<< HEAD
 #define MAX_DELAY_US 50000
 #define MIN_DELAY_RANGE_US 5000
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int map_update_retriable(int map_fd, const void *key, const void *value,
 				int flags, int attempts)
 {
+<<<<<<< HEAD
 	int delay = rand() % MIN_DELAY_RANGE_US;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	while (bpf_map_update_elem(map_fd, key, value, flags)) {
 		if (!attempts || (errno != EAGAIN && errno != EBUSY))
 			return -errno;
 
+<<<<<<< HEAD
 		if (delay <= MAX_DELAY_US / 2)
 			delay *= 2;
 
 		usleep(delay);
+=======
+		usleep(1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		attempts--;
 	}
 
@@ -1420,16 +1453,23 @@ static int map_update_retriable(int map_fd, const void *key, const void *value,
 
 static int map_delete_retriable(int map_fd, const void *key, int attempts)
 {
+<<<<<<< HEAD
 	int delay = rand() % MIN_DELAY_RANGE_US;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	while (bpf_map_delete_elem(map_fd, key)) {
 		if (!attempts || (errno != EAGAIN && errno != EBUSY))
 			return -errno;
 
+<<<<<<< HEAD
 		if (delay <= MAX_DELAY_US / 2)
 			delay *= 2;
 
 		usleep(delay);
+=======
+		usleep(1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		attempts--;
 	}
 

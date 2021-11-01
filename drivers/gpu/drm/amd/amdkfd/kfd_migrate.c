@@ -891,6 +891,7 @@ int svm_migrate_init(struct amdgpu_device *adev)
 	pgmap->ops = &svm_migrate_pgmap_ops;
 	pgmap->owner = SVM_ADEV_PGMAP_OWNER(adev);
 	pgmap->flags = MIGRATE_VMA_SELECT_DEVICE_PRIVATE;
+<<<<<<< HEAD
 
 	/* Device manager releases device-specific resources, memory region and
 	 * pgmap when driver disconnects from device.
@@ -901,6 +902,11 @@ int svm_migrate_init(struct amdgpu_device *adev)
 
 		/* Disable SVM support capability */
 		pgmap->type = 0;
+=======
+	r = devm_memremap_pages(adev->dev, pgmap);
+	if (IS_ERR(r)) {
+		pr_err("failed to register HMM device memory\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		devm_release_mem_region(adev->dev, res->start,
 					res->end - res->start + 1);
 		return PTR_ERR(r);
@@ -915,3 +921,15 @@ int svm_migrate_init(struct amdgpu_device *adev)
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+void svm_migrate_fini(struct amdgpu_device *adev)
+{
+	struct dev_pagemap *pgmap = &adev->kfd.dev->pgmap;
+
+	devm_memunmap_pages(adev->dev, pgmap);
+	devm_release_mem_region(adev->dev, pgmap->range.start,
+				pgmap->range.end - pgmap->range.start + 1);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

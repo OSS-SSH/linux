@@ -96,6 +96,12 @@ config HAVE_FAST_GUP
 	depends on MMU
 	bool
 
+<<<<<<< HEAD
+=======
+config HOLES_IN_ZONE
+	bool
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # Don't discard allocated memory used to track "memory" and "reserved" memblocks
 # after early boot, so it can still be used to test for validity of memory.
 # Also, memblocks are updated with memory hot(un)plug.
@@ -739,6 +745,7 @@ config DEFERRED_STRUCT_PAGE_INIT
 	  lifetime of the system until these kthreads finish the
 	  initialisation.
 
+<<<<<<< HEAD
 config PAGE_IDLE_FLAG
 	bool
 	select PAGE_EXTENSION if !64BIT
@@ -751,6 +758,12 @@ config IDLE_PAGE_TRACKING
 	bool "Enable idle page tracking"
 	depends on SYSFS && MMU
 	select PAGE_IDLE_FLAG
+=======
+config IDLE_PAGE_TRACKING
+	bool "Enable idle page tracking"
+	depends on SYSFS && MMU
+	select PAGE_EXTENSION if !64BIT
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  This feature allows to estimate the amount of user pages that have
 	  not been touched during a given period of time. This information can
@@ -894,6 +907,9 @@ config IO_MAPPING
 config SECRETMEM
 	def_bool ARCH_HAS_SET_DIRECT_MAP && !EMBEDDED
 
+<<<<<<< HEAD
 source "mm/damon/Kconfig"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endmenu

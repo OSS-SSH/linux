@@ -1,4 +1,9 @@
 /*
+<<<<<<< HEAD
+=======
+ * kernel/mutex-debug.c
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Debugging code for mutexes
  *
  * Started by Ingo Molnar:
@@ -20,7 +25,11 @@
 #include <linux/interrupt.h>
 #include <linux/debug_locks.h>
 
+<<<<<<< HEAD
 #include "mutex.h"
+=======
+#include "mutex-debug.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Must be called with lock->wait_lock held.
@@ -30,7 +39,10 @@ void debug_mutex_lock_common(struct mutex *lock, struct mutex_waiter *waiter)
 	memset(waiter, MUTEX_DEBUG_INIT, sizeof(*waiter));
 	waiter->magic = waiter;
 	INIT_LIST_HEAD(&waiter->list);
+<<<<<<< HEAD
 	waiter->ww_ctx = MUTEX_POISON_WW_CTX;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void debug_mutex_wake_waiter(struct mutex *lock, struct mutex_waiter *waiter)

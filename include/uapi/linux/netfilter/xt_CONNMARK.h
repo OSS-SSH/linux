@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* SPDX-License-Identifier: GPL-2.0+ WITH Linux-syscall-note */
 #ifndef _XT_CONNMARK_H
 #define _XT_CONNMARK_H
@@ -40,3 +41,12 @@ struct xt_connmark_mtinfo1 {
 };
 
 #endif /*_XT_CONNMARK_H*/
+=======
+/* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+#ifndef _XT_CONNMARK_H_target
+#define _XT_CONNMARK_H_target
+
+#include <linux/netfilter/xt_connmark.h>
+
+#endif /*_XT_CONNMARK_H_target*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

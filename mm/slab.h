@@ -216,18 +216,24 @@ DECLARE_STATIC_KEY_FALSE(slub_debug_enabled);
 #endif
 extern void print_tracking(struct kmem_cache *s, void *object);
 long validate_slab_cache(struct kmem_cache *s);
+<<<<<<< HEAD
 static inline bool __slub_debug_enabled(void)
 {
 	return static_branch_unlikely(&slub_debug_enabled);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 static inline void print_tracking(struct kmem_cache *s, void *object)
 {
 }
+<<<<<<< HEAD
 static inline bool __slub_debug_enabled(void)
 {
 	return false;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 /*
@@ -237,10 +243,18 @@ static inline bool __slub_debug_enabled(void)
  */
 static inline bool kmem_cache_debug_flags(struct kmem_cache *s, slab_flags_t flags)
 {
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_SLUB_DEBUG))
 		VM_WARN_ON_ONCE(!(flags & SLAB_DEBUG_FLAGS));
 	if (__slub_debug_enabled())
 		return s->flags & flags;
+=======
+#ifdef CONFIG_SLUB_DEBUG
+	VM_WARN_ON_ONCE(!(flags & SLAB_DEBUG_FLAGS));
+	if (static_branch_unlikely(&slub_debug_enabled))
+		return s->flags & flags;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return false;
 }
 
@@ -346,7 +360,11 @@ static inline void memcg_slab_free_hook(struct kmem_cache *s_orig,
 			continue;
 
 		page = virt_to_head_page(p[i]);
+<<<<<<< HEAD
 		objcgs = page_objcgs_check(page);
+=======
+		objcgs = page_objcgs(page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!objcgs)
 			continue;
 

@@ -19,7 +19,11 @@ struct page_ext_operations {
 enum page_ext_flags {
 	PAGE_EXT_OWNER,
 	PAGE_EXT_OWNER_ALLOCATED,
+<<<<<<< HEAD
 #if defined(CONFIG_PAGE_IDLE_FLAG) && !defined(CONFIG_64BIT)
+=======
+#if defined(CONFIG_IDLE_PAGE_TRACKING) && !defined(CONFIG_64BIT)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	PAGE_EXT_YOUNG,
 	PAGE_EXT_IDLE,
 #endif

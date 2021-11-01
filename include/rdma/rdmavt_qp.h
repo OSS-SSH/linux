@@ -444,7 +444,11 @@ struct rvt_qp {
 	/*
 	 * This sge list MUST be last. Do not add anything below here.
 	 */
+<<<<<<< HEAD
 	struct rvt_sge *r_sg_list /* verified SGEs */
+=======
+	struct rvt_sge r_sg_list[] /* verified SGEs */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		____cacheline_aligned_in_smp;
 };
 

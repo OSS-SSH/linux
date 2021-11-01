@@ -12,7 +12,10 @@
 struct drm_i915_private;
 struct intel_memory_region;
 struct ttm_resource;
+<<<<<<< HEAD
 struct ttm_device_funcs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int intel_region_ttm_device_init(struct drm_i915_private *dev_priv);
 
@@ -22,6 +25,7 @@ int intel_region_ttm_init(struct intel_memory_region *mem);
 
 void intel_region_ttm_fini(struct intel_memory_region *mem);
 
+<<<<<<< HEAD
 struct sg_table *intel_region_ttm_resource_to_st(struct intel_memory_region *mem,
 						 struct ttm_resource *res);
 
@@ -38,4 +42,16 @@ intel_region_ttm_resource_alloc(struct intel_memory_region *mem,
 				resource_size_t size,
 				unsigned int flags);
 #endif
+=======
+struct sg_table *intel_region_ttm_node_to_st(struct intel_memory_region *mem,
+					     struct ttm_resource *res);
+
+struct ttm_resource *
+intel_region_ttm_node_alloc(struct intel_memory_region *mem,
+			    resource_size_t size,
+			    unsigned int flags);
+
+void intel_region_ttm_node_free(struct intel_memory_region *mem,
+				struct ttm_resource *node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _INTEL_REGION_TTM_H_ */

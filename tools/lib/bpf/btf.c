@@ -804,7 +804,10 @@ static struct btf *btf_new(const void *data, __u32 size, struct btf *base_btf)
 	btf->nr_types = 0;
 	btf->start_id = 1;
 	btf->start_str_off = 0;
+<<<<<<< HEAD
 	btf->fd = -1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (base_btf) {
 		btf->base_btf = base_btf;
@@ -833,6 +836,11 @@ static struct btf *btf_new(const void *data, __u32 size, struct btf *base_btf)
 	if (err)
 		goto done;
 
+<<<<<<< HEAD
+=======
+	btf->fd = -1;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 done:
 	if (err) {
 		btf__free(btf);
@@ -1179,7 +1187,11 @@ int btf__finalize_data(struct bpf_object *obj, struct btf *btf)
 
 static void *btf_get_raw_data(const struct btf *btf, __u32 *size, bool swap_endian);
 
+<<<<<<< HEAD
 int btf__load_into_kernel(struct btf *btf)
+=======
+int btf__load(struct btf *btf)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	__u32 log_buf_size = 0, raw_size;
 	char *log_buf = NULL;
@@ -1227,7 +1239,10 @@ done:
 	free(log_buf);
 	return libbpf_err(err);
 }
+<<<<<<< HEAD
 int btf__load(struct btf *) __attribute__((alias("btf__load_into_kernel")));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int btf__fd(const struct btf *btf)
 {
@@ -1382,6 +1397,7 @@ exit_free:
 	return btf;
 }
 
+<<<<<<< HEAD
 struct btf *btf__load_from_kernel_by_id_split(__u32 id, struct btf *base_btf)
 {
 	struct btf *btf;
@@ -1411,6 +1427,23 @@ int btf__get_from_id(__u32 id, struct btf **btf)
 	res = btf__load_from_kernel_by_id(id);
 	err = libbpf_get_error(res);
 
+=======
+int btf__get_from_id(__u32 id, struct btf **btf)
+{
+	struct btf *res;
+	int err, btf_fd;
+
+	*btf = NULL;
+	btf_fd = bpf_btf_get_fd_by_id(id);
+	if (btf_fd < 0)
+		return libbpf_err(-errno);
+
+	res = btf_get_from_fd(btf_fd, NULL);
+	err = libbpf_get_error(res);
+
+	close(btf_fd);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err)
 		return libbpf_err(err);
 
@@ -4035,7 +4068,11 @@ static void btf_dedup_merge_hypot_map(struct btf_dedup *d)
 		 */
 		if (d->hypot_adjust_canon)
 			continue;
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (t_kind == BTF_KIND_FWD && c_kind != BTF_KIND_FWD)
 			d->map[t_id] = c_id;
 
@@ -4408,7 +4445,11 @@ static int btf_dedup_remap_types(struct btf_dedup *d)
  * Probe few well-known locations for vmlinux kernel image and try to load BTF
  * data out of it to use for target BTF.
  */
+<<<<<<< HEAD
 struct btf *btf__load_vmlinux_btf(void)
+=======
+struct btf *libbpf_find_kernel_btf(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct {
 		const char *path_fmt;
@@ -4454,6 +4495,7 @@ struct btf *btf__load_vmlinux_btf(void)
 	return libbpf_err_ptr(-ESRCH);
 }
 
+<<<<<<< HEAD
 struct btf *libbpf_find_kernel_btf(void) __attribute__((alias("btf__load_vmlinux_btf")));
 
 struct btf *btf__load_module_btf(const char *module_name, struct btf *vmlinux_btf)
@@ -4464,6 +4506,8 @@ struct btf *btf__load_module_btf(const char *module_name, struct btf *vmlinux_bt
 	return btf__parse_split(path, vmlinux_btf);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int btf_type_visit_type_ids(struct btf_type *t, type_id_visit_fn visit, void *ctx)
 {
 	int i, n, err;

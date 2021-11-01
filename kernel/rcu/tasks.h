@@ -643,8 +643,13 @@ void exit_tasks_rcu_finish(void) { exit_tasks_rcu_finish_trace(current); }
 //
 // "Rude" variant of Tasks RCU, inspired by Steve Rostedt's trick of
 // passing an empty function to schedule_on_each_cpu().  This approach
+<<<<<<< HEAD
 // provides an asynchronous call_rcu_tasks_rude() API and batching of
 // concurrent calls to the synchronous synchronize_rcu_tasks_rude() API.
+=======
+// provides an asynchronous call_rcu_tasks_rude() API and batching
+// of concurrent calls to the synchronous synchronize_rcu_rude() API.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 // This invokes schedule_on_each_cpu() in order to send IPIs far and wide
 // and induces otherwise unnecessary context switches on all online CPUs,
 // whether idle or not.
@@ -785,10 +790,14 @@ EXPORT_SYMBOL_GPL(show_rcu_tasks_rude_gp_kthread);
 //	set that task's .need_qs flag so that task's next outermost
 //	rcu_read_unlock_trace() will report the quiescent state (in which
 //	case the count of readers is incremented).  If both attempts fail,
+<<<<<<< HEAD
 //	the task is added to a "holdout" list.  Note that IPIs are used
 //	to invoke trc_read_check_handler() in the context of running tasks
 //	in order to avoid ordering overhead on common-case shared-variable
 //	accessses.
+=======
+//	the task is added to a "holdout" list.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 // rcu_tasks_trace_postscan():
 //	Initialize state and attempt to identify an immediate quiescent
 //	state as above (but only for idle tasks), unblock CPU-hotplug
@@ -850,7 +859,11 @@ static DEFINE_IRQ_WORK(rcu_tasks_trace_iw, rcu_read_unlock_iw);
 /* If we are the last reader, wake up the grace-period kthread. */
 void rcu_read_unlock_trace_special(struct task_struct *t, int nesting)
 {
+<<<<<<< HEAD
 	int nq = READ_ONCE(t->trc_reader_special.b.need_qs);
+=======
+	int nq = t->trc_reader_special.b.need_qs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (IS_ENABLED(CONFIG_TASKS_TRACE_RCU_READ_MB) &&
 	    t->trc_reader_special.b.need_mb)
@@ -897,7 +910,11 @@ static void trc_read_check_handler(void *t_in)
 
 	// If the task is not in a read-side critical section, and
 	// if this is the last reader, awaken the grace-period kthread.
+<<<<<<< HEAD
 	if (likely(!READ_ONCE(t->trc_reader_nesting))) {
+=======
+	if (likely(!t->trc_reader_nesting)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (WARN_ON_ONCE(atomic_dec_and_test(&trc_n_readers_need_end)))
 			wake_up(&trc_wait);
 		// Mark as checked after decrement to avoid false
@@ -906,7 +923,11 @@ static void trc_read_check_handler(void *t_in)
 		goto reset_ipi;
 	}
 	// If we are racing with an rcu_read_unlock_trace(), try again later.
+<<<<<<< HEAD
 	if (unlikely(READ_ONCE(t->trc_reader_nesting) < 0)) {
+=======
+	if (unlikely(t->trc_reader_nesting < 0)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (WARN_ON_ONCE(atomic_dec_and_test(&trc_n_readers_need_end)))
 			wake_up(&trc_wait);
 		goto reset_ipi;
@@ -916,14 +937,22 @@ static void trc_read_check_handler(void *t_in)
 	// Get here if the task is in a read-side critical section.  Set
 	// its state so that it will awaken the grace-period kthread upon
 	// exit from that critical section.
+<<<<<<< HEAD
 	WARN_ON_ONCE(READ_ONCE(t->trc_reader_special.b.need_qs));
+=======
+	WARN_ON_ONCE(t->trc_reader_special.b.need_qs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WRITE_ONCE(t->trc_reader_special.b.need_qs, true);
 
 reset_ipi:
 	// Allow future IPIs to be sent on CPU and for task.
 	// Also order this IPI handler against any later manipulations of
 	// the intended task.
+<<<<<<< HEAD
 	smp_store_release(per_cpu_ptr(&trc_ipi_to_cpu, smp_processor_id()), false); // ^^^
+=======
+	smp_store_release(&per_cpu(trc_ipi_to_cpu, smp_processor_id()), false); // ^^^
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	smp_store_release(&texp->trc_ipi_to_cpu, -1); // ^^^
 }
 
@@ -953,6 +982,7 @@ static bool trc_inspect_reader(struct task_struct *t, void *arg)
 			n_heavy_reader_ofl_updates++;
 		in_qs = true;
 	} else {
+<<<<<<< HEAD
 		// The task is not running, so C-language access is safe.
 		in_qs = likely(!t->trc_reader_nesting);
 	}
@@ -960,6 +990,15 @@ static bool trc_inspect_reader(struct task_struct *t, void *arg)
 	// Mark as checked so that the grace-period kthread will
 	// remove it from the holdout list.
 	t->trc_reader_checked = true;
+=======
+		in_qs = likely(!t->trc_reader_nesting);
+	}
+
+	// Mark as checked.  Because this is called from the grace-period
+	// kthread, also remove the task from the holdout list.
+	t->trc_reader_checked = true;
+	trc_del_holdout(t);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (in_qs)
 		return true;  // Already in quiescent state, done!!!
@@ -968,7 +1007,11 @@ static bool trc_inspect_reader(struct task_struct *t, void *arg)
 	// state so that it will awaken the grace-period kthread upon exit
 	// from that critical section.
 	atomic_inc(&trc_n_readers_need_end); // One more to wait on.
+<<<<<<< HEAD
 	WARN_ON_ONCE(READ_ONCE(t->trc_reader_special.b.need_qs));
+=======
+	WARN_ON_ONCE(t->trc_reader_special.b.need_qs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WRITE_ONCE(t->trc_reader_special.b.need_qs, true);
 	return true;
 }
@@ -986,7 +1029,12 @@ static void trc_wait_for_one_reader(struct task_struct *t,
 	// The current task had better be in a quiescent state.
 	if (t == current) {
 		t->trc_reader_checked = true;
+<<<<<<< HEAD
 		WARN_ON_ONCE(READ_ONCE(t->trc_reader_nesting));
+=======
+		trc_del_holdout(t);
+		WARN_ON_ONCE(t->trc_reader_nesting);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	}
 
@@ -998,12 +1046,15 @@ static void trc_wait_for_one_reader(struct task_struct *t,
 	}
 	put_task_struct(t);
 
+<<<<<<< HEAD
 	// If this task is not yet on the holdout list, then we are in
 	// an RCU read-side critical section.  Otherwise, the invocation of
 	// rcu_add_holdout() that added it to the list did the necessary
 	// get_task_struct().  Either way, the task cannot be freed out
 	// from under this code.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	// If currently running, send an IPI, either way, add to list.
 	trc_add_holdout(t, bhp);
 	if (task_curr(t) &&
@@ -1102,8 +1153,13 @@ static void show_stalled_task_trace(struct task_struct *t, bool *firstreport)
 		 ".I"[READ_ONCE(t->trc_ipi_to_cpu) > 0],
 		 ".i"[is_idle_task(t)],
 		 ".N"[cpu > 0 && tick_nohz_full_cpu(cpu)],
+<<<<<<< HEAD
 		 READ_ONCE(t->trc_reader_nesting),
 		 " N"[!!READ_ONCE(t->trc_reader_special.b.need_qs)],
+=======
+		 t->trc_reader_nesting,
+		 " N"[!!t->trc_reader_special.b.need_qs],
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 cpu);
 	sched_show_task(t);
 }
@@ -1197,7 +1253,11 @@ static void rcu_tasks_trace_postgp(struct rcu_tasks *rtp)
 static void exit_tasks_rcu_finish_trace(struct task_struct *t)
 {
 	WRITE_ONCE(t->trc_reader_checked, true);
+<<<<<<< HEAD
 	WARN_ON_ONCE(READ_ONCE(t->trc_reader_nesting));
+=======
+	WARN_ON_ONCE(t->trc_reader_nesting);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WRITE_ONCE(t->trc_reader_nesting, 0);
 	if (WARN_ON_ONCE(READ_ONCE(t->trc_reader_special.b.need_qs)))
 		rcu_read_unlock_trace_special(t, 0);

@@ -15,7 +15,10 @@
 
 #include <asm/alternative.h>
 #include <asm/lse.h>
+<<<<<<< HEAD
 #include <asm/rwonce.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 typedef union hyp_spinlock {
 	u32	__val;
@@ -90,6 +93,7 @@ static inline void hyp_spin_unlock(hyp_spinlock_t *lock)
 	: "memory");
 }
 
+<<<<<<< HEAD
 static inline bool hyp_spin_is_locked(hyp_spinlock_t *lock)
 {
 	hyp_spinlock_t lockval = READ_ONCE(*lock);
@@ -114,4 +118,6 @@ static inline void hyp_assert_lock_held(hyp_spinlock_t *lock)
 static inline void hyp_assert_lock_held(hyp_spinlock_t *lock) { }
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __ARM64_KVM_NVHE_SPINLOCK_H__ */

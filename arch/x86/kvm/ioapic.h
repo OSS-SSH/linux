@@ -35,17 +35,33 @@ struct kvm_vcpu;
 #define	IOAPIC_INIT			0x5
 #define	IOAPIC_EXTINT			0x7
 
+<<<<<<< HEAD
 #define RTC_GSI 8
 
 struct dest_map {
 	/* vcpu bitmap where IRQ has been sent */
 	DECLARE_BITMAP(map, KVM_MAX_VCPU_ID + 1);
+=======
+#ifdef CONFIG_X86
+#define RTC_GSI 8
+#else
+#define RTC_GSI -1U
+#endif
+
+struct dest_map {
+	/* vcpu bitmap where IRQ has been sent */
+	DECLARE_BITMAP(map, KVM_MAX_VCPU_ID);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Vector sent to a given vcpu, only valid when
 	 * the vcpu's bit in map is set
 	 */
+<<<<<<< HEAD
 	u8 vectors[KVM_MAX_VCPU_ID + 1];
+=======
+	u8 vectors[KVM_MAX_VCPU_ID];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 

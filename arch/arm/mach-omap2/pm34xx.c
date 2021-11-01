@@ -26,6 +26,10 @@
 #include <linux/delay.h>
 #include <linux/slab.h>
 #include <linux/of.h>
+<<<<<<< HEAD
+=======
+#include <linux/omap-gpmc.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <trace/events/power.h>
 
@@ -80,6 +84,11 @@ static void omap3_core_save_context(void)
 
 	/* Save the Interrupt controller context */
 	omap_intc_save_context();
+<<<<<<< HEAD
+=======
+	/* Save the GPMC context */
+	omap3_gpmc_save_context();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Save the system control module context, padconf already save above*/
 	omap3_control_save_context();
 }
@@ -88,6 +97,11 @@ static void omap3_core_restore_context(void)
 {
 	/* Restore the control module context, padconf restored by h/w */
 	omap3_control_restore_context();
+<<<<<<< HEAD
+=======
+	/* Restore the GPMC context */
+	omap3_gpmc_restore_context();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Restore the interrupt controller context */
 	omap_intc_restore_context();
 }

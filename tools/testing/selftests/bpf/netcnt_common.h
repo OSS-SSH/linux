@@ -6,6 +6,7 @@
 
 #define MAX_PERCPU_PACKETS 32
 
+<<<<<<< HEAD
 /* sizeof(struct bpf_local_storage_elem):
  *
  * It really is about 128 bytes on x86_64, but allocate more to account for
@@ -39,6 +40,21 @@ union net_cnt {
 		__u64 bytes;
 	};
 	__u8 data[BPF_LOCAL_STORAGE_MAX_VALUE_SIZE];
+=======
+struct percpu_net_cnt {
+	__u64 packets;
+	__u64 bytes;
+
+	__u64 prev_ts;
+
+	__u64 prev_packets;
+	__u64 prev_bytes;
+};
+
+struct net_cnt {
+	__u64 packets;
+	__u64 bytes;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #endif

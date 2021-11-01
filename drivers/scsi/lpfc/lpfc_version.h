@@ -20,7 +20,11 @@
  * included with this package.                                     *
  *******************************************************************/
 
+<<<<<<< HEAD
 #define LPFC_DRIVER_VERSION "14.0.0.1"
+=======
+#define LPFC_DRIVER_VERSION "12.8.0.10"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define LPFC_DRIVER_NAME		"lpfc"
 
 /* Used for SLI 2/3 */

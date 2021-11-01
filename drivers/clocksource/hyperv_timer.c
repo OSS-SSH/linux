@@ -361,6 +361,12 @@ EXPORT_SYMBOL_GPL(hv_stimer_global_cleanup);
  * Hyper-V and 32-bit x86.  The TSC reference page version is preferred.
  */
 
+<<<<<<< HEAD
+=======
+u64 (*hv_read_reference_counter)(void);
+EXPORT_SYMBOL_GPL(hv_read_reference_counter);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static union {
 	struct ms_hyperv_tsc_page page;
 	u8 reserved[PAGE_SIZE];

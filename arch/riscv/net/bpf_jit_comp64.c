@@ -939,10 +939,13 @@ out_be:
 		emit_ld(rd, 0, RV_REG_T1, ctx);
 		break;
 
+<<<<<<< HEAD
 	/* speculation barrier */
 	case BPF_ST | BPF_NOSPEC:
 		break;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* ST: *(size *)(dst + off) = imm */
 	case BPF_ST | BPF_MEM | BPF_B:
 		emit_imm(RV_REG_T1, imm, ctx);

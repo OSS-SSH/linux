@@ -204,12 +204,15 @@ config POWER_RESET_ST
 	help
 	  Reset support for STMicroelectronics boards.
 
+<<<<<<< HEAD
 config POWER_RESET_TPS65086
 	bool "TPS65086 restart driver"
 	depends on MFD_TPS65086
 	help
 	  This driver adds support for resetting the TPS65086 PMIC on restart.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config POWER_RESET_VERSATILE
 	bool "ARM Versatile family reboot driver"
 	depends on ARM

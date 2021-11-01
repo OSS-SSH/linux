@@ -131,6 +131,10 @@ static struct page **get_pages(struct drm_gem_object *obj)
 		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
 			sync_for_device(msm_obj);
 
+<<<<<<< HEAD
+=======
+		GEM_WARN_ON(msm_obj->active_count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		update_inactive(msm_obj);
 	}
 
@@ -217,6 +221,34 @@ static pgprot_t msm_gem_pgprot(struct msm_gem_object *msm_obj, pgprot_t prot)
 	return prot;
 }
 
+<<<<<<< HEAD
+=======
+int msm_gem_mmap_obj(struct drm_gem_object *obj,
+		struct vm_area_struct *vma)
+{
+	struct msm_gem_object *msm_obj = to_msm_bo(obj);
+
+	vma->vm_flags &= ~VM_PFNMAP;
+	vma->vm_flags |= VM_MIXEDMAP;
+	vma->vm_page_prot = msm_gem_pgprot(msm_obj, vm_get_page_prot(vma->vm_flags));
+
+	return 0;
+}
+
+int msm_gem_mmap(struct file *filp, struct vm_area_struct *vma)
+{
+	int ret;
+
+	ret = drm_gem_mmap(filp, vma);
+	if (ret) {
+		DBG("mmap failed: %d", ret);
+		return ret;
+	}
+
+	return msm_gem_mmap_obj(vma->vm_private_data, vma);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static vm_fault_t msm_gem_fault(struct vm_fault *vmf)
 {
 	struct vm_area_struct *vma = vmf->vma;
@@ -778,6 +810,44 @@ void msm_gem_vunmap(struct drm_gem_object *obj)
 	msm_obj->vaddr = NULL;
 }
 
+<<<<<<< HEAD
+=======
+/* must be called before _move_to_active().. */
+int msm_gem_sync_object(struct drm_gem_object *obj,
+		struct msm_fence_context *fctx, bool exclusive)
+{
+	struct dma_resv_list *fobj;
+	struct dma_fence *fence;
+	int i, ret;
+
+	fobj = dma_resv_shared_list(obj->resv);
+	if (!fobj || (fobj->shared_count == 0)) {
+		fence = dma_resv_excl_fence(obj->resv);
+		/* don't need to wait on our own fences, since ring is fifo */
+		if (fence && (fence->context != fctx->context)) {
+			ret = dma_fence_wait(fence, true);
+			if (ret)
+				return ret;
+		}
+	}
+
+	if (!exclusive || !fobj)
+		return 0;
+
+	for (i = 0; i < fobj->shared_count; i++) {
+		fence = rcu_dereference_protected(fobj->shared[i],
+						dma_resv_held(obj->resv));
+		if (fence->context != fctx->context) {
+			ret = dma_fence_wait(fence, true);
+			if (ret)
+				return ret;
+		}
+	}
+
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
 {
 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
@@ -787,12 +857,21 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
 	GEM_WARN_ON(!msm_gem_is_locked(obj));
 	GEM_WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED);
 	GEM_WARN_ON(msm_obj->dontneed);
+<<<<<<< HEAD
+=======
+	GEM_WARN_ON(!msm_obj->sgt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (msm_obj->active_count++ == 0) {
 		mutex_lock(&priv->mm_lock);
 		if (msm_obj->evictable)
 			mark_unevictable(msm_obj);
+<<<<<<< HEAD
 		list_move_tail(&msm_obj->mm_list, &gpu->active_list);
+=======
+		list_del(&msm_obj->mm_list);
+		list_add_tail(&msm_obj->mm_list, &gpu->active_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mutex_unlock(&priv->mm_lock);
 	}
 }
@@ -999,7 +1078,11 @@ void msm_gem_describe_objects(struct list_head *list, struct seq_file *m)
 }
 #endif
 
+<<<<<<< HEAD
 /* don't call directly!  Use drm_gem_object_put() */
+=======
+/* don't call directly!  Use drm_gem_object_put_locked() and friends */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void msm_gem_free_object(struct drm_gem_object *obj)
 {
 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
@@ -1051,6 +1134,7 @@ void msm_gem_free_object(struct drm_gem_object *obj)
 	kfree(msm_obj);
 }
 
+<<<<<<< HEAD
 static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct *vma)
 {
 	struct msm_gem_object *msm_obj = to_msm_bo(obj);
@@ -1062,6 +1146,8 @@ static int msm_gem_object_mmap(struct drm_gem_object *obj, struct vm_area_struct
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* convenience method to construct a GEM buffer object, and userspace handle */
 int msm_gem_new_handle(struct drm_device *dev, struct drm_file *file,
 		uint32_t size, uint32_t flags, uint32_t *handle,
@@ -1099,7 +1185,10 @@ static const struct drm_gem_object_funcs msm_gem_object_funcs = {
 	.get_sg_table = msm_gem_prime_get_sg_table,
 	.vmap = msm_gem_prime_vmap,
 	.vunmap = msm_gem_prime_vunmap,
+<<<<<<< HEAD
 	.mmap = msm_gem_object_mmap,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.vm_ops = &vm_ops,
 };
 
@@ -1118,7 +1207,11 @@ static int msm_gem_new_impl(struct drm_device *dev,
 	case MSM_BO_CACHED_COHERENT:
 		if (priv->has_cached_coherent)
 			break;
+<<<<<<< HEAD
 		fallthrough;
+=======
+		/* fallthrough */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		DRM_DEV_ERROR(dev->dev, "invalid cache flag: %x\n",
 				(flags & MSM_BO_CACHE_MASK));
@@ -1132,6 +1225,10 @@ static int msm_gem_new_impl(struct drm_device *dev,
 	msm_obj->flags = flags;
 	msm_obj->madv = MSM_MADV_WILLNEED;
 
+<<<<<<< HEAD
+=======
+	INIT_LIST_HEAD(&msm_obj->submit_entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	INIT_LIST_HEAD(&msm_obj->vmas);
 
 	*obj = &msm_obj->base;
@@ -1140,7 +1237,12 @@ static int msm_gem_new_impl(struct drm_device *dev,
 	return 0;
 }
 
+<<<<<<< HEAD
 struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32_t flags)
+=======
+static struct drm_gem_object *_msm_gem_new(struct drm_device *dev,
+		uint32_t size, uint32_t flags, bool struct_mutex_locked)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct msm_drm_private *priv = dev->dev_private;
 	struct msm_gem_object *msm_obj;
@@ -1227,10 +1329,33 @@ struct drm_gem_object *msm_gem_new(struct drm_device *dev, uint32_t size, uint32
 	return obj;
 
 fail:
+<<<<<<< HEAD
 	drm_gem_object_put(obj);
 	return ERR_PTR(ret);
 }
 
+=======
+	if (struct_mutex_locked) {
+		drm_gem_object_put_locked(obj);
+	} else {
+		drm_gem_object_put(obj);
+	}
+	return ERR_PTR(ret);
+}
+
+struct drm_gem_object *msm_gem_new_locked(struct drm_device *dev,
+		uint32_t size, uint32_t flags)
+{
+	return _msm_gem_new(dev, size, flags, true);
+}
+
+struct drm_gem_object *msm_gem_new(struct drm_device *dev,
+		uint32_t size, uint32_t flags)
+{
+	return _msm_gem_new(dev, size, flags, false);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct drm_gem_object *msm_gem_import(struct drm_device *dev,
 		struct dma_buf *dmabuf, struct sg_table *sgt)
 {
@@ -1289,12 +1414,21 @@ fail:
 	return ERR_PTR(ret);
 }
 
+<<<<<<< HEAD
 void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size,
 		uint32_t flags, struct msm_gem_address_space *aspace,
 		struct drm_gem_object **bo, uint64_t *iova)
 {
 	void *vaddr;
 	struct drm_gem_object *obj = msm_gem_new(dev, size, flags);
+=======
+static void *_msm_gem_kernel_new(struct drm_device *dev, uint32_t size,
+		uint32_t flags, struct msm_gem_address_space *aspace,
+		struct drm_gem_object **bo, uint64_t *iova, bool locked)
+{
+	void *vaddr;
+	struct drm_gem_object *obj = _msm_gem_new(dev, size, flags, locked);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	if (IS_ERR(obj))
@@ -1318,21 +1452,55 @@ void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size,
 
 	return vaddr;
 err:
+<<<<<<< HEAD
 	drm_gem_object_put(obj);
+=======
+	if (locked)
+		drm_gem_object_put_locked(obj);
+	else
+		drm_gem_object_put(obj);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ERR_PTR(ret);
 
 }
 
+<<<<<<< HEAD
 void msm_gem_kernel_put(struct drm_gem_object *bo,
 		struct msm_gem_address_space *aspace)
+=======
+void *msm_gem_kernel_new(struct drm_device *dev, uint32_t size,
+		uint32_t flags, struct msm_gem_address_space *aspace,
+		struct drm_gem_object **bo, uint64_t *iova)
+{
+	return _msm_gem_kernel_new(dev, size, flags, aspace, bo, iova, false);
+}
+
+void *msm_gem_kernel_new_locked(struct drm_device *dev, uint32_t size,
+		uint32_t flags, struct msm_gem_address_space *aspace,
+		struct drm_gem_object **bo, uint64_t *iova)
+{
+	return _msm_gem_kernel_new(dev, size, flags, aspace, bo, iova, true);
+}
+
+void msm_gem_kernel_put(struct drm_gem_object *bo,
+		struct msm_gem_address_space *aspace, bool locked)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (IS_ERR_OR_NULL(bo))
 		return;
 
 	msm_gem_put_vaddr(bo);
 	msm_gem_unpin_iova(bo, aspace);
+<<<<<<< HEAD
 	drm_gem_object_put(bo);
+=======
+
+	if (locked)
+		drm_gem_object_put_locked(bo);
+	else
+		drm_gem_object_put(bo);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void msm_gem_object_set_name(struct drm_gem_object *bo, const char *fmt, ...)

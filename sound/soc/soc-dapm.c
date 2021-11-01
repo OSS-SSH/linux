@@ -650,11 +650,20 @@ static struct snd_soc_dapm_widget *
 dapm_wcache_lookup(struct snd_soc_dapm_wcache *wcache, const char *name)
 {
 	struct snd_soc_dapm_widget *w = wcache->widget;
+<<<<<<< HEAD
 
 	if (w) {
 		struct list_head *wlist = &w->dapm->card->widgets;
 		const int depth = 2;
 		int i = 0;
+=======
+	struct list_head *wlist;
+	const int depth = 2;
+	int i = 0;
+
+	if (w) {
+		wlist = &w->dapm->card->widgets;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		list_for_each_entry_from(w, wlist, list) {
 			if (!strcmp(name, w->name))
@@ -747,11 +756,18 @@ static int dapm_connect_mux(struct snd_soc_dapm_context *dapm,
 {
 	const struct snd_kcontrol_new *kcontrol = &w->kcontrol_news[0];
 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+<<<<<<< HEAD
 	unsigned int item;
 	int i;
 
 	if (e->reg != SND_SOC_NOPM) {
 		unsigned int val;
+=======
+	unsigned int val, item;
+	int i;
+
+	if (e->reg != SND_SOC_NOPM) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		val = soc_dapm_read(dapm, e->reg);
 		val = (val >> e->shift_l) & e->mask;
 		item = snd_soc_enum_val_to_item(e, val);
@@ -782,6 +798,7 @@ static void dapm_set_mixer_path_status(struct snd_soc_dapm_path *p, int i,
 	struct soc_mixer_control *mc = (struct soc_mixer_control *)
 		p->sink->kcontrol_news[i].private_value;
 	unsigned int reg = mc->reg;
+<<<<<<< HEAD
 	unsigned int invert = mc->invert;
 
 	if (reg != SND_SOC_NOPM) {
@@ -790,6 +807,16 @@ static void dapm_set_mixer_path_status(struct snd_soc_dapm_path *p, int i,
 		unsigned int mask = (1 << fls(max)) - 1;
 		unsigned int val = soc_dapm_read(p->sink->dapm, reg);
 
+=======
+	unsigned int shift = mc->shift;
+	unsigned int max = mc->max;
+	unsigned int mask = (1 << fls(max)) - 1;
+	unsigned int invert = mc->invert;
+	unsigned int val;
+
+	if (reg != SND_SOC_NOPM) {
+		val = soc_dapm_read(p->sink->dapm, reg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/*
 		 * The nth_path argument allows this function to know
 		 * which path of a kcontrol it is setting the initial
@@ -1060,10 +1087,17 @@ static int dapm_new_mux(struct snd_soc_dapm_widget *w)
 /* create new dapm volume control */
 static int dapm_new_pga(struct snd_soc_dapm_widget *w)
 {
+<<<<<<< HEAD
 	int i;
 
 	for (i = 0; i < w->num_kcontrols; i++) {
 		int ret = dapm_create_or_share_kcontrol(w, i);
+=======
+	int i, ret;
+
+	for (i = 0; i < w->num_kcontrols; i++) {
+		ret = dapm_create_or_share_kcontrol(w, i);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret < 0)
 			return ret;
 	}
@@ -1074,7 +1108,14 @@ static int dapm_new_pga(struct snd_soc_dapm_widget *w)
 /* create new dapm dai link control */
 static int dapm_new_dai_link(struct snd_soc_dapm_widget *w)
 {
+<<<<<<< HEAD
 	int i;
+=======
+	int i, ret;
+	struct snd_kcontrol *kcontrol;
+	struct snd_soc_dapm_context *dapm = w->dapm;
+	struct snd_card *card = dapm->card->snd_card;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct snd_soc_pcm_runtime *rtd = w->priv;
 
 	/* create control for links with > 1 config */
@@ -1083,12 +1124,18 @@ static int dapm_new_dai_link(struct snd_soc_dapm_widget *w)
 
 	/* add kcontrol */
 	for (i = 0; i < w->num_kcontrols; i++) {
+<<<<<<< HEAD
 		struct snd_soc_dapm_context *dapm = w->dapm;
 		struct snd_card *card = dapm->card->snd_card;
 		struct snd_kcontrol *kcontrol = snd_soc_cnew(&w->kcontrol_news[i],
 							     w, w->name, NULL);
 		int ret = snd_ctl_add(card, kcontrol);
 
+=======
+		kcontrol = snd_soc_cnew(&w->kcontrol_news[i], w,
+					w->name, NULL);
+		ret = snd_ctl_add(card, kcontrol);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret < 0) {
 			dev_err(dapm->dev,
 				"ASoC: failed to add widget %s dapm kcontrol %s: %d\n",
@@ -1528,7 +1575,11 @@ static void dapm_seq_check_event(struct snd_soc_card *card,
 				 struct snd_soc_dapm_widget *w, int event)
 {
 	const char *ev_name;
+<<<<<<< HEAD
 	int power;
+=======
+	int power, ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (event) {
 	case SND_SOC_DAPM_PRE_PMU:
@@ -1564,8 +1615,11 @@ static void dapm_seq_check_event(struct snd_soc_card *card,
 		return;
 
 	if (w->event && (w->event_flags & event)) {
+<<<<<<< HEAD
 		int ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pop_dbg(w->dapm->dev, card->pop_time, "pop test : %s %s\n",
 			w->name, ev_name);
 		soc_dapm_async_complete(w->dapm);
@@ -1647,7 +1701,11 @@ static void dapm_seq_run(struct snd_soc_card *card,
 	int cur_subseq = -1;
 	int cur_reg = SND_SOC_NOPM;
 	struct snd_soc_dapm_context *cur_dapm = NULL;
+<<<<<<< HEAD
 	int i;
+=======
+	int ret, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int *sort;
 
 	if (power_up)
@@ -1656,7 +1714,11 @@ static void dapm_seq_run(struct snd_soc_card *card,
 		sort = dapm_down_seq;
 
 	list_for_each_entry_safe(w, n, list, power_list) {
+<<<<<<< HEAD
 		int ret = 0;
+=======
+		ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* Do we need to apply any queued changes? */
 		if (sort[w->id] != cur_sort || w->reg != cur_reg ||
@@ -3006,6 +3068,10 @@ err:
 static int snd_soc_dapm_del_route(struct snd_soc_dapm_context *dapm,
 				  const struct snd_soc_dapm_route *route)
 {
+<<<<<<< HEAD
+=======
+	struct snd_soc_dapm_widget *wsource, *wsink;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct snd_soc_dapm_path *path, *p;
 	const char *sink;
 	const char *source;
@@ -3043,8 +3109,13 @@ static int snd_soc_dapm_del_route(struct snd_soc_dapm_context *dapm,
 	}
 
 	if (path) {
+<<<<<<< HEAD
 		struct snd_soc_dapm_widget *wsource = path->source;
 		struct snd_soc_dapm_widget *wsink = path->sink;
+=======
+		wsource = path->source;
+		wsink = path->sink;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		dapm_mark_dirty(wsource, "Route removed");
 		dapm_mark_dirty(wsink, "Route removed");
@@ -3080,11 +3151,19 @@ static int snd_soc_dapm_del_route(struct snd_soc_dapm_context *dapm,
 int snd_soc_dapm_add_routes(struct snd_soc_dapm_context *dapm,
 			    const struct snd_soc_dapm_route *route, int num)
 {
+<<<<<<< HEAD
 	int i, ret = 0;
 
 	mutex_lock_nested(&dapm->card->dapm_mutex, SND_SOC_DAPM_CLASS_RUNTIME);
 	for (i = 0; i < num; i++) {
 		int r = snd_soc_dapm_add_route(dapm, route);
+=======
+	int i, r, ret = 0;
+
+	mutex_lock_nested(&dapm->card->dapm_mutex, SND_SOC_DAPM_CLASS_RUNTIME);
+	for (i = 0; i < num; i++) {
+		r = snd_soc_dapm_add_route(dapm, route);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (r < 0) {
 			dev_err(dapm->dev, "ASoC: Failed to add route %s -> %s -> %s\n",
 				route->source,
@@ -3188,12 +3267,20 @@ static int snd_soc_dapm_weak_route(struct snd_soc_dapm_context *dapm,
 int snd_soc_dapm_weak_routes(struct snd_soc_dapm_context *dapm,
 			     const struct snd_soc_dapm_route *route, int num)
 {
+<<<<<<< HEAD
 	int i;
+=======
+	int i, err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret = 0;
 
 	mutex_lock_nested(&dapm->card->dapm_mutex, SND_SOC_DAPM_CLASS_INIT);
 	for (i = 0; i < num; i++) {
+<<<<<<< HEAD
 		int err = snd_soc_dapm_weak_route(dapm, route);
+=======
+		err = snd_soc_dapm_weak_route(dapm, route);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			ret = err;
 		route++;
@@ -3784,12 +3871,20 @@ int snd_soc_dapm_new_controls(struct snd_soc_dapm_context *dapm,
 	const struct snd_soc_dapm_widget *widget,
 	int num)
 {
+<<<<<<< HEAD
+=======
+	struct snd_soc_dapm_widget *w;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i;
 	int ret = 0;
 
 	mutex_lock_nested(&dapm->card->dapm_mutex, SND_SOC_DAPM_CLASS_INIT);
 	for (i = 0; i < num; i++) {
+<<<<<<< HEAD
 		struct snd_soc_dapm_widget *w = snd_soc_dapm_new_control_unlocked(dapm, widget);
+=======
+		w = snd_soc_dapm_new_control_unlocked(dapm, widget);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (IS_ERR(w)) {
 			ret = PTR_ERR(w);
 			break;
@@ -4365,12 +4460,19 @@ static void soc_dapm_dai_stream_event(struct snd_soc_dai *dai, int stream,
 	int event)
 {
 	struct snd_soc_dapm_widget *w;
+<<<<<<< HEAD
+=======
+	unsigned int ep;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	w = snd_soc_dai_get_widget(dai, stream);
 
 	if (w) {
+<<<<<<< HEAD
 		unsigned int ep;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dapm_mark_dirty(w, "stream event");
 
 		if (w->id == snd_soc_dapm_dai_in) {

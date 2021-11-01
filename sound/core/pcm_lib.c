@@ -1746,7 +1746,11 @@ static int snd_pcm_lib_ioctl_fifo_size(struct snd_pcm_substream *substream,
 		channels = params_channels(params);
 		frame_size = snd_pcm_format_size(format, channels);
 		if (frame_size > 0)
+<<<<<<< HEAD
 			params->fifo_size /= frame_size;
+=======
+			params->fifo_size /= (unsigned)frame_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return 0;
 }

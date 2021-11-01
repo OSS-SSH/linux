@@ -110,7 +110,10 @@ struct virtio_device {
 	bool config_enabled;
 	bool config_change_pending;
 	spinlock_t config_lock;
+<<<<<<< HEAD
 	spinlock_t vqs_list_lock; /* Protects VQs list access */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct device dev;
 	struct virtio_device_id id;
 	const struct virtio_config_ops *config;

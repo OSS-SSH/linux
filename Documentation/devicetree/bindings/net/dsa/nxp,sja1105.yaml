@@ -67,8 +67,13 @@ properties:
           reg:
             oneOf:
               - enum:
+<<<<<<< HEAD
                   - 0
                   - 1
+=======
+                - 0
+                - 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
         required:
           - compatible

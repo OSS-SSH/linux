@@ -131,6 +131,10 @@ static int omap_cpu_init(struct cpufreq_policy *policy)
 
 	/* FIXME: what's the actual transition time? */
 	cpufreq_generic_init(policy, freq_table, 300 * 1000);
+<<<<<<< HEAD
+=======
+	dev_pm_opp_of_register_em(mpu_dev, policy->cpus);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -149,7 +153,10 @@ static struct cpufreq_driver omap_driver = {
 	.get		= cpufreq_generic_get,
 	.init		= omap_cpu_init,
 	.exit		= omap_cpu_exit,
+<<<<<<< HEAD
 	.register_em	= cpufreq_register_em_with_opp,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.name		= "omap",
 	.attr		= cpufreq_generic_attr,
 };

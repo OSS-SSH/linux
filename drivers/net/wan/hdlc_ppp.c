@@ -100,7 +100,11 @@ static const char *const event_names[EVENTS] = {
 
 static struct sk_buff_head tx_queue; /* used when holding the spin lock */
 
+<<<<<<< HEAD
 static int ppp_ioctl(struct net_device *dev, struct if_settings *ifs);
+=======
+static int ppp_ioctl(struct net_device *dev, struct ifreq *ifr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static inline struct ppp *get_ppp(struct net_device *dev)
 {
@@ -655,17 +659,29 @@ static const struct header_ops ppp_header_ops = {
 	.create = ppp_hard_header,
 };
 
+<<<<<<< HEAD
 static int ppp_ioctl(struct net_device *dev, struct if_settings *ifs)
+=======
+static int ppp_ioctl(struct net_device *dev, struct ifreq *ifr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	hdlc_device *hdlc = dev_to_hdlc(dev);
 	struct ppp *ppp;
 	int result;
 
+<<<<<<< HEAD
 	switch (ifs->type) {
 	case IF_GET_PROTO:
 		if (dev_to_hdlc(dev)->proto != &proto)
 			return -EINVAL;
 		ifs->type = IF_PROTO_PPP;
+=======
+	switch (ifr->ifr_settings.type) {
+	case IF_GET_PROTO:
+		if (dev_to_hdlc(dev)->proto != &proto)
+			return -EINVAL;
+		ifr->ifr_settings.type = IF_PROTO_PPP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0; /* return protocol only, no settable parameters */
 
 	case IF_PROTO_PPP:
@@ -705,20 +721,33 @@ static int ppp_ioctl(struct net_device *dev, struct if_settings *ifs)
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int __init hdlc_ppp_init(void)
+=======
+static int __init mod_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	skb_queue_head_init(&tx_queue);
 	register_hdlc_protocol(&proto);
 	return 0;
 }
 
+<<<<<<< HEAD
 static void __exit hdlc_ppp_exit(void)
+=======
+static void __exit mod_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unregister_hdlc_protocol(&proto);
 }
 
+<<<<<<< HEAD
 module_init(hdlc_ppp_init);
 module_exit(hdlc_ppp_exit);
+=======
+module_init(mod_init);
+module_exit(mod_exit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_AUTHOR("Krzysztof Halasa <khc@pm.waw.pl>");
 MODULE_DESCRIPTION("PPP protocol support for generic HDLC");

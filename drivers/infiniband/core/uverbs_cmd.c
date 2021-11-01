@@ -1435,13 +1435,44 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
 		attr.source_qpn = cmd->source_qpn;
 	}
 
+<<<<<<< HEAD
 	qp = ib_create_qp_user(device, pd, &attr, &attrs->driver_udata, obj,
 			       KBUILD_MODNAME);
+=======
+	if (cmd->qp_type == IB_QPT_XRC_TGT)
+		qp = ib_create_qp(pd, &attr);
+	else
+		qp = _ib_create_qp(device, pd, &attr, &attrs->driver_udata, obj,
+				   NULL);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(qp)) {
 		ret = PTR_ERR(qp);
 		goto err_put;
 	}
+<<<<<<< HEAD
 	ib_qp_usecnt_inc(qp);
+=======
+
+	if (cmd->qp_type != IB_QPT_XRC_TGT) {
+		ret = ib_create_qp_security(qp, device);
+		if (ret)
+			goto err_cb;
+
+		atomic_inc(&pd->usecnt);
+		if (attr.send_cq)
+			atomic_inc(&attr.send_cq->usecnt);
+		if (attr.recv_cq)
+			atomic_inc(&attr.recv_cq->usecnt);
+		if (attr.srq)
+			atomic_inc(&attr.srq->usecnt);
+		if (ind_tbl)
+			atomic_inc(&ind_tbl->usecnt);
+	} else {
+		/* It is done in _ib_create_qp for other QP types */
+		qp->uobject = obj;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	obj->uevent.uobject.object = qp;
 	obj->uevent.event_file = READ_ONCE(attrs->ufile->default_async_file);
@@ -1480,6 +1511,12 @@ static int create_qp(struct uverbs_attr_bundle *attrs,
 	resp.response_length = uverbs_response_length(attrs, sizeof(resp));
 	return uverbs_response(attrs, &resp, sizeof(resp));
 
+<<<<<<< HEAD
+=======
+err_cb:
+	ib_destroy_qp_user(qp, uverbs_get_cleared_udata(attrs));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_put:
 	if (!IS_ERR(xrcd_uobj))
 		uobj_put_read(xrcd_uobj);

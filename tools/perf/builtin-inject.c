@@ -46,7 +46,10 @@ struct perf_inject {
 	bool			jit_mode;
 	bool			in_place_update;
 	bool			in_place_update_dry_run;
+<<<<<<< HEAD
 	bool			is_pipe;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const char		*input_name;
 	struct perf_data	output;
 	u64			bytes_written;
@@ -127,7 +130,11 @@ static int perf_event__repipe_attr(struct perf_tool *tool,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (!inject->is_pipe)
+=======
+	if (!inject->output.is_pipe)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	return perf_event__repipe_synth(tool, event);
@@ -362,10 +369,16 @@ static struct dso *findnew_dso(int pid, int tid, const char *filename,
 		dso = machine__findnew_dso_id(machine, filename, id);
 	}
 
+<<<<<<< HEAD
 	if (dso) {
 		nsinfo__put(dso->nsinfo);
 		dso->nsinfo = nsi;
 	} else
+=======
+	if (dso)
+		dso->nsinfo = nsi;
+	else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		nsinfo__put(nsi);
 
 	thread__put(thread);
@@ -827,14 +840,22 @@ static int __cmd_inject(struct perf_inject *inject)
 	if (!inject->itrace_synth_opts.set)
 		auxtrace_index__free(&session->auxtrace_index);
 
+<<<<<<< HEAD
 	if (!inject->is_pipe && !inject->in_place_update)
+=======
+	if (!data_out->is_pipe && !inject->in_place_update)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		lseek(fd, output_data_offset, SEEK_SET);
 
 	ret = perf_session__process_events(session);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (!inject->is_pipe && !inject->in_place_update) {
+=======
+	if (!data_out->is_pipe && !inject->in_place_update) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (inject->build_ids)
 			perf_header__set_feat(&session->header,
 					      HEADER_BUILD_ID);
@@ -919,7 +940,10 @@ int cmd_inject(int argc, const char **argv)
 		.use_stdio = true,
 	};
 	int ret;
+<<<<<<< HEAD
 	bool repipe = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct option options[] = {
 		OPT_BOOLEAN('b', "build-ids", &inject.build_ids,
@@ -994,6 +1018,7 @@ int cmd_inject(int argc, const char **argv)
 	}
 
 	data.path = inject.input_name;
+<<<<<<< HEAD
 	if (!strcmp(inject.input_name, "-") || inject.output.is_pipe) {
 		inject.is_pipe = true;
 		/*
@@ -1012,10 +1037,16 @@ int cmd_inject(int argc, const char **argv)
 		ret = PTR_ERR(inject.session);
 		goto out_close_output;
 	}
+=======
+	inject.session = perf_session__new(&data, inject.output.is_pipe, &inject.tool);
+	if (IS_ERR(inject.session))
+		return PTR_ERR(inject.session);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (zstd_init(&(inject.session->zstd_data), 0) < 0)
 		pr_warning("Decompression initialization failed.\n");
 
+<<<<<<< HEAD
 	if (!data.is_pipe && inject.output.is_pipe) {
 		ret = perf_header__write_pipe(perf_data__fd(&inject.output));
 		if (ret < 0) {
@@ -1031,6 +1062,8 @@ int cmd_inject(int argc, const char **argv)
 			goto out_delete;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (inject.build_ids && !inject.build_id_all) {
 		/*
 		 * to make sure the mmap records are ordered correctly
@@ -1068,8 +1101,11 @@ int cmd_inject(int argc, const char **argv)
 out_delete:
 	zstd_fini(&(inject.session->zstd_data));
 	perf_session__delete(inject.session);
+<<<<<<< HEAD
 out_close_output:
 	perf_data__close(&inject.output);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	free(inject.itrace_synth_opts.vm_tm_corr_args);
 	return ret;
 }

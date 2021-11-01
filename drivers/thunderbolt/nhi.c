@@ -35,8 +35,11 @@
 
 #define NHI_MAILBOX_TIMEOUT	500 /* ms */
 
+<<<<<<< HEAD
 #define QUIRK_AUTO_CLEAR_INT	BIT(0)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int ring_interrupt_index(struct tb_ring *ring)
 {
 	int bit = ring->hop;
@@ -68,6 +71,7 @@ static void ring_interrupt_active(struct tb_ring *ring, bool active)
 		else
 			index = ring->hop + ring->nhi->hop_count;
 
+<<<<<<< HEAD
 		if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT) {
 			/*
 			 * Ask the hardware to clear interrupt status
@@ -79,6 +83,16 @@ static void ring_interrupt_active(struct tb_ring *ring, bool active)
 				misc |= REG_DMA_MISC_INT_AUTO_CLEAR;
 				iowrite32(misc, ring->nhi->iobase + REG_DMA_MISC);
 			}
+=======
+		/*
+		 * Ask the hardware to clear interrupt status bits automatically
+		 * since we already know which interrupt was triggered.
+		 */
+		misc = ioread32(ring->nhi->iobase + REG_DMA_MISC);
+		if (!(misc & REG_DMA_MISC_INT_AUTO_CLEAR)) {
+			misc |= REG_DMA_MISC_INT_AUTO_CLEAR;
+			iowrite32(misc, ring->nhi->iobase + REG_DMA_MISC);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		ivr_base = ring->nhi->iobase + REG_INT_VEC_ALLOC_BASE;
@@ -382,6 +396,7 @@ void tb_ring_poll_complete(struct tb_ring *ring)
 }
 EXPORT_SYMBOL_GPL(tb_ring_poll_complete);
 
+<<<<<<< HEAD
 static void ring_clear_msix(const struct tb_ring *ring)
 {
 	if (ring->nhi->quirks & QUIRK_AUTO_CLEAR_INT)
@@ -394,12 +409,17 @@ static void ring_clear_msix(const struct tb_ring *ring)
 			 4 * (ring->nhi->hop_count / 32));
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static irqreturn_t ring_msix(int irq, void *data)
 {
 	struct tb_ring *ring = data;
 
 	spin_lock(&ring->nhi->lock);
+<<<<<<< HEAD
 	ring_clear_msix(ring);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock(&ring->lock);
 	__ring_interrupt(ring);
 	spin_unlock(&ring->lock);
@@ -1092,6 +1112,7 @@ static void nhi_shutdown(struct tb_nhi *nhi)
 		nhi->ops->shutdown(nhi);
 }
 
+<<<<<<< HEAD
 static void nhi_check_quirks(struct tb_nhi *nhi)
 {
 	/*
@@ -1102,6 +1123,8 @@ static void nhi_check_quirks(struct tb_nhi *nhi)
 		nhi->quirks |= QUIRK_AUTO_CLEAR_INT;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int nhi_init_msi(struct tb_nhi *nhi)
 {
 	struct pci_dev *pdev = nhi->pdev;
@@ -1218,8 +1241,11 @@ static int nhi_probe(struct pci_dev *pdev, const struct pci_device_id *id)
 	if (!nhi->tx_rings || !nhi->rx_rings)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	nhi_check_quirks(nhi);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	res = nhi_init_msi(nhi);
 	if (res) {
 		dev_err(&pdev->dev, "cannot enable MSI, aborting\n");

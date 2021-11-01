@@ -2933,7 +2933,11 @@ static const struct net_device_ops mtk_netdev_ops = {
 	.ndo_start_xmit		= mtk_start_xmit,
 	.ndo_set_mac_address	= mtk_set_mac_address,
 	.ndo_validate_addr	= eth_validate_addr,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= mtk_do_ioctl,
+=======
+	.ndo_do_ioctl		= mtk_do_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_change_mtu		= mtk_change_mtu,
 	.ndo_tx_timeout		= mtk_tx_timeout,
 	.ndo_get_stats64        = mtk_get_stats64,

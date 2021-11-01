@@ -34,7 +34,10 @@
 #include "en.h"
 #include "en_accel/tls.h"
 #include "en_accel/en_accel.h"
+<<<<<<< HEAD
 #include "en/ptp.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static unsigned int stats_grps_num(struct mlx5e_priv *priv)
 {
@@ -451,7 +454,11 @@ static MLX5E_DECLARE_STATS_GRP_OP_UPDATE_STATS(sw)
 
 	memset(s, 0, sizeof(*s));
 
+<<<<<<< HEAD
 	for (i = 0; i < priv->stats_nch; i++) {
+=======
+	for (i = 0; i < priv->max_nch; i++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct mlx5e_channel_stats *channel_stats =
 			&priv->channel_stats[i];
 		int j;
@@ -2077,7 +2084,11 @@ static MLX5E_DECLARE_STATS_GRP_OP_FILL_STRS(ptp)
 	if (priv->rx_ptp_opened) {
 		for (i = 0; i < NUM_PTP_RQ_STATS; i++)
 			sprintf(data + (idx++) * ETH_GSTRING_LEN,
+<<<<<<< HEAD
 				ptp_rq_stats_desc[i].format, MLX5E_PTP_CHANNEL_IX);
+=======
+				ptp_rq_stats_desc[i].format);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return idx;
 }
@@ -2120,7 +2131,11 @@ static MLX5E_DECLARE_STATS_GRP_OP_UPDATE_STATS(ptp) { return; }
 
 static MLX5E_DECLARE_STATS_GRP_OP_NUM_STATS(channels)
 {
+<<<<<<< HEAD
 	int max_nch = priv->stats_nch;
+=======
+	int max_nch = priv->max_nch;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return (NUM_RQ_STATS * max_nch) +
 	       (NUM_CH_STATS * max_nch) +
@@ -2134,7 +2149,11 @@ static MLX5E_DECLARE_STATS_GRP_OP_NUM_STATS(channels)
 static MLX5E_DECLARE_STATS_GRP_OP_FILL_STRS(channels)
 {
 	bool is_xsk = priv->xsk.ever_used;
+<<<<<<< HEAD
 	int max_nch = priv->stats_nch;
+=======
+	int max_nch = priv->max_nch;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i, j, tc;
 
 	for (i = 0; i < max_nch; i++)
@@ -2176,7 +2195,11 @@ static MLX5E_DECLARE_STATS_GRP_OP_FILL_STRS(channels)
 static MLX5E_DECLARE_STATS_GRP_OP_FILL_STATS(channels)
 {
 	bool is_xsk = priv->xsk.ever_used;
+<<<<<<< HEAD
 	int max_nch = priv->stats_nch;
+=======
+	int max_nch = priv->max_nch;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i, j, tc;
 
 	for (i = 0; i < max_nch; i++)

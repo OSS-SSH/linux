@@ -39,5 +39,9 @@ examples:
       regulator-min-microvolt = <1500000>;
       regulator-max-microvolt = <3000000>;
       regulator-always-on;
+<<<<<<< HEAD
+=======
+      status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     };
 ...

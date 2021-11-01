@@ -1,2 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-only
+<<<<<<< HEAD
 obj-y	+= mm/ kernel/ math-emu/
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

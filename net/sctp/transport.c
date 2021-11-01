@@ -258,6 +258,7 @@ void sctp_transport_pmtu(struct sctp_transport *transport, struct sock *sk)
 	sctp_transport_pl_update(transport);
 }
 
+<<<<<<< HEAD
 bool sctp_transport_pl_send(struct sctp_transport *t)
 {
 	if (t->pl.probe_count < SCTP_MAX_PROBES)
@@ -265,6 +266,18 @@ bool sctp_transport_pl_send(struct sctp_transport *t)
 
 	t->pl.last_rtx_chunks = t->asoc->rtx_data_chunks;
 	t->pl.probe_count = 0;
+=======
+void sctp_transport_pl_send(struct sctp_transport *t)
+{
+	pr_debug("%s: PLPMTUD: transport: %p, state: %d, pmtu: %d, size: %d, high: %d\n",
+		 __func__, t, t->pl.state, t->pl.pmtu, t->pl.probe_size, t->pl.probe_high);
+
+	if (t->pl.probe_count < SCTP_MAX_PROBES) {
+		t->pl.probe_count++;
+		return;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (t->pl.state == SCTP_PL_BASE) {
 		if (t->pl.probe_size == SCTP_BASE_PLPMTU) { /* BASE_PLPMTU Confirmation Failed */
 			t->pl.state = SCTP_PL_ERROR; /* Base -> Error */
@@ -296,6 +309,7 @@ bool sctp_transport_pl_send(struct sctp_transport *t)
 			sctp_assoc_sync_pmtu(t->asoc);
 		}
 	}
+<<<<<<< HEAD
 
 out:
 	if (t->pl.state == SCTP_PL_COMPLETE && t->pl.raise_count < 30 &&
@@ -312,11 +326,20 @@ out:
 }
 
 bool sctp_transport_pl_recv(struct sctp_transport *t)
+=======
+	t->pl.probe_count = 1;
+}
+
+void sctp_transport_pl_recv(struct sctp_transport *t)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	pr_debug("%s: PLPMTUD: transport: %p, state: %d, pmtu: %d, size: %d, high: %d\n",
 		 __func__, t, t->pl.state, t->pl.pmtu, t->pl.probe_size, t->pl.probe_high);
 
+<<<<<<< HEAD
 	t->pl.last_rtx_chunks = t->asoc->rtx_data_chunks;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	t->pl.pmtu = t->pl.probe_size;
 	t->pl.probe_count = 0;
 	if (t->pl.state == SCTP_PL_BASE) {
@@ -333,7 +356,11 @@ bool sctp_transport_pl_recv(struct sctp_transport *t)
 		if (!t->pl.probe_high) {
 			t->pl.probe_size = min(t->pl.probe_size + SCTP_PL_BIG_STEP,
 					       SCTP_MAX_PLPMTU);
+<<<<<<< HEAD
 			return false;
+=======
+			return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		t->pl.probe_size += SCTP_PL_MIN_STEP;
 		if (t->pl.probe_size >= t->pl.probe_high) {
@@ -345,13 +372,20 @@ bool sctp_transport_pl_recv(struct sctp_transport *t)
 			t->pathmtu = t->pl.pmtu + sctp_transport_pl_hlen(t);
 			sctp_assoc_sync_pmtu(t->asoc);
 		}
+<<<<<<< HEAD
 	} else if (t->pl.state == SCTP_PL_COMPLETE && t->pl.raise_count == 30) {
+=======
+	} else if (t->pl.state == SCTP_PL_COMPLETE && ++t->pl.raise_count == 30) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Raise probe_size again after 30 * interval in Search Complete */
 		t->pl.state = SCTP_PL_SEARCH; /* Search Complete -> Search */
 		t->pl.probe_size += SCTP_PL_MIN_STEP;
 	}
+<<<<<<< HEAD
 
 	return t->pl.state == SCTP_PL_COMPLETE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static bool sctp_transport_pl_toobig(struct sctp_transport *t, u32 pmtu)

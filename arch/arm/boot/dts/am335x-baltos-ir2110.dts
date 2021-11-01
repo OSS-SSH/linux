@@ -58,12 +58,17 @@
 	dr_mode = "host";
 };
 
+<<<<<<< HEAD
 &davinci_mdio_sw {
+=======
+&davinci_mdio {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy0: ethernet-phy@0 {
 		reg = <1>;
 	};
 };
 
+<<<<<<< HEAD
 &cpsw_port1 {
 	phy-mode = "rmii";
 	ti,dual-emac-pvid = <1>;
@@ -73,6 +78,17 @@
 &cpsw_port2 {
 	phy-mode = "rgmii-id";
 	ti,dual-emac-pvid = <2>;
+=======
+&cpsw_emac0 {
+	phy-mode = "rmii";
+	dual_emac_res_vlan = <1>;
+	phy-handle = <&phy0>;
+};
+
+&cpsw_emac1 {
+	phy-mode = "rgmii-id";
+	dual_emac_res_vlan = <2>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy-handle = <&phy1>;
 };
 

@@ -12,7 +12,10 @@
 #include <linux/kernel.h>
 #include <linux/mod_devicetable.h>
 #include <linux/of_device.h>
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/serdev.h>
 #include <linux/skbuff.h>
 
@@ -22,8 +25,11 @@
 #include "btrtl.h"
 #include "hci_uart.h"
 
+<<<<<<< HEAD
 #define SUSPEND_TIMEOUT_MS	6000
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define HCI_3WIRE_ACK_PKT	0
 #define HCI_3WIRE_LINK_PKT	15
 
@@ -54,10 +60,15 @@
 
 /* H5 state flags */
 enum {
+<<<<<<< HEAD
 	H5_RX_ESC,		/* SLIP escape mode */
 	H5_TX_ACK_REQ,		/* Pending ack to send */
 	H5_WAKEUP_DISABLE,	/* Device cannot wake host */
 	H5_HW_FLOW_CONTROL,	/* Use HW flow control */
+=======
+	H5_RX_ESC,	/* SLIP escape mode */
+	H5_TX_ACK_REQ,	/* Pending ack to send */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct h5 {
@@ -102,10 +113,13 @@ struct h5 {
 	struct gpio_desc *device_wake_gpio;
 };
 
+<<<<<<< HEAD
 enum h5_driver_info {
 	H5_INFO_WAKEUP_DISABLE = BIT(0),
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct h5_vnd {
 	int (*setup)(struct h5 *h5);
 	void (*open)(struct h5 *h5);
@@ -115,11 +129,14 @@ struct h5_vnd {
 	const struct acpi_gpio_mapping *acpi_gpio_map;
 };
 
+<<<<<<< HEAD
 struct h5_device_data {
 	uint32_t driver_info;
 	struct h5_vnd *vnd;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void h5_reset_rx(struct h5 *h5);
 
 static void h5_link_control(struct hci_uart *hu, const void *data, size_t len)
@@ -587,10 +604,13 @@ static int h5_recv(struct hci_uart *hu, const void *data, int count)
 		count -= processed;
 	}
 
+<<<<<<< HEAD
 	pm_runtime_get(&hu->serdev->dev);
 	pm_runtime_mark_last_busy(&hu->serdev->dev);
 	pm_runtime_put_autosuspend(&hu->serdev->dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -627,10 +647,13 @@ static int h5_enqueue(struct hci_uart *hu, struct sk_buff *skb)
 		break;
 	}
 
+<<<<<<< HEAD
 	pm_runtime_get_sync(&hu->serdev->dev);
 	pm_runtime_mark_last_busy(&hu->serdev->dev);
 	pm_runtime_put_autosuspend(&hu->serdev->dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -813,8 +836,11 @@ static int h5_serdev_probe(struct serdev_device *serdev)
 {
 	struct device *dev = &serdev->dev;
 	struct h5 *h5;
+<<<<<<< HEAD
 	const struct h5_device_data *data;
 	int err;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	h5 = devm_kzalloc(dev, sizeof(*h5), GFP_KERNEL);
 	if (!h5)
@@ -831,19 +857,32 @@ static int h5_serdev_probe(struct serdev_device *serdev)
 		if (!match)
 			return -ENODEV;
 
+<<<<<<< HEAD
 		data = (const struct h5_device_data *)match->driver_data;
 		h5->vnd = data->vnd;
+=======
+		h5->vnd = (const struct h5_vnd *)match->driver_data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		h5->id  = (char *)match->id;
 
 		if (h5->vnd->acpi_gpio_map)
 			devm_acpi_dev_add_driver_gpios(dev,
 						       h5->vnd->acpi_gpio_map);
 	} else {
+<<<<<<< HEAD
+=======
+		const void *data;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		data = of_device_get_match_data(dev);
 		if (!data)
 			return -ENODEV;
 
+<<<<<<< HEAD
 		h5->vnd = data->vnd;
+=======
+		h5->vnd = (const struct h5_vnd *)data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 
@@ -856,6 +895,7 @@ static int h5_serdev_probe(struct serdev_device *serdev)
 	if (IS_ERR(h5->device_wake_gpio))
 		return PTR_ERR(h5->device_wake_gpio);
 
+<<<<<<< HEAD
 	err = hci_uart_register_device(&h5->serdev_hu, &h5p);
 	if (err)
 		return err;
@@ -864,6 +904,9 @@ static int h5_serdev_probe(struct serdev_device *serdev)
 		set_bit(H5_WAKEUP_DISABLE, &h5->flags);
 
 	return 0;
+=======
+	return hci_uart_register_device(&h5->serdev_hu, &h5p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void h5_serdev_remove(struct serdev_device *serdev)
@@ -932,9 +975,12 @@ static int h5_btrtl_setup(struct h5 *h5)
 	serdev_device_set_baudrate(h5->hu->serdev, controller_baudrate);
 	serdev_device_set_flow_control(h5->hu->serdev, flow_control);
 
+<<<<<<< HEAD
 	if (flow_control)
 		set_bit(H5_HW_FLOW_CONTROL, &h5->flags);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = btrtl_download_firmware(h5->hu->hdev, btrtl_dev);
 	/* Give the device some time before the hci-core sends it a reset */
 	usleep_range(10000, 20000);
@@ -949,6 +995,7 @@ out_free:
 
 static void h5_btrtl_open(struct h5 *h5)
 {
+<<<<<<< HEAD
 	/*
 	 * Since h5_btrtl_resume() does a device_reprobe() the suspend handling
 	 * done by the hci_suspend_notifier is not necessary; it actually causes
@@ -957,17 +1004,22 @@ static void h5_btrtl_open(struct h5 *h5)
 	if (test_bit(H5_WAKEUP_DISABLE, &h5->flags))
 		set_bit(HCI_UART_NO_SUSPEND_NOTIFIER, &h5->hu->flags);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Devices always start with these fixed parameters */
 	serdev_device_set_flow_control(h5->hu->serdev, false);
 	serdev_device_set_parity(h5->hu->serdev, SERDEV_PARITY_EVEN);
 	serdev_device_set_baudrate(h5->hu->serdev, 115200);
 
+<<<<<<< HEAD
 	pm_runtime_set_active(&h5->hu->serdev->dev);
 	pm_runtime_use_autosuspend(&h5->hu->serdev->dev);
 	pm_runtime_set_autosuspend_delay(&h5->hu->serdev->dev,
 					 SUSPEND_TIMEOUT_MS);
 	pm_runtime_enable(&h5->hu->serdev->dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* The controller needs up to 500ms to wakeup */
 	gpiod_set_value_cansleep(h5->enable_gpio, 1);
 	gpiod_set_value_cansleep(h5->device_wake_gpio, 1);
@@ -976,26 +1028,38 @@ static void h5_btrtl_open(struct h5 *h5)
 
 static void h5_btrtl_close(struct h5 *h5)
 {
+<<<<<<< HEAD
 	pm_runtime_disable(&h5->hu->serdev->dev);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	gpiod_set_value_cansleep(h5->device_wake_gpio, 0);
 	gpiod_set_value_cansleep(h5->enable_gpio, 0);
 }
 
 /* Suspend/resume support. On many devices the RTL BT device loses power during
  * suspend/resume, causing it to lose its firmware and all state. So we simply
+<<<<<<< HEAD
  * turn it off on suspend and reprobe on resume. This mirrors how RTL devices
  * are handled in the USB driver, where the BTUSB_WAKEUP_DISABLE is used which
+=======
+ * turn it off on suspend and reprobe on resume.  This mirrors how RTL devices
+ * are handled in the USB driver, where the USB_QUIRK_RESET_RESUME is used which
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * also causes a reprobe on resume.
  */
 static int h5_btrtl_suspend(struct h5 *h5)
 {
 	serdev_device_set_flow_control(h5->hu->serdev, false);
 	gpiod_set_value_cansleep(h5->device_wake_gpio, 0);
+<<<<<<< HEAD
 
 	if (test_bit(H5_WAKEUP_DISABLE, &h5->flags))
 		gpiod_set_value_cansleep(h5->enable_gpio, 0);
 
+=======
+	gpiod_set_value_cansleep(h5->enable_gpio, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1021,6 +1085,7 @@ static void h5_btrtl_reprobe_worker(struct work_struct *work)
 
 static int h5_btrtl_resume(struct h5 *h5)
 {
+<<<<<<< HEAD
 	if (test_bit(H5_WAKEUP_DISABLE, &h5->flags)) {
 		struct h5_btrtl_reprobe *reprobe;
 
@@ -1040,6 +1105,19 @@ static int h5_btrtl_resume(struct h5 *h5)
 			serdev_device_set_flow_control(h5->hu->serdev, true);
 	}
 
+=======
+	struct h5_btrtl_reprobe *reprobe;
+
+	reprobe = kzalloc(sizeof(*reprobe), GFP_KERNEL);
+	if (!reprobe)
+		return -ENOMEM;
+
+	__module_get(THIS_MODULE);
+
+	INIT_WORK(&reprobe->work, h5_btrtl_reprobe_worker);
+	reprobe->dev = get_device(&h5->hu->serdev->dev);
+	queue_work(system_long_wq, &reprobe->work);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1061,6 +1139,7 @@ static struct h5_vnd rtl_vnd = {
 	.resume		= h5_btrtl_resume,
 	.acpi_gpio_map	= acpi_btrtl_gpios,
 };
+<<<<<<< HEAD
 
 static const struct h5_device_data h5_data_rtl8822cs = {
 	.vnd = &rtl_vnd,
@@ -1070,13 +1149,20 @@ static const struct h5_device_data h5_data_rtl8723bs = {
 	.driver_info = H5_INFO_WAKEUP_DISABLE,
 	.vnd = &rtl_vnd,
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifdef CONFIG_ACPI
 static const struct acpi_device_id h5_acpi_match[] = {
 #ifdef CONFIG_BT_HCIUART_RTL
+<<<<<<< HEAD
 	{ "OBDA0623", (kernel_ulong_t)&h5_data_rtl8723bs },
 	{ "OBDA8723", (kernel_ulong_t)&h5_data_rtl8723bs },
+=======
+	{ "OBDA0623", (kernel_ulong_t)&rtl_vnd },
+	{ "OBDA8723", (kernel_ulong_t)&rtl_vnd },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	{ },
 };
@@ -1085,17 +1171,28 @@ MODULE_DEVICE_TABLE(acpi, h5_acpi_match);
 
 static const struct dev_pm_ops h5_serdev_pm_ops = {
 	SET_SYSTEM_SLEEP_PM_OPS(h5_serdev_suspend, h5_serdev_resume)
+<<<<<<< HEAD
 	SET_RUNTIME_PM_OPS(h5_serdev_suspend, h5_serdev_resume, NULL)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct of_device_id rtl_bluetooth_of_match[] = {
 #ifdef CONFIG_BT_HCIUART_RTL
 	{ .compatible = "realtek,rtl8822cs-bt",
+<<<<<<< HEAD
 	  .data = (const void *)&h5_data_rtl8822cs },
 	{ .compatible = "realtek,rtl8723bs-bt",
 	  .data = (const void *)&h5_data_rtl8723bs },
 	{ .compatible = "realtek,rtl8723ds-bt",
 	  .data = (const void *)&h5_data_rtl8723bs },
+=======
+	  .data = (const void *)&rtl_vnd },
+	{ .compatible = "realtek,rtl8723bs-bt",
+	  .data = (const void *)&rtl_vnd },
+	{ .compatible = "realtek,rtl8723ds-bt",
+	  .data = (const void *)&rtl_vnd },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	{ },
 };

@@ -306,8 +306,13 @@ struct amd_pm_funcs {
 /* export for sysfs */
 	void (*set_fan_control_mode)(void *handle, u32 mode);
 	u32 (*get_fan_control_mode)(void *handle);
+<<<<<<< HEAD
 	int (*set_fan_speed_pwm)(void *handle, u32 speed);
 	int (*get_fan_speed_pwm)(void *handle, u32 *speed);
+=======
+	int (*set_fan_speed_percent)(void *handle, u32 speed);
+	int (*get_fan_speed_percent)(void *handle, u32 *speed);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int (*force_clock_level)(void *handle, enum pp_clock_type type, uint32_t mask);
 	int (*print_clock_levels)(void *handle, enum pp_clock_type type, char *buf);
 	int (*force_performance_level)(void *handle, enum amd_dpm_forced_level level);

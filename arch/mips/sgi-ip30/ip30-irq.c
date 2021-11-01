@@ -99,7 +99,11 @@ static void ip30_normal_irq(struct irq_desc *desc)
 	int cpu = smp_processor_id();
 	struct irq_domain *domain;
 	u64 pend, mask;
+<<<<<<< HEAD
 	int ret;
+=======
+	int irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pend = heart_read(&heart_regs->isr);
 	mask = (heart_read(&heart_regs->imr[cpu]) &
@@ -130,8 +134,15 @@ static void ip30_normal_irq(struct irq_desc *desc)
 #endif
 	{
 		domain = irq_desc_get_handler_data(desc);
+<<<<<<< HEAD
 		ret = generic_handle_domain_irq(domain, __ffs(pend));
 		if (ret)
+=======
+		irq = irq_linear_revmap(domain, __ffs(pend));
+		if (irq)
+			generic_handle_irq(irq);
+		else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			spurious_interrupt();
 	}
 }

@@ -25,4 +25,13 @@ void tegra30_sleep_core_init(void);
 
 extern void (*tegra_tear_down_cpu)(void);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PM_SLEEP
+void tegra_init_suspend(void);
+#else
+static inline void tegra_init_suspend(void) {}
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _MACH_TEGRA_PM_H_ */

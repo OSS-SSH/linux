@@ -21,7 +21,10 @@
  */
 
 #include "amdgpu_amdkfd.h"
+<<<<<<< HEAD
 #include "amd_pcie.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "amd_shared.h"
 
 #include "amdgpu.h"
@@ -192,6 +195,7 @@ void amdgpu_amdkfd_suspend(struct amdgpu_device *adev, bool run_pm)
 		kgd2kfd_suspend(adev->kfd.dev, run_pm);
 }
 
+<<<<<<< HEAD
 int amdgpu_amdkfd_resume_iommu(struct amdgpu_device *adev)
 {
 	int r = 0;
@@ -202,6 +206,8 @@ int amdgpu_amdkfd_resume_iommu(struct amdgpu_device *adev)
 	return r;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int amdgpu_amdkfd_resume(struct amdgpu_device *adev, bool run_pm)
 {
 	int r = 0;
@@ -564,6 +570,7 @@ uint8_t amdgpu_amdkfd_get_xgmi_hops_count(struct kgd_dev *dst, struct kgd_dev *s
 	return  (uint8_t)ret;
 }
 
+<<<<<<< HEAD
 int amdgpu_amdkfd_get_xgmi_bandwidth_mbytes(struct kgd_dev *dst, struct kgd_dev *src, bool is_min)
 {
 	struct amdgpu_device *adev = (struct amdgpu_device *)dst, *peer_adev;
@@ -646,6 +653,8 @@ int amdgpu_amdkfd_get_pcie_bandwidth_mbytes(struct kgd_dev *dev, bool is_min)
 	return (num_lanes_factor * gen_speed_mbits_factor)/BITS_PER_BYTE;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 uint64_t amdgpu_amdkfd_get_mmio_remap_phys_addr(struct kgd_dev *kgd)
 {
 	struct amdgpu_device *adev = (struct amdgpu_device *)kgd;
@@ -724,6 +733,10 @@ int amdgpu_amdkfd_submit_ib(struct kgd_dev *kgd, enum kgd_engine_type engine,
 	ret = dma_fence_wait(f, false);
 
 err_ib_sched:
+<<<<<<< HEAD
+=======
+	dma_fence_put(f);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	amdgpu_job_free(job);
 err:
 	return ret;

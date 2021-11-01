@@ -47,6 +47,11 @@
  *	driver should be able to register multiple nodes
  */
 
+<<<<<<< HEAD
+=======
+static DEFINE_MUTEX(device_mutex);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct snd_compr_file {
 	unsigned long caps;
 	struct snd_compr_stream stream;
@@ -1177,7 +1182,10 @@ int snd_compress_new(struct snd_card *card, int device,
 	compr->card = card;
 	compr->device = device;
 	compr->direction = dirn;
+<<<<<<< HEAD
 	mutex_init(&compr->lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	snd_compress_set_id(compr, id);
 
@@ -1192,6 +1200,75 @@ int snd_compress_new(struct snd_card *card, int device,
 }
 EXPORT_SYMBOL_GPL(snd_compress_new);
 
+<<<<<<< HEAD
+=======
+static int snd_compress_add_device(struct snd_compr *device)
+{
+	int ret;
+
+	if (!device->card)
+		return -EINVAL;
+
+	/* register the card */
+	ret = snd_card_register(device->card);
+	if (ret)
+		goto out;
+	return 0;
+
+out:
+	pr_err("failed with %d\n", ret);
+	return ret;
+
+}
+
+static int snd_compress_remove_device(struct snd_compr *device)
+{
+	return snd_card_free(device->card);
+}
+
+/**
+ * snd_compress_register - register compressed device
+ *
+ * @device: compressed device to register
+ */
+int snd_compress_register(struct snd_compr *device)
+{
+	int retval;
+
+	if (device->name == NULL || device->ops == NULL)
+		return -EINVAL;
+
+	pr_debug("Registering compressed device %s\n", device->name);
+	if (snd_BUG_ON(!device->ops->open))
+		return -EINVAL;
+	if (snd_BUG_ON(!device->ops->free))
+		return -EINVAL;
+	if (snd_BUG_ON(!device->ops->set_params))
+		return -EINVAL;
+	if (snd_BUG_ON(!device->ops->trigger))
+		return -EINVAL;
+
+	mutex_init(&device->lock);
+
+	/* register a compressed card */
+	mutex_lock(&device_mutex);
+	retval = snd_compress_add_device(device);
+	mutex_unlock(&device_mutex);
+	return retval;
+}
+EXPORT_SYMBOL_GPL(snd_compress_register);
+
+int snd_compress_deregister(struct snd_compr *device)
+{
+	pr_debug("Removing compressed device %s\n", device->name);
+	mutex_lock(&device_mutex);
+	snd_compress_remove_device(device);
+	mutex_unlock(&device_mutex);
+	return 0;
+}
+EXPORT_SYMBOL_GPL(snd_compress_deregister);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_DESCRIPTION("ALSA Compressed offload framework");
 MODULE_AUTHOR("Vinod Koul <vinod.koul@linux.intel.com>");
 MODULE_LICENSE("GPL v2");

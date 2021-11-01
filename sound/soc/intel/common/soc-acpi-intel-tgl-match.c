@@ -8,7 +8,10 @@
 
 #include <sound/soc-acpi.h>
 #include <sound/soc-acpi-intel-match.h>
+<<<<<<< HEAD
 #include "soc-acpi-intel-sdw-mockup-match.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const struct snd_soc_acpi_codecs tgl_codecs = {
 	.num_codecs = 1,
@@ -197,6 +200,7 @@ static const struct snd_soc_acpi_link_adr tgl_rvp[] = {
 	{}
 };
 
+<<<<<<< HEAD
 static const struct snd_soc_acpi_link_adr tgl_rvp_headset_only[] = {
 	{
 		.mask = BIT(0),
@@ -206,6 +210,8 @@ static const struct snd_soc_acpi_link_adr tgl_rvp_headset_only[] = {
 	{}
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct snd_soc_acpi_link_adr tgl_hp[] = {
 	{
 		.mask = BIT(0),
@@ -361,6 +367,7 @@ EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_tgl_machines);
 
 /* this table is used when there is no I2S codec present */
 struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_sdw_machines[] = {
+<<<<<<< HEAD
 	/* mockup tests need to be first */
 	{
 		.link_mask = GENMASK(3, 0),
@@ -383,6 +390,8 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_sdw_machines[] = {
 		.sof_fw_filename = "sof-tgl.ri",
 		.sof_tplg_filename = "sof-tgl-rt715-rt711-rt1308-mono.tplg",
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{
 		.link_mask = 0x7,
 		.links = tgl_sdw_rt711_link1_rt1308_link2_rt715_link0,
@@ -430,12 +439,15 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_tgl_sdw_machines[] = {
 		.drv_name = "sof_sdw",
 		.sof_tplg_filename = "sof-tgl-sdw-max98373-rt5682.tplg",
 	},
+<<<<<<< HEAD
 	{
 		.link_mask = 0x1, /* rt711 on link 0 */
 		.links = tgl_rvp_headset_only,
 		.drv_name = "sof_sdw",
 		.sof_tplg_filename = "sof-tgl-rt711.tplg",
 	},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{},
 };
 EXPORT_SYMBOL_GPL(snd_soc_acpi_intel_tgl_sdw_machines);

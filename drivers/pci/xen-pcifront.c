@@ -115,7 +115,11 @@ static int do_pci_op(struct pcifront_device *pdev, struct xen_pci_op *op)
 	struct xen_pci_op *active_op = &pdev->sh_info->op;
 	unsigned long irq_flags;
 	evtchn_port_t port = pdev->evtchn;
+<<<<<<< HEAD
 	unsigned int irq = pdev->irq;
+=======
+	unsigned irq = pdev->irq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	s64 ns, ns_timeout;
 
 	spin_lock_irqsave(&pdev->sh_info_lock, irq_flags);
@@ -153,10 +157,17 @@ static int do_pci_op(struct pcifront_device *pdev, struct xen_pci_op *op)
 	}
 
 	/*
+<<<<<<< HEAD
 	 * We might lose backend service request since we
 	 * reuse same evtchn with pci_conf backend response. So re-schedule
 	 * aer pcifront service.
 	 */
+=======
+	* We might lose backend service request since we
+	* reuse same evtchn with pci_conf backend response. So re-schedule
+	* aer pcifront service.
+	*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (test_bit(_XEN_PCIB_active,
 			(unsigned long *)&pdev->sh_info->flags)) {
 		dev_err(&pdev->xdev->dev,
@@ -414,8 +425,12 @@ static int pcifront_scan_bus(struct pcifront_device *pdev,
 	struct pci_dev *d;
 	unsigned int devfn;
 
+<<<<<<< HEAD
 	/*
 	 * Scan the bus for functions and add.
+=======
+	/* Scan the bus for functions and add.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * We omit handling of PCI bridge attachment because pciback prevents
 	 * bridges from being exported.
 	 */
@@ -493,10 +508,15 @@ static int pcifront_scan_root(struct pcifront_device *pdev,
 
 	list_add(&bus_entry->list, &pdev->root_buses);
 
+<<<<<<< HEAD
 	/*
 	 * pci_scan_root_bus skips devices which do not have a
 	 * devfn==0. The pcifront_scan_bus enumerates all devfn.
 	 */
+=======
+	/* pci_scan_root_bus skips devices which do not have a
+	* devfn==0. The pcifront_scan_bus enumerates all devfn. */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = pcifront_scan_bus(pdev, domain, bus, b);
 
 	/* Claim resources before going "live" with our devices */
@@ -654,10 +674,15 @@ static void pcifront_do_aer(struct work_struct *data)
 	pci_channel_state_t state =
 		(pci_channel_state_t)pdev->sh_info->aer_op.err;
 
+<<<<<<< HEAD
 	/*
 	 * If a pci_conf op is in progress, we have to wait until it is done
 	 * before service aer op
 	 */
+=======
+	/*If a pci_conf op is in progress,
+		we have to wait until it is done before service aer op*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev_dbg(&pdev->xdev->dev,
 		"pcifront service aer bus %x devfn %x\n",
 		pdev->sh_info->aer_op.bus, pdev->sh_info->aer_op.devfn);
@@ -681,7 +706,10 @@ static void pcifront_do_aer(struct work_struct *data)
 static irqreturn_t pcifront_handler_aer(int irq, void *dev)
 {
 	struct pcifront_device *pdev = dev;
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	schedule_pcifront_aer_op(pdev);
 	return IRQ_HANDLED;
 }
@@ -699,7 +727,11 @@ static int pcifront_connect_and_init_dma(struct pcifront_device *pdev)
 
 	spin_unlock(&pcifront_dev_lock);
 
+<<<<<<< HEAD
 	if (!err && !is_swiotlb_active(&pdev->xdev->dev)) {
+=======
+	if (!err && !is_swiotlb_active()) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = pci_xen_swiotlb_init_late();
 		if (err)
 			dev_err(&pdev->xdev->dev, "Could not setup SWIOTLB!\n");
@@ -1033,7 +1065,10 @@ static int pcifront_detach_devices(struct pcifront_device *pdev)
 	/* Find devices being detached and remove them. */
 	for (i = 0; i < num_devs; i++) {
 		int l, state;
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		l = snprintf(str, sizeof(str), "state-%d", i);
 		if (unlikely(l >= (sizeof(str) - 1))) {
 			err = -ENOMEM;
@@ -1085,7 +1120,11 @@ out:
 	return err;
 }
 
+<<<<<<< HEAD
 static void pcifront_backend_changed(struct xenbus_device *xdev,
+=======
+static void __ref pcifront_backend_changed(struct xenbus_device *xdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 						  enum xenbus_state be_state)
 {
 	struct pcifront_device *pdev = dev_get_drvdata(&xdev->dev);
@@ -1144,7 +1183,10 @@ out:
 static int pcifront_xenbus_remove(struct xenbus_device *xdev)
 {
 	struct pcifront_device *pdev = dev_get_drvdata(&xdev->dev);
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (pdev)
 		free_pdev(pdev);
 

@@ -106,6 +106,13 @@
 # include "test-libdw-dwarf-unwind.c"
 #undef main
 
+<<<<<<< HEAD
+=======
+#define main main_test_sync_compare_and_swap
+# include "test-sync-compare-and-swap.c"
+#undef main
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define main main_test_zlib
 # include "test-zlib.c"
 #undef main

@@ -26,7 +26,13 @@ struct ib_umem {
 	u32 is_odp : 1;
 	u32 is_dmabuf : 1;
 	struct work_struct	work;
+<<<<<<< HEAD
 	struct sg_append_table sgt_append;
+=======
+	struct sg_table sg_head;
+	int             nmap;
+	unsigned int    sg_nents;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct ib_umem_dmabuf {
@@ -54,7 +60,11 @@ static inline int ib_umem_offset(struct ib_umem *umem)
 static inline unsigned long ib_umem_dma_offset(struct ib_umem *umem,
 					       unsigned long pgsz)
 {
+<<<<<<< HEAD
 	return (sg_dma_address(umem->sgt_append.sgt.sgl) + ib_umem_offset(umem)) &
+=======
+	return (sg_dma_address(umem->sg_head.sgl) + ib_umem_offset(umem)) &
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	       (pgsz - 1);
 }
 
@@ -75,8 +85,12 @@ static inline void __rdma_umem_block_iter_start(struct ib_block_iter *biter,
 						struct ib_umem *umem,
 						unsigned long pgsz)
 {
+<<<<<<< HEAD
 	__rdma_block_iter_start(biter, umem->sgt_append.sgt.sgl,
 				umem->sgt_append.sgt.nents, pgsz);
+=======
+	__rdma_block_iter_start(biter, umem->sg_head.sgl, umem->nmap, pgsz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -127,7 +141,11 @@ static inline unsigned long ib_umem_find_best_pgoff(struct ib_umem *umem,
 						    unsigned long pgsz_bitmap,
 						    u64 pgoff_bitmask)
 {
+<<<<<<< HEAD
 	struct scatterlist *sg = umem->sgt_append.sgt.sgl;
+=======
+	struct scatterlist *sg = umem->sg_head.sgl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dma_addr_t dma_addr;
 
 	dma_addr = sg_dma_address(sg) + (umem->address & ~PAGE_MASK);

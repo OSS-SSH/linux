@@ -609,7 +609,11 @@ struct gpio_desc *devm_fwnode_get_gpiod_from_child(struct device *dev,
 #if IS_ENABLED(CONFIG_GPIOLIB) && IS_ENABLED(CONFIG_OF_GPIO)
 struct device_node;
 
+<<<<<<< HEAD
 struct gpio_desc *gpiod_get_from_of_node(const struct device_node *node,
+=======
+struct gpio_desc *gpiod_get_from_of_node(struct device_node *node,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					 const char *propname, int index,
 					 enum gpiod_flags dflags,
 					 const char *label);
@@ -619,7 +623,11 @@ struct gpio_desc *gpiod_get_from_of_node(const struct device_node *node,
 struct device_node;
 
 static inline
+<<<<<<< HEAD
 struct gpio_desc *gpiod_get_from_of_node(const struct device_node *node,
+=======
+struct gpio_desc *gpiod_get_from_of_node(struct device_node *node,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					 const char *propname, int index,
 					 enum gpiod_flags dflags,
 					 const char *label)
@@ -633,7 +641,11 @@ struct gpio_desc *gpiod_get_from_of_node(const struct device_node *node,
 struct device_node;
 
 struct gpio_desc *devm_gpiod_get_from_of_node(struct device *dev,
+<<<<<<< HEAD
 					      const struct device_node *node,
+=======
+					      struct device_node *node,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					      const char *propname, int index,
 					      enum gpiod_flags dflags,
 					      const char *label);
@@ -644,7 +656,11 @@ struct device_node;
 
 static inline
 struct gpio_desc *devm_gpiod_get_from_of_node(struct device *dev,
+<<<<<<< HEAD
 					      const struct device_node *node,
+=======
+					      struct device_node *node,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					      const char *propname, int index,
 					      enum gpiod_flags dflags,
 					      const char *label)
@@ -680,10 +696,17 @@ struct acpi_gpio_mapping {
 	unsigned int quirks;
 };
 
+<<<<<<< HEAD
 struct acpi_device;
 
 #if IS_ENABLED(CONFIG_GPIOLIB) && IS_ENABLED(CONFIG_ACPI)
 
+=======
+#if IS_ENABLED(CONFIG_GPIOLIB) && IS_ENABLED(CONFIG_ACPI)
+
+struct acpi_device;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int acpi_dev_add_driver_gpios(struct acpi_device *adev,
 			      const struct acpi_gpio_mapping *gpios);
 void acpi_dev_remove_driver_gpios(struct acpi_device *adev);
@@ -696,6 +719,11 @@ struct gpio_desc *acpi_get_and_request_gpiod(char *path, int pin, char *label);
 
 #else  /* CONFIG_GPIOLIB && CONFIG_ACPI */
 
+<<<<<<< HEAD
+=======
+struct acpi_device;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int acpi_dev_add_driver_gpios(struct acpi_device *adev,
 			      const struct acpi_gpio_mapping *gpios)
 {

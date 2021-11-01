@@ -8,15 +8,21 @@
 #include <string.h>
 #include "kvm_util.h"
 #include "processor.h"
+<<<<<<< HEAD
 #include "apic.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define VCPU_ID 0
 
 #define DR6_BD		(1 << 13)
 #define DR7_GD		(1 << 13)
 
+<<<<<<< HEAD
 #define IRQ_VECTOR 0xAA
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* For testing data access debug BP */
 uint32_t guest_value;
 
@@ -24,11 +30,14 @@ extern unsigned char sw_bp, hw_bp, write_data, ss_start, bd_start;
 
 static void guest_code(void)
 {
+<<<<<<< HEAD
 	/* Create a pending interrupt on current vCPU */
 	x2apic_enable();
 	x2apic_write_reg(APIC_ICR, APIC_DEST_SELF | APIC_INT_ASSERT |
 			 APIC_DM_FIXED | IRQ_VECTOR);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Software BP tests.
 	 *
@@ -46,6 +55,7 @@ static void guest_code(void)
 		     "mov %%rax,%0;\n\t write_data:"
 		     : "=m" (guest_value) : : "rax");
 
+<<<<<<< HEAD
 	/*
 	 * Single step test, covers 2 basic instructions and 2 emulated
 	 *
@@ -54,11 +64,18 @@ static void guest_code(void)
 	 */
 	asm volatile("ss_start: "
 		     "sti\n\t"
+=======
+	/* Single step test, covers 2 basic instructions and 2 emulated */
+	asm volatile("ss_start: "
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		     "xor %%eax,%%eax\n\t"
 		     "cpuid\n\t"
 		     "movl $0x1a0,%%ecx\n\t"
 		     "rdmsr\n\t"
+<<<<<<< HEAD
 		     "cli\n\t"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		     : : : "eax", "ebx", "ecx", "edx");
 
 	/* DR6.BD test */
@@ -87,13 +104,20 @@ int main(void)
 	uint64_t cmd;
 	int i;
 	/* Instruction lengths starting at ss_start */
+<<<<<<< HEAD
 	int ss_size[6] = {
 		1,		/* sti*/
+=======
+	int ss_size[4] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		2,		/* xor */
 		2,		/* cpuid */
 		5,		/* mov */
 		2,		/* rdmsr */
+<<<<<<< HEAD
 		1,		/* cli */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	if (!kvm_check_cap(KVM_CAP_SET_GUEST_DEBUG)) {
@@ -171,8 +195,12 @@ int main(void)
 	for (i = 0; i < (sizeof(ss_size) / sizeof(ss_size[0])); i++) {
 		target_rip += ss_size[i];
 		CLEAR_DEBUG();
+<<<<<<< HEAD
 		debug.control = KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_SINGLESTEP |
 				KVM_GUESTDBG_BLOCKIRQ;
+=======
+		debug.control = KVM_GUESTDBG_ENABLE | KVM_GUESTDBG_SINGLESTEP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		debug.arch.debugreg[7] = 0x00000400;
 		APPLY_DEBUG();
 		vcpu_run(vm, VCPU_ID);

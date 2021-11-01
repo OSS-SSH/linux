@@ -131,6 +131,7 @@ int btintel_set_bdaddr(struct hci_dev *hdev, const bdaddr_t *bdaddr)
 }
 EXPORT_SYMBOL_GPL(btintel_set_bdaddr);
 
+<<<<<<< HEAD
 static int btintel_set_event_mask(struct hci_dev *hdev, bool debug)
 {
 	u8 mask[8] = { 0x87, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
@@ -151,6 +152,8 @@ static int btintel_set_event_mask(struct hci_dev *hdev, bool debug)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int btintel_set_diag(struct hci_dev *hdev, bool enable)
 {
 	struct sk_buff *skb;
@@ -184,7 +187,11 @@ done:
 }
 EXPORT_SYMBOL_GPL(btintel_set_diag);
 
+<<<<<<< HEAD
 static int btintel_set_diag_mfg(struct hci_dev *hdev, bool enable)
+=======
+int btintel_set_diag_mfg(struct hci_dev *hdev, bool enable)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err, ret;
 
@@ -200,6 +207,7 @@ static int btintel_set_diag_mfg(struct hci_dev *hdev, bool enable)
 
 	return ret;
 }
+<<<<<<< HEAD
 
 static int btintel_set_diag_combined(struct hci_dev *hdev, bool enable)
 {
@@ -219,6 +227,11 @@ static int btintel_set_diag_combined(struct hci_dev *hdev, bool enable)
 }
 
 static void btintel_hw_error(struct hci_dev *hdev, u8 code)
+=======
+EXPORT_SYMBOL_GPL(btintel_set_diag_mfg);
+
+void btintel_hw_error(struct hci_dev *hdev, u8 code)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sk_buff *skb;
 	u8 type = 0x00;
@@ -250,6 +263,10 @@ static void btintel_hw_error(struct hci_dev *hdev, u8 code)
 
 	kfree_skb(skb);
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL_GPL(btintel_hw_error);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
 {
@@ -271,8 +288,11 @@ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
 	 * compatibility options when newer hardware variants come along.
 	 */
 	switch (ver->hw_variant) {
+<<<<<<< HEAD
 	case 0x07:	/* WP - Legacy ROM */
 	case 0x08:	/* StP - Legacy ROM */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 0x0b:      /* SfP */
 	case 0x0c:      /* WsP */
 	case 0x11:      /* JfP */
@@ -287,6 +307,7 @@ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
 	}
 
 	switch (ver->fw_variant) {
+<<<<<<< HEAD
 	case 0x01:
 		variant = "Legacy ROM 2.5";
 		break;
@@ -296,6 +317,11 @@ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
 	case 0x22:
 		variant = "Legacy ROM 2.x";
 		break;
+=======
+	case 0x06:
+		variant = "Bootloader";
+		break;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case 0x23:
 		variant = "Firmware";
 		break;
@@ -313,8 +339,13 @@ int btintel_version_info(struct hci_dev *hdev, struct intel_version *ver)
 }
 EXPORT_SYMBOL_GPL(btintel_version_info);
 
+<<<<<<< HEAD
 static int btintel_secure_send(struct hci_dev *hdev, u8 fragment_type, u32 plen,
 			       const void *param)
+=======
+int btintel_secure_send(struct hci_dev *hdev, u8 fragment_type, u32 plen,
+			const void *param)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	while (plen > 0) {
 		struct sk_buff *skb;
@@ -336,6 +367,10 @@ static int btintel_secure_send(struct hci_dev *hdev, u8 fragment_type, u32 plen,
 
 	return 0;
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL_GPL(btintel_secure_send);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int btintel_load_ddc_config(struct hci_dev *hdev, const char *ddc_name)
 {
@@ -382,6 +417,30 @@ int btintel_load_ddc_config(struct hci_dev *hdev, const char *ddc_name)
 }
 EXPORT_SYMBOL_GPL(btintel_load_ddc_config);
 
+<<<<<<< HEAD
+=======
+int btintel_set_event_mask(struct hci_dev *hdev, bool debug)
+{
+	u8 mask[8] = { 0x87, 0x0c, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
+	struct sk_buff *skb;
+	int err;
+
+	if (debug)
+		mask[1] |= 0x62;
+
+	skb = __hci_cmd_sync(hdev, 0xfc52, 8, mask, HCI_INIT_TIMEOUT);
+	if (IS_ERR(skb)) {
+		err = PTR_ERR(skb);
+		bt_dev_err(hdev, "Setting Intel event mask failed (%d)", err);
+		return err;
+	}
+	kfree_skb(skb);
+
+	return 0;
+}
+EXPORT_SYMBOL_GPL(btintel_set_event_mask);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int btintel_set_event_mask_mfg(struct hci_dev *hdev, bool debug)
 {
 	int err, ret;
@@ -425,8 +484,12 @@ int btintel_read_version(struct hci_dev *hdev, struct intel_version *ver)
 }
 EXPORT_SYMBOL_GPL(btintel_read_version);
 
+<<<<<<< HEAD
 static int btintel_version_info_tlv(struct hci_dev *hdev,
 				    struct intel_version_tlv *version)
+=======
+int btintel_version_info_tlv(struct hci_dev *hdev, struct intel_version_tlv *version)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const char *variant;
 
@@ -503,11 +566,38 @@ static int btintel_version_info_tlv(struct hci_dev *hdev,
 
 	return 0;
 }
+<<<<<<< HEAD
 
 static int btintel_parse_version_tlv(struct hci_dev *hdev,
 				     struct intel_version_tlv *version,
 				     struct sk_buff *skb)
 {
+=======
+EXPORT_SYMBOL_GPL(btintel_version_info_tlv);
+
+int btintel_read_version_tlv(struct hci_dev *hdev, struct intel_version_tlv *version)
+{
+	struct sk_buff *skb;
+	const u8 param[1] = { 0xFF };
+
+	if (!version)
+		return -EINVAL;
+
+	skb = __hci_cmd_sync(hdev, 0xfc05, 1, param, HCI_CMD_TIMEOUT);
+	if (IS_ERR(skb)) {
+		bt_dev_err(hdev, "Reading Intel version information failed (%ld)",
+			   PTR_ERR(skb));
+		return PTR_ERR(skb);
+	}
+
+	if (skb->data[0]) {
+		bt_dev_err(hdev, "Intel Read Version command failed (%02x)",
+			   skb->data[0]);
+		kfree_skb(skb);
+		return -EIO;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Consume Command Complete Status field */
 	skb_pull(skb, 1);
 
@@ -519,6 +609,7 @@ static int btintel_parse_version_tlv(struct hci_dev *hdev,
 	while (skb->len) {
 		struct intel_tlv *tlv;
 
+<<<<<<< HEAD
 		/* Make sure skb has a minimum length of the header */
 		if (skb->len < sizeof(*tlv))
 			return -EINVAL;
@@ -529,6 +620,9 @@ static int btintel_parse_version_tlv(struct hci_dev *hdev,
 		if (skb->len < tlv->len + sizeof(*tlv))
 			return -EINVAL;
 
+=======
+		tlv = (struct intel_tlv *)skb->data;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		switch (tlv->type) {
 		case INTEL_TLV_CNVI_TOP:
 			version->cnvi_top = get_unaligned_le32(tlv->val);
@@ -592,8 +686,12 @@ static int btintel_parse_version_tlv(struct hci_dev *hdev,
 			version->sbe_type = tlv->val[0];
 			break;
 		case INTEL_TLV_OTP_BDADDR:
+<<<<<<< HEAD
 			memcpy(&version->otp_bd_addr, tlv->val,
 							sizeof(bdaddr_t));
+=======
+			memcpy(&version->otp_bd_addr, tlv->val, tlv->len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		default:
 			/* Ignore rest of information */
@@ -603,6 +701,7 @@ static int btintel_parse_version_tlv(struct hci_dev *hdev,
 		skb_pull(skb, tlv->len + sizeof(*tlv));
 	}
 
+<<<<<<< HEAD
 	return 0;
 }
 
@@ -634,6 +733,12 @@ static int btintel_read_version_tlv(struct hci_dev *hdev,
 	kfree_skb(skb);
 	return 0;
 }
+=======
+	kfree_skb(skb);
+	return 0;
+}
+EXPORT_SYMBOL_GPL(btintel_read_version_tlv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* ------- REGMAP IBT SUPPORT ------- */
 
@@ -1106,10 +1211,17 @@ int btintel_download_firmware(struct hci_dev *hdev,
 }
 EXPORT_SYMBOL_GPL(btintel_download_firmware);
 
+<<<<<<< HEAD
 static int btintel_download_fw_tlv(struct hci_dev *hdev,
 				   struct intel_version_tlv *ver,
 				   const struct firmware *fw, u32 *boot_param,
 				   u8 hw_variant, u8 sbe_type)
+=======
+int btintel_download_firmware_newgen(struct hci_dev *hdev,
+				     struct intel_version_tlv *ver,
+				     const struct firmware *fw, u32 *boot_param,
+				     u8 hw_variant, u8 sbe_type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err;
 	u32 css_header_ver;
@@ -1206,8 +1318,14 @@ static int btintel_download_fw_tlv(struct hci_dev *hdev,
 	}
 	return 0;
 }
+<<<<<<< HEAD
 
 static void btintel_reset_to_bootloader(struct hci_dev *hdev)
+=======
+EXPORT_SYMBOL_GPL(btintel_download_firmware_newgen);
+
+void btintel_reset_to_bootloader(struct hci_dev *hdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct intel_reset params;
 	struct sk_buff *skb;
@@ -1250,9 +1368,16 @@ static void btintel_reset_to_bootloader(struct hci_dev *hdev)
 	 */
 	msleep(150);
 }
+<<<<<<< HEAD
 
 static int btintel_read_debug_features(struct hci_dev *hdev,
 				       struct intel_debug_features *features)
+=======
+EXPORT_SYMBOL_GPL(btintel_reset_to_bootloader);
+
+int btintel_read_debug_features(struct hci_dev *hdev,
+				struct intel_debug_features *features)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sk_buff *skb;
 	u8 page_no = 1;
@@ -1281,8 +1406,14 @@ static int btintel_read_debug_features(struct hci_dev *hdev,
 	kfree_skb(skb);
 	return 0;
 }
+<<<<<<< HEAD
 
 static int btintel_set_debug_features(struct hci_dev *hdev,
+=======
+EXPORT_SYMBOL_GPL(btintel_read_debug_features);
+
+int btintel_set_debug_features(struct hci_dev *hdev,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			       const struct intel_debug_features *features)
 {
 	u8 mask[11] = { 0x0a, 0x92, 0x02, 0x07, 0x00, 0x00, 0x00, 0x00,
@@ -1307,6 +1438,7 @@ static int btintel_set_debug_features(struct hci_dev *hdev,
 	kfree_skb(skb);
 	return 0;
 }
+<<<<<<< HEAD
 
 static const struct firmware *btintel_legacy_rom_get_fw(struct hci_dev *hdev,
 					       struct intel_version *ver)
@@ -2455,6 +2587,9 @@ void btintel_secure_send_result(struct hci_dev *hdev,
 		btintel_wake_up_flag(hdev, INTEL_DOWNLOADING);
 }
 EXPORT_SYMBOL_GPL(btintel_secure_send_result);
+=======
+EXPORT_SYMBOL_GPL(btintel_set_debug_features);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 MODULE_AUTHOR("Marcel Holtmann <marcel@holtmann.org>");
 MODULE_DESCRIPTION("Bluetooth support for Intel devices ver " VERSION);

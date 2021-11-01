@@ -51,7 +51,10 @@ void __init xen_remap_memory(void);
 phys_addr_t __init xen_find_free_area(phys_addr_t size);
 char * __init xen_memory_setup(void);
 void __init xen_arch_setup(void);
+<<<<<<< HEAD
 void xen_banner(void);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void xen_enable_sysenter(void);
 void xen_enable_syscall(void);
 void xen_vcpu_restore(void);
@@ -110,7 +113,11 @@ static inline void xen_uninit_lock_cpu(int cpu)
 
 struct dom0_vga_console_info;
 
+<<<<<<< HEAD
 #ifdef CONFIG_XEN_PV_DOM0
+=======
+#ifdef CONFIG_XEN_DOM0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __init xen_init_vga(const struct dom0_vga_console_info *, size_t size);
 #else
 static inline void __init xen_init_vga(const struct dom0_vga_console_info *info,
@@ -119,8 +126,11 @@ static inline void __init xen_init_vga(const struct dom0_vga_console_info *info,
 }
 #endif
 
+<<<<<<< HEAD
 void xen_add_preferred_consoles(void);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __init xen_init_apic(void);
 
 #ifdef CONFIG_XEN_EFI

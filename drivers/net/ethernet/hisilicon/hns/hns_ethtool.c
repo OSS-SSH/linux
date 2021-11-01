@@ -730,15 +730,22 @@ static int hns_set_pauseparam(struct net_device *net_dev,
  * hns_get_coalesce - get coalesce info.
  * @net_dev: net device
  * @ec: coalesce info.
+<<<<<<< HEAD
  * @kernel_coal: ethtool CQE mode setting structure
  * @extack: extack for reporting error messages
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Return 0 on success, negative on failure.
  */
 static int hns_get_coalesce(struct net_device *net_dev,
+<<<<<<< HEAD
 			    struct ethtool_coalesce *ec,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+=======
+			    struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct hns_nic_priv *priv = netdev_priv(net_dev);
 	struct hnae_ae_ops *ops;
@@ -778,15 +785,22 @@ static int hns_get_coalesce(struct net_device *net_dev,
  * hns_set_coalesce - set coalesce info.
  * @net_dev: net device
  * @ec: coalesce info.
+<<<<<<< HEAD
  * @kernel_coal: ethtool CQE mode setting structure
  * @extack: extack for reporting error messages
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * Return 0 on success, negative on failure.
  */
 static int hns_set_coalesce(struct net_device *net_dev,
+<<<<<<< HEAD
 			    struct ethtool_coalesce *ec,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+=======
+			    struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct hns_nic_priv *priv = netdev_priv(net_dev);
 	struct hnae_ae_ops *ops;

@@ -1214,8 +1214,13 @@ dev_release (struct inode *inode, struct file *fd)
 static __poll_t
 ep0_poll (struct file *fd, poll_table *wait)
 {
+<<<<<<< HEAD
 	struct dev_data         *dev = fd->private_data;
 	__poll_t                mask = 0;
+=======
+       struct dev_data         *dev = fd->private_data;
+       __poll_t                mask = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (dev->state <= STATE_DEV_OPENED)
 		return DEFAULT_POLLMASK;

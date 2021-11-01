@@ -1152,10 +1152,18 @@ static int fsl_sai_probe(struct platform_device *pdev)
 	if (ret < 0)
 		goto err_pm_get_sync;
 
+<<<<<<< HEAD
 	/*
 	 * Register platform component before registering cpu dai for there
 	 * is not defer probe for platform component in snd_soc_add_pcm_runtime().
 	 */
+=======
+	ret = devm_snd_soc_register_component(&pdev->dev, &fsl_component,
+					      &sai->cpu_dai_drv, 1);
+	if (ret)
+		goto err_pm_get_sync;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (sai->soc_data->use_imx_pcm) {
 		ret = imx_pcm_dma_init(pdev, IMX_SAI_DMABUF_SIZE);
 		if (ret)
@@ -1166,11 +1174,14 @@ static int fsl_sai_probe(struct platform_device *pdev)
 			goto err_pm_get_sync;
 	}
 
+<<<<<<< HEAD
 	ret = devm_snd_soc_register_component(&pdev->dev, &fsl_component,
 					      &sai->cpu_dai_drv, 1);
 	if (ret)
 		goto err_pm_get_sync;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 
 err_pm_get_sync:

@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: LGPL-2.1
 /*
+<<<<<<< HEAD
  *   CIFS filesystem cache index structure definitions
+=======
+ *   fs/cifs/cache.c - CIFS filesystem cache index structure definitions
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   Copyright (c) 2010 Novell, Inc.
  *   Authors(s): Suresh Jayaraman (sjayaraman@suse.de>

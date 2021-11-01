@@ -39,7 +39,10 @@ Hardware Monitoring Kernel Drivers
    adt7475
    aht10
    amc6821
+<<<<<<< HEAD
    aquacomputer_d5next
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
    asb100
    asc7621
    aspeed-pwm-tacho
@@ -161,7 +164,10 @@ Hardware Monitoring Kernel Drivers
    pwm-fan
    q54sj108a2
    raspberrypi-hwmon
+<<<<<<< HEAD
    sbrmi
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
    sbtsi_temp
    sch5627
    sch5636

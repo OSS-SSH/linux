@@ -76,7 +76,11 @@ static inline int __enable_fpu(enum fpu_mode mode)
 		/* we only have a 32-bit FPU */
 		return SIGFPE;
 #endif
+<<<<<<< HEAD
 		/* fallthrough */
+=======
+		fallthrough;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case FPU_32BIT:
 		if (cpu_has_fre) {
 			/* clear FRE */

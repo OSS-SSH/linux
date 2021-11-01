@@ -7,8 +7,11 @@
 #include <linux/kvm_host.h>
 #include <linux/debugfs.h>
 #include "lapic.h"
+<<<<<<< HEAD
 #include "mmu.h"
 #include "mmu/mmu_internal.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int vcpu_get_timer_advance_ns(void *data, u64 *val)
 {
@@ -75,6 +78,7 @@ void kvm_arch_create_vcpu_debugfs(struct kvm_vcpu *vcpu, struct dentry *debugfs_
 				    &vcpu_tsc_scaling_frac_fops);
 	}
 }
+<<<<<<< HEAD
 
 /*
  * This covers statistics <1024 (11=log(1024)+1), which should be enough to
@@ -184,3 +188,5 @@ int kvm_arch_create_vm_debugfs(struct kvm *kvm)
 			    &mmu_rmaps_stat_fops);
 	return 0;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

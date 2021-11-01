@@ -529,7 +529,11 @@ xfs_attr_list(
 
 	XFS_STATS_INC(dp->i_mount, xs_attr_list);
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(dp->i_mount))
+=======
+	if (XFS_FORCED_SHUTDOWN(dp->i_mount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	lock_mode = xfs_ilock_attr_map_shared(dp);

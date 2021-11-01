@@ -212,7 +212,11 @@ static int scsifront_do_request(struct vscsifrnt_info *info,
 	memcpy(ring_req->cmnd, sc->cmnd, sc->cmd_len);
 
 	ring_req->sc_data_direction   = (uint8_t)sc->sc_data_direction;
+<<<<<<< HEAD
 	ring_req->timeout_per_command = scsi_cmd_to_rq(sc)->timeout / HZ;
+=======
+	ring_req->timeout_per_command = sc->request->timeout / HZ;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < (shadow->nr_segments & ~VSCSIIF_SG_GRANT); i++)
 		ring_req->seg[i] = shadow->seg[i];

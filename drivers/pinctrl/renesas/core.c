@@ -571,6 +571,7 @@ static const struct of_device_id sh_pfc_of_table[] = {
 		.data = &r8a7794_pinmux_info,
 	},
 #endif
+<<<<<<< HEAD
 /*
  * Both r8a7795 entries must be present to make sanity checks work, but only
  * the first entry is actually used.
@@ -586,6 +587,19 @@ static const struct of_device_id sh_pfc_of_table[] = {
 	{
 		.compatible = "renesas,pfc-r8a7795",
 		.data = &r8a77950_pinmux_info,
+=======
+/* Both r8a7795 entries must be present to make sanity checks work */
+#ifdef CONFIG_PINCTRL_PFC_R8A77950
+	{
+		.compatible = "renesas,pfc-r8a7795",
+		.data = &r8a77950_pinmux_info,
+	},
+#endif
+#ifdef CONFIG_PINCTRL_PFC_R8A77951
+	{
+		.compatible = "renesas,pfc-r8a7795",
+		.data = &r8a77951_pinmux_info,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 #endif
 #ifdef CONFIG_PINCTRL_PFC_R8A77960
@@ -1089,20 +1103,38 @@ static inline void sh_pfc_check_driver(struct platform_driver *pdrv) {}
 #ifdef CONFIG_OF
 static const void *sh_pfc_quirk_match(void)
 {
+<<<<<<< HEAD
 #ifdef CONFIG_PINCTRL_PFC_R8A77950
+=======
+#if defined(CONFIG_PINCTRL_PFC_R8A77950) || \
+    defined(CONFIG_PINCTRL_PFC_R8A77951)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const struct soc_device_attribute *match;
 	static const struct soc_device_attribute quirks[] = {
 		{
 			.soc_id = "r8a7795", .revision = "ES1.*",
 			.data = &r8a77950_pinmux_info,
 		},
+<<<<<<< HEAD
+=======
+		{
+			.soc_id = "r8a7795",
+			.data = &r8a77951_pinmux_info,
+		},
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		{ /* sentinel */ }
 	};
 
 	match = soc_device_match(quirks);
 	if (match)
+<<<<<<< HEAD
 		return match->data;
 #endif /* CONFIG_PINCTRL_PFC_R8A77950 */
+=======
+		return match->data ?: ERR_PTR(-ENODEV);
+#endif /* CONFIG_PINCTRL_PFC_R8A77950 || CONFIG_PINCTRL_PFC_R8A77951 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return NULL;
 }
@@ -1117,6 +1149,12 @@ static int sh_pfc_probe(struct platform_device *pdev)
 #ifdef CONFIG_OF
 	if (pdev->dev.of_node) {
 		info = sh_pfc_quirk_match();
+<<<<<<< HEAD
+=======
+		if (IS_ERR(info))
+			return PTR_ERR(info);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!info)
 			info = of_device_get_match_data(&pdev->dev);
 	} else

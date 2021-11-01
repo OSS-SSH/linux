@@ -887,7 +887,11 @@ struct iwl_trans_txqs {
 	bool bc_table_dword;
 	u8 page_offs;
 	u8 dev_cmd_offs;
+<<<<<<< HEAD
 	struct iwl_tso_hdr_page __percpu *tso_hdr_page;
+=======
+	struct __percpu iwl_tso_hdr_page * tso_hdr_page;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct {
 		u8 fifo;
@@ -1385,14 +1389,22 @@ iwl_trans_release_nic_access(struct iwl_trans *trans)
 	__release(nic_access);
 }
 
+<<<<<<< HEAD
 static inline void iwl_trans_fw_error(struct iwl_trans *trans, bool sync)
+=======
+static inline void iwl_trans_fw_error(struct iwl_trans *trans)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (WARN_ON_ONCE(!trans->op_mode))
 		return;
 
 	/* prevent double restarts due to the same erroneous FW */
 	if (!test_and_set_bit(STATUS_FW_ERROR, &trans->status)) {
+<<<<<<< HEAD
 		iwl_op_mode_nic_error(trans->op_mode, sync);
+=======
+		iwl_op_mode_nic_error(trans->op_mode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		trans->state = IWL_TRANS_NO_FW;
 	}
 }

@@ -27,7 +27,10 @@
 #include <linux/hrtimer.h>
 #include <linux/of.h>
 #include <linux/pm_qos.h>
+<<<<<<< HEAD
 #include <linux/units.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "governor.h"
 
 #define CREATE_TRACE_POINTS
@@ -35,6 +38,10 @@
 
 #define IS_SUPPORTED_FLAG(f, name) ((f & DEVFREQ_GOV_FLAG_##name) ? true : false)
 #define IS_SUPPORTED_ATTR(f, name) ((f & DEVFREQ_GOV_ATTR_##name) ? true : false)
+<<<<<<< HEAD
+=======
+#define HZ_PER_KHZ	1000
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct class *devfreq_class;
 static struct dentry *devfreq_debugfs;

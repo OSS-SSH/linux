@@ -90,6 +90,7 @@ config INTEL_TCC_COOLING
 	  Note that, on different platforms, the behavior might be different
 	  on how fast the setting takes effect, and how much the CPU frequency
 	  is reduced.
+<<<<<<< HEAD
 
 config INTEL_MENLOW
 	tristate "Thermal Management driver for Intel menlow platform"
@@ -99,3 +100,5 @@ config INTEL_MENLOW
 	  Intel Menlow platform.
 
 	  If unsure, say N.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

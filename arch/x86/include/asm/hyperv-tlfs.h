@@ -288,6 +288,7 @@ union hv_x64_msr_hypercall_contents {
 	} __packed;
 };
 
+<<<<<<< HEAD
 union hv_vp_assist_msr_contents {
 	u64 as_uint64;
 	struct {
@@ -297,6 +298,8 @@ union hv_vp_assist_msr_contents {
 	} __packed;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct hv_reenlightenment_control {
 	__u64 vector:8;
 	__u64 reserved1:8;

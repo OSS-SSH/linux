@@ -936,6 +936,7 @@ int mmc_execute_tuning(struct mmc_card *card)
 		opcode = MMC_SEND_TUNING_BLOCK;
 
 	err = host->ops->execute_tuning(host, opcode);
+<<<<<<< HEAD
 	if (!err) {
 		mmc_retune_clear(host);
 		mmc_retune_enable(host);
@@ -946,6 +947,17 @@ int mmc_execute_tuning(struct mmc_card *card)
 	if (!host->detect_change)
 		pr_err("%s: tuning execution failed: %d\n",
 			mmc_hostname(host), err);
+=======
+
+	if (err) {
+		pr_err("%s: tuning execution failed: %d\n",
+			mmc_hostname(host), err);
+	} else {
+		host->retune_now = 0;
+		host->need_retune = 0;
+		mmc_retune_enable(host);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
@@ -2150,6 +2162,7 @@ int mmc_detect_card_removed(struct mmc_host *host)
 }
 EXPORT_SYMBOL(mmc_detect_card_removed);
 
+<<<<<<< HEAD
 int mmc_card_alternative_gpt_sector(struct mmc_card *card, sector_t *gpt_sector)
 {
 	unsigned int boot_sectors_num;
@@ -2185,6 +2198,8 @@ int mmc_card_alternative_gpt_sector(struct mmc_card *card, sector_t *gpt_sector)
 }
 EXPORT_SYMBOL(mmc_card_alternative_gpt_sector);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void mmc_rescan(struct work_struct *work)
 {
 	struct mmc_host *host =

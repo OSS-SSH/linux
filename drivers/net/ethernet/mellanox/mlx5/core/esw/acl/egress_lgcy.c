@@ -79,6 +79,7 @@ int esw_acl_egress_lgcy_setup(struct mlx5_eswitch *esw,
 	int dest_num = 0;
 	int err = 0;
 
+<<<<<<< HEAD
 	if (vport->egress.legacy.drop_counter) {
 		drop_counter = vport->egress.legacy.drop_counter;
 	} else if (MLX5_CAP_ESW_EGRESS_ACL(esw->dev, flow_counter)) {
@@ -89,6 +90,14 @@ int esw_acl_egress_lgcy_setup(struct mlx5_eswitch *esw,
 				 vport->vport, PTR_ERR(drop_counter));
 			drop_counter = NULL;
 		}
+=======
+	if (MLX5_CAP_ESW_EGRESS_ACL(esw->dev, flow_counter)) {
+		drop_counter = mlx5_fc_create(esw->dev, false);
+		if (IS_ERR(drop_counter))
+			esw_warn(esw->dev,
+				 "vport[%d] configure egress drop rule counter err(%ld)\n",
+				 vport->vport, PTR_ERR(drop_counter));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		vport->egress.legacy.drop_counter = drop_counter;
 	}
 
@@ -127,7 +136,11 @@ int esw_acl_egress_lgcy_setup(struct mlx5_eswitch *esw,
 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_DROP;
 
 	/* Attach egress drop flow counter */
+<<<<<<< HEAD
 	if (drop_counter) {
+=======
+	if (!IS_ERR_OR_NULL(drop_counter)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		flow_act.action |= MLX5_FLOW_CONTEXT_ACTION_COUNT;
 		drop_ctr_dst.type = MLX5_FLOW_DESTINATION_TYPE_COUNTER;
 		drop_ctr_dst.counter_id = mlx5_fc_id(drop_counter);
@@ -166,7 +179,11 @@ void esw_acl_egress_lgcy_cleanup(struct mlx5_eswitch *esw,
 	esw_acl_egress_table_destroy(vport);
 
 clean_drop_counter:
+<<<<<<< HEAD
 	if (vport->egress.legacy.drop_counter) {
+=======
+	if (!IS_ERR_OR_NULL(vport->egress.legacy.drop_counter)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		mlx5_fc_destroy(esw->dev, vport->egress.legacy.drop_counter);
 		vport->egress.legacy.drop_counter = NULL;
 	}

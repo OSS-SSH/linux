@@ -35,9 +35,12 @@
 #define POSSIBLE_CRTCS 1
 #define to_kmb_plane(x) container_of(x, struct kmb_plane, base_plane)
 
+<<<<<<< HEAD
 #define POSSIBLE_CRTCS		1
 #define KMB_MAX_PLANES		2
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum layer_id {
 	LAYER_0,
 	LAYER_1,
@@ -46,6 +49,11 @@ enum layer_id {
 	/* KMB_MAX_PLANES */
 };
 
+<<<<<<< HEAD
+=======
+#define KMB_MAX_PLANES 1
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 enum sub_plane_id {
 	Y_PLANE,
 	U_PLANE,

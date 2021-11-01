@@ -697,12 +697,20 @@ static int gameport_driver_probe(struct device *dev)
 	return gameport->drv ? 0 : -ENODEV;
 }
 
+<<<<<<< HEAD
 static void gameport_driver_remove(struct device *dev)
+=======
+static int gameport_driver_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct gameport *gameport = to_gameport_port(dev);
 	struct gameport_driver *drv = to_gameport_driver(dev->driver);
 
 	drv->disconnect(gameport);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void gameport_attach_driver(struct gameport_driver *drv)

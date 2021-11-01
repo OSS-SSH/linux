@@ -1573,7 +1573,10 @@ int vb2_core_qbuf(struct vb2_queue *q, unsigned int index, void *pb,
 		  struct media_request *req)
 {
 	struct vb2_buffer *vb;
+<<<<<<< HEAD
 	enum vb2_buffer_state orig_state;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	if (q->error) {
@@ -1674,7 +1677,10 @@ int vb2_core_qbuf(struct vb2_queue *q, unsigned int index, void *pb,
 	 * Add to the queued buffers list, a buffer will stay on it until
 	 * dequeued in dqbuf.
 	 */
+<<<<<<< HEAD
 	orig_state = vb->state;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_add_tail(&vb->queued_entry, &q->queued_list);
 	q->queued_count++;
 	q->waiting_for_buffers = false;
@@ -1705,6 +1711,7 @@ int vb2_core_qbuf(struct vb2_queue *q, unsigned int index, void *pb,
 	if (q->streaming && !q->start_streaming_called &&
 	    q->queued_count >= q->min_buffers_needed) {
 		ret = vb2_start_streaming(q);
+<<<<<<< HEAD
 		if (ret) {
 			/*
 			 * Since vb2_core_qbuf will return with an error,
@@ -1716,6 +1723,10 @@ int vb2_core_qbuf(struct vb2_queue *q, unsigned int index, void *pb,
 			vb->state = orig_state;
 			return ret;
 		}
+=======
+		if (ret)
+			return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	dprintk(q, 2, "qbuf of buffer %d succeeded\n", vb->index);

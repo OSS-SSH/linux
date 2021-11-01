@@ -271,7 +271,13 @@ static irqreturn_t ast2600_timer_interrupt(int irq, void *dev_id)
 }
 
 static int __init fttmr010_common_init(struct device_node *np,
+<<<<<<< HEAD
 				       bool is_aspeed, bool is_ast2600)
+=======
+		bool is_aspeed,
+		int (*timer_shutdown)(struct clock_event_device *),
+		irq_handler_t irq_handler)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct fttmr010 *fttmr010;
 	int irq;
@@ -372,6 +378,11 @@ static int __init fttmr010_common_init(struct device_node *np,
 				     fttmr010->tick_rate);
 	}
 
+<<<<<<< HEAD
+=======
+	fttmr010->timer_shutdown = timer_shutdown;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Setup clockevent timer (interrupt-driven) on timer 1.
 	 */
@@ -379,6 +390,7 @@ static int __init fttmr010_common_init(struct device_node *np,
 	writel(0, fttmr010->base + TIMER1_LOAD);
 	writel(0, fttmr010->base + TIMER1_MATCH1);
 	writel(0, fttmr010->base + TIMER1_MATCH2);
+<<<<<<< HEAD
 
 	if (is_ast2600) {
 		fttmr010->timer_shutdown = ast2600_timer_shutdown;
@@ -391,6 +403,10 @@ static int __init fttmr010_common_init(struct device_node *np,
 				  IRQF_TIMER, "FTTMR010-TIMER1",
 				  &fttmr010->clkevt);
 	}
+=======
+	ret = request_irq(irq, irq_handler, IRQF_TIMER,
+			  "FTTMR010-TIMER1", &fttmr010->clkevt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		pr_err("FTTMR010-TIMER1 no IRQ\n");
 		goto out_unmap;
@@ -438,17 +454,35 @@ out_disable_clock:
 
 static __init int ast2600_timer_init(struct device_node *np)
 {
+<<<<<<< HEAD
 	return fttmr010_common_init(np, true, true);
+=======
+	return fttmr010_common_init(np, true,
+			ast2600_timer_shutdown,
+			ast2600_timer_interrupt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static __init int aspeed_timer_init(struct device_node *np)
 {
+<<<<<<< HEAD
 	return fttmr010_common_init(np, true, false);
+=======
+	return fttmr010_common_init(np, true,
+			fttmr010_timer_shutdown,
+			fttmr010_timer_interrupt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static __init int fttmr010_timer_init(struct device_node *np)
 {
+<<<<<<< HEAD
 	return fttmr010_common_init(np, false, false);
+=======
+	return fttmr010_common_init(np, false,
+			fttmr010_timer_shutdown,
+			fttmr010_timer_interrupt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 TIMER_OF_DECLARE(fttmr010, "faraday,fttmr010", fttmr010_timer_init);

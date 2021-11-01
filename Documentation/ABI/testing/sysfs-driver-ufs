@@ -1298,6 +1298,7 @@ Description:	This node is used to set or display whether UFS WriteBooster is
 		(if the platform supports UFSHCD_CAP_CLK_SCALING). For a
 		platform that doesn't support UFSHCD_CAP_CLK_SCALING, we can
 		disable/enable WriteBooster through this sysfs node.
+<<<<<<< HEAD
 
 What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/hpb_version
 Date:		June 2021
@@ -1534,3 +1535,5 @@ Contact:	Avri Altman <avri.altman@wdc.com>
 Description:	In host control mode the host is the originator of map requests.
 		To avoid flooding the device with map requests, use a simple throttling
 		mechanism that limits the number of inflight map requests.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

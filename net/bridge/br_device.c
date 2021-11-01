@@ -27,14 +27,21 @@ EXPORT_SYMBOL_GPL(nf_br_ops);
 /* net device transmit always called with BH disabled */
 netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
 {
+<<<<<<< HEAD
 	struct net_bridge_mcast_port *pmctx_null = NULL;
 	struct net_bridge *br = netdev_priv(dev);
 	struct net_bridge_mcast *brmctx = &br->multicast_ctx;
+=======
+	struct net_bridge *br = netdev_priv(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct net_bridge_fdb_entry *dst;
 	struct net_bridge_mdb_entry *mdst;
 	const struct nf_br_ops *nf_ops;
 	u8 state = BR_STATE_FORWARDING;
+<<<<<<< HEAD
 	struct net_bridge_vlan *vlan;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const unsigned char *dest;
 	u16 vid = 0;
 
@@ -56,8 +63,12 @@ netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
 	skb_reset_mac_header(skb);
 	skb_pull(skb, ETH_HLEN);
 
+<<<<<<< HEAD
 	if (!br_allowed_ingress(br, br_vlan_group_rcu(br), skb, &vid,
 				&state, &vlan))
+=======
+	if (!br_allowed_ingress(br, br_vlan_group_rcu(br), skb, &vid, &state))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 
 	if (IS_ENABLED(CONFIG_INET) &&
@@ -86,15 +97,26 @@ netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
 			br_flood(br, skb, BR_PKT_MULTICAST, false, true);
 			goto out;
 		}
+<<<<<<< HEAD
 		if (br_multicast_rcv(&brmctx, &pmctx_null, vlan, skb, vid)) {
+=======
+		if (br_multicast_rcv(br, NULL, skb, vid)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			kfree_skb(skb);
 			goto out;
 		}
 
+<<<<<<< HEAD
 		mdst = br_mdb_get(brmctx, skb, vid);
 		if ((mdst || BR_INPUT_SKB_CB_MROUTERS_ONLY(skb)) &&
 		    br_multicast_querier_exists(brmctx, eth_hdr(skb), mdst))
 			br_multicast_flood(mdst, skb, brmctx, false, true);
+=======
+		mdst = br_mdb_get(br, skb, vid);
+		if ((mdst || BR_INPUT_SKB_CB_MROUTERS_ONLY(skb)) &&
+		    br_multicast_querier_exists(br, eth_hdr(skb), mdst))
+			br_multicast_flood(mdst, skb, false, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			br_flood(br, skb, BR_PKT_MULTICAST, false, true);
 	} else if ((dst = br_fdb_find_rcu(br, dest, vid)) != NULL) {
@@ -454,7 +476,11 @@ static const struct net_device_ops br_netdev_ops = {
 	.ndo_set_rx_mode	 = br_dev_set_multicast_list,
 	.ndo_change_rx_flags	 = br_dev_change_rx_flags,
 	.ndo_change_mtu		 = br_change_mtu,
+<<<<<<< HEAD
 	.ndo_siocdevprivate	 = br_dev_siocdevprivate,
+=======
+	.ndo_do_ioctl		 = br_dev_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_NET_POLL_CONTROLLER
 	.ndo_netpoll_setup	 = br_netpoll_setup,
 	.ndo_netpoll_cleanup	 = br_netpoll_cleanup,

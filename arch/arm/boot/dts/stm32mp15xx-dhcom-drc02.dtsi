@@ -159,7 +159,10 @@
 &usbphyc_port0 {
 	phy-supply = <&vdd_usb>;
 };
+<<<<<<< HEAD
 
 &usbphyc_port1 {
 	phy-supply = <&vdd_usb>;
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -18,9 +18,14 @@
 #ifdef __LP64__
 #define __ARCH_WANT_NEW_STAT
 #define __ARCH_WANT_SET_GET_RLIMIT
+<<<<<<< HEAD
 #endif /* __LP64__ */
 
 #define __ARCH_WANT_SYS_CLONE3
+=======
+#define __ARCH_WANT_SYS_CLONE3
+#endif /* __LP64__ */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm-generic/unistd.h>
 

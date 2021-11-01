@@ -13,6 +13,7 @@ struct i2c_client;
 struct bmc150_accel_chip_info;
 struct bmc150_accel_interrupt_info;
 
+<<<<<<< HEAD
 /*
  * We can often guess better than "UNKNOWN" based on the device IDs
  * but unfortunately this information is not always accurate. There are some
@@ -29,6 +30,8 @@ enum bmc150_type {
 	BOSCH_BMC156,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct bmc150_accel_interrupt {
 	const struct bmc150_accel_interrupt_info *info;
 	atomic_t users;
@@ -78,7 +81,10 @@ struct bmc150_accel_data {
 	int ev_enable_state;
 	int64_t timestamp, old_timestamp; /* Only used in hw fifo mode. */
 	const struct bmc150_accel_chip_info *chip_info;
+<<<<<<< HEAD
 	enum bmc150_type type;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct i2c_client *second_device;
 	void (*resume_callback)(struct device *dev);
 	struct delayed_work resume_work;
@@ -86,8 +92,12 @@ struct bmc150_accel_data {
 };
 
 int bmc150_accel_core_probe(struct device *dev, struct regmap *regmap, int irq,
+<<<<<<< HEAD
 			    enum bmc150_type type, const char *name,
 			    bool block_supported);
+=======
+			    const char *name, bool block_supported);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int bmc150_accel_core_remove(struct device *dev);
 extern const struct dev_pm_ops bmc150_accel_pm_ops;
 extern const struct regmap_config bmc150_regmap_conf;

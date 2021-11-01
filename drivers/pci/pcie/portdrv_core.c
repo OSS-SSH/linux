@@ -257,6 +257,7 @@ static int get_port_device_capability(struct pci_dev *dev)
 		services |= PCIE_PORT_SERVICE_DPC;
 
 	if (pci_pcie_type(dev) == PCI_EXP_TYPE_DOWNSTREAM ||
+<<<<<<< HEAD
 	    pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT) {
 		u32 linkcap;
 
@@ -264,6 +265,10 @@ static int get_port_device_capability(struct pci_dev *dev)
 		if (linkcap & PCI_EXP_LNKCAP_LBNC)
 			services |= PCIE_PORT_SERVICE_BWNOTIF;
 	}
+=======
+	    pci_pcie_type(dev) == PCI_EXP_TYPE_ROOT_PORT)
+		services |= PCIE_PORT_SERVICE_BWNOTIF;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return services;
 }

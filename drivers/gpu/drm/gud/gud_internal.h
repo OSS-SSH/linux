@@ -5,7 +5,10 @@
 
 #include <linux/list.h>
 #include <linux/mutex.h>
+<<<<<<< HEAD
 #include <linux/scatterlist.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/usb.h>
 #include <linux/workqueue.h>
 #include <uapi/drm/drm_fourcc.h>
@@ -27,7 +30,10 @@ struct gud_device {
 	unsigned int bulk_pipe;
 	void *bulk_buf;
 	size_t bulk_len;
+<<<<<<< HEAD
 	struct sg_table bulk_sgt;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	u8 compression;
 	void *lz4_comp_mem;

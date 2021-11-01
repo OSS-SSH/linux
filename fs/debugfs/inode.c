@@ -528,7 +528,11 @@ void debugfs_create_file_size(const char *name, umode_t mode,
 {
 	struct dentry *de = debugfs_create_file(name, mode, parent, data, fops);
 
+<<<<<<< HEAD
 	if (!IS_ERR(de))
+=======
+	if (de)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		d_inode(de)->i_size = file_size;
 }
 EXPORT_SYMBOL_GPL(debugfs_create_file_size);

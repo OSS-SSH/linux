@@ -8,8 +8,19 @@ ksft_xfail=2
 ksft_xpass=3
 ksft_skip=4
 
+<<<<<<< HEAD
 SPECFILE=veth.spec
 XSKOBJ=xdpxceiver
+=======
+GREEN='\033[0;92m'
+YELLOW='\033[0;93m'
+RED='\033[0;31m'
+NC='\033[0m'
+STACK_LIM=131072
+SPECFILE=veth.spec
+XSKOBJ=xdpxceiver
+NUMPKTS=10000
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 validate_root_exec()
 {
@@ -44,12 +55,31 @@ validate_veth_spec_file()
 test_status()
 {
 	statusval=$1
+<<<<<<< HEAD
 	if [ $statusval -eq 2 ]; then
 		echo -e "$2: [ FAIL ]"
 	elif [ $statusval -eq 1 ]; then
 		echo -e "$2: [ SKIPPED ]"
 	elif [ $statusval -eq 0 ]; then
 		echo -e "$2: [ PASS ]"
+=======
+	if [ -n "${colorconsole+set}" ]; then
+		if [ $statusval -eq 2 ]; then
+			echo -e "${YELLOW}$2${NC}: [ ${RED}FAIL${NC} ]"
+		elif [ $statusval -eq 1 ]; then
+			echo -e "${YELLOW}$2${NC}: [ ${RED}SKIPPED${NC} ]"
+		elif [ $statusval -eq 0 ]; then
+			echo -e "${YELLOW}$2${NC}: [ ${GREEN}PASS${NC} ]"
+		fi
+	else
+		if [ $statusval -eq 2 ]; then
+			echo -e "$2: [ FAIL ]"
+		elif [ $statusval -eq 1 ]; then
+			echo -e "$2: [ SKIPPED ]"
+		elif [ $statusval -eq 0 ]; then
+			echo -e "$2: [ PASS ]"
+		fi
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fi
 }
 
@@ -91,5 +121,9 @@ validate_ip_utility()
 
 execxdpxceiver()
 {
+<<<<<<< HEAD
 	./${XSKOBJ} -i ${VETH0} -i ${VETH1},${NS1} ${VERBOSE_ARG} ${DUMP_PKTS_ARG}
+=======
+	./${XSKOBJ} -i ${VETH0} -i ${VETH1},${NS1} -C ${NUMPKTS} ${VERBOSE_ARG} ${DUMP_PKTS_ARG}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

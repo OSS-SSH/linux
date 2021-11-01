@@ -51,9 +51,17 @@ static const struct sysfs_ops nilfs_##name##_attr_ops = { \
 #define NILFS_DEV_INT_GROUP_TYPE(name, parent_name) \
 static void nilfs_##name##_attr_release(struct kobject *kobj) \
 { \
+<<<<<<< HEAD
 	struct nilfs_sysfs_##parent_name##_subgroups *subgroups = container_of(kobj, \
 						struct nilfs_sysfs_##parent_name##_subgroups, \
 						sg_##name##_kobj); \
+=======
+	struct nilfs_sysfs_##parent_name##_subgroups *subgroups; \
+	struct the_nilfs *nilfs = container_of(kobj->parent, \
+						struct the_nilfs, \
+						ns_##parent_name##_kobj); \
+	subgroups = nilfs->ns_##parent_name##_subgroups; \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	complete(&subgroups->sg_##name##_kobj_unregister); \
 } \
 static struct kobj_type nilfs_##name##_ktype = { \
@@ -79,12 +87,21 @@ static int nilfs_sysfs_create_##name##_group(struct the_nilfs *nilfs) \
 	err = kobject_init_and_add(kobj, &nilfs_##name##_ktype, parent, \
 				    #name); \
 	if (err) \
+<<<<<<< HEAD
 		kobject_put(kobj); \
 	return err; \
 } \
 static void nilfs_sysfs_delete_##name##_group(struct the_nilfs *nilfs) \
 { \
 	kobject_put(&nilfs->ns_##parent_name##_subgroups->sg_##name##_kobj); \
+=======
+		return err; \
+	return 0; \
+} \
+static void nilfs_sysfs_delete_##name##_group(struct the_nilfs *nilfs) \
+{ \
+	kobject_del(&nilfs->ns_##parent_name##_subgroups->sg_##name##_kobj); \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /************************************************************************
@@ -195,14 +212,24 @@ int nilfs_sysfs_create_snapshot_group(struct nilfs_root *root)
 	}
 
 	if (err)
+<<<<<<< HEAD
 		kobject_put(&root->snapshot_kobj);
 
 	return err;
+=======
+		return err;
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void nilfs_sysfs_delete_snapshot_group(struct nilfs_root *root)
 {
+<<<<<<< HEAD
 	kobject_put(&root->snapshot_kobj);
+=======
+	kobject_del(&root->snapshot_kobj);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /************************************************************************
@@ -984,7 +1011,11 @@ int nilfs_sysfs_create_device_group(struct super_block *sb)
 	err = kobject_init_and_add(&nilfs->ns_dev_kobj, &nilfs_dev_ktype, NULL,
 				    "%s", sb->s_id);
 	if (err)
+<<<<<<< HEAD
 		goto cleanup_dev_kobject;
+=======
+		goto free_dev_subgroups;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = nilfs_sysfs_create_mounted_snapshots_group(nilfs);
 	if (err)
@@ -1021,7 +1052,13 @@ delete_mounted_snapshots_group:
 	nilfs_sysfs_delete_mounted_snapshots_group(nilfs);
 
 cleanup_dev_kobject:
+<<<<<<< HEAD
 	kobject_put(&nilfs->ns_dev_kobj);
+=======
+	kobject_del(&nilfs->ns_dev_kobj);
+
+free_dev_subgroups:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(nilfs->ns_dev_subgroups);
 
 failed_create_device_group:

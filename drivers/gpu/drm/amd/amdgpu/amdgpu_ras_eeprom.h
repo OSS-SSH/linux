@@ -28,11 +28,18 @@
 
 struct amdgpu_device;
 
+<<<<<<< HEAD
 enum amdgpu_ras_eeprom_err_type {
 	AMDGPU_RAS_EEPROM_ERR_NA,
 	AMDGPU_RAS_EEPROM_ERR_RECOVERABLE,
 	AMDGPU_RAS_EEPROM_ERR_NON_RECOVERABLE,
 	AMDGPU_RAS_EEPROM_ERR_COUNT,
+=======
+enum amdgpu_ras_eeprom_err_type{
+	AMDGPU_RAS_EEPROM_ERR_PLACE_HOLDER,
+	AMDGPU_RAS_EEPROM_ERR_RECOVERABLE,
+	AMDGPU_RAS_EEPROM_ERR_NON_RECOVERABLE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct amdgpu_ras_eeprom_table_header {
@@ -41,6 +48,7 @@ struct amdgpu_ras_eeprom_table_header {
 	uint32_t first_rec_offset;
 	uint32_t tbl_size;
 	uint32_t checksum;
+<<<<<<< HEAD
 } __packed;
 
 struct amdgpu_ras_eeprom_control {
@@ -80,6 +88,17 @@ struct amdgpu_ras_eeprom_control {
 	/* Protect table access via this mutex.
 	 */
 	struct mutex ras_tbl_mutex;
+=======
+}__attribute__((__packed__));
+
+struct amdgpu_ras_eeprom_control {
+	struct amdgpu_ras_eeprom_table_header tbl_hdr;
+	uint32_t next_addr;
+	unsigned int num_recs;
+	struct mutex tbl_mutex;
+	uint32_t tbl_byte_sum;
+	uint16_t i2c_address; // 8-bit represented address
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -105,15 +124,23 @@ struct eeprom_table_record {
 
 	unsigned char mem_channel;
 	unsigned char mcumc_id;
+<<<<<<< HEAD
 } __packed;
 
 int amdgpu_ras_eeprom_init(struct amdgpu_ras_eeprom_control *control,
 			   bool *exceed_err_limit);
 
+=======
+}__attribute__((__packed__));
+
+int amdgpu_ras_eeprom_init(struct amdgpu_ras_eeprom_control *control,
+			bool *exceed_err_limit);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int amdgpu_ras_eeprom_reset_table(struct amdgpu_ras_eeprom_control *control);
 
 bool amdgpu_ras_eeprom_check_err_threshold(struct amdgpu_device *adev);
 
+<<<<<<< HEAD
 int amdgpu_ras_eeprom_read(struct amdgpu_ras_eeprom_control *control,
 			   struct eeprom_table_record *records, const u32 num);
 
@@ -126,5 +153,15 @@ void amdgpu_ras_debugfs_set_ret_size(struct amdgpu_ras_eeprom_control *control);
 
 extern const struct file_operations amdgpu_ras_debugfs_eeprom_size_ops;
 extern const struct file_operations amdgpu_ras_debugfs_eeprom_table_ops;
+=======
+int amdgpu_ras_eeprom_process_recods(struct amdgpu_ras_eeprom_control *control,
+					    struct eeprom_table_record *records,
+					    bool write,
+					    int num);
+
+inline uint32_t amdgpu_ras_eeprom_get_record_max_length(void);
+
+void amdgpu_ras_eeprom_test(struct amdgpu_ras_eeprom_control *control);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif // _AMDGPU_RAS_EEPROM_H

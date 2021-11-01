@@ -97,6 +97,7 @@ s32 brcmf_fil_bsscfg_data_get(struct brcmf_if *ifp, char *name, void *data,
 			      u32 len);
 s32 brcmf_fil_bsscfg_int_set(struct brcmf_if *ifp, char *name, u32 data);
 s32 brcmf_fil_bsscfg_int_get(struct brcmf_if *ifp, char *name, u32 *data);
+<<<<<<< HEAD
 s32 brcmf_fil_xtlv_data_set(struct brcmf_if *ifp, char *name, u16 id,
 			    void *data, u32 len);
 s32 brcmf_fil_xtlv_data_get(struct brcmf_if *ifp, char *name, u16 id,
@@ -105,5 +106,7 @@ s32 brcmf_fil_xtlv_int_set(struct brcmf_if *ifp, char *name, u16 id, u32 data);
 s32 brcmf_fil_xtlv_int_get(struct brcmf_if *ifp, char *name, u16 id, u32 *data);
 s32 brcmf_fil_xtlv_int8_get(struct brcmf_if *ifp, char *name, u16 id, u8 *data);
 s32 brcmf_fil_xtlv_int16_get(struct brcmf_if *ifp, char *name, u16 id, u16 *data);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* _fwil_h_ */

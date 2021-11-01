@@ -931,7 +931,11 @@ struct bfq_group {
 
 	void *bfqd;
 
+<<<<<<< HEAD
 	struct bfq_queue *async_bfqq[2][IOPRIO_NR_LEVELS];
+=======
+	struct bfq_queue *async_bfqq[2][IOPRIO_BE_NR];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct bfq_queue *async_idle_bfqq;
 
 	struct bfq_entity *my_entity;
@@ -948,13 +952,22 @@ struct bfq_group {
 	struct bfq_entity entity;
 	struct bfq_sched_data sched_data;
 
+<<<<<<< HEAD
 	struct bfq_queue *async_bfqq[2][IOPRIO_NR_LEVELS];
+=======
+	struct bfq_queue *async_bfqq[2][IOPRIO_BE_NR];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct bfq_queue *async_idle_bfqq;
 
 	struct rb_root rq_pos_tree;
 };
 #endif
 
+<<<<<<< HEAD
+=======
+struct bfq_queue *bfq_entity_to_bfqq(struct bfq_entity *entity);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* --------------- main algorithm interface ----------------- */
 
 #define BFQ_SERVICE_TREE_INIT	((struct bfq_service_tree)		\

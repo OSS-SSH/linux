@@ -450,8 +450,13 @@ static int enforce_temp_range(struct device *dev, int trip_temp)
 
 	temp = clamp_val(trip_temp, min_low_temp, max_high_temp);
 	if (temp != trip_temp)
+<<<<<<< HEAD
 		dev_dbg(dev, "soctherm: trip temperature %d forced to %d\n",
 			trip_temp, temp);
+=======
+		dev_info(dev, "soctherm: trip temperature %d forced to %d\n",
+			 trip_temp, temp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return temp;
 }
 

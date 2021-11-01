@@ -1087,8 +1087,15 @@ int x86_schedule_events(struct cpu_hw_events *cpuc, int n, int *assign)
 	 * validate an event group (assign == NULL)
 	 */
 	if (!unsched && assign) {
+<<<<<<< HEAD
 		for (i = 0; i < n; i++)
 			static_call_cond(x86_pmu_commit_scheduling)(cpuc, i, assign[i]);
+=======
+		for (i = 0; i < n; i++) {
+			e = cpuc->event_list[i];
+			static_call_cond(x86_pmu_commit_scheduling)(cpuc, i, assign[i]);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		for (i = n0; i < n; i++) {
 			e = cpuc->event_list[i];
@@ -2465,7 +2472,10 @@ static int x86_pmu_event_init(struct perf_event *event)
 	if (err) {
 		if (event->destroy)
 			event->destroy(event);
+<<<<<<< HEAD
 		event->destroy = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (READ_ONCE(x86_pmu.attr_rdpmc) &&
@@ -2488,6 +2498,7 @@ void perf_clear_dirty_counters(void)
 		return;
 
 	for_each_set_bit(i, cpuc->dirty, X86_PMC_IDX_MAX) {
+<<<<<<< HEAD
 		if (i >= INTEL_PMC_IDX_FIXED) {
 			/* Metrics and fake events don't have corresponding HW counters. */
 			if ((i - INTEL_PMC_IDX_FIXED) >= hybrid(cpuc->pmu, num_counters_fixed))
@@ -2497,6 +2508,15 @@ void perf_clear_dirty_counters(void)
 		} else {
 			wrmsrl(x86_pmu_event_addr(i), 0);
 		}
+=======
+		/* Metrics and fake events don't have corresponding HW counters. */
+		if (is_metric_idx(i) || (i == INTEL_PMC_IDX_FIXED_VLBR))
+			continue;
+		else if (i >= INTEL_PMC_IDX_FIXED)
+			wrmsrl(MSR_ARCH_PERFMON_FIXED_CTR0 + (i - INTEL_PMC_IDX_FIXED), 0);
+		else
+			wrmsrl(x86_pmu_event_addr(i), 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	bitmap_zero(cpuc->dirty, X86_PMC_IDX_MAX);

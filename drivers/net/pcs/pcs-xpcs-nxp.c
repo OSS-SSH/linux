@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 /* Copyright 2021 NXP
+=======
+/* Copyright 2021 NXP Semiconductors
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #include <linux/pcs/pcs-xpcs.h>
 #include "pcs-xpcs.h"

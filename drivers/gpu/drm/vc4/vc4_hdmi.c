@@ -46,7 +46,10 @@
 #include <linux/rational.h>
 #include <linux/reset.h>
 #include <sound/dmaengine_pcm.h>
+<<<<<<< HEAD
 #include <sound/hdmi-codec.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <sound/pcm_drm_eld.h>
 #include <sound/pcm_params.h>
 #include <sound/soc.h>
@@ -167,6 +170,11 @@ vc4_hdmi_connector_detect(struct drm_connector *connector, bool force)
 	struct vc4_hdmi *vc4_hdmi = connector_to_vc4_hdmi(connector);
 	bool connected = false;
 
+<<<<<<< HEAD
+=======
+	WARN_ON(pm_runtime_resume_and_get(&vc4_hdmi->pdev->dev));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (vc4_hdmi->hpd_gpio &&
 	    gpiod_get_value_cansleep(vc4_hdmi->hpd_gpio)) {
 		connected = true;
@@ -187,10 +195,18 @@ vc4_hdmi_connector_detect(struct drm_connector *connector, bool force)
 			}
 		}
 
+<<<<<<< HEAD
+=======
+		pm_runtime_put(&vc4_hdmi->pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return connector_status_connected;
 	}
 
 	cec_phys_addr_invalidate(vc4_hdmi->cec_adap);
+<<<<<<< HEAD
+=======
+	pm_runtime_put(&vc4_hdmi->pdev->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return connector_status_disconnected;
 }
 
@@ -474,10 +490,22 @@ static void vc4_hdmi_set_spd_infoframe(struct drm_encoder *encoder)
 static void vc4_hdmi_set_audio_infoframe(struct drm_encoder *encoder)
 {
 	struct vc4_hdmi *vc4_hdmi = encoder_to_vc4_hdmi(encoder);
+<<<<<<< HEAD
 	struct hdmi_audio_infoframe *audio = &vc4_hdmi->audio.infoframe;
 	union hdmi_infoframe frame;
 
 	memcpy(&frame.audio, audio, sizeof(*audio));
+=======
+	union hdmi_infoframe frame;
+
+	hdmi_audio_infoframe_init(&frame.audio);
+
+	frame.audio.coding_type = HDMI_AUDIO_CODING_TYPE_STREAM;
+	frame.audio.sample_frequency = HDMI_AUDIO_SAMPLE_FREQUENCY_STREAM;
+	frame.audio.sample_size = HDMI_AUDIO_SAMPLE_SIZE_STREAM;
+	frame.audio.channels = vc4_hdmi->audio.channels;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vc4_hdmi_write_infoframe(encoder, &frame);
 }
 
@@ -605,12 +633,21 @@ static void vc4_hdmi_encoder_post_crtc_disable(struct drm_encoder *encoder,
 
 	HDMI_WRITE(HDMI_RAM_PACKET_CONFIG, 0);
 
+<<<<<<< HEAD
 	HDMI_WRITE(HDMI_VID_CTL, HDMI_READ(HDMI_VID_CTL) | VC4_HD_VID_CTL_CLRRGB);
 
 	mdelay(1);
 
 	HDMI_WRITE(HDMI_VID_CTL,
 		   HDMI_READ(HDMI_VID_CTL) & ~VC4_HD_VID_CTL_ENABLE);
+=======
+	HDMI_WRITE(HDMI_VID_CTL, HDMI_READ(HDMI_VID_CTL) |
+		   VC4_HD_VID_CTL_CLRRGB | VC4_HD_VID_CTL_CLRSYNC);
+
+	HDMI_WRITE(HDMI_VID_CTL,
+		   HDMI_READ(HDMI_VID_CTL) | VC4_HD_VID_CTL_BLANKPIX);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vc4_hdmi_disable_scrambling(encoder);
 }
 
@@ -620,6 +657,7 @@ static void vc4_hdmi_encoder_post_crtc_powerdown(struct drm_encoder *encoder,
 	struct vc4_hdmi *vc4_hdmi = encoder_to_vc4_hdmi(encoder);
 	int ret;
 
+<<<<<<< HEAD
 	HDMI_WRITE(HDMI_VID_CTL,
 		   HDMI_READ(HDMI_VID_CTL) | VC4_HD_VID_CTL_BLANKPIX);
 
@@ -628,6 +666,15 @@ static void vc4_hdmi_encoder_post_crtc_powerdown(struct drm_encoder *encoder,
 
 	clk_disable_unprepare(vc4_hdmi->pixel_bvb_clock);
 	clk_disable_unprepare(vc4_hdmi->hsm_clock);
+=======
+	if (vc4_hdmi->variant->phy_disable)
+		vc4_hdmi->variant->phy_disable(vc4_hdmi);
+
+	HDMI_WRITE(HDMI_VID_CTL,
+		   HDMI_READ(HDMI_VID_CTL) & ~VC4_HD_VID_CTL_ENABLE);
+
+	clk_disable_unprepare(vc4_hdmi->pixel_bvb_clock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	clk_disable_unprepare(vc4_hdmi->pixel_clock);
 
 	ret = pm_runtime_put(&vc4_hdmi->pdev->dev);
@@ -938,6 +985,7 @@ static void vc4_hdmi_encoder_pre_crtc_configure(struct drm_encoder *encoder,
 		return;
 	}
 
+<<<<<<< HEAD
 	ret = clk_prepare_enable(vc4_hdmi->hsm_clock);
 	if (ret) {
 		DRM_ERROR("Failed to turn on HSM clock: %d\n", ret);
@@ -945,6 +993,8 @@ static void vc4_hdmi_encoder_pre_crtc_configure(struct drm_encoder *encoder,
 		return;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vc4_hdmi_cec_update_clk_div(vc4_hdmi);
 
 	if (pixel_rate > 297000000)
@@ -957,7 +1007,10 @@ static void vc4_hdmi_encoder_pre_crtc_configure(struct drm_encoder *encoder,
 	ret = clk_set_min_rate(vc4_hdmi->pixel_bvb_clock, bvb_rate);
 	if (ret) {
 		DRM_ERROR("Failed to set pixel bvb clock rate: %d\n", ret);
+<<<<<<< HEAD
 		clk_disable_unprepare(vc4_hdmi->hsm_clock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		clk_disable_unprepare(vc4_hdmi->pixel_clock);
 		return;
 	}
@@ -965,7 +1018,10 @@ static void vc4_hdmi_encoder_pre_crtc_configure(struct drm_encoder *encoder,
 	ret = clk_prepare_enable(vc4_hdmi->pixel_bvb_clock);
 	if (ret) {
 		DRM_ERROR("Failed to turn on pixel bvb clock: %d\n", ret);
+<<<<<<< HEAD
 		clk_disable_unprepare(vc4_hdmi->hsm_clock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		clk_disable_unprepare(vc4_hdmi->pixel_clock);
 		return;
 	}
@@ -1017,7 +1073,10 @@ static void vc4_hdmi_encoder_post_crtc_enable(struct drm_encoder *encoder,
 
 	HDMI_WRITE(HDMI_VID_CTL,
 		   VC4_HD_VID_CTL_ENABLE |
+<<<<<<< HEAD
 		   VC4_HD_VID_CTL_CLRRGB |
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   VC4_HD_VID_CTL_UNDERFLOW_ENABLE |
 		   VC4_HD_VID_CTL_FRAME_COUNTER_RESET |
 		   (vsync_pos ? 0 : VC4_HD_VID_CTL_VSYNC_LOW) |
@@ -1176,13 +1235,21 @@ static u32 vc5_hdmi_channel_map(struct vc4_hdmi *vc4_hdmi, u32 channel_mask)
 }
 
 /* HDMI audio codec callbacks */
+<<<<<<< HEAD
 static void vc4_hdmi_audio_set_mai_clock(struct vc4_hdmi *vc4_hdmi,
 					 unsigned int samplerate)
+=======
+static void vc4_hdmi_audio_set_mai_clock(struct vc4_hdmi *vc4_hdmi)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u32 hsm_clock = clk_get_rate(vc4_hdmi->audio_clock);
 	unsigned long n, m;
 
+<<<<<<< HEAD
 	rational_best_approximation(hsm_clock, samplerate,
+=======
+	rational_best_approximation(hsm_clock, vc4_hdmi->audio.samplerate,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				    VC4_HD_MAI_SMP_N_MASK >>
 				    VC4_HD_MAI_SMP_N_SHIFT,
 				    (VC4_HD_MAI_SMP_M_MASK >>
@@ -1194,11 +1261,19 @@ static void vc4_hdmi_audio_set_mai_clock(struct vc4_hdmi *vc4_hdmi,
 		   VC4_SET_FIELD(m - 1, VC4_HD_MAI_SMP_M));
 }
 
+<<<<<<< HEAD
 static void vc4_hdmi_set_n_cts(struct vc4_hdmi *vc4_hdmi, unsigned int samplerate)
+=======
+static void vc4_hdmi_set_n_cts(struct vc4_hdmi *vc4_hdmi)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct drm_encoder *encoder = &vc4_hdmi->encoder.base.base;
 	struct drm_crtc *crtc = encoder->crtc;
 	const struct drm_display_mode *mode = &crtc->state->adjusted_mode;
+<<<<<<< HEAD
+=======
+	u32 samplerate = vc4_hdmi->audio.samplerate;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 n, cts;
 	u64 tmp;
 
@@ -1227,10 +1302,25 @@ static inline struct vc4_hdmi *dai_to_hdmi(struct snd_soc_dai *dai)
 	return snd_soc_card_get_drvdata(card);
 }
 
+<<<<<<< HEAD
 static int vc4_hdmi_audio_startup(struct device *dev, void *data)
 {
 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
 	struct drm_encoder *encoder = &vc4_hdmi->encoder.base.base;
+=======
+static int vc4_hdmi_audio_startup(struct snd_pcm_substream *substream,
+				  struct snd_soc_dai *dai)
+{
+	struct vc4_hdmi *vc4_hdmi = dai_to_hdmi(dai);
+	struct drm_encoder *encoder = &vc4_hdmi->encoder.base.base;
+	struct drm_connector *connector = &vc4_hdmi->connector;
+	int ret;
+
+	if (vc4_hdmi->audio.substream && vc4_hdmi->audio.substream != substream)
+		return -EINVAL;
+
+	vc4_hdmi->audio.substream = substream;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * If the HDMI encoder hasn't probed, or the encoder is
@@ -1240,6 +1330,7 @@ static int vc4_hdmi_audio_startup(struct device *dev, void *data)
 				VC4_HDMI_RAM_PACKET_ENABLE))
 		return -ENODEV;
 
+<<<<<<< HEAD
 	vc4_hdmi->audio.streaming = true;
 
 	HDMI_WRITE(HDMI_MAI_CTL,
@@ -1252,6 +1343,17 @@ static int vc4_hdmi_audio_startup(struct device *dev, void *data)
 	if (vc4_hdmi->variant->phy_rng_enable)
 		vc4_hdmi->variant->phy_rng_enable(vc4_hdmi);
 
+=======
+	ret = snd_pcm_hw_constraint_eld(substream->runtime, connector->eld);
+	if (ret)
+		return ret;
+
+	return 0;
+}
+
+static int vc4_hdmi_audio_set_fmt(struct snd_soc_dai *dai, unsigned int fmt)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1271,6 +1373,7 @@ static void vc4_hdmi_audio_reset(struct vc4_hdmi *vc4_hdmi)
 	HDMI_WRITE(HDMI_MAI_CTL, VC4_HD_MAI_CTL_FLUSH);
 }
 
+<<<<<<< HEAD
 static void vc4_hdmi_audio_shutdown(struct device *dev, void *data)
 {
 	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
@@ -1361,6 +1464,50 @@ static int vc4_hdmi_audio_prepare(struct device *dev, void *data,
 				 VC4_HDMI_MAI_FORMAT_SAMPLE_RATE) |
 		   VC4_SET_FIELD(mai_audio_format,
 				 VC4_HDMI_MAI_FORMAT_AUDIO_FORMAT));
+=======
+static void vc4_hdmi_audio_shutdown(struct snd_pcm_substream *substream,
+				    struct snd_soc_dai *dai)
+{
+	struct vc4_hdmi *vc4_hdmi = dai_to_hdmi(dai);
+
+	if (substream != vc4_hdmi->audio.substream)
+		return;
+
+	vc4_hdmi_audio_reset(vc4_hdmi);
+
+	vc4_hdmi->audio.substream = NULL;
+}
+
+/* HDMI audio codec callbacks */
+static int vc4_hdmi_audio_hw_params(struct snd_pcm_substream *substream,
+				    struct snd_pcm_hw_params *params,
+				    struct snd_soc_dai *dai)
+{
+	struct vc4_hdmi *vc4_hdmi = dai_to_hdmi(dai);
+	struct drm_encoder *encoder = &vc4_hdmi->encoder.base.base;
+	struct device *dev = &vc4_hdmi->pdev->dev;
+	u32 audio_packet_config, channel_mask;
+	u32 channel_map;
+
+	if (substream != vc4_hdmi->audio.substream)
+		return -EINVAL;
+
+	dev_dbg(dev, "%s: %u Hz, %d bit, %d channels\n", __func__,
+		params_rate(params), params_width(params),
+		params_channels(params));
+
+	vc4_hdmi->audio.channels = params_channels(params);
+	vc4_hdmi->audio.samplerate = params_rate(params);
+
+	HDMI_WRITE(HDMI_MAI_CTL,
+		   VC4_HD_MAI_CTL_RESET |
+		   VC4_HD_MAI_CTL_FLUSH |
+		   VC4_HD_MAI_CTL_DLATE |
+		   VC4_HD_MAI_CTL_ERRORE |
+		   VC4_HD_MAI_CTL_ERRORF);
+
+	vc4_hdmi_audio_set_mai_clock(vc4_hdmi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The B frame identifier should match the value used by alsa-lib (8) */
 	audio_packet_config =
@@ -1368,6 +1515,7 @@ static int vc4_hdmi_audio_prepare(struct device *dev, void *data,
 		VC4_HDMI_AUDIO_PACKET_ZERO_DATA_ON_INACTIVE_CHANNELS |
 		VC4_SET_FIELD(0x8, VC4_HDMI_AUDIO_PACKET_B_FRAME_IDENTIFIER);
 
+<<<<<<< HEAD
 	channel_mask = GENMASK(channels - 1, 0);
 	audio_packet_config |= VC4_SET_FIELD(channel_mask,
 					     VC4_HDMI_AUDIO_PACKET_CEA_MASK);
@@ -1382,19 +1530,177 @@ static int vc4_hdmi_audio_prepare(struct device *dev, void *data,
 	HDMI_WRITE(HDMI_MAI_CONFIG,
 		   VC4_HDMI_MAI_CONFIG_BIT_REVERSE |
 		   VC4_HDMI_MAI_CONFIG_FORMAT_REVERSE |
+=======
+	channel_mask = GENMASK(vc4_hdmi->audio.channels - 1, 0);
+	audio_packet_config |= VC4_SET_FIELD(channel_mask,
+					     VC4_HDMI_AUDIO_PACKET_CEA_MASK);
+
+	/* Set the MAI threshold.  This logic mimics the firmware's. */
+	if (vc4_hdmi->audio.samplerate > 96000) {
+		HDMI_WRITE(HDMI_MAI_THR,
+			   VC4_SET_FIELD(0x12, VC4_HD_MAI_THR_DREQHIGH) |
+			   VC4_SET_FIELD(0x12, VC4_HD_MAI_THR_DREQLOW));
+	} else if (vc4_hdmi->audio.samplerate > 48000) {
+		HDMI_WRITE(HDMI_MAI_THR,
+			   VC4_SET_FIELD(0x14, VC4_HD_MAI_THR_DREQHIGH) |
+			   VC4_SET_FIELD(0x12, VC4_HD_MAI_THR_DREQLOW));
+	} else {
+		HDMI_WRITE(HDMI_MAI_THR,
+			   VC4_SET_FIELD(0x10, VC4_HD_MAI_THR_PANICHIGH) |
+			   VC4_SET_FIELD(0x10, VC4_HD_MAI_THR_PANICLOW) |
+			   VC4_SET_FIELD(0x10, VC4_HD_MAI_THR_DREQHIGH) |
+			   VC4_SET_FIELD(0x10, VC4_HD_MAI_THR_DREQLOW));
+	}
+
+	HDMI_WRITE(HDMI_MAI_CONFIG,
+		   VC4_HDMI_MAI_CONFIG_BIT_REVERSE |
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   VC4_SET_FIELD(channel_mask, VC4_HDMI_MAI_CHANNEL_MASK));
 
 	channel_map = vc4_hdmi->variant->channel_map(vc4_hdmi, channel_mask);
 	HDMI_WRITE(HDMI_MAI_CHANNEL_MAP, channel_map);
 	HDMI_WRITE(HDMI_AUDIO_PACKET_CONFIG, audio_packet_config);
+<<<<<<< HEAD
 	vc4_hdmi_set_n_cts(vc4_hdmi, sample_rate);
 
 	memcpy(&vc4_hdmi->audio.infoframe, &params->cea, sizeof(params->cea));
+=======
+	vc4_hdmi_set_n_cts(vc4_hdmi);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vc4_hdmi_set_audio_infoframe(encoder);
 
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static int vc4_hdmi_audio_trigger(struct snd_pcm_substream *substream, int cmd,
+				  struct snd_soc_dai *dai)
+{
+	struct vc4_hdmi *vc4_hdmi = dai_to_hdmi(dai);
+
+	switch (cmd) {
+	case SNDRV_PCM_TRIGGER_START:
+		vc4_hdmi->audio.streaming = true;
+
+		if (vc4_hdmi->variant->phy_rng_enable)
+			vc4_hdmi->variant->phy_rng_enable(vc4_hdmi);
+
+		HDMI_WRITE(HDMI_MAI_CTL,
+			   VC4_SET_FIELD(vc4_hdmi->audio.channels,
+					 VC4_HD_MAI_CTL_CHNUM) |
+			   VC4_HD_MAI_CTL_ENABLE);
+		break;
+	case SNDRV_PCM_TRIGGER_STOP:
+		HDMI_WRITE(HDMI_MAI_CTL,
+			   VC4_HD_MAI_CTL_DLATE |
+			   VC4_HD_MAI_CTL_ERRORE |
+			   VC4_HD_MAI_CTL_ERRORF);
+
+		if (vc4_hdmi->variant->phy_rng_disable)
+			vc4_hdmi->variant->phy_rng_disable(vc4_hdmi);
+
+		vc4_hdmi->audio.streaming = false;
+
+		break;
+	default:
+		break;
+	}
+
+	return 0;
+}
+
+static inline struct vc4_hdmi *
+snd_component_to_hdmi(struct snd_soc_component *component)
+{
+	struct snd_soc_card *card = snd_soc_component_get_drvdata(component);
+
+	return snd_soc_card_get_drvdata(card);
+}
+
+static int vc4_hdmi_audio_eld_ctl_info(struct snd_kcontrol *kcontrol,
+				       struct snd_ctl_elem_info *uinfo)
+{
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+	struct vc4_hdmi *vc4_hdmi = snd_component_to_hdmi(component);
+	struct drm_connector *connector = &vc4_hdmi->connector;
+
+	uinfo->type = SNDRV_CTL_ELEM_TYPE_BYTES;
+	uinfo->count = sizeof(connector->eld);
+
+	return 0;
+}
+
+static int vc4_hdmi_audio_eld_ctl_get(struct snd_kcontrol *kcontrol,
+				      struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+	struct vc4_hdmi *vc4_hdmi = snd_component_to_hdmi(component);
+	struct drm_connector *connector = &vc4_hdmi->connector;
+
+	memcpy(ucontrol->value.bytes.data, connector->eld,
+	       sizeof(connector->eld));
+
+	return 0;
+}
+
+static const struct snd_kcontrol_new vc4_hdmi_audio_controls[] = {
+	{
+		.access = SNDRV_CTL_ELEM_ACCESS_READ |
+			  SNDRV_CTL_ELEM_ACCESS_VOLATILE,
+		.iface = SNDRV_CTL_ELEM_IFACE_PCM,
+		.name = "ELD",
+		.info = vc4_hdmi_audio_eld_ctl_info,
+		.get = vc4_hdmi_audio_eld_ctl_get,
+	},
+};
+
+static const struct snd_soc_dapm_widget vc4_hdmi_audio_widgets[] = {
+	SND_SOC_DAPM_OUTPUT("TX"),
+};
+
+static const struct snd_soc_dapm_route vc4_hdmi_audio_routes[] = {
+	{ "TX", NULL, "Playback" },
+};
+
+static const struct snd_soc_component_driver vc4_hdmi_audio_component_drv = {
+	.name			= "vc4-hdmi-codec-dai-component",
+	.controls		= vc4_hdmi_audio_controls,
+	.num_controls		= ARRAY_SIZE(vc4_hdmi_audio_controls),
+	.dapm_widgets		= vc4_hdmi_audio_widgets,
+	.num_dapm_widgets	= ARRAY_SIZE(vc4_hdmi_audio_widgets),
+	.dapm_routes		= vc4_hdmi_audio_routes,
+	.num_dapm_routes	= ARRAY_SIZE(vc4_hdmi_audio_routes),
+	.idle_bias_on		= 1,
+	.use_pmdown_time	= 1,
+	.endianness		= 1,
+	.non_legacy_dai_naming	= 1,
+};
+
+static const struct snd_soc_dai_ops vc4_hdmi_audio_dai_ops = {
+	.startup = vc4_hdmi_audio_startup,
+	.shutdown = vc4_hdmi_audio_shutdown,
+	.hw_params = vc4_hdmi_audio_hw_params,
+	.set_fmt = vc4_hdmi_audio_set_fmt,
+	.trigger = vc4_hdmi_audio_trigger,
+};
+
+static struct snd_soc_dai_driver vc4_hdmi_audio_codec_dai_drv = {
+	.name = "vc4-hdmi-hifi",
+	.playback = {
+		.stream_name = "Playback",
+		.channels_min = 2,
+		.channels_max = 8,
+		.rates = SNDRV_PCM_RATE_32000 | SNDRV_PCM_RATE_44100 |
+			 SNDRV_PCM_RATE_48000 | SNDRV_PCM_RATE_88200 |
+			 SNDRV_PCM_RATE_96000 | SNDRV_PCM_RATE_176400 |
+			 SNDRV_PCM_RATE_192000,
+		.formats = SNDRV_PCM_FMTBIT_IEC958_SUBFRAME_LE,
+	},
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct snd_soc_component_driver vc4_hdmi_audio_cpu_dai_comp = {
 	.name = "vc4-hdmi-cpu-dai-component",
 };
@@ -1421,6 +1727,10 @@ static struct snd_soc_dai_driver vc4_hdmi_audio_cpu_dai_drv = {
 			 SNDRV_PCM_RATE_192000,
 		.formats = SNDRV_PCM_FMTBIT_IEC958_SUBFRAME_LE,
 	},
+<<<<<<< HEAD
+=======
+	.ops = &vc4_hdmi_audio_dai_ops,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct snd_dmaengine_pcm_config pcm_conf = {
@@ -1428,6 +1738,7 @@ static const struct snd_dmaengine_pcm_config pcm_conf = {
 	.prepare_slave_config = snd_dmaengine_pcm_prepare_slave_config,
 };
 
+<<<<<<< HEAD
 static int vc4_hdmi_audio_get_eld(struct device *dev, void *data,
 				  uint8_t *buf, size_t len)
 {
@@ -1452,6 +1763,8 @@ static struct hdmi_codec_pdata vc4_hdmi_codec_pdata = {
 	.i2s = 1,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
 {
 	const struct vc4_hdmi_register *mai_data =
@@ -1459,7 +1772,10 @@ static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
 	struct snd_soc_dai_link *dai_link = &vc4_hdmi->audio.link;
 	struct snd_soc_card *card = &vc4_hdmi->audio.card;
 	struct device *dev = &vc4_hdmi->pdev->dev;
+<<<<<<< HEAD
 	struct platform_device *codec_pdev;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const __be32 *addr;
 	int index;
 	int ret;
@@ -1506,6 +1822,7 @@ static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
 		return ret;
 	}
 
+<<<<<<< HEAD
 	codec_pdev = platform_device_register_data(dev, HDMI_CODEC_DRV_NAME,
 						   PLATFORM_DEVID_AUTO,
 						   &vc4_hdmi_codec_pdata,
@@ -1513,6 +1830,14 @@ static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
 	if (IS_ERR(codec_pdev)) {
 		dev_err(dev, "Couldn't register the HDMI codec: %ld\n", PTR_ERR(codec_pdev));
 		return PTR_ERR(codec_pdev);
+=======
+	/* register component and codec dai */
+	ret = devm_snd_soc_register_component(dev, &vc4_hdmi_audio_component_drv,
+				     &vc4_hdmi_audio_codec_dai_drv, 1);
+	if (ret) {
+		dev_err(dev, "Could not register component: %d\n", ret);
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	dai_link->cpus		= &vc4_hdmi->audio.cpu;
@@ -1525,9 +1850,15 @@ static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
 
 	dai_link->name = "MAI";
 	dai_link->stream_name = "MAI PCM";
+<<<<<<< HEAD
 	dai_link->codecs->dai_name = "i2s-hifi";
 	dai_link->cpus->dai_name = dev_name(dev);
 	dai_link->codecs->name = dev_name(&codec_pdev->dev);
+=======
+	dai_link->codecs->dai_name = vc4_hdmi_audio_codec_dai_drv.name;
+	dai_link->cpus->dai_name = dev_name(dev);
+	dai_link->codecs->name = dev_name(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dai_link->platforms->name = dev_name(dev);
 
 	card->dai_link = dai_link;
@@ -1547,12 +1878,17 @@ static int vc4_hdmi_audio_init(struct vc4_hdmi *vc4_hdmi)
 	snd_soc_card_set_drvdata(card, vc4_hdmi);
 	ret = devm_snd_soc_register_card(dev, card);
 	if (ret)
+<<<<<<< HEAD
 		dev_err_probe(dev, ret, "Could not register sound card\n");
+=======
+		dev_err(dev, "Could not register sound card: %d\n", ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 
 }
 
+<<<<<<< HEAD
 static irqreturn_t vc4_hdmi_hpd_irq_thread(int irq, void *priv)
 {
 	struct vc4_hdmi *vc4_hdmi = priv;
@@ -1606,6 +1942,8 @@ static void vc4_hdmi_hotplug_exit(struct vc4_hdmi *vc4_hdmi)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DRM_VC4_HDMI_CEC
 static irqreturn_t vc4_cec_irq_handler_rx_thread(int irq, void *priv)
 {
@@ -1848,6 +2186,7 @@ static int vc4_hdmi_cec_init(struct vc4_hdmi *vc4_hdmi)
 	vc4_hdmi_cec_update_clk_div(vc4_hdmi);
 
 	if (vc4_hdmi->variant->external_irq_controller) {
+<<<<<<< HEAD
 		ret = request_threaded_irq(platform_get_irq_byname(pdev, "cec-rx"),
 					   vc4_cec_irq_handler_rx_bare,
 					   vc4_cec_irq_handler_rx_thread, 0,
@@ -1868,12 +2207,37 @@ static int vc4_hdmi_cec_init(struct vc4_hdmi *vc4_hdmi)
 					   vc4_cec_irq_handler,
 					   vc4_cec_irq_handler_thread, 0,
 					   "vc4 hdmi cec", vc4_hdmi);
+=======
+		ret = devm_request_threaded_irq(&pdev->dev,
+						platform_get_irq_byname(pdev, "cec-rx"),
+						vc4_cec_irq_handler_rx_bare,
+						vc4_cec_irq_handler_rx_thread, 0,
+						"vc4 hdmi cec rx", vc4_hdmi);
+		if (ret)
+			goto err_delete_cec_adap;
+
+		ret = devm_request_threaded_irq(&pdev->dev,
+						platform_get_irq_byname(pdev, "cec-tx"),
+						vc4_cec_irq_handler_tx_bare,
+						vc4_cec_irq_handler_tx_thread, 0,
+						"vc4 hdmi cec tx", vc4_hdmi);
+		if (ret)
+			goto err_delete_cec_adap;
+	} else {
+		HDMI_WRITE(HDMI_CEC_CPU_MASK_SET, 0xffffffff);
+
+		ret = devm_request_threaded_irq(&pdev->dev, platform_get_irq(pdev, 0),
+						vc4_cec_irq_handler,
+						vc4_cec_irq_handler_thread, 0,
+						"vc4 hdmi cec", vc4_hdmi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			goto err_delete_cec_adap;
 	}
 
 	ret = cec_register_adapter(vc4_hdmi->cec_adap, &pdev->dev);
 	if (ret < 0)
+<<<<<<< HEAD
 		goto err_remove_handlers;
 
 	return 0;
@@ -1888,6 +2252,12 @@ err_remove_cec_rx_handler:
 	if (vc4_hdmi->variant->external_irq_controller)
 		free_irq(platform_get_irq_byname(pdev, "cec-rx"), vc4_hdmi);
 
+=======
+		goto err_delete_cec_adap;
+
+	return 0;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_delete_cec_adap:
 	cec_delete_adapter(vc4_hdmi->cec_adap);
 
@@ -1896,6 +2266,7 @@ err_delete_cec_adap:
 
 static void vc4_hdmi_cec_exit(struct vc4_hdmi *vc4_hdmi)
 {
+<<<<<<< HEAD
 	struct platform_device *pdev = vc4_hdmi->pdev;
 
 	if (vc4_hdmi->variant->external_irq_controller) {
@@ -1905,6 +2276,8 @@ static void vc4_hdmi_cec_exit(struct vc4_hdmi *vc4_hdmi)
 		free_irq(platform_get_irq(pdev, 0), vc4_hdmi);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cec_unregister_adapter(vc4_hdmi->cec_adap);
 }
 #else
@@ -2098,6 +2471,32 @@ static int vc5_hdmi_init_resources(struct vc4_hdmi *vc4_hdmi)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_PM
+static int vc4_hdmi_runtime_suspend(struct device *dev)
+{
+	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
+
+	clk_disable_unprepare(vc4_hdmi->hsm_clock);
+
+	return 0;
+}
+
+static int vc4_hdmi_runtime_resume(struct device *dev)
+{
+	struct vc4_hdmi *vc4_hdmi = dev_get_drvdata(dev);
+	int ret;
+
+	ret = clk_prepare_enable(vc4_hdmi->hsm_clock);
+	if (ret)
+		return ret;
+
+	return 0;
+}
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int vc4_hdmi_bind(struct device *dev, struct device *master, void *data)
 {
 	const struct vc4_hdmi_variant *variant = of_device_get_match_data(dev);
@@ -2181,6 +2580,7 @@ static int vc4_hdmi_bind(struct device *dev, struct device *master, void *data)
 	if (ret)
 		goto err_destroy_encoder;
 
+<<<<<<< HEAD
 	ret = vc4_hdmi_hotplug_init(vc4_hdmi);
 	if (ret)
 		goto err_destroy_conn;
@@ -2188,6 +2588,11 @@ static int vc4_hdmi_bind(struct device *dev, struct device *master, void *data)
 	ret = vc4_hdmi_cec_init(vc4_hdmi);
 	if (ret)
 		goto err_free_hotplug;
+=======
+	ret = vc4_hdmi_cec_init(vc4_hdmi);
+	if (ret)
+		goto err_destroy_conn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = vc4_hdmi_audio_init(vc4_hdmi);
 	if (ret)
@@ -2201,8 +2606,11 @@ static int vc4_hdmi_bind(struct device *dev, struct device *master, void *data)
 
 err_free_cec:
 	vc4_hdmi_cec_exit(vc4_hdmi);
+<<<<<<< HEAD
 err_free_hotplug:
 	vc4_hdmi_hotplug_exit(vc4_hdmi);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_destroy_conn:
 	vc4_hdmi_connector_destroy(&vc4_hdmi->connector);
 err_destroy_encoder:
@@ -2244,7 +2652,10 @@ static void vc4_hdmi_unbind(struct device *dev, struct device *master,
 	kfree(vc4_hdmi->hd_regset.regs);
 
 	vc4_hdmi_cec_exit(vc4_hdmi);
+<<<<<<< HEAD
 	vc4_hdmi_hotplug_exit(vc4_hdmi);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vc4_hdmi_connector_destroy(&vc4_hdmi->connector);
 	drm_encoder_cleanup(&vc4_hdmi->encoder.base.base);
 
@@ -2352,11 +2763,24 @@ static const struct of_device_id vc4_hdmi_dt_match[] = {
 	{}
 };
 
+<<<<<<< HEAD
+=======
+static const struct dev_pm_ops vc4_hdmi_pm_ops = {
+	SET_RUNTIME_PM_OPS(vc4_hdmi_runtime_suspend,
+			   vc4_hdmi_runtime_resume,
+			   NULL)
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct platform_driver vc4_hdmi_driver = {
 	.probe = vc4_hdmi_dev_probe,
 	.remove = vc4_hdmi_dev_remove,
 	.driver = {
 		.name = "vc4_hdmi",
 		.of_match_table = vc4_hdmi_dt_match,
+<<<<<<< HEAD
+=======
+		.pm = &vc4_hdmi_pm_ops,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 };

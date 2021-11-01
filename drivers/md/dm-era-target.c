@@ -1644,10 +1644,13 @@ static void era_status(struct dm_target *ti, status_type_t type,
 		format_dev_t(buf, era->origin_dev->bdev->bd_dev);
 		DMEMIT("%s %u", buf, era->sectors_per_block);
 		break;
+<<<<<<< HEAD
 
 	case STATUSTYPE_IMA:
 		*result = '\0';
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return;

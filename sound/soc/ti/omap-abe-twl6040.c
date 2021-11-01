@@ -292,6 +292,14 @@ static int omap_abe_probe(struct platform_device *pdev)
 
 	card->fully_routed = 1;
 
+<<<<<<< HEAD
+=======
+	if (!priv->mclk_freq) {
+		dev_err(&pdev->dev, "MCLK frequency missing\n");
+		return -ENODEV;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	card->dai_link = priv->dai_links;
 	card->num_links = num_links;
 

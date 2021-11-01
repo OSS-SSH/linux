@@ -14,7 +14,10 @@
 #include <linux/lzo.h>
 #include <linux/refcount.h>
 #include "compression.h"
+<<<<<<< HEAD
 #include "ctree.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define LZO_LEN	4
 
@@ -141,18 +144,30 @@ int lzo_compress_pages(struct list_head *ws, struct address_space *mapping,
 	*total_in = 0;
 
 	in_page = find_get_page(mapping, start >> PAGE_SHIFT);
+<<<<<<< HEAD
 	data_in = page_address(in_page);
+=======
+	data_in = kmap(in_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * store the size of all chunks of compressed data in
 	 * the first 4 bytes
 	 */
+<<<<<<< HEAD
 	out_page = alloc_page(GFP_NOFS);
+=======
+	out_page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (out_page == NULL) {
 		ret = -ENOMEM;
 		goto out;
 	}
+<<<<<<< HEAD
 	cpage_out = page_address(out_page);
+=======
+	cpage_out = kmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	out_offset = LZO_LEN;
 	tot_out = LZO_LEN;
 	pages[0] = out_page;
@@ -210,18 +225,30 @@ int lzo_compress_pages(struct list_head *ws, struct address_space *mapping,
 				if (out_len == 0 && tot_in >= len)
 					break;
 
+<<<<<<< HEAD
+=======
+				kunmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (nr_pages == nr_dest_pages) {
 					out_page = NULL;
 					ret = -E2BIG;
 					goto out;
 				}
 
+<<<<<<< HEAD
 				out_page = alloc_page(GFP_NOFS);
+=======
+				out_page = alloc_page(GFP_NOFS | __GFP_HIGHMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (out_page == NULL) {
 					ret = -ENOMEM;
 					goto out;
 				}
+<<<<<<< HEAD
 				cpage_out = page_address(out_page);
+=======
+				cpage_out = kmap(out_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				pages[nr_pages++] = out_page;
 
 				pg_bytes_left = PAGE_SIZE;
@@ -243,11 +270,19 @@ int lzo_compress_pages(struct list_head *ws, struct address_space *mapping,
 			break;
 
 		bytes_left = len - tot_in;
+<<<<<<< HEAD
+=======
+		kunmap(in_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		put_page(in_page);
 
 		start += PAGE_SIZE;
 		in_page = find_get_page(mapping, start >> PAGE_SHIFT);
+<<<<<<< HEAD
 		data_in = page_address(in_page);
+=======
+		data_in = kmap(in_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		in_len = min(bytes_left, PAGE_SIZE);
 	}
 
@@ -257,21 +292,38 @@ int lzo_compress_pages(struct list_head *ws, struct address_space *mapping,
 	}
 
 	/* store the size of all chunks of compressed data */
+<<<<<<< HEAD
 	sizes_ptr = page_address(pages[0]);
 	write_compress_length(sizes_ptr, tot_out);
+=======
+	sizes_ptr = kmap_local_page(pages[0]);
+	write_compress_length(sizes_ptr, tot_out);
+	kunmap_local(sizes_ptr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = 0;
 	*total_out = tot_out;
 	*total_in = tot_in;
 out:
 	*out_pages = nr_pages;
+<<<<<<< HEAD
 
 	if (in_page)
 		put_page(in_page);
+=======
+	if (out_page)
+		kunmap(out_page);
+
+	if (in_page) {
+		kunmap(in_page);
+		put_page(in_page);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
 
+<<<<<<< HEAD
 /*
  * Copy the compressed segment payload into @dest.
  *
@@ -381,6 +433,146 @@ int lzo_decompress_bio(struct list_head *ws, struct compressed_bio *cb)
 out:
 	if (!ret)
 		zero_fill_bio(cb->orig_bio);
+=======
+int lzo_decompress_bio(struct list_head *ws, struct compressed_bio *cb)
+{
+	struct workspace *workspace = list_entry(ws, struct workspace, list);
+	int ret = 0, ret2;
+	char *data_in;
+	unsigned long page_in_index = 0;
+	size_t srclen = cb->compressed_len;
+	unsigned long total_pages_in = DIV_ROUND_UP(srclen, PAGE_SIZE);
+	unsigned long buf_start;
+	unsigned long buf_offset = 0;
+	unsigned long bytes;
+	unsigned long working_bytes;
+	size_t in_len;
+	size_t out_len;
+	const size_t max_segment_len = lzo1x_worst_compress(PAGE_SIZE);
+	unsigned long in_offset;
+	unsigned long in_page_bytes_left;
+	unsigned long tot_in;
+	unsigned long tot_out;
+	unsigned long tot_len;
+	char *buf;
+	bool may_late_unmap, need_unmap;
+	struct page **pages_in = cb->compressed_pages;
+	u64 disk_start = cb->start;
+	struct bio *orig_bio = cb->orig_bio;
+
+	data_in = kmap(pages_in[0]);
+	tot_len = read_compress_length(data_in);
+	/*
+	 * Compressed data header check.
+	 *
+	 * The real compressed size can't exceed the maximum extent length, and
+	 * all pages should be used (whole unused page with just the segment
+	 * header is not possible).  If this happens it means the compressed
+	 * extent is corrupted.
+	 */
+	if (tot_len > min_t(size_t, BTRFS_MAX_COMPRESSED, srclen) ||
+	    tot_len < srclen - PAGE_SIZE) {
+		ret = -EUCLEAN;
+		goto done;
+	}
+
+	tot_in = LZO_LEN;
+	in_offset = LZO_LEN;
+	in_page_bytes_left = PAGE_SIZE - LZO_LEN;
+
+	tot_out = 0;
+
+	while (tot_in < tot_len) {
+		in_len = read_compress_length(data_in + in_offset);
+		in_page_bytes_left -= LZO_LEN;
+		in_offset += LZO_LEN;
+		tot_in += LZO_LEN;
+
+		/*
+		 * Segment header check.
+		 *
+		 * The segment length must not exceed the maximum LZO
+		 * compression size, nor the total compressed size.
+		 */
+		if (in_len > max_segment_len || tot_in + in_len > tot_len) {
+			ret = -EUCLEAN;
+			goto done;
+		}
+
+		tot_in += in_len;
+		working_bytes = in_len;
+		may_late_unmap = need_unmap = false;
+
+		/* fast path: avoid using the working buffer */
+		if (in_page_bytes_left >= in_len) {
+			buf = data_in + in_offset;
+			bytes = in_len;
+			may_late_unmap = true;
+			goto cont;
+		}
+
+		/* copy bytes from the pages into the working buffer */
+		buf = workspace->cbuf;
+		buf_offset = 0;
+		while (working_bytes) {
+			bytes = min(working_bytes, in_page_bytes_left);
+
+			memcpy(buf + buf_offset, data_in + in_offset, bytes);
+			buf_offset += bytes;
+cont:
+			working_bytes -= bytes;
+			in_page_bytes_left -= bytes;
+			in_offset += bytes;
+
+			/* check if we need to pick another page */
+			if ((working_bytes == 0 && in_page_bytes_left < LZO_LEN)
+			    || in_page_bytes_left == 0) {
+				tot_in += in_page_bytes_left;
+
+				if (working_bytes == 0 && tot_in >= tot_len)
+					break;
+
+				if (page_in_index + 1 >= total_pages_in) {
+					ret = -EIO;
+					goto done;
+				}
+
+				if (may_late_unmap)
+					need_unmap = true;
+				else
+					kunmap(pages_in[page_in_index]);
+
+				data_in = kmap(pages_in[++page_in_index]);
+
+				in_page_bytes_left = PAGE_SIZE;
+				in_offset = 0;
+			}
+		}
+
+		out_len = max_segment_len;
+		ret = lzo1x_decompress_safe(buf, in_len, workspace->buf,
+					    &out_len);
+		if (need_unmap)
+			kunmap(pages_in[page_in_index - 1]);
+		if (ret != LZO_E_OK) {
+			pr_warn("BTRFS: decompress failed\n");
+			ret = -EIO;
+			break;
+		}
+
+		buf_start = tot_out;
+		tot_out += out_len;
+
+		ret2 = btrfs_decompress_buf2page(workspace->buf, buf_start,
+						 tot_out, disk_start, orig_bio);
+		if (ret2 == 0)
+			break;
+	}
+done:
+	kunmap(pages_in[page_in_index]);
+	if (!ret)
+		zero_fill_bio(orig_bio);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -431,7 +623,11 @@ int lzo_decompress(struct list_head *ws, unsigned char *data_in,
 	destlen = min_t(unsigned long, destlen, PAGE_SIZE);
 	bytes = min_t(unsigned long, destlen, out_len - start_byte);
 
+<<<<<<< HEAD
 	kaddr = page_address(dest_page);
+=======
+	kaddr = kmap_local_page(dest_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memcpy(kaddr, workspace->buf + start_byte, bytes);
 
 	/*
@@ -441,6 +637,10 @@ int lzo_decompress(struct list_head *ws, unsigned char *data_in,
 	 */
 	if (bytes < destlen)
 		memset(kaddr+bytes, 0, destlen-bytes);
+<<<<<<< HEAD
+=======
+	kunmap_local(kaddr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	return ret;
 }

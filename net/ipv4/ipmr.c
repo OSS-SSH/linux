@@ -2119,7 +2119,11 @@ int ip_mr_input(struct sk_buff *skb)
 				raw_rcv(mroute_sk, skb);
 				return 0;
 			}
+<<<<<<< HEAD
 		}
+=======
+		    }
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* already under rcu_read_lock() */

@@ -435,7 +435,11 @@ static void genpd_restore_performance_state(struct device *dev,
 int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
 {
 	struct generic_pm_domain *genpd;
+<<<<<<< HEAD
 	int ret = 0;
+=======
+	int ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	genpd = dev_to_genpd_safe(dev);
 	if (!genpd)
@@ -446,6 +450,7 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
 		return -EINVAL;
 
 	genpd_lock(genpd);
+<<<<<<< HEAD
 	if (pm_runtime_suspended(dev)) {
 		dev_gpd_data(dev)->rpm_pstate = state;
 	} else {
@@ -453,6 +458,9 @@ int dev_pm_genpd_set_performance_state(struct device *dev, unsigned int state)
 		if (!ret)
 			dev_gpd_data(dev)->rpm_pstate = 0;
 	}
+=======
+	ret = genpd_set_performance_state(dev, state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	genpd_unlock(genpd);
 
 	return ret;
@@ -2604,12 +2612,15 @@ static void genpd_dev_pm_detach(struct device *dev, bool power_off)
 
 	dev_dbg(dev, "removing from PM domain %s\n", pd->name);
 
+<<<<<<< HEAD
 	/* Drop the default performance state */
 	if (dev_gpd_data(dev)->default_pstate) {
 		dev_pm_genpd_set_performance_state(dev, 0);
 		dev_gpd_data(dev)->default_pstate = 0;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 1; i < GENPD_RETRY_MAX_MS; i <<= 1) {
 		ret = genpd_remove_device(pd, dev);
 		if (ret != -EAGAIN)
@@ -2649,7 +2660,10 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
 {
 	struct of_phandle_args pd_args;
 	struct generic_pm_domain *pd;
+<<<<<<< HEAD
 	int pstate;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int ret;
 
 	ret = of_parse_phandle_with_args(dev->of_node, "power-domains",
@@ -2688,6 +2702,7 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
 		genpd_unlock(pd);
 	}
 
+<<<<<<< HEAD
 	if (ret) {
 		genpd_remove_device(pd, dev);
 		return -EPROBE_DEFER;
@@ -2711,6 +2726,12 @@ err:
 		pd->name, ret);
 	genpd_remove_device(pd, dev);
 	return ret;
+=======
+	if (ret)
+		genpd_remove_device(pd, dev);
+
+	return ret ? -EPROBE_DEFER : 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**

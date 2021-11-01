@@ -46,7 +46,10 @@ int hyperv_mode_config_init(struct hyperv_drm_device *hv);
 int hyperv_update_vram_location(struct hv_device *hdev, phys_addr_t vram_pp);
 int hyperv_update_situation(struct hv_device *hdev, u8 active, u32 bpp,
 			    u32 w, u32 h, u32 pitch);
+<<<<<<< HEAD
 int hyperv_hide_hw_ptr(struct hv_device *hdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int hyperv_update_dirt(struct hv_device *hdev, struct drm_rect *rect);
 int hyperv_connect_vsp(struct hv_device *hdev);
 

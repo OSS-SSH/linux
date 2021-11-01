@@ -81,7 +81,11 @@ static int slim_device_probe(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static void slim_device_remove(struct device *dev)
+=======
+static int slim_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct slim_device *sbdev = to_slim_device(dev);
 	struct slim_driver *sbdrv;
@@ -91,6 +95,11 @@ static void slim_device_remove(struct device *dev)
 		if (sbdrv->remove)
 			sbdrv->remove(sbdev);
 	}
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int slim_device_uevent(struct device *dev, struct kobj_uevent_env *env)

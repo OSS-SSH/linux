@@ -176,7 +176,11 @@ char *cifs_compose_mount_options(const char *sb_mountdata,
 		}
 	}
 
+<<<<<<< HEAD
 	rc = dns_resolve_server_name_to_ip(name, &srvIP, NULL);
+=======
+	rc = dns_resolve_server_name_to_ip(name, &srvIP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (rc < 0) {
 		cifs_dbg(FYI, "%s: Failed to resolve server part of %s to IP: %d\n",
 			 __func__, name, rc);
@@ -211,10 +215,13 @@ char *cifs_compose_mount_options(const char *sb_mountdata,
 		else
 			noff = tkn_e - (sb_mountdata + off) + 1;
 
+<<<<<<< HEAD
 		if (strncasecmp(sb_mountdata + off, "cruid=", 6) == 0) {
 			off += noff;
 			continue;
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (strncasecmp(sb_mountdata + off, "unc=", 4) == 0) {
 			off += noff;
 			continue;

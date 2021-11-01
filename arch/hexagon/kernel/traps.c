@@ -28,6 +28,13 @@
 #define TRAP_SYSCALL	1
 #define TRAP_DEBUG	0xdb
 
+<<<<<<< HEAD
+=======
+void __init trap_init(void)
+{
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_GENERIC_BUG
 /* Maybe should resemble arch/sh/kernel/traps.c ?? */
 int is_valid_bugaddr(unsigned long addr)

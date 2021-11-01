@@ -88,6 +88,7 @@
 
 static DEFINE_IDR(loop_index_idr);
 static DEFINE_MUTEX(loop_ctl_mutex);
+<<<<<<< HEAD
 static DEFINE_MUTEX(loop_validate_mutex);
 
 /**
@@ -129,6 +130,8 @@ static void loop_global_unlock(struct loop_device *lo, bool global)
 	if (global)
 		mutex_unlock(&loop_validate_mutex);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int max_part;
 static int part_shift;
@@ -713,15 +716,24 @@ static int loop_validate_file(struct file *file, struct block_device *bdev)
 	while (is_loop_device(f)) {
 		struct loop_device *l;
 
+<<<<<<< HEAD
 		lockdep_assert_held(&loop_validate_mutex);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (f->f_mapping->host->i_rdev == bdev->bd_dev)
 			return -EBADF;
 
 		l = I_BDEV(f->f_mapping->host)->bd_disk->private_data;
+<<<<<<< HEAD
 		if (l->lo_state != Lo_bound)
 			return -EINVAL;
 		/* Order wrt setting lo->lo_backing_file in loop_configure(). */
 		rmb();
+=======
+		if (l->lo_state != Lo_bound) {
+			return -EINVAL;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		f = l->lo_backing_file;
 	}
 	if (!S_ISREG(inode->i_mode) && !S_ISBLK(inode->i_mode))
@@ -740,6 +752,7 @@ static int loop_validate_file(struct file *file, struct block_device *bdev)
 static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
 			  unsigned int arg)
 {
+<<<<<<< HEAD
 	struct file *file = fget(arg);
 	struct file *old_file;
 	int error;
@@ -752,6 +765,15 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
 	error = loop_global_lock_killable(lo, is_loop);
 	if (error)
 		goto out_putf;
+=======
+	struct file	*file = NULL, *old_file;
+	int		error;
+	bool		partscan;
+
+	error = mutex_lock_killable(&lo->lo_mutex);
+	if (error)
+		return error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	error = -ENXIO;
 	if (lo->lo_state != Lo_bound)
 		goto out_err;
@@ -761,6 +783,14 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
 	if (!(lo->lo_flags & LO_FLAGS_READ_ONLY))
 		goto out_err;
 
+<<<<<<< HEAD
+=======
+	error = -EBADF;
+	file = fget(arg);
+	if (!file)
+		goto out_err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	error = loop_validate_file(file, bdev);
 	if (error)
 		goto out_err;
@@ -774,7 +804,10 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
 		goto out_err;
 
 	/* and ... switch */
+<<<<<<< HEAD
 	disk_force_media_change(lo->lo_disk, DISK_EVENT_MEDIA_CHANGE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	blk_mq_freeze_queue(lo->lo_queue);
 	mapping_set_gfp_mask(old_file->f_mapping, lo->old_gfp_mask);
 	lo->lo_backing_file = file;
@@ -784,6 +817,7 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
 	loop_update_dio(lo);
 	blk_mq_unfreeze_queue(lo->lo_queue);
 	partscan = lo->lo_flags & LO_FLAGS_PARTSCAN;
+<<<<<<< HEAD
 	loop_global_unlock(lo, is_loop);
 
 	/*
@@ -794,6 +828,9 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
 		mutex_lock(&loop_validate_mutex);
 		mutex_unlock(&loop_validate_mutex);
 	}
+=======
+	mutex_unlock(&lo->lo_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * We must drop file reference outside of lo_mutex as dropping
 	 * the file ref can take open_mutex which creates circular locking
@@ -805,9 +842,15 @@ static int loop_change_fd(struct loop_device *lo, struct block_device *bdev,
 	return 0;
 
 out_err:
+<<<<<<< HEAD
 	loop_global_unlock(lo, is_loop);
 out_putf:
 	fput(file);
+=======
+	mutex_unlock(&lo->lo_mutex);
+	if (file)
+		fput(file);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return error;
 }
 
@@ -1189,6 +1232,7 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
 			  struct block_device *bdev,
 			  const struct loop_config *config)
 {
+<<<<<<< HEAD
 	struct file *file = fget(config->fd);
 	struct inode *inode;
 	struct address_space *mapping;
@@ -1201,10 +1245,27 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
 	if (!file)
 		return -EBADF;
 	is_loop = is_loop_device(file);
+=======
+	struct file	*file;
+	struct inode	*inode;
+	struct address_space *mapping;
+	int		error;
+	loff_t		size;
+	bool		partscan;
+	unsigned short  bsize;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* This is safe, since we have a reference from open(). */
 	__module_get(THIS_MODULE);
 
+<<<<<<< HEAD
+=======
+	error = -EBADF;
+	file = fget(config->fd);
+	if (!file)
+		goto out;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * If we don't hold exclusive handle for the device, upgrade to it
 	 * here to avoid changing device under exclusive owner.
@@ -1215,7 +1276,11 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
 			goto out_putf;
 	}
 
+<<<<<<< HEAD
 	error = loop_global_lock_killable(lo, is_loop);
+=======
+	error = mutex_lock_killable(&lo->lo_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (error)
 		goto out_bdev;
 
@@ -1258,7 +1323,10 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
 		goto out_unlock;
 	}
 
+<<<<<<< HEAD
 	disk_force_media_change(lo->lo_disk, DISK_EVENT_MEDIA_CHANGE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	set_disk_ro(lo->lo_disk, (lo->lo_flags & LO_FLAGS_READ_ONLY) != 0);
 
 	INIT_WORK(&lo->rootcg_work, loop_rootcg_workfn);
@@ -1296,9 +1364,12 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
 	size = get_loop_size(lo, file);
 	loop_set_size(lo, size);
 
+<<<<<<< HEAD
 	/* Order wrt reading lo_state in loop_validate_file(). */
 	wmb();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lo->lo_state = Lo_bound;
 	if (part_shift)
 		lo->lo_flags |= LO_FLAGS_PARTSCAN;
@@ -1306,7 +1377,15 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
 	if (partscan)
 		lo->lo_disk->flags &= ~GENHD_FL_NO_PART_SCAN;
 
+<<<<<<< HEAD
 	loop_global_unlock(lo, is_loop);
+=======
+	/* Grab the block_device to prevent its destruction after we
+	 * put /dev/loopXX inode. Later in __loop_clr_fd() we bdput(bdev).
+	 */
+	bdgrab(bdev);
+	mutex_unlock(&lo->lo_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (partscan)
 		loop_reread_partitions(lo);
 	if (!(mode & FMODE_EXCL))
@@ -1314,12 +1393,20 @@ static int loop_configure(struct loop_device *lo, fmode_t mode,
 	return 0;
 
 out_unlock:
+<<<<<<< HEAD
 	loop_global_unlock(lo, is_loop);
+=======
+	mutex_unlock(&lo->lo_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_bdev:
 	if (!(mode & FMODE_EXCL))
 		bd_abort_claiming(bdev, loop_configure);
 out_putf:
 	fput(file);
+<<<<<<< HEAD
+=======
+out:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* This is safe: open() is still holding a reference. */
 	module_put(THIS_MODULE);
 	return error;
@@ -1335,6 +1422,7 @@ static int __loop_clr_fd(struct loop_device *lo, bool release)
 	int lo_number;
 	struct loop_worker *pos, *worker;
 
+<<<<<<< HEAD
 	/*
 	 * Flush loop_configure() and loop_change_fd(). It is acceptable for
 	 * loop_validate_file() to succeed, for actual clear operation has not
@@ -1347,6 +1435,8 @@ static int __loop_clr_fd(struct loop_device *lo, bool release)
 	 * became visible.
 	 */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_lock(&lo->lo_mutex);
 	if (WARN_ON_ONCE(lo->lo_state != Lo_rundown)) {
 		err = -ENXIO;
@@ -1396,6 +1486,10 @@ static int __loop_clr_fd(struct loop_device *lo, bool release)
 	blk_queue_physical_block_size(lo->lo_queue, 512);
 	blk_queue_io_min(lo->lo_queue, 512);
 	if (bdev) {
+<<<<<<< HEAD
+=======
+		bdput(bdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		invalidate_bdev(bdev);
 		bdev->bd_inode->i_mapping->wb_err = 0;
 	}
@@ -1412,7 +1506,10 @@ static int __loop_clr_fd(struct loop_device *lo, bool release)
 
 	partscan = lo->lo_flags & LO_FLAGS_PARTSCAN && bdev;
 	lo_number = lo->lo_number;
+<<<<<<< HEAD
 	disk_force_media_change(lo->lo_disk, DISK_EVENT_MEDIA_CHANGE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_unlock:
 	mutex_unlock(&lo->lo_mutex);
 	if (partscan) {
@@ -2111,6 +2208,21 @@ int loop_register_transfer(struct loop_func_table *funcs)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static int unregister_transfer_cb(int id, void *ptr, void *data)
+{
+	struct loop_device *lo = ptr;
+	struct loop_func_table *xfer = data;
+
+	mutex_lock(&lo->lo_mutex);
+	if (lo->lo_encryption == xfer)
+		loop_release_xfer(lo);
+	mutex_unlock(&lo->lo_mutex);
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int loop_unregister_transfer(int number)
 {
 	unsigned int n = number;
@@ -2118,6 +2230,7 @@ int loop_unregister_transfer(int number)
 
 	if (n == 0 || n >= MAX_LO_CRYPT || (xfer = xfer_funcs[n]) == NULL)
 		return -EINVAL;
+<<<<<<< HEAD
 	/*
 	 * This function is called from only cleanup_cryptoloop().
 	 * Given that each loop device that has a transfer enabled holds a
@@ -2132,6 +2245,11 @@ int loop_unregister_transfer(int number)
 #endif
 
 	xfer_funcs[n] = NULL;
+=======
+
+	xfer_funcs[n] = NULL;
+	idr_for_each(&loop_index_idr, &unregister_transfer_cb, xfer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -2322,9 +2440,14 @@ static int loop_add(int i)
 	} else {
 		err = idr_alloc(&loop_index_idr, lo, 0, 0, GFP_KERNEL);
 	}
+<<<<<<< HEAD
 	mutex_unlock(&loop_ctl_mutex);
 	if (err < 0)
 		goto out_free_dev;
+=======
+	if (err < 0)
+		goto out_unlock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	i = err;
 
 	err = -ENOMEM;
@@ -2333,8 +2456,12 @@ static int loop_add(int i)
 	lo->tag_set.queue_depth = 128;
 	lo->tag_set.numa_node = NUMA_NO_NODE;
 	lo->tag_set.cmd_size = sizeof(struct loop_cmd);
+<<<<<<< HEAD
 	lo->tag_set.flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_STACKING |
 		BLK_MQ_F_NO_SCHED_BY_DEFAULT;
+=======
+	lo->tag_set.flags = BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_STACKING;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	lo->tag_set.driver_data = lo;
 
 	err = blk_mq_alloc_tag_set(&lo->tag_set);
@@ -2390,6 +2517,7 @@ static int loop_add(int i)
 	disk->fops		= &lo_fops;
 	disk->private_data	= lo;
 	disk->queue		= lo->lo_queue;
+<<<<<<< HEAD
 	disk->events		= DISK_EVENT_MEDIA_CHANGE;
 	disk->event_flags	= DISK_EVENT_FLAG_UEVENT;
 	sprintf(disk->disk_name, "loop%d", i);
@@ -2398,14 +2526,23 @@ static int loop_add(int i)
 	/* Show this loop device. */
 	mutex_lock(&loop_ctl_mutex);
 	lo->idr_visible = true;
+=======
+	sprintf(disk->disk_name, "loop%d", i);
+	add_disk(disk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&loop_ctl_mutex);
 	return i;
 
 out_cleanup_tags:
 	blk_mq_free_tag_set(&lo->tag_set);
 out_free_idr:
+<<<<<<< HEAD
 	mutex_lock(&loop_ctl_mutex);
 	idr_remove(&loop_index_idr, i);
+=======
+	idr_remove(&loop_index_idr, i);
+out_unlock:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&loop_ctl_mutex);
 out_free_dev:
 	kfree(lo);
@@ -2415,6 +2552,7 @@ out:
 
 static void loop_remove(struct loop_device *lo)
 {
+<<<<<<< HEAD
 	/* Make this loop device unreachable from pathname. */
 	del_gendisk(lo->lo_disk);
 	blk_cleanup_disk(lo->lo_disk);
@@ -2423,6 +2561,11 @@ static void loop_remove(struct loop_device *lo)
 	idr_remove(&loop_index_idr, lo->lo_number);
 	mutex_unlock(&loop_ctl_mutex);
 	/* There is no route which can find this loop device. */
+=======
+	del_gendisk(lo->lo_disk);
+	blk_cleanup_disk(lo->lo_disk);
+	blk_mq_free_tag_set(&lo->tag_set);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_destroy(&lo->lo_mutex);
 	kfree(lo);
 }
@@ -2446,6 +2589,7 @@ static int loop_control_remove(int idx)
 		return -EINVAL;
 	}
 		
+<<<<<<< HEAD
 	/* Hide this loop device for serialization. */
 	ret = mutex_lock_killable(&loop_ctl_mutex);
 	if (ret)
@@ -2463,10 +2607,26 @@ static int loop_control_remove(int idx)
 	ret = mutex_lock_killable(&lo->lo_mutex);
 	if (ret)
 		goto mark_visible;
+=======
+	ret = mutex_lock_killable(&loop_ctl_mutex);
+	if (ret)
+		return ret;
+
+	lo = idr_find(&loop_index_idr, idx);
+	if (!lo) {
+		ret = -ENODEV;
+		goto out_unlock_ctrl;
+	}
+
+	ret = mutex_lock_killable(&lo->lo_mutex);
+	if (ret)
+		goto out_unlock_ctrl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (lo->lo_state != Lo_unbound ||
 	    atomic_read(&lo->lo_refcnt) > 0) {
 		mutex_unlock(&lo->lo_mutex);
 		ret = -EBUSY;
+<<<<<<< HEAD
 		goto mark_visible;
 	}
 	/* Mark this loop device no longer open()-able. */
@@ -2480,6 +2640,16 @@ mark_visible:
 	/* Show this loop device again. */
 	mutex_lock(&loop_ctl_mutex);
 	lo->idr_visible = true;
+=======
+		goto out_unlock_ctrl;
+	}
+	lo->lo_state = Lo_deleting;
+	mutex_unlock(&lo->lo_mutex);
+
+	idr_remove(&loop_index_idr, lo->lo_number);
+	loop_remove(lo);
+out_unlock_ctrl:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&loop_ctl_mutex);
 	return ret;
 }
@@ -2493,8 +2663,12 @@ static int loop_control_get_free(int idx)
 	if (ret)
 		return ret;
 	idr_for_each_entry(&loop_index_idr, lo, id) {
+<<<<<<< HEAD
 		/* Hitting a race results in creating a new loop device which is harmless. */
 		if (lo->idr_visible && data_race(lo->lo_state) == Lo_unbound)
+=======
+		if (lo->lo_state == Lo_unbound)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto found;
 	}
 	mutex_unlock(&loop_ctl_mutex);
@@ -2610,6 +2784,7 @@ static void __exit loop_exit(void)
 	unregister_blkdev(LOOP_MAJOR, "loop");
 	misc_deregister(&loop_misc);
 
+<<<<<<< HEAD
 	/*
 	 * There is no need to use loop_ctl_mutex here, for nobody else can
 	 * access loop_index_idr when this module is unloading (unless forced
@@ -2618,6 +2793,12 @@ static void __exit loop_exit(void)
 	 */
 	idr_for_each_entry(&loop_index_idr, lo, id)
 		loop_remove(lo);
+=======
+	mutex_lock(&loop_ctl_mutex);
+	idr_for_each_entry(&loop_index_idr, lo, id)
+		loop_remove(lo);
+	mutex_unlock(&loop_ctl_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	idr_destroy(&loop_index_idr);
 }

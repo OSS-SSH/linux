@@ -24,7 +24,10 @@ static const u8 COMMAND_VERSION[] = { 'v' };
 // End transmit and repeat reset command so we exit sump mode
 static const u8 COMMAND_RESET[] = { 0xff, 0xff, 0, 0, 0, 0, 0 };
 static const u8 COMMAND_SMODE_ENTER[] = { 's' };
+<<<<<<< HEAD
 static const u8 COMMAND_SMODE_EXIT[] = { 0 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const u8 COMMAND_TXSTART[] = { 0x26, 0x24, 0x25, 0x03 };
 
 #define REPLY_XMITCOUNT 't'
@@ -310,12 +313,17 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
 		buf[i] = cpu_to_be16(v);
 	}
 
+<<<<<<< HEAD
 	buf[count] = 0xffff;
+=======
+	buf[count] = cpu_to_be16(0xffff);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	irtoy->tx_buf = buf;
 	irtoy->tx_len = size;
 	irtoy->emitted = 0;
 
+<<<<<<< HEAD
 	// There is an issue where if the unit is receiving IR while the
 	// first TXSTART command is sent, the device might end up hanging
 	// with its led on. It does not respond to any command when this
@@ -334,6 +342,8 @@ static int irtoy_tx(struct rc_dev *rc, uint *txbuf, uint count)
 		return err;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = irtoy_command(irtoy, COMMAND_TXSTART, sizeof(COMMAND_TXSTART),
 			    STATE_TX);
 	kfree(buf);

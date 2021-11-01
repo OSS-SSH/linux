@@ -1444,7 +1444,11 @@ again:
 			if (do_debug_ccw)
 			ctcmpc_dumpit((char *)&ch->ccw[0],
 					sizeof(struct ccw1) * 3);
+<<<<<<< HEAD
 		dolock = !in_hardirq();
+=======
+		dolock = !in_irq();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (dolock)
 			spin_lock_irqsave(
 				get_ccwdev_lock(ch->cdev), saveflags);
@@ -1454,7 +1458,10 @@ again:
 				get_ccwdev_lock(ch->cdev), saveflags);
 		if (rc != 0)
 			ctcm_ccw_check_rc(ch, rc, "normal RX");
+<<<<<<< HEAD
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}

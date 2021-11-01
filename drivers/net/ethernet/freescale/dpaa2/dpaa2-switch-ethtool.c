@@ -15,6 +15,7 @@ static struct {
 	enum dpsw_counter id;
 	char name[ETH_GSTRING_LEN];
 } dpaa2_switch_ethtool_counters[] =  {
+<<<<<<< HEAD
 	{DPSW_CNT_ING_FRAME,		"[hw] rx frames"},
 	{DPSW_CNT_ING_BYTE,		"[hw] rx bytes"},
 	{DPSW_CNT_ING_FLTR_FRAME,	"[hw] rx filtered frames"},
@@ -27,6 +28,20 @@ static struct {
 	{DPSW_CNT_EGR_BYTE,		"[hw] tx bytes"},
 	{DPSW_CNT_EGR_FRAME_DISCARD,	"[hw] tx discarded frames"},
 	{DPSW_CNT_ING_NO_BUFF_DISCARD,	"[hw] rx nobuffer discards"},
+=======
+	{DPSW_CNT_ING_FRAME,		"rx frames"},
+	{DPSW_CNT_ING_BYTE,		"rx bytes"},
+	{DPSW_CNT_ING_FLTR_FRAME,	"rx filtered frames"},
+	{DPSW_CNT_ING_FRAME_DISCARD,	"rx discarded frames"},
+	{DPSW_CNT_ING_BCAST_FRAME,	"rx b-cast frames"},
+	{DPSW_CNT_ING_BCAST_BYTES,	"rx b-cast bytes"},
+	{DPSW_CNT_ING_MCAST_FRAME,	"rx m-cast frames"},
+	{DPSW_CNT_ING_MCAST_BYTE,	"rx m-cast bytes"},
+	{DPSW_CNT_EGR_FRAME,		"tx frames"},
+	{DPSW_CNT_EGR_BYTE,		"tx bytes"},
+	{DPSW_CNT_EGR_FRAME_DISCARD,	"tx discarded frames"},
+	{DPSW_CNT_ING_NO_BUFF_DISCARD,	"rx discarded no buffer frames"},
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define DPAA2_SWITCH_NUM_COUNTERS	ARRAY_SIZE(dpaa2_switch_ethtool_counters)
@@ -62,10 +77,13 @@ dpaa2_switch_get_link_ksettings(struct net_device *netdev,
 	struct dpsw_link_state state = {0};
 	int err = 0;
 
+<<<<<<< HEAD
 	if (dpaa2_switch_port_is_type_phy(port_priv))
 		return phylink_ethtool_ksettings_get(port_priv->mac->phylink,
 						     link_ksettings);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = dpsw_if_get_link_state(port_priv->ethsw_data->mc_io, 0,
 				     port_priv->ethsw_data->dpsw_handle,
 				     port_priv->idx,
@@ -99,10 +117,13 @@ dpaa2_switch_set_link_ksettings(struct net_device *netdev,
 	bool if_running;
 	int err = 0, ret;
 
+<<<<<<< HEAD
 	if (dpaa2_switch_port_is_type_phy(port_priv))
 		return phylink_ethtool_ksettings_set(port_priv->mac->phylink,
 						     link_ksettings);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Interface needs to be down to change link settings */
 	if_running = netif_running(netdev);
 	if (if_running) {
@@ -142,6 +163,7 @@ dpaa2_switch_set_link_ksettings(struct net_device *netdev,
 	return err;
 }
 
+<<<<<<< HEAD
 static int
 dpaa2_switch_ethtool_get_sset_count(struct net_device *netdev, int sset)
 {
@@ -153,6 +175,13 @@ dpaa2_switch_ethtool_get_sset_count(struct net_device *netdev, int sset)
 		if (port_priv->mac)
 			num_ss_stats += dpaa2_mac_get_sset_count();
 		return num_ss_stats;
+=======
+static int dpaa2_switch_ethtool_get_sset_count(struct net_device *dev, int sset)
+{
+	switch (sset) {
+	case ETH_SS_STATS:
+		return DPAA2_SWITCH_NUM_COUNTERS;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return -EOPNOTSUPP;
 	}
@@ -161,12 +190,16 @@ dpaa2_switch_ethtool_get_sset_count(struct net_device *netdev, int sset)
 static void dpaa2_switch_ethtool_get_strings(struct net_device *netdev,
 					     u32 stringset, u8 *data)
 {
+<<<<<<< HEAD
 	struct ethsw_port_priv *port_priv = netdev_priv(netdev);
 	u8 *p = data;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i;
 
 	switch (stringset) {
 	case ETH_SS_STATS:
+<<<<<<< HEAD
 		for (i = 0; i < DPAA2_SWITCH_NUM_COUNTERS; i++) {
 			memcpy(p, dpaa2_switch_ethtool_counters[i].name,
 			       ETH_GSTRING_LEN);
@@ -174,6 +207,12 @@ static void dpaa2_switch_ethtool_get_strings(struct net_device *netdev,
 		}
 		if (port_priv->mac)
 			dpaa2_mac_get_strings(p);
+=======
+		for (i = 0; i < DPAA2_SWITCH_NUM_COUNTERS; i++)
+			memcpy(data + i * ETH_GSTRING_LEN,
+			       dpaa2_switch_ethtool_counters[i].name,
+			       ETH_GSTRING_LEN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	}
 }
@@ -195,9 +234,12 @@ static void dpaa2_switch_ethtool_get_stats(struct net_device *netdev,
 			netdev_err(netdev, "dpsw_if_get_counter[%s] err %d\n",
 				   dpaa2_switch_ethtool_counters[i].name, err);
 	}
+<<<<<<< HEAD
 
 	if (port_priv->mac)
 		dpaa2_mac_get_ethtool_stats(port_priv->mac, data + i);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 const struct ethtool_ops dpaa2_switch_port_ethtool_ops = {

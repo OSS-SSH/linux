@@ -12,11 +12,15 @@
 
 #include <linux/dma-fence.h>
 #include <linux/irq_work.h>
+<<<<<<< HEAD
 #include <linux/slab.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * struct dma_fence_chain - fence to represent an node of a fence chain
  * @base: fence base class
+<<<<<<< HEAD
  * @prev: previous fence of the chain
  * @prev_seqno: original previous seqno before garbage collection
  * @fence: encapsulated fence
@@ -47,6 +51,23 @@ struct dma_fence_chain {
 		struct irq_work work;
 	};
 	spinlock_t lock;
+=======
+ * @lock: spinlock for fence handling
+ * @prev: previous fence of the chain
+ * @prev_seqno: original previous seqno before garbage collection
+ * @fence: encapsulated fence
+ * @cb: callback structure for signaling
+ * @work: irq work item for signaling
+ */
+struct dma_fence_chain {
+	struct dma_fence base;
+	spinlock_t lock;
+	struct dma_fence __rcu *prev;
+	u64 prev_seqno;
+	struct dma_fence *fence;
+	struct dma_fence_cb cb;
+	struct irq_work work;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 extern const struct dma_fence_ops dma_fence_chain_ops;
@@ -68,6 +89,7 @@ to_dma_fence_chain(struct dma_fence *fence)
 }
 
 /**
+<<<<<<< HEAD
  * dma_fence_chain_alloc
  *
  * Returns a new struct dma_fence_chain object or NULL on failure.
@@ -92,6 +114,8 @@ static inline void dma_fence_chain_free(struct dma_fence_chain *chain)
 };
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * dma_fence_chain_for_each - iterate over all fences in chain
  * @iter: current fence
  * @head: starting point

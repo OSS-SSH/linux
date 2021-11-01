@@ -2302,7 +2302,11 @@ end:
 	return ret;
 }
 
+<<<<<<< HEAD
 static void hid_device_remove(struct device *dev)
+=======
+static int hid_device_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct hid_device *hdev = to_hid_device(dev);
 	struct hid_driver *hdrv;
@@ -2322,6 +2326,11 @@ static void hid_device_remove(struct device *dev)
 
 	if (!hdev->io_started)
 		up(&hdev->driver_input_lock);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t modalias_show(struct device *dev, struct device_attribute *a,

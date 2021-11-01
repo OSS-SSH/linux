@@ -17,7 +17,10 @@ Introduction
    busses/index
    i2c-topology
    muxes/i2c-mux-gpio
+<<<<<<< HEAD
    i2c-sysfs
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Writing device drivers
 ======================

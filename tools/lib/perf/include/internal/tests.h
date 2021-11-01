@@ -23,8 +23,11 @@ static inline int get_verbose(char **argv, int argc)
 			break;
 		}
 	}
+<<<<<<< HEAD
 	optind = 1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return verbose;
 }
 

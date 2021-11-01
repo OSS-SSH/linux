@@ -547,10 +547,20 @@ To use the helpers please keep the following in mind:
   the irqchip can initialize. E.g. .dev and .can_sleep shall be set up
   properly.
 
+<<<<<<< HEAD
 - Nominally set gpio_irq_chip.handler to handle_bad_irq. Then, if your irqchip
   is cascaded, set the handler to handle_level_irq() and/or handle_edge_irq()
   in the irqchip .set_type() callback depending on what your controller
   supports and what is requested by the consumer.
+=======
+- Nominally set all handlers to handle_bad_irq() in the setup call and pass
+  handle_bad_irq() as flow handler parameter in gpiochip_irqchip_add() if it is
+  expected for GPIO driver that irqchip .set_type() callback will be called
+  before using/enabling each GPIO IRQ. Then set the handler to
+  handle_level_irq() and/or handle_edge_irq() in the irqchip .set_type()
+  callback depending on what your controller supports and what is requested
+  by the consumer.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 Locking IRQ usage

@@ -2,6 +2,7 @@
 
 .. include:: ../disclaimer-zh_CN.rst
 
+<<<<<<< HEAD
 :Original: Documentation/cpu-freq/index.rst
 
 :翻译:
@@ -10,6 +11,14 @@
 
 .. _cn_index.rst:
 
+=======
+:Original: :doc:`../../../cpu-freq/index`
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+
+.. _cn_index.rst:
+
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======================================================
 Linux CPUFreq - Linux(TM)内核中的CPU频率和电压升降代码
 =======================================================

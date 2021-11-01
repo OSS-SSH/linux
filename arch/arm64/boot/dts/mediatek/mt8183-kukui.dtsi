@@ -13,8 +13,11 @@
 / {
 	aliases {
 		serial0 = &uart0;
+<<<<<<< HEAD
 		mmc0 = &mmc0;
 		mmc1 = &mmc1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	chosen {

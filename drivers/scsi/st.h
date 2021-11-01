@@ -187,7 +187,11 @@ struct scsi_tape {
 	unsigned char last_cmnd[6];
 	unsigned char last_sense[16];
 #endif
+<<<<<<< HEAD
 	char name[DISK_NAME_LEN];
+=======
+	struct gendisk *disk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct kref     kref;
 	struct scsi_tape_stats *stats;
 };

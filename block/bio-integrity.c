@@ -104,7 +104,12 @@ void bio_integrity_free(struct bio *bio)
 	struct bio_set *bs = bio->bi_pool;
 
 	if (bip->bip_flags & BIP_BLOCK_INTEGRITY)
+<<<<<<< HEAD
 		kfree(bvec_virt(bip->bip_vec));
+=======
+		kfree(page_address(bip->bip_vec->bv_page) +
+		      bip->bip_vec->bv_offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	__bio_integrity_free(bs, bip);
 	bio->bi_integrity = NULL;
@@ -162,10 +167,16 @@ static blk_status_t bio_integrity_process(struct bio *bio,
 	struct bio_vec bv;
 	struct bio_integrity_payload *bip = bio_integrity(bio);
 	blk_status_t ret = BLK_STS_OK;
+<<<<<<< HEAD
+=======
+	void *prot_buf = page_address(bip->bip_vec->bv_page) +
+		bip->bip_vec->bv_offset;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	iter.disk_name = bio->bi_bdev->bd_disk->disk_name;
 	iter.interval = 1 << bi->interval_exp;
 	iter.seed = proc_iter->bi_sector;
+<<<<<<< HEAD
 	iter.prot_buf = bvec_virt(bip->bip_vec);
 
 	__bio_for_each_segment(bv, bio, bviter, *proc_iter) {
@@ -179,6 +190,23 @@ static blk_status_t bio_integrity_process(struct bio *bio,
 		if (ret)
 			break;
 
+=======
+	iter.prot_buf = prot_buf;
+
+	__bio_for_each_segment(bv, bio, bviter, *proc_iter) {
+		void *kaddr = kmap_atomic(bv.bv_page);
+
+		iter.data_buf = kaddr + bv.bv_offset;
+		iter.data_size = bv.bv_len;
+
+		ret = proc_fn(&iter);
+		if (ret) {
+			kunmap_atomic(kaddr);
+			return ret;
+		}
+
+		kunmap_atomic(kaddr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return ret;
 }

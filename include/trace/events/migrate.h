@@ -21,8 +21,12 @@
 	EM( MR_MEMPOLICY_MBIND,	"mempolicy_mbind")		\
 	EM( MR_NUMA_MISPLACED,	"numa_misplaced")		\
 	EM( MR_CONTIG_RANGE,	"contig_range")			\
+<<<<<<< HEAD
 	EM( MR_LONGTERM_PIN,	"longterm_pin")			\
 	EMe(MR_DEMOTION,	"demotion")
+=======
+	EMe(MR_LONGTERM_PIN,	"longterm_pin")
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * First define the enums in the above macros to be exported to userspace

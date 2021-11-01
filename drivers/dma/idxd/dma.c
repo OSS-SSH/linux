@@ -69,11 +69,15 @@ static inline void idxd_prep_desc_common(struct idxd_wq *wq,
 	hw->src_addr = addr_f1;
 	hw->dst_addr = addr_f2;
 	hw->xfer_size = len;
+<<<<<<< HEAD
 	/*
 	 * For dedicated WQ, this field is ignored and HW will use the WQCFG.priv
 	 * field instead. This field should be set to 1 for kernel descriptors.
 	 */
 	hw->priv = 1;
+=======
+	hw->priv = !!(wq->type == IDXD_WQT_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	hw->completion_addr = compl;
 }
 
@@ -153,8 +157,15 @@ static dma_cookie_t idxd_dma_tx_submit(struct dma_async_tx_descriptor *tx)
 	cookie = dma_cookie_assign(tx);
 
 	rc = idxd_submit_desc(wq, desc);
+<<<<<<< HEAD
 	if (rc < 0)
 		return rc;
+=======
+	if (rc < 0) {
+		idxd_free_desc(wq, desc);
+		return rc;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return cookie;
 }
@@ -247,7 +258,11 @@ int idxd_register_dma_channel(struct idxd_wq *wq)
 
 	wq->idxd_chan = idxd_chan;
 	idxd_chan->wq = wq;
+<<<<<<< HEAD
 	get_device(wq_confdev(wq));
+=======
+	get_device(&wq->conf_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -262,6 +277,7 @@ void idxd_unregister_dma_channel(struct idxd_wq *wq)
 	list_del(&chan->device_node);
 	kfree(wq->idxd_chan);
 	wq->idxd_chan = NULL;
+<<<<<<< HEAD
 	put_device(wq_confdev(wq));
 }
 
@@ -346,3 +362,7 @@ struct idxd_device_driver idxd_dmaengine_drv = {
 	.type = dev_types,
 };
 EXPORT_SYMBOL_GPL(idxd_dmaengine_drv);
+=======
+	put_device(&wq->conf_dev);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

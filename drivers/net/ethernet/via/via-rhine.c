@@ -884,7 +884,11 @@ static const struct net_device_ops rhine_netdev_ops = {
 	.ndo_set_rx_mode	 = rhine_set_rx_mode,
 	.ndo_validate_addr	 = eth_validate_addr,
 	.ndo_set_mac_address 	 = eth_mac_addr,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		 = netdev_ioctl,
+=======
+	.ndo_do_ioctl		 = netdev_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout 	 = rhine_tx_timeout,
 	.ndo_vlan_rx_add_vid	 = rhine_vlan_rx_add_vid,
 	.ndo_vlan_rx_kill_vid	 = rhine_vlan_rx_kill_vid,
@@ -1113,12 +1117,21 @@ err_out:
 
 static int rhine_init_one_platform(struct platform_device *pdev)
 {
+<<<<<<< HEAD
+=======
+	const struct of_device_id *match;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const u32 *quirks;
 	int irq;
 	void __iomem *ioaddr;
 
+<<<<<<< HEAD
 	quirks = of_device_get_match_data(&pdev->dev);
 	if (!quirks)
+=======
+	match = of_match_device(rhine_of_tbl, &pdev->dev);
+	if (!match)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	ioaddr = devm_platform_ioremap_resource(pdev, 0);
@@ -1129,6 +1142,13 @@ static int rhine_init_one_platform(struct platform_device *pdev)
 	if (!irq)
 		return -EINVAL;
 
+<<<<<<< HEAD
+=======
+	quirks = match->data;
+	if (!quirks)
+		return -EINVAL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rhine_init_one_common(&pdev->dev, *quirks,
 				     (long)ioaddr, ioaddr, irq);
 }

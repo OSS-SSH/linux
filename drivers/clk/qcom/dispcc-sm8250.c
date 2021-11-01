@@ -26,10 +26,13 @@ enum {
 	P_DISP_CC_PLL1_OUT_MAIN,
 	P_DP_PHY_PLL_LINK_CLK,
 	P_DP_PHY_PLL_VCO_DIV_CLK,
+<<<<<<< HEAD
 	P_DPTX1_PHY_PLL_LINK_CLK,
 	P_DPTX1_PHY_PLL_VCO_DIV_CLK,
 	P_DPTX2_PHY_PLL_LINK_CLK,
 	P_DPTX2_PHY_PLL_VCO_DIV_CLK,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	P_EDP_PHY_PLL_LINK_CLK,
 	P_EDP_PHY_PLL_VCO_DIV_CLK,
 	P_DSI0_PHY_PLL_OUT_BYTECLK,
@@ -102,20 +105,26 @@ static const struct parent_map disp_cc_parent_map_0[] = {
 	{ P_BI_TCXO, 0 },
 	{ P_DP_PHY_PLL_LINK_CLK, 1 },
 	{ P_DP_PHY_PLL_VCO_DIV_CLK, 2 },
+<<<<<<< HEAD
 	{ P_DPTX1_PHY_PLL_LINK_CLK, 3 },
 	{ P_DPTX1_PHY_PLL_VCO_DIV_CLK, 4 },
 	{ P_DPTX2_PHY_PLL_LINK_CLK, 5 },
 	{ P_DPTX2_PHY_PLL_VCO_DIV_CLK, 6 },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct clk_parent_data disp_cc_parent_data_0[] = {
 	{ .fw_name = "bi_tcxo" },
 	{ .fw_name = "dp_phy_pll_link_clk" },
 	{ .fw_name = "dp_phy_pll_vco_div_clk" },
+<<<<<<< HEAD
 	{ .fw_name = "dptx1_phy_pll_link_clk" },
 	{ .fw_name = "dptx1_phy_pll_vco_div_clk" },
 	{ .fw_name = "dptx2_phy_pll_link_clk" },
 	{ .fw_name = "dptx2_phy_pll_vco_div_clk" },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct parent_map disp_cc_parent_map_1[] = {
@@ -281,11 +290,26 @@ static struct clk_rcg2 disp_cc_mdss_dp_aux_clk_src = {
 	},
 };
 
+<<<<<<< HEAD
+=======
+static const struct freq_tbl ftbl_disp_cc_mdss_dp_link1_clk_src[] = {
+	F(162000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+	F(270000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+	F(540000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+	F(810000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+	{ }
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct clk_rcg2 disp_cc_mdss_dp_link1_clk_src = {
 	.cmd_rcgr = 0x220c,
 	.mnd_width = 0,
 	.hid_width = 5,
 	.parent_map = disp_cc_parent_map_0,
+<<<<<<< HEAD
+=======
+	.freq_tbl = ftbl_disp_cc_mdss_dp_link1_clk_src,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.clkr.hw.init = &(struct clk_init_data){
 		.name = "disp_cc_mdss_dp_link1_clk_src",
 		.parent_data = disp_cc_parent_data_0,
@@ -299,6 +323,10 @@ static struct clk_rcg2 disp_cc_mdss_dp_link_clk_src = {
 	.mnd_width = 0,
 	.hid_width = 5,
 	.parent_map = disp_cc_parent_map_0,
+<<<<<<< HEAD
+=======
+	.freq_tbl = ftbl_disp_cc_mdss_dp_link1_clk_src,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.clkr.hw.init = &(struct clk_init_data){
 		.name = "disp_cc_mdss_dp_link_clk_src",
 		.parent_data = disp_cc_parent_data_0,

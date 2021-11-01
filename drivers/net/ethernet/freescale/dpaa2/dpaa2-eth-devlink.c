@@ -68,7 +68,11 @@ dpaa2_eth_dl_trap_item_lookup(struct dpaa2_eth_priv *priv, u16 trap_id)
 struct dpaa2_eth_trap_item *dpaa2_eth_dl_get_trap(struct dpaa2_eth_priv *priv,
 						  struct dpaa2_fapr *fapr)
 {
+<<<<<<< HEAD
 	static const struct dpaa2_faf_error_bit {
+=======
+	struct dpaa2_faf_error_bit {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		int position;
 		enum devlink_trap_generic_id trap_id;
 	} faf_bits[] = {
@@ -196,8 +200,12 @@ int dpaa2_eth_dl_register(struct dpaa2_eth_priv *priv)
 	struct dpaa2_eth_devlink_priv *dl_priv;
 	int err;
 
+<<<<<<< HEAD
 	priv->devlink =
 		devlink_alloc(&dpaa2_eth_devlink_ops, sizeof(*dl_priv), dev);
+=======
+	priv->devlink = devlink_alloc(&dpaa2_eth_devlink_ops, sizeof(*dl_priv));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!priv->devlink) {
 		dev_err(dev, "devlink_alloc failed\n");
 		return -ENOMEM;
@@ -205,7 +213,11 @@ int dpaa2_eth_dl_register(struct dpaa2_eth_priv *priv)
 	dl_priv = devlink_priv(priv->devlink);
 	dl_priv->dpaa2_priv = priv;
 
+<<<<<<< HEAD
 	err = devlink_register(priv->devlink);
+=======
+	err = devlink_register(priv->devlink, dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err) {
 		dev_err(dev, "devlink_register() = %d\n", err);
 		goto devlink_free;

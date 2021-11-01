@@ -35,6 +35,10 @@
 #define ADF_DH895XCC_ERRSSMSH_EN BIT(3)
 
 #define ADF_DH895XCC_PF2VF_OFFSET(i)	(0x3A000 + 0x280 + ((i) * 0x04))
+<<<<<<< HEAD
+=======
+#define ADF_DH895XCC_VINTMSK_OFFSET(i)	(0x3A000 + 0x200 + ((i) * 0x04))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* AE to function mapping */
 #define ADF_DH895XCC_AE2FUNC_MAP_GRP_A_NUM_REGS 96

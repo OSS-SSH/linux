@@ -488,7 +488,13 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
 					struct sk_buff *skb, u16 source_node_id,
 					bool is_broadcast, u16 ether_type)
 {
+<<<<<<< HEAD
 	int status;
+=======
+	struct fwnet_device *dev;
+	int status;
+	__be64 guid;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (ether_type) {
 	case ETH_P_ARP:
@@ -501,6 +507,10 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
 		goto err;
 	}
 
+<<<<<<< HEAD
+=======
+	dev = netdev_priv(net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Write metadata, and then pass to the receive level */
 	skb->dev = net;
 	skb->ip_summed = CHECKSUM_NONE;
@@ -509,6 +519,10 @@ static int fwnet_finish_incoming_packet(struct net_device *net,
 	 * Parse the encapsulation header. This actually does the job of
 	 * converting to an ethernet-like pseudo frame header.
 	 */
+<<<<<<< HEAD
+=======
+	guid = cpu_to_be64(dev->card->guid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (dev_hard_header(skb, net, ether_type,
 			   is_broadcast ? net->broadcast : net->dev_addr,
 			   NULL, skb->len) >= 0) {

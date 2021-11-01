@@ -16,4 +16,7 @@ obj-$(CONFIG_VIDEO_IMX_CSI) += imx6-mipi-csi2.o
 
 obj-$(CONFIG_VIDEO_IMX7_CSI) += imx7-media-csi.o
 obj-$(CONFIG_VIDEO_IMX7_CSI) += imx7-mipi-csis.o
+<<<<<<< HEAD
 obj-$(CONFIG_VIDEO_IMX7_CSI) += imx8mq-mipi-csi2.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

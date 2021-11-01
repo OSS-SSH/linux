@@ -116,6 +116,7 @@ static void vhost_vdpa_unsetup_vq_irq(struct vhost_vdpa *v, u16 qid)
 	irq_bypass_unregister_producer(&vq->call_ctx.producer);
 }
 
+<<<<<<< HEAD
 static int vhost_vdpa_reset(struct vhost_vdpa *v)
 {
 	struct vdpa_device *vdpa = v->vdpa;
@@ -123,6 +124,14 @@ static int vhost_vdpa_reset(struct vhost_vdpa *v)
 	v->in_batch = 0;
 
 	return vdpa_reset(vdpa);
+=======
+static void vhost_vdpa_reset(struct vhost_vdpa *v)
+{
+	struct vdpa_device *vdpa = v->vdpa;
+
+	vdpa_reset(vdpa);
+	v->in_batch = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static long vhost_vdpa_get_device_id(struct vhost_vdpa *v, u8 __user *argp)
@@ -158,7 +167,11 @@ static long vhost_vdpa_set_status(struct vhost_vdpa *v, u8 __user *statusp)
 	struct vdpa_device *vdpa = v->vdpa;
 	const struct vdpa_config_ops *ops = vdpa->config;
 	u8 status, status_old;
+<<<<<<< HEAD
 	int ret, nvqs = v->nvqs;
+=======
+	int nvqs = v->nvqs;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u16 i;
 
 	if (copy_from_user(&status, statusp, sizeof(status)))
@@ -173,6 +186,7 @@ static long vhost_vdpa_set_status(struct vhost_vdpa *v, u8 __user *statusp)
 	if (status != 0 && (ops->get_status(vdpa) & ~status) != 0)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if ((status_old & VIRTIO_CONFIG_S_DRIVER_OK) && !(status & VIRTIO_CONFIG_S_DRIVER_OK))
 		for (i = 0; i < nvqs; i++)
 			vhost_vdpa_unsetup_vq_irq(v, i);
@@ -183,11 +197,21 @@ static long vhost_vdpa_set_status(struct vhost_vdpa *v, u8 __user *statusp)
 			return ret;
 	} else
 		ops->set_status(vdpa, status);
+=======
+	ops->set_status(vdpa, status);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if ((status & VIRTIO_CONFIG_S_DRIVER_OK) && !(status_old & VIRTIO_CONFIG_S_DRIVER_OK))
 		for (i = 0; i < nvqs; i++)
 			vhost_vdpa_setup_vq_irq(v, i);
 
+<<<<<<< HEAD
+=======
+	if ((status_old & VIRTIO_CONFIG_S_DRIVER_OK) && !(status & VIRTIO_CONFIG_S_DRIVER_OK))
+		for (i = 0; i < nvqs; i++)
+			vhost_vdpa_unsetup_vq_irq(v, i);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -322,7 +346,11 @@ static long vhost_vdpa_set_config_call(struct vhost_vdpa *v, u32 __user *argp)
 	struct eventfd_ctx *ctx;
 
 	cb.callback = vhost_vdpa_config_cb;
+<<<<<<< HEAD
 	cb.private = v;
+=======
+	cb.private = v->vdpa;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (copy_from_user(&fd, argp, sizeof(fd)))
 		return  -EFAULT;
 
@@ -504,7 +532,11 @@ static long vhost_vdpa_unlocked_ioctl(struct file *filep,
 	return r;
 }
 
+<<<<<<< HEAD
 static void vhost_vdpa_pa_unmap(struct vhost_vdpa *v, u64 start, u64 last)
+=======
+static void vhost_vdpa_iotlb_unmap(struct vhost_vdpa *v, u64 start, u64 last)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vhost_dev *dev = &v->vdev;
 	struct vhost_iotlb *iotlb = dev->iotlb;
@@ -513,14 +545,20 @@ static void vhost_vdpa_pa_unmap(struct vhost_vdpa *v, u64 start, u64 last)
 	unsigned long pfn, pinned;
 
 	while ((map = vhost_iotlb_itree_first(iotlb, start, last)) != NULL) {
+<<<<<<< HEAD
 		pinned = PFN_DOWN(map->size);
 		for (pfn = PFN_DOWN(map->addr);
+=======
+		pinned = map->size >> PAGE_SHIFT;
+		for (pfn = map->addr >> PAGE_SHIFT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		     pinned > 0; pfn++, pinned--) {
 			page = pfn_to_page(pfn);
 			if (map->perm & VHOST_ACCESS_WO)
 				set_page_dirty_lock(page);
 			unpin_user_page(page);
 		}
+<<<<<<< HEAD
 		atomic64_sub(PFN_DOWN(map->size), &dev->mm->pinned_vm);
 		vhost_iotlb_map_free(iotlb, map);
 	}
@@ -537,10 +575,14 @@ static void vhost_vdpa_va_unmap(struct vhost_vdpa *v, u64 start, u64 last)
 		map_file = (struct vdpa_map_file *)map->opaque;
 		fput(map_file->file);
 		kfree(map_file);
+=======
+		atomic64_sub(map->size >> PAGE_SHIFT, &dev->mm->pinned_vm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		vhost_iotlb_map_free(iotlb, map);
 	}
 }
 
+<<<<<<< HEAD
 static void vhost_vdpa_iotlb_unmap(struct vhost_vdpa *v, u64 start, u64 last)
 {
 	struct vdpa_device *vdpa = v->vdpa;
@@ -551,6 +593,8 @@ static void vhost_vdpa_iotlb_unmap(struct vhost_vdpa *v, u64 start, u64 last)
 	return vhost_vdpa_pa_unmap(v, start, last);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void vhost_vdpa_iotlb_free(struct vhost_vdpa *v)
 {
 	struct vhost_dev *dev = &v->vdev;
@@ -582,21 +626,35 @@ static int perm_to_iommu_flags(u32 perm)
 	return flags | IOMMU_CACHE;
 }
 
+<<<<<<< HEAD
 static int vhost_vdpa_map(struct vhost_vdpa *v, u64 iova,
 			  u64 size, u64 pa, u32 perm, void *opaque)
+=======
+static int vhost_vdpa_map(struct vhost_vdpa *v,
+			  u64 iova, u64 size, u64 pa, u32 perm)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct vhost_dev *dev = &v->vdev;
 	struct vdpa_device *vdpa = v->vdpa;
 	const struct vdpa_config_ops *ops = vdpa->config;
 	int r = 0;
 
+<<<<<<< HEAD
 	r = vhost_iotlb_add_range_ctx(dev->iotlb, iova, iova + size - 1,
 				      pa, perm, opaque);
+=======
+	r = vhost_iotlb_add_range(dev->iotlb, iova, iova + size - 1,
+				  pa, perm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (r)
 		return r;
 
 	if (ops->dma_map) {
+<<<<<<< HEAD
 		r = ops->dma_map(vdpa, iova, size, pa, perm, opaque);
+=======
+		r = ops->dma_map(vdpa, iova, size, pa, perm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else if (ops->set_map) {
 		if (!v->in_batch)
 			r = ops->set_map(vdpa, dev->iotlb);
@@ -604,6 +662,7 @@ static int vhost_vdpa_map(struct vhost_vdpa *v, u64 iova,
 		r = iommu_map(v->domain, iova, pa, size,
 			      perm_to_iommu_flags(perm));
 	}
+<<<<<<< HEAD
 	if (r) {
 		vhost_iotlb_del_range(dev->iotlb, iova, iova + size - 1);
 		return r;
@@ -613,6 +672,15 @@ static int vhost_vdpa_map(struct vhost_vdpa *v, u64 iova,
 		atomic64_add(PFN_DOWN(size), &dev->mm->pinned_vm);
 
 	return 0;
+=======
+
+	if (r)
+		vhost_iotlb_del_range(dev->iotlb, iova, iova + size - 1);
+	else
+		atomic64_add(size >> PAGE_SHIFT, &dev->mm->pinned_vm);
+
+	return r;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void vhost_vdpa_unmap(struct vhost_vdpa *v, u64 iova, u64 size)
@@ -633,6 +701,7 @@ static void vhost_vdpa_unmap(struct vhost_vdpa *v, u64 iova, u64 size)
 	}
 }
 
+<<<<<<< HEAD
 static int vhost_vdpa_va_map(struct vhost_vdpa *v,
 			     u64 iova, u64 size, u64 uaddr, u32 perm)
 {
@@ -687,24 +756,53 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
 			     u64 iova, u64 size, u64 uaddr, u32 perm)
 {
 	struct vhost_dev *dev = &v->vdev;
+=======
+static int vhost_vdpa_process_iotlb_update(struct vhost_vdpa *v,
+					   struct vhost_iotlb_msg *msg)
+{
+	struct vhost_dev *dev = &v->vdev;
+	struct vhost_iotlb *iotlb = dev->iotlb;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct page **page_list;
 	unsigned long list_size = PAGE_SIZE / sizeof(struct page *);
 	unsigned int gup_flags = FOLL_LONGTERM;
 	unsigned long npages, cur_base, map_pfn, last_pfn = 0;
 	unsigned long lock_limit, sz2pin, nchunks, i;
+<<<<<<< HEAD
 	u64 start = iova;
 	long pinned;
 	int ret = 0;
 
+=======
+	u64 iova = msg->iova;
+	long pinned;
+	int ret = 0;
+
+	if (msg->iova < v->range.first ||
+	    msg->iova + msg->size - 1 > v->range.last)
+		return -EINVAL;
+
+	if (vhost_iotlb_itree_first(iotlb, msg->iova,
+				    msg->iova + msg->size - 1))
+		return -EEXIST;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Limit the use of memory for bookkeeping */
 	page_list = (struct page **) __get_free_page(GFP_KERNEL);
 	if (!page_list)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	if (perm & VHOST_ACCESS_WO)
 		gup_flags |= FOLL_WRITE;
 
 	npages = PFN_UP(size + (iova & ~PAGE_MASK));
+=======
+	if (msg->perm & VHOST_ACCESS_WO)
+		gup_flags |= FOLL_WRITE;
+
+	npages = PAGE_ALIGN(msg->size + (iova & ~PAGE_MASK)) >> PAGE_SHIFT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!npages) {
 		ret = -EINVAL;
 		goto free;
@@ -712,13 +810,21 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
 
 	mmap_read_lock(dev->mm);
 
+<<<<<<< HEAD
 	lock_limit = PFN_DOWN(rlimit(RLIMIT_MEMLOCK));
+=======
+	lock_limit = rlimit(RLIMIT_MEMLOCK) >> PAGE_SHIFT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (npages + atomic64_read(&dev->mm->pinned_vm) > lock_limit) {
 		ret = -ENOMEM;
 		goto unlock;
 	}
 
+<<<<<<< HEAD
 	cur_base = uaddr & PAGE_MASK;
+=======
+	cur_base = msg->uaddr & PAGE_MASK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iova &= PAGE_MASK;
 	nchunks = 0;
 
@@ -746,10 +852,17 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
 
 			if (last_pfn && (this_pfn != last_pfn + 1)) {
 				/* Pin a contiguous chunk of memory */
+<<<<<<< HEAD
 				csize = PFN_PHYS(last_pfn - map_pfn + 1);
 				ret = vhost_vdpa_map(v, iova, csize,
 						     PFN_PHYS(map_pfn),
 						     perm, NULL);
+=======
+				csize = (last_pfn - map_pfn + 1) << PAGE_SHIFT;
+				ret = vhost_vdpa_map(v, iova, csize,
+						     map_pfn << PAGE_SHIFT,
+						     msg->perm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (ret) {
 					/*
 					 * Unpin the pages that are left unmapped
@@ -772,13 +885,22 @@ static int vhost_vdpa_pa_map(struct vhost_vdpa *v,
 			last_pfn = this_pfn;
 		}
 
+<<<<<<< HEAD
 		cur_base += PFN_PHYS(pinned);
+=======
+		cur_base += pinned << PAGE_SHIFT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		npages -= pinned;
 	}
 
 	/* Pin the rest chunk */
+<<<<<<< HEAD
 	ret = vhost_vdpa_map(v, iova, PFN_PHYS(last_pfn - map_pfn + 1),
 			     PFN_PHYS(map_pfn), perm, NULL);
+=======
+	ret = vhost_vdpa_map(v, iova, (last_pfn - map_pfn + 1) << PAGE_SHIFT,
+			     map_pfn << PAGE_SHIFT, msg->perm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	if (ret) {
 		if (nchunks) {
@@ -797,13 +919,18 @@ out:
 			for (pfn = map_pfn; pfn <= last_pfn; pfn++)
 				unpin_user_page(pfn_to_page(pfn));
 		}
+<<<<<<< HEAD
 		vhost_vdpa_unmap(v, start, size);
+=======
+		vhost_vdpa_unmap(v, msg->iova, msg->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 unlock:
 	mmap_read_unlock(dev->mm);
 free:
 	free_page((unsigned long)page_list);
 	return ret;
+<<<<<<< HEAD
 
 }
 
@@ -829,6 +956,8 @@ static int vhost_vdpa_process_iotlb_update(struct vhost_vdpa *v,
 
 	return vhost_vdpa_pa_map(v, msg->iova, msg->size, msg->uaddr,
 				 msg->perm);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int vhost_vdpa_process_iotlb_msg(struct vhost_dev *dev,
@@ -958,9 +1087,13 @@ static int vhost_vdpa_open(struct inode *inode, struct file *filep)
 		return -EBUSY;
 
 	nvqs = v->nvqs;
+<<<<<<< HEAD
 	r = vhost_vdpa_reset(v);
 	if (r)
 		goto err;
+=======
+	vhost_vdpa_reset(v);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	vqs = kmalloc_array(nvqs, sizeof(*vqs), GFP_KERNEL);
 	if (!vqs) {
@@ -1045,7 +1178,11 @@ static vm_fault_t vhost_vdpa_fault(struct vm_fault *vmf)
 
 	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
 	if (remap_pfn_range(vma, vmf->address & PAGE_MASK,
+<<<<<<< HEAD
 			    PFN_DOWN(notify.addr), PAGE_SIZE,
+=======
+			    notify.addr >> PAGE_SHIFT, PAGE_SIZE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			    vma->vm_page_prot))
 		return VM_FAULT_SIGBUS;
 

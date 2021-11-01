@@ -17,16 +17,25 @@ root_check_run_with_sudo "$@"
 # Parameter parsing via include
 source ${basedir}/parameters.sh
 # Set some default params, if they didn't get set
+<<<<<<< HEAD
 if [ -z "$DEST_IP" ]; then
     [ -z "$IP6" ] && DEST_IP="198.18.0.42" || DEST_IP="FD00::1"
 fi
+=======
+[ -z "$DEST_IP" ]   && DEST_IP="198.18.0.42"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 [ -z "$DST_MAC" ]   && DST_MAC="90:e2:ba:ff:ff:ff"
 [ -z "$CLONE_SKB" ] && CLONE_SKB="0"
 [ -z "$BURST" ]     && BURST=32
 [ -z "$COUNT" ]     && COUNT="0" # Zero means indefinitely
 if [ -n "$DEST_IP" ]; then
+<<<<<<< HEAD
     validate_addr${IP6} $DEST_IP
     read -r DST_MIN DST_MAX <<< $(parse_addr${IP6} $DEST_IP)
+=======
+    validate_addr $DEST_IP
+    read -r DST_MIN DST_MAX <<< $(parse_addr $DEST_IP)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 fi
 if [ -n "$DST_PORT" ]; then
     read -r UDP_DST_MIN UDP_DST_MAX <<< $(parse_ports $DST_PORT)
@@ -54,8 +63,13 @@ for ((thread = $F_THREAD; thread <= $L_THREAD; thread++)); do
 
     # Single destination
     pg_set $dev "dst_mac $DST_MAC"
+<<<<<<< HEAD
     pg_set $dev "dst${IP6}_min $DST_MIN"
     pg_set $dev "dst${IP6}_max $DST_MAX"
+=======
+    pg_set $dev "dst_min $DST_MIN"
+    pg_set $dev "dst_max $DST_MAX"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
     if [ -n "$DST_PORT" ]; then
 	# Single destination port or random port range

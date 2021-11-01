@@ -58,6 +58,10 @@
  *    and up to the hardware designer to not wire
  *    them up in some weird unusable way.
  */
+<<<<<<< HEAD
+=======
+#include <stddef.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/i2c.h>
 #include <asm/pmac_low_i2c.h>
 #include <asm/prom.h>

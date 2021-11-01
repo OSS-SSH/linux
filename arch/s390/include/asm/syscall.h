@@ -104,6 +104,7 @@ static inline bool arch_syscall_is_vdso_sigreturn(struct pt_regs *regs)
 	return false;
 }
 
+<<<<<<< HEAD
 #define SYSCALL_FMT_0
 #define SYSCALL_FMT_1 , "0" (r2)
 #define SYSCALL_FMT_2 , "d" (r3) SYSCALL_FMT_1
@@ -163,4 +164,6 @@ GENERATE_SYSCALL_FUNC(4)
 GENERATE_SYSCALL_FUNC(5)
 GENERATE_SYSCALL_FUNC(6)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif	/* _ASM_SYSCALL_H */

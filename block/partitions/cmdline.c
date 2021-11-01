@@ -14,6 +14,7 @@
  * For further information, see "Documentation/block/cmdline-partition.rst"
  *
  */
+<<<<<<< HEAD
 #include <linux/blkdev.h>
 #include <linux/fs.h>
 #include <linux/slab.h>
@@ -246,16 +247,30 @@ static struct cmdline_parts *cmdline_parts_find(struct cmdline_parts *parts,
 		parts = parts->next_parts;
 	return parts;
 }
+=======
+
+#include <linux/cmdline-parser.h>
+
+#include "check.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static char *cmdline;
 static struct cmdline_parts *bdev_parts;
 
+<<<<<<< HEAD
 static int add_part(int slot, struct cmdline_subpart *subpart,
 		struct parsed_partitions *state)
+=======
+static int add_part(int slot, struct cmdline_subpart *subpart, void *param)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int label_min;
 	struct partition_meta_info *info;
 	char tmp[sizeof(info->volname) + 4];
+<<<<<<< HEAD
+=======
+	struct parsed_partitions *state = (struct parsed_partitions *)param;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (slot >= state->limit)
 		return 1;
@@ -278,6 +293,7 @@ static int add_part(int slot, struct cmdline_subpart *subpart,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int cmdline_parts_set(struct cmdline_parts *parts, sector_t disk_size,
 		struct parsed_partitions *state)
 {
@@ -307,6 +323,8 @@ static int cmdline_parts_set(struct cmdline_parts *parts, sector_t disk_size,
 	return slot;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int __init cmdline_parts_setup(char *s)
 {
 	cmdline = s;
@@ -380,6 +398,10 @@ static void cmdline_parts_verifier(int slot, struct parsed_partitions *state)
 int cmdline_partition(struct parsed_partitions *state)
 {
 	sector_t disk_size;
+<<<<<<< HEAD
+=======
+	char bdev[BDEVNAME_SIZE];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct cmdline_parts *parts;
 
 	if (cmdline) {
@@ -396,6 +418,7 @@ int cmdline_partition(struct parsed_partitions *state)
 	if (!bdev_parts)
 		return 0;
 
+<<<<<<< HEAD
 	parts = cmdline_parts_find(bdev_parts, state->disk->disk_name);
 	if (!parts)
 		return 0;
@@ -403,6 +426,16 @@ int cmdline_partition(struct parsed_partitions *state)
 	disk_size = get_capacity(state->disk) << 9;
 
 	cmdline_parts_set(parts, disk_size, state);
+=======
+	bdevname(state->bdev, bdev);
+	parts = cmdline_parts_find(bdev_parts, bdev);
+	if (!parts)
+		return 0;
+
+	disk_size = get_capacity(state->bdev->bd_disk) << 9;
+
+	cmdline_parts_set(parts, disk_size, 1, add_part, (void *)state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cmdline_parts_verifier(1, state);
 
 	strlcat(state->pp_buf, "\n", PAGE_SIZE);

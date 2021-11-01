@@ -222,6 +222,7 @@ ndo_do_ioctl:
 	Synchronization: rtnl_lock() semaphore.
 	Context: process
 
+<<<<<<< HEAD
         This is only called by network subsystems internally,
         not by user space calling ioctl as it was in before
         linux-5.14.
@@ -251,6 +252,8 @@ ndo_eth_ioctl:
 	Synchronization: rtnl_lock() semaphore.
 	Context: process
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ndo_get_stats:
 	Synchronization: rtnl_lock() semaphore, dev_base_lock rwlock, or RCU.
 	Context: atomic (can't sleep under rwlock or RCU)

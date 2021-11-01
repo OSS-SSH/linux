@@ -92,7 +92,11 @@ xfs_fs_map_blocks(
 	uint			lock_flags;
 	int			error = 0;
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	/*

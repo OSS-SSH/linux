@@ -40,6 +40,10 @@
 struct acx424akp {
 	struct drm_panel panel;
 	struct device *dev;
+<<<<<<< HEAD
+=======
+	struct backlight_device *bl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct regulator *supply;
 	struct gpio_desc *reset_gpio;
 	bool video_mode;
@@ -101,6 +105,7 @@ static int acx424akp_set_brightness(struct backlight_device *bl)
 	u8 par;
 	int ret;
 
+<<<<<<< HEAD
 	if (backlight_is_blank(bl)) {
 		/* Disable backlight */
 		par = 0x00;
@@ -113,6 +118,8 @@ static int acx424akp_set_brightness(struct backlight_device *bl)
 		return 0;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Calculate the PWM duty cycle in n/256's */
 	pwm_ratio = max(((duty_ns * 256) / period_ns) - 1, 1);
 	pwm_div = max(1,
@@ -183,12 +190,15 @@ static const struct backlight_ops acx424akp_bl_ops = {
 	.update_status = acx424akp_set_brightness,
 };
 
+<<<<<<< HEAD
 static const struct backlight_properties acx424akp_bl_props = {
 	.type = BACKLIGHT_RAW,
 	.brightness = 512,
 	.max_brightness = 1023,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int acx424akp_read_id(struct acx424akp *acx)
 {
 	struct mipi_dsi_device *dsi = to_mipi_dsi_device(acx->dev);
@@ -327,6 +337,11 @@ static int acx424akp_prepare(struct drm_panel *panel)
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	acx->bl->props.power = FB_BLANK_NORMAL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 err_power_off:
@@ -338,8 +353,23 @@ static int acx424akp_unprepare(struct drm_panel *panel)
 {
 	struct acx424akp *acx = panel_to_acx424akp(panel);
 	struct mipi_dsi_device *dsi = to_mipi_dsi_device(acx->dev);
+<<<<<<< HEAD
 	int ret;
 
+=======
+	u8 par;
+	int ret;
+
+	/* Disable backlight */
+	par = 0x00;
+	ret = mipi_dsi_dcs_write(dsi, MIPI_DCS_WRITE_CONTROL_DISPLAY,
+				 &par, 1);
+	if (ret) {
+		dev_err(acx->dev, "failed to disable display backlight (%d)\n", ret);
+		return ret;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = mipi_dsi_dcs_set_display_off(dsi);
 	if (ret) {
 		dev_err(acx->dev, "failed to turn display off (%d)\n", ret);
@@ -355,10 +385,42 @@ static int acx424akp_unprepare(struct drm_panel *panel)
 	msleep(85);
 
 	acx424akp_power_off(acx);
+<<<<<<< HEAD
+=======
+	acx->bl->props.power = FB_BLANK_POWERDOWN;
 
 	return 0;
 }
 
+static int acx424akp_enable(struct drm_panel *panel)
+{
+	struct acx424akp *acx = panel_to_acx424akp(panel);
+
+	/*
+	 * The backlight is on as long as the display is on
+	 * so no use to call backlight_enable() here.
+	 */
+	acx->bl->props.power = FB_BLANK_UNBLANK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+
+	return 0;
+}
+
+<<<<<<< HEAD
+=======
+static int acx424akp_disable(struct drm_panel *panel)
+{
+	struct acx424akp *acx = panel_to_acx424akp(panel);
+
+	/*
+	 * The backlight is on as long as the display is on
+	 * so no use to call backlight_disable() here.
+	 */
+	acx->bl->props.power = FB_BLANK_NORMAL;
+
+	return 0;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int acx424akp_get_modes(struct drm_panel *panel,
 			       struct drm_connector *connector)
@@ -388,8 +450,15 @@ static int acx424akp_get_modes(struct drm_panel *panel,
 }
 
 static const struct drm_panel_funcs acx424akp_drm_funcs = {
+<<<<<<< HEAD
 	.unprepare = acx424akp_unprepare,
 	.prepare = acx424akp_prepare,
+=======
+	.disable = acx424akp_disable,
+	.unprepare = acx424akp_unprepare,
+	.prepare = acx424akp_prepare,
+	.enable = acx424akp_enable,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.get_modes = acx424akp_get_modes,
 };
 
@@ -435,18 +504,39 @@ static int acx424akp_probe(struct mipi_dsi_device *dsi)
 	/* This asserts RESET by default */
 	acx->reset_gpio = devm_gpiod_get_optional(dev, "reset",
 						  GPIOD_OUT_HIGH);
+<<<<<<< HEAD
 	if (IS_ERR(acx->reset_gpio))
 		return dev_err_probe(dev, PTR_ERR(acx->reset_gpio),
 				     "failed to request GPIO\n");
+=======
+	if (IS_ERR(acx->reset_gpio)) {
+		ret = PTR_ERR(acx->reset_gpio);
+		if (ret != -EPROBE_DEFER)
+			dev_err(dev, "failed to request GPIO (%d)\n", ret);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	drm_panel_init(&acx->panel, dev, &acx424akp_drm_funcs,
 		       DRM_MODE_CONNECTOR_DSI);
 
+<<<<<<< HEAD
 	acx->panel.backlight = devm_backlight_device_register(dev, "acx424akp", dev, acx,
 					&acx424akp_bl_ops, &acx424akp_bl_props);
 	if (IS_ERR(acx->panel.backlight))
 		return dev_err_probe(dev, PTR_ERR(acx->panel.backlight),
 				     "failed to register backlight device\n");
+=======
+	acx->bl = devm_backlight_device_register(dev, "acx424akp", dev, acx,
+						 &acx424akp_bl_ops, NULL);
+	if (IS_ERR(acx->bl)) {
+		dev_err(dev, "failed to register backlight device\n");
+		return PTR_ERR(acx->bl);
+	}
+	acx->bl->props.max_brightness = 1023;
+	acx->bl->props.brightness = 512;
+	acx->bl->props.power = FB_BLANK_POWERDOWN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	drm_panel_add(&acx->panel);
 

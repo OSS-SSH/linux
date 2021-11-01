@@ -39,7 +39,10 @@ properties:
       - qcom,rpm-msm8996
       - qcom,rpm-msm8998
       - qcom,rpm-sdm660
+<<<<<<< HEAD
       - qcom,rpm-sm6115
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - qcom,rpm-sm6125
       - qcom,rpm-qcs404
 

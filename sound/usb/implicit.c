@@ -171,7 +171,11 @@ static int add_roland_implicit_fb(struct snd_usb_audio *chip,
 	if (!usb_endpoint_is_isoc_in(epd) ||
 	    (epd->bmAttributes & USB_ENDPOINT_SYNCTYPE) != USB_ENDPOINT_SYNC_ASYNC)
 		return 0;
+<<<<<<< HEAD
 	chip->quirk_flags |= QUIRK_FLAG_PLAYBACK_FIRST;
+=======
+	chip->playback_first = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return add_implicit_fb_sync_ep(chip, fmt, epd->bEndpointAddress, 0,
 				       alts->desc.bInterfaceNumber, alts);
 }
@@ -320,7 +324,11 @@ static int audioformat_implicit_fb_quirk(struct snd_usb_audio *chip,
 		case IMPLICIT_FB_FIXED:
 			return 0; /* no quirk */
 		case IMPLICIT_FB_BOTH:
+<<<<<<< HEAD
 			chip->quirk_flags |= QUIRK_FLAG_PLAYBACK_FIRST;
+=======
+			chip->playback_first = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return add_generic_implicit_fb(chip, fmt, alts);
 		}
 	}
@@ -344,7 +352,11 @@ static int audioformat_implicit_fb_quirk(struct snd_usb_audio *chip,
 
 	/* Pioneer devices with vendor spec class */
 	if (is_pioneer_implicit_fb(chip, alts)) {
+<<<<<<< HEAD
 		chip->quirk_flags |= QUIRK_FLAG_PLAYBACK_FIRST;
+=======
+		chip->playback_first = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return add_implicit_fb_sync_ep(chip, fmt,
 					       get_endpoint(alts, 1)->bEndpointAddress,
 					       1, alts->desc.bInterfaceNumber,

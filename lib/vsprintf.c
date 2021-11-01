@@ -17,7 +17,11 @@
  * - scnprintf and vscnprintf
  */
 
+<<<<<<< HEAD
 #include <linux/stdarg.h>
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/build_bug.h>
 #include <linux/clk.h>
 #include <linux/clk-provider.h>
@@ -2019,7 +2023,11 @@ static const struct page_flags_fields pff[] = {
 static
 char *format_page_flags(char *buf, char *end, unsigned long flags)
 {
+<<<<<<< HEAD
 	unsigned long main_flags = flags & PAGEFLAGS_MASK;
+=======
+	unsigned long main_flags = flags & (BIT(NR_PAGEFLAGS) - 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool append = false;
 	int i;
 

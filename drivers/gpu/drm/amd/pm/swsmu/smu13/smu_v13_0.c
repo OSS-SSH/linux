@@ -85,10 +85,13 @@ int smu_v13_0_init_microcode(struct smu_context *smu)
 	const struct common_firmware_header *header;
 	struct amdgpu_firmware_info *ucode = NULL;
 
+<<<<<<< HEAD
 	/* doesn't need to load smu firmware in IOV mode */
 	if (amdgpu_sriov_vf(adev))
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (adev->asic_type) {
 	case CHIP_ALDEBARAN:
 		chip_name = "aldebaran";
@@ -214,9 +217,12 @@ int smu_v13_0_check_fw_version(struct smu_context *smu)
 	case CHIP_ALDEBARAN:
 		smu->smc_driver_if_version = SMU13_DRIVER_IF_VERSION_ALDE;
 		break;
+<<<<<<< HEAD
 	case CHIP_YELLOW_CARP:
 		smu->smc_driver_if_version = SMU13_DRIVER_IF_VERSION_YELLOW_CARP;
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		dev_err(smu->adev->dev, "smu unsupported asic type:%d.\n", smu->adev->asic_type);
 		smu->smc_driver_if_version = SMU13_DRIVER_IF_VERSION_INV;
@@ -272,6 +278,7 @@ static int smu_v13_0_set_pptable_v2_1(struct smu_context *smu, void **table,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int smu_v13_0_get_pptable_from_vbios(struct smu_context *smu, void **table, uint32_t *size)
 {
 	struct amdgpu_device *adev = smu->adev;
@@ -351,6 +358,53 @@ int smu_v13_0_setup_pptable(struct smu_context *smu)
 
 	if (ret)
 		return ret;
+=======
+int smu_v13_0_setup_pptable(struct smu_context *smu)
+{
+	struct amdgpu_device *adev = smu->adev;
+	const struct smc_firmware_header_v1_0 *hdr;
+	int ret, index;
+	uint32_t size = 0;
+	uint16_t atom_table_size;
+	uint8_t frev, crev;
+	void *table;
+	uint16_t version_major, version_minor;
+
+
+	if (amdgpu_smu_pptable_id >= 0) {
+		smu->smu_table.boot_values.pp_table_id = amdgpu_smu_pptable_id;
+		dev_info(adev->dev, "override pptable id %d\n", amdgpu_smu_pptable_id);
+	}
+
+	hdr = (const struct smc_firmware_header_v1_0 *) adev->pm.fw->data;
+	version_major = le16_to_cpu(hdr->header.header_version_major);
+	version_minor = le16_to_cpu(hdr->header.header_version_minor);
+	if (version_major == 2 && smu->smu_table.boot_values.pp_table_id > 0) {
+		dev_info(adev->dev, "use driver provided pptable %d\n", smu->smu_table.boot_values.pp_table_id);
+		switch (version_minor) {
+		case 1:
+			ret = smu_v13_0_set_pptable_v2_1(smu, &table, &size,
+							 smu->smu_table.boot_values.pp_table_id);
+			break;
+		default:
+			ret = -EINVAL;
+			break;
+		}
+		if (ret)
+			return ret;
+
+	} else {
+		dev_info(adev->dev, "use vbios provided pptable\n");
+		index = get_index_into_master_table(atom_master_list_of_data_tables_v2_1,
+						    powerplayinfo);
+
+		ret = amdgpu_atombios_get_data_table(adev, index, &atom_table_size, &frev, &crev,
+						     (uint8_t **)&table);
+		if (ret)
+			return ret;
+		size = atom_table_size;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!smu->smu_table.power_play_table)
 		smu->smu_table.power_play_table = table;
@@ -735,6 +789,7 @@ failed:
 	return ret;
 }
 
+<<<<<<< HEAD
 int smu_v13_0_gfx_off_control(struct smu_context *smu, bool enable)
 {
 	int ret = 0;
@@ -756,6 +811,8 @@ int smu_v13_0_gfx_off_control(struct smu_context *smu, bool enable)
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int smu_v13_0_system_features_control(struct smu_context *smu,
 				      bool en)
 {

@@ -147,6 +147,11 @@ static int cifs_swn_send_register_message(struct cifs_swn_reg *swnreg)
 			goto nlmsg_fail;
 		}
 		break;
+<<<<<<< HEAD
+=======
+	case LANMAN:
+	case NTLM:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case NTLMv2:
 	case RawNTLMSSP:
 		ret = cifs_swn_auth_info_ntlm(swnreg->tcon, skb);

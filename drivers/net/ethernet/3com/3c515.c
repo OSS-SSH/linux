@@ -407,7 +407,11 @@ MODULE_PARM_DESC(max_interrupt_work, "3c515 maximum events handled per interrupt
 /* we will need locking (and refcounting) if we ever use it for more */
 static LIST_HEAD(root_corkscrew_dev);
 
+<<<<<<< HEAD
 static int corkscrew_init_module(void)
+=======
+int init_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int found = 0;
 	if (debug >= 0)
@@ -416,7 +420,10 @@ static int corkscrew_init_module(void)
 		found++;
 	return found ? 0 : -ENODEV;
 }
+<<<<<<< HEAD
 module_init(corkscrew_init_module);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #else
 struct net_device *tc515_probe(int unit)
@@ -1050,7 +1057,11 @@ static netdev_tx_t corkscrew_start_xmit(struct sk_buff *skb,
 #ifdef VORTEX_BUS_MASTER
 	if (vp->bus_master) {
 		/* Set the bus-master controller to transfer the packet. */
+<<<<<<< HEAD
 		outl(isa_virt_to_bus(skb->data), ioaddr + Wn7_MasterAddr);
+=======
+		outl((int) (skb->data), ioaddr + Wn7_MasterAddr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		outw((skb->len + 3) & ~3, ioaddr + Wn7_MasterLen);
 		vp->tx_skb = skb;
 		outw(StartDMADown, ioaddr + EL3_CMD);

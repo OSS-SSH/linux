@@ -26,7 +26,11 @@
 #ifndef _UAPI_HYPERV_H
 #define _UAPI_HYPERV_H
 
+<<<<<<< HEAD
 #include <linux/types.h>
+=======
+#include <linux/uuid.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Framework version for util services.

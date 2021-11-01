@@ -2,7 +2,10 @@
 #ifndef _ASM_X86_RESCTRL_INTERNAL_H
 #define _ASM_X86_RESCTRL_INTERNAL_H
 
+<<<<<<< HEAD
 #include <linux/resctrl.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/sched.h>
 #include <linux/kernfs.h>
 #include <linux/fs_context.h>
@@ -110,7 +113,10 @@ extern unsigned int resctrl_cqm_threshold;
 extern bool rdt_alloc_capable;
 extern bool rdt_mon_capable;
 extern unsigned int rdt_mon_features;
+<<<<<<< HEAD
 extern struct list_head resctrl_schema_all;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 enum rdt_group_type {
 	RDTCTRL_GROUP = 0,
@@ -163,8 +169,13 @@ struct mongroup {
 
 /**
  * struct pseudo_lock_region - pseudo-lock region information
+<<<<<<< HEAD
  * @s:			Resctrl schema for the resource to which this
  *			pseudo-locked region belongs
+=======
+ * @r:			RDT resource to which this pseudo-locked region
+ *			belongs
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @d:			RDT domain to which this pseudo-locked region
  *			belongs
  * @cbm:		bitmask of the pseudo-locked region
@@ -184,7 +195,11 @@ struct mongroup {
  * @pm_reqs:		Power management QoS requests related to this region
  */
 struct pseudo_lock_region {
+<<<<<<< HEAD
 	struct resctrl_schema	*s;
+=======
+	struct rdt_resource	*r;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct rdt_domain	*d;
 	u32			cbm;
 	wait_queue_head_t	lock_thread_wq;
@@ -305,6 +320,7 @@ struct mbm_state {
 };
 
 /**
+<<<<<<< HEAD
  * struct rdt_hw_domain - Arch private attributes of a set of CPUs that share
  *			  a resource
  * @d_resctrl:	Properties exposed to the resctrl file system
@@ -324,6 +340,46 @@ static inline struct rdt_hw_domain *resctrl_to_arch_dom(struct rdt_domain *r)
 	return container_of(r, struct rdt_hw_domain, d_resctrl);
 }
 
+=======
+ * struct rdt_domain - group of cpus sharing an RDT resource
+ * @list:	all instances of this resource
+ * @id:		unique id for this instance
+ * @cpu_mask:	which cpus share this resource
+ * @rmid_busy_llc:
+ *		bitmap of which limbo RMIDs are above threshold
+ * @mbm_total:	saved state for MBM total bandwidth
+ * @mbm_local:	saved state for MBM local bandwidth
+ * @mbm_over:	worker to periodically read MBM h/w counters
+ * @cqm_limbo:	worker to periodically read CQM h/w counters
+ * @mbm_work_cpu:
+ *		worker cpu for MBM h/w counters
+ * @cqm_work_cpu:
+ *		worker cpu for CQM h/w counters
+ * @ctrl_val:	array of cache or mem ctrl values (indexed by CLOSID)
+ * @mbps_val:	When mba_sc is enabled, this holds the bandwidth in MBps
+ * @new_ctrl:	new ctrl value to be loaded
+ * @have_new_ctrl: did user provide new_ctrl for this domain
+ * @plr:	pseudo-locked region (if any) associated with domain
+ */
+struct rdt_domain {
+	struct list_head		list;
+	int				id;
+	struct cpumask			cpu_mask;
+	unsigned long			*rmid_busy_llc;
+	struct mbm_state		*mbm_total;
+	struct mbm_state		*mbm_local;
+	struct delayed_work		mbm_over;
+	struct delayed_work		cqm_limbo;
+	int				mbm_work_cpu;
+	int				cqm_work_cpu;
+	u32				*ctrl_val;
+	u32				*mbps_val;
+	u32				new_ctrl;
+	bool				have_new_ctrl;
+	struct pseudo_lock_region	*plr;
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * struct msr_param - set a range of MSRs from a domain
  * @res:       The resource to use
@@ -332,8 +388,74 @@ static inline struct rdt_hw_domain *resctrl_to_arch_dom(struct rdt_domain *r)
  */
 struct msr_param {
 	struct rdt_resource	*res;
+<<<<<<< HEAD
 	u32			low;
 	u32			high;
+=======
+	int			low;
+	int			high;
+};
+
+/**
+ * struct rdt_cache - Cache allocation related data
+ * @cbm_len:		Length of the cache bit mask
+ * @min_cbm_bits:	Minimum number of consecutive bits to be set
+ * @cbm_idx_mult:	Multiplier of CBM index
+ * @cbm_idx_offset:	Offset of CBM index. CBM index is computed by:
+ *			closid * cbm_idx_multi + cbm_idx_offset
+ *			in a cache bit mask
+ * @shareable_bits:	Bitmask of shareable resource with other
+ *			executing entities
+ * @arch_has_sparse_bitmaps:	True if a bitmap like f00f is valid.
+ * @arch_has_empty_bitmaps:	True if the '0' bitmap is valid.
+ * @arch_has_per_cpu_cfg:	True if QOS_CFG register for this cache
+ *				level has CPU scope.
+ */
+struct rdt_cache {
+	unsigned int	cbm_len;
+	unsigned int	min_cbm_bits;
+	unsigned int	cbm_idx_mult;
+	unsigned int	cbm_idx_offset;
+	unsigned int	shareable_bits;
+	bool		arch_has_sparse_bitmaps;
+	bool		arch_has_empty_bitmaps;
+	bool		arch_has_per_cpu_cfg;
+};
+
+/**
+ * enum membw_throttle_mode - System's memory bandwidth throttling mode
+ * @THREAD_THROTTLE_UNDEFINED:	Not relevant to the system
+ * @THREAD_THROTTLE_MAX:	Memory bandwidth is throttled at the core
+ *				always using smallest bandwidth percentage
+ *				assigned to threads, aka "max throttling"
+ * @THREAD_THROTTLE_PER_THREAD:	Memory bandwidth is throttled at the thread
+ */
+enum membw_throttle_mode {
+	THREAD_THROTTLE_UNDEFINED = 0,
+	THREAD_THROTTLE_MAX,
+	THREAD_THROTTLE_PER_THREAD,
+};
+
+/**
+ * struct rdt_membw - Memory bandwidth allocation related data
+ * @min_bw:		Minimum memory bandwidth percentage user can request
+ * @bw_gran:		Granularity at which the memory bandwidth is allocated
+ * @delay_linear:	True if memory B/W delay is in linear scale
+ * @arch_needs_linear:	True if we can't configure non-linear resources
+ * @throttle_mode:	Bandwidth throttling mode when threads request
+ *			different memory bandwidths
+ * @mba_sc:		True if MBA software controller(mba_sc) is enabled
+ * @mb_map:		Mapping of memory B/W percentage to memory B/W delay
+ */
+struct rdt_membw {
+	u32				min_bw;
+	u32				bw_gran;
+	u32				delay_linear;
+	bool				arch_needs_linear;
+	enum membw_throttle_mode	throttle_mode;
+	bool				mba_sc;
+	u32				*mb_map;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline bool is_llc_occupancy_enabled(void)
@@ -368,6 +490,7 @@ struct rdt_parse_data {
 };
 
 /**
+<<<<<<< HEAD
  * struct rdt_hw_resource - arch private attributes of a resctrl resource
  * @r_resctrl:		Attributes of the resource used directly by resctrl.
  * @num_closid:		Maximum number of closid this hardware can support,
@@ -404,25 +527,97 @@ static inline struct rdt_hw_resource *resctrl_to_arch_res(struct rdt_resource *r
 int parse_cbm(struct rdt_parse_data *data, struct resctrl_schema *s,
 	      struct rdt_domain *d);
 int parse_bw(struct rdt_parse_data *data, struct resctrl_schema *s,
+=======
+ * struct rdt_resource - attributes of an RDT resource
+ * @rid:		The index of the resource
+ * @alloc_enabled:	Is allocation enabled on this machine
+ * @mon_enabled:	Is monitoring enabled for this feature
+ * @alloc_capable:	Is allocation available on this machine
+ * @mon_capable:	Is monitor feature available on this machine
+ * @name:		Name to use in "schemata" file
+ * @num_closid:		Number of CLOSIDs available
+ * @cache_level:	Which cache level defines scope of this resource
+ * @default_ctrl:	Specifies default cache cbm or memory B/W percent.
+ * @msr_base:		Base MSR address for CBMs
+ * @msr_update:		Function pointer to update QOS MSRs
+ * @data_width:		Character width of data when displaying
+ * @domains:		All domains for this resource
+ * @cache:		Cache allocation related data
+ * @membw:		If the component has bandwidth controls, their properties.
+ * @format_str:		Per resource format string to show domain value
+ * @parse_ctrlval:	Per resource function pointer to parse control values
+ * @evt_list:		List of monitoring events
+ * @num_rmid:		Number of RMIDs available
+ * @mon_scale:		cqm counter * mon_scale = occupancy in bytes
+ * @mbm_width:		Monitor width, to detect and correct for overflow.
+ * @fflags:		flags to choose base and info files
+ */
+struct rdt_resource {
+	int			rid;
+	bool			alloc_enabled;
+	bool			mon_enabled;
+	bool			alloc_capable;
+	bool			mon_capable;
+	char			*name;
+	int			num_closid;
+	int			cache_level;
+	u32			default_ctrl;
+	unsigned int		msr_base;
+	void (*msr_update)	(struct rdt_domain *d, struct msr_param *m,
+				 struct rdt_resource *r);
+	int			data_width;
+	struct list_head	domains;
+	struct rdt_cache	cache;
+	struct rdt_membw	membw;
+	const char		*format_str;
+	int (*parse_ctrlval)(struct rdt_parse_data *data,
+			     struct rdt_resource *r,
+			     struct rdt_domain *d);
+	struct list_head	evt_list;
+	int			num_rmid;
+	unsigned int		mon_scale;
+	unsigned int		mbm_width;
+	unsigned long		fflags;
+};
+
+int parse_cbm(struct rdt_parse_data *data, struct rdt_resource *r,
+	      struct rdt_domain *d);
+int parse_bw(struct rdt_parse_data *data, struct rdt_resource *r,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	     struct rdt_domain *d);
 
 extern struct mutex rdtgroup_mutex;
 
+<<<<<<< HEAD
 extern struct rdt_hw_resource rdt_resources_all[];
+=======
+extern struct rdt_resource rdt_resources_all[];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern struct rdtgroup rdtgroup_default;
 DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
 
 extern struct dentry *debugfs_resctrl;
 
+<<<<<<< HEAD
 enum resctrl_res_level {
 	RDT_RESOURCE_L3,
 	RDT_RESOURCE_L2,
+=======
+enum {
+	RDT_RESOURCE_L3,
+	RDT_RESOURCE_L3DATA,
+	RDT_RESOURCE_L3CODE,
+	RDT_RESOURCE_L2,
+	RDT_RESOURCE_L2DATA,
+	RDT_RESOURCE_L2CODE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	RDT_RESOURCE_MBA,
 
 	/* Must be the last */
 	RDT_NUM_RESOURCES,
 };
 
+<<<<<<< HEAD
 static inline struct rdt_resource *resctrl_inc(struct rdt_resource *res)
 {
 	struct rdt_hw_resource *hw_res = resctrl_to_arch_res(res);
@@ -465,6 +660,35 @@ int resctrl_arch_set_cdp_enabled(enum resctrl_res_level l, bool enable);
 
 #define for_each_mon_enabled_rdt_resource(r)				      \
 	for_each_rdt_resource(r)					      \
+=======
+#define for_each_rdt_resource(r)					      \
+	for (r = rdt_resources_all; r < rdt_resources_all + RDT_NUM_RESOURCES;\
+	     r++)
+
+#define for_each_capable_rdt_resource(r)				      \
+	for (r = rdt_resources_all; r < rdt_resources_all + RDT_NUM_RESOURCES;\
+	     r++)							      \
+		if (r->alloc_capable || r->mon_capable)
+
+#define for_each_alloc_capable_rdt_resource(r)				      \
+	for (r = rdt_resources_all; r < rdt_resources_all + RDT_NUM_RESOURCES;\
+	     r++)							      \
+		if (r->alloc_capable)
+
+#define for_each_mon_capable_rdt_resource(r)				      \
+	for (r = rdt_resources_all; r < rdt_resources_all + RDT_NUM_RESOURCES;\
+	     r++)							      \
+		if (r->mon_capable)
+
+#define for_each_alloc_enabled_rdt_resource(r)				      \
+	for (r = rdt_resources_all; r < rdt_resources_all + RDT_NUM_RESOURCES;\
+	     r++)							      \
+		if (r->alloc_enabled)
+
+#define for_each_mon_enabled_rdt_resource(r)				      \
+	for (r = rdt_resources_all; r < rdt_resources_all + RDT_NUM_RESOURCES;\
+	     r++)							      \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (r->mon_enabled)
 
 /* CPUID.(EAX=10H, ECX=ResID=1).EAX */
@@ -508,7 +732,11 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
 				char *buf, size_t nbytes, loff_t off);
 int rdtgroup_schemata_show(struct kernfs_open_file *of,
 			   struct seq_file *s, void *v);
+<<<<<<< HEAD
 bool rdtgroup_cbm_overlaps(struct resctrl_schema *s, struct rdt_domain *d,
+=======
+bool rdtgroup_cbm_overlaps(struct rdt_resource *r, struct rdt_domain *d,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   unsigned long cbm, int closid, bool exclusive);
 unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r, struct rdt_domain *d,
 				  unsigned long cbm);
@@ -523,6 +751,10 @@ void rdt_pseudo_lock_release(void);
 int rdtgroup_pseudo_lock_create(struct rdtgroup *rdtgrp);
 void rdtgroup_pseudo_lock_remove(struct rdtgroup *rdtgrp);
 struct rdt_domain *get_domain_from_cpu(int cpu, struct rdt_resource *r);
+<<<<<<< HEAD
+=======
+int update_domains(struct rdt_resource *r, int closid);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int closids_supported(void);
 void closid_free(int closid);
 int alloc_rmid(void);

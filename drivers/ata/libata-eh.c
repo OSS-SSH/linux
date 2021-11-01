@@ -912,7 +912,11 @@ void ata_qc_schedule_eh(struct ata_queued_cmd *qc)
 	 * Note that ATA_QCFLAG_FAILED is unconditionally set after
 	 * this function completes.
 	 */
+<<<<<<< HEAD
 	blk_abort_request(scsi_cmd_to_rq(qc->scsicmd));
+=======
+	blk_abort_request(qc->scsicmd->request);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1893,7 +1897,12 @@ static inline int ata_eh_worth_retry(struct ata_queued_cmd *qc)
  */
 static inline bool ata_eh_quiet(struct ata_queued_cmd *qc)
 {
+<<<<<<< HEAD
 	if (qc->scsicmd && scsi_cmd_to_rq(qc->scsicmd)->rq_flags & RQF_QUIET)
+=======
+	if (qc->scsicmd &&
+	    qc->scsicmd->request->rq_flags & RQF_QUIET)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		qc->flags |= ATA_QCFLAG_QUIET;
 	return qc->flags & ATA_QCFLAG_QUIET;
 }

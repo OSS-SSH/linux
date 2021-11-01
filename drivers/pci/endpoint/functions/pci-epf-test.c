@@ -247,8 +247,13 @@ static int pci_epf_test_copy(struct pci_epf_test *epf_test)
 		goto err;
 	}
 
+<<<<<<< HEAD
 	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, src_phys_addr,
 			       reg->src_addr, reg->size);
+=======
+	ret = pci_epc_map_addr(epc, epf->func_no, src_phys_addr, reg->src_addr,
+			       reg->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		dev_err(dev, "Failed to map source address\n");
 		reg->status = STATUS_SRC_ADDR_INVALID;
@@ -263,8 +268,13 @@ static int pci_epf_test_copy(struct pci_epf_test *epf_test)
 		goto err_src_map_addr;
 	}
 
+<<<<<<< HEAD
 	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, dst_phys_addr,
 			       reg->dst_addr, reg->size);
+=======
+	ret = pci_epc_map_addr(epc, epf->func_no, dst_phys_addr, reg->dst_addr,
+			       reg->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		dev_err(dev, "Failed to map destination address\n");
 		reg->status = STATUS_DST_ADDR_INVALID;
@@ -291,13 +301,21 @@ static int pci_epf_test_copy(struct pci_epf_test *epf_test)
 	pci_epf_test_print_rate("COPY", reg->size, &start, &end, use_dma);
 
 err_map_addr:
+<<<<<<< HEAD
 	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, dst_phys_addr);
+=======
+	pci_epc_unmap_addr(epc, epf->func_no, dst_phys_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err_dst_addr:
 	pci_epc_mem_free_addr(epc, dst_phys_addr, dst_addr, reg->size);
 
 err_src_map_addr:
+<<<<<<< HEAD
 	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, src_phys_addr);
+=======
+	pci_epc_unmap_addr(epc, epf->func_no, src_phys_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err_src_addr:
 	pci_epc_mem_free_addr(epc, src_phys_addr, src_addr, reg->size);
@@ -331,8 +349,13 @@ static int pci_epf_test_read(struct pci_epf_test *epf_test)
 		goto err;
 	}
 
+<<<<<<< HEAD
 	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, phys_addr,
 			       reg->src_addr, reg->size);
+=======
+	ret = pci_epc_map_addr(epc, epf->func_no, phys_addr, reg->src_addr,
+			       reg->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		dev_err(dev, "Failed to map address\n");
 		reg->status = STATUS_SRC_ADDR_INVALID;
@@ -386,7 +409,11 @@ err_dma_map:
 	kfree(buf);
 
 err_map_addr:
+<<<<<<< HEAD
 	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, phys_addr);
+=======
+	pci_epc_unmap_addr(epc, epf->func_no, phys_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err_addr:
 	pci_epc_mem_free_addr(epc, phys_addr, src_addr, reg->size);
@@ -419,8 +446,13 @@ static int pci_epf_test_write(struct pci_epf_test *epf_test)
 		goto err;
 	}
 
+<<<<<<< HEAD
 	ret = pci_epc_map_addr(epc, epf->func_no, epf->vfunc_no, phys_addr,
 			       reg->dst_addr, reg->size);
+=======
+	ret = pci_epc_map_addr(epc, epf->func_no, phys_addr, reg->dst_addr,
+			       reg->size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret) {
 		dev_err(dev, "Failed to map address\n");
 		reg->status = STATUS_DST_ADDR_INVALID;
@@ -479,7 +511,11 @@ err_dma_map:
 	kfree(buf);
 
 err_map_addr:
+<<<<<<< HEAD
 	pci_epc_unmap_addr(epc, epf->func_no, epf->vfunc_no, phys_addr);
+=======
+	pci_epc_unmap_addr(epc, epf->func_no, phys_addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err_addr:
 	pci_epc_mem_free_addr(epc, phys_addr, dst_addr, reg->size);
@@ -501,6 +537,7 @@ static void pci_epf_test_raise_irq(struct pci_epf_test *epf_test, u8 irq_type,
 
 	switch (irq_type) {
 	case IRQ_TYPE_LEGACY:
+<<<<<<< HEAD
 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
 				  PCI_EPC_IRQ_LEGACY, 0);
 		break;
@@ -511,6 +548,15 @@ static void pci_epf_test_raise_irq(struct pci_epf_test *epf_test, u8 irq_type,
 	case IRQ_TYPE_MSIX:
 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
 				  PCI_EPC_IRQ_MSIX, irq);
+=======
+		pci_epc_raise_irq(epc, epf->func_no, PCI_EPC_IRQ_LEGACY, 0);
+		break;
+	case IRQ_TYPE_MSI:
+		pci_epc_raise_irq(epc, epf->func_no, PCI_EPC_IRQ_MSI, irq);
+		break;
+	case IRQ_TYPE_MSIX:
+		pci_epc_raise_irq(epc, epf->func_no, PCI_EPC_IRQ_MSIX, irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		break;
 	default:
 		dev_err(dev, "Failed to raise IRQ, unknown type\n");
@@ -545,8 +591,12 @@ static void pci_epf_test_cmd_handler(struct work_struct *work)
 
 	if (command & COMMAND_RAISE_LEGACY_IRQ) {
 		reg->status = STATUS_IRQ_RAISED;
+<<<<<<< HEAD
 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
 				  PCI_EPC_IRQ_LEGACY, 0);
+=======
+		pci_epc_raise_irq(epc, epf->func_no, PCI_EPC_IRQ_LEGACY, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto reset_handler;
 	}
 
@@ -584,22 +634,40 @@ static void pci_epf_test_cmd_handler(struct work_struct *work)
 	}
 
 	if (command & COMMAND_RAISE_MSI_IRQ) {
+<<<<<<< HEAD
 		count = pci_epc_get_msi(epc, epf->func_no, epf->vfunc_no);
 		if (reg->irq_number > count || count <= 0)
 			goto reset_handler;
 		reg->status = STATUS_IRQ_RAISED;
 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
 				  PCI_EPC_IRQ_MSI, reg->irq_number);
+=======
+		count = pci_epc_get_msi(epc, epf->func_no);
+		if (reg->irq_number > count || count <= 0)
+			goto reset_handler;
+		reg->status = STATUS_IRQ_RAISED;
+		pci_epc_raise_irq(epc, epf->func_no, PCI_EPC_IRQ_MSI,
+				  reg->irq_number);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto reset_handler;
 	}
 
 	if (command & COMMAND_RAISE_MSIX_IRQ) {
+<<<<<<< HEAD
 		count = pci_epc_get_msix(epc, epf->func_no, epf->vfunc_no);
 		if (reg->irq_number > count || count <= 0)
 			goto reset_handler;
 		reg->status = STATUS_IRQ_RAISED;
 		pci_epc_raise_irq(epc, epf->func_no, epf->vfunc_no,
 				  PCI_EPC_IRQ_MSIX, reg->irq_number);
+=======
+		count = pci_epc_get_msix(epc, epf->func_no);
+		if (reg->irq_number > count || count <= 0)
+			goto reset_handler;
+		reg->status = STATUS_IRQ_RAISED;
+		pci_epc_raise_irq(epc, epf->func_no, PCI_EPC_IRQ_MSIX,
+				  reg->irq_number);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto reset_handler;
 	}
 
@@ -622,8 +690,12 @@ static void pci_epf_test_unbind(struct pci_epf *epf)
 		epf_bar = &epf->bar[bar];
 
 		if (epf_test->reg[bar]) {
+<<<<<<< HEAD
 			pci_epc_clear_bar(epc, epf->func_no, epf->vfunc_no,
 					  epf_bar);
+=======
+			pci_epc_clear_bar(epc, epf->func_no, epf_bar);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pci_epf_free_space(epf, epf_test->reg[bar], bar,
 					   PRIMARY_INTERFACE);
 		}
@@ -655,8 +727,12 @@ static int pci_epf_test_set_bar(struct pci_epf *epf)
 		if (!!(epc_features->reserved_bar & (1 << bar)))
 			continue;
 
+<<<<<<< HEAD
 		ret = pci_epc_set_bar(epc, epf->func_no, epf->vfunc_no,
 				      epf_bar);
+=======
+		ret = pci_epc_set_bar(epc, epf->func_no, epf_bar);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret) {
 			pci_epf_free_space(epf, epf_test->reg[bar], bar,
 					   PRIMARY_INTERFACE);
@@ -680,18 +756,29 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
 	bool msi_capable = true;
 	int ret;
 
+<<<<<<< HEAD
 	epc_features = pci_epc_get_features(epc, epf->func_no, epf->vfunc_no);
+=======
+	epc_features = pci_epc_get_features(epc, epf->func_no);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (epc_features) {
 		msix_capable = epc_features->msix_capable;
 		msi_capable = epc_features->msi_capable;
 	}
 
+<<<<<<< HEAD
 	if (epf->vfunc_no <= 1) {
 		ret = pci_epc_write_header(epc, epf->func_no, epf->vfunc_no, header);
 		if (ret) {
 			dev_err(dev, "Configuration header write failed\n");
 			return ret;
 		}
+=======
+	ret = pci_epc_write_header(epc, epf->func_no, header);
+	if (ret) {
+		dev_err(dev, "Configuration header write failed\n");
+		return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = pci_epf_test_set_bar(epf);
@@ -699,8 +786,12 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
 		return ret;
 
 	if (msi_capable) {
+<<<<<<< HEAD
 		ret = pci_epc_set_msi(epc, epf->func_no, epf->vfunc_no,
 				      epf->msi_interrupts);
+=======
+		ret = pci_epc_set_msi(epc, epf->func_no, epf->msi_interrupts);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret) {
 			dev_err(dev, "MSI configuration failed\n");
 			return ret;
@@ -708,8 +799,12 @@ static int pci_epf_test_core_init(struct pci_epf *epf)
 	}
 
 	if (msix_capable) {
+<<<<<<< HEAD
 		ret = pci_epc_set_msix(epc, epf->func_no, epf->vfunc_no,
 				       epf->msix_interrupts,
+=======
+		ret = pci_epc_set_msix(epc, epf->func_no, epf->msix_interrupts,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				       epf_test->test_reg_bar,
 				       epf_test->msix_table_offset);
 		if (ret) {
@@ -842,7 +937,11 @@ static int pci_epf_test_bind(struct pci_epf *epf)
 	if (WARN_ON_ONCE(!epc))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	epc_features = pci_epc_get_features(epc, epf->func_no, epf->vfunc_no);
+=======
+	epc_features = pci_epc_get_features(epc, epf->func_no);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!epc_features) {
 		dev_err(&epf->dev, "epc_features not implemented\n");
 		return -EOPNOTSUPP;

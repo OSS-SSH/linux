@@ -90,11 +90,20 @@ examples:
   # UART example on Raspberry Pi
   - |
     uart0 {
+<<<<<<< HEAD
+=======
+        status = "okay";
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         nfc {
             compatible = "samsung,s3fwrn82";
 
             en-gpios = <&gpio 20 GPIO_ACTIVE_HIGH>;
             wake-gpios = <&gpio 16 GPIO_ACTIVE_HIGH>;
 
+<<<<<<< HEAD
+=======
+            status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         };
     };

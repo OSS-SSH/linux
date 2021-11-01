@@ -132,6 +132,7 @@ enum iavf_status iavf_free_virt_mem_d(struct iavf_hw *hw,
 }
 
 /**
+<<<<<<< HEAD
  * iavf_lock_timeout - try to lock mutex but give up after timeout
  * @lock: mutex that should be locked
  * @msecs: timeout in msecs
@@ -153,6 +154,8 @@ static int iavf_lock_timeout(struct mutex *lock, unsigned int msecs)
 }
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * iavf_schedule_reset - Set the flags and schedule a reset event
  * @adapter: board private structure
  **/
@@ -772,7 +775,10 @@ struct iavf_mac_filter *iavf_add_filter(struct iavf_adapter *adapter,
 
 		list_add_tail(&f->list, &adapter->mac_filter_list);
 		f->add = true;
+<<<<<<< HEAD
 		f->is_new_mac = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		adapter->aq_required |= IAVF_FLAG_AQ_ADD_MAC_FILTER;
 	} else {
 		f->remove = false;
@@ -1528,6 +1534,14 @@ static int iavf_reinit_interrupt_scheme(struct iavf_adapter *adapter)
 	set_bit(__IAVF_VSI_DOWN, adapter->vsi.state);
 
 	iavf_map_rings_to_vectors(adapter);
+<<<<<<< HEAD
+=======
+
+	if (RSS_AQ(adapter))
+		adapter->aq_required |= IAVF_FLAG_AQ_CONFIGURE_RSS;
+	else
+		err = iavf_init_rss(adapter);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err:
 	return err;
 }
@@ -1937,7 +1951,11 @@ static void iavf_watchdog_task(struct work_struct *work)
 	struct iavf_hw *hw = &adapter->hw;
 	u32 reg_val;
 
+<<<<<<< HEAD
 	if (!mutex_trylock(&adapter->crit_lock))
+=======
+	if (test_and_set_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto restart_watchdog;
 
 	if (adapter->flags & IAVF_FLAG_PF_COMMS_FAILED)
@@ -1955,7 +1973,12 @@ static void iavf_watchdog_task(struct work_struct *work)
 			adapter->state = __IAVF_STARTUP;
 			adapter->flags &= ~IAVF_FLAG_PF_COMMS_FAILED;
 			queue_delayed_work(iavf_wq, &adapter->init_task, 10);
+<<<<<<< HEAD
 			mutex_unlock(&adapter->crit_lock);
+=======
+			clear_bit(__IAVF_IN_CRITICAL_TASK,
+				  &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* Don't reschedule the watchdog, since we've restarted
 			 * the init task. When init_task contacts the PF and
 			 * gets everything set up again, it'll restart the
@@ -1965,12 +1988,21 @@ static void iavf_watchdog_task(struct work_struct *work)
 		}
 		adapter->aq_required = 0;
 		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
+<<<<<<< HEAD
+=======
+		clear_bit(__IAVF_IN_CRITICAL_TASK,
+			  &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		queue_delayed_work(iavf_wq,
 				   &adapter->watchdog_task,
 				   msecs_to_jiffies(10));
 		goto watchdog_done;
 	case __IAVF_RESETTING:
+<<<<<<< HEAD
 		mutex_unlock(&adapter->crit_lock);
+=======
+		clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		queue_delayed_work(iavf_wq, &adapter->watchdog_task, HZ * 2);
 		return;
 	case __IAVF_DOWN:
@@ -1993,7 +2025,11 @@ static void iavf_watchdog_task(struct work_struct *work)
 		}
 		break;
 	case __IAVF_REMOVE:
+<<<<<<< HEAD
 		mutex_unlock(&adapter->crit_lock);
+=======
+		clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 	default:
 		goto restart_watchdog;
@@ -2002,6 +2038,10 @@ static void iavf_watchdog_task(struct work_struct *work)
 		/* check for hw reset */
 	reg_val = rd32(hw, IAVF_VF_ARQLEN1) & IAVF_VF_ARQLEN1_ARQENABLE_MASK;
 	if (!reg_val) {
+<<<<<<< HEAD
+=======
+		adapter->state = __IAVF_RESETTING;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		adapter->flags |= IAVF_FLAG_RESET_PENDING;
 		adapter->aq_required = 0;
 		adapter->current_op = VIRTCHNL_OP_UNKNOWN;
@@ -2015,7 +2055,11 @@ watchdog_done:
 	if (adapter->state == __IAVF_RUNNING ||
 	    adapter->state == __IAVF_COMM_FAILED)
 		iavf_detect_recover_hung(&adapter->vsi);
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 restart_watchdog:
 	if (adapter->aq_required)
 		queue_delayed_work(iavf_wq, &adapter->watchdog_task,
@@ -2079,7 +2123,11 @@ static void iavf_disable_vf(struct iavf_adapter *adapter)
 	memset(adapter->vf_res, 0, IAVF_VIRTCHNL_VF_RESOURCE_SIZE);
 	iavf_shutdown_adminq(&adapter->hw);
 	adapter->netdev->flags &= ~IFF_UP;
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	adapter->flags &= ~IAVF_FLAG_RESET_PENDING;
 	adapter->state = __IAVF_DOWN;
 	wake_up(&adapter->down_waitqueue);
@@ -2112,6 +2160,7 @@ static void iavf_reset_task(struct work_struct *work)
 	/* When device is being removed it doesn't make sense to run the reset
 	 * task, just return in such a case.
 	 */
+<<<<<<< HEAD
 	if (mutex_is_locked(&adapter->remove_lock))
 		return;
 
@@ -2120,6 +2169,13 @@ static void iavf_reset_task(struct work_struct *work)
 		return;
 	}
 	while (!mutex_trylock(&adapter->client_lock))
+=======
+	if (test_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section))
+		return;
+
+	while (test_and_set_bit(__IAVF_IN_CLIENT_TASK,
+				&adapter->crit_section))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usleep_range(500, 1000);
 	if (CLIENT_ENABLED(adapter)) {
 		adapter->flags &= ~(IAVF_FLAG_CLIENT_NEEDS_OPEN |
@@ -2171,7 +2227,11 @@ static void iavf_reset_task(struct work_struct *work)
 		dev_err(&adapter->pdev->dev, "Reset never finished (%x)\n",
 			reg_val);
 		iavf_disable_vf(adapter);
+<<<<<<< HEAD
 		mutex_unlock(&adapter->client_lock);
+=======
+		clear_bit(__IAVF_IN_CLIENT_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return; /* Do not attempt to reinit. It's dead, Jim. */
 	}
 
@@ -2216,6 +2276,7 @@ continue_reset:
 			goto reset_err;
 	}
 
+<<<<<<< HEAD
 	if (RSS_AQ(adapter)) {
 		adapter->aq_required |= IAVF_FLAG_AQ_CONFIGURE_RSS;
 	} else {
@@ -2224,6 +2285,8 @@ continue_reset:
 			goto reset_err;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	adapter->aq_required |= IAVF_FLAG_AQ_GET_CONFIG;
 	adapter->aq_required |= IAVF_FLAG_AQ_MAP_VECTORS;
 
@@ -2298,6 +2361,7 @@ continue_reset:
 		adapter->state = __IAVF_DOWN;
 		wake_up(&adapter->down_waitqueue);
 	}
+<<<<<<< HEAD
 	mutex_unlock(&adapter->client_lock);
 	mutex_unlock(&adapter->crit_lock);
 
@@ -2305,6 +2369,15 @@ continue_reset:
 reset_err:
 	mutex_unlock(&adapter->client_lock);
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CLIENT_TASK, &adapter->crit_section);
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+
+	return;
+reset_err:
+	clear_bit(__IAVF_IN_CLIENT_TASK, &adapter->crit_section);
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev_err(&adapter->pdev->dev, "failed to allocate resources during reinit\n");
 	iavf_close(netdev);
 }
@@ -2332,8 +2405,11 @@ static void iavf_adminq_task(struct work_struct *work)
 	if (!event.msg_buf)
 		goto out;
 
+<<<<<<< HEAD
 	if (iavf_lock_timeout(&adapter->crit_lock, 200))
 		goto freedom;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	do {
 		ret = iavf_clean_arq_element(hw, &event, &pending);
 		v_op = (enum virtchnl_ops)le32_to_cpu(event.desc.cookie_high);
@@ -2347,7 +2423,10 @@ static void iavf_adminq_task(struct work_struct *work)
 		if (pending != 0)
 			memset(event.msg_buf, 0, IAVF_MAX_AQ_BUF_SIZE);
 	} while (pending);
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if ((adapter->flags &
 	     (IAVF_FLAG_RESET_PENDING | IAVF_FLAG_RESET_NEEDED)) ||
@@ -2414,7 +2493,11 @@ static void iavf_client_task(struct work_struct *work)
 	 * later.
 	 */
 
+<<<<<<< HEAD
 	if (!mutex_trylock(&adapter->client_lock))
+=======
+	if (test_and_set_bit(__IAVF_IN_CLIENT_TASK, &adapter->crit_section))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (adapter->flags & IAVF_FLAG_SERVICE_CLIENT_REQUESTED) {
@@ -2437,7 +2520,11 @@ static void iavf_client_task(struct work_struct *work)
 		adapter->flags &= ~IAVF_FLAG_CLIENT_NEEDS_OPEN;
 	}
 out:
+<<<<<<< HEAD
 	mutex_unlock(&adapter->client_lock);
+=======
+	clear_bit(__IAVF_IN_CLIENT_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -3040,7 +3127,12 @@ static int iavf_configure_clsflower(struct iavf_adapter *adapter,
 	if (!filter)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	while (!mutex_trylock(&adapter->crit_lock)) {
+=======
+	while (test_and_set_bit(__IAVF_IN_CRITICAL_TASK,
+				&adapter->crit_section)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (--count == 0)
 			goto err;
 		udelay(1);
@@ -3071,7 +3163,11 @@ err:
 	if (err)
 		kfree(filter);
 
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 
@@ -3218,7 +3314,12 @@ static int iavf_open(struct net_device *netdev)
 		return -EIO;
 	}
 
+<<<<<<< HEAD
 	while (!mutex_trylock(&adapter->crit_lock))
+=======
+	while (test_and_set_bit(__IAVF_IN_CRITICAL_TASK,
+				&adapter->crit_section))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usleep_range(500, 1000);
 
 	if (adapter->state != __IAVF_DOWN) {
@@ -3253,7 +3354,11 @@ static int iavf_open(struct net_device *netdev)
 
 	iavf_irq_enable(adapter, true);
 
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 
@@ -3265,7 +3370,11 @@ err_setup_rx:
 err_setup_tx:
 	iavf_free_all_tx_resources(adapter);
 err_unlock:
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return err;
 }
@@ -3289,7 +3398,12 @@ static int iavf_close(struct net_device *netdev)
 	if (adapter->state <= __IAVF_DOWN_PENDING)
 		return 0;
 
+<<<<<<< HEAD
 	while (!mutex_trylock(&adapter->crit_lock))
+=======
+	while (test_and_set_bit(__IAVF_IN_CRITICAL_TASK,
+				&adapter->crit_section))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usleep_range(500, 1000);
 
 	set_bit(__IAVF_VSI_DOWN, adapter->vsi.state);
@@ -3300,7 +3414,11 @@ static int iavf_close(struct net_device *netdev)
 	adapter->state = __IAVF_DOWN_PENDING;
 	iavf_free_traffic_irqs(adapter);
 
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* We explicitly don't free resources here because the hardware is
 	 * still active and can DMA into memory. Resources are cleared in
@@ -3649,10 +3767,13 @@ static void iavf_init_task(struct work_struct *work)
 						    init_task.work);
 	struct iavf_hw *hw = &adapter->hw;
 
+<<<<<<< HEAD
 	if (iavf_lock_timeout(&adapter->crit_lock, 5000)) {
 		dev_warn(&adapter->pdev->dev, "failed to acquire crit_lock in %s\n", __FUNCTION__);
 		return;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (adapter->state) {
 	case __IAVF_STARTUP:
 		if (iavf_startup(adapter) < 0)
@@ -3665,14 +3786,22 @@ static void iavf_init_task(struct work_struct *work)
 	case __IAVF_INIT_GET_RESOURCES:
 		if (iavf_init_get_resources(adapter) < 0)
 			goto init_failed;
+<<<<<<< HEAD
 		goto out;
+=======
+		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		goto init_failed;
 	}
 
 	queue_delayed_work(iavf_wq, &adapter->init_task,
 			   msecs_to_jiffies(30));
+<<<<<<< HEAD
 	goto out;
+=======
+	return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 init_failed:
 	if (++adapter->aq_wait_count > IAVF_AQ_MAX_ERR) {
 		dev_err(&adapter->pdev->dev,
@@ -3681,11 +3810,17 @@ init_failed:
 		iavf_shutdown_adminq(hw);
 		adapter->state = __IAVF_STARTUP;
 		queue_delayed_work(iavf_wq, &adapter->init_task, HZ * 5);
+<<<<<<< HEAD
 		goto out;
 	}
 	queue_delayed_work(iavf_wq, &adapter->init_task, HZ);
 out:
 	mutex_unlock(&adapter->crit_lock);
+=======
+		return;
+	}
+	queue_delayed_work(iavf_wq, &adapter->init_task, HZ);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -3702,12 +3837,18 @@ static void iavf_shutdown(struct pci_dev *pdev)
 	if (netif_running(netdev))
 		iavf_close(netdev);
 
+<<<<<<< HEAD
 	if (iavf_lock_timeout(&adapter->crit_lock, 5000))
 		dev_warn(&adapter->pdev->dev, "failed to acquire crit_lock in %s\n", __FUNCTION__);
 	/* Prevent the watchdog from running. */
 	adapter->state = __IAVF_REMOVE;
 	adapter->aq_required = 0;
 	mutex_unlock(&adapter->crit_lock);
+=======
+	/* Prevent the watchdog from running. */
+	adapter->state = __IAVF_REMOVE;
+	adapter->aq_required = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_PM
 	pci_save_state(pdev);
@@ -3801,9 +3942,12 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 	/* set up the locks for the AQ, do this only once in probe
 	 * and destroy them only once in remove
 	 */
+<<<<<<< HEAD
 	mutex_init(&adapter->crit_lock);
 	mutex_init(&adapter->client_lock);
 	mutex_init(&adapter->remove_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_init(&hw->aq.asq_mutex);
 	mutex_init(&hw->aq.arq_mutex);
 
@@ -3834,7 +3978,10 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
 err_ioremap:
 	free_netdev(netdev);
 err_alloc_etherdev:
+<<<<<<< HEAD
 	pci_disable_pcie_error_reporting(pdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pci_release_regions(pdev);
 err_pci_reg:
 err_dma:
@@ -3855,7 +4002,12 @@ static int __maybe_unused iavf_suspend(struct device *dev_d)
 
 	netif_device_detach(netdev);
 
+<<<<<<< HEAD
 	while (!mutex_trylock(&adapter->crit_lock))
+=======
+	while (test_and_set_bit(__IAVF_IN_CRITICAL_TASK,
+				&adapter->crit_section))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		usleep_range(500, 1000);
 
 	if (netif_running(netdev)) {
@@ -3866,7 +4018,11 @@ static int __maybe_unused iavf_suspend(struct device *dev_d)
 	iavf_free_misc_irq(adapter);
 	iavf_reset_interrupt_capability(adapter);
 
+<<<<<<< HEAD
 	mutex_unlock(&adapter->crit_lock);
+=======
+	clear_bit(__IAVF_IN_CRITICAL_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -3928,7 +4084,11 @@ static void iavf_remove(struct pci_dev *pdev)
 	struct iavf_hw *hw = &adapter->hw;
 	int err;
 	/* Indicate we are in remove and not to run reset_task */
+<<<<<<< HEAD
 	mutex_lock(&adapter->remove_lock);
+=======
+	set_bit(__IAVF_IN_REMOVE_TASK, &adapter->crit_section);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cancel_delayed_work_sync(&adapter->init_task);
 	cancel_work_sync(&adapter->reset_task);
 	cancel_delayed_work_sync(&adapter->client_task);
@@ -3943,6 +4103,13 @@ static void iavf_remove(struct pci_dev *pdev)
 				 err);
 	}
 
+<<<<<<< HEAD
+=======
+	/* Shut down all the garbage mashers on the detention level */
+	adapter->state = __IAVF_REMOVE;
+	adapter->aq_required = 0;
+	adapter->flags &= ~IAVF_FLAG_REINIT_ITR_NEEDED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iavf_request_reset(adapter);
 	msleep(50);
 	/* If the FW isn't responding, kick it once, but only once. */
@@ -3950,6 +4117,7 @@ static void iavf_remove(struct pci_dev *pdev)
 		iavf_request_reset(adapter);
 		msleep(50);
 	}
+<<<<<<< HEAD
 	if (iavf_lock_timeout(&adapter->crit_lock, 5000))
 		dev_warn(&adapter->pdev->dev, "failed to acquire crit_lock in %s\n", __FUNCTION__);
 
@@ -3957,6 +4125,8 @@ static void iavf_remove(struct pci_dev *pdev)
 	adapter->state = __IAVF_REMOVE;
 	adapter->aq_required = 0;
 	adapter->flags &= ~IAVF_FLAG_REINIT_ITR_NEEDED;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iavf_free_all_tx_resources(adapter);
 	iavf_free_all_rx_resources(adapter);
 	iavf_misc_irq_disable(adapter);
@@ -3976,11 +4146,14 @@ static void iavf_remove(struct pci_dev *pdev)
 	/* destroy the locks only once, here */
 	mutex_destroy(&hw->aq.arq_mutex);
 	mutex_destroy(&hw->aq.asq_mutex);
+<<<<<<< HEAD
 	mutex_destroy(&adapter->client_lock);
 	mutex_unlock(&adapter->crit_lock);
 	mutex_destroy(&adapter->crit_lock);
 	mutex_unlock(&adapter->remove_lock);
 	mutex_destroy(&adapter->remove_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	iounmap(hw->hw_addr);
 	pci_release_regions(pdev);

@@ -140,12 +140,21 @@ static int mmc_bus_probe(struct device *dev)
 	return drv->probe(card);
 }
 
+<<<<<<< HEAD
 static void mmc_bus_remove(struct device *dev)
+=======
+static int mmc_bus_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mmc_driver *drv = to_mmc_driver(dev->driver);
 	struct mmc_card *card = mmc_dev_to_card(dev);
 
 	drv->remove(card);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void mmc_bus_shutdown(struct device *dev)

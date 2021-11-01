@@ -26,6 +26,7 @@
 
 #define ACPI_WIFI_DOMAIN	(0x07)
 
+<<<<<<< HEAD
 #define ACPI_SAR_PROFILE_NUM		4
 
 #define ACPI_NUM_GEO_PROFILES		3
@@ -66,6 +67,23 @@
 					 ACPI_GEO_NUM_BANDS_REV2 * \
 					 ACPI_GEO_PER_CHAIN_SIZE + 1)
 
+=======
+#define ACPI_SAR_TABLE_SIZE		10
+#define ACPI_SAR_PROFILE_NUM		4
+
+#define ACPI_GEO_TABLE_SIZE		6
+#define ACPI_NUM_GEO_PROFILES		3
+#define ACPI_GEO_PER_CHAIN_SIZE		3
+
+#define ACPI_SAR_NUM_CHAIN_LIMITS	2
+#define ACPI_SAR_NUM_SUB_BANDS		5
+#define ACPI_SAR_NUM_TABLES		1
+
+#define ACPI_WRDS_WIFI_DATA_SIZE	(ACPI_SAR_TABLE_SIZE + 2)
+#define ACPI_EWRD_WIFI_DATA_SIZE	((ACPI_SAR_PROFILE_NUM - 1) * \
+					 ACPI_SAR_TABLE_SIZE + 3)
+#define ACPI_WGDS_WIFI_DATA_SIZE	19
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ACPI_WRDD_WIFI_DATA_SIZE	2
 #define ACPI_SPLC_WIFI_DATA_SIZE	2
 #define ACPI_ECKV_WIFI_DATA_SIZE	2
@@ -76,6 +94,11 @@
 #define APCI_WTAS_BLACK_LIST_MAX	16
 #define ACPI_WTAS_WIFI_DATA_SIZE	(3 + APCI_WTAS_BLACK_LIST_MAX)
 
+<<<<<<< HEAD
+=======
+#define ACPI_WGDS_TABLE_SIZE		3
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ACPI_PPAG_WIFI_DATA_SIZE_V1	((IWL_NUM_CHAIN_LIMITS * \
 					  IWL_NUM_SUB_BANDS_V1) + 2)
 #define ACPI_PPAG_WIFI_DATA_SIZE_V2	((IWL_NUM_CHAIN_LIMITS * \
@@ -87,6 +110,7 @@
 #define ACPI_PPAG_MIN_HB -16
 #define ACPI_PPAG_MAX_HB 40
 
+<<<<<<< HEAD
 /*
  * The profile for revision 2 is a superset of revision 1, which is in
  * turn a superset of revision 0.  So we can store all revisions
@@ -109,6 +133,15 @@ struct iwl_geo_profile_band {
 
 struct iwl_geo_profile {
 	struct iwl_geo_profile_band bands[ACPI_GEO_NUM_BANDS_REV2];
+=======
+struct iwl_sar_profile {
+	bool enabled;
+	u8 table[ACPI_SAR_TABLE_SIZE];
+};
+
+struct iwl_geo_profile {
+	u8 values[ACPI_GEO_TABLE_SIZE];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum iwl_dsm_funcs_rev_0 {
@@ -272,7 +305,11 @@ static inline int iwl_sar_get_ewrd_table(struct iwl_fw_runtime *fwrt)
 
 static inline int iwl_sar_get_wgds_table(struct iwl_fw_runtime *fwrt)
 {
+<<<<<<< HEAD
 	return 1;
+=======
+	return -ENOENT;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline bool iwl_sar_geo_support(struct iwl_fw_runtime *fwrt)

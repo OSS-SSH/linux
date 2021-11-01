@@ -474,12 +474,15 @@ static irqreturn_t nfp_net_irq_rxtx(int irq, void *data)
 {
 	struct nfp_net_r_vector *r_vec = data;
 
+<<<<<<< HEAD
 	/* Currently we cannot tell if it's a rx or tx interrupt,
 	 * since dim does not need accurate event_ctr to calculate,
 	 * we just use this counter for both rx and tx dim.
 	 */
 	r_vec->event_ctr++;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	napi_schedule_irqoff(&r_vec->napi);
 
 	/* The FW auto-masks any interrupt, either via the MASK bit in
@@ -1703,7 +1706,11 @@ nfp_net_parse_meta(struct net_device *netdev, struct nfp_meta_parsed *meta,
 		case NFP_NET_META_RESYNC_INFO:
 			if (nfp_net_tls_rx_resync_req(netdev, data, pkt,
 						      pkt_len))
+<<<<<<< HEAD
 				return false;
+=======
+				return NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			data += sizeof(struct nfp_net_tls_resync_req);
 			break;
 		default:
@@ -2067,6 +2074,7 @@ static int nfp_net_poll(struct napi_struct *napi, int budget)
 		if (napi_complete_done(napi, pkts_polled))
 			nfp_net_irq_unmask(r_vec->nfp_net, r_vec->irq_entry);
 
+<<<<<<< HEAD
 	if (r_vec->nfp_net->rx_coalesce_adapt_on) {
 		struct dim_sample dim_sample = {};
 		unsigned int start;
@@ -2097,6 +2105,8 @@ static int nfp_net_poll(struct napi_struct *napi, int budget)
 		net_dim(&r_vec->tx_dim, dim_sample);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return pkts_polled;
 }
 
@@ -2909,7 +2919,10 @@ static int nfp_net_set_config_and_enable(struct nfp_net *nn)
  */
 static void nfp_net_close_stack(struct nfp_net *nn)
 {
+<<<<<<< HEAD
 	struct nfp_net_r_vector *r_vec;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int r;
 
 	disable_irq(nn->irq_entries[NFP_NET_IRQ_LSC_IDX].vector);
@@ -2917,6 +2930,7 @@ static void nfp_net_close_stack(struct nfp_net *nn)
 	nn->link_up = false;
 
 	for (r = 0; r < nn->dp.num_r_vecs; r++) {
+<<<<<<< HEAD
 		r_vec = &nn->r_vecs[r];
 
 		disable_irq(r_vec->irq_vector);
@@ -2927,6 +2941,10 @@ static void nfp_net_close_stack(struct nfp_net *nn)
 
 		if (r_vec->tx_ring)
 			cancel_work_sync(&r_vec->tx_dim.work);
+=======
+		disable_irq(nn->r_vecs[r].irq_vector);
+		napi_disable(&nn->r_vecs[r].napi);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	netif_tx_disable(nn->dp.netdev);
@@ -2993,6 +3011,7 @@ void nfp_ctrl_close(struct nfp_net *nn)
 	rtnl_unlock();
 }
 
+<<<<<<< HEAD
 static void nfp_net_rx_dim_work(struct work_struct *work)
 {
 	struct nfp_net_r_vector *r_vec;
@@ -3055,12 +3074,15 @@ static void nfp_net_tx_dim_work(struct work_struct *work)
 	dim->state = DIM_START_MEASURE;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * nfp_net_open_stack() - Start the device from stack's perspective
  * @nn:      NFP Net device to reconfigure
  */
 static void nfp_net_open_stack(struct nfp_net *nn)
 {
+<<<<<<< HEAD
 	struct nfp_net_r_vector *r_vec;
 	unsigned int r;
 
@@ -3079,6 +3101,13 @@ static void nfp_net_open_stack(struct nfp_net *nn)
 
 		napi_enable(&r_vec->napi);
 		enable_irq(r_vec->irq_vector);
+=======
+	unsigned int r;
+
+	for (r = 0; r < nn->dp.num_r_vecs; r++) {
+		napi_enable(&nn->r_vecs[r].napi);
+		enable_irq(nn->r_vecs[r].irq_vector);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	netif_tx_wake_all_queues(nn->dp.netdev);
@@ -3281,12 +3310,26 @@ static int nfp_net_dp_swap_enable(struct nfp_net *nn, struct nfp_net_dp *dp)
 	for (r = 0; r <	nn->max_r_vecs; r++)
 		nfp_net_vector_assign_rings(&nn->dp, &nn->r_vecs[r], r);
 
+<<<<<<< HEAD
 	err = netif_set_real_num_queues(nn->dp.netdev,
 					nn->dp.num_stack_tx_rings,
 					nn->dp.num_rx_rings);
 	if (err)
 		return err;
 
+=======
+	err = netif_set_real_num_rx_queues(nn->dp.netdev, nn->dp.num_rx_rings);
+	if (err)
+		return err;
+
+	if (nn->dp.netdev->real_num_tx_queues != nn->dp.num_stack_tx_rings) {
+		err = netif_set_real_num_tx_queues(nn->dp.netdev,
+						   nn->dp.num_stack_tx_rings);
+		if (err)
+			return err;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return nfp_net_set_config_and_enable(nn);
 }
 
@@ -4008,9 +4051,12 @@ static void nfp_net_irqmod_init(struct nfp_net *nn)
 	nn->rx_coalesce_max_frames = 64;
 	nn->tx_coalesce_usecs      = 50;
 	nn->tx_coalesce_max_frames = 64;
+<<<<<<< HEAD
 
 	nn->rx_coalesce_adapt_on   = true;
 	nn->tx_coalesce_adapt_on   = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void nfp_net_netdev_init(struct nfp_net *nn)

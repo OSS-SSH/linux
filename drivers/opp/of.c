@@ -95,7 +95,19 @@ static struct dev_pm_opp *_find_opp_of_np(struct opp_table *opp_table,
 static struct device_node *of_parse_required_opp(struct device_node *np,
 						 int index)
 {
+<<<<<<< HEAD
 	return of_parse_phandle(np, "required-opps", index);
+=======
+	struct device_node *required_np;
+
+	required_np = of_parse_phandle(np, "required-opps", index);
+	if (unlikely(!required_np)) {
+		pr_err("%s: Unable to parse required-opps: %pOF, index: %d\n",
+		       __func__, np, index);
+	}
+
+	return required_np;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* The caller must call dev_pm_opp_put_opp_table() after the table is used */
@@ -956,9 +968,14 @@ static int _of_add_opp_table_v2(struct device *dev, struct opp_table *opp_table)
 		}
 	}
 
+<<<<<<< HEAD
 	/* There should be one or more OPPs defined */
 	if (!count) {
 		dev_err(dev, "%s: no supported OPPs", __func__);
+=======
+	/* There should be one of more OPP defined */
+	if (WARN_ON(!count)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -ENOENT;
 		goto remove_static_opp;
 	}
@@ -1320,7 +1337,11 @@ int of_get_required_opp_performance_state(struct device_node *np, int index)
 
 	required_np = of_parse_required_opp(np, index);
 	if (!required_np)
+<<<<<<< HEAD
 		return -ENODEV;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	opp_table = _find_table_of_opp_np(required_np);
 	if (IS_ERR(opp_table)) {

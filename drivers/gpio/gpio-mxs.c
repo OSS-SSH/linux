@@ -157,7 +157,11 @@ static void mxs_gpio_irq_handler(struct irq_desc *desc)
 		if (port->both_edges & (1 << irqoffset))
 			mxs_flip_edge(port, irqoffset);
 
+<<<<<<< HEAD
 		generic_handle_domain_irq(port->domain, irqoffset);
+=======
+		generic_handle_irq(irq_find_mapping(port->domain, irqoffset));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		irq_stat &= ~(1 << irqoffset);
 	}
 }

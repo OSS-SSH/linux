@@ -4577,10 +4577,13 @@ static int sctp_setsockopt(struct sock *sk, int level, int optname,
 	}
 
 	if (optlen > 0) {
+<<<<<<< HEAD
 		/* Trim it to the biggest size sctp sockopt may need if necessary */
 		optlen = min_t(unsigned int, optlen,
 			       PAGE_ALIGN(USHRT_MAX +
 					  sizeof(__u16) * sizeof(struct sctp_reset_streams)));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kopt = memdup_sockptr(optval, optlen);
 		if (IS_ERR(kopt))
 			return PTR_ERR(kopt);

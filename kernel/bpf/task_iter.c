@@ -525,6 +525,10 @@ static const struct seq_operations task_vma_seq_ops = {
 };
 
 BTF_ID_LIST(btf_task_file_ids)
+<<<<<<< HEAD
+=======
+BTF_ID(struct, task_struct)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 BTF_ID(struct, file)
 BTF_ID(struct, vm_area_struct)
 
@@ -590,19 +594,33 @@ static int __init task_iter_init(void)
 {
 	int ret;
 
+<<<<<<< HEAD
 	task_reg_info.ctx_arg_info[0].btf_id = btf_task_struct_ids[0];
+=======
+	task_reg_info.ctx_arg_info[0].btf_id = btf_task_file_ids[0];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = bpf_iter_reg_target(&task_reg_info);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	task_file_reg_info.ctx_arg_info[0].btf_id = btf_task_struct_ids[0];
 	task_file_reg_info.ctx_arg_info[1].btf_id = btf_task_file_ids[0];
+=======
+	task_file_reg_info.ctx_arg_info[0].btf_id = btf_task_file_ids[0];
+	task_file_reg_info.ctx_arg_info[1].btf_id = btf_task_file_ids[1];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret =  bpf_iter_reg_target(&task_file_reg_info);
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	task_vma_reg_info.ctx_arg_info[0].btf_id = btf_task_struct_ids[0];
 	task_vma_reg_info.ctx_arg_info[1].btf_id = btf_task_file_ids[1];
+=======
+	task_vma_reg_info.ctx_arg_info[0].btf_id = btf_task_file_ids[0];
+	task_vma_reg_info.ctx_arg_info[1].btf_id = btf_task_file_ids[2];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return bpf_iter_reg_target(&task_vma_reg_info);
 }
 late_initcall(task_iter_init);

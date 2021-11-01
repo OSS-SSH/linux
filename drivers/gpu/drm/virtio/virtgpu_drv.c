@@ -57,7 +57,11 @@ static int virtio_gpu_pci_quirk(struct drm_device *dev, struct virtio_device *vd
 		 vga ? "virtio-vga" : "virtio-gpu-pci",
 		 pname);
 	if (vga) {
+<<<<<<< HEAD
 		ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &driver);
+=======
+		ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, "virtiodrmfb");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ret)
 			return ret;
 	}

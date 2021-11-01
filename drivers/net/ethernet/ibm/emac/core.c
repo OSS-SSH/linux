@@ -3011,7 +3011,11 @@ static const struct net_device_ops emac_netdev_ops = {
 	.ndo_stop		= emac_close,
 	.ndo_get_stats		= emac_stats,
 	.ndo_set_rx_mode	= emac_set_multicast_list,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= emac_ioctl,
+=======
+	.ndo_do_ioctl		= emac_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout		= emac_tx_timeout,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= emac_set_mac_address,
@@ -3023,7 +3027,11 @@ static const struct net_device_ops emac_gige_netdev_ops = {
 	.ndo_stop		= emac_close,
 	.ndo_get_stats		= emac_stats,
 	.ndo_set_rx_mode	= emac_set_multicast_list,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= emac_ioctl,
+=======
+	.ndo_do_ioctl		= emac_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout		= emac_tx_timeout,
 	.ndo_validate_addr	= eth_validate_addr,
 	.ndo_set_mac_address	= emac_set_mac_address,

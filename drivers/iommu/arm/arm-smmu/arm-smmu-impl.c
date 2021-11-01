@@ -215,8 +215,12 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
 	    of_device_is_compatible(np, "nvidia,tegra186-smmu"))
 		return nvidia_smmu_impl_init(smmu);
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
 		smmu = qcom_smmu_impl_init(smmu);
+=======
+	smmu = qcom_smmu_impl_init(smmu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
 		smmu->impl = &mrvl_mmu500_impl;

@@ -484,16 +484,23 @@ enum desc_type {
 	MONITOR_ACQUIRE,
 	EXPIRE_STATE,
 	EXPIRE_POLICY,
+<<<<<<< HEAD
 	SPDINFO_ATTRS,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 const char *desc_name[] = {
 	"create tunnel",
 	"alloc spi",
 	"monitor acquire",
 	"expire state",
+<<<<<<< HEAD
 	"expire policy",
 	"spdinfo attributes",
 	""
+=======
+	"expire policy"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 struct xfrm_desc {
 	enum desc_type	type;
@@ -1596,6 +1603,7 @@ out_close:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int xfrm_spdinfo_set_thresh(int xfrm_sock, uint32_t *seq,
 		unsigned thresh4_l, unsigned thresh4_r,
 		unsigned thresh6_l, unsigned thresh6_r,
@@ -1745,6 +1753,8 @@ static int xfrm_spdinfo_attrs(int xfrm_sock, uint32_t *seq)
 	return KSFT_PASS;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int child_serv(int xfrm_sock, uint32_t *seq,
 		unsigned int nr, int cmd_fd, void *buf, struct xfrm_desc *desc)
 {
@@ -1869,9 +1879,12 @@ static int child_f(unsigned int nr, int test_desc_fd, int cmd_fd, void *buf)
 		case EXPIRE_POLICY:
 			ret = xfrm_expire_policy(xfrm_sock, &seq, nr, &desc);
 			break;
+<<<<<<< HEAD
 		case SPDINFO_ATTRS:
 			ret = xfrm_spdinfo_attrs(xfrm_sock, &seq);
 			break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		default:
 			printk("Unknown desc type %d", desc.type);
 			exit(KSFT_FAIL);
@@ -2149,10 +2162,15 @@ static int write_proto_plan(int fd, int proto)
  *   sizeof(xfrm_user_polexpire)  = 168  |  sizeof(xfrm_user_polexpire)  = 176
  *
  * Check the affected by the UABI difference structures.
+<<<<<<< HEAD
  * Also, check translation for xfrm_set_spdinfo: it has it's own attributes
  * which needs to be correctly copied, but not translated.
  */
 const unsigned int compat_plan = 5;
+=======
+ */
+const unsigned int compat_plan = 4;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int write_compat_struct_tests(int test_desc_fd)
 {
 	struct xfrm_desc desc = {};
@@ -2176,10 +2194,13 @@ static int write_compat_struct_tests(int test_desc_fd)
 	if (__write_desc(test_desc_fd, &desc))
 		return -1;
 
+<<<<<<< HEAD
 	desc.type = SPDINFO_ATTRS;
 	if (__write_desc(test_desc_fd, &desc))
 		return -1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

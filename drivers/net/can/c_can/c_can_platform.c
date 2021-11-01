@@ -385,6 +385,10 @@ static int c_can_plat_probe(struct platform_device *pdev)
 	priv->base = addr;
 	priv->device = &pdev->dev;
 	priv->can.clock.freq = clk_get_rate(clk);
+<<<<<<< HEAD
+=======
+	priv->priv = clk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	priv->type = drvdata->id;
 
 	platform_set_drvdata(pdev, dev);

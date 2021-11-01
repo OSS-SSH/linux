@@ -374,7 +374,10 @@ selected_server:
 	if (vnode->cb_server != server) {
 		vnode->cb_server = server;
 		vnode->cb_s_break = server->cb_s_break;
+<<<<<<< HEAD
 		vnode->cb_fs_s_break = atomic_read(&server->cell->fs_s_break);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		vnode->cb_v_break = vnode->volume->cb_v_break;
 		clear_bit(AFS_VNODE_CB_PROMISED, &vnode->flags);
 	}

@@ -327,6 +327,7 @@ static inline int serdev_tty_port_unregister(struct tty_port *port)
 }
 #endif /* CONFIG_SERIAL_DEV_CTRL_TTYPORT */
 
+<<<<<<< HEAD
 struct acpi_resource;
 struct acpi_resource_uart_serialbus;
 
@@ -341,4 +342,6 @@ static inline bool serdev_acpi_get_uart_resource(struct acpi_resource *ares,
 }
 #endif /* CONFIG_ACPI */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /*_LINUX_SERDEV_H */

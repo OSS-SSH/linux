@@ -33,12 +33,19 @@ config NVME_HWMON
 	  in the system.
 
 config NVME_FABRICS
+<<<<<<< HEAD
 	select NVME_CORE
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tristate
 
 config NVME_RDMA
 	tristate "NVM Express over Fabrics RDMA host driver"
 	depends on INFINIBAND && INFINIBAND_ADDR_TRANS && BLOCK
+<<<<<<< HEAD
+=======
+	select NVME_CORE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select NVME_FABRICS
 	select SG_POOL
 	help
@@ -55,6 +62,10 @@ config NVME_FC
 	tristate "NVM Express over Fabrics FC host driver"
 	depends on BLOCK
 	depends on HAS_DMA
+<<<<<<< HEAD
+=======
+	select NVME_CORE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select NVME_FABRICS
 	select SG_POOL
 	help
@@ -71,6 +82,10 @@ config NVME_TCP
 	tristate "NVM Express over Fabrics TCP host driver"
 	depends on INET
 	depends on BLOCK
+<<<<<<< HEAD
+=======
+	select NVME_CORE
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select NVME_FABRICS
 	select CRYPTO
 	select CRYPTO_CRC32C

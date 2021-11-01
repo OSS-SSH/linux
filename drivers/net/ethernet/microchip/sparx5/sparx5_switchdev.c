@@ -93,12 +93,18 @@ static int sparx5_port_attr_set(struct net_device *dev, const void *ctx,
 }
 
 static int sparx5_port_bridge_join(struct sparx5_port *port,
+<<<<<<< HEAD
 				   struct net_device *bridge,
 				   struct netlink_ext_ack *extack)
 {
 	struct sparx5 *sparx5 = port->sparx5;
 	struct net_device *ndev = port->ndev;
 	int err;
+=======
+				   struct net_device *bridge)
+{
+	struct sparx5 *sparx5 = port->sparx5;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (bitmap_empty(sparx5->bridge_mask, SPX5_PORTS))
 		/* First bridged port */
@@ -112,6 +118,7 @@ static int sparx5_port_bridge_join(struct sparx5_port *port,
 
 	set_bit(port->portno, sparx5->bridge_mask);
 
+<<<<<<< HEAD
 	err = switchdev_bridge_port_offload(ndev, ndev, NULL, NULL, NULL,
 					    false, extack);
 	if (err)
@@ -127,6 +134,14 @@ static int sparx5_port_bridge_join(struct sparx5_port *port,
 err_switchdev_offload:
 	clear_bit(port->portno, sparx5->bridge_mask);
 	return err;
+=======
+	/* Port enters in bridge mode therefor don't need to copy to CPU
+	 * frames for multicast in case the bridge is not requesting them
+	 */
+	__dev_mc_unsync(port->ndev, sparx5_mc_unsync);
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void sparx5_port_bridge_leave(struct sparx5_port *port,
@@ -134,8 +149,11 @@ static void sparx5_port_bridge_leave(struct sparx5_port *port,
 {
 	struct sparx5 *sparx5 = port->sparx5;
 
+<<<<<<< HEAD
 	switchdev_bridge_port_unoffload(port->ndev, NULL, NULL, NULL);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	clear_bit(port->portno, sparx5->bridge_mask);
 	if (bitmap_empty(sparx5->bridge_mask, SPX5_PORTS))
 		sparx5->hw_bridge_dev = NULL;
@@ -153,6 +171,7 @@ static int sparx5_port_changeupper(struct net_device *dev,
 				   struct netdev_notifier_changeupper_info *info)
 {
 	struct sparx5_port *port = netdev_priv(dev);
+<<<<<<< HEAD
 	struct netlink_ext_ack *extack;
 	int err = 0;
 
@@ -162,6 +181,13 @@ static int sparx5_port_changeupper(struct net_device *dev,
 		if (info->linking)
 			err = sparx5_port_bridge_join(port, info->upper_dev,
 						      extack);
+=======
+	int err = 0;
+
+	if (netif_is_bridge_master(info->upper_dev)) {
+		if (info->linking)
+			err = sparx5_port_bridge_join(port, info->upper_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			sparx5_port_bridge_leave(port, info->upper_dev);
 

@@ -1052,7 +1052,11 @@ static const struct net_device_ops boomrang_netdev_ops = {
 	.ndo_tx_timeout		= vortex_tx_timeout,
 	.ndo_get_stats		= vortex_get_stats,
 #ifdef CONFIG_PCI
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= vortex_ioctl,
+=======
+	.ndo_do_ioctl 		= vortex_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	.ndo_set_rx_mode	= set_rx_mode,
 	.ndo_set_mac_address 	= eth_mac_addr,
@@ -1069,7 +1073,11 @@ static const struct net_device_ops vortex_netdev_ops = {
 	.ndo_tx_timeout		= vortex_tx_timeout,
 	.ndo_get_stats		= vortex_get_stats,
 #ifdef CONFIG_PCI
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= vortex_ioctl,
+=======
+	.ndo_do_ioctl 		= vortex_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	.ndo_set_rx_mode	= set_rx_mode,
 	.ndo_set_mac_address 	= eth_mac_addr,
@@ -2786,7 +2794,11 @@ static void
 dump_tx_ring(struct net_device *dev)
 {
 	if (vortex_debug > 0) {
+<<<<<<< HEAD
 		struct vortex_private *vp = netdev_priv(dev);
+=======
+	struct vortex_private *vp = netdev_priv(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		void __iomem *ioaddr = vp->ioaddr;
 
 		if (vp->full_bus_master_tx) {

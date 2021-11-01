@@ -1147,6 +1147,7 @@ static bool ieee80211_tx_prep_agg(struct ieee80211_tx_data *tx,
 	return queued;
 }
 
+<<<<<<< HEAD
 static void
 ieee80211_aggr_check(struct ieee80211_sub_if_data *sdata,
 		     struct sta_info *sta,
@@ -1170,6 +1171,8 @@ ieee80211_aggr_check(struct ieee80211_sub_if_data *sdata,
 	ieee80211_start_tx_ba_session(&sta->sta, tid, 0);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * initialises @tx
  * pass %NULL for the station if unknown, a valid pointer if known
@@ -1183,7 +1186,10 @@ ieee80211_tx_prepare(struct ieee80211_sub_if_data *sdata,
 	struct ieee80211_local *local = sdata->local;
 	struct ieee80211_hdr *hdr;
 	struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
+<<<<<<< HEAD
 	bool aggr_check = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int tid;
 
 	memset(tx, 0, sizeof(*tx));
@@ -1212,10 +1218,15 @@ ieee80211_tx_prepare(struct ieee80211_sub_if_data *sdata,
 		} else if (tx->sdata->control_port_protocol == tx->skb->protocol) {
 			tx->sta = sta_info_get_bss(sdata, hdr->addr1);
 		}
+<<<<<<< HEAD
 		if (!tx->sta && !is_multicast_ether_addr(hdr->addr1)) {
 			tx->sta = sta_info_get(sdata, hdr->addr1);
 			aggr_check = true;
 		}
+=======
+		if (!tx->sta && !is_multicast_ether_addr(hdr->addr1))
+			tx->sta = sta_info_get(sdata, hdr->addr1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (tx->sta && ieee80211_is_data_qos(hdr->frame_control) &&
@@ -1225,12 +1236,17 @@ ieee80211_tx_prepare(struct ieee80211_sub_if_data *sdata,
 		struct tid_ampdu_tx *tid_tx;
 
 		tid = ieee80211_get_tid(hdr);
+<<<<<<< HEAD
 		tid_tx = rcu_dereference(tx->sta->ampdu_mlme.tid_tx[tid]);
 		if (!tid_tx && aggr_check) {
 			ieee80211_aggr_check(sdata, tx->sta, skb);
 			tid_tx = rcu_dereference(tx->sta->ampdu_mlme.tid_tx[tid]);
 		}
 
+=======
+
+		tid_tx = rcu_dereference(tx->sta->ampdu_mlme.tid_tx[tid]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (tid_tx) {
 			bool queued;
 
@@ -2209,11 +2225,15 @@ bool ieee80211_parse_tx_radiotap(struct sk_buff *skb,
 			}
 
 			vht_mcs = iterator.this_arg[4] >> 4;
+<<<<<<< HEAD
 			if (vht_mcs > 11)
 				vht_mcs = 0;
 			vht_nss = iterator.this_arg[4] & 0xF;
 			if (!vht_nss || vht_nss > 8)
 				vht_nss = 1;
+=======
+			vht_nss = iterator.this_arg[4] & 0xF;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 
 		/*
@@ -3246,9 +3266,13 @@ static bool ieee80211_amsdu_prepare_head(struct ieee80211_sub_if_data *sdata,
 	if (info->control.flags & IEEE80211_TX_CTRL_AMSDU)
 		return true;
 
+<<<<<<< HEAD
 	if (!ieee80211_amsdu_realloc_pad(local, skb,
 					 sizeof(*amsdu_hdr) +
 					 local->hw.extra_tx_headroom))
+=======
+	if (!ieee80211_amsdu_realloc_pad(local, skb, sizeof(*amsdu_hdr)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return false;
 
 	data = skb_push(skb, sizeof(*amsdu_hdr));
@@ -3384,6 +3408,7 @@ static bool ieee80211_amsdu_aggregate(struct ieee80211_sub_if_data *sdata,
 	if (!ieee80211_amsdu_prepare_head(sdata, fast_tx, head))
 		goto out;
 
+<<<<<<< HEAD
 	/* If n == 2, the "while (*frag_tail)" loop above didn't execute
 	 * and  frag_tail should be &skb_shinfo(head)->frag_list.
 	 * However, ieee80211_amsdu_prepare_head() can reallocate it.
@@ -3392,6 +3417,8 @@ static bool ieee80211_amsdu_aggregate(struct ieee80211_sub_if_data *sdata,
 	if (n == 2)
 		frag_tail = &skb_shinfo(head)->frag_list;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Pad out the previous subframe to a multiple of 4 by adding the
 	 * padding to the next one, that's being added. Note that head->len
@@ -4164,6 +4191,32 @@ void ieee80211_txq_schedule_start(struct ieee80211_hw *hw, u8 ac)
 }
 EXPORT_SYMBOL(ieee80211_txq_schedule_start);
 
+<<<<<<< HEAD
+=======
+static void
+ieee80211_aggr_check(struct ieee80211_sub_if_data *sdata,
+		     struct sta_info *sta,
+		     struct sk_buff *skb)
+{
+	struct rate_control_ref *ref = sdata->local->rate_ctrl;
+	u16 tid;
+
+	if (!ref || !(ref->ops->capa & RATE_CTRL_CAPA_AMPDU_TRIGGER))
+		return;
+
+	if (!sta || !sta->sta.ht_cap.ht_supported ||
+	    !sta->sta.wme || skb_get_queue_mapping(skb) == IEEE80211_AC_VO ||
+	    skb->protocol == sdata->control_port_protocol)
+		return;
+
+	tid = skb->priority & IEEE80211_QOS_CTL_TID_MASK;
+	if (likely(sta->ampdu_mlme.tid_tx[tid]))
+		return;
+
+	ieee80211_start_tx_ba_session(&sta->sta, tid, 0);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __ieee80211_subif_start_xmit(struct sk_buff *skb,
 				  struct net_device *dev,
 				  u32 info_flags,
@@ -4796,11 +4849,19 @@ static int ieee80211_beacon_add_tim(struct ieee80211_sub_if_data *sdata,
 static void ieee80211_set_beacon_cntdwn(struct ieee80211_sub_if_data *sdata,
 					struct beacon_data *beacon)
 {
+<<<<<<< HEAD
 	u8 *beacon_data, count, max_count = 1;
 	struct probe_resp *resp;
 	size_t beacon_data_len;
 	u16 *bcn_offsets;
 	int i;
+=======
+	struct probe_resp *resp;
+	u8 *beacon_data;
+	size_t beacon_data_len;
+	int i;
+	u8 count = beacon->cntdwn_current_counter;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (sdata->vif.type) {
 	case NL80211_IFTYPE_AP:
@@ -4820,6 +4881,7 @@ static void ieee80211_set_beacon_cntdwn(struct ieee80211_sub_if_data *sdata,
 	}
 
 	rcu_read_lock();
+<<<<<<< HEAD
 	resp = rcu_dereference(sdata->u.ap.probe_resp);
 
 	bcn_offsets = beacon->cntdwn_counter_offsets;
@@ -4841,6 +4903,23 @@ static void ieee80211_set_beacon_cntdwn(struct ieee80211_sub_if_data *sdata,
 
 			resp->data[resp_offsets[i]] = count;
 		}
+=======
+	for (i = 0; i < IEEE80211_MAX_CNTDWN_COUNTERS_NUM; ++i) {
+		resp = rcu_dereference(sdata->u.ap.probe_resp);
+
+		if (beacon->cntdwn_counter_offsets[i]) {
+			if (WARN_ON_ONCE(beacon->cntdwn_counter_offsets[i] >=
+					 beacon_data_len)) {
+				rcu_read_unlock();
+				return;
+			}
+
+			beacon_data[beacon->cntdwn_counter_offsets[i]] = count;
+		}
+
+		if (sdata->vif.type == NL80211_IFTYPE_AP && resp)
+			resp->data[resp->cntdwn_counter_offsets[i]] = count;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	rcu_read_unlock();
 }
@@ -5050,7 +5129,10 @@ __ieee80211_beacon_get(struct ieee80211_hw *hw,
 			if (offs) {
 				offs->tim_offset = beacon->head_len;
 				offs->tim_length = skb->len - beacon->head_len;
+<<<<<<< HEAD
 				offs->cntdwn_counter_offs[0] = beacon->cntdwn_counter_offsets[0];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 				/* for AP the csa offsets are from tail */
 				csa_off_base = skb->len;

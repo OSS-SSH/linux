@@ -774,6 +774,10 @@ nvkm_vma_tail(struct nvkm_vma *vma, u64 tail)
 	new->refd = vma->refd;
 	new->used = vma->used;
 	new->part = vma->part;
+<<<<<<< HEAD
+=======
+	new->user = vma->user;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	new->busy = vma->busy;
 	new->mapped = vma->mapped;
 	list_add(&new->head, &vma->head);
@@ -950,7 +954,11 @@ nvkm_vmm_node_split(struct nvkm_vmm *vmm,
 static void
 nvkm_vma_dump(struct nvkm_vma *vma)
 {
+<<<<<<< HEAD
 	printk(KERN_ERR "%016llx %016llx %c%c%c%c%c%c%c%c %p\n",
+=======
+	printk(KERN_ERR "%016llx %016llx %c%c%c%c%c%c%c%c%c %p\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	       vma->addr, (u64)vma->size,
 	       vma->used ? '-' : 'F',
 	       vma->mapref ? 'R' : '-',
@@ -958,6 +966,10 @@ nvkm_vma_dump(struct nvkm_vma *vma)
 	       vma->page != NVKM_VMA_PAGE_NONE ? '0' + vma->page : '-',
 	       vma->refd != NVKM_VMA_PAGE_NONE ? '0' + vma->refd : '-',
 	       vma->part ? 'P' : '-',
+<<<<<<< HEAD
+=======
+	       vma->user ? 'U' : '-',
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	       vma->busy ? 'B' : '-',
 	       vma->mapped ? 'M' : '-',
 	       vma->memory);
@@ -1022,6 +1034,10 @@ nvkm_vmm_ctor_managed(struct nvkm_vmm *vmm, u64 addr, u64 size)
 	vma->mapref = true;
 	vma->sparse = false;
 	vma->used = true;
+<<<<<<< HEAD
+=======
+	vma->user = true;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	nvkm_vmm_node_insert(vmm, vma);
 	list_add_tail(&vma->head, &vmm->list);
 	return 0;
@@ -1612,6 +1628,10 @@ nvkm_vmm_put_locked(struct nvkm_vmm *vmm, struct nvkm_vma *vma)
 	vma->page = NVKM_VMA_PAGE_NONE;
 	vma->refd = NVKM_VMA_PAGE_NONE;
 	vma->used = false;
+<<<<<<< HEAD
+=======
+	vma->user = false;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	nvkm_vmm_put_region(vmm, vma);
 }
 

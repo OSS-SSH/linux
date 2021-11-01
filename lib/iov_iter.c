@@ -672,7 +672,11 @@ static size_t copy_mc_pipe_to_iter(const void *addr, size_t bytes,
  * _copy_mc_to_iter - copy to iter with source memory error exception handling
  * @addr: source kernel address
  * @bytes: total transfer length
+<<<<<<< HEAD
  * @i: destination iterator
+=======
+ * @iter: destination iterator
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * The pmem driver deploys this for the dax operation
  * (dax_copy_to_iter()) for dax reads (bypass page-cache and the
@@ -690,8 +694,11 @@ static size_t copy_mc_pipe_to_iter(const void *addr, size_t bytes,
  * * ITER_KVEC, ITER_PIPE, and ITER_BVEC can return short copies.
  *   Compare to copy_to_iter() where only ITER_IOVEC attempts might return
  *   a short copy.
+<<<<<<< HEAD
  *
  * Return: number of bytes copied (may be %0)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 size_t _copy_mc_to_iter(const void *addr, size_t bytes, struct iov_iter *i)
 {
@@ -746,7 +753,11 @@ EXPORT_SYMBOL(_copy_from_iter_nocache);
  * _copy_from_iter_flushcache - write destination through cpu cache
  * @addr: destination kernel address
  * @bytes: total transfer length
+<<<<<<< HEAD
  * @i: source iterator
+=======
+ * @iter: source iterator
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * The pmem driver arranges for filesystem-dax to use this facility via
  * dax_copy_from_iter() for ensuring that writes to persistent memory
@@ -755,8 +766,11 @@ EXPORT_SYMBOL(_copy_from_iter_nocache);
  * all iterator types. The _copy_from_iter_nocache() only attempts to
  * bypass the cache for the ITER_IOVEC case, and on some archs may use
  * instructions that strand dirty-data in the cache.
+<<<<<<< HEAD
  *
  * Return: number of bytes copied (may be %0)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 size_t _copy_from_iter_flushcache(void *addr, size_t bytes, struct iov_iter *i)
 {
@@ -1972,6 +1986,7 @@ int import_single_range(int rw, void __user *buf, size_t len,
 	return 0;
 }
 EXPORT_SYMBOL(import_single_range);
+<<<<<<< HEAD
 
 /**
  * iov_iter_restore() - Restore a &struct iov_iter to the same state as when
@@ -2008,3 +2023,5 @@ void iov_iter_restore(struct iov_iter *i, struct iov_iter_state *state)
 		i->iov -= state->nr_segs - i->nr_segs;
 	i->nr_segs = state->nr_segs;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

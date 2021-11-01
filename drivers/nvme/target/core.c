@@ -553,7 +553,11 @@ int nvmet_ns_enable(struct nvmet_ns *ns)
 	mutex_lock(&subsys->lock);
 	ret = 0;
 
+<<<<<<< HEAD
 	if (nvmet_is_passthru_subsys(subsys)) {
+=======
+	if (nvmet_passthru_ctrl(subsys)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pr_info("cannot enable both passthru and regular namespaces for a single subsystem");
 		goto out_unlock;
 	}
@@ -802,7 +806,10 @@ void nvmet_sq_destroy(struct nvmet_sq *sq)
 		 * controller teardown as a result of a keep-alive expiration.
 		 */
 		ctrl->reset_tbkas = true;
+<<<<<<< HEAD
 		sq->ctrl->sqs[sq->qid] = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		nvmet_ctrl_put(ctrl);
 		sq->ctrl = NULL; /* allows reusing the queue later */
 	}
@@ -869,7 +876,11 @@ static u16 nvmet_parse_io_cmd(struct nvmet_req *req)
 	if (unlikely(ret))
 		return ret;
 
+<<<<<<< HEAD
 	if (nvmet_is_passthru_req(req))
+=======
+	if (nvmet_req_passthru_ctrl(req))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return nvmet_parse_passthru_io_cmd(req);
 
 	ret = nvmet_req_find_ns(req);
@@ -1206,9 +1217,12 @@ static void nvmet_init_cap(struct nvmet_ctrl *ctrl)
 	ctrl->cap |= (15ULL << 24);
 	/* maximum queue entries supported: */
 	ctrl->cap |= NVMET_QUEUE_SIZE - 1;
+<<<<<<< HEAD
 
 	if (nvmet_is_passthru_subsys(ctrl->subsys))
 		nvmet_passthrough_override_cap(ctrl);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct nvmet_ctrl *nvmet_ctrl_find_get(const char *subsysnqn,
@@ -1366,6 +1380,11 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
 		goto out_put_subsystem;
 	mutex_init(&ctrl->lock);
 
+<<<<<<< HEAD
+=======
+	nvmet_init_cap(ctrl);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ctrl->port = req->port;
 
 	INIT_WORK(&ctrl->async_event_work, nvmet_async_event_work);
@@ -1379,7 +1398,10 @@ u16 nvmet_alloc_ctrl(const char *subsysnqn, const char *hostnqn,
 
 	kref_init(&ctrl->ref);
 	ctrl->subsys = subsys;
+<<<<<<< HEAD
 	nvmet_init_cap(ctrl);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	WRITE_ONCE(ctrl->aen_enabled, NVMET_AEN_CFG_OPTIONAL);
 
 	ctrl->changed_ns_list = kmalloc_array(NVME_MAX_CHANGED_NAMESPACES,

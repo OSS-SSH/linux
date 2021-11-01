@@ -25,7 +25,10 @@ struct sy8824_config {
 	unsigned int vsel_min;
 	unsigned int vsel_step;
 	unsigned int vsel_count;
+<<<<<<< HEAD
 	const struct regmap_config *config;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct sy8824_device_info {
@@ -111,6 +114,7 @@ static int sy8824_regulator_register(struct sy8824_device_info *di,
 static const struct regmap_config sy8824_regmap_config = {
 	.reg_bits = 8,
 	.val_bits = 8,
+<<<<<<< HEAD
 	.num_reg_defaults_raw = 1,
 	.cache_type = REGCACHE_FLAT,
 };
@@ -120,6 +124,8 @@ static const struct regmap_config sy20276_regmap_config = {
 	.val_bits = 8,
 	.num_reg_defaults_raw = 2,
 	.cache_type = REGCACHE_FLAT,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int sy8824_i2c_probe(struct i2c_client *client)
@@ -144,7 +150,11 @@ static int sy8824_i2c_probe(struct i2c_client *client)
 	di->dev = dev;
 	di->cfg = of_device_get_match_data(dev);
 
+<<<<<<< HEAD
 	regmap = devm_regmap_init_i2c(client, di->cfg->config);
+=======
+	regmap = devm_regmap_init_i2c(client, &sy8824_regmap_config);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(regmap)) {
 		dev_err(dev, "Failed to allocate regmap!\n");
 		return PTR_ERR(regmap);
@@ -170,7 +180,10 @@ static const struct sy8824_config sy8824c_cfg = {
 	.vsel_min = 762500,
 	.vsel_step = 12500,
 	.vsel_count = 64,
+<<<<<<< HEAD
 	.config = &sy8824_regmap_config,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct sy8824_config sy8824e_cfg = {
@@ -180,7 +193,10 @@ static const struct sy8824_config sy8824e_cfg = {
 	.vsel_min = 700000,
 	.vsel_step = 12500,
 	.vsel_count = 64,
+<<<<<<< HEAD
 	.config = &sy8824_regmap_config,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct sy8824_config sy20276_cfg = {
@@ -190,7 +206,10 @@ static const struct sy8824_config sy20276_cfg = {
 	.vsel_min = 600000,
 	.vsel_step = 10000,
 	.vsel_count = 128,
+<<<<<<< HEAD
 	.config = &sy20276_regmap_config,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct sy8824_config sy20278_cfg = {
@@ -200,7 +219,10 @@ static const struct sy8824_config sy20278_cfg = {
 	.vsel_min = 762500,
 	.vsel_step = 12500,
 	.vsel_count = 64,
+<<<<<<< HEAD
 	.config = &sy20276_regmap_config,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct of_device_id sy8824_dt_ids[] = {

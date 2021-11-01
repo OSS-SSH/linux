@@ -1,7 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-only
 config SND_SOC_MEDIATEK
 	tristate
+<<<<<<< HEAD
 	select REGMAP_MMIO
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config SND_SOC_MT2701
 	tristate "ASoC support for Mediatek MT2701 chip"
@@ -185,6 +188,7 @@ config SND_SOC_MT8192_MT6359_RT1015_RT5682
 	  with the MT6359 RT1015 RT5682 audio codec.
 	  Select Y if you have such device.
 	  If unsure select "N".
+<<<<<<< HEAD
 
 config SND_SOC_MT8195
 	tristate "ASoC support for Mediatek MT8195 chip"
@@ -212,3 +216,5 @@ config SND_SOC_MT8195_MT6359_RT1019_RT5682
 	  with the MT6359 RT1019 RT5682 audio codec.
 	  Select Y if you have such device.
 	  If unsure select "N".
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -21,6 +21,10 @@ platform-$(CONFIG_MIPS_MALTA)		+= mti-malta/
 platform-$(CONFIG_MACH_NINTENDO64)	+= n64/
 platform-$(CONFIG_NLM_COMMON)		+= netlogic/
 platform-$(CONFIG_PIC32MZDA)		+= pic32/
+<<<<<<< HEAD
+=======
+platform-$(CONFIG_MACH_PISTACHIO)	+= pistachio/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 platform-$(CONFIG_RALINK)		+= ralink/
 platform-$(CONFIG_MIKROTIK_RB532)	+= rb532/
 platform-$(CONFIG_SGI_IP22)		+= sgi-ip22/

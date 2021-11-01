@@ -187,7 +187,19 @@ static s32 igc_init_phy_params_base(struct igc_hw *hw)
 
 	igc_check_for_copper_link(hw);
 
+<<<<<<< HEAD
 	phy->type = igc_phy_i225;
+=======
+	/* Verify phy id and set remaining function pointers */
+	switch (phy->id) {
+	case I225_I_PHY_ID:
+		phy->type	= igc_phy_i225;
+		break;
+	default:
+		ret_val = -IGC_ERR_PHY;
+		goto out;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 out:
 	return ret_val;

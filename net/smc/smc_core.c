@@ -917,8 +917,13 @@ static int smc_switch_cursor(struct smc_sock *smc, struct smc_cdc_tx_pend *pend,
 	return rc;
 }
 
+<<<<<<< HEAD
 void smc_switch_link_and_count(struct smc_connection *conn,
 			       struct smc_link *to_lnk)
+=======
+static void smc_switch_link_and_count(struct smc_connection *conn,
+				      struct smc_link *to_lnk)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	atomic_dec(&conn->lnk->conn_cnt);
 	conn->lnk = to_lnk;
@@ -949,7 +954,11 @@ struct smc_link *smc_switch_conns(struct smc_link_group *lgr,
 		to_lnk = &lgr->lnk[i];
 		break;
 	}
+<<<<<<< HEAD
 	if (!to_lnk || !smc_wr_tx_link_hold(to_lnk)) {
+=======
+	if (!to_lnk) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		smc_lgr_terminate_sched(lgr);
 		return NULL;
 	}
@@ -981,14 +990,22 @@ again:
 		read_unlock_bh(&lgr->conns_lock);
 		/* pre-fetch buffer outside of send_lock, might sleep */
 		rc = smc_cdc_get_free_slot(conn, to_lnk, &wr_buf, NULL, &pend);
+<<<<<<< HEAD
 		if (rc)
 			goto err_out;
+=======
+		if (rc) {
+			smcr_link_down_cond_sched(to_lnk);
+			return NULL;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* avoid race with smcr_tx_sndbuf_nonempty() */
 		spin_lock_bh(&conn->send_lock);
 		smc_switch_link_and_count(conn, to_lnk);
 		rc = smc_switch_cursor(smc, pend, wr_buf);
 		spin_unlock_bh(&conn->send_lock);
 		sock_put(&smc->sk);
+<<<<<<< HEAD
 		if (rc)
 			goto err_out;
 		goto again;
@@ -1001,6 +1018,16 @@ err_out:
 	smcr_link_down_cond_sched(to_lnk);
 	smc_wr_tx_link_put(to_lnk);
 	return NULL;
+=======
+		if (rc) {
+			smcr_link_down_cond_sched(to_lnk);
+			return NULL;
+		}
+		goto again;
+	}
+	read_unlock_bh(&lgr->conns_lock);
+	return to_lnk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void smcr_buf_unuse(struct smc_buf_desc *rmb_desc,
@@ -1476,9 +1503,13 @@ static void smc_conn_abort_work(struct work_struct *work)
 						   abort_work);
 	struct smc_sock *smc = container_of(conn, struct smc_sock, conn);
 
+<<<<<<< HEAD
 	lock_sock(&smc->sk);
 	smc_conn_kill(conn, true);
 	release_sock(&smc->sk);
+=======
+	smc_conn_kill(conn, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sock_put(&smc->sk); /* sock_hold done by schedulers of abort_work */
 }
 
@@ -1756,6 +1787,7 @@ out:
 	return rc;
 }
 
+<<<<<<< HEAD
 #define SMCD_DMBE_SIZES		6 /* 0 -> 16KB, 1 -> 32KB, .. 6 -> 1MB */
 #define SMCR_RMBE_SIZES		5 /* 0 -> 16KB, 1 -> 32KB, .. 5 -> 512KB */
 
@@ -1767,11 +1799,20 @@ out:
 static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
 {
 	const unsigned int max_scat = SG_MAX_SINGLE_ALLOC * PAGE_SIZE;
+=======
+/* convert the RMB size into the compressed notation - minimum 16K.
+ * In contrast to plain ilog2, this rounds towards the next power of 2,
+ * so the socket application gets at least its desired sndbuf / rcvbuf size.
+ */
+static u8 smc_compress_bufsize(int size)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 compressed;
 
 	if (size <= SMC_BUF_MIN_SIZE)
 		return 0;
 
+<<<<<<< HEAD
 	size = (size - 1) >> 14;  /* convert to 16K multiple */
 	compressed = min_t(u8, ilog2(size) + 1,
 			   is_smcd ? SMCD_DMBE_SIZES : SMCR_RMBE_SIZES);
@@ -1780,6 +1821,12 @@ static u8 smc_compress_bufsize(int size, bool is_smcd, bool is_rmb)
 		/* RMBs are backed by & limited to max size of scatterlists */
 		compressed = min_t(u8, compressed, ilog2(max_scat >> 14));
 
+=======
+	size = (size - 1) >> 14;
+	compressed = ilog2(size) + 1;
+	if (compressed >= SMC_RMBE_SIZES)
+		compressed = SMC_RMBE_SIZES - 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return compressed;
 }
 
@@ -1995,12 +2042,23 @@ out:
 	return rc;
 }
 
+<<<<<<< HEAD
+=======
+#define SMCD_DMBE_SIZES		6 /* 0 -> 16KB, 1 -> 32KB, .. 6 -> 1MB */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct smc_buf_desc *smcd_new_buf_create(struct smc_link_group *lgr,
 						bool is_dmb, int bufsize)
 {
 	struct smc_buf_desc *buf_desc;
 	int rc;
 
+<<<<<<< HEAD
+=======
+	if (smc_compress_bufsize(bufsize) > SMCD_DMBE_SIZES)
+		return ERR_PTR(-EAGAIN);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* try to alloc a new DMB */
 	buf_desc = kzalloc(sizeof(*buf_desc), GFP_KERNEL);
 	if (!buf_desc)
@@ -2049,8 +2107,14 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
 		/* use socket send buffer size (w/o overhead) as start value */
 		sk_buf_size = smc->sk.sk_sndbuf / 2;
 
+<<<<<<< HEAD
 	for (bufsize_short = smc_compress_bufsize(sk_buf_size, is_smcd, is_rmb);
 	     bufsize_short >= 0; bufsize_short--) {
+=======
+	for (bufsize_short = smc_compress_bufsize(sk_buf_size);
+	     bufsize_short >= 0; bufsize_short--) {
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (is_rmb) {
 			lock = &lgr->rmbs_lock;
 			buf_list = &lgr->rmbs[bufsize_short];
@@ -2059,6 +2123,11 @@ static int __smc_buf_create(struct smc_sock *smc, bool is_smcd, bool is_rmb)
 			buf_list = &lgr->sndbufs[bufsize_short];
 		}
 		bufsize = smc_uncompress_bufsize(bufsize_short);
+<<<<<<< HEAD
+=======
+		if ((1 << get_order(bufsize)) > SG_MAX_SINGLE_ALLOC)
+			continue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* check for reusable slot in the link group */
 		buf_desc = smc_buf_get_slot(bufsize_short, lock, buf_list);

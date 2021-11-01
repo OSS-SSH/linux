@@ -1578,6 +1578,7 @@ static int _mlx4_ib_create_qp(struct ib_pd *pd, struct mlx4_ib_qp *qp,
 	return 0;
 }
 
+<<<<<<< HEAD
 int mlx4_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 		      struct ib_udata *udata)
 {
@@ -1591,6 +1592,26 @@ int mlx4_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 	ret = _mlx4_ib_create_qp(pd, qp, init_attr, udata);
 	if (ret)
 		return ret;
+=======
+struct ib_qp *mlx4_ib_create_qp(struct ib_pd *pd,
+				struct ib_qp_init_attr *init_attr,
+				struct ib_udata *udata) {
+	struct ib_device *device = pd ? pd->device : init_attr->xrcd->device;
+	struct mlx4_ib_dev *dev = to_mdev(device);
+	struct mlx4_ib_qp *qp;
+	int ret;
+
+	qp = kzalloc(sizeof(*qp), GFP_KERNEL);
+	if (!qp)
+		return ERR_PTR(-ENOMEM);
+
+	mutex_init(&qp->mutex);
+	ret = _mlx4_ib_create_qp(pd, qp, init_attr, udata);
+	if (ret) {
+		kfree(qp);
+		return ERR_PTR(ret);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (init_attr->qp_type == IB_QPT_GSI &&
 	    !(init_attr->create_flags & MLX4_IB_QP_CREATE_ROCE_V2_GSI)) {
@@ -1613,7 +1634,11 @@ int mlx4_ib_create_qp(struct ib_qp *ibqp, struct ib_qp_init_attr *init_attr,
 			init_attr->create_flags &= ~MLX4_IB_QP_CREATE_ROCE_V2_GSI;
 		}
 	}
+<<<<<<< HEAD
 	return 0;
+=======
+	return &qp->ibqp;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int _mlx4_ib_destroy_qp(struct ib_qp *qp, struct ib_udata *udata)
@@ -1641,6 +1666,11 @@ static int _mlx4_ib_destroy_qp(struct ib_qp *qp, struct ib_udata *udata)
 	}
 
 	kfree(mqp->sqp);
+<<<<<<< HEAD
+=======
+	kfree(mqp);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

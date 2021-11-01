@@ -1547,7 +1547,10 @@ config CRYPTO_SERPENT_AVX2_X86_64
 config CRYPTO_SM4
 	tristate "SM4 cipher algorithm"
 	select CRYPTO_ALGAPI
+<<<<<<< HEAD
 	select CRYPTO_LIB_SM4
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  SM4 cipher algorithms (OSCCA GB/T 32907-2016).
 
@@ -1570,6 +1573,7 @@ config CRYPTO_SM4
 
 	  If unsure, say N.
 
+<<<<<<< HEAD
 config CRYPTO_SM4_AESNI_AVX_X86_64
 	tristate "SM4 cipher algorithm (x86_64/AES-NI/AVX)"
 	depends on X86 && 64BIT
@@ -1613,6 +1617,8 @@ config CRYPTO_SM4_AESNI_AVX2_X86_64
 
 	  If unsure, say N.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 config CRYPTO_TEA
 	tristate "TEA, XTEA and XETA cipher algorithms"
 	depends on CRYPTO_USER_API_ENABLE_OBSOLETE
@@ -1812,7 +1818,11 @@ config CRYPTO_DRBG_HMAC
 	bool
 	default y
 	select CRYPTO_HMAC
+<<<<<<< HEAD
 	select CRYPTO_SHA512
+=======
+	select CRYPTO_SHA256
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config CRYPTO_DRBG_HASH
 	bool "Enable Hash DRBG"

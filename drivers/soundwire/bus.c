@@ -390,10 +390,14 @@ sdw_nread_no_pm(struct sdw_slave *slave, u32 addr, size_t count, u8 *val)
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 	ret = sdw_transfer(slave->bus, &msg);
 	if (slave->is_mockup_device)
 		ret = 0;
 	return ret;
+=======
+	return sdw_transfer(slave->bus, &msg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int
@@ -407,10 +411,14 @@ sdw_nwrite_no_pm(struct sdw_slave *slave, u32 addr, size_t count, const u8 *val)
 	if (ret < 0)
 		return ret;
 
+<<<<<<< HEAD
 	ret = sdw_transfer(slave->bus, &msg);
 	if (slave->is_mockup_device)
 		ret = 0;
 	return ret;
+=======
+	return sdw_transfer(slave->bus, &msg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int sdw_write_no_pm(struct sdw_slave *slave, u32 addr, u8 value)
@@ -902,8 +910,12 @@ static int sdw_bus_wait_for_clk_prep_deprep(struct sdw_bus *bus, u16 dev_num)
 	do {
 		val = sdw_bread_no_pm(bus, dev_num, SDW_SCP_STAT);
 		if (val < 0) {
+<<<<<<< HEAD
 			if (val != -ENODATA)
 				dev_err(bus->dev, "SDW_SCP_STAT bread failed:%d\n", val);
+=======
+			dev_err(bus->dev, "SDW_SCP_STAT bread failed:%d\n", val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return val;
 		}
 		val &= SDW_SCP_STAT_CLK_STP_NF;
@@ -1860,7 +1872,10 @@ void sdw_clear_slave_status(struct sdw_bus *bus, u32 request)
 		if (slave->status != SDW_SLAVE_UNATTACHED) {
 			sdw_modify_slave_status(slave, SDW_SLAVE_UNATTACHED);
 			slave->first_interrupt_done = false;
+<<<<<<< HEAD
 			sdw_update_slave_status(slave, SDW_SLAVE_UNATTACHED);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 
 		/* keep track of request, used in pm_runtime resume */

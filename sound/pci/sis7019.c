@@ -1007,10 +1007,23 @@ static int sis_mixer_create(struct sis7019 *sis)
 	return rc;
 }
 
+<<<<<<< HEAD
 static void sis_chip_free(struct snd_card *card)
 {
 	struct sis7019 *sis = card->private_data;
 
+=======
+static void sis_free_suspend(struct sis7019 *sis)
+{
+	int i;
+
+	for (i = 0; i < SIS_SUSPEND_PAGES; i++)
+		kfree(sis->suspend_state[i]);
+}
+
+static int sis_chip_free(struct sis7019 *sis)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Reset the chip, and disable all interrputs.
 	 */
 	outl(SIS_GCR_SOFTWARE_RESET, sis->ioport + SIS_GCR);
@@ -1022,6 +1035,21 @@ static void sis_chip_free(struct snd_card *card)
 	 */
 	if (sis->irq >= 0)
 		free_irq(sis->irq, sis);
+<<<<<<< HEAD
+=======
+
+	iounmap(sis->ioaddr);
+	pci_release_regions(sis->pci);
+	pci_disable_device(sis->pci);
+	sis_free_suspend(sis);
+	return 0;
+}
+
+static int sis_dev_free(struct snd_device *dev)
+{
+	struct sis7019 *sis = dev->device_data;
+	return sis_chip_free(sis);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int sis_chip_init(struct sis7019 *sis)
@@ -1247,8 +1275,12 @@ static int sis_alloc_suspend(struct sis7019 *sis)
 	 * buffer.
 	 */
 	for (i = 0; i < SIS_SUSPEND_PAGES; i++) {
+<<<<<<< HEAD
 		sis->suspend_state[i] = devm_kmalloc(&sis->pci->dev, 4096,
 						     GFP_KERNEL);
+=======
+		sis->suspend_state[i] = kmalloc(4096, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!sis->suspend_state[i])
 			return -ENOMEM;
 	}
@@ -1262,19 +1294,38 @@ static int sis_chip_create(struct snd_card *card,
 {
 	struct sis7019 *sis = card->private_data;
 	struct voice *voice;
+<<<<<<< HEAD
 	int rc;
 	int i;
 
 	rc = pcim_enable_device(pci);
 	if (rc)
 		return rc;
+=======
+	static const struct snd_device_ops ops = {
+		.dev_free = sis_dev_free,
+	};
+	int rc;
+	int i;
+
+	rc = pci_enable_device(pci);
+	if (rc)
+		goto error_out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rc = dma_set_mask(&pci->dev, DMA_BIT_MASK(30));
 	if (rc < 0) {
 		dev_err(&pci->dev, "architecture does not support 30-bit PCI busmaster DMA");
+<<<<<<< HEAD
 		return -ENXIO;
 	}
 
+=======
+		goto error_out_enabled;
+	}
+
+	memset(sis, 0, sizeof(*sis));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_init(&sis->ac97_mutex);
 	spin_lock_init(&sis->voice_lock);
 	sis->card = card;
@@ -1285,6 +1336,7 @@ static int sis_chip_create(struct snd_card *card,
 	rc = pci_request_regions(pci, "SiS7019");
 	if (rc) {
 		dev_err(&pci->dev, "unable request regions\n");
+<<<<<<< HEAD
 		return rc;
 	}
 
@@ -1292,24 +1344,46 @@ static int sis_chip_create(struct snd_card *card,
 	if (!sis->ioaddr) {
 		dev_err(&pci->dev, "unable to remap MMIO, aborting\n");
 		return -EIO;
+=======
+		goto error_out_enabled;
+	}
+
+	rc = -EIO;
+	sis->ioaddr = ioremap(pci_resource_start(pci, 1), 0x4000);
+	if (!sis->ioaddr) {
+		dev_err(&pci->dev, "unable to remap MMIO, aborting\n");
+		goto error_out_cleanup;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	rc = sis_alloc_suspend(sis);
 	if (rc < 0) {
 		dev_err(&pci->dev, "unable to allocate state storage\n");
+<<<<<<< HEAD
 		return rc;
+=======
+		goto error_out_cleanup;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	rc = sis_chip_init(sis);
 	if (rc)
+<<<<<<< HEAD
 		return rc;
 	card->private_free = sis_chip_free;
+=======
+		goto error_out_cleanup;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rc = request_irq(pci->irq, sis_interrupt, IRQF_SHARED, KBUILD_MODNAME,
 			 sis);
 	if (rc) {
 		dev_err(&pci->dev, "unable to allocate irq %d\n", sis->irq);
+<<<<<<< HEAD
 		return rc;
+=======
+		goto error_out_cleanup;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	sis->irq = pci->irq;
@@ -1328,7 +1402,24 @@ static int sis_chip_create(struct snd_card *card,
 	voice->num = SIS_CAPTURE_CHAN_AC97_PCM_IN;
 	voice->ctrl_base = SIS_CAPTURE_DMA_ADDR(sis->ioaddr, voice->num);
 
+<<<<<<< HEAD
 	return 0;
+=======
+	rc = snd_device_new(card, SNDRV_DEV_LOWLEVEL, sis, &ops);
+	if (rc)
+		goto error_out_cleanup;
+
+	return 0;
+
+error_out_cleanup:
+	sis_chip_free(sis);
+
+error_out_enabled:
+	pci_disable_device(pci);
+
+error_out:
+	return rc;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int snd_sis7019_probe(struct pci_dev *pci,
@@ -1338,8 +1429,14 @@ static int snd_sis7019_probe(struct pci_dev *pci,
 	struct sis7019 *sis;
 	int rc;
 
+<<<<<<< HEAD
 	if (!enable)
 		return -ENOENT;
+=======
+	rc = -ENOENT;
+	if (!enable)
+		goto error_out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The user can specify which codecs should be present so that we
 	 * can wait for them to show up if they are slow to recover from
@@ -1355,23 +1452,39 @@ static int snd_sis7019_probe(struct pci_dev *pci,
 	rc = snd_card_new(&pci->dev, index, id, THIS_MODULE,
 			  sizeof(*sis), &card);
 	if (rc < 0)
+<<<<<<< HEAD
 		return rc;
+=======
+		goto error_out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	strcpy(card->driver, "SiS7019");
 	strcpy(card->shortname, "SiS7019");
 	rc = sis_chip_create(card, pci);
 	if (rc)
+<<<<<<< HEAD
 		return rc;
+=======
+		goto card_error_out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sis = card->private_data;
 
 	rc = sis_mixer_create(sis);
 	if (rc)
+<<<<<<< HEAD
 		return rc;
 
 	rc = sis_pcm_create(sis);
 	if (rc)
 		return rc;
+=======
+		goto card_error_out;
+
+	rc = sis_pcm_create(sis);
+	if (rc)
+		goto card_error_out;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	snprintf(card->longname, sizeof(card->longname),
 			"%s Audio Accelerator with %s at 0x%lx, irq %d",
@@ -1380,16 +1493,38 @@ static int snd_sis7019_probe(struct pci_dev *pci,
 
 	rc = snd_card_register(card);
 	if (rc)
+<<<<<<< HEAD
 		return rc;
 
 	pci_set_drvdata(pci, card);
 	return 0;
+=======
+		goto card_error_out;
+
+	pci_set_drvdata(pci, card);
+	return 0;
+
+card_error_out:
+	snd_card_free(card);
+
+error_out:
+	return rc;
+}
+
+static void snd_sis7019_remove(struct pci_dev *pci)
+{
+	snd_card_free(pci_get_drvdata(pci));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct pci_driver sis7019_driver = {
 	.name = KBUILD_MODNAME,
 	.id_table = snd_sis7019_ids,
 	.probe = snd_sis7019_probe,
+<<<<<<< HEAD
+=======
+	.remove = snd_sis7019_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.driver = {
 		.pm = SIS_PM_OPS,
 	},

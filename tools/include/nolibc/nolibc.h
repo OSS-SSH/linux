@@ -1031,7 +1031,11 @@ struct sys_stat_struct {
  *     scall32-o32.S in the kernel sources.
  *   - the system call is performed by calling "syscall"
  *   - syscall return comes in v0, and register a3 needs to be checked to know
+<<<<<<< HEAD
  *     if an error occurred, in which case errno is in v0.
+=======
+ *     if an error occured, in which case errno is in v0.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *   - the arguments are cast to long and assigned into the target registers
  *     which are then simply passed as registers to the asm code, so that we
  *     don't have to experience issues with register constraints.
@@ -2244,6 +2248,7 @@ unsigned int sleep(unsigned int seconds)
 }
 
 static __attribute__((unused))
+<<<<<<< HEAD
 int msleep(unsigned int msecs)
 {
 	struct timeval my_timeval = { msecs / 1000, (msecs % 1000) * 1000 };
@@ -2257,6 +2262,8 @@ int msleep(unsigned int msecs)
 }
 
 static __attribute__((unused))
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int stat(const char *path, struct stat *buf)
 {
 	int ret = sys_stat(path, buf);

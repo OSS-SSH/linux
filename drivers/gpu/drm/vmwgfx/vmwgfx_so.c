@@ -539,8 +539,12 @@ const SVGACOTableType vmw_so_cotables[] = {
 	[vmw_so_ds] = SVGA_COTABLE_DEPTHSTENCIL,
 	[vmw_so_rs] = SVGA_COTABLE_RASTERIZERSTATE,
 	[vmw_so_ss] = SVGA_COTABLE_SAMPLER,
+<<<<<<< HEAD
 	[vmw_so_so] = SVGA_COTABLE_STREAMOUTPUT,
 	[vmw_so_max]= SVGA_COTABLE_MAX
+=======
+	[vmw_so_so] = SVGA_COTABLE_STREAMOUTPUT
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 

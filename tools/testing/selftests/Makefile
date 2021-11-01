@@ -35,11 +35,17 @@ TARGETS += memory-hotplug
 TARGETS += mincore
 TARGETS += mount
 TARGETS += mount_setattr
+<<<<<<< HEAD
 TARGETS += move_mount_set_group
 TARGETS += mqueue
 TARGETS += nci
 TARGETS += net
 TARGETS += net/af_unix
+=======
+TARGETS += mqueue
+TARGETS += nci
+TARGETS += net
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 TARGETS += net/forwarding
 TARGETS += net/mptcp
 TARGETS += netfilter

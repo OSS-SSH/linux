@@ -68,7 +68,10 @@ typedef int drm_ioctl_compat_t(struct file *filp, unsigned int cmd,
 			       unsigned long arg);
 
 #define DRM_IOCTL_NR(n)                _IOC_NR(n)
+<<<<<<< HEAD
 #define DRM_IOCTL_TYPE(n)              _IOC_TYPE(n)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define DRM_MAJOR       226
 
 /**

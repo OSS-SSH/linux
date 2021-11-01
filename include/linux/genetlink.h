@@ -8,11 +8,40 @@
 /* All generic netlink requests are serialized by a global lock.  */
 extern void genl_lock(void);
 extern void genl_unlock(void);
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_LOCKDEP
+extern bool lockdep_genl_is_held(void);
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* for synchronisation between af_netlink and genetlink */
 extern atomic_t genl_sk_destructing_cnt;
 extern wait_queue_head_t genl_sk_destructing_waitq;
 
+<<<<<<< HEAD
+=======
+/**
+ * rcu_dereference_genl - rcu_dereference with debug checking
+ * @p: The pointer to read, prior to dereferencing
+ *
+ * Do an rcu_dereference(p), but check caller either holds rcu_read_lock()
+ * or genl mutex. Note : Please prefer genl_dereference() or rcu_dereference()
+ */
+#define rcu_dereference_genl(p)					\
+	rcu_dereference_check(p, lockdep_genl_is_held())
+
+/**
+ * genl_dereference - fetch RCU pointer when updates are prevented by genl mutex
+ * @p: The pointer to read, prior to dereferencing
+ *
+ * Return the value of the specified RCU-protected pointer, but omit
+ * the READ_ONCE(), because caller holds genl mutex.
+ */
+#define genl_dereference(p)					\
+	rcu_dereference_protected(p, lockdep_genl_is_held())
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define MODULE_ALIAS_GENL_FAMILY(family)\
  MODULE_ALIAS_NET_PF_PROTO_NAME(PF_NETLINK, NETLINK_GENERIC, "-family-" family)
 

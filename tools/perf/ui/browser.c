@@ -757,16 +757,27 @@ void __ui_browser__line_arrow(struct ui_browser *browser, unsigned int column,
 }
 
 void ui_browser__mark_fused(struct ui_browser *browser, unsigned int column,
+<<<<<<< HEAD
 			    unsigned int row, int diff, bool arrow_down)
 {
 	int end_row;
 
 	if (diff <= 0)
+=======
+			    unsigned int row, bool arrow_down)
+{
+	unsigned int end_row;
+
+	if (row >= browser->top_idx)
+		end_row = row - browser->top_idx;
+	else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	SLsmg_set_char_set(1);
 
 	if (arrow_down) {
+<<<<<<< HEAD
 		if (row + diff <= browser->top_idx)
 			return;
 
@@ -791,6 +802,15 @@ void ui_browser__mark_fused(struct ui_browser *browser, unsigned int column,
 			return;
 
 		end_row = row - browser->top_idx;
+=======
+		ui_browser__gotorc(browser, end_row, column - 1);
+		SLsmg_write_char(SLSMG_ULCORN_CHAR);
+		ui_browser__gotorc(browser, end_row, column);
+		SLsmg_draw_hline(2);
+		ui_browser__gotorc(browser, end_row + 1, column - 1);
+		SLsmg_write_char(SLSMG_LTEE_CHAR);
+	} else {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ui_browser__gotorc(browser, end_row, column - 1);
 		SLsmg_write_char(SLSMG_LTEE_CHAR);
 		ui_browser__gotorc(browser, end_row, column);

@@ -218,6 +218,10 @@ int amdgpu_vce_sw_fini(struct amdgpu_device *adev)
 	if (adev->vce.vcpu_bo == NULL)
 		return 0;
 
+<<<<<<< HEAD
+=======
+	cancel_delayed_work_sync(&adev->vce.idle_work);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_sched_entity_destroy(&adev->vce.entity);
 
 	amdgpu_bo_free_kernel(&adev->vce.vcpu_bo, &adev->vce.gpu_addr,

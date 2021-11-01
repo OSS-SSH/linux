@@ -43,6 +43,10 @@ static __maybe_unused const struct st_sensors_platform_data default_press_pdata 
 
 #ifdef CONFIG_IIO_BUFFER
 int st_press_allocate_ring(struct iio_dev *indio_dev);
+<<<<<<< HEAD
+=======
+void st_press_deallocate_ring(struct iio_dev *indio_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int st_press_trig_set_state(struct iio_trigger *trig, bool state);
 #define ST_PRESS_TRIGGER_SET_STATE (&st_press_trig_set_state)
 #else /* CONFIG_IIO_BUFFER */
@@ -50,6 +54,13 @@ static inline int st_press_allocate_ring(struct iio_dev *indio_dev)
 {
 	return 0;
 }
+<<<<<<< HEAD
+=======
+
+static inline void st_press_deallocate_ring(struct iio_dev *indio_dev)
+{
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ST_PRESS_TRIGGER_SET_STATE NULL
 #endif /* CONFIG_IIO_BUFFER */
 

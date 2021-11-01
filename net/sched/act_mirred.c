@@ -78,7 +78,12 @@ static void tcf_mirred_release(struct tc_action *a)
 
 	/* last reference to action, no need to lock */
 	dev = rcu_dereference_protected(m->tcfm_dev, 1);
+<<<<<<< HEAD
 	dev_put(dev);
+=======
+	if (dev)
+		dev_put(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct nla_policy mirred_policy[TCA_MIRRED_MAX + 1] = {
@@ -90,11 +95,18 @@ static struct tc_action_ops act_mirred_ops;
 
 static int tcf_mirred_init(struct net *net, struct nlattr *nla,
 			   struct nlattr *est, struct tc_action **a,
+<<<<<<< HEAD
+=======
+			   int ovr, int bind, bool rtnl_held,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   struct tcf_proto *tp,
 			   u32 flags, struct netlink_ext_ack *extack)
 {
 	struct tc_action_net *tn = net_generic(net, mirred_net_id);
+<<<<<<< HEAD
 	bool bind = flags & TCA_ACT_FLAGS_BIND;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nlattr *tb[TCA_MIRRED_MAX + 1];
 	struct tcf_chain *goto_ch = NULL;
 	bool mac_header_xmit = false;
@@ -154,7 +166,11 @@ static int tcf_mirred_init(struct net *net, struct nlattr *nla,
 			return ret;
 		}
 		ret = ACT_P_CREATED;
+<<<<<<< HEAD
 	} else if (!(flags & TCA_ACT_FLAGS_REPLACE)) {
+=======
+	} else if (!ovr) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		tcf_idr_release(*a, bind);
 		return -EEXIST;
 	}
@@ -179,7 +195,12 @@ static int tcf_mirred_init(struct net *net, struct nlattr *nla,
 		mac_header_xmit = dev_is_mac_header_xmit(dev);
 		dev = rcu_replace_pointer(m->tcfm_dev, dev,
 					  lockdep_is_held(&m->tcf_lock));
+<<<<<<< HEAD
 		dev_put(dev);
+=======
+		if (dev)
+			dev_put(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		m->tcfm_mac_header_xmit = mac_header_xmit;
 	}
 	goto_ch = tcf_action_set_ctrlact(*a, parm->action, goto_ch);
@@ -271,9 +292,12 @@ static int tcf_mirred_act(struct sk_buff *skb, const struct tc_action *a,
 			goto out;
 	}
 
+<<<<<<< HEAD
 	/* All mirred/redirected skbs should clear previous ct info */
 	nf_reset_ct(skb2);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	want_ingress = tcf_mirred_act_wants_ingress(m_eaction);
 
 	expects_nh = want_ingress || !m_mac_header_xmit;

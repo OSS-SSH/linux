@@ -41,7 +41,10 @@ static u32 xive_queue_shift;
 static u32 xive_pool_vps = XIVE_INVALID_VP;
 static struct kmem_cache *xive_provision_cache;
 static bool xive_has_single_esc;
+<<<<<<< HEAD
 static bool xive_has_save_restore;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int xive_native_populate_irq_data(u32 hw_irq, struct xive_irq_data *data)
 {
@@ -589,9 +592,12 @@ bool __init xive_native_init(void)
 	if (of_get_property(np, "single-escalation-support", NULL) != NULL)
 		xive_has_single_esc = true;
 
+<<<<<<< HEAD
 	if (of_get_property(np, "vp-save-restore", NULL))
 		xive_has_save_restore = true;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Configure Thread Management areas for KVM */
 	for_each_possible_cpu(cpu)
 		kvmppc_set_xive_tima(cpu, r.start, tima);
@@ -756,12 +762,15 @@ bool xive_native_has_single_escalation(void)
 }
 EXPORT_SYMBOL_GPL(xive_native_has_single_escalation);
 
+<<<<<<< HEAD
 bool xive_native_has_save_restore(void)
 {
 	return xive_has_save_restore;
 }
 EXPORT_SYMBOL_GPL(xive_native_has_save_restore);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int xive_native_get_queue_info(u32 vp_id, u32 prio,
 			       u64 *out_qpage,
 			       u64 *out_qsize,

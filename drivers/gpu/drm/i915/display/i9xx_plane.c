@@ -912,7 +912,11 @@ intel_primary_plane_create(struct drm_i915_private *dev_priv, enum pipe pipe)
 	zpos = 0;
 	drm_plane_create_zpos_immutable_property(&plane->base, zpos);
 
+<<<<<<< HEAD
 	intel_plane_helper_add(plane);
+=======
+	drm_plane_helper_add(&plane->base, &intel_plane_helper_funcs);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return plane;
 

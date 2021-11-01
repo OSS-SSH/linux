@@ -24,7 +24,10 @@ struct msm_dsi_phy_ops {
 	void (*disable)(struct msm_dsi_phy *phy);
 	void (*save_pll_state)(struct msm_dsi_phy *phy);
 	int (*restore_pll_state)(struct msm_dsi_phy *phy);
+<<<<<<< HEAD
 	bool (*set_continuous_clock)(struct msm_dsi_phy *phy, bool enable);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct msm_dsi_phy_cfg {
@@ -52,7 +55,10 @@ extern const struct msm_dsi_phy_cfg dsi_phy_10nm_cfgs;
 extern const struct msm_dsi_phy_cfg dsi_phy_10nm_8998_cfgs;
 extern const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs;
 extern const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs;
+<<<<<<< HEAD
 extern const struct msm_dsi_phy_cfg dsi_phy_7nm_7280_cfgs;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct msm_dsi_dphy_timing {
 	u32 clk_zero;
@@ -101,7 +107,10 @@ struct msm_dsi_phy {
 
 	enum msm_dsi_phy_usecase usecase;
 	bool regulator_ldo_mode;
+<<<<<<< HEAD
 	bool cphy_mode;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct clk_hw *vco_hw;
 	bool pll_on;
@@ -122,7 +131,10 @@ int msm_dsi_dphy_timing_calc_v3(struct msm_dsi_dphy_timing *timing,
 				struct msm_dsi_phy_clk_request *clk_req);
 int msm_dsi_dphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
 				struct msm_dsi_phy_clk_request *clk_req);
+<<<<<<< HEAD
 int msm_dsi_cphy_timing_calc_v4(struct msm_dsi_dphy_timing *timing,
 				struct msm_dsi_phy_clk_request *clk_req);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* __DSI_PHY_H__ */

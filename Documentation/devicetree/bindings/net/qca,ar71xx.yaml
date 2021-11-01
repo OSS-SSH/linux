@@ -101,6 +101,11 @@ examples:
 
         phy-mode = "gmii";
 
+<<<<<<< HEAD
+=======
+        status = "disabled";
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         fixed-link {
             speed = <1000>;
             full-duplex;
@@ -146,24 +151,44 @@ examples:
                         reg = <0x1>;
                         phy-handle = <&phy_port0>;
                         phy-mode = "internal";
+<<<<<<< HEAD
+=======
+
+                        status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                     };
 
                     switch_port2: port@2 {
                         reg = <0x2>;
                         phy-handle = <&phy_port1>;
                         phy-mode = "internal";
+<<<<<<< HEAD
+=======
+
+                        status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                     };
 
                     switch_port3: port@3 {
                         reg = <0x3>;
                         phy-handle = <&phy_port2>;
                         phy-mode = "internal";
+<<<<<<< HEAD
+=======
+
+                        status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                     };
 
                     switch_port4: port@4 {
                         reg = <0x4>;
                         phy-handle = <&phy_port3>;
                         phy-mode = "internal";
+<<<<<<< HEAD
+=======
+
+                        status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                     };
                 };
 
@@ -173,6 +198,7 @@ examples:
 
                     interrupt-parent = <&switch10>;
 
+<<<<<<< HEAD
                     phy_port0: ethernet-phy@0 {
                         reg = <0x0>;
                         interrupts = <0>;
@@ -196,6 +222,36 @@ examples:
                     phy_port4: ethernet-phy@4 {
                         reg = <0x4>;
                         interrupts = <0>;
+=======
+                    phy_port0: phy@0 {
+                        reg = <0x0>;
+                        interrupts = <0>;
+                        status = "disabled";
+                    };
+
+                    phy_port1: phy@1 {
+                        reg = <0x1>;
+                        interrupts = <0>;
+                        status = "disabled";
+                    };
+
+                    phy_port2: phy@2 {
+                        reg = <0x2>;
+                        interrupts = <0>;
+                        status = "disabled";
+                    };
+
+                    phy_port3: phy@3 {
+                        reg = <0x3>;
+                        interrupts = <0>;
+                        status = "disabled";
+                    };
+
+                    phy_port4: phy@4 {
+                        reg = <0x4>;
+                        interrupts = <0>;
+                        status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                     };
                 };
             };

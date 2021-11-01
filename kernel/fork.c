@@ -446,7 +446,10 @@ void put_task_stack(struct task_struct *tsk)
 
 void free_task(struct task_struct *tsk)
 {
+<<<<<<< HEAD
 	release_user_cpus_ptr(tsk);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	scs_release(tsk);
 
 #ifndef CONFIG_THREAD_INFO_IN_TASK
@@ -471,6 +474,7 @@ void free_task(struct task_struct *tsk)
 }
 EXPORT_SYMBOL(free_task);
 
+<<<<<<< HEAD
 static void dup_mm_exe_file(struct mm_struct *mm, struct mm_struct *oldmm)
 {
 	struct file *exe_file;
@@ -485,6 +489,8 @@ static void dup_mm_exe_file(struct mm_struct *mm, struct mm_struct *oldmm)
 		pr_warn_once("deny_write_access() failed in %s\n", __func__);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_MMU
 static __latent_entropy int dup_mmap(struct mm_struct *mm,
 					struct mm_struct *oldmm)
@@ -508,7 +514,11 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
 	mmap_write_lock_nested(mm, SINGLE_DEPTH_NESTING);
 
 	/* No ordering required: file already has been exposed. */
+<<<<<<< HEAD
 	dup_mm_exe_file(mm, oldmm);
+=======
+	RCU_INIT_POINTER(mm->exe_file, get_mm_exe_file(oldmm));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mm->total_vm = oldmm->total_vm;
 	mm->data_vm = oldmm->data_vm;
@@ -571,9 +581,18 @@ static __latent_entropy int dup_mmap(struct mm_struct *mm,
 		tmp->vm_flags &= ~(VM_LOCKED | VM_LOCKONFAULT);
 		file = tmp->vm_file;
 		if (file) {
+<<<<<<< HEAD
 			struct address_space *mapping = file->f_mapping;
 
 			get_file(file);
+=======
+			struct inode *inode = file_inode(file);
+			struct address_space *mapping = file->f_mapping;
+
+			get_file(file);
+			if (tmp->vm_flags & VM_DENYWRITE)
+				put_write_access(inode);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			i_mmap_lock_write(mapping);
 			if (tmp->vm_flags & VM_SHARED)
 				mapping_allow_writable(mapping);
@@ -651,7 +670,11 @@ static inline void mm_free_pgd(struct mm_struct *mm)
 static int dup_mmap(struct mm_struct *mm, struct mm_struct *oldmm)
 {
 	mmap_write_lock(oldmm);
+<<<<<<< HEAD
 	dup_mm_exe_file(mm, oldmm);
+=======
+	RCU_INIT_POINTER(mm->exe_file, get_mm_exe_file(oldmm));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mmap_write_unlock(oldmm);
 	return 0;
 }
@@ -840,10 +863,17 @@ void __init fork_init(void)
 	for (i = 0; i < MAX_PER_NAMESPACE_UCOUNTS; i++)
 		init_user_ns.ucount_max[i] = max_threads/2;
 
+<<<<<<< HEAD
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_NPROC,      RLIM_INFINITY);
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MSGQUEUE,   RLIM_INFINITY);
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_SIGPENDING, RLIM_INFINITY);
 	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MEMLOCK,    RLIM_INFINITY);
+=======
+	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_NPROC, task_rlimit(&init_task, RLIMIT_NPROC));
+	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MSGQUEUE, task_rlimit(&init_task, RLIMIT_MSGQUEUE));
+	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_SIGPENDING, task_rlimit(&init_task, RLIMIT_SIGPENDING));
+	set_rlimit_ucount_max(&init_user_ns, UCOUNT_RLIMIT_MEMLOCK, task_rlimit(&init_task, RLIMIT_MEMLOCK));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_VMAP_STACK
 	cpuhp_setup_state(CPUHP_BP_PREPARE_DYN, "fork:vm_stack_cache",
@@ -936,7 +966,10 @@ static struct task_struct *dup_task_struct(struct task_struct *orig, int node)
 #endif
 	if (orig->cpus_ptr == &orig->cpus_mask)
 		tsk->cpus_ptr = &tsk->cpus_mask;
+<<<<<<< HEAD
 	dup_user_cpus_ptr(tsk, orig, node);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * One for the user space visible state that goes away when reaped.
@@ -1063,7 +1096,10 @@ static struct mm_struct *mm_init(struct mm_struct *mm, struct task_struct *p,
 	mm->pmd_huge_pte = NULL;
 #endif
 	mm_init_uprobes_state(mm);
+<<<<<<< HEAD
 	hugetlb_count_init(mm);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (current->mm) {
 		mm->flags = current->mm->flags & MMF_INIT_MASK;
@@ -1162,11 +1198,19 @@ void mmput_async(struct mm_struct *mm)
  *
  * Main users are mmput() and sys_execve(). Callers prevent concurrent
  * invocations: in mmput() nobody alive left, in execve task is single
+<<<<<<< HEAD
  * threaded.
  *
  * Can only fail if new_exe_file != NULL.
  */
 int set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
+=======
+ * threaded. sys_prctl(PR_SET_MM_MAP/EXE_FILE) also needs to set the
+ * mm->exe_file, but does so without using set_mm_exe_file() in order
+ * to avoid the need for any locks.
+ */
+void set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct file *old_exe_file;
 
@@ -1177,6 +1221,7 @@ int set_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
 	 */
 	old_exe_file = rcu_dereference_raw(mm->exe_file);
 
+<<<<<<< HEAD
 	if (new_exe_file) {
 		/*
 		 * We expect the caller (i.e., sys_execve) to already denied
@@ -1244,6 +1289,13 @@ int replace_mm_exe_file(struct mm_struct *mm, struct file *new_exe_file)
 		mmap_read_unlock(mm);
 	}
 	return 0;
+=======
+	if (new_exe_file)
+		get_file(new_exe_file);
+	rcu_assign_pointer(mm->exe_file, new_exe_file);
+	if (old_exe_file)
+		fput(old_exe_file);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1263,6 +1315,10 @@ struct file *get_mm_exe_file(struct mm_struct *mm)
 	rcu_read_unlock();
 	return exe_file;
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL(get_mm_exe_file);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * get_task_exe_file - acquire a reference to the task's executable file
@@ -1285,6 +1341,10 @@ struct file *get_task_exe_file(struct task_struct *task)
 	task_unlock(task);
 	return exe_file;
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL(get_task_exe_file);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * get_task_mm - acquire a reference to the task's mm
@@ -2157,7 +2217,10 @@ static __latent_entropy struct task_struct *copy_process(
 #endif
 #ifdef CONFIG_BPF_SYSCALL
 	RCU_INIT_POINTER(p->bpf_storage, NULL);
+<<<<<<< HEAD
 	p->bpf_ctx = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 	/* Perform scheduler related setup. Assign this task to a CPU. */

@@ -218,11 +218,17 @@ static void ext4_check_bdev_write_error(struct super_block *sb)
 }
 
 int __ext4_journal_get_write_access(const char *where, unsigned int line,
+<<<<<<< HEAD
 				    handle_t *handle, struct super_block *sb,
 				    struct buffer_head *bh,
 				    enum ext4_journal_trigger_type trigger_type)
 {
 	int err;
+=======
+				    handle_t *handle, struct buffer_head *bh)
+{
+	int err = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	might_sleep();
 
@@ -231,6 +237,7 @@ int __ext4_journal_get_write_access(const char *where, unsigned int line,
 
 	if (ext4_handle_valid(handle)) {
 		err = jbd2_journal_get_write_access(handle, bh);
+<<<<<<< HEAD
 		if (err) {
 			ext4_journal_abort_handle(where, line, __func__, bh,
 						  handle, err);
@@ -243,6 +250,13 @@ int __ext4_journal_get_write_access(const char *where, unsigned int line,
 	jbd2_journal_set_triggers(bh,
 		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
 	return 0;
+=======
+		if (err)
+			ext4_journal_abort_handle(where, line, __func__, bh,
+						  handle, err);
+	}
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -253,6 +267,12 @@ int __ext4_journal_get_write_access(const char *where, unsigned int line,
  * "bh" may be NULL: a metadata block may have been freed from memory
  * but there may still be a record of it in the journal, and that record
  * still needs to be revoked.
+<<<<<<< HEAD
+=======
+ *
+ * If the handle isn't valid we're not journaling, but we still need to
+ * call into ext4_journal_revoke() to put the buffer head.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
 		  int is_metadata, struct inode *inode,
@@ -310,6 +330,7 @@ int __ext4_forget(const char *where, unsigned int line, handle_t *handle,
 }
 
 int __ext4_journal_get_create_access(const char *where, unsigned int line,
+<<<<<<< HEAD
 				handle_t *handle, struct super_block *sb,
 				struct buffer_head *bh,
 				enum ext4_journal_trigger_type trigger_type)
@@ -331,6 +352,19 @@ int __ext4_journal_get_create_access(const char *where, unsigned int line,
 	jbd2_journal_set_triggers(bh,
 		&EXT4_SB(sb)->s_journal_triggers[trigger_type].tr_triggers);
 	return 0;
+=======
+				handle_t *handle, struct buffer_head *bh)
+{
+	int err = 0;
+
+	if (ext4_handle_valid(handle)) {
+		err = jbd2_journal_get_create_access(handle, bh);
+		if (err)
+			ext4_journal_abort_handle(where, line, __func__,
+						  bh, handle, err);
+	}
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int __ext4_handle_dirty_metadata(const char *where, unsigned int line,

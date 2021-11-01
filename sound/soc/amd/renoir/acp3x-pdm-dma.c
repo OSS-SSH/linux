@@ -242,7 +242,11 @@ static int acp_pdm_dma_hw_params(struct snd_soc_component *component,
 		return -EINVAL;
 	size = params_buffer_bytes(params);
 	period_bytes = params_period_bytes(params);
+<<<<<<< HEAD
 	rtd->dma_addr = substream->runtime->dma_addr;
+=======
+	rtd->dma_addr = substream->dma_buffer.addr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rtd->num_pages = (PAGE_ALIGN(size) >> PAGE_SHIFT);
 	config_acp_dma(rtd, substream->stream);
 	init_pdm_ring_buffer(MEM_WINDOW_START, size, period_bytes,
@@ -291,6 +295,16 @@ static int acp_pdm_dma_new(struct snd_soc_component *component,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static int acp_pdm_dma_mmap(struct snd_soc_component *component,
+			    struct snd_pcm_substream *substream,
+			    struct vm_area_struct *vma)
+{
+	return snd_pcm_lib_default_mmap(substream, vma);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int acp_pdm_dma_close(struct snd_soc_component *component,
 			     struct snd_pcm_substream *substream)
 {
@@ -368,6 +382,10 @@ static const struct snd_soc_component_driver acp_pdm_component = {
 	.close		= acp_pdm_dma_close,
 	.hw_params	= acp_pdm_dma_hw_params,
 	.pointer	= acp_pdm_dma_pointer,
+<<<<<<< HEAD
+=======
+	.mmap		= acp_pdm_dma_mmap,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.pcm_construct	= acp_pdm_dma_new,
 };
 

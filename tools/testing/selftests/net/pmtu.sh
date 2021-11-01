@@ -118,6 +118,7 @@
 #	below for IPv6 doesn't apply here, because, on IPv4, administrative MTU
 #	changes alone won't affect PMTU
 #
+<<<<<<< HEAD
 # - pmtu_vti4_udp_exception
 #       Same as pmtu_vti4_exception, but using ESP-in-UDP
 #
@@ -128,6 +129,8 @@
 #	lower MTU on second part of routed environment and check that exception
 #	is created with the expected PMTU.
 #
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # - pmtu_vti6_exception
 #	Set up vti6 tunnel on top of veth, with xfrm states and policies, in two
 #	namespaces with matching endpoints. Check that route exception is
@@ -135,6 +138,7 @@
 #	decrease and increase MTU of tunnel, checking that route exception PMTU
 #	changes accordingly
 #
+<<<<<<< HEAD
 # - pmtu_vti6_udp_exception
 #       Same as pmtu_vti6_exception, but using ESP-in-UDP
 #
@@ -142,6 +146,8 @@
 #	Same as pmtu_vti6_udp_routed_exception but with routing between vti
 #	endpoints
 #
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # - pmtu_vti4_default_mtu
 #	Set up vti4 tunnel on top of veth, in two namespaces with matching
 #	endpoints. Check that MTU assigned to vti interface is the MTU of the
@@ -241,10 +247,13 @@ tests="
 	pmtu_ipv6_ipv6_exception	IPv6 over IPv6: PMTU exceptions		1
 	pmtu_vti6_exception		vti6: PMTU exceptions			0
 	pmtu_vti4_exception		vti4: PMTU exceptions			0
+<<<<<<< HEAD
 	pmtu_vti6_udp_exception		vti6: PMTU exceptions (ESP-in-UDP)	0
 	pmtu_vti4_udp_exception		vti4: PMTU exceptions (ESP-in-UDP)	0
 	pmtu_vti6_udp_routed_exception	vti6: PMTU exceptions, routed (ESP-in-UDP)	0
 	pmtu_vti4_udp_routed_exception	vti4: PMTU exceptions, routed (ESP-in-UDP)	0
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pmtu_vti4_default_mtu		vti4: default MTU assignment		0
 	pmtu_vti6_default_mtu		vti6: default MTU assignment		0
 	pmtu_vti4_link_add_mtu		vti4: MTU setting on link creation	0
@@ -267,6 +276,10 @@ ns_b="ip netns exec ${NS_B}"
 ns_c="ip netns exec ${NS_C}"
 ns_r1="ip netns exec ${NS_R1}"
 ns_r2="ip netns exec ${NS_R2}"
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # Addressing and routing for tests with routers: four network segments, with
 # index SEGMENT between 1 and 4, a common prefix (PREFIX4 or PREFIX6) and an
 # identifier ID, which is 1 for hosts (A and B), 2 for routers (R1 and R2).
@@ -299,6 +312,10 @@ routes="
 	A	${prefix6}:${b_r2}::1	${prefix6}:${a_r2}::2
 	B	default			${prefix6}:${b_r1}::2
 "
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 USE_NH="no"
 #	ns	family	nh id	   destination		gateway
 nexthops="
@@ -345,7 +362,10 @@ dummy6_mask="64"
 
 err_buf=
 tcpdump_pids=
+<<<<<<< HEAD
 nettest_pids=
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 err() {
 	err_buf="${err_buf}${1}
@@ -568,6 +588,7 @@ setup_vti6() {
 	setup_vti 6 ${veth6_a_addr} ${veth6_b_addr} ${tunnel6_a_addr} ${tunnel6_b_addr} ${tunnel6_mask}
 }
 
+<<<<<<< HEAD
 setup_vti4routed() {
 	setup_vti 4 ${prefix4}.${a_r1}.1 ${prefix4}.${b_r1}.1 ${tunnel4_a_addr} ${tunnel4_b_addr} ${tunnel4_mask}
 }
@@ -576,6 +597,8 @@ setup_vti6routed() {
 	setup_vti 6 ${prefix6}:${a_r1}::1 ${prefix6}:${b_r1}::1 ${tunnel6_a_addr} ${tunnel6_b_addr} ${tunnel6_mask}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 setup_vxlan_or_geneve() {
 	type="${1}"
 	a_addr="${2}"
@@ -647,6 +670,7 @@ setup_xfrm() {
 	proto=${1}
 	veth_a_addr="${2}"
 	veth_b_addr="${3}"
+<<<<<<< HEAD
 	encap=${4}
 
 	run_cmd ${ns_a} ip -${proto} xfrm state add src ${veth_a_addr} dst ${veth_b_addr} spi 0x1000 proto esp aead 'rfc4106(gcm(aes))' 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f 128 mode tunnel ${encap} || return 1
@@ -656,10 +680,21 @@ setup_xfrm() {
 
 	run_cmd ${ns_b} ip -${proto} xfrm state add src ${veth_a_addr} dst ${veth_b_addr} spi 0x1000 proto esp aead 'rfc4106(gcm(aes))' 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f 128 mode tunnel ${encap}
 	run_cmd ${ns_b} ip -${proto} xfrm state add src ${veth_b_addr} dst ${veth_a_addr} spi 0x1001 proto esp aead 'rfc4106(gcm(aes))' 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f 128 mode tunnel ${encap}
+=======
+
+	run_cmd ${ns_a} ip -${proto} xfrm state add src ${veth_a_addr} dst ${veth_b_addr} spi 0x1000 proto esp aead 'rfc4106(gcm(aes))' 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f 128 mode tunnel || return 1
+	run_cmd ${ns_a} ip -${proto} xfrm state add src ${veth_b_addr} dst ${veth_a_addr} spi 0x1001 proto esp aead 'rfc4106(gcm(aes))' 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f 128 mode tunnel
+	run_cmd ${ns_a} ip -${proto} xfrm policy add dir out mark 10 tmpl src ${veth_a_addr} dst ${veth_b_addr} proto esp mode tunnel
+	run_cmd ${ns_a} ip -${proto} xfrm policy add dir in mark 10 tmpl src ${veth_b_addr} dst ${veth_a_addr} proto esp mode tunnel
+
+	run_cmd ${ns_b} ip -${proto} xfrm state add src ${veth_a_addr} dst ${veth_b_addr} spi 0x1000 proto esp aead 'rfc4106(gcm(aes))' 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f 128 mode tunnel
+	run_cmd ${ns_b} ip -${proto} xfrm state add src ${veth_b_addr} dst ${veth_a_addr} spi 0x1001 proto esp aead 'rfc4106(gcm(aes))' 0x0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f 128 mode tunnel
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	run_cmd ${ns_b} ip -${proto} xfrm policy add dir out mark 10 tmpl src ${veth_b_addr} dst ${veth_a_addr} proto esp mode tunnel
 	run_cmd ${ns_b} ip -${proto} xfrm policy add dir in mark 10 tmpl src ${veth_a_addr} dst ${veth_b_addr} proto esp mode tunnel
 }
 
+<<<<<<< HEAD
 setup_nettest_xfrm() {
 	which nettest >/dev/null
 	if [ $? -ne 0 ]; then
@@ -677,6 +712,8 @@ setup_nettest_xfrm() {
 	nettest_pids="${nettest_pids} $!"
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 setup_xfrm4() {
 	setup_xfrm 4 ${veth4_a_addr} ${veth4_b_addr}
 }
@@ -685,6 +722,7 @@ setup_xfrm6() {
 	setup_xfrm 6 ${veth6_a_addr} ${veth6_b_addr}
 }
 
+<<<<<<< HEAD
 setup_xfrm4udp() {
 	setup_xfrm 4 ${veth4_a_addr} ${veth4_b_addr} "encap espinudp 4500 4500 0.0.0.0"
 	setup_nettest_xfrm 4 4500
@@ -705,6 +743,8 @@ setup_xfrm6udprouted() {
 	setup_nettest_xfrm 6 4500
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 setup_routing_old() {
 	for i in ${routes}; do
 		[ "${ns}" = "" ]	&& ns="${i}"		&& continue
@@ -889,11 +929,14 @@ cleanup() {
 	done
 	tcpdump_pids=
 
+<<<<<<< HEAD
 	for pid in ${nettest_pids}; do
 		kill ${pid}
 	done
 	nettest_pids=
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for n in ${NS_A} ${NS_B} ${NS_C} ${NS_R1} ${NS_R2}; do
 		ip netns del ${n} 2> /dev/null
 	done
@@ -1503,6 +1546,7 @@ test_pmtu_vti6_exception() {
 	return ${fail}
 }
 
+<<<<<<< HEAD
 test_pmtu_vti4_udp_exception() {
 	setup namespaces veth vti4 xfrm4udp || return $ksft_skip
 	trace "${ns_a}" veth_a    "${ns_b}" veth_b \
@@ -1632,6 +1676,8 @@ test_pmtu_vti6_udp_routed_exception() {
 
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 test_pmtu_vti4_default_mtu() {
 	setup namespaces veth vti4 || return $ksft_skip
 

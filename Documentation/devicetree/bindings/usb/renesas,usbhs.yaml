@@ -17,9 +17,13 @@ properties:
           - const: renesas,rza1-usbhs
 
       - items:
+<<<<<<< HEAD
           - enum:
               - renesas,usbhs-r7s9210   # RZ/A2
               - renesas,usbhs-r9a07g044 # RZ/G2{L,LC}
+=======
+          - const: renesas,usbhs-r7s9210 # RZ/A2
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
           - const: renesas,rza2-usbhs
 
       - items:
@@ -61,8 +65,12 @@ properties:
       - description: USB 2.0 clock selector
 
   interrupts:
+<<<<<<< HEAD
     minItems: 1
     maxItems: 4
+=======
+    maxItems: 1
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   renesas,buswait:
     $ref: /schemas/types.yaml#/definitions/uint32
@@ -111,6 +119,7 @@ required:
   - clocks
   - interrupts
 
+<<<<<<< HEAD
 allOf:
   - if:
       properties:
@@ -130,6 +139,8 @@ allOf:
         interrupts:
           maxItems: 1
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 additionalProperties: false
 
 examples:

@@ -1246,9 +1246,12 @@ static int __init mce_amd_init(void)
 	    c->x86_vendor != X86_VENDOR_HYGON)
 		return -ENODEV;
 
+<<<<<<< HEAD
 	if (cpu_feature_enabled(X86_FEATURE_HYPERVISOR))
 		return -ENODEV;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (boot_cpu_has(X86_FEATURE_SMCA)) {
 		xec_mask = 0x3f;
 		goto out;

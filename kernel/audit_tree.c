@@ -593,6 +593,10 @@ static void prune_tree_chunks(struct audit_tree *victim, bool tagged)
 		spin_lock(&hash_lock);
 	}
 	spin_unlock(&hash_lock);
+<<<<<<< HEAD
+=======
+	put_tree(victim);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -601,7 +605,10 @@ static void prune_tree_chunks(struct audit_tree *victim, bool tagged)
 static void prune_one(struct audit_tree *victim)
 {
 	prune_tree_chunks(victim, false);
+<<<<<<< HEAD
 	put_tree(victim);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* trim the uncommitted chunks from tree */

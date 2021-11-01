@@ -128,12 +128,15 @@ properties:
       as a panic indicator.
     type: boolean
 
+<<<<<<< HEAD
   retain-state-shutdown:
     description:
       This property specifies that the LED should not be turned off or changed
       when the system shuts down.
     type: boolean
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   trigger-sources:
     description: |
       List of devices which should be used as a source triggering this LED

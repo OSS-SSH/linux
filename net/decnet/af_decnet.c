@@ -816,7 +816,11 @@ static int dn_auto_bind(struct socket *sock)
 static int dn_confirm_accept(struct sock *sk, long *timeo, gfp_t allocation)
 {
 	struct dn_scp *scp = DN_SK(sk);
+<<<<<<< HEAD
 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+=======
+	DEFINE_WAIT(wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	if (scp->state != DN_CR)
@@ -826,11 +830,19 @@ static int dn_confirm_accept(struct sock *sk, long *timeo, gfp_t allocation)
 	scp->segsize_loc = dst_metric_advmss(__sk_dst_get(sk));
 	dn_send_conn_conf(sk, allocation);
 
+<<<<<<< HEAD
 	add_wait_queue(sk_sleep(sk), &wait);
 	for(;;) {
 		release_sock(sk);
 		if (scp->state == DN_CC)
 			*timeo = wait_woken(&wait, TASK_INTERRUPTIBLE, *timeo);
+=======
+	prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+	for(;;) {
+		release_sock(sk);
+		if (scp->state == DN_CC)
+			*timeo = schedule_timeout(*timeo);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		lock_sock(sk);
 		err = 0;
 		if (scp->state == DN_RUN)
@@ -844,8 +856,14 @@ static int dn_confirm_accept(struct sock *sk, long *timeo, gfp_t allocation)
 		err = -EAGAIN;
 		if (!*timeo)
 			break;
+<<<<<<< HEAD
 	}
 	remove_wait_queue(sk_sleep(sk), &wait);
+=======
+		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+	}
+	finish_wait(sk_sleep(sk), &wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err == 0) {
 		sk->sk_socket->state = SS_CONNECTED;
 	} else if (scp->state != DN_CC) {
@@ -857,7 +875,11 @@ static int dn_confirm_accept(struct sock *sk, long *timeo, gfp_t allocation)
 static int dn_wait_run(struct sock *sk, long *timeo)
 {
 	struct dn_scp *scp = DN_SK(sk);
+<<<<<<< HEAD
 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
+=======
+	DEFINE_WAIT(wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err = 0;
 
 	if (scp->state == DN_RUN)
@@ -866,11 +888,19 @@ static int dn_wait_run(struct sock *sk, long *timeo)
 	if (!*timeo)
 		return -EALREADY;
 
+<<<<<<< HEAD
 	add_wait_queue(sk_sleep(sk), &wait);
 	for(;;) {
 		release_sock(sk);
 		if (scp->state == DN_CI || scp->state == DN_CC)
 			*timeo = wait_woken(&wait, TASK_INTERRUPTIBLE, *timeo);
+=======
+	prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+	for(;;) {
+		release_sock(sk);
+		if (scp->state == DN_CI || scp->state == DN_CC)
+			*timeo = schedule_timeout(*timeo);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		lock_sock(sk);
 		err = 0;
 		if (scp->state == DN_RUN)
@@ -884,8 +914,14 @@ static int dn_wait_run(struct sock *sk, long *timeo)
 		err = -ETIMEDOUT;
 		if (!*timeo)
 			break;
+<<<<<<< HEAD
 	}
 	remove_wait_queue(sk_sleep(sk), &wait);
+=======
+		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+	}
+	finish_wait(sk_sleep(sk), &wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out:
 	if (err == 0) {
 		sk->sk_socket->state = SS_CONNECTED;
@@ -1030,16 +1066,28 @@ static void dn_user_copy(struct sk_buff *skb, struct optdata_dn *opt)
 
 static struct sk_buff *dn_wait_for_connect(struct sock *sk, long *timeo)
 {
+<<<<<<< HEAD
 	DEFINE_WAIT_FUNC(wait, woken_wake_function);
 	struct sk_buff *skb = NULL;
 	int err = 0;
 
 	add_wait_queue(sk_sleep(sk), &wait);
+=======
+	DEFINE_WAIT(wait);
+	struct sk_buff *skb = NULL;
+	int err = 0;
+
+	prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for(;;) {
 		release_sock(sk);
 		skb = skb_dequeue(&sk->sk_receive_queue);
 		if (skb == NULL) {
+<<<<<<< HEAD
 			*timeo = wait_woken(&wait, TASK_INTERRUPTIBLE, *timeo);
+=======
+			*timeo = schedule_timeout(*timeo);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			skb = skb_dequeue(&sk->sk_receive_queue);
 		}
 		lock_sock(sk);
@@ -1054,8 +1102,14 @@ static struct sk_buff *dn_wait_for_connect(struct sock *sk, long *timeo)
 		err = -EAGAIN;
 		if (!*timeo)
 			break;
+<<<<<<< HEAD
 	}
 	remove_wait_queue(sk_sleep(sk), &wait);
+=======
+		prepare_to_wait(sk_sleep(sk), &wait, TASK_INTERRUPTIBLE);
+	}
+	finish_wait(sk_sleep(sk), &wait);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return skb == NULL ? ERR_PTR(err) : skb;
 }

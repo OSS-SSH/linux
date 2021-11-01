@@ -1,7 +1,11 @@
 /*******************************************************************
  * This file is part of the Emulex Linux Device Driver for         *
  * Fibre Channel Host Bus Adapters.                                *
+<<<<<<< HEAD
  * Copyright (C) 2017-2021 Broadcom. All Rights Reserved. The term *
+=======
+ * Copyright (C) 2017-2019 Broadcom. All Rights Reserved. The term *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * “Broadcom” refers to Broadcom Inc and/or its subsidiaries.  *
  * Copyright (C) 2004-2016 Emulex.  All rights reserved.           *
  * EMULEX and SLI are trademarks of Emulex.                        *
@@ -142,10 +146,13 @@ struct lpfc_scsicmd_bkt {
 #define FC_PORTSPEED_128GBIT	0x2000
 #endif
 
+<<<<<<< HEAD
 #ifndef FC_PORTSPEED_256GBIT
 #define FC_PORTSPEED_256GBIT	0x4000
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define TXRDY_PAYLOAD_LEN	12
 
 /* For sysfs/debugfs tmp string max len */

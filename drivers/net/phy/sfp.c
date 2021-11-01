@@ -134,7 +134,11 @@ static const char * const sm_state_strings[] = {
 	[SFP_S_LINK_UP] = "link_up",
 	[SFP_S_TX_FAULT] = "tx_fault",
 	[SFP_S_REINIT] = "reinit",
+<<<<<<< HEAD
 	[SFP_S_TX_DISABLE] = "tx_disable",
+=======
+	[SFP_S_TX_DISABLE] = "rx_disable",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const char *sm_state_to_str(unsigned short sm_state)

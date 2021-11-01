@@ -561,9 +561,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c14_default>;
 				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 0 QCOM_GPI_I2C>,
 				       <&gpi_dma2 1 0 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -575,6 +578,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
 				interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 0 QCOM_GPI_SPI>,
 				       <&gpi_dma2 1 0 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -582,6 +586,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -593,9 +603,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c15_default>;
 				interrupts = <GIC_SPI 583 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 1 QCOM_GPI_I2C>,
 				       <&gpi_dma2 1 1 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -607,6 +620,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
 				interrupts = <GIC_SPI 583 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 1 QCOM_GPI_SPI>,
 				       <&gpi_dma2 1 1 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -614,6 +628,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -625,9 +645,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c16_default>;
 				interrupts = <GIC_SPI 584 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 2 QCOM_GPI_I2C>,
 				       <&gpi_dma2 1 2 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -639,6 +662,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP2_S2_CLK>;
 				interrupts = <GIC_SPI 584 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 2 QCOM_GPI_SPI>,
 				       <&gpi_dma2 1 2 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -646,6 +670,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -657,9 +687,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c17_default>;
 				interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 3 QCOM_GPI_I2C>,
 				       <&gpi_dma2 1 3 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -671,6 +704,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP2_S3_CLK>;
 				interrupts = <GIC_SPI 585 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 3 QCOM_GPI_SPI>,
 				       <&gpi_dma2 1 3 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -678,6 +712,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -702,9 +742,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c18_default>;
 				interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 4 QCOM_GPI_I2C>,
 				       <&gpi_dma2 1 4 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -716,6 +759,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP2_S4_CLK>;
 				interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 4 QCOM_GPI_SPI>,
 				       <&gpi_dma2 1 4 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -723,6 +767,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -747,9 +797,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c19_default>;
 				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 5 QCOM_GPI_I2C>,
 				       <&gpi_dma2 1 5 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -761,6 +814,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
 				interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma2 0 5 QCOM_GPI_SPI>,
 				       <&gpi_dma2 1 5 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -768,6 +822,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 		};
@@ -815,9 +875,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c0_default>;
 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 0 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 0 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -829,6 +892,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
 				interrupts = <GIC_SPI 601 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 0 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 0 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -836,6 +900,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -847,9 +917,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c1_default>;
 				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 1 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 1 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -861,6 +934,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S1_CLK>;
 				interrupts = <GIC_SPI 602 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 1 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 1 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -868,6 +942,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -879,9 +959,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c2_default>;
 				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 2 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 2 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -893,6 +976,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S2_CLK>;
 				interrupts = <GIC_SPI 603 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 2 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 2 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -900,6 +984,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -924,9 +1014,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c3_default>;
 				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 3 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 3 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -938,6 +1031,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S3_CLK>;
 				interrupts = <GIC_SPI 604 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 3 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 3 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -945,6 +1039,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -956,9 +1056,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c4_default>;
 				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 4 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 4 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -970,6 +1073,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
 				interrupts = <GIC_SPI 605 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 4 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 4 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -977,6 +1081,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -988,9 +1098,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c5_default>;
 				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 5 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 5 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1002,6 +1115,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S5_CLK>;
 				interrupts = <GIC_SPI 606 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 5 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 5 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1009,6 +1123,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1020,9 +1140,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c6_default>;
 				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 6 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 6 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1034,6 +1157,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S6_CLK>;
 				interrupts = <GIC_SPI 607 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 6 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 6 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1041,6 +1165,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1065,9 +1195,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c7_default>;
 				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 7 QCOM_GPI_I2C>,
 				       <&gpi_dma0 1 7 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1079,6 +1212,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP0_S7_CLK>;
 				interrupts = <GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma0 0 7 QCOM_GPI_SPI>,
 				       <&gpi_dma0 1 7 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1086,6 +1220,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 		};
@@ -1130,9 +1270,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c8_default>;
 				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 0 QCOM_GPI_I2C>,
 				       <&gpi_dma1 1 0 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1144,6 +1287,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
 				interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 0 QCOM_GPI_SPI>,
 				       <&gpi_dma1 1 0 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1151,6 +1295,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1162,9 +1312,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c9_default>;
 				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 1 QCOM_GPI_I2C>,
 				       <&gpi_dma1 1 1 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1176,6 +1329,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
 				interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 1 QCOM_GPI_SPI>,
 				       <&gpi_dma1 1 1 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1183,6 +1337,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1194,9 +1354,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c10_default>;
 				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 2 QCOM_GPI_I2C>,
 				       <&gpi_dma1 1 2 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1208,6 +1371,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
 				interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 2 QCOM_GPI_SPI>,
 				       <&gpi_dma1 1 2 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1215,6 +1379,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1226,9 +1396,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c11_default>;
 				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 3 QCOM_GPI_I2C>,
 				       <&gpi_dma1 1 3 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1240,6 +1413,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP1_S3_CLK>;
 				interrupts = <GIC_SPI 356 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 3 QCOM_GPI_SPI>,
 				       <&gpi_dma1 1 3 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1247,6 +1421,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1258,9 +1438,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c12_default>;
 				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 4 QCOM_GPI_I2C>,
 				       <&gpi_dma1 1 4 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1272,6 +1455,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP1_S4_CLK>;
 				interrupts = <GIC_SPI 357 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 4 QCOM_GPI_SPI>,
 				       <&gpi_dma1 1 4 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1279,6 +1463,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 
@@ -1303,9 +1493,12 @@
 				pinctrl-names = "default";
 				pinctrl-0 = <&qup_i2c13_default>;
 				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 5 QCOM_GPI_I2C>,
 				       <&gpi_dma1 1 5 QCOM_GPI_I2C>;
 				dma-names = "tx", "rx";
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				#address-cells = <1>;
 				#size-cells = <0>;
 				status = "disabled";
@@ -1317,6 +1510,7 @@
 				clock-names = "se";
 				clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
 				interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+<<<<<<< HEAD
 				dmas = <&gpi_dma1 0 5 QCOM_GPI_SPI>,
 				       <&gpi_dma1 1 5 QCOM_GPI_SPI>;
 				dma-names = "tx", "rx";
@@ -1324,6 +1518,12 @@
 				operating-points-v2 = <&qup_opp_table>;
 				#address-cells = <1>;
 				#size-cells = <0>;
+=======
+				#address-cells = <1>;
+				#size-cells = <0>;
+				power-domains = <&rpmhpd SM8250_CX>;
+				operating-points-v2 = <&qup_opp_table>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				status = "disabled";
 			};
 		};
@@ -2330,7 +2530,11 @@
 				 <&gcc GCC_USB3_PHY_SEC_BCR>;
 			reset-names = "phy", "common";
 
+<<<<<<< HEAD
 			usb_2_ssphy: lanes@88eb200 {
+=======
+			usb_2_ssphy: lane@88eb200 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				reg = <0 0x088eb200 0 0x200>,
 				      <0 0x088eb400 0 0x200>,
 				      <0 0x088eb800 0 0x800>;
@@ -2441,7 +2645,11 @@
 
 			resets = <&gcc GCC_USB30_PRIM_BCR>;
 
+<<<<<<< HEAD
 			usb_1_dwc3: usb@a600000 {
+=======
+			usb_1_dwc3: dwc3@a600000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				compatible = "snps,dwc3";
 				reg = <0 0x0a600000 0 0xcd00>;
 				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
@@ -2492,7 +2700,11 @@
 
 			resets = <&gcc GCC_USB30_SEC_BCR>;
 
+<<<<<<< HEAD
 			usb_2_dwc3: usb@a800000 {
+=======
+			usb_2_dwc3: dwc3@a800000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				compatible = "snps,dwc3";
 				reg = <0 0x0a800000 0 0xcd00>;
 				interrupts = <GIC_SPI 138 IRQ_TYPE_LEVEL_HIGH>;
@@ -2590,9 +2802,16 @@
 			power-domains = <&dispcc MDSS_GDSC>;
 
 			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+<<<<<<< HEAD
 				 <&gcc GCC_DISP_SF_AXI_CLK>,
 				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
 			clock-names = "iface", "nrt_bus", "core";
+=======
+				 <&gcc GCC_DISP_HF_AXI_CLK>,
+				 <&gcc GCC_DISP_SF_AXI_CLK>,
+				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
+			clock-names = "iface", "bus", "nrt_bus", "core";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
 			assigned-clock-rates = <460000000>;
@@ -2697,9 +2916,12 @@
 					      "iface",
 					      "bus";
 
+<<<<<<< HEAD
 				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE0_CLK_SRC>, <&dispcc DISP_CC_MDSS_PCLK0_CLK_SRC>;
 				assigned-clock-parents = <&dsi0_phy 0>, <&dsi0_phy 1>;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				operating-points-v2 = <&dsi_opp_table>;
 				power-domains = <&rpmhpd SM8250_MMCX>;
 
@@ -2770,9 +2992,12 @@
 					      "iface",
 					      "bus";
 
+<<<<<<< HEAD
 				assigned-clocks = <&dispcc DISP_CC_MDSS_BYTE1_CLK_SRC>, <&dispcc DISP_CC_MDSS_PCLK1_CLK_SRC>;
 				assigned-clock-parents = <&dsi1_phy 0>, <&dsi1_phy 1>;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				operating-points-v2 = <&dsi_opp_table>;
 				power-domains = <&rpmhpd SM8250_MMCX>;
 
@@ -4080,7 +4305,11 @@
 			};
 		};
 
+<<<<<<< HEAD
 		epss_l3: interconnect@18590000 {
+=======
+		epss_l3: interconnect@18591000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			compatible = "qcom,sm8250-epss-l3";
 			reg = <0 0x18590000 0 0x1000>;
 

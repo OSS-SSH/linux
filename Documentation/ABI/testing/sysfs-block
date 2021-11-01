@@ -28,6 +28,7 @@ Description:
 		For more details refer Documentation/admin-guide/iostats.rst
 
 
+<<<<<<< HEAD
 What:		/sys/block/<disk>/diskseq
 Date:		February 2021
 Contact:	Matteo Croce <mcroce@microsoft.com>
@@ -40,6 +41,8 @@ Description:
 		The value type is 64 bit unsigned.
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 What:		/sys/block/<disk>/<part>/stat
 Date:		February 2008
 Contact:	Jerome Marchand <jmarchan@redhat.com>

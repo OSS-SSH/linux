@@ -95,7 +95,10 @@ struct amdgpu_nbio_funcs {
 	void (*program_aspm)(struct amdgpu_device *adev);
 	void (*apply_lc_spc_mode_wa)(struct amdgpu_device *adev);
 	void (*apply_l1_link_width_reconfig_wa)(struct amdgpu_device *adev);
+<<<<<<< HEAD
 	void (*clear_doorbell_interrupt)(struct amdgpu_device *adev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct amdgpu_nbio {

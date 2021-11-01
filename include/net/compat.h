@@ -71,6 +71,7 @@ struct compat_group_source_req {
 } __packed;
 
 struct compat_group_filter {
+<<<<<<< HEAD
 	union {
 		struct {
 			__u32				 gf_interface_aux;
@@ -91,6 +92,15 @@ struct compat_group_filter {
 				__aligned(4);
 		} __packed;
 	};
+=======
+	__u32				 gf_interface;
+	struct __kernel_sockaddr_storage gf_group
+		__aligned(4);
+	__u32				 gf_fmode;
+	__u32				 gf_numsrc;
+	struct __kernel_sockaddr_storage gf_slist[1]
+		__aligned(4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } __packed;
 
 #endif /* NET_COMPAT_H */

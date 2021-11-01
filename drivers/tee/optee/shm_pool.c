@@ -27,6 +27,7 @@ static int pool_op_alloc(struct tee_shm_pool_mgr *poolm,
 	shm->paddr = page_to_phys(page);
 	shm->size = PAGE_SIZE << order;
 
+<<<<<<< HEAD
 	/*
 	 * Shared memory private to the OP-TEE driver doesn't need
 	 * to be registered with OP-TEE.
@@ -40,6 +41,15 @@ static int pool_op_alloc(struct tee_shm_pool_mgr *poolm,
 			rc = -ENOMEM;
 			goto err;
 		}
+=======
+	if (shm->flags & TEE_SHM_DMA_BUF) {
+		unsigned int nr_pages = 1 << order, i;
+		struct page **pages;
+
+		pages = kcalloc(nr_pages, sizeof(pages), GFP_KERNEL);
+		if (!pages)
+			return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		for (i = 0; i < nr_pages; i++) {
 			pages[i] = page;
@@ -50,6 +60,7 @@ static int pool_op_alloc(struct tee_shm_pool_mgr *poolm,
 		rc = optee_shm_register(shm->ctx, shm, pages, nr_pages,
 					(unsigned long)shm->kaddr);
 		kfree(pages);
+<<<<<<< HEAD
 		if (rc)
 			goto err;
 	}
@@ -58,13 +69,21 @@ static int pool_op_alloc(struct tee_shm_pool_mgr *poolm,
 
 err:
 	__free_pages(page, order);
+=======
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 
 static void pool_op_free(struct tee_shm_pool_mgr *poolm,
 			 struct tee_shm *shm)
 {
+<<<<<<< HEAD
 	if (!(shm->flags & TEE_SHM_PRIV))
+=======
+	if (shm->flags & TEE_SHM_DMA_BUF)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		optee_shm_unregister(shm->ctx, shm);
 
 	free_pages((unsigned long)shm->kaddr, get_order(shm->size));

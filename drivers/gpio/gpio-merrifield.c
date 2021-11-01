@@ -359,8 +359,17 @@ static void mrfld_irq_handler(struct irq_desc *desc)
 		/* Only interrupts that are enabled */
 		pending &= enabled;
 
+<<<<<<< HEAD
 		for_each_set_bit(gpio, &pending, 32)
 			generic_handle_domain_irq(gc->irq.domain, base + gpio);
+=======
+		for_each_set_bit(gpio, &pending, 32) {
+			unsigned int irq;
+
+			irq = irq_find_mapping(gc->irq.domain, base + gpio);
+			generic_handle_irq(irq);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	chained_irq_exit(irqchip, desc);

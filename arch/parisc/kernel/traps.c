@@ -859,3 +859,10 @@ void  __init early_trap_init(void)
 
 	initialize_ivt(&fault_vector_20);
 }
+<<<<<<< HEAD
+=======
+
+void __init trap_init(void)
+{
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -115,7 +115,11 @@ static inline void dwc3_qcom_clrbits(void __iomem *base, u32 offset, u32 val)
 	readl(base + offset);
 }
 
+<<<<<<< HEAD
 static void dwc3_qcom_vbus_override_enable(struct dwc3_qcom *qcom, bool enable)
+=======
+static void dwc3_qcom_vbus_overrride_enable(struct dwc3_qcom *qcom, bool enable)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (enable) {
 		dwc3_qcom_setbits(qcom->qscratch_base, QSCRATCH_SS_PHY_CTRL,
@@ -136,7 +140,11 @@ static int dwc3_qcom_vbus_notifier(struct notifier_block *nb,
 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, vbus_nb);
 
 	/* enable vbus override for device mode */
+<<<<<<< HEAD
 	dwc3_qcom_vbus_override_enable(qcom, event);
+=======
+	dwc3_qcom_vbus_overrride_enable(qcom, event);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	qcom->mode = event ? USB_DR_MODE_PERIPHERAL : USB_DR_MODE_HOST;
 
 	return NOTIFY_DONE;
@@ -148,7 +156,11 @@ static int dwc3_qcom_host_notifier(struct notifier_block *nb,
 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, host_nb);
 
 	/* disable vbus override in host mode */
+<<<<<<< HEAD
 	dwc3_qcom_vbus_override_enable(qcom, !event);
+=======
+	dwc3_qcom_vbus_overrride_enable(qcom, !event);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	qcom->mode = event ? USB_DR_MODE_HOST : USB_DR_MODE_PERIPHERAL;
 
 	return NOTIFY_DONE;
@@ -614,10 +626,13 @@ static int dwc3_qcom_acpi_register_core(struct platform_device *pdev)
 		qcom->acpi_pdata->dwc3_core_base_size;
 
 	irq = platform_get_irq(pdev_irq, 0);
+<<<<<<< HEAD
 	if (irq < 0) {
 		ret = irq;
 		goto out;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	child_res[1].flags = IORESOURCE_IRQ;
 	child_res[1].start = child_res[1].end = irq;
 
@@ -649,7 +664,10 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
 	struct dwc3_qcom	*qcom = platform_get_drvdata(pdev);
 	struct device_node	*np = pdev->dev.of_node, *dwc3_np;
 	struct device		*dev = &pdev->dev;
+<<<<<<< HEAD
 	struct property		*prop;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int			ret;
 
 	dwc3_np = of_get_compatible_child(np, "snps,dwc3");
@@ -658,6 +676,7 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
 		return -ENODEV;
 	}
 
+<<<<<<< HEAD
 	prop = devm_kzalloc(dev, sizeof(*prop), GFP_KERNEL);
 	if (!prop) {
 		ret = -ENOMEM;
@@ -672,6 +691,8 @@ static int dwc3_qcom_of_register_core(struct platform_device *pdev)
 		goto node_put;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = of_platform_populate(np, NULL, NULL, dev);
 	if (ret) {
 		dev_err(dev, "failed to register dwc3 core - %d\n", ret);
@@ -830,7 +851,11 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
 
 	/* enable vbus override for device mode */
 	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
+<<<<<<< HEAD
 		dwc3_qcom_vbus_override_enable(qcom, true);
+=======
+		dwc3_qcom_vbus_overrride_enable(qcom, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* register extcon to override sw_vbus on Vbus change later */
 	ret = dwc3_qcom_register_extcon(qcom);
@@ -935,7 +960,10 @@ static const struct of_device_id dwc3_qcom_of_match[] = {
 	{ .compatible = "qcom,dwc3" },
 	{ .compatible = "qcom,msm8996-dwc3" },
 	{ .compatible = "qcom,msm8998-dwc3" },
+<<<<<<< HEAD
 	{ .compatible = "qcom,sdm660-dwc3" },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ .compatible = "qcom,sdm845-dwc3" },
 	{ }
 };

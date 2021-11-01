@@ -218,6 +218,7 @@ static void dwmac1000_dump_dma_regs(void __iomem *ioaddr, u32 *reg_space)
 				readl(ioaddr + DMA_BUS_MODE + i * 4);
 }
 
+<<<<<<< HEAD
 static int dwmac1000_get_hw_feature(void __iomem *ioaddr,
 				    struct dma_features *dma_cap)
 {
@@ -230,6 +231,13 @@ static int dwmac1000_get_hw_feature(void __iomem *ioaddr,
 		return -EOPNOTSUPP;
 	}
 
+=======
+static void dwmac1000_get_hw_feature(void __iomem *ioaddr,
+				     struct dma_features *dma_cap)
+{
+	u32 hw_cap = readl(ioaddr + DMA_HW_FEATURE);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dma_cap->mbps_10_100 = (hw_cap & DMA_HW_FEAT_MIISEL);
 	dma_cap->mbps_1000 = (hw_cap & DMA_HW_FEAT_GMIISEL) >> 1;
 	dma_cap->half_duplex = (hw_cap & DMA_HW_FEAT_HDSEL) >> 2;
@@ -259,8 +267,11 @@ static int dwmac1000_get_hw_feature(void __iomem *ioaddr,
 	dma_cap->number_tx_channel = (hw_cap & DMA_HW_FEAT_TXCHCNT) >> 22;
 	/* Alternate (enhanced) DESC mode */
 	dma_cap->enh_desc = (hw_cap & DMA_HW_FEAT_ENHDESSEL) >> 24;
+<<<<<<< HEAD
 
 	return 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void dwmac1000_rx_watchdog(void __iomem *ioaddr, u32 riwt,

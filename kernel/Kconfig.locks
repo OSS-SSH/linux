@@ -251,7 +251,11 @@ config ARCH_USE_QUEUED_RWLOCKS
 
 config QUEUED_RWLOCKS
 	def_bool y if ARCH_USE_QUEUED_RWLOCKS
+<<<<<<< HEAD
 	depends on SMP && !PREEMPT_RT
+=======
+	depends on SMP
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 config ARCH_HAS_MMIOWB
 	bool

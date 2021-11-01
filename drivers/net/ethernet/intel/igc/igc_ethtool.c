@@ -862,9 +862,13 @@ static void igc_ethtool_get_stats(struct net_device *netdev,
 }
 
 static int igc_ethtool_get_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 				    struct ethtool_coalesce *ec,
 				    struct kernel_ethtool_coalesce *kernel_coal,
 				    struct netlink_ext_ack *extack)
+=======
+				    struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct igc_adapter *adapter = netdev_priv(netdev);
 
@@ -884,9 +888,13 @@ static int igc_ethtool_get_coalesce(struct net_device *netdev,
 }
 
 static int igc_ethtool_set_coalesce(struct net_device *netdev,
+<<<<<<< HEAD
 				    struct ethtool_coalesce *ec,
 				    struct kernel_ethtool_coalesce *kernel_coal,
 				    struct netlink_ext_ack *extack)
+=======
+				    struct ethtool_coalesce *ec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct igc_adapter *adapter = netdev_priv(netdev);
 	int i;
@@ -983,12 +991,15 @@ static int igc_ethtool_get_nfc_rule(struct igc_adapter *adapter,
 		eth_broadcast_addr(fsp->m_u.ether_spec.h_source);
 	}
 
+<<<<<<< HEAD
 	if (rule->filter.match_flags & IGC_FILTER_FLAG_USER_DATA) {
 		fsp->flow_type |= FLOW_EXT;
 		memcpy(fsp->h_ext.data, rule->filter.user_data, sizeof(fsp->h_ext.data));
 		memcpy(fsp->m_ext.data, rule->filter.user_mask, sizeof(fsp->m_ext.data));
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&adapter->nfc_rule_lock);
 	return 0;
 
@@ -1225,6 +1236,7 @@ static void igc_ethtool_init_nfc_rule(struct igc_nfc_rule *rule,
 		ether_addr_copy(rule->filter.dst_addr,
 				fsp->h_u.ether_spec.h_dest);
 	}
+<<<<<<< HEAD
 
 	/* VLAN etype matching */
 	if ((fsp->flow_type & FLOW_EXT) && fsp->h_ext.vlan_etype) {
@@ -1249,6 +1261,8 @@ static void igc_ethtool_init_nfc_rule(struct igc_nfc_rule *rule,
 		rule->flex = true;
 	else
 		rule->flex = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -1278,6 +1292,14 @@ static int igc_ethtool_check_nfc_rule(struct igc_adapter *adapter,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
+=======
+	if (flags & (flags - 1)) {
+		netdev_dbg(dev, "Rule with multiple matches not supported\n");
+		return -EOPNOTSUPP;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	list_for_each_entry(tmp, &adapter->nfc_rule_list, list) {
 		if (!memcmp(&rule->filter, &tmp->filter,
 			    sizeof(rule->filter)) &&
@@ -1309,6 +1331,15 @@ static int igc_ethtool_add_nfc_rule(struct igc_adapter *adapter,
 		return -EOPNOTSUPP;
 	}
 
+<<<<<<< HEAD
+=======
+	if ((fsp->flow_type & FLOW_EXT) &&
+	    fsp->m_ext.vlan_tci != htons(VLAN_PRIO_MASK)) {
+		netdev_dbg(netdev, "VLAN mask not supported\n");
+		return -EOPNOTSUPP;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (fsp->ring_cookie >= adapter->num_rx_queues) {
 		netdev_dbg(netdev, "Invalid action\n");
 		return -EINVAL;

@@ -25,11 +25,17 @@ config INTEL_IOMMU
 	  and include PCI device scope covered by these DMA
 	  remapping devices.
 
+<<<<<<< HEAD
 if INTEL_IOMMU
 
 config INTEL_IOMMU_DEBUGFS
 	bool "Export Intel IOMMU internals in Debugfs"
 	depends on IOMMU_DEBUGFS
+=======
+config INTEL_IOMMU_DEBUGFS
+	bool "Export Intel IOMMU internals in Debugfs"
+	depends on INTEL_IOMMU && IOMMU_DEBUGFS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select DMAR_PERF
 	help
 	  !!!WARNING!!!
@@ -43,7 +49,11 @@ config INTEL_IOMMU_DEBUGFS
 
 config INTEL_IOMMU_SVM
 	bool "Support for Shared Virtual Memory with Intel IOMMU"
+<<<<<<< HEAD
 	depends on X86_64
+=======
+	depends on INTEL_IOMMU && X86_64
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select PCI_PASID
 	select PCI_PRI
 	select MMU_NOTIFIER
@@ -55,8 +65,14 @@ config INTEL_IOMMU_SVM
 	  means of a Process Address Space ID (PASID).
 
 config INTEL_IOMMU_DEFAULT_ON
+<<<<<<< HEAD
 	bool "Enable Intel DMA Remapping Devices by default"
 	default y
+=======
+	def_bool y
+	prompt "Enable Intel DMA Remapping Devices by default"
+	depends on INTEL_IOMMU
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Selecting this option will enable a DMAR device at boot time if
 	  one is found. If this option is not selected, DMAR support can
@@ -64,7 +80,11 @@ config INTEL_IOMMU_DEFAULT_ON
 
 config INTEL_IOMMU_BROKEN_GFX_WA
 	bool "Workaround broken graphics drivers (going away soon)"
+<<<<<<< HEAD
 	depends on BROKEN && X86
+=======
+	depends on INTEL_IOMMU && BROKEN && X86
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Current Graphics drivers tend to use physical address
 	  for DMA and avoid using DMA APIs. Setting this config
@@ -75,7 +95,11 @@ config INTEL_IOMMU_BROKEN_GFX_WA
 
 config INTEL_IOMMU_FLOPPY_WA
 	def_bool y
+<<<<<<< HEAD
 	depends on X86
+=======
+	depends on INTEL_IOMMU && X86
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Floppy disk drivers are known to bypass DMA API calls
 	  thereby failing to work when IOMMU is enabled. This
@@ -84,7 +108,11 @@ config INTEL_IOMMU_FLOPPY_WA
 
 config INTEL_IOMMU_SCALABLE_MODE_DEFAULT_ON
 	bool "Enable Intel IOMMU scalable mode by default"
+<<<<<<< HEAD
 	default y
+=======
+	depends on INTEL_IOMMU
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	help
 	  Selecting this option will enable by default the scalable mode if
 	  hardware presents the capability. The scalable mode is defined in
@@ -93,5 +121,8 @@ config INTEL_IOMMU_SCALABLE_MODE_DEFAULT_ON
 	  is not selected, scalable mode support could also be enabled by
 	  passing intel_iommu=sm_on to the kernel. If not sure, please use
 	  the default value.
+<<<<<<< HEAD
 
 endif # INTEL_IOMMU
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

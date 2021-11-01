@@ -18,7 +18,10 @@
 #include <linux/secretmem.h>
 #include <linux/set_memory.h>
 #include <linux/sched/signal.h>
+<<<<<<< HEAD
 #include <linux/refcount.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <uapi/linux/magic.h>
 
@@ -41,11 +44,19 @@ module_param_named(enable, secretmem_enable, bool, 0400);
 MODULE_PARM_DESC(secretmem_enable,
 		 "Enable secretmem and memfd_secret(2) system call");
 
+<<<<<<< HEAD
 static refcount_t secretmem_users;
 
 bool secretmem_active(void)
 {
 	return !!refcount_read(&secretmem_users);
+=======
+static atomic_t secretmem_users;
+
+bool secretmem_active(void)
+{
+	return !!atomic_read(&secretmem_users);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static vm_fault_t secretmem_fault(struct vm_fault *vmf)
@@ -104,7 +115,11 @@ static const struct vm_operations_struct secretmem_vm_ops = {
 
 static int secretmem_release(struct inode *inode, struct file *file)
 {
+<<<<<<< HEAD
 	refcount_dec(&secretmem_users);
+=======
+	atomic_dec(&secretmem_users);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -153,7 +168,10 @@ static void secretmem_freepage(struct page *page)
 }
 
 const struct address_space_operations secretmem_aops = {
+<<<<<<< HEAD
 	.set_page_dirty	= __set_page_dirty_no_writeback,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.freepage	= secretmem_freepage,
 	.migratepage	= secretmem_migratepage,
 	.isolate_page	= secretmem_isolate_page,
@@ -218,7 +236,11 @@ SYSCALL_DEFINE1(memfd_secret, unsigned int, flags)
 	file->f_flags |= O_LARGEFILE;
 
 	fd_install(fd, file);
+<<<<<<< HEAD
 	refcount_inc(&secretmem_users);
+=======
+	atomic_inc(&secretmem_users);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return fd;
 
 err_put_fd:

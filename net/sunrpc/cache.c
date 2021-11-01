@@ -803,7 +803,11 @@ static int cache_request(struct cache_detail *detail,
 
 	detail->cache_request(detail, crq->item, &bp, &len);
 	if (len < 0)
+<<<<<<< HEAD
 		return -E2BIG;
+=======
+		return -EAGAIN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return PAGE_SIZE - len;
 }
 

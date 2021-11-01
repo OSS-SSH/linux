@@ -375,7 +375,10 @@ hv_vss_init(struct hv_util_service *srv)
 	}
 	recv_buffer = srv->recv_buffer;
 	vss_transaction.recv_channel = srv->channel;
+<<<<<<< HEAD
 	vss_transaction.recv_channel->max_pkt_size = HV_HYP_PAGE_SIZE * 2;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * When this driver loads, the user level daemon that

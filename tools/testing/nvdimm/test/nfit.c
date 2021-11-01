@@ -434,7 +434,11 @@ static int nd_intel_test_finish_query(struct nfit_test *t,
 		dev_dbg(dev, "%s: transition out verify\n", __func__);
 		fw->state = FW_STATE_UPDATED;
 		fw->missed_activate = false;
+<<<<<<< HEAD
 		fallthrough;
+=======
+		/* fall through */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case FW_STATE_UPDATED:
 		nd_cmd->status = 0;
 		/* bogus test version */

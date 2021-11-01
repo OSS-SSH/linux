@@ -178,10 +178,19 @@ static int intel_xpower_pmic_update_power(struct regmap *regmap, int reg,
 {
 	int data, ret;
 
+<<<<<<< HEAD
+=======
+	/* GPIO1 LDO regulator needs special handling */
+	if (reg == XPOWER_GPI1_CTRL)
+		return regmap_update_bits(regmap, reg, GPI1_LDO_MASK,
+					  on ? GPI1_LDO_ON : GPI1_LDO_OFF);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = iosf_mbi_block_punit_i2c_access();
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	/* GPIO1 LDO regulator needs special handling */
 	if (reg == XPOWER_GPI1_CTRL) {
 		ret = regmap_update_bits(regmap, reg, GPI1_LDO_MASK,
@@ -189,6 +198,8 @@ static int intel_xpower_pmic_update_power(struct regmap *regmap, int reg,
 		goto out;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (regmap_read(regmap, reg, &data)) {
 		ret = -EIO;
 		goto out;
@@ -236,11 +247,14 @@ static int intel_xpower_pmic_get_raw_temp(struct regmap *regmap, int reg)
 		return ret;
 
 	if (adc_ts_pin_ctrl & AXP288_ADC_TS_CURRENT_ON_OFF_MASK) {
+<<<<<<< HEAD
 		/*
 		 * AXP288_ADC_TS_PIN_CTRL reads are cached by the regmap, so
 		 * this does to a single I2C-transfer, and thus there is no
 		 * need to explicitly call iosf_mbi_block_punit_i2c_access().
 		 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = regmap_update_bits(regmap, AXP288_ADC_TS_PIN_CTRL,
 					 AXP288_ADC_TS_CURRENT_ON_OFF_MASK,
 					 AXP288_ADC_TS_CURRENT_ON_ONDEMAND);
@@ -251,10 +265,13 @@ static int intel_xpower_pmic_get_raw_temp(struct regmap *regmap, int reg)
 		usleep_range(6000, 10000);
 	}
 
+<<<<<<< HEAD
 	ret = iosf_mbi_block_punit_i2c_access();
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = regmap_bulk_read(regmap, AXP288_GP_ADC_H, buf, 2);
 	if (ret == 0)
 		ret = (buf[0] << 4) + ((buf[1] >> 4) & 0x0f);
@@ -265,6 +282,7 @@ static int intel_xpower_pmic_get_raw_temp(struct regmap *regmap, int reg)
 				   AXP288_ADC_TS_CURRENT_ON);
 	}
 
+<<<<<<< HEAD
 	iosf_mbi_unblock_punit_i2c_access();
 
 	return ret;
@@ -290,6 +308,8 @@ static int intel_xpower_exec_mipi_pmic_seq_element(struct regmap *regmap,
 
 	iosf_mbi_unblock_punit_i2c_access();
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -297,7 +317,10 @@ static struct intel_pmic_opregion_data intel_xpower_pmic_opregion_data = {
 	.get_power = intel_xpower_pmic_get_power,
 	.update_power = intel_xpower_pmic_update_power,
 	.get_raw_temp = intel_xpower_pmic_get_raw_temp,
+<<<<<<< HEAD
 	.exec_mipi_pmic_seq_element = intel_xpower_exec_mipi_pmic_seq_element,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.power_table = power_table,
 	.power_table_count = ARRAY_SIZE(power_table),
 	.thermal_table = thermal_table,

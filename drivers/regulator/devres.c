@@ -205,6 +205,38 @@ struct regulator_dev *devm_regulator_register(struct device *dev,
 }
 EXPORT_SYMBOL_GPL(devm_regulator_register);
 
+<<<<<<< HEAD
+=======
+static int devm_rdev_match(struct device *dev, void *res, void *data)
+{
+	struct regulator_dev **r = res;
+	if (!r || !*r) {
+		WARN_ON(!r || !*r);
+		return 0;
+	}
+	return *r == data;
+}
+
+/**
+ * devm_regulator_unregister - Resource managed regulator_unregister()
+ * @dev:  device to supply
+ * @rdev: regulator to free
+ *
+ * Unregister a regulator registered with devm_regulator_register().
+ * Normally this function will not need to be called and the resource
+ * management code will ensure that the resource is freed.
+ */
+void devm_regulator_unregister(struct device *dev, struct regulator_dev *rdev)
+{
+	int rc;
+
+	rc = devres_release(dev, devm_rdev_release, devm_rdev_match, rdev);
+	if (rc != 0)
+		WARN_ON(rc);
+}
+EXPORT_SYMBOL_GPL(devm_regulator_unregister);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct regulator_supply_alias_match {
 	struct device *dev;
 	const char *id;
@@ -267,8 +299,24 @@ int devm_regulator_register_supply_alias(struct device *dev, const char *id,
 }
 EXPORT_SYMBOL_GPL(devm_regulator_register_supply_alias);
 
+<<<<<<< HEAD
 static void devm_regulator_unregister_supply_alias(struct device *dev,
 						   const char *id)
+=======
+/**
+ * devm_regulator_unregister_supply_alias - Resource managed
+ * regulator_unregister_supply_alias()
+ *
+ * @dev: device to supply
+ * @id:  supply name or regulator ID
+ *
+ * Unregister an alias registered with
+ * devm_regulator_register_supply_alias(). Normally this function
+ * will not need to be called and the resource management code
+ * will ensure that the resource is freed.
+ */
+void devm_regulator_unregister_supply_alias(struct device *dev, const char *id)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct regulator_supply_alias_match match;
 	int rc;
@@ -281,6 +329,10 @@ static void devm_regulator_unregister_supply_alias(struct device *dev,
 	if (rc != 0)
 		WARN_ON(rc);
 }
+<<<<<<< HEAD
+=======
+EXPORT_SYMBOL_GPL(devm_regulator_unregister_supply_alias);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * devm_regulator_bulk_register_supply_alias - Managed register
@@ -332,6 +384,33 @@ err:
 }
 EXPORT_SYMBOL_GPL(devm_regulator_bulk_register_supply_alias);
 
+<<<<<<< HEAD
+=======
+/**
+ * devm_regulator_bulk_unregister_supply_alias - Managed unregister
+ * multiple aliases
+ *
+ * @dev:    device to supply
+ * @id:     list of supply names or regulator IDs
+ * @num_id: number of aliases to unregister
+ *
+ * Unregister aliases registered with
+ * devm_regulator_bulk_register_supply_alias(). Normally this function
+ * will not need to be called and the resource management code
+ * will ensure that the resource is freed.
+ */
+void devm_regulator_bulk_unregister_supply_alias(struct device *dev,
+						 const char *const *id,
+						 int num_id)
+{
+	int i;
+
+	for (i = 0; i < num_id; ++i)
+		devm_regulator_unregister_supply_alias(dev, id[i]);
+}
+EXPORT_SYMBOL_GPL(devm_regulator_bulk_unregister_supply_alias);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct regulator_notifier_match {
 	struct regulator *regulator;
 	struct notifier_block *nb;

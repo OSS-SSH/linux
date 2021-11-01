@@ -22,8 +22,13 @@ usage() {
 
 cleanup()
 {
+<<<<<<< HEAD
 	rm -f "$cout" "$sout"
 	rm -f "$large" "$small"
+=======
+	rm -f "$cin" "$cout"
+	rm -f "$sin" "$sout"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rm -f "$capout"
 
 	local netns

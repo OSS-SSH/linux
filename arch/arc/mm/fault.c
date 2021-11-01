@@ -33,6 +33,7 @@ noinline static int handle_kernel_vaddr_fault(unsigned long address)
 	pud_t *pud, *pud_k;
 	pmd_t *pmd, *pmd_k;
 
+<<<<<<< HEAD
 	pgd = pgd_offset(current->active_mm, address);
 	pgd_k = pgd_offset_k(address);
 
@@ -61,6 +62,30 @@ noinline static int handle_kernel_vaddr_fault(unsigned long address)
 		goto bad_area;
 	if (!pmd_present(*pmd))
 		set_pmd(pmd, *pmd_k);
+=======
+	pgd = pgd_offset_fast(current->active_mm, address);
+	pgd_k = pgd_offset_k(address);
+
+	if (!pgd_present(*pgd_k))
+		goto bad_area;
+
+	p4d = p4d_offset(pgd, address);
+	p4d_k = p4d_offset(pgd_k, address);
+	if (!p4d_present(*p4d_k))
+		goto bad_area;
+
+	pud = pud_offset(p4d, address);
+	pud_k = pud_offset(p4d_k, address);
+	if (!pud_present(*pud_k))
+		goto bad_area;
+
+	pmd = pmd_offset(pud, address);
+	pmd_k = pmd_offset(pud_k, address);
+	if (!pmd_present(*pmd_k))
+		goto bad_area;
+
+	set_pmd(pmd, *pmd_k);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* XXX: create the TLB entry here */
 	return 0;

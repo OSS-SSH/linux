@@ -17,8 +17,11 @@
 #include <linux/sort.h>
 #include <linux/slab.h>
 
+<<<<<<< HEAD
 #include "cros_ec_trace.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Precision of fixed point for the m values from the filter */
 #define M_PRECISION BIT(23)
 
@@ -293,7 +296,10 @@ cros_ec_sensor_ring_ts_filter_update(struct cros_ec_sensors_ts_filter_state
 		state->median_m = 0;
 		state->median_error = 0;
 	}
+<<<<<<< HEAD
 	trace_cros_ec_sensorhub_filter(state, dx, dy);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -430,11 +436,14 @@ cros_ec_sensor_ring_process_event(struct cros_ec_sensorhub *sensorhub,
 			if (new_timestamp - *current_timestamp > 0)
 				*current_timestamp = new_timestamp;
 		}
+<<<<<<< HEAD
 		trace_cros_ec_sensorhub_timestamp(in->timestamp,
 						  fifo_info->timestamp,
 						  fifo_timestamp,
 						  *current_timestamp,
 						  now);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (in->flags & MOTIONSENSE_SENSOR_FLAG_ODR) {
@@ -468,12 +477,15 @@ cros_ec_sensor_ring_process_event(struct cros_ec_sensorhub *sensorhub,
 
 	/* Regular sample */
 	out->sensor_id = in->sensor_num;
+<<<<<<< HEAD
 	trace_cros_ec_sensorhub_data(in->sensor_num,
 				     fifo_info->timestamp,
 				     fifo_timestamp,
 				     *current_timestamp,
 				     now);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (*current_timestamp - now > 0) {
 		/*
 		 * This fix is needed to overcome the timestamp filter putting

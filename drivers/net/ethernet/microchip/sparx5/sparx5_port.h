@@ -89,6 +89,9 @@ int sparx5_get_port_status(struct sparx5 *sparx5,
 			   struct sparx5_port_status *status);
 
 void sparx5_port_enable(struct sparx5_port *port, bool enable);
+<<<<<<< HEAD
 int sparx5_port_fwd_urg(struct sparx5 *sparx5, u32 speed);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif	/* __SPARX5_PORT_H__ */

@@ -22,7 +22,11 @@
 #define SMBASE		0x40
 #define SMBUS_IO_SIZE	64
 
+<<<<<<< HEAD
 #define GPIO_BASE	0x44
+=======
+#define GPIOBASE	0x44
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define GPIO_IO_SIZE	64
 #define GPIO_IO_SIZE_CENTERTON	128
 
@@ -145,7 +149,11 @@ static int lpc_sch_probe(struct pci_dev *dev, const struct pci_device_id *id)
 	if (ret == 0)
 		cells++;
 
+<<<<<<< HEAD
 	ret = lpc_sch_populate_cell(dev, GPIO_BASE, "sch_gpio",
+=======
+	ret = lpc_sch_populate_cell(dev, GPIOBASE, "sch_gpio",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				    info->io_size_gpio,
 				    id->device, &lpc_sch_cells[cells]);
 	if (ret < 0)

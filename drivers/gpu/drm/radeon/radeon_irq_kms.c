@@ -31,7 +31,11 @@
 
 #include <drm/drm_crtc_helper.h>
 #include <drm/drm_device.h>
+<<<<<<< HEAD
 #include <drm/drm_drv.h>
+=======
+#include <drm/drm_irq.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_probe_helper.h>
 #include <drm/drm_vblank.h>
 #include <drm/radeon_drm.h>
@@ -51,7 +55,11 @@
  * radeon_irq_process is a macro that points to the per-asic
  * irq handler callback.
  */
+<<<<<<< HEAD
 static irqreturn_t radeon_driver_irq_handler_kms(int irq, void *arg)
+=======
+irqreturn_t radeon_driver_irq_handler_kms(int irq, void *arg)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct drm_device *dev = (struct drm_device *) arg;
 	struct radeon_device *rdev = dev->dev_private;
@@ -118,7 +126,11 @@ static void radeon_dp_work_func(struct work_struct *work)
  * Gets the hw ready to enable irqs (all asics).
  * This function disables all interrupt sources on the GPU.
  */
+<<<<<<< HEAD
 static void radeon_driver_irq_preinstall_kms(struct drm_device *dev)
+=======
+void radeon_driver_irq_preinstall_kms(struct drm_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct radeon_device *rdev = dev->dev_private;
 	unsigned long irqflags;
@@ -150,7 +162,11 @@ static void radeon_driver_irq_preinstall_kms(struct drm_device *dev)
  * Handles stuff to be done after enabling irqs (all asics).
  * Returns 0 on success.
  */
+<<<<<<< HEAD
 static int radeon_driver_irq_postinstall_kms(struct drm_device *dev)
+=======
+int radeon_driver_irq_postinstall_kms(struct drm_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct radeon_device *rdev = dev->dev_private;
 
@@ -169,7 +185,11 @@ static int radeon_driver_irq_postinstall_kms(struct drm_device *dev)
  *
  * This function disables all interrupt sources on the GPU (all asics).
  */
+<<<<<<< HEAD
 static void radeon_driver_irq_uninstall_kms(struct drm_device *dev)
+=======
+void radeon_driver_irq_uninstall_kms(struct drm_device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct radeon_device *rdev = dev->dev_private;
 	unsigned long irqflags;
@@ -194,6 +214,7 @@ static void radeon_driver_irq_uninstall_kms(struct drm_device *dev)
 	spin_unlock_irqrestore(&rdev->irq.lock, irqflags);
 }
 
+<<<<<<< HEAD
 static int radeon_irq_install(struct radeon_device *rdev, int irq)
 {
 	struct drm_device *dev = rdev->ddev;
@@ -224,6 +245,8 @@ static void radeon_irq_uninstall(struct radeon_device *rdev)
 	free_irq(pdev->irq, dev);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * radeon_msi_ok - asic specific msi checks
  *
@@ -344,7 +367,11 @@ int radeon_irq_kms_init(struct radeon_device *rdev)
 	INIT_WORK(&rdev->audio_work, r600_audio_update_hdmi);
 
 	rdev->irq.installed = true;
+<<<<<<< HEAD
 	r = radeon_irq_install(rdev, rdev->pdev->irq);
+=======
+	r = drm_irq_install(rdev->ddev, rdev->pdev->irq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (r) {
 		rdev->irq.installed = false;
 		flush_delayed_work(&rdev->hotplug_work);
@@ -365,7 +392,11 @@ int radeon_irq_kms_init(struct radeon_device *rdev)
 void radeon_irq_kms_fini(struct radeon_device *rdev)
 {
 	if (rdev->irq.installed) {
+<<<<<<< HEAD
 		radeon_irq_uninstall(rdev);
+=======
+		drm_irq_uninstall(rdev->ddev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		rdev->irq.installed = false;
 		if (rdev->msi_enabled)
 			pci_disable_msi(rdev->pdev);
@@ -387,7 +418,11 @@ void radeon_irq_kms_sw_irq_get(struct radeon_device *rdev, int ring)
 {
 	unsigned long irqflags;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (atomic_inc_return(&rdev->irq.ring_int[ring]) == 1) {
@@ -426,7 +461,11 @@ void radeon_irq_kms_sw_irq_put(struct radeon_device *rdev, int ring)
 {
 	unsigned long irqflags;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (atomic_dec_and_test(&rdev->irq.ring_int[ring])) {
@@ -452,7 +491,11 @@ void radeon_irq_kms_pflip_irq_get(struct radeon_device *rdev, int crtc)
 	if (crtc < 0 || crtc >= rdev->num_crtc)
 		return;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (atomic_inc_return(&rdev->irq.pflip[crtc]) == 1) {
@@ -478,7 +521,11 @@ void radeon_irq_kms_pflip_irq_put(struct radeon_device *rdev, int crtc)
 	if (crtc < 0 || crtc >= rdev->num_crtc)
 		return;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (atomic_dec_and_test(&rdev->irq.pflip[crtc])) {
@@ -500,7 +547,11 @@ void radeon_irq_kms_enable_afmt(struct radeon_device *rdev, int block)
 {
 	unsigned long irqflags;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	spin_lock_irqsave(&rdev->irq.lock, irqflags);
@@ -522,7 +573,11 @@ void radeon_irq_kms_disable_afmt(struct radeon_device *rdev, int block)
 {
 	unsigned long irqflags;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	spin_lock_irqsave(&rdev->irq.lock, irqflags);
@@ -544,7 +599,11 @@ void radeon_irq_kms_enable_hpd(struct radeon_device *rdev, unsigned hpd_mask)
 	unsigned long irqflags;
 	int i;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	spin_lock_irqsave(&rdev->irq.lock, irqflags);
@@ -567,7 +626,11 @@ void radeon_irq_kms_disable_hpd(struct radeon_device *rdev, unsigned hpd_mask)
 	unsigned long irqflags;
 	int i;
 
+<<<<<<< HEAD
 	if (!rdev->irq.installed)
+=======
+	if (!rdev->ddev->irq_enabled)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	spin_lock_irqsave(&rdev->irq.lock, irqflags);

@@ -344,7 +344,10 @@ typedef void (*regmap_unlock)(void *);
  * @ranges: Array of configuration entries for virtual address ranges.
  * @num_ranges: Number of range configuration entries.
  * @use_hwlock: Indicate if a hardware spinlock should be used.
+<<<<<<< HEAD
  * @use_raw_spinlock: Indicate if a raw spinlock should be used.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @hwlock_id: Specify the hardware spinlock id.
  * @hwlock_mode: The hardware spinlock mode, should be HWLOCK_IRQSTATE,
  *		 HWLOCK_IRQ or 0.
@@ -404,7 +407,10 @@ struct regmap_config {
 	unsigned int num_ranges;
 
 	bool use_hwlock;
+<<<<<<< HEAD
 	bool use_raw_spinlock;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int hwlock_id;
 	unsigned int hwlock_mode;
 
@@ -1271,13 +1277,21 @@ void devm_regmap_field_free(struct device *dev,	struct regmap_field *field);
 
 int regmap_field_bulk_alloc(struct regmap *regmap,
 			     struct regmap_field **rm_field,
+<<<<<<< HEAD
 			     const struct reg_field *reg_field,
+=======
+			     struct reg_field *reg_field,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			     int num_fields);
 void regmap_field_bulk_free(struct regmap_field *field);
 int devm_regmap_field_bulk_alloc(struct device *dev, struct regmap *regmap,
 				 struct regmap_field **field,
+<<<<<<< HEAD
 				 const struct reg_field *reg_field,
 				 int num_fields);
+=======
+				 struct reg_field *reg_field, int num_fields);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void devm_regmap_field_bulk_free(struct device *dev,
 				 struct regmap_field *field);
 

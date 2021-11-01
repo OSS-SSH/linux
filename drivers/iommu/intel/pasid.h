@@ -28,12 +28,21 @@
 #define VCMD_CMD_ALLOC			0x1
 #define VCMD_CMD_FREE			0x2
 #define VCMD_VRSP_IP			0x1
+<<<<<<< HEAD
 #define VCMD_VRSP_SC(e)			(((e) & 0xff) >> 1)
 #define VCMD_VRSP_SC_SUCCESS		0
 #define VCMD_VRSP_SC_NO_PASID_AVAIL	16
 #define VCMD_VRSP_SC_INVALID_PASID	16
 #define VCMD_VRSP_RESULT_PASID(e)	(((e) >> 16) & 0xfffff)
 #define VCMD_CMD_OPERAND(e)		((e) << 16)
+=======
+#define VCMD_VRSP_SC(e)			(((e) >> 1) & 0x3)
+#define VCMD_VRSP_SC_SUCCESS		0
+#define VCMD_VRSP_SC_NO_PASID_AVAIL	2
+#define VCMD_VRSP_SC_INVALID_PASID	2
+#define VCMD_VRSP_RESULT_PASID(e)	(((e) >> 8) & 0xfffff)
+#define VCMD_CMD_OPERAND(e)		((e) << 8)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Domain ID reserved for pasid entries programmed for first-level
  * only and pass-through transfer modes.
@@ -99,12 +108,15 @@ static inline bool pasid_pte_is_present(struct pasid_entry *pte)
 	return READ_ONCE(pte->val[0]) & PASID_PTE_PRESENT;
 }
 
+<<<<<<< HEAD
 /* Get PGTT field of a PASID table entry */
 static inline u16 pasid_pte_get_pgtt(struct pasid_entry *pte)
 {
 	return (u16)((READ_ONCE(pte->val[0]) >> 6) & 0x7);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern unsigned int intel_pasid_max_id;
 int intel_pasid_alloc_table(struct device *dev);
 void intel_pasid_free_table(struct device *dev);

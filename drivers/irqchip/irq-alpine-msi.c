@@ -267,7 +267,13 @@ static int alpine_msix_init(struct device_node *node,
 		goto err_priv;
 	}
 
+<<<<<<< HEAD
 	priv->msi_map = bitmap_zalloc(priv->num_spis, GFP_KERNEL);
+=======
+	priv->msi_map = kcalloc(BITS_TO_LONGS(priv->num_spis),
+				sizeof(*priv->msi_map),
+				GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!priv->msi_map) {
 		ret = -ENOMEM;
 		goto err_priv;
@@ -283,7 +289,11 @@ static int alpine_msix_init(struct device_node *node,
 	return 0;
 
 err_map:
+<<<<<<< HEAD
 	bitmap_free(priv->msi_map);
+=======
+	kfree(priv->msi_map);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_priv:
 	kfree(priv);
 	return ret;

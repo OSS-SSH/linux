@@ -132,7 +132,11 @@ xfs_ilock_attr_map_shared(
 
 /*
  * In addition to i_rwsem in the VFS inode, the xfs inode contains 2
+<<<<<<< HEAD
  * multi-reader locks: invalidate_lock and the i_lock.  This routine allows
+=======
+ * multi-reader locks: i_mmap_lock and the i_lock.  This routine allows
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * various combinations of the locks to be obtained.
  *
  * The 3 locks should always be ordered so that the IO lock is obtained first,
@@ -140,11 +144,16 @@ xfs_ilock_attr_map_shared(
  *
  * Basic locking order:
  *
+<<<<<<< HEAD
  * i_rwsem -> invalidate_lock -> page_lock -> i_ilock
+=======
+ * i_rwsem -> i_mmap_lock -> page_lock -> i_ilock
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * mmap_lock locking order:
  *
  * i_rwsem -> page lock -> mmap_lock
+<<<<<<< HEAD
  * mmap_lock -> invalidate_lock -> page_lock
  *
  * The difference in mmap_lock locking order mean that we cannot hold the
@@ -157,6 +166,20 @@ xfs_ilock_attr_map_shared(
  * Hence to serialise fully against both syscall and mmap based IO, we need to
  * take both the i_rwsem and the invalidate_lock. These locks should *only* be
  * both taken in places where we need to invalidate the page cache in a race
+=======
+ * mmap_lock -> i_mmap_lock -> page_lock
+ *
+ * The difference in mmap_lock locking order mean that we cannot hold the
+ * i_mmap_lock over syscall based read(2)/write(2) based IO. These IO paths can
+ * fault in pages during copy in/out (for buffered IO) or require the mmap_lock
+ * in get_user_pages() to map the user pages into the kernel address space for
+ * direct IO. Similarly the i_rwsem cannot be taken inside a page fault because
+ * page faults already hold the mmap_lock.
+ *
+ * Hence to serialise fully against both syscall and mmap based IO, we need to
+ * take both the i_rwsem and the i_mmap_lock. These locks should *only* be both
+ * taken in places where we need to invalidate the page cache in a race
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * free manner (e.g. truncate, hole punch and other extent manipulation
  * functions).
  */
@@ -188,6 +211,7 @@ xfs_ilock(
 				 XFS_IOLOCK_DEP(lock_flags));
 	}
 
+<<<<<<< HEAD
 	if (lock_flags & XFS_MMAPLOCK_EXCL) {
 		down_write_nested(&VFS_I(ip)->i_mapping->invalidate_lock,
 				  XFS_MMAPLOCK_DEP(lock_flags));
@@ -195,6 +219,12 @@ xfs_ilock(
 		down_read_nested(&VFS_I(ip)->i_mapping->invalidate_lock,
 				 XFS_MMAPLOCK_DEP(lock_flags));
 	}
+=======
+	if (lock_flags & XFS_MMAPLOCK_EXCL)
+		mrupdate_nested(&ip->i_mmaplock, XFS_MMAPLOCK_DEP(lock_flags));
+	else if (lock_flags & XFS_MMAPLOCK_SHARED)
+		mraccess_nested(&ip->i_mmaplock, XFS_MMAPLOCK_DEP(lock_flags));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (lock_flags & XFS_ILOCK_EXCL)
 		mrupdate_nested(&ip->i_lock, XFS_ILOCK_DEP(lock_flags));
@@ -243,10 +273,17 @@ xfs_ilock_nowait(
 	}
 
 	if (lock_flags & XFS_MMAPLOCK_EXCL) {
+<<<<<<< HEAD
 		if (!down_write_trylock(&VFS_I(ip)->i_mapping->invalidate_lock))
 			goto out_undo_iolock;
 	} else if (lock_flags & XFS_MMAPLOCK_SHARED) {
 		if (!down_read_trylock(&VFS_I(ip)->i_mapping->invalidate_lock))
+=======
+		if (!mrtryupdate(&ip->i_mmaplock))
+			goto out_undo_iolock;
+	} else if (lock_flags & XFS_MMAPLOCK_SHARED) {
+		if (!mrtryaccess(&ip->i_mmaplock))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto out_undo_iolock;
 	}
 
@@ -261,9 +298,15 @@ xfs_ilock_nowait(
 
 out_undo_mmaplock:
 	if (lock_flags & XFS_MMAPLOCK_EXCL)
+<<<<<<< HEAD
 		up_write(&VFS_I(ip)->i_mapping->invalidate_lock);
 	else if (lock_flags & XFS_MMAPLOCK_SHARED)
 		up_read(&VFS_I(ip)->i_mapping->invalidate_lock);
+=======
+		mrunlock_excl(&ip->i_mmaplock);
+	else if (lock_flags & XFS_MMAPLOCK_SHARED)
+		mrunlock_shared(&ip->i_mmaplock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_undo_iolock:
 	if (lock_flags & XFS_IOLOCK_EXCL)
 		up_write(&VFS_I(ip)->i_rwsem);
@@ -310,9 +353,15 @@ xfs_iunlock(
 		up_read(&VFS_I(ip)->i_rwsem);
 
 	if (lock_flags & XFS_MMAPLOCK_EXCL)
+<<<<<<< HEAD
 		up_write(&VFS_I(ip)->i_mapping->invalidate_lock);
 	else if (lock_flags & XFS_MMAPLOCK_SHARED)
 		up_read(&VFS_I(ip)->i_mapping->invalidate_lock);
+=======
+		mrunlock_excl(&ip->i_mmaplock);
+	else if (lock_flags & XFS_MMAPLOCK_SHARED)
+		mrunlock_shared(&ip->i_mmaplock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (lock_flags & XFS_ILOCK_EXCL)
 		mrunlock_excl(&ip->i_lock);
@@ -338,7 +387,11 @@ xfs_ilock_demote(
 	if (lock_flags & XFS_ILOCK_EXCL)
 		mrdemote(&ip->i_lock);
 	if (lock_flags & XFS_MMAPLOCK_EXCL)
+<<<<<<< HEAD
 		downgrade_write(&VFS_I(ip)->i_mapping->invalidate_lock);
+=======
+		mrdemote(&ip->i_mmaplock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (lock_flags & XFS_IOLOCK_EXCL)
 		downgrade_write(&VFS_I(ip)->i_rwsem);
 
@@ -346,6 +399,7 @@ xfs_ilock_demote(
 }
 
 #if defined(DEBUG) || defined(XFS_WARN)
+<<<<<<< HEAD
 static inline bool
 __xfs_rwsem_islocked(
 	struct rw_semaphore	*rwsem,
@@ -369,6 +423,11 @@ __xfs_rwsem_islocked(
 bool
 xfs_isilocked(
 	struct xfs_inode	*ip,
+=======
+int
+xfs_isilocked(
+	xfs_inode_t		*ip,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint			lock_flags)
 {
 	if (lock_flags & (XFS_ILOCK_EXCL|XFS_ILOCK_SHARED)) {
@@ -378,6 +437,7 @@ xfs_isilocked(
 	}
 
 	if (lock_flags & (XFS_MMAPLOCK_EXCL|XFS_MMAPLOCK_SHARED)) {
+<<<<<<< HEAD
 		return __xfs_rwsem_islocked(&VFS_I(ip)->i_rwsem,
 				(lock_flags & XFS_IOLOCK_SHARED));
 	}
@@ -389,6 +449,22 @@ xfs_isilocked(
 
 	ASSERT(0);
 	return false;
+=======
+		if (!(lock_flags & XFS_MMAPLOCK_SHARED))
+			return !!ip->i_mmaplock.mr_writer;
+		return rwsem_is_locked(&ip->i_mmaplock.mr_lock);
+	}
+
+	if (lock_flags & (XFS_IOLOCK_EXCL|XFS_IOLOCK_SHARED)) {
+		if (!(lock_flags & XFS_IOLOCK_SHARED))
+			return !debug_locks ||
+				lockdep_is_held_type(&VFS_I(ip)->i_rwsem, 0);
+		return rwsem_is_locked(&VFS_I(ip)->i_rwsem);
+	}
+
+	ASSERT(0);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif
 
@@ -552,10 +628,19 @@ again:
 }
 
 /*
+<<<<<<< HEAD
  * xfs_lock_two_inodes() can only be used to lock ilock. The iolock and
  * mmaplock must be double-locked separately since we use i_rwsem and
  * invalidate_lock for that. We now support taking one lock EXCL and the
  * other SHARED.
+=======
+ * xfs_lock_two_inodes() can only be used to lock one type of lock at a time -
+ * the mmaplock or the ilock, but not more than one type at a time. If we lock
+ * more than one at a time, lockdep will report false positives saying we have
+ * violated locking orders.  The iolock must be double-locked separately since
+ * we use i_rwsem for that.  We now support taking one lock EXCL and the other
+ * SHARED.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 void
 xfs_lock_two_inodes(
@@ -573,8 +658,20 @@ xfs_lock_two_inodes(
 	ASSERT(hweight32(ip1_mode) == 1);
 	ASSERT(!(ip0_mode & (XFS_IOLOCK_SHARED|XFS_IOLOCK_EXCL)));
 	ASSERT(!(ip1_mode & (XFS_IOLOCK_SHARED|XFS_IOLOCK_EXCL)));
+<<<<<<< HEAD
 	ASSERT(!(ip0_mode & (XFS_MMAPLOCK_SHARED|XFS_MMAPLOCK_EXCL)));
 	ASSERT(!(ip1_mode & (XFS_MMAPLOCK_SHARED|XFS_MMAPLOCK_EXCL)));
+=======
+	ASSERT(!(ip0_mode & (XFS_MMAPLOCK_SHARED|XFS_MMAPLOCK_EXCL)) ||
+	       !(ip0_mode & (XFS_ILOCK_SHARED|XFS_ILOCK_EXCL)));
+	ASSERT(!(ip1_mode & (XFS_MMAPLOCK_SHARED|XFS_MMAPLOCK_EXCL)) ||
+	       !(ip1_mode & (XFS_ILOCK_SHARED|XFS_ILOCK_EXCL)));
+	ASSERT(!(ip1_mode & (XFS_MMAPLOCK_SHARED|XFS_MMAPLOCK_EXCL)) ||
+	       !(ip0_mode & (XFS_ILOCK_SHARED|XFS_ILOCK_EXCL)));
+	ASSERT(!(ip0_mode & (XFS_MMAPLOCK_SHARED|XFS_MMAPLOCK_EXCL)) ||
+	       !(ip1_mode & (XFS_ILOCK_SHARED|XFS_ILOCK_EXCL)));
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ASSERT(ip0->i_ino != ip1->i_ino);
 
 	if (ip0->i_ino > ip1->i_ino) {
@@ -674,7 +771,11 @@ xfs_lookup(
 
 	trace_xfs_lookup(dp, name);
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(dp->i_mount))
+=======
+	if (XFS_FORCED_SHUTDOWN(dp->i_mount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	error = xfs_dir_lookup(NULL, dp, name, &inum, ci_name);
@@ -716,7 +817,11 @@ xfs_inode_inherit_flags(
 			di_flags |= XFS_DIFLAG_PROJINHERIT;
 	} else if (S_ISREG(mode)) {
 		if ((pip->i_diflags & XFS_DIFLAG_RTINHERIT) &&
+<<<<<<< HEAD
 		    xfs_has_realtime(ip->i_mount))
+=======
+		    xfs_sb_version_hasrealtime(&ip->i_mount->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			di_flags |= XFS_DIFLAG_REALTIME;
 		if (pip->i_diflags & XFS_DIFLAG_EXTSZINHERIT) {
 			di_flags |= XFS_DIFLAG_EXTSIZE;
@@ -837,7 +942,12 @@ xfs_init_new_inode(
 	inode->i_rdev = rdev;
 	ip->i_projid = prid;
 
+<<<<<<< HEAD
 	if (dir && !(dir->i_mode & S_ISGID) && xfs_has_grpid(mp)) {
+=======
+	if (dir && !(dir->i_mode & S_ISGID) &&
+	    (mp->m_flags & XFS_MOUNT_GRPID)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		inode_fsuid_set(inode, mnt_userns);
 		inode->i_gid = dir->i_gid;
 		inode->i_mode = mode;
@@ -867,7 +977,11 @@ xfs_init_new_inode(
 	ip->i_extsize = 0;
 	ip->i_diflags = 0;
 
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(mp)) {
+=======
+	if (xfs_sb_version_has_v3inode(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		inode_set_iversion(inode, 1);
 		ip->i_cowextsize = 0;
 		ip->i_crtime = tv;
@@ -907,7 +1021,11 @@ xfs_init_new_inode(
 	 * this saves us from needing to run a separate transaction to set the
 	 * fork offset in the immediate future.
 	 */
+<<<<<<< HEAD
 	if (init_xattrs && xfs_has_attr(mp)) {
+=======
+	if (init_xattrs && xfs_sb_version_hasattr(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ip->i_forkoff = xfs_default_attroffset(ip) >> 3;
 		ip->i_afp = xfs_ifork_alloc(XFS_DINODE_FMT_EXTENTS, 0);
 	}
@@ -986,7 +1104,11 @@ xfs_create(
 
 	trace_xfs_create(dp, name);
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	prid = xfs_get_initial_prid(dp);
@@ -1078,7 +1200,11 @@ xfs_create(
 	 * create transaction goes to disk before returning to
 	 * the user.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp) || xfs_has_dirsync(mp))
+=======
+	if (mp->m_flags & (XFS_MOUNT_WSYNC|XFS_MOUNT_DIRSYNC))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_trans_set_sync(tp);
 
 	/*
@@ -1140,7 +1266,11 @@ xfs_create_tmpfile(
 	uint			resblks;
 	xfs_ino_t		ino;
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	prid = xfs_get_initial_prid(dp);
@@ -1170,7 +1300,11 @@ xfs_create_tmpfile(
 	if (error)
 		goto out_trans_cancel;
 
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp))
+=======
+	if (mp->m_flags & XFS_MOUNT_WSYNC)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_trans_set_sync(tp);
 
 	/*
@@ -1230,7 +1364,11 @@ xfs_link(
 
 	ASSERT(!S_ISDIR(VFS_I(sip)->i_mode));
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	error = xfs_qm_dqattach(sip);
@@ -1304,7 +1442,11 @@ xfs_link(
 	 * link transaction goes to disk before returning to
 	 * the user.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp) || xfs_has_dirsync(mp))
+=======
+	if (mp->m_flags & (XFS_MOUNT_WSYNC|XFS_MOUNT_DIRSYNC))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_trans_set_sync(tp);
 
 	return xfs_trans_commit(tp);
@@ -1445,10 +1587,17 @@ xfs_release(
 		return 0;
 
 	/* If this is a read-only mount, don't do this (would generate I/O) */
+<<<<<<< HEAD
 	if (xfs_is_readonly(mp))
 		return 0;
 
 	if (!xfs_is_shutdown(mp)) {
+=======
+	if (mp->m_flags & XFS_MOUNT_RDONLY)
+		return 0;
+
+	if (!XFS_FORCED_SHUTDOWN(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		int truncated;
 
 		/*
@@ -1531,7 +1680,11 @@ xfs_inactive_truncate(
 
 	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_itruncate, 0, 0, 0, &tp);
 	if (error) {
+<<<<<<< HEAD
 		ASSERT(xfs_is_shutdown(mp));
+=======
+		ASSERT(XFS_FORCED_SHUTDOWN(mp));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return error;
 	}
 	xfs_ilock(ip, XFS_ILOCK_EXCL);
@@ -1602,7 +1755,11 @@ xfs_inactive_ifree(
 			"Failed to remove inode(s) from unlinked list. "
 			"Please free space, unmount and run xfs_repair.");
 		} else {
+<<<<<<< HEAD
 			ASSERT(xfs_is_shutdown(mp));
+=======
+			ASSERT(XFS_FORCED_SHUTDOWN(mp));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		return error;
 	}
@@ -1638,7 +1795,11 @@ xfs_inactive_ifree(
 		 * might do that, we need to make sure.  Otherwise the
 		 * inode might be lost for a long time or forever.
 		 */
+<<<<<<< HEAD
 		if (!xfs_is_shutdown(mp)) {
+=======
+		if (!XFS_FORCED_SHUTDOWN(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xfs_notice(mp, "%s: xfs_ifree returned error %d",
 				__func__, error);
 			xfs_force_shutdown(mp, SHUTDOWN_META_IO_ERROR);
@@ -1665,6 +1826,7 @@ xfs_inactive_ifree(
 }
 
 /*
+<<<<<<< HEAD
  * Returns true if we need to update the on-disk metadata before we can free
  * the memory used by this inode.  Updates include freeing post-eof
  * preallocations; freeing COW staging extents; and marking the inode free in
@@ -1718,6 +1880,8 @@ xfs_inode_needs_inactive(
 }
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * xfs_inactive
  *
  * This is called when the vnode reference count for the vnode
@@ -1746,7 +1910,11 @@ xfs_inactive(
 	ASSERT(!xfs_iflags_test(ip, XFS_IRECOVERY));
 
 	/* If this is a read-only mount, don't do this (would generate I/O) */
+<<<<<<< HEAD
 	if (xfs_is_readonly(mp))
+=======
+	if (mp->m_flags & XFS_MOUNT_RDONLY)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 
 	/* Metadata inodes require explicit resource cleanup. */
@@ -2021,7 +2189,11 @@ xfs_iunlink_destroy(
 	rhashtable_free_and_destroy(&pag->pagi_unlinked_hash,
 			xfs_iunlink_free_item, &freed_anything);
 
+<<<<<<< HEAD
 	ASSERT(freed_anything == false || xfs_is_shutdown(pag->pag_mount));
+=======
+	ASSERT(freed_anything == false || XFS_FORCED_SHUTDOWN(pag->pag_mount));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -2766,7 +2938,11 @@ xfs_remove(
 
 	trace_xfs_remove(dp, name);
 
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EIO;
 
 	error = xfs_qm_dqattach(dp);
@@ -2826,6 +3002,7 @@ xfs_remove(
 		error = xfs_droplink(tp, ip);
 		if (error)
 			goto out_trans_cancel;
+<<<<<<< HEAD
 
 		/*
 		 * Point the unlinked child directory's ".." entry to the root
@@ -2839,6 +3016,8 @@ xfs_remove(
 			if (error)
 				return error;
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		/*
 		 * When removing a non-directory we need to log the parent
@@ -2865,7 +3044,11 @@ xfs_remove(
 	 * remove transaction goes to disk before returning to
 	 * the user.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_wsync(mp) || xfs_has_dirsync(mp))
+=======
+	if (mp->m_flags & (XFS_MOUNT_WSYNC|XFS_MOUNT_DIRSYNC))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_trans_set_sync(tp);
 
 	error = xfs_trans_commit(tp);
@@ -2942,7 +3125,11 @@ xfs_finish_rename(
 	 * If this is a synchronous mount, make sure that the rename transaction
 	 * goes to disk before returning to the user.
 	 */
+<<<<<<< HEAD
 	if (xfs_has_wsync(tp->t_mountp) || xfs_has_dirsync(tp->t_mountp))
+=======
+	if (tp->t_mountp->m_flags & (XFS_MOUNT_WSYNC|XFS_MOUNT_DIRSYNC))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_trans_set_sync(tp);
 
 	return xfs_trans_commit(tp);
@@ -3525,7 +3712,11 @@ xfs_iflush(
 	 * happen but we need to still do it to ensure backwards compatibility
 	 * with old kernels that predate logging all inode changes.
 	 */
+<<<<<<< HEAD
 	if (!xfs_has_v3inodes(mp))
+=======
+	if (!xfs_sb_version_has_v3inode(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ip->i_flushiter++;
 
 	/*
@@ -3547,7 +3738,11 @@ xfs_iflush(
 	xfs_inode_to_disk(ip, dip, iip->ili_item.li_lsn);
 
 	/* Wrap, we never let the log put out DI_MAX_FLUSH */
+<<<<<<< HEAD
 	if (!xfs_has_v3inodes(mp)) {
+=======
+	if (!xfs_sb_version_has_v3inode(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ip->i_flushiter == DI_MAX_FLUSH)
 			ip->i_flushiter = 0;
 	}
@@ -3666,7 +3861,11 @@ xfs_iflush_cluster(
 		 * AIL, leaving a dirty/unpinned inode attached to the buffer
 		 * that otherwise looks like it should be flushed.
 		 */
+<<<<<<< HEAD
 		if (xfs_is_shutdown(mp)) {
+=======
+		if (XFS_FORCED_SHUTDOWN(mp)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xfs_iunpin_wait(ip);
 			xfs_iflush_abort(ip);
 			xfs_iunlock(ip, XFS_ILOCK_SHARED);
@@ -3804,8 +4003,16 @@ xfs_ilock2_io_mmap(
 	ret = xfs_iolock_two_inodes_and_break_layout(VFS_I(ip1), VFS_I(ip2));
 	if (ret)
 		return ret;
+<<<<<<< HEAD
 	filemap_invalidate_lock_two(VFS_I(ip1)->i_mapping,
 				    VFS_I(ip2)->i_mapping);
+=======
+	if (ip1 == ip2)
+		xfs_ilock(ip1, XFS_MMAPLOCK_EXCL);
+	else
+		xfs_lock_two_inodes(ip1, XFS_MMAPLOCK_EXCL,
+				    ip2, XFS_MMAPLOCK_EXCL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -3815,9 +4022,19 @@ xfs_iunlock2_io_mmap(
 	struct xfs_inode	*ip1,
 	struct xfs_inode	*ip2)
 {
+<<<<<<< HEAD
 	filemap_invalidate_unlock_two(VFS_I(ip1)->i_mapping,
 				      VFS_I(ip2)->i_mapping);
 	inode_unlock(VFS_I(ip2));
 	if (ip1 != ip2)
+=======
+	bool			same_inode = (ip1 == ip2);
+
+	xfs_iunlock(ip2, XFS_MMAPLOCK_EXCL);
+	if (!same_inode)
+		xfs_iunlock(ip1, XFS_MMAPLOCK_EXCL);
+	inode_unlock(VFS_I(ip2));
+	if (!same_inode)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		inode_unlock(VFS_I(ip1));
 }

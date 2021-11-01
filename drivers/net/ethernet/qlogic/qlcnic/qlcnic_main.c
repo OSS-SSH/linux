@@ -2343,9 +2343,17 @@ qlcnic_setup_netdev(struct qlcnic_adapter *adapter, struct net_device *netdev,
 
 static int qlcnic_set_dma_mask(struct pci_dev *pdev, int *pci_using_dac)
 {
+<<<<<<< HEAD
 	if (!dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64)))
 		*pci_using_dac = 1;
 	else if (!dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32)))
+=======
+	if (!pci_set_dma_mask(pdev, DMA_BIT_MASK(64)) &&
+			!pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64)))
+		*pci_using_dac = 1;
+	else if (!pci_set_dma_mask(pdev, DMA_BIT_MASK(32)) &&
+			!pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		*pci_using_dac = 0;
 	else {
 		dev_err(&pdev->dev, "Unable to set DMA mask, aborting\n");

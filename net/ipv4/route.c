@@ -276,6 +276,7 @@ static int rt_cpu_seq_show(struct seq_file *seq, void *v)
 	struct rt_cache_stat *st = v;
 
 	if (v == SEQ_START_TOKEN) {
+<<<<<<< HEAD
 		seq_puts(seq, "entries  in_hit   in_slow_tot in_slow_mc in_no_route in_brd   in_martian_dst in_martian_src out_hit  out_slow_tot out_slow_mc gc_total gc_ignored gc_goal_miss gc_dst_overflow in_hlist_search out_hlist_search\n");
 		return 0;
 	}
@@ -283,6 +284,14 @@ static int rt_cpu_seq_show(struct seq_file *seq, void *v)
 	seq_printf(seq, "%08x %08x %08x    %08x   %08x    %08x %08x       "
 			"%08x       %08x %08x     %08x    %08x %08x   "
 			"%08x     %08x        %08x        %08x\n",
+=======
+		seq_printf(seq, "entries  in_hit in_slow_tot in_slow_mc in_no_route in_brd in_martian_dst in_martian_src  out_hit out_slow_tot out_slow_mc  gc_total gc_ignored gc_goal_miss gc_dst_overflow in_hlist_search out_hlist_search\n");
+		return 0;
+	}
+
+	seq_printf(seq,"%08x  %08x %08x %08x %08x %08x %08x %08x "
+		   " %08x %08x %08x %08x %08x %08x %08x %08x %08x \n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   dst_entries_get_slow(&ipv4_dst_ops),
 		   0, /* st->in_hit */
 		   st->in_slow_tot,
@@ -587,6 +596,7 @@ static void fnhe_flush_routes(struct fib_nh_exception *fnhe)
 	}
 }
 
+<<<<<<< HEAD
 static void fnhe_remove_oldest(struct fnhe_hash_bucket *hash)
 {
 	struct fib_nh_exception __rcu **fnhe_p, **oldest_p;
@@ -616,6 +626,30 @@ static u32 fnhe_hashfun(__be32 daddr)
 	net_get_random_once(&fnhe_hash_key, sizeof(fnhe_hash_key));
 	hval = siphash_1u32((__force u32)daddr, &fnhe_hash_key);
 	return hash_64(hval, FNHE_HASH_SHIFT);
+=======
+static struct fib_nh_exception *fnhe_oldest(struct fnhe_hash_bucket *hash)
+{
+	struct fib_nh_exception *fnhe, *oldest;
+
+	oldest = rcu_dereference(hash->chain);
+	for (fnhe = rcu_dereference(oldest->fnhe_next); fnhe;
+	     fnhe = rcu_dereference(fnhe->fnhe_next)) {
+		if (time_before(fnhe->fnhe_stamp, oldest->fnhe_stamp))
+			oldest = fnhe;
+	}
+	fnhe_flush_routes(oldest);
+	return oldest;
+}
+
+static inline u32 fnhe_hashfun(__be32 daddr)
+{
+	static u32 fnhe_hashrnd __read_mostly;
+	u32 hval;
+
+	net_get_random_once(&fnhe_hashrnd, sizeof(fnhe_hashrnd));
+	hval = jhash_1word((__force u32)daddr, fnhe_hashrnd);
+	return hash_32(hval, FNHE_HASH_SHIFT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void fill_route_from_fnhe(struct rtable *rt, struct fib_nh_exception *fnhe)
@@ -684,6 +718,7 @@ static void update_or_create_fnhe(struct fib_nh_common *nhc, __be32 daddr,
 		if (rt)
 			fill_route_from_fnhe(rt, fnhe);
 	} else {
+<<<<<<< HEAD
 		/* Randomize max depth to avoid some side channels attacks. */
 		int max_depth = FNHE_RECLAIM_DEPTH +
 				prandom_u32_max(FNHE_RECLAIM_DEPTH);
@@ -699,6 +734,18 @@ static void update_or_create_fnhe(struct fib_nh_common *nhc, __be32 daddr,
 
 		fnhe->fnhe_next = hash->chain;
 
+=======
+		if (depth > FNHE_RECLAIM_DEPTH)
+			fnhe = fnhe_oldest(hash);
+		else {
+			fnhe = kzalloc(sizeof(*fnhe), GFP_ATOMIC);
+			if (!fnhe)
+				goto out_unlock;
+
+			fnhe->fnhe_next = hash->chain;
+			rcu_assign_pointer(hash->chain, fnhe);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		fnhe->fnhe_genid = genid;
 		fnhe->fnhe_daddr = daddr;
 		fnhe->fnhe_gw = gw;
@@ -706,8 +753,11 @@ static void update_or_create_fnhe(struct fib_nh_common *nhc, __be32 daddr,
 		fnhe->fnhe_mtu_locked = lock;
 		fnhe->fnhe_expires = max(1UL, expires);
 
+<<<<<<< HEAD
 		rcu_assign_pointer(hash->chain, fnhe);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Exception created; mark the cached routes for the nexthop
 		 * stale, so anyone caching it rechecks if this exception
 		 * applies to them.
@@ -1314,7 +1364,30 @@ static unsigned int ipv4_default_advmss(const struct dst_entry *dst)
 
 INDIRECT_CALLABLE_SCOPE unsigned int ipv4_mtu(const struct dst_entry *dst)
 {
+<<<<<<< HEAD
 	return ip_dst_mtu_maybe_forward(dst, false);
+=======
+	const struct rtable *rt = (const struct rtable *)dst;
+	unsigned int mtu = rt->rt_pmtu;
+
+	if (!mtu || time_after_eq(jiffies, rt->dst.expires))
+		mtu = dst_metric_raw(dst, RTAX_MTU);
+
+	if (mtu)
+		goto out;
+
+	mtu = READ_ONCE(dst->dev->mtu);
+
+	if (unlikely(ip_mtu_locked(dst))) {
+		if (rt->rt_uses_gateway && mtu > 576)
+			mtu = 576;
+	}
+
+out:
+	mtu = min_t(unsigned int, mtu, IP_MAX_MTU);
+
+	return mtu - lwtunnel_headroom(dst->lwtstate, mtu);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_INDIRECT_CALLABLE(ipv4_mtu);
 
@@ -2827,7 +2900,12 @@ struct dst_entry *ipv4_blackhole_route(struct net *net, struct dst_entry *dst_or
 		new->output = dst_discard_out;
 
 		new->dev = net->loopback_dev;
+<<<<<<< HEAD
 		dev_hold(new->dev);
+=======
+		if (new->dev)
+			dev_hold(new->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		rt->rt_is_input = ort->rt_is_input;
 		rt->rt_iif = ort->rt_iif;
@@ -3165,7 +3243,11 @@ static struct sk_buff *inet_rtm_getroute_build_skb(__be32 src, __be32 dst,
 		udph = skb_put_zero(skb, sizeof(struct udphdr));
 		udph->source = sport;
 		udph->dest = dport;
+<<<<<<< HEAD
 		udph->len = htons(sizeof(struct udphdr));
+=======
+		udph->len = sizeof(struct udphdr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		udph->check = 0;
 		break;
 	}

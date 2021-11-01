@@ -435,6 +435,10 @@ static int fastop(struct x86_emulate_ctxt *ctxt, fastop_t fop);
 	__FOP_RET(#op)
 
 asm(".pushsection .fixup, \"ax\"\n"
+<<<<<<< HEAD
+=======
+    ".global kvm_fastop_exception \n"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     "kvm_fastop_exception: xor %esi, %esi; ret\n"
     ".popsection");
 
@@ -4205,7 +4209,11 @@ static int check_rdtsc(struct x86_emulate_ctxt *ctxt)
 	u64 cr4 = ctxt->ops->get_cr(ctxt, 4);
 
 	if (cr4 & X86_CR4_TSD && ctxt->ops->cpl(ctxt))
+<<<<<<< HEAD
 		return emulate_gp(ctxt, 0);
+=======
+		return emulate_ud(ctxt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return X86EMUL_CONTINUE;
 }

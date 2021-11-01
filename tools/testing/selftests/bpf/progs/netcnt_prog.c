@@ -13,21 +13,35 @@
 struct {
 	__uint(type, BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE);
 	__type(key, struct bpf_cgroup_storage_key);
+<<<<<<< HEAD
 	__type(value, union percpu_net_cnt);
+=======
+	__type(value, struct percpu_net_cnt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } percpu_netcnt SEC(".maps");
 
 struct {
 	__uint(type, BPF_MAP_TYPE_CGROUP_STORAGE);
 	__type(key, struct bpf_cgroup_storage_key);
+<<<<<<< HEAD
 	__type(value, union net_cnt);
+=======
+	__type(value, struct net_cnt);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 } netcnt SEC(".maps");
 
 SEC("cgroup/skb")
 int bpf_nextcnt(struct __sk_buff *skb)
 {
+<<<<<<< HEAD
 	union percpu_net_cnt *percpu_cnt;
 	char fmt[] = "%d %llu %llu\n";
 	union net_cnt *cnt;
+=======
+	struct percpu_net_cnt *percpu_cnt;
+	char fmt[] = "%d %llu %llu\n";
+	struct net_cnt *cnt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u64 ts, dt;
 	int ret;
 

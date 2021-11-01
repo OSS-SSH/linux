@@ -6,7 +6,10 @@
 
 #define pr_fmt(fmt)     "AMD-Vi: " fmt
 
+<<<<<<< HEAD
 #include <linux/refcount.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/mmu_notifier.h>
 #include <linux/amd-iommu.h>
 #include <linux/mm_types.h>
@@ -34,7 +37,11 @@ struct pri_queue {
 
 struct pasid_state {
 	struct list_head list;			/* For global state-list */
+<<<<<<< HEAD
 	refcount_t count;				/* Reference count */
+=======
+	atomic_t count;				/* Reference count */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned mmu_notifier_count;		/* Counting nested mmu_notifier
 						   calls */
 	struct mm_struct *mm;			/* mm_struct for the faults */
@@ -243,7 +250,11 @@ static struct pasid_state *get_pasid_state(struct device_state *dev_state,
 
 	ret = *ptr;
 	if (ret)
+<<<<<<< HEAD
 		refcount_inc(&ret->count);
+=======
+		atomic_inc(&ret->count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 out_unlock:
 	spin_unlock_irqrestore(&dev_state->lock, flags);
@@ -258,14 +269,23 @@ static void free_pasid_state(struct pasid_state *pasid_state)
 
 static void put_pasid_state(struct pasid_state *pasid_state)
 {
+<<<<<<< HEAD
 	if (refcount_dec_and_test(&pasid_state->count))
+=======
+	if (atomic_dec_and_test(&pasid_state->count))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		wake_up(&pasid_state->wq);
 }
 
 static void put_pasid_state_wait(struct pasid_state *pasid_state)
 {
+<<<<<<< HEAD
 	refcount_dec(&pasid_state->count);
 	wait_event(pasid_state->wq, !refcount_read(&pasid_state->count));
+=======
+	atomic_dec(&pasid_state->count);
+	wait_event(pasid_state->wq, !atomic_read(&pasid_state->count));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	free_pasid_state(pasid_state);
 }
 
@@ -625,7 +645,11 @@ int amd_iommu_bind_pasid(struct pci_dev *pdev, u32 pasid,
 		goto out;
 
 
+<<<<<<< HEAD
 	refcount_set(&pasid_state->count, 1);
+=======
+	atomic_set(&pasid_state->count, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	init_waitqueue_head(&pasid_state->wq);
 	spin_lock_init(&pasid_state->lock);
 

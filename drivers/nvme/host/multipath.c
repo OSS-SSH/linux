@@ -147,6 +147,7 @@ void nvme_mpath_clear_ctrl_paths(struct nvme_ctrl *ctrl)
 	mutex_unlock(&ctrl->scan_lock);
 }
 
+<<<<<<< HEAD
 void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
 {
 	struct nvme_ns_head *head = ns->head;
@@ -162,6 +163,8 @@ void nvme_mpath_revalidate_paths(struct nvme_ns *ns)
 		rcu_assign_pointer(head->current_path[node], NULL);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool nvme_path_is_disabled(struct nvme_ns *ns)
 {
 	/*
@@ -173,7 +176,11 @@ static bool nvme_path_is_disabled(struct nvme_ns *ns)
 	    ns->ctrl->state != NVME_CTRL_DELETING)
 		return true;
 	if (test_bit(NVME_NS_ANA_PENDING, &ns->flags) ||
+<<<<<<< HEAD
 	    !test_bit(NVME_NS_READY, &ns->flags))
+=======
+	    test_bit(NVME_NS_REMOVING, &ns->flags))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 	return false;
 }
@@ -431,6 +438,11 @@ static int nvme_add_ns_head_cdev(struct nvme_ns_head *head)
 		return ret;
 	ret = nvme_cdev_add(&head->cdev, &head->cdev_device,
 			    &nvme_ns_head_chr_fops, THIS_MODULE);
+<<<<<<< HEAD
+=======
+	if (ret)
+		kfree_const(head->cdev_device.kobj.name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -478,8 +490,11 @@ int nvme_mpath_alloc_disk(struct nvme_ctrl *ctrl, struct nvme_ns_head *head)
 			ctrl->subsys->instance, head->instance);
 
 	blk_queue_flag_set(QUEUE_FLAG_NONROT, head->disk->queue);
+<<<<<<< HEAD
 	blk_queue_flag_set(QUEUE_FLAG_NOWAIT, head->disk->queue);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* set to a default value of 512 until the disk is validated */
 	blk_queue_logical_block_size(head->disk->queue, 512);
 	blk_set_stacking_limits(&head->disk->queue->limits);
@@ -598,17 +613,25 @@ static int nvme_update_ana_state(struct nvme_ctrl *ctrl,
 
 	down_read(&ctrl->namespaces_rwsem);
 	list_for_each_entry(ns, &ctrl->namespaces, list) {
+<<<<<<< HEAD
 		unsigned nsid;
 again:
 		nsid = le32_to_cpu(desc->nsids[n]);
+=======
+		unsigned nsid = le32_to_cpu(desc->nsids[n]);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (ns->head->ns_id < nsid)
 			continue;
 		if (ns->head->ns_id == nsid)
 			nvme_update_ns_ana_state(desc, ns);
 		if (++n == nr_nsids)
 			break;
+<<<<<<< HEAD
 		if (ns->head->ns_id > nsid)
 			goto again;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	up_read(&ctrl->namespaces_rwsem);
 	return 0;
@@ -778,6 +801,7 @@ void nvme_mpath_add_disk(struct nvme_ns *ns, struct nvme_id_ns *id)
 #endif
 }
 
+<<<<<<< HEAD
 void nvme_mpath_shutdown_disk(struct nvme_ns_head *head)
 {
 	if (!head->disk)
@@ -793,6 +817,16 @@ void nvme_mpath_remove_disk(struct nvme_ns_head *head)
 {
 	if (!head->disk)
 		return;
+=======
+void nvme_mpath_remove_disk(struct nvme_ns_head *head)
+{
+	if (!head->disk)
+		return;
+	if (head->disk->flags & GENHD_FL_UP) {
+		nvme_cdev_del(&head->cdev, &head->cdev_device);
+		del_gendisk(head->disk);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	blk_set_queue_dying(head->disk->queue);
 	/* make sure all pending bios are cleaned up */
 	kblockd_schedule_work(&head->requeue_work);

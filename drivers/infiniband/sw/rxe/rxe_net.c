@@ -259,7 +259,10 @@ static void prepare_ipv4_hdr(struct dst_entry *dst, struct sk_buff *skb,
 
 	iph->version	=	IPVERSION;
 	iph->ihl	=	sizeof(struct iphdr) >> 2;
+<<<<<<< HEAD
 	iph->tot_len	=	htons(skb->len);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	iph->frag_off	=	df;
 	iph->protocol	=	proto;
 	iph->tos	=	tos;
@@ -344,7 +347,11 @@ static int prepare6(struct rxe_pkt_info *pkt, struct sk_buff *skb)
 	return 0;
 }
 
+<<<<<<< HEAD
 int rxe_prepare(struct rxe_pkt_info *pkt, struct sk_buff *skb)
+=======
+int rxe_prepare(struct rxe_pkt_info *pkt, struct sk_buff *skb, u32 *crc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err = 0;
 
@@ -353,6 +360,11 @@ int rxe_prepare(struct rxe_pkt_info *pkt, struct sk_buff *skb)
 	else if (skb->protocol == htons(ETH_P_IPV6))
 		err = prepare6(pkt, skb);
 
+<<<<<<< HEAD
+=======
+	*crc = rxe_icrc_hdr(pkt, skb);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ether_addr_equal(skb->dev->dev_addr, rxe_get_av(pkt)->dmac))
 		pkt->mask |= RXE_LOOPBACK_MASK;
 
@@ -372,7 +384,11 @@ static void rxe_skb_tx_dtor(struct sk_buff *skb)
 	rxe_drop_ref(qp);
 }
 
+<<<<<<< HEAD
 static int rxe_send(struct sk_buff *skb, struct rxe_pkt_info *pkt)
+=======
+int rxe_send(struct rxe_pkt_info *pkt, struct sk_buff *skb)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err;
 
@@ -405,15 +421,22 @@ static int rxe_send(struct sk_buff *skb, struct rxe_pkt_info *pkt)
 /* fix up a send packet to match the packets
  * received from UDP before looping them back
  */
+<<<<<<< HEAD
 static int rxe_loopback(struct sk_buff *skb, struct rxe_pkt_info *pkt)
 {
 	memcpy(SKB_TO_PKT(skb), pkt, sizeof(*pkt));
+=======
+void rxe_loopback(struct sk_buff *skb)
+{
+	struct rxe_pkt_info *pkt = SKB_TO_PKT(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (skb->protocol == htons(ETH_P_IP))
 		skb_pull(skb, sizeof(struct iphdr));
 	else
 		skb_pull(skb, sizeof(struct ipv6hdr));
 
+<<<<<<< HEAD
 	if (WARN_ON(!ib_device_try_get(&pkt->rxe->ib_dev))) {
 		kfree_skb(skb);
 		return -EIO;
@@ -463,6 +486,12 @@ drop:
 	err = 0;
 done:
 	return err;
+=======
+	if (WARN_ON(!ib_device_try_get(&pkt->rxe->ib_dev)))
+		kfree_skb(skb);
+	else
+		rxe_rcv(skb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 struct sk_buff *rxe_init_packet(struct rxe_dev *rxe, struct rxe_av *av,

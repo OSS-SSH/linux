@@ -407,8 +407,11 @@ static void syncpt_release(struct kref *ref)
 
 	atomic_set(&sp->max_val, host1x_syncpt_read(sp));
 
+<<<<<<< HEAD
 	sp->locked = false;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_lock(&sp->host->syncpt_mutex);
 
 	host1x_syncpt_base_free(sp->base);

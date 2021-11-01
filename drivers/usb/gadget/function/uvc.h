@@ -65,12 +65,17 @@ extern unsigned int uvc_gadget_trace_param;
  * Driver specific constants
  */
 
+<<<<<<< HEAD
+=======
+#define UVC_NUM_REQUESTS			4
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define UVC_MAX_REQUEST_SIZE			64
 #define UVC_MAX_EVENTS				4
 
 /* ------------------------------------------------------------------------
  * Structures
  */
+<<<<<<< HEAD
 struct uvc_request {
 	struct usb_request *req;
 	u8 *req_buffer;
@@ -78,6 +83,8 @@ struct uvc_request {
 	struct sg_table sgt;
 	u8 header[2];
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct uvc_video {
 	struct uvc_device *uvc;
@@ -93,6 +100,7 @@ struct uvc_video {
 	unsigned int imagesize;
 	struct mutex mutex;	/* protects frame parameters */
 
+<<<<<<< HEAD
 	unsigned int uvc_num_requests;
 
 	/* Requests */
@@ -103,6 +111,15 @@ struct uvc_video {
 
 	unsigned int req_int_count;
 
+=======
+	/* Requests */
+	unsigned int req_size;
+	struct usb_request *req[UVC_NUM_REQUESTS];
+	__u8 *req_buffer[UVC_NUM_REQUESTS];
+	struct list_head req_free;
+	spinlock_t req_lock;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*encode) (struct usb_request *req, struct uvc_video *video,
 			struct uvc_buffer *buf);
 

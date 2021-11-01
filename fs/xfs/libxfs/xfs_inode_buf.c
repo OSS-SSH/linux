@@ -48,7 +48,11 @@ xfs_inode_buf_verify(
 	/*
 	 * Validate the magic number and version of every inode in the buffer
 	 */
+<<<<<<< HEAD
 	agno = xfs_daddr_to_agno(mp, xfs_buf_daddr(bp));
+=======
+	agno = xfs_daddr_to_agno(mp, XFS_BUF_ADDR(bp));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ni = XFS_BB_TO_FSB(mp, bp->b_length) * mp->m_sb.sb_inopblock;
 	for (i = 0; i < ni; i++) {
 		int		di_ok;
@@ -58,7 +62,11 @@ xfs_inode_buf_verify(
 		dip = xfs_buf_offset(bp, (i << mp->m_sb.sb_inodelog));
 		unlinked_ino = be32_to_cpu(dip->di_next_unlinked);
 		di_ok = xfs_verify_magic16(bp, dip->di_magic) &&
+<<<<<<< HEAD
 			xfs_dinode_good_version(mp, dip->di_version) &&
+=======
+			xfs_dinode_good_version(&mp->m_sb, dip->di_version) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xfs_verify_agino_or_null(mp, agno, unlinked_ino);
 		if (unlikely(XFS_TEST_ERROR(!di_ok, mp,
 						XFS_ERRTAG_ITOBP_INOTOBP))) {
@@ -71,7 +79,11 @@ xfs_inode_buf_verify(
 #ifdef DEBUG
 			xfs_alert(mp,
 				"bad inode magic/vsn daddr %lld #%d (magic=%x)",
+<<<<<<< HEAD
 				(unsigned long long)xfs_buf_daddr(bp), i,
+=======
+				(unsigned long long)bp->b_bn, i,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				be16_to_cpu(dip->di_magic));
 #endif
 			xfs_buf_verifier_error(bp, -EFSCORRUPTED,
@@ -192,7 +204,11 @@ xfs_inode_from_disk(
 	 * inode. If the inode is unused, mode is zero and we shouldn't mess
 	 * with the uninitialized part of it.
 	 */
+<<<<<<< HEAD
 	if (!xfs_has_v3inodes(ip->i_mount))
+=======
+	if (!xfs_sb_version_has_v3inode(&ip->i_mount->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ip->i_flushiter = be16_to_cpu(from->di_flushiter);
 	inode->i_generation = be32_to_cpu(from->di_gen);
 	inode->i_mode = be16_to_cpu(from->di_mode);
@@ -235,7 +251,11 @@ xfs_inode_from_disk(
 	if (from->di_dmevmask || from->di_dmstate)
 		xfs_iflags_set(ip, XFS_IPRESERVE_DM_FIELDS);
 
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(ip->i_mount)) {
+=======
+	if (xfs_sb_version_has_v3inode(&ip->i_mount->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		inode_set_iversion_queried(inode,
 					   be64_to_cpu(from->di_changecount));
 		ip->i_crtime = xfs_inode_from_disk_ts(from, from->di_crtime);
@@ -313,7 +333,11 @@ xfs_inode_to_disk(
 	to->di_aformat = xfs_ifork_format(ip->i_afp);
 	to->di_flags = cpu_to_be16(ip->i_diflags);
 
+<<<<<<< HEAD
 	if (xfs_has_v3inodes(ip->i_mount)) {
+=======
+	if (xfs_sb_version_has_v3inode(&ip->i_mount->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		to->di_version = 3;
 		to->di_changecount = cpu_to_be64(inode_peek_iversion(inode));
 		to->di_crtime = xfs_inode_to_disk_ts(ip, ip->i_crtime);
@@ -413,7 +437,11 @@ xfs_dinode_verify(
 
 	/* Verify v3 integrity information first */
 	if (dip->di_version >= 3) {
+<<<<<<< HEAD
 		if (!xfs_has_v3inodes(mp))
+=======
+		if (!xfs_sb_version_has_v3inode(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return __this_address;
 		if (!xfs_verify_cksum((char *)dip, mp->m_sb.sb_inodesize,
 				      XFS_DINODE_CRC_OFF))
@@ -515,7 +543,11 @@ xfs_dinode_verify(
 
 	/* don't allow reflink/cowextsize if we don't have reflink */
 	if ((flags2 & (XFS_DIFLAG2_REFLINK | XFS_DIFLAG2_COWEXTSIZE)) &&
+<<<<<<< HEAD
 	     !xfs_has_reflink(mp))
+=======
+	     !xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return __this_address;
 
 	/* only regular files get reflink */
@@ -534,7 +566,11 @@ xfs_dinode_verify(
 
 	/* bigtime iflag can only happen on bigtime filesystems */
 	if (xfs_dinode_has_bigtime(dip) &&
+<<<<<<< HEAD
 	    !xfs_has_bigtime(mp))
+=======
+	    !xfs_sb_version_hasbigtime(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return __this_address;
 
 	return NULL;
@@ -550,7 +586,11 @@ xfs_dinode_calc_crc(
 	if (dip->di_version < 3)
 		return;
 
+<<<<<<< HEAD
 	ASSERT(xfs_has_crc(mp));
+=======
+	ASSERT(xfs_sb_version_hascrc(&mp->m_sb));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	crc = xfs_start_cksum_update((char *)dip, mp->m_sb.sb_inodesize,
 			      XFS_DINODE_CRC_OFF);
 	dip->di_crc = xfs_end_cksum(crc);
@@ -592,6 +632,7 @@ xfs_inode_validate_extsize(
 	/*
 	 * This comment describes a historic gap in this verifier function.
 	 *
+<<<<<<< HEAD
 	 * For a directory with both RTINHERIT and EXTSZINHERIT flags set, this
 	 * function has never checked that the extent size hint is an integer
 	 * multiple of the realtime extent size.  Since we allow users to set
@@ -600,10 +641,18 @@ xfs_inode_validate_extsize(
 	 * is that users can configure a filesystem anticipating one rt
 	 * geometry and change their minds later.  Directories do not use the
 	 * extent size hint, so this is harmless for them.
+=======
+	 * On older kernels, the extent size hint verifier doesn't check that
+	 * the extent size hint is an integer multiple of the realtime extent
+	 * size on a directory with both RTINHERIT and EXTSZINHERIT flags set.
+	 * The verifier has always enforced the alignment rule for regular
+	 * files with the REALTIME flag set.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 *
 	 * If a directory with a misaligned extent size hint is allowed to
 	 * propagate that hint into a new regular realtime file, the result
 	 * is that the inode cluster buffer verifier will trigger a corruption
+<<<<<<< HEAD
 	 * shutdown the next time it is run, because the verifier has always
 	 * enforced the alignment rule for regular files.
 	 *
@@ -613,6 +662,16 @@ xfs_inode_validate_extsize(
 	 * reading an existing filesystem.  Instead, we rely on callers to
 	 * decide when alignment checks are appropriate, and fix things up as
 	 * needed.
+=======
+	 * shutdown the next time it is run.
+	 *
+	 * Unfortunately, there could be filesystems with these misconfigured
+	 * directories in the wild, so we cannot add a check to this verifier
+	 * at this time because that will result a new source of directory
+	 * corruption errors when reading an existing filesystem.  Instead, we
+	 * permit the misconfiguration to pass through the verifiers so that
+	 * callers of this function can correct and mitigate externally.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 */
 
 	if (rt_flag)
@@ -677,7 +736,11 @@ xfs_inode_validate_cowextsize(
 	hint_flag = (flags2 & XFS_DIFLAG2_COWEXTSIZE);
 	cowextsize_bytes = XFS_FSB_TO_B(mp, cowextsize);
 
+<<<<<<< HEAD
 	if (hint_flag && !xfs_has_reflink(mp))
+=======
+	if (hint_flag && !xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return __this_address;
 
 	if (hint_flag && !(S_ISDIR(mode) || S_ISREG(mode)))

@@ -137,20 +137,30 @@ static void pmc_reprogram_counter(struct kvm_pmc *pmc, u32 type,
 	pmc->perf_event = event;
 	pmc_to_pmu(pmc)->event_count++;
 	clear_bit(pmc->idx, pmc_to_pmu(pmc)->reprogram_pmi);
+<<<<<<< HEAD
 	pmc->is_paused = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void pmc_pause_counter(struct kvm_pmc *pmc)
 {
 	u64 counter = pmc->counter;
 
+<<<<<<< HEAD
 	if (!pmc->perf_event || pmc->is_paused)
+=======
+	if (!pmc->perf_event)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	/* update counter, reset event value to avoid redundant accumulation */
 	counter += perf_event_pause(pmc->perf_event, true);
 	pmc->counter = counter & pmc_bitmask(pmc);
+<<<<<<< HEAD
 	pmc->is_paused = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static bool pmc_resume_counter(struct kvm_pmc *pmc)
@@ -165,7 +175,10 @@ static bool pmc_resume_counter(struct kvm_pmc *pmc)
 
 	/* reuse perf_event to serve as pmc_reprogram_counter() does*/
 	perf_event_enable(pmc->perf_event);
+<<<<<<< HEAD
 	pmc->is_paused = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	clear_bit(pmc->idx, (unsigned long *)&pmc_to_pmu(pmc)->reprogram_pmi);
 	return true;

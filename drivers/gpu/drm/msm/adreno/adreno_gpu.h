@@ -42,8 +42,11 @@ struct adreno_rev {
 	uint8_t  patchid;
 };
 
+<<<<<<< HEAD
 #define ANY_ID 0xff
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ADRENO_REV(core, major, minor, patchid) \
 	((struct adreno_rev){ core, major, minor, patchid })
 
@@ -143,8 +146,11 @@ struct adreno_platform_config {
 	__ret;                                             \
 })
 
+<<<<<<< HEAD
 bool adreno_cmp_rev(struct adreno_rev rev1, struct adreno_rev rev2);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool adreno_is_a2xx(struct adreno_gpu *gpu)
 {
 	return (gpu->revn < 300);
@@ -241,9 +247,15 @@ static inline int adreno_is_a630(struct adreno_gpu *gpu)
        return gpu->revn == 630;
 }
 
+<<<<<<< HEAD
 static inline int adreno_is_a640_family(struct adreno_gpu *gpu)
 {
 	return (gpu->revn == 640) || (gpu->revn == 680);
+=======
+static inline int adreno_is_a640(struct adreno_gpu *gpu)
+{
+       return gpu->revn == 640;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int adreno_is_a650(struct adreno_gpu *gpu)
@@ -251,17 +263,21 @@ static inline int adreno_is_a650(struct adreno_gpu *gpu)
        return gpu->revn == 650;
 }
 
+<<<<<<< HEAD
 static inline int adreno_is_7c3(struct adreno_gpu *gpu)
 {
 	/* The order of args is important here to handle ANY_ID correctly */
        return adreno_cmp_rev(ADRENO_REV(6, 3, 5, ANY_ID), gpu->rev);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int adreno_is_a660(struct adreno_gpu *gpu)
 {
        return gpu->revn == 660;
 }
 
+<<<<<<< HEAD
 static inline int adreno_is_a660_family(struct adreno_gpu *gpu)
 {
        return adreno_is_a660(gpu) || adreno_is_7c3(gpu);
@@ -272,6 +288,12 @@ static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
 {
        return gpu->revn == 650 || gpu->revn == 620 ||
 	       adreno_is_a660_family(gpu);
+=======
+/* check for a650, a660, or any derivatives */
+static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
+{
+       return gpu->revn == 650 || gpu->revn == 620 || gpu->revn == 660;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value);

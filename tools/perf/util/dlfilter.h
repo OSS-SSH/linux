@@ -93,7 +93,10 @@ static inline int dlfilter__filter_event_early(struct dlfilter *d,
 }
 
 int list_available_dlfilters(const struct option *opt, const char *s, int unset);
+<<<<<<< HEAD
 bool get_filter_desc(const char *dirname, const char *name, char **desc,
 		     char **long_desc);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif

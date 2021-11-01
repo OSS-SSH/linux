@@ -23,10 +23,17 @@ ifneq ($(c-gettimeofday-y),)
 endif
 
 # Build rules
+<<<<<<< HEAD
 targets := $(obj-vdso) vdso.so vdso.so.dbg vdso.lds
 obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
 
 obj-y += vdso.o
+=======
+targets := $(obj-vdso) vdso.so vdso.so.dbg vdso.lds vdso-syms.S
+obj-vdso := $(addprefix $(obj)/, $(obj-vdso))
+
+obj-y += vdso.o vdso-syms.o
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 CPPFLAGS_vdso.lds += -P -C -U$(ARCH)
 
 # Disable -pg to prevent insert call site
@@ -36,7 +43,10 @@ CFLAGS_REMOVE_vgettimeofday.o = $(CC_FLAGS_FTRACE) -Os
 GCOV_PROFILE := n
 KCOV_INSTRUMENT := n
 KASAN_SANITIZE := n
+<<<<<<< HEAD
 UBSAN_SANITIZE := n
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 # Force dependency
 $(obj)/vdso.o: $(obj)/vdso.so
@@ -44,14 +54,27 @@ $(obj)/vdso.o: $(obj)/vdso.so
 # link rule for the .so file, .lds has to be first
 $(obj)/vdso.so.dbg: $(obj)/vdso.lds $(obj-vdso) FORCE
 	$(call if_changed,vdsold)
+<<<<<<< HEAD
 LDFLAGS_vdso.so.dbg = -shared -S -soname=linux-vdso.so.1 \
 	--build-id=sha1 --hash-style=both --eh-frame-hdr
 
+=======
+LDFLAGS_vdso.so.dbg = -shared -s -soname=linux-vdso.so.1 \
+	--build-id=sha1 --hash-style=both --eh-frame-hdr
+
+# We also create a special relocatable object that should mirror the symbol
+# table and layout of the linked DSO. With ld --just-symbols we can then
+# refer to these symbols in the kernel code rather than hand-coded addresses.
+$(obj)/vdso-syms.S: $(obj)/vdso.so FORCE
+	$(call if_changed,so2s)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # strip rule for the .so file
 $(obj)/%.so: OBJCOPYFLAGS := -S
 $(obj)/%.so: $(obj)/%.so.dbg FORCE
 	$(call if_changed,objcopy)
 
+<<<<<<< HEAD
 # Generate VDSO offsets using helper script
 gen-vdsosym := $(srctree)/$(src)/gen_vdso_offsets.sh
 quiet_cmd_vdsosym = VDSOSYM $@
@@ -60,6 +83,8 @@ quiet_cmd_vdsosym = VDSOSYM $@
 include/generated/vdso-offsets.h: $(obj)/vdso.so.dbg FORCE
 	$(call if_changed,vdsosym)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # actual build commands
 # The DSO images are built using a special linker script
 # Make sure only to export the intended __vdso_xxx symbol offsets.
@@ -68,6 +93,14 @@ quiet_cmd_vdsold = VDSOLD  $@
                    $(OBJCOPY) $(patsubst %, -G __vdso_%, $(vdso-syms)) $@.tmp $@ && \
                    rm $@.tmp
 
+<<<<<<< HEAD
+=======
+# Extracts symbol offsets from the VDSO, converting them into an assembly file
+# that contains the same symbols at the same offsets.
+quiet_cmd_so2s = SO2S    $@
+      cmd_so2s = $(NM) -D $< | $(srctree)/$(src)/so2s.sh > $@
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # install commands for the unstripped file
 quiet_cmd_vdso_install = INSTALL $@
       cmd_vdso_install = cp $(obj)/$@.dbg $(MODLIB)/vdso/$@

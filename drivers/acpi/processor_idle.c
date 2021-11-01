@@ -1301,7 +1301,11 @@ int acpi_processor_power_state_has_changed(struct acpi_processor *pr)
 	if (pr->id == 0 && cpuidle_get_driver() == &acpi_idle_driver) {
 
 		/* Protect against cpu-hotplug */
+<<<<<<< HEAD
 		cpus_read_lock();
+=======
+		get_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cpuidle_pause_and_lock();
 
 		/* Disable all cpuidle devices */
@@ -1330,7 +1334,11 @@ int acpi_processor_power_state_has_changed(struct acpi_processor *pr)
 			}
 		}
 		cpuidle_resume_and_unlock();
+<<<<<<< HEAD
 		cpus_read_unlock();
+=======
+		put_online_cpus();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;

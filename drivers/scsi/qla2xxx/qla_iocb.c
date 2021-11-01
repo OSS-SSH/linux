@@ -118,7 +118,11 @@ qla2x00_prep_cont_type0_iocb(struct scsi_qla_host *vha)
  *
  * Returns a pointer to the continuation type 1 IOCB packet.
  */
+<<<<<<< HEAD
 cont_a64_entry_t *
+=======
+static inline cont_a64_entry_t *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 qla2x00_prep_cont_type1_iocb(scsi_qla_host_t *vha, struct req_que *req)
 {
 	cont_a64_entry_t *cont_pkt;
@@ -145,6 +149,10 @@ inline int
 qla24xx_configure_prot_mode(srb_t *sp, uint16_t *fw_prot_opts)
 {
 	struct scsi_cmnd *cmd = GET_CMD_SP(sp);
+<<<<<<< HEAD
+=======
+	uint8_t	guard = scsi_host_get_guard(cmd->device->host);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* We always use DIFF Bundling for best performance */
 	*fw_prot_opts = 0;
@@ -165,7 +173,11 @@ qla24xx_configure_prot_mode(srb_t *sp, uint16_t *fw_prot_opts)
 		break;
 	case SCSI_PROT_READ_PASS:
 	case SCSI_PROT_WRITE_PASS:
+<<<<<<< HEAD
 		if (cmd->prot_flags & SCSI_PROT_IP_CHECKSUM)
+=======
+		if (guard & SHOST_DIX_GUARD_IP)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			*fw_prot_opts |= PO_MODE_DIF_TCP_CKSUM;
 		else
 			*fw_prot_opts |= PO_MODE_DIF_PASS;
@@ -175,9 +187,12 @@ qla24xx_configure_prot_mode(srb_t *sp, uint16_t *fw_prot_opts)
 		break;
 	}
 
+<<<<<<< HEAD
 	if (!(cmd->prot_flags & SCSI_PROT_GUARD_CHECK))
 		*fw_prot_opts |= PO_DISABLE_GUARD_CHECK;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return scsi_prot_sg_count(cmd);
 }
 
@@ -774,19 +789,89 @@ qla24xx_set_t10dif_tags(srb_t *sp, struct fw_dif_context *pkt,
 {
 	struct scsi_cmnd *cmd = GET_CMD_SP(sp);
 
+<<<<<<< HEAD
 	pkt->ref_tag = cpu_to_le32(scsi_prot_ref_tag(cmd));
 
 	if (cmd->prot_flags & SCSI_PROT_REF_CHECK &&
 	    qla2x00_hba_err_chk_enabled(sp)) {
+=======
+	switch (scsi_get_prot_type(cmd)) {
+	case SCSI_PROT_DIF_TYPE0:
+		/*
+		 * No check for ql2xenablehba_err_chk, as it would be an
+		 * I/O error if hba tag generation is not done.
+		 */
+		pkt->ref_tag = cpu_to_le32((uint32_t)
+		    (0xffffffff & scsi_get_lba(cmd)));
+
+		if (!qla2x00_hba_err_chk_enabled(sp))
+			break;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pkt->ref_tag_mask[0] = 0xff;
 		pkt->ref_tag_mask[1] = 0xff;
 		pkt->ref_tag_mask[2] = 0xff;
 		pkt->ref_tag_mask[3] = 0xff;
+<<<<<<< HEAD
 	}
 
 	pkt->app_tag = cpu_to_le16(0);
 	pkt->app_tag_mask[0] = 0x0;
 	pkt->app_tag_mask[1] = 0x0;
+=======
+		break;
+
+	/*
+	 * For TYPE 2 protection: 16 bit GUARD + 32 bit REF tag has to
+	 * match LBA in CDB + N
+	 */
+	case SCSI_PROT_DIF_TYPE2:
+		pkt->app_tag = cpu_to_le16(0);
+		pkt->app_tag_mask[0] = 0x0;
+		pkt->app_tag_mask[1] = 0x0;
+
+		pkt->ref_tag = cpu_to_le32((uint32_t)
+		    (0xffffffff & scsi_get_lba(cmd)));
+
+		if (!qla2x00_hba_err_chk_enabled(sp))
+			break;
+
+		/* enable ALL bytes of the ref tag */
+		pkt->ref_tag_mask[0] = 0xff;
+		pkt->ref_tag_mask[1] = 0xff;
+		pkt->ref_tag_mask[2] = 0xff;
+		pkt->ref_tag_mask[3] = 0xff;
+		break;
+
+	/* For Type 3 protection: 16 bit GUARD only */
+	case SCSI_PROT_DIF_TYPE3:
+		pkt->ref_tag_mask[0] = pkt->ref_tag_mask[1] =
+			pkt->ref_tag_mask[2] = pkt->ref_tag_mask[3] =
+								0x00;
+		break;
+
+	/*
+	 * For TYpe 1 protection: 16 bit GUARD tag, 32 bit REF tag, and
+	 * 16 bit app tag.
+	 */
+	case SCSI_PROT_DIF_TYPE1:
+		pkt->ref_tag = cpu_to_le32((uint32_t)
+		    (0xffffffff & scsi_get_lba(cmd)));
+		pkt->app_tag = cpu_to_le16(0);
+		pkt->app_tag_mask[0] = 0x0;
+		pkt->app_tag_mask[1] = 0x0;
+
+		if (!qla2x00_hba_err_chk_enabled(sp))
+			break;
+
+		/* enable ALL bytes of the ref tag */
+		pkt->ref_tag_mask[0] = 0xff;
+		pkt->ref_tag_mask[1] = 0xff;
+		pkt->ref_tag_mask[2] = 0xff;
+		pkt->ref_tag_mask[3] = 0xff;
+		break;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int
@@ -852,7 +937,11 @@ qla24xx_walk_and_build_sglist_no_difb(struct qla_hw_data *ha, srb_t *sp,
 	memset(&sgx, 0, sizeof(struct qla2_sgx));
 	if (sp) {
 		cmd = GET_CMD_SP(sp);
+<<<<<<< HEAD
 		prot_int = scsi_prot_interval(cmd);
+=======
+		prot_int = cmd->device->sector_size;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		sgx.tot_bytes = scsi_bufflen(cmd);
 		sgx.cur_sg = scsi_sglist(cmd);
@@ -1552,9 +1641,12 @@ qla24xx_start_scsi(srb_t *sp)
 	struct scsi_qla_host *vha = sp->vha;
 	struct qla_hw_data *ha = vha->hw;
 
+<<<<<<< HEAD
 	if (sp->fcport->edif.enable  && (sp->fcport->flags & FCF_FCSP_DEVICE))
 		return qla28xx_start_scsi_edif(sp);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Setup device pointers. */
 	req = vha->req;
 	rsp = req->rsp;
@@ -1913,9 +2005,12 @@ qla2xxx_start_scsi_mq(srb_t *sp)
 	struct qla_hw_data *ha = vha->hw;
 	struct qla_qpair *qpair = sp->qpair;
 
+<<<<<<< HEAD
 	if (sp->fcport->edif.enable && (sp->fcport->flags & FCF_FCSP_DEVICE))
 		return qla28xx_start_scsi_edif(sp);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Acquire qpair specific lock */
 	spin_lock_irqsave(&qpair->qp_lock, flags);
 
@@ -2419,12 +2514,15 @@ qla24xx_login_iocb(srb_t *sp, struct logio_entry_24xx *logio)
 			logio->control_flags |= cpu_to_le16(LCF_COND_PLOGI);
 		if (lio->u.logio.flags & SRB_LOGIN_SKIP_PRLI)
 			logio->control_flags |= cpu_to_le16(LCF_SKIP_PRLI);
+<<<<<<< HEAD
 		if (lio->u.logio.flags & SRB_LOGIN_FCSP) {
 			logio->control_flags |=
 			    cpu_to_le16(LCF_COMMON_FEAT | LCF_SKIP_PRLI);
 			logio->io_parameter[0] =
 			    cpu_to_le32(LIO_COMM_FEAT_FCSP | LIO_COMM_FEAT_CIO);
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	logio->nport_handle = cpu_to_le16(sp->fcport->loop_id);
 	logio->port_id[0] = sp->fcport->d_id.b.al_pa;
@@ -2748,10 +2846,14 @@ qla24xx_els_logo_iocb(srb_t *sp, struct els_entry_24xx *els_iocb)
 	els_iocb->s_id[0] = vha->d_id.b.domain;
 
 	if (elsio->u.els_logo.els_cmd == ELS_DCMD_PLOGI) {
+<<<<<<< HEAD
 		if (vha->hw->flags.edif_enabled)
 			els_iocb->control_flags = cpu_to_le16(ECF_SEC_LOGIN);
 		else
 			els_iocb->control_flags = 0;
+=======
+		els_iocb->control_flags = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		els_iocb->tx_byte_count = els_iocb->tx_len =
 			cpu_to_le32(sizeof(struct els_plogi_payload));
 		put_unaligned_le64(elsio->u.els_plogi.els_plogi_pyld_dma,
@@ -2768,6 +2870,10 @@ qla24xx_els_logo_iocb(srb_t *sp, struct els_entry_24xx *els_iocb)
 		    (uint8_t *)els_iocb,
 		    sizeof(*els_iocb));
 	} else {
+<<<<<<< HEAD
+=======
+		els_iocb->control_flags = cpu_to_le16(1 << 13);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		els_iocb->tx_byte_count =
 			cpu_to_le32(sizeof(struct els_logo_payload));
 		put_unaligned_le64(elsio->u.els_logo.els_logo_pyld_dma,
@@ -2991,7 +3097,11 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *vha, int els_opcode,
 	qla2x00_set_fcport_disc_state(fcport, DSC_LOGIN_PEND);
 	elsio = &sp->u.iocb_cmd;
 	ql_dbg(ql_dbg_io, vha, 0x3073,
+<<<<<<< HEAD
 	       "%s Enter: PLOGI portid=%06x\n", __func__, fcport->d_id.b24);
+=======
+	    "Enter: PLOGI portid=%06x\n", fcport->d_id.b24);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sp->type = SRB_ELS_DCMD;
 	sp->name = "ELS_DCMD";
@@ -3034,6 +3144,7 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *vha, int els_opcode,
 	elsio->u.els_plogi.els_cmd = els_opcode;
 	elsio->u.els_plogi.els_plogi_pyld->opcode = els_opcode;
 
+<<<<<<< HEAD
 	if (els_opcode == ELS_DCMD_PLOGI && vha->hw->flags.edif_enabled &&
 	    vha->e_dbell.db_flags & EDB_ACTIVE) {
 		struct fc_els_flogi *p = ptr;
@@ -3041,6 +3152,8 @@ qla24xx_els_dcmd2_iocb(scsi_qla_host_t *vha, int els_opcode,
 		p->fl_csp.sp_features |= cpu_to_be16(FC_SP_FT_SEC);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ql_dbg(ql_dbg_disc + ql_dbg_buffer, vha, 0x3073, "PLOGI buffer:\n");
 	ql_dump_buffer(ql_dbg_disc + ql_dbg_buffer, vha, 0x0109,
 	    (uint8_t *)elsio->u.els_plogi.els_plogi_pyld,
@@ -3074,6 +3187,7 @@ done:
 	return rval;
 }
 
+<<<<<<< HEAD
 /* it is assume qpair lock is held */
 void qla_els_pt_iocb(struct scsi_qla_host *vha,
 	struct els_entry_24xx *els_iocb,
@@ -3111,6 +3225,8 @@ void qla_els_pt_iocb(struct scsi_qla_host *vha,
 	put_unaligned_le64(a->rx_addr, &els_iocb->rx_address);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void
 qla24xx_els_iocb(srb_t *sp, struct els_entry_24xx *els_iocb)
 {
@@ -3705,6 +3821,7 @@ static void qla2x00_send_notify_ack_iocb(srb_t *sp,
 	nack->u.isp24.srr_reject_code = 0;
 	nack->u.isp24.srr_reject_code_expl = 0;
 	nack->u.isp24.vp_index = ntfy->u.isp24.vp_index;
+<<<<<<< HEAD
 
 	if (ntfy->u.isp24.status_subcode == ELS_PLOGI &&
 	    (le16_to_cpu(ntfy->u.isp24.flags) & NOTIFY24XX_FLAGS_FCSP) &&
@@ -3715,6 +3832,8 @@ static void qla2x00_send_notify_ack_iocb(srb_t *sp,
 		    sp->fcport->d_id.b24);
 		nack->u.isp24.flags |= cpu_to_le16(NOTIFY_ACK_FLAGS_FCSP);
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -3819,10 +3938,13 @@ qla2x00_start_sp(srb_t *sp)
 	case SRB_ELS_CMD_HST:
 		qla24xx_els_iocb(sp, pkt);
 		break;
+<<<<<<< HEAD
 	case SRB_ELS_CMD_HST_NOLOGIN:
 		qla_els_pt_iocb(sp->vha, pkt,  &sp->u.bsg_cmd.u.els_arg);
 		((struct els_entry_24xx *)pkt)->handle = sp->handle;
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case SRB_CT_CMD:
 		IS_FWI2_CAPABLE(ha) ?
 		    qla24xx_ct_iocb(sp, pkt) :
@@ -3870,12 +3992,15 @@ qla2x00_start_sp(srb_t *sp)
 	case SRB_PRLO_CMD:
 		qla24xx_prlo_iocb(sp, pkt);
 		break;
+<<<<<<< HEAD
 	case SRB_SA_UPDATE:
 		qla24xx_sa_update_iocb(sp, pkt);
 		break;
 	case SRB_SA_REPLACE:
 		qla24xx_sa_replace_iocb(sp, pkt);
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		break;
 	}

@@ -28,6 +28,10 @@
 #include <linux/mm.h>
 #include <linux/page-flags.h>
 #include <linux/highmem.h>
+<<<<<<< HEAD
+=======
+#include <linux/console.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/pci.h>
 #include <linux/gfp.h>
 #include <linux/edd.h>
@@ -108,6 +112,21 @@ struct tls_descs {
  */
 static DEFINE_PER_CPU(struct tls_descs, shadow_tls_desc);
 
+<<<<<<< HEAD
+=======
+static void __init xen_banner(void)
+{
+	unsigned version = HYPERVISOR_xen_version(XENVER_version, NULL);
+	struct xen_extraversion extra;
+	HYPERVISOR_xen_version(XENVER_extraversion, &extra);
+
+	pr_info("Booting paravirtualized kernel on %s\n", pv_info.name);
+	printk(KERN_INFO "Xen version: %d.%d%s%s\n",
+	       version >> 16, version & 0xffff, extra.extraversion,
+	       xen_feature(XENFEAT_mmu_pt_update_preserve_ad) ? " (preserve-AD)" : "");
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __init xen_pv_init_platform(void)
 {
 	populate_extra_pte(fix_to_virt(FIX_PARAVIRT_BOOTMAP));
@@ -130,6 +149,25 @@ static void __init xen_pv_guest_late_init(void)
 #endif
 }
 
+<<<<<<< HEAD
+=======
+/* Check if running on Xen version (major, minor) or later */
+bool
+xen_running_on_version_or_later(unsigned int major, unsigned int minor)
+{
+	unsigned int version;
+
+	if (!xen_domain())
+		return false;
+
+	version = HYPERVISOR_xen_version(XENVER_version, NULL);
+	if ((((version >> 16) == major) && ((version & 0xffff) >= minor)) ||
+		((version >> 16) > major))
+		return true;
+	return false;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static __read_mostly unsigned int cpuid_leaf5_ecx_val;
 static __read_mostly unsigned int cpuid_leaf5_edx_val;
 
@@ -727,8 +765,13 @@ static void xen_write_idt_entry(gate_desc *dt, int entrynum, const gate_desc *g)
 	preempt_enable();
 }
 
+<<<<<<< HEAD
 static unsigned xen_convert_trap_info(const struct desc_ptr *desc,
 				      struct trap_info *traps, bool full)
+=======
+static void xen_convert_trap_info(const struct desc_ptr *desc,
+				  struct trap_info *traps)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unsigned in, out, count;
 
@@ -738,18 +781,29 @@ static unsigned xen_convert_trap_info(const struct desc_ptr *desc,
 	for (in = out = 0; in < count; in++) {
 		gate_desc *entry = (gate_desc *)(desc->address) + in;
 
+<<<<<<< HEAD
 		if (cvt_gate_to_trap(in, entry, &traps[out]) || full)
 			out++;
 	}
 
 	return out;
+=======
+		if (cvt_gate_to_trap(in, entry, &traps[out]))
+			out++;
+	}
+	traps[out].address = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void xen_copy_trap_info(struct trap_info *traps)
 {
 	const struct desc_ptr *desc = this_cpu_ptr(&idt_desc);
 
+<<<<<<< HEAD
 	xen_convert_trap_info(desc, traps, true);
+=======
+	xen_convert_trap_info(desc, traps);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Load a new IDT into Xen.  In principle this can be per-CPU, so we
@@ -759,7 +813,10 @@ static void xen_load_idt(const struct desc_ptr *desc)
 {
 	static DEFINE_SPINLOCK(lock);
 	static struct trap_info traps[257];
+<<<<<<< HEAD
 	unsigned out;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	trace_xen_cpu_load_idt(desc);
 
@@ -767,8 +824,12 @@ static void xen_load_idt(const struct desc_ptr *desc)
 
 	memcpy(this_cpu_ptr(&idt_desc), desc, sizeof(idt_desc));
 
+<<<<<<< HEAD
 	out = xen_convert_trap_info(desc, traps, false);
 	memset(&traps[out], 0, sizeof(traps[0]));
+=======
+	xen_convert_trap_info(desc, traps);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	xen_mc_flush();
 	if (HYPERVISOR_set_trap_table(traps))
@@ -1189,11 +1250,14 @@ static void __init xen_dom0_set_legacy_features(void)
 	x86_platform.legacy.rtc = 1;
 }
 
+<<<<<<< HEAD
 static void __init xen_domu_set_legacy_features(void)
 {
 	x86_platform.legacy.rtc = 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* First C function to be called on Xen boot */
 asmlinkage __visible void __init xen_start_kernel(void)
 {
@@ -1281,6 +1345,16 @@ asmlinkage __visible void __init xen_start_kernel(void)
 	xen_init_apic();
 #endif
 
+<<<<<<< HEAD
+=======
+	if (xen_feature(XENFEAT_mmu_pt_update_preserve_ad)) {
+		pv_ops.mmu.ptep_modify_prot_start =
+			xen_ptep_modify_prot_start;
+		pv_ops.mmu.ptep_modify_prot_commit =
+			xen_ptep_modify_prot_commit;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	machine_ops = xen_machine_ops;
 
 	/*
@@ -1336,10 +1410,16 @@ asmlinkage __visible void __init xen_start_kernel(void)
 	boot_params.hdr.hardware_subarch = X86_SUBARCH_XEN;
 
 	if (!xen_initial_domain()) {
+<<<<<<< HEAD
 		if (pci_xen)
 			x86_init.pci.arch_init = pci_xen_init;
 		x86_platform.set_legacy_features =
 				xen_domu_set_legacy_features;
+=======
+		add_preferred_console("xenboot", 0, NULL);
+		if (pci_xen)
+			x86_init.pci.arch_init = pci_xen_init;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		const struct dom0_vga_console_info *info =
 			(void *)((char *)xen_start_info +
@@ -1380,7 +1460,15 @@ asmlinkage __visible void __init xen_start_kernel(void)
 #endif
 	}
 
+<<<<<<< HEAD
 	xen_add_preferred_consoles();
+=======
+	if (!boot_params.screen_info.orig_video_isVGA)
+		add_preferred_console("tty", 0, NULL);
+	add_preferred_console("hvc", 0, NULL);
+	if (boot_params.screen_info.orig_video_isVGA)
+		add_preferred_console("tty", 0, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_PCI
 	/* PCI BIOS service won't work from a PV guest. */

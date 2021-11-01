@@ -21,6 +21,10 @@
 #include <linux/platform_device.h>
 #include <linux/pm_runtime.h>
 #include <linux/slab.h>
+<<<<<<< HEAD
+=======
+#include <linux/dma-iommu.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 typedef u32 sysmmu_iova_t;
 typedef u32 sysmmu_pte_t;
@@ -734,16 +738,32 @@ static struct iommu_domain *exynos_iommu_domain_alloc(unsigned type)
 	/* Check if correct PTE offsets are initialized */
 	BUG_ON(PG_ENT_SHIFT < 0 || !dma_dev);
 
+<<<<<<< HEAD
 	if (type != IOMMU_DOMAIN_DMA && type != IOMMU_DOMAIN_UNMANAGED)
 		return NULL;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	domain = kzalloc(sizeof(*domain), GFP_KERNEL);
 	if (!domain)
 		return NULL;
 
+<<<<<<< HEAD
 	domain->pgtable = (sysmmu_pte_t *)__get_free_pages(GFP_KERNEL, 2);
 	if (!domain->pgtable)
 		goto err_pgtable;
+=======
+	if (type == IOMMU_DOMAIN_DMA) {
+		if (iommu_get_dma_cookie(&domain->domain) != 0)
+			goto err_pgtable;
+	} else if (type != IOMMU_DOMAIN_UNMANAGED) {
+		goto err_pgtable;
+	}
+
+	domain->pgtable = (sysmmu_pte_t *)__get_free_pages(GFP_KERNEL, 2);
+	if (!domain->pgtable)
+		goto err_dma_cookie;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	domain->lv2entcnt = (short *)__get_free_pages(GFP_KERNEL | __GFP_ZERO, 1);
 	if (!domain->lv2entcnt)
@@ -774,6 +794,12 @@ err_lv2ent:
 	free_pages((unsigned long)domain->lv2entcnt, 1);
 err_counter:
 	free_pages((unsigned long)domain->pgtable, 2);
+<<<<<<< HEAD
+=======
+err_dma_cookie:
+	if (type == IOMMU_DOMAIN_DMA)
+		iommu_put_dma_cookie(&domain->domain);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_pgtable:
 	kfree(domain);
 	return NULL;
@@ -801,6 +827,12 @@ static void exynos_iommu_domain_free(struct iommu_domain *iommu_domain)
 
 	spin_unlock_irqrestore(&domain->lock, flags);
 
+<<<<<<< HEAD
+=======
+	if (iommu_domain->type == IOMMU_DOMAIN_DMA)
+		iommu_put_dma_cookie(iommu_domain);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dma_unmap_single(dma_dev, virt_to_phys(domain->pgtable), LV1TABLE_SIZE,
 			 DMA_TO_DEVICE);
 

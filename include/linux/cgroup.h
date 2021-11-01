@@ -829,13 +829,40 @@ static inline void cgroup_account_cputime_field(struct task_struct *task,
  */
 #ifdef CONFIG_SOCK_CGROUP_DATA
 
+<<<<<<< HEAD
+=======
+#if defined(CONFIG_CGROUP_NET_PRIO) || defined(CONFIG_CGROUP_NET_CLASSID)
+extern spinlock_t cgroup_sk_update_lock;
+#endif
+
+void cgroup_sk_alloc_disable(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void cgroup_sk_alloc(struct sock_cgroup_data *skcd);
 void cgroup_sk_clone(struct sock_cgroup_data *skcd);
 void cgroup_sk_free(struct sock_cgroup_data *skcd);
 
 static inline struct cgroup *sock_cgroup_ptr(struct sock_cgroup_data *skcd)
 {
+<<<<<<< HEAD
 	return skcd->cgroup;
+=======
+#if defined(CONFIG_CGROUP_NET_PRIO) || defined(CONFIG_CGROUP_NET_CLASSID)
+	unsigned long v;
+
+	/*
+	 * @skcd->val is 64bit but the following is safe on 32bit too as we
+	 * just need the lower ulong to be written and read atomically.
+	 */
+	v = READ_ONCE(skcd->val);
+
+	if (v & 3)
+		return &cgrp_dfl_root.cgrp;
+
+	return (struct cgroup *)(unsigned long)v ?: &cgrp_dfl_root.cgrp;
+#else
+	return (struct cgroup *)(unsigned long)skcd->val;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #else	/* CONFIG_CGROUP_DATA */

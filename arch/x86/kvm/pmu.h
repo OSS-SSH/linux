@@ -55,7 +55,11 @@ static inline u64 pmc_read_counter(struct kvm_pmc *pmc)
 	u64 counter, enabled, running;
 
 	counter = pmc->counter;
+<<<<<<< HEAD
 	if (pmc->perf_event && !pmc->is_paused)
+=======
+	if (pmc->perf_event)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		counter += perf_event_read_value(pmc->perf_event,
 						 &enabled, &running);
 	/* FIXME: Scaling needed? */

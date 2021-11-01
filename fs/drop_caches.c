@@ -3,7 +3,10 @@
  * Implement the manual drop-all-pagecache function
  */
 
+<<<<<<< HEAD
 #include <linux/pagemap.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/kernel.h>
 #include <linux/mm.h>
 #include <linux/fs.h>
@@ -28,7 +31,11 @@ static void drop_pagecache_sb(struct super_block *sb, void *unused)
 		 * we need to reschedule to avoid softlockups.
 		 */
 		if ((inode->i_state & (I_FREEING|I_WILL_FREE|I_NEW)) ||
+<<<<<<< HEAD
 		    (mapping_empty(inode->i_mapping) && !need_resched())) {
+=======
+		    (inode->i_mapping->nrpages == 0 && !need_resched())) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			spin_unlock(&inode->i_lock);
 			continue;
 		}

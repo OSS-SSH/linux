@@ -5,6 +5,10 @@
 #ifndef _ASM_S390_CIO_H_
 #define _ASM_S390_CIO_H_
 
+<<<<<<< HEAD
+=======
+#include <linux/spinlock.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/bitops.h>
 #include <linux/genalloc.h>
 #include <asm/types.h>

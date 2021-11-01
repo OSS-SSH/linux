@@ -1825,8 +1825,12 @@ static void ixgbe_dma_sync_frag(struct ixgbe_ring *rx_ring,
 				struct sk_buff *skb)
 {
 	if (ring_uses_build_skb(rx_ring)) {
+<<<<<<< HEAD
 		unsigned long mask = (unsigned long)ixgbe_rx_pg_size(rx_ring) - 1;
 		unsigned long offset = (unsigned long)(skb->data) & mask;
+=======
+		unsigned long offset = (unsigned long)(skb->data) & ~PAGE_MASK;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		dma_sync_single_range_for_cpu(rx_ring->dev,
 					      IXGBE_CB(skb)->dma,
@@ -10112,7 +10116,10 @@ static int ixgbe_xdp_setup(struct net_device *dev, struct bpf_prog *prog)
 	struct ixgbe_adapter *adapter = netdev_priv(dev);
 	struct bpf_prog *old_prog;
 	bool need_reset;
+<<<<<<< HEAD
 	int num_queues;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (adapter->flags & IXGBE_FLAG_SRIOV_ENABLED)
 		return -EINVAL;
@@ -10162,6 +10169,7 @@ static int ixgbe_xdp_setup(struct net_device *dev, struct bpf_prog *prog)
 	/* Kick start the NAPI context if there is an AF_XDP socket open
 	 * on that queue id. This so that receiving will start.
 	 */
+<<<<<<< HEAD
 	if (need_reset && prog) {
 		num_queues = min_t(int, adapter->num_rx_queues,
 				   adapter->num_xdp_queues);
@@ -10170,6 +10178,13 @@ static int ixgbe_xdp_setup(struct net_device *dev, struct bpf_prog *prog)
 				(void)ixgbe_xsk_wakeup(adapter->netdev, i,
 						       XDP_WAKEUP_RX);
 	}
+=======
+	if (need_reset && prog)
+		for (i = 0; i < adapter->num_rx_queues; i++)
+			if (adapter->xdp_ring[i]->xsk_pool)
+				(void)ixgbe_xsk_wakeup(adapter->netdev, i,
+						       XDP_WAKEUP_RX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -10251,7 +10266,11 @@ static const struct net_device_ops ixgbe_netdev_ops = {
 	.ndo_set_tx_maxrate	= ixgbe_tx_maxrate,
 	.ndo_vlan_rx_add_vid	= ixgbe_vlan_rx_add_vid,
 	.ndo_vlan_rx_kill_vid	= ixgbe_vlan_rx_kill_vid,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= ixgbe_ioctl,
+=======
+	.ndo_do_ioctl		= ixgbe_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_set_vf_mac		= ixgbe_ndo_set_vf_mac,
 	.ndo_set_vf_vlan	= ixgbe_ndo_set_vf_vlan,
 	.ndo_set_vf_rate	= ixgbe_ndo_set_vf_bw,
@@ -11072,7 +11091,10 @@ err_ioremap:
 	disable_dev = !test_and_set_bit(__IXGBE_DISABLED, &adapter->state);
 	free_netdev(netdev);
 err_alloc_etherdev:
+<<<<<<< HEAD
 	pci_disable_pcie_error_reporting(pdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pci_release_mem_regions(pdev);
 err_pci_reg:
 err_dma:

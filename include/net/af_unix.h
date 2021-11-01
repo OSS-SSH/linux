@@ -70,9 +70,12 @@ struct unix_sock {
 	struct socket_wq	peer_wq;
 	wait_queue_entry_t	peer_wake;
 	struct scm_stat		scm_stat;
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_AF_UNIX_OOB)
 	struct sk_buff		*oob_skb;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline struct unix_sock *unix_sk(const struct sock *sk)
@@ -85,10 +88,13 @@ static inline struct unix_sock *unix_sk(const struct sock *sk)
 long unix_inq_len(struct sock *sk);
 long unix_outq_len(struct sock *sk);
 
+<<<<<<< HEAD
 int __unix_dgram_recvmsg(struct sock *sk, struct msghdr *msg, size_t size,
 			 int flags);
 int __unix_stream_recvmsg(struct sock *sk, struct msghdr *msg, size_t size,
 			  int flags);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_SYSCTL
 int unix_sysctl_register(struct net *net);
 void unix_sysctl_unregister(struct net *net);
@@ -96,6 +102,7 @@ void unix_sysctl_unregister(struct net *net);
 static inline int unix_sysctl_register(struct net *net) { return 0; }
 static inline void unix_sysctl_unregister(struct net *net) {}
 #endif
+<<<<<<< HEAD
 
 #ifdef CONFIG_BPF_SYSCALL
 extern struct proto unix_dgram_proto;
@@ -108,4 +115,6 @@ void __init unix_bpf_build_proto(void);
 static inline void __init unix_bpf_build_proto(void)
 {}
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

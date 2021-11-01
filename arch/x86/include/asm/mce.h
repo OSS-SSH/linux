@@ -265,7 +265,10 @@ enum mcp_flags {
 	MCP_TIMESTAMP	= BIT(0),	/* log time stamp */
 	MCP_UC		= BIT(1),	/* log uncorrected errors */
 	MCP_DONTLOG	= BIT(2),	/* only clear, don't log */
+<<<<<<< HEAD
 	MCP_QUEUE_LOG	= BIT(3),	/* only queue to genpool */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 bool machine_check_poll(enum mcp_flags flags, mce_banks_t *b);
 

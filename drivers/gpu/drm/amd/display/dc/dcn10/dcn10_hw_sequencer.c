@@ -1502,11 +1502,16 @@ void dcn10_init_hw(struct dc *dc)
 void dcn10_power_down_on_boot(struct dc *dc)
 {
 	struct dc_link *edp_links[MAX_NUM_EDP];
+<<<<<<< HEAD
 	struct dc_link *edp_link = NULL;
+=======
+	struct dc_link *edp_link;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int edp_num;
 	int i = 0;
 
 	get_edp_links(dc, edp_links, &edp_num);
+<<<<<<< HEAD
 	if (edp_num)
 		edp_link = edp_links[0];
 
@@ -1518,6 +1523,22 @@ void dcn10_power_down_on_boot(struct dc *dc)
 		dc->hwseq->funcs.edp_backlight_control(edp_link, false);
 		dc->hwss.power_down(dc);
 		dc->hwss.edp_power_control(edp_link, false);
+=======
+
+	if (edp_num) {
+		for (i = 0; i < edp_num; i++) {
+			edp_link = edp_links[i];
+			if (edp_link->link_enc->funcs->is_dig_enabled &&
+					edp_link->link_enc->funcs->is_dig_enabled(edp_link->link_enc) &&
+					dc->hwseq->funcs.edp_backlight_control &&
+					dc->hwss.power_down &&
+					dc->hwss.edp_power_control) {
+				dc->hwseq->funcs.edp_backlight_control(edp_link, false);
+				dc->hwss.power_down(dc);
+				dc->hwss.edp_power_control(edp_link, false);
+			}
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		for (i = 0; i < dc->link_count; i++) {
 			struct dc_link *link = dc->links[i];
@@ -3177,12 +3198,17 @@ void dcn10_update_dchub(struct dce_hwseq *hws, struct dchub_init_data *dh_data)
 static bool dcn10_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
 {
 	struct pipe_ctx *test_pipe;
+<<<<<<< HEAD
 	const struct scaler_data *scl_data = &pipe_ctx->plane_res.scl_data;
 	const struct rect *r1 = &scl_data->recout, *r2;
 	int r1_r = r1->x + r1->width, r1_b = r1->y + r1->height, r2_r, r2_b;
 	int cur_layer = pipe_ctx->plane_state->layer_index;
 	bool upper_pipe_exists = false;
 	struct fixed31_32 one = dc_fixpt_from_int(1);
+=======
+	const struct rect *r1 = &pipe_ctx->plane_res.scl_data.recout, *r2;
+	int r1_r = r1->x + r1->width, r1_b = r1->y + r1->height, r2_r, r2_b;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/**
 	 * Disable the cursor if there's another pipe above this with a
@@ -3200,6 +3226,7 @@ static bool dcn10_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
 
 		if (r1->x >= r2->x && r1->y >= r2->y && r1_r <= r2_r && r1_b <= r2_b)
 			return true;
+<<<<<<< HEAD
 
 		if (test_pipe->plane_state->layer_index < cur_layer)
 			upper_pipe_exists = true;
@@ -3211,6 +3238,10 @@ static bool dcn10_can_pipe_disable_cursor(struct pipe_ctx *pipe_ctx)
 			scl_data->ratios.vert.value != one.value))
 		return true;
 
+=======
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return false;
 }
 
@@ -3641,11 +3672,20 @@ enum dc_status dcn10_set_clock(struct dc *dc,
 	struct dc_clock_config clock_cfg = {0};
 	struct dc_clocks *current_clocks = &context->bw_ctx.bw.dcn.clk;
 
+<<<<<<< HEAD
 	if (!dc->clk_mgr || !dc->clk_mgr->funcs->get_clock)
 		return DC_FAIL_UNSUPPORTED_1;
 
 	dc->clk_mgr->funcs->get_clock(dc->clk_mgr,
 		context, clock_type, &clock_cfg);
+=======
+	if (dc->clk_mgr && dc->clk_mgr->funcs->get_clock)
+				dc->clk_mgr->funcs->get_clock(dc->clk_mgr,
+						context, clock_type, &clock_cfg);
+
+	if (!dc->clk_mgr->funcs->get_clock)
+		return DC_FAIL_UNSUPPORTED_1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (clk_khz > clock_cfg.max_clock_khz)
 		return DC_FAIL_CLK_EXCEED_MAX;
@@ -3664,7 +3704,11 @@ enum dc_status dcn10_set_clock(struct dc *dc,
 	else
 		return DC_ERROR_UNEXPECTED;
 
+<<<<<<< HEAD
 	if (dc->clk_mgr->funcs->update_clocks)
+=======
+	if (dc->clk_mgr && dc->clk_mgr->funcs->update_clocks)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dc->clk_mgr->funcs->update_clocks(dc->clk_mgr,
 				context, true);
 	return DC_OK;

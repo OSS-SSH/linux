@@ -24,7 +24,11 @@ static struct cgroup_namespace *alloc_cgroup_ns(void)
 	struct cgroup_namespace *new_ns;
 	int ret;
 
+<<<<<<< HEAD
 	new_ns = kzalloc(sizeof(struct cgroup_namespace), GFP_KERNEL_ACCOUNT);
+=======
+	new_ns = kzalloc(sizeof(struct cgroup_namespace), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!new_ns)
 		return ERR_PTR(-ENOMEM);
 	ret = ns_alloc_inum(&new_ns->ns);

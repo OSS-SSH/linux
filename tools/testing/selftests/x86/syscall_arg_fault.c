@@ -17,6 +17,12 @@
 
 #include "helpers.h"
 
+<<<<<<< HEAD
+=======
+/* Our sigaltstack scratch space. */
+static unsigned char altstack_data[SIGSTKSZ];
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void sethandler(int sig, void (*handler)(int, siginfo_t *, void *),
 		       int flags)
 {
@@ -101,8 +107,12 @@ static void sigill(int sig, siginfo_t *info, void *ctx_void)
 int main()
 {
 	stack_t stack = {
+<<<<<<< HEAD
 		/* Our sigaltstack scratch space. */
 		.ss_sp = malloc(sizeof(char) * SIGSTKSZ),
+=======
+		.ss_sp = altstack_data,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.ss_size = SIGSTKSZ,
 	};
 	if (sigaltstack(&stack, NULL) != 0)
@@ -231,6 +241,9 @@ int main()
 	set_eflags(get_eflags() & ~X86_EFLAGS_TF);
 #endif
 
+<<<<<<< HEAD
 	free(stack.ss_sp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }

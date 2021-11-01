@@ -112,6 +112,7 @@ on PowerPC.
 The ``smp_mb__after_unlock_lock()`` invocations prevent this
 ``WARN_ON()`` from triggering.
 
+<<<<<<< HEAD
 +-----------------------------------------------------------------------+
 | **Quick Quiz**:                                                       |
 +-----------------------------------------------------------------------+
@@ -141,6 +142,8 @@ The ``smp_mb__after_unlock_lock()`` invocations prevent this
 | core processing at all.                                               |
 +-----------------------------------------------------------------------+
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 This approach must be extended to include idle CPUs, which need
 RCU's grace-period memory ordering guarantee to extend to any
 RCU read-side critical sections preceding and following the current

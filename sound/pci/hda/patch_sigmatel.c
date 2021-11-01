@@ -4380,6 +4380,21 @@ static int stac_init(struct hda_codec *codec)
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+static void stac_shutup(struct hda_codec *codec)
+{
+	struct sigmatel_spec *spec = codec->spec;
+
+	snd_hda_shutup_pins(codec);
+
+	if (spec->eapd_mask)
+		stac_gpio_set(codec, spec->gpio_mask,
+				spec->gpio_dir, spec->gpio_data &
+				~spec->eapd_mask);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define stac_free	snd_hda_gen_free
 
 #ifdef CONFIG_SND_PROC_FS
@@ -4432,6 +4447,7 @@ static void stac927x_proc_hook(struct snd_info_buffer *buffer,
 #ifdef CONFIG_PM
 static int stac_suspend(struct hda_codec *codec)
 {
+<<<<<<< HEAD
 	struct sigmatel_spec *spec = codec->spec;
 
 	snd_hda_shutup_pins(codec);
@@ -4441,6 +4457,9 @@ static int stac_suspend(struct hda_codec *codec)
 				spec->gpio_dir, spec->gpio_data &
 				~spec->eapd_mask);
 
+=======
+	stac_shutup(codec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 #else
@@ -4456,6 +4475,10 @@ static const struct hda_codec_ops stac_patch_ops = {
 #ifdef CONFIG_PM
 	.suspend = stac_suspend,
 #endif
+<<<<<<< HEAD
+=======
+	.reboot_notify = stac_shutup,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int alloc_stac_spec(struct hda_codec *codec)

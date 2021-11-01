@@ -1033,6 +1033,7 @@ struct fwnode_handle *
 fwnode_graph_get_next_endpoint(const struct fwnode_handle *fwnode,
 			       struct fwnode_handle *prev)
 {
+<<<<<<< HEAD
 	const struct fwnode_handle *parent;
 	struct fwnode_handle *ep;
 
@@ -1053,6 +1054,9 @@ fwnode_graph_get_next_endpoint(const struct fwnode_handle *fwnode,
 		ep = fwnode_graph_get_next_endpoint(parent->secondary, NULL);
 
 	return ep;
+=======
+	return fwnode_call_ptr_op(fwnode, graph_get_next_endpoint, prev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(fwnode_graph_get_next_endpoint);
 
@@ -1231,7 +1235,18 @@ fwnode_graph_get_endpoint_by_id(const struct fwnode_handle *fwnode,
 		best_ep_id = fwnode_ep.id;
 	}
 
+<<<<<<< HEAD
 	return best_ep;
+=======
+	if (best_ep)
+		return best_ep;
+
+	if (fwnode && !IS_ERR_OR_NULL(fwnode->secondary))
+		return fwnode_graph_get_endpoint_by_id(fwnode->secondary, port,
+						       endpoint, flags);
+
+	return NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(fwnode_graph_get_endpoint_by_id);
 

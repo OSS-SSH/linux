@@ -164,7 +164,11 @@ static void tau_work_func(struct work_struct *work)
 	queue_work(tau_workq, work);
 }
 
+<<<<<<< HEAD
 static DECLARE_WORK(tau_work, tau_work_func);
+=======
+DECLARE_WORK(tau_work, tau_work_func);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * setup the TAU

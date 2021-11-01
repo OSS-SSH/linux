@@ -89,6 +89,7 @@ static int nfnl_hook_put_nft_chain_info(struct sk_buff *nlskb,
 	if (!nest2)
 		goto cancel_nest;
 
+<<<<<<< HEAD
 	ret = nla_put_string(nlskb, NFNLA_CHAIN_TABLE, chain->table->name);
 	if (ret)
 		goto cancel_nest;
@@ -98,6 +99,13 @@ static int nfnl_hook_put_nft_chain_info(struct sk_buff *nlskb,
 		goto cancel_nest;
 
 	ret = nla_put_u8(nlskb, NFNLA_CHAIN_FAMILY, chain->table->family);
+=======
+	ret = nla_put_string(nlskb, NFTA_CHAIN_TABLE, chain->table->name);
+	if (ret)
+		goto cancel_nest;
+
+	ret = nla_put_string(nlskb, NFTA_CHAIN_NAME, chain->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		goto cancel_nest;
 
@@ -113,19 +121,30 @@ cancel_nest:
 static int nfnl_hook_dump_one(struct sk_buff *nlskb,
 			      const struct nfnl_dump_hook_data *ctx,
 			      const struct nf_hook_ops *ops,
+<<<<<<< HEAD
 			      int family, unsigned int seq)
+=======
+			      unsigned int seq)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u16 event = nfnl_msg_type(NFNL_SUBSYS_HOOK, NFNL_MSG_HOOK_GET);
 	unsigned int portid = NETLINK_CB(nlskb).portid;
 	struct nlmsghdr *nlh;
 	int ret = -EMSGSIZE;
+<<<<<<< HEAD
 	u32 hooknum;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_KALLSYMS
 	char sym[KSYM_SYMBOL_LEN];
 	char *module_name;
 #endif
 	nlh = nfnl_msg_put(nlskb, portid, seq, event,
+<<<<<<< HEAD
 			   NLM_F_MULTI, family, NFNETLINK_V0, 0);
+=======
+			   NLM_F_MULTI, ops->pf, NFNETLINK_V0, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!nlh)
 		goto nla_put_failure;
 
@@ -140,7 +159,10 @@ static int nfnl_hook_dump_one(struct sk_buff *nlskb,
 	if (module_name) {
 		char *end;
 
+<<<<<<< HEAD
 		*module_name = '\0';
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		module_name += 2;
 		end = strchr(module_name, ']');
 		if (end) {
@@ -157,12 +179,16 @@ static int nfnl_hook_dump_one(struct sk_buff *nlskb,
 		goto nla_put_failure;
 #endif
 
+<<<<<<< HEAD
 	if (ops->pf == NFPROTO_INET && ops->hooknum == NF_INET_INGRESS)
 		hooknum = NF_NETDEV_INGRESS;
 	else
 		hooknum = ops->hooknum;
 
 	ret = nla_put_be32(nlskb, NFNLA_HOOK_HOOKNUM, htonl(hooknum));
+=======
+	ret = nla_put_be32(nlskb, NFNLA_HOOK_HOOKNUM, htonl(ops->hooknum));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		goto nla_put_failure;
 
@@ -185,9 +211,13 @@ static const struct nf_hook_entries *
 nfnl_hook_entries_head(u8 pf, unsigned int hook, struct net *net, const char *dev)
 {
 	const struct nf_hook_entries *hook_head = NULL;
+<<<<<<< HEAD
 #ifdef CONFIG_NETFILTER_INGRESS
 	struct net_device *netdev;
 #endif
+=======
+	struct net_device *netdev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (pf) {
 	case NFPROTO_IPV4:
@@ -270,8 +300,12 @@ static int nfnl_hook_dump(struct sk_buff *nlskb,
 	ops = nf_hook_entries_get_hook_ops(e);
 
 	for (; i < e->num_hook_entries; i++) {
+<<<<<<< HEAD
 		err = nfnl_hook_dump_one(nlskb, ctx, ops[i], family,
 					 cb->nlh->nlmsg_seq);
+=======
+		err = nfnl_hook_dump_one(nlskb, ctx, ops[i], cb->seq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (err)
 			break;
 	}

@@ -291,8 +291,11 @@ static void thread_group_start_cputime(struct task_struct *tsk, u64 *samples)
 	struct thread_group_cputimer *cputimer = &tsk->signal->cputimer;
 	struct posix_cputimers *pct = &tsk->signal->posix_cputimers;
 
+<<<<<<< HEAD
 	lockdep_assert_task_sighand_held(tsk);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Check if cputimer isn't running. This is accessed without locking. */
 	if (!READ_ONCE(pct->timers_active)) {
 		struct task_cputime sum;
@@ -407,6 +410,7 @@ static int posix_cpu_timer_create(struct k_itimer *new_timer)
 	return 0;
 }
 
+<<<<<<< HEAD
 static struct posix_cputimer_base *timer_base(struct k_itimer *timer,
 					      struct task_struct *tsk)
 {
@@ -456,6 +460,8 @@ static void disarm_timer(struct k_itimer *timer, struct task_struct *p)
 }
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Clean up a CPU-clock timer that is about to be destroyed.
  * This is called from timer deletion with the timer already locked.
@@ -490,7 +496,11 @@ static int posix_cpu_timer_del(struct k_itimer *timer)
 		if (timer->it.cpu.firing)
 			ret = TIMER_RETRY;
 		else
+<<<<<<< HEAD
 			disarm_timer(timer, p);
+=======
+			cpu_timer_dequeue(ctmr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		unlock_task_sighand(p, &flags);
 	}
@@ -549,9 +559,21 @@ void posix_cpu_timers_exit_group(struct task_struct *tsk)
  */
 static void arm_timer(struct k_itimer *timer, struct task_struct *p)
 {
+<<<<<<< HEAD
 	struct posix_cputimer_base *base = timer_base(timer, p);
 	struct cpu_timer *ctmr = &timer->it.cpu;
 	u64 newexp = cpu_timer_getexpires(ctmr);
+=======
+	int clkidx = CPUCLOCK_WHICH(timer->it_clock);
+	struct cpu_timer *ctmr = &timer->it.cpu;
+	u64 newexp = cpu_timer_getexpires(ctmr);
+	struct posix_cputimer_base *base;
+
+	if (CPUCLOCK_PERTHREAD(timer->it_clock))
+		base = p->posix_cputimers.bases + clkidx;
+	else
+		base = p->signal->posix_cputimers.bases + clkidx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!cpu_timer_enqueue(&base->tqhead, ctmr))
 		return;
@@ -748,6 +770,7 @@ static int posix_cpu_timer_set(struct k_itimer *timer, int timer_flags,
 	timer->it_overrun_last = 0;
 	timer->it_overrun = -1;
 
+<<<<<<< HEAD
 	if (val >= new_expires) {
 		if (new_expires != 0) {
 			/*
@@ -771,6 +794,18 @@ static int posix_cpu_timer_set(struct k_itimer *timer, int timer_flags,
 
 		unlock_task_sighand(p, &flags);
 	}
+=======
+	if (new_expires != 0 && !(val < new_expires)) {
+		/*
+		 * The designated time already passed, so we notify
+		 * immediately, even if the thread never runs to
+		 * accumulate more time on this clock.
+		 */
+		cpu_timer_fire(timer);
+	}
+
+	ret = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  out:
 	rcu_read_unlock();
 	if (old)
@@ -1049,11 +1084,14 @@ static void posix_cpu_timer_rearm(struct k_itimer *timer)
 	if (!p)
 		goto out;
 
+<<<<<<< HEAD
 	/* Protect timer list r/w in arm_timer() */
 	sighand = lock_task_sighand(p, &flags);
 	if (unlikely(sighand == NULL))
 		goto out;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Fetch the current sample and update the timer's expiry time.
 	 */
@@ -1064,6 +1102,14 @@ static void posix_cpu_timer_rearm(struct k_itimer *timer)
 
 	bump_cpu_timer(timer, now);
 
+<<<<<<< HEAD
+=======
+	/* Protect timer list r/w in arm_timer() */
+	sighand = lock_task_sighand(p, &flags);
+	if (unlikely(sighand == NULL))
+		goto out;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Now re-arm for the new expiry time.
 	 */
@@ -1404,8 +1450,14 @@ void set_process_cpu_timer(struct task_struct *tsk, unsigned int clkid,
 			}
 		}
 
+<<<<<<< HEAD
 		if (*newval)
 			*newval += now;
+=======
+		if (!*newval)
+			return;
+		*newval += now;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/*

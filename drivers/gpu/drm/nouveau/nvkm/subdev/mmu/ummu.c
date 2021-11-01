@@ -34,7 +34,11 @@ nvkm_ummu_sclass(struct nvkm_object *object, int index,
 {
 	struct nvkm_mmu *mmu = nvkm_ummu(object)->mmu;
 
+<<<<<<< HEAD
 	if (mmu->func->mem.user.oclass) {
+=======
+	if (mmu->func->mem.user.oclass && oclass->client->super) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (index-- == 0) {
 			oclass->base = mmu->func->mem.user;
 			oclass->ctor = nvkm_umem_new;

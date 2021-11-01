@@ -26,7 +26,10 @@ static u32 ibs_caps;
 #include <linux/hardirq.h>
 
 #include <asm/nmi.h>
+<<<<<<< HEAD
 #include <asm/amd-ibs.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define IBS_FETCH_CONFIG_MASK	(IBS_FETCH_RAND_EN | IBS_FETCH_MAX_CNT)
 #define IBS_OP_CONFIG_MASK	IBS_OP_MAX_CNT
@@ -91,7 +94,10 @@ struct perf_ibs {
 	unsigned long			offset_mask[1];
 	int				offset_max;
 	unsigned int			fetch_count_reset_broken : 1;
+<<<<<<< HEAD
 	unsigned int			fetch_ignore_if_zero_rip : 1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct cpu_perf_ibs __percpu	*pcpu;
 
 	struct attribute		**format_attrs;
@@ -101,6 +107,18 @@ struct perf_ibs {
 	u64				(*get_count)(u64 config);
 };
 
+<<<<<<< HEAD
+=======
+struct perf_ibs_data {
+	u32		size;
+	union {
+		u32	data[0];	/* data buffer starts here */
+		u32	caps;
+	};
+	u64		regs[MSR_AMD64_IBS_REG_COUNT_MAX];
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 perf_event_set_period(struct hw_perf_event *hwc, u64 min, u64 max, u64 *hw_period)
 {
@@ -321,14 +339,21 @@ static int perf_ibs_set_period(struct perf_ibs *perf_ibs,
 
 static u64 get_ibs_fetch_count(u64 config)
 {
+<<<<<<< HEAD
 	union ibs_fetch_ctl fetch_ctl = (union ibs_fetch_ctl)config;
 
 	return fetch_ctl.fetch_cnt << 4;
+=======
+	return (config & IBS_FETCH_CNT) >> 12;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static u64 get_ibs_op_count(u64 config)
 {
+<<<<<<< HEAD
 	union ibs_op_ctl op_ctl = (union ibs_op_ctl)config;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 count = 0;
 
 	/*
@@ -336,12 +361,21 @@ static u64 get_ibs_op_count(u64 config)
 	 * and the lower 7 bits of CurCnt are randomized.
 	 * Otherwise CurCnt has the full 27-bit current counter value.
 	 */
+<<<<<<< HEAD
 	if (op_ctl.op_val) {
 		count = op_ctl.opmaxcnt << 4;
 		if (ibs_caps & IBS_CAPS_OPCNTEXT)
 			count += op_ctl.opmaxcnt_ext << 20;
 	} else if (ibs_caps & IBS_CAPS_RDWROPCNT) {
 		count = op_ctl.opcurcnt;
+=======
+	if (config & IBS_OP_VAL) {
+		count = (config & IBS_OP_MAX_CNT) << 4;
+		if (ibs_caps & IBS_CAPS_OPCNTEXT)
+			count += config & IBS_OP_MAX_CNT_EXT_MASK;
+	} else if (ibs_caps & IBS_CAPS_RDWROPCNT) {
+		count = (config & IBS_OP_CUR_CNT) >> 32;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return count;
@@ -566,7 +600,10 @@ static struct perf_ibs perf_ibs_op = {
 		.start		= perf_ibs_start,
 		.stop		= perf_ibs_stop,
 		.read		= perf_ibs_read,
+<<<<<<< HEAD
 		.capabilities	= PERF_PMU_CAP_NO_EXCLUDE,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	},
 	.msr			= MSR_AMD64_IBSOPCTL,
 	.config_mask		= IBS_OP_CONFIG_MASK,
@@ -669,10 +706,13 @@ fail:
 	if (check_rip && (ibs_data.regs[2] & IBS_RIP_INVALID)) {
 		regs.flags &= ~PERF_EFLAGS_EXACT;
 	} else {
+<<<<<<< HEAD
 		/* Workaround for erratum #1197 */
 		if (perf_ibs->fetch_ignore_if_zero_rip && !(ibs_data.regs[1]))
 			goto out;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		set_linear_ip(&regs, ibs_data.regs[1]);
 		regs.flags |= PERF_EFLAGS_EXACT;
 	}
@@ -770,9 +810,12 @@ static __init void perf_event_ibs_init(void)
 	if (boot_cpu_data.x86 >= 0x16 && boot_cpu_data.x86 <= 0x18)
 		perf_ibs_fetch.fetch_count_reset_broken = 1;
 
+<<<<<<< HEAD
 	if (boot_cpu_data.x86 == 0x19 && boot_cpu_data.x86_model < 0x10)
 		perf_ibs_fetch.fetch_ignore_if_zero_rip = 1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	perf_ibs_pmu_init(&perf_ibs_fetch, "ibs_fetch");
 
 	if (ibs_caps & IBS_CAPS_OPCNT) {

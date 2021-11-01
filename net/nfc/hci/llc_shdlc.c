@@ -123,7 +123,11 @@ static bool llc_shdlc_x_lteq_y_lt_z(int x, int y, int z)
 		return ((y >= x) || (y < z)) ? true : false;
 }
 
+<<<<<<< HEAD
 static struct sk_buff *llc_shdlc_alloc_skb(const struct llc_shdlc *shdlc,
+=======
+static struct sk_buff *llc_shdlc_alloc_skb(struct llc_shdlc *shdlc,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					   int payload_len)
 {
 	struct sk_buff *skb;
@@ -137,7 +141,11 @@ static struct sk_buff *llc_shdlc_alloc_skb(const struct llc_shdlc *shdlc,
 }
 
 /* immediately sends an S frame. */
+<<<<<<< HEAD
 static int llc_shdlc_send_s_frame(const struct llc_shdlc *shdlc,
+=======
+static int llc_shdlc_send_s_frame(struct llc_shdlc *shdlc,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  enum sframe_type sframe_type, int nr)
 {
 	int r;
@@ -159,7 +167,11 @@ static int llc_shdlc_send_s_frame(const struct llc_shdlc *shdlc,
 }
 
 /* immediately sends an U frame. skb may contain optional payload */
+<<<<<<< HEAD
 static int llc_shdlc_send_u_frame(const struct llc_shdlc *shdlc,
+=======
+static int llc_shdlc_send_u_frame(struct llc_shdlc *shdlc,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  struct sk_buff *skb,
 				  enum uframe_modifier uframe_modifier)
 {
@@ -361,7 +373,11 @@ static void llc_shdlc_connect_complete(struct llc_shdlc *shdlc, int r)
 	wake_up(shdlc->connect_wq);
 }
 
+<<<<<<< HEAD
 static int llc_shdlc_connect_initiate(const struct llc_shdlc *shdlc)
+=======
+static int llc_shdlc_connect_initiate(struct llc_shdlc *shdlc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sk_buff *skb;
 
@@ -377,7 +393,11 @@ static int llc_shdlc_connect_initiate(const struct llc_shdlc *shdlc)
 	return llc_shdlc_send_u_frame(shdlc, skb, U_FRAME_RSET);
 }
 
+<<<<<<< HEAD
 static int llc_shdlc_connect_send_ua(const struct llc_shdlc *shdlc)
+=======
+static int llc_shdlc_connect_send_ua(struct llc_shdlc *shdlc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sk_buff *skb;
 
@@ -820,7 +840,11 @@ static int llc_shdlc_xmit_from_hci(struct nfc_llc *llc, struct sk_buff *skb)
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct nfc_llc_ops llc_shdlc_ops = {
+=======
+static struct nfc_llc_ops llc_shdlc_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.init = llc_shdlc_init,
 	.deinit = llc_shdlc_deinit,
 	.start = llc_shdlc_start,

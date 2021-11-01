@@ -19,7 +19,10 @@
 #include <linux/set_memory.h>
 #include <linux/dma-map-ops.h>
 #include <linux/crash_dump.h>
+<<<<<<< HEAD
 #include <linux/hugetlb.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <asm/fixmap.h>
 #include <asm/tlbflush.h>
@@ -37,9 +40,12 @@ EXPORT_SYMBOL(kernel_map);
 #define kernel_map	(*(struct kernel_mapping *)XIP_FIXUP(&kernel_map))
 #endif
 
+<<<<<<< HEAD
 phys_addr_t phys_ram_base __ro_after_init;
 EXPORT_SYMBOL(phys_ram_base);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_XIP_KERNEL
 extern char _xiprom[], _exiprom[];
 #endif
@@ -131,6 +137,7 @@ void __init mem_init(void)
 }
 
 /*
+<<<<<<< HEAD
  * The default maximal physical memory size is -PAGE_OFFSET for 32-bit kernel,
  * whereas for 64-bit kernel, the end of the virtual address space is occupied
  * by the modules/BPF/kernel mappings which reduces the available size of the
@@ -142,6 +149,12 @@ static phys_addr_t memory_limit = -PAGE_OFFSET - SZ_4G;
 #else
 static phys_addr_t memory_limit = -PAGE_OFFSET;
 #endif
+=======
+ * The default maximal physical memory size is -PAGE_OFFSET,
+ * limit the memory size via mem.
+ */
+static phys_addr_t memory_limit = -PAGE_OFFSET;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static int __init early_mem(char *p)
 {
@@ -163,8 +176,13 @@ static void __init setup_bootmem(void)
 {
 	phys_addr_t vmlinux_end = __pa_symbol(&_end);
 	phys_addr_t vmlinux_start = __pa_symbol(&_start);
+<<<<<<< HEAD
 	phys_addr_t __maybe_unused max_mapped_addr;
 	phys_addr_t phys_ram_end;
+=======
+	phys_addr_t max_mapped_addr = __pa(~(ulong)0);
+	phys_addr_t dram_end;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_XIP_KERNEL
 	vmlinux_start = __pa_symbol(&_sdata);
@@ -185,16 +203,21 @@ static void __init setup_bootmem(void)
 #endif
 	memblock_reserve(vmlinux_start, vmlinux_end - vmlinux_start);
 
+<<<<<<< HEAD
 
 	phys_ram_end = memblock_end_of_DRAM();
 #ifndef CONFIG_64BIT
 #ifndef CONFIG_XIP_KERNEL
 	phys_ram_base = memblock_start_of_DRAM();
 #endif
+=======
+	dram_end = memblock_end_of_DRAM();
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * memblock allocator is not aware of the fact that last 4K bytes of
 	 * the addressable memory can not be mapped because of IS_ERR_VALUE
 	 * macro. Make sure that last 4k bytes are not usable by memblock
+<<<<<<< HEAD
 	 * if end of dram is equal to maximum addressable memory.  For 64-bit
 	 * kernel, this problem can't happen here as the end of the virtual
 	 * address space is occupied by the kernel mapping then this check must
@@ -207,6 +230,15 @@ static void __init setup_bootmem(void)
 
 	min_low_pfn = PFN_UP(phys_ram_base);
 	max_low_pfn = max_pfn = PFN_DOWN(phys_ram_end);
+=======
+	 * if end of dram is equal to maximum addressable memory.
+	 */
+	if (max_mapped_addr == (dram_end - 1))
+		memblock_set_current_limit(max_mapped_addr - 4096);
+
+	min_low_pfn = PFN_UP(memblock_start_of_DRAM());
+	max_low_pfn = max_pfn = PFN_DOWN(dram_end);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dma32_phys_limit = min(4UL * SZ_1G, (unsigned long)PFN_PHYS(max_low_pfn));
 	set_max_mapnr(max_low_pfn - ARCH_PFN_OFFSET);
@@ -223,8 +255,11 @@ static void __init setup_bootmem(void)
 
 	early_init_fdt_scan_reserved_mem();
 	dma_contiguous_reserve(dma32_phys_limit);
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_64BIT))
 		hugetlb_cma_reserve(PUD_SHIFT - PAGE_SHIFT);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memblock_allow_resize();
 }
 
@@ -237,15 +272,23 @@ static struct pt_alloc_ops _pt_ops __initdata;
 #define pt_ops _pt_ops
 #endif
 
+<<<<<<< HEAD
 unsigned long riscv_pfn_base __ro_after_init;
 EXPORT_SYMBOL(riscv_pfn_base);
+=======
+unsigned long pfn_base __ro_after_init;
+EXPORT_SYMBOL(pfn_base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 pgd_t swapper_pg_dir[PTRS_PER_PGD] __page_aligned_bss;
 pgd_t trampoline_pg_dir[PTRS_PER_PGD] __page_aligned_bss;
 static pte_t fixmap_pte[PTRS_PER_PTE] __page_aligned_bss;
 
 pgd_t early_pg_dir[PTRS_PER_PGD] __initdata __aligned(PAGE_SIZE);
+<<<<<<< HEAD
 static pmd_t __maybe_unused early_dtb_pmd[PTRS_PER_PMD] __initdata __aligned(PAGE_SIZE);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_XIP_KERNEL
 #define trampoline_pg_dir      ((pgd_t *)XIP_FIXUP(trampoline_pg_dir))
@@ -326,6 +369,10 @@ static void __init create_pte_mapping(pte_t *ptep,
 static pmd_t trampoline_pmd[PTRS_PER_PMD] __page_aligned_bss;
 static pmd_t fixmap_pmd[PTRS_PER_PMD] __page_aligned_bss;
 static pmd_t early_pmd[PTRS_PER_PMD] __initdata __aligned(PAGE_SIZE);
+<<<<<<< HEAD
+=======
+static pmd_t early_dtb_pmd[PTRS_PER_PMD] __initdata __aligned(PAGE_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_XIP_KERNEL
 #define trampoline_pmd ((pmd_t *)XIP_FIXUP(trampoline_pmd))
@@ -411,7 +458,10 @@ static void __init create_pmd_mapping(pmd_t *pmdp,
 #define create_pgd_next_mapping(__nextp, __va, __pa, __sz, __prot)	\
 	create_pte_mapping(__nextp, __va, __pa, __sz, __prot)
 #define fixmap_pgd_next		fixmap_pte
+<<<<<<< HEAD
 #define create_pmd_mapping(__pmdp, __va, __pa, __sz, __prot)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 void __init create_pgd_mapping(pgd_t *pgdp,
@@ -519,13 +569,18 @@ static __init pgprot_t pgprot_from_va(uintptr_t va)
 #endif
 
 #ifdef CONFIG_XIP_KERNEL
+<<<<<<< HEAD
 static void __init create_kernel_page_table(pgd_t *pgdir,
+=======
+static void __init create_kernel_page_table(pgd_t *pgdir, uintptr_t map_size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    __always_unused bool early)
 {
 	uintptr_t va, end_va;
 
 	/* Map the flash resident part */
 	end_va = kernel_map.virt_addr + kernel_map.xiprom_sz;
+<<<<<<< HEAD
 	for (va = kernel_map.virt_addr; va < end_va; va += PMD_SIZE)
 		create_pgd_mapping(pgdir, va,
 				   kernel_map.xiprom + (va - kernel_map.virt_addr),
@@ -540,19 +595,44 @@ static void __init create_kernel_page_table(pgd_t *pgdir,
 }
 #else
 static void __init create_kernel_page_table(pgd_t *pgdir, bool early)
+=======
+	for (va = kernel_map.virt_addr; va < end_va; va += map_size)
+		create_pgd_mapping(pgdir, va,
+				   kernel_map.xiprom + (va - kernel_map.virt_addr),
+				   map_size, PAGE_KERNEL_EXEC);
+
+	/* Map the data in RAM */
+	end_va = kernel_map.virt_addr + XIP_OFFSET + kernel_map.size;
+	for (va = kernel_map.virt_addr + XIP_OFFSET; va < end_va; va += map_size)
+		create_pgd_mapping(pgdir, va,
+				   kernel_map.phys_addr + (va - (kernel_map.virt_addr + XIP_OFFSET)),
+				   map_size, PAGE_KERNEL);
+}
+#else
+static void __init create_kernel_page_table(pgd_t *pgdir, uintptr_t map_size,
+					    bool early)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	uintptr_t va, end_va;
 
 	end_va = kernel_map.virt_addr + kernel_map.size;
+<<<<<<< HEAD
 	for (va = kernel_map.virt_addr; va < end_va; va += PMD_SIZE)
 		create_pgd_mapping(pgdir, va,
 				   kernel_map.phys_addr + (va - kernel_map.virt_addr),
 				   PMD_SIZE,
+=======
+	for (va = kernel_map.virt_addr; va < end_va; va += map_size)
+		create_pgd_mapping(pgdir, va,
+				   kernel_map.phys_addr + (va - kernel_map.virt_addr),
+				   map_size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   early ?
 					PAGE_KERNEL_EXEC : pgprot_from_va(va));
 }
 #endif
 
+<<<<<<< HEAD
 /*
  * Setup a 4MB mapping that encompasses the device tree: for 64-bit kernel,
  * this means 2 PMD entries whereas for 32-bit kernel, this is only 1 PGDIR
@@ -592,6 +672,15 @@ static void __init create_fdt_early_page_table(pgd_t *pgdir, uintptr_t dtb_pa)
 asmlinkage void __init setup_vm(uintptr_t dtb_pa)
 {
 	pmd_t __maybe_unused fix_bmap_spmd, fix_bmap_epmd;
+=======
+asmlinkage void __init setup_vm(uintptr_t dtb_pa)
+{
+	uintptr_t __maybe_unused pa;
+	uintptr_t map_size;
+#ifndef __PAGETABLE_PMD_FOLDED
+	pmd_t fix_bmap_spmd, fix_bmap_epmd;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	kernel_map.virt_addr = KERNEL_LINK_ADDR;
 
@@ -599,7 +688,10 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
 	kernel_map.xiprom = (uintptr_t)CONFIG_XIP_PHYS_ADDR;
 	kernel_map.xiprom_sz = (uintptr_t)(&_exiprom) - (uintptr_t)(&_xiprom);
 
+<<<<<<< HEAD
 	phys_ram_base = CONFIG_PHYS_RAM_BASE;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kernel_map.phys_addr = (uintptr_t)CONFIG_PHYS_RAM_BASE;
 	kernel_map.size = (uintptr_t)(&_end) - (uintptr_t)(&_sdata);
 
@@ -608,6 +700,7 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
 	kernel_map.phys_addr = (uintptr_t)(&_start);
 	kernel_map.size = (uintptr_t)(&_end) - kernel_map.phys_addr;
 #endif
+<<<<<<< HEAD
 	kernel_map.va_pa_offset = PAGE_OFFSET - kernel_map.phys_addr;
 	kernel_map.va_kernel_pa_offset = kernel_map.virt_addr - kernel_map.phys_addr;
 
@@ -624,6 +717,25 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
 	 */
 	BUG_ON((kernel_map.virt_addr + kernel_map.size) > ADDRESS_SPACE_END - SZ_4K);
 #endif
+=======
+
+	kernel_map.va_pa_offset = PAGE_OFFSET - kernel_map.phys_addr;
+#ifdef CONFIG_64BIT
+	kernel_map.va_kernel_pa_offset = kernel_map.virt_addr - kernel_map.phys_addr;
+#endif
+
+	pfn_base = PFN_DOWN(kernel_map.phys_addr);
+
+	/*
+	 * Enforce boot alignment requirements of RV32 and
+	 * RV64 by only allowing PMD or PGD mappings.
+	 */
+	map_size = PMD_SIZE;
+
+	/* Sanity check alignment and size */
+	BUG_ON((PAGE_OFFSET % PGDIR_SIZE) != 0);
+	BUG_ON((kernel_map.phys_addr % map_size) != 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pt_ops.alloc_pte = alloc_pte_early;
 	pt_ops.get_pte_virt = get_pte_virt_early;
@@ -660,10 +772,57 @@ asmlinkage void __init setup_vm(uintptr_t dtb_pa)
 	 * us to reach paging_init(). We map all memory banks later
 	 * in setup_vm_final() below.
 	 */
+<<<<<<< HEAD
 	create_kernel_page_table(early_pg_dir, true);
 
 	/* Setup early mapping for FDT early scan */
 	create_fdt_early_page_table(early_pg_dir, dtb_pa);
+=======
+	create_kernel_page_table(early_pg_dir, map_size, true);
+
+#ifndef __PAGETABLE_PMD_FOLDED
+	/* Setup early PMD for DTB */
+	create_pgd_mapping(early_pg_dir, DTB_EARLY_BASE_VA,
+			   (uintptr_t)early_dtb_pmd, PGDIR_SIZE, PAGE_TABLE);
+#ifndef CONFIG_BUILTIN_DTB
+	/* Create two consecutive PMD mappings for FDT early scan */
+	pa = dtb_pa & ~(PMD_SIZE - 1);
+	create_pmd_mapping(early_dtb_pmd, DTB_EARLY_BASE_VA,
+			   pa, PMD_SIZE, PAGE_KERNEL);
+	create_pmd_mapping(early_dtb_pmd, DTB_EARLY_BASE_VA + PMD_SIZE,
+			   pa + PMD_SIZE, PMD_SIZE, PAGE_KERNEL);
+	dtb_early_va = (void *)DTB_EARLY_BASE_VA + (dtb_pa & (PMD_SIZE - 1));
+#else /* CONFIG_BUILTIN_DTB */
+#ifdef CONFIG_64BIT
+	/*
+	 * __va can't be used since it would return a linear mapping address
+	 * whereas dtb_early_va will be used before setup_vm_final installs
+	 * the linear mapping.
+	 */
+	dtb_early_va = kernel_mapping_pa_to_va(XIP_FIXUP(dtb_pa));
+#else
+	dtb_early_va = __va(dtb_pa);
+#endif /* CONFIG_64BIT */
+#endif /* CONFIG_BUILTIN_DTB */
+#else
+#ifndef CONFIG_BUILTIN_DTB
+	/* Create two consecutive PGD mappings for FDT early scan */
+	pa = dtb_pa & ~(PGDIR_SIZE - 1);
+	create_pgd_mapping(early_pg_dir, DTB_EARLY_BASE_VA,
+			   pa, PGDIR_SIZE, PAGE_KERNEL);
+	create_pgd_mapping(early_pg_dir, DTB_EARLY_BASE_VA + PGDIR_SIZE,
+			   pa + PGDIR_SIZE, PGDIR_SIZE, PAGE_KERNEL);
+	dtb_early_va = (void *)DTB_EARLY_BASE_VA + (dtb_pa & (PGDIR_SIZE - 1));
+#else /* CONFIG_BUILTIN_DTB */
+#ifdef CONFIG_64BIT
+	dtb_early_va = kernel_mapping_pa_to_va(XIP_FIXUP(dtb_pa));
+#else
+	dtb_early_va = __va(dtb_pa);
+#endif /* CONFIG_64BIT */
+#endif /* CONFIG_BUILTIN_DTB */
+#endif
+	dtb_early_pa = dtb_pa;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Bootime fixmap only can handle PMD_SIZE mapping. Thus, boot-ioremap
@@ -724,8 +883,11 @@ static void __init setup_vm_final(void)
 		if (start <= __pa(PAGE_OFFSET) &&
 		    __pa(PAGE_OFFSET) < end)
 			start = __pa(PAGE_OFFSET);
+<<<<<<< HEAD
 		if (end >= __pa(PAGE_OFFSET) + memory_limit)
 			end = __pa(PAGE_OFFSET) + memory_limit;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		map_size = best_map_size(start, end - start);
 		for (pa = start; pa < end; pa += map_size) {
@@ -738,7 +900,11 @@ static void __init setup_vm_final(void)
 
 #ifdef CONFIG_64BIT
 	/* Map the kernel */
+<<<<<<< HEAD
 	create_kernel_page_table(swapper_pg_dir, false);
+=======
+	create_kernel_page_table(swapper_pg_dir, PMD_SIZE, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 	/* Clear fixmap PTE and PMD mappings */
@@ -805,6 +971,7 @@ static void __init reserve_crashkernel(void)
 
 	crash_size = PAGE_ALIGN(crash_size);
 
+<<<<<<< HEAD
 	if (crash_base) {
 		search_start = crash_base;
 		search_end = crash_base + crash_size;
@@ -821,6 +988,40 @@ static void __init reserve_crashkernel(void)
 			crash_size >> 10);
 		return;
 	}
+=======
+	if (crash_base == 0) {
+		/*
+		 * Current riscv boot protocol requires 2MB alignment for
+		 * RV64 and 4MB alignment for RV32 (hugepage size)
+		 */
+		crash_base = memblock_find_in_range(search_start, search_end,
+						    crash_size, PMD_SIZE);
+
+		if (crash_base == 0) {
+			pr_warn("crashkernel: couldn't allocate %lldKB\n",
+				crash_size >> 10);
+			return;
+		}
+	} else {
+		/* User specifies base address explicitly. */
+		if (!memblock_is_region_memory(crash_base, crash_size)) {
+			pr_warn("crashkernel: requested region is not memory\n");
+			return;
+		}
+
+		if (memblock_is_region_reserved(crash_base, crash_size)) {
+			pr_warn("crashkernel: requested region is reserved\n");
+			return;
+		}
+
+
+		if (!IS_ALIGNED(crash_base, PMD_SIZE)) {
+			pr_warn("crashkernel: requested region is misaligned\n");
+			return;
+		}
+	}
+	memblock_reserve(crash_base, crash_size);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	pr_info("crashkernel: reserved 0x%016llx - 0x%016llx (%lld MB)\n",
 		crash_base, crash_base + crash_size, crash_size >> 20);
@@ -830,6 +1031,29 @@ static void __init reserve_crashkernel(void)
 }
 #endif /* CONFIG_KEXEC_CORE */
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRASH_DUMP
+/*
+ * We keep track of the ELF core header of the crashed
+ * kernel with a reserved-memory region with compatible
+ * string "linux,elfcorehdr". Here we register a callback
+ * to populate elfcorehdr_addr/size when this region is
+ * present. Note that this region will be marked as
+ * reserved once we call early_init_fdt_scan_reserved_mem()
+ * later on.
+ */
+static int __init elfcore_hdr_setup(struct reserved_mem *rmem)
+{
+	elfcorehdr_addr = rmem->base;
+	elfcorehdr_size = rmem->size;
+	return 0;
+}
+
+RESERVEDMEM_OF_DECLARE(elfcorehdr, "linux,elfcorehdr", elfcore_hdr_setup);
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __init paging_init(void)
 {
 	setup_bootmem();

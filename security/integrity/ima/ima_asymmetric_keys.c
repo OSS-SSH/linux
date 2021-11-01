@@ -62,5 +62,9 @@ void ima_post_key_create_or_update(struct key *keyring, struct key *key,
 	 */
 	process_buffer_measurement(&init_user_ns, NULL, payload, payload_len,
 				   keyring->description, KEY_CHECK, 0,
+<<<<<<< HEAD
 				   keyring->description, false, NULL, 0);
+=======
+				   keyring->description, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

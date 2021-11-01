@@ -5,7 +5,10 @@
  * Author: YH Huang <yh.huang@mediatek.com>
  */
 
+<<<<<<< HEAD
 #include <linux/bitfield.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/clk.h>
 #include <linux/err.h>
 #include <linux/io.h>
@@ -48,7 +51,10 @@ struct mtk_disp_pwm {
 	struct clk *clk_main;
 	struct clk *clk_mm;
 	void __iomem *base;
+<<<<<<< HEAD
 	bool enabled;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline struct mtk_disp_pwm *to_mtk_disp_pwm(struct pwm_chip *chip)
@@ -68,14 +74,20 @@ static void mtk_disp_pwm_update_bits(struct mtk_disp_pwm *mdp, u32 offset,
 	writel(value, address);
 }
 
+<<<<<<< HEAD
 static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 			      const struct pwm_state *state)
+=======
+static int mtk_disp_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
+			       int duty_ns, int period_ns)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
 	u32 clk_div, period, high_width, value;
 	u64 div, rate;
 	int err;
 
+<<<<<<< HEAD
 	if (state->polarity != PWM_POLARITY_NORMAL)
 		return -EINVAL;
 
@@ -109,6 +121,8 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Find period, high_width and clk_div to suit duty_ns and period_ns.
 	 * Calculate proper div value to keep period value in the bound.
@@ -120,6 +134,7 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 	 * high_width = (PWM_CLK_RATE * duty_ns) / (10^9 * (clk_div + 1))
 	 */
 	rate = clk_get_rate(mdp->clk_main);
+<<<<<<< HEAD
 	clk_div = mul_u64_u64_div_u64(state->period, rate, NSEC_PER_SEC) >>
 			  PWM_PERIOD_BIT_WIDTH;
 	if (clk_div > PWM_CLKDIV_MAX) {
@@ -138,6 +153,31 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 	high_width = mul_u64_u64_div_u64(state->duty_cycle, rate, div);
 	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
 
+=======
+	clk_div = div_u64(rate * period_ns, NSEC_PER_SEC) >>
+			  PWM_PERIOD_BIT_WIDTH;
+	if (clk_div > PWM_CLKDIV_MAX)
+		return -EINVAL;
+
+	div = NSEC_PER_SEC * (clk_div + 1);
+	period = div64_u64(rate * period_ns, div);
+	if (period > 0)
+		period--;
+
+	high_width = div64_u64(rate * duty_ns, div);
+	value = period | (high_width << PWM_HIGH_WIDTH_SHIFT);
+
+	err = clk_enable(mdp->clk_main);
+	if (err < 0)
+		return err;
+
+	err = clk_enable(mdp->clk_mm);
+	if (err < 0) {
+		clk_disable(mdp->clk_main);
+		return err;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
 				 PWM_CLKDIV_MASK,
 				 clk_div << PWM_CLKDIV_SHIFT);
@@ -152,6 +192,7 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 		mtk_disp_pwm_update_bits(mdp, mdp->data->commit,
 					 mdp->data->commit_mask,
 					 0x0);
+<<<<<<< HEAD
 	} else {
 		/*
 		 * For MT2701, disable double buffer before writing register
@@ -168,10 +209,17 @@ static int mtk_disp_pwm_apply(struct pwm_chip *chip, struct pwm_device *pwm,
 	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
 				 mdp->data->enable_mask);
 	mdp->enabled = true;
+=======
+	}
+
+	clk_disable(mdp->clk_mm);
+	clk_disable(mdp->clk_main);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
 				   struct pwm_device *pwm,
 				   struct pwm_state *state)
@@ -216,6 +264,44 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
 static const struct pwm_ops mtk_disp_pwm_ops = {
 	.apply = mtk_disp_pwm_apply,
 	.get_state = mtk_disp_pwm_get_state,
+=======
+static int mtk_disp_pwm_enable(struct pwm_chip *chip, struct pwm_device *pwm)
+{
+	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
+	int err;
+
+	err = clk_enable(mdp->clk_main);
+	if (err < 0)
+		return err;
+
+	err = clk_enable(mdp->clk_mm);
+	if (err < 0) {
+		clk_disable(mdp->clk_main);
+		return err;
+	}
+
+	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
+				 mdp->data->enable_mask);
+
+	return 0;
+}
+
+static void mtk_disp_pwm_disable(struct pwm_chip *chip, struct pwm_device *pwm)
+{
+	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
+
+	mtk_disp_pwm_update_bits(mdp, DISP_PWM_EN, mdp->data->enable_mask,
+				 0x0);
+
+	clk_disable(mdp->clk_mm);
+	clk_disable(mdp->clk_main);
+}
+
+static const struct pwm_ops mtk_disp_pwm_ops = {
+	.config = mtk_disp_pwm_config,
+	.enable = mtk_disp_pwm_enable,
+	.disable = mtk_disp_pwm_disable,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.owner = THIS_MODULE,
 };
 
@@ -242,28 +328,77 @@ static int mtk_disp_pwm_probe(struct platform_device *pdev)
 	if (IS_ERR(mdp->clk_mm))
 		return PTR_ERR(mdp->clk_mm);
 
+<<<<<<< HEAD
+=======
+	ret = clk_prepare(mdp->clk_main);
+	if (ret < 0)
+		return ret;
+
+	ret = clk_prepare(mdp->clk_mm);
+	if (ret < 0)
+		goto disable_clk_main;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mdp->chip.dev = &pdev->dev;
 	mdp->chip.ops = &mtk_disp_pwm_ops;
 	mdp->chip.npwm = 1;
 
 	ret = pwmchip_add(&mdp->chip);
 	if (ret < 0) {
+<<<<<<< HEAD
 		dev_err(&pdev->dev, "pwmchip_add() failed: %pe\n", ERR_PTR(ret));
 		return ret;
+=======
+		dev_err(&pdev->dev, "pwmchip_add() failed: %d\n", ret);
+		goto disable_clk_mm;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	platform_set_drvdata(pdev, mdp);
 
+<<<<<<< HEAD
 	return 0;
+=======
+	/*
+	 * For MT2701, disable double buffer before writing register
+	 * and select manual mode and use PWM_PERIOD/PWM_HIGH_WIDTH.
+	 */
+	if (!mdp->data->has_commit) {
+		mtk_disp_pwm_update_bits(mdp, mdp->data->bls_debug,
+					 mdp->data->bls_debug_mask,
+					 mdp->data->bls_debug_mask);
+		mtk_disp_pwm_update_bits(mdp, mdp->data->con0,
+					 mdp->data->con0_sel,
+					 mdp->data->con0_sel);
+	}
+
+	return 0;
+
+disable_clk_mm:
+	clk_unprepare(mdp->clk_mm);
+disable_clk_main:
+	clk_unprepare(mdp->clk_main);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int mtk_disp_pwm_remove(struct platform_device *pdev)
 {
 	struct mtk_disp_pwm *mdp = platform_get_drvdata(pdev);
+<<<<<<< HEAD
 
 	pwmchip_remove(&mdp->chip);
 
 	return 0;
+=======
+	int ret;
+
+	ret = pwmchip_remove(&mdp->chip);
+	clk_unprepare(mdp->clk_mm);
+	clk_unprepare(mdp->clk_main);
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct mtk_pwm_data mt2701_pwm_data = {

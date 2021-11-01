@@ -673,6 +673,7 @@ static const struct file_operations spidev_fops = {
 
 static struct class *spidev_class;
 
+<<<<<<< HEAD
 static const struct spi_device_id spidev_spi_ids[] = {
 	{ .name = "dh2228fv" },
 	{ .name = "ltc2488" },
@@ -686,10 +687,16 @@ static const struct spi_device_id spidev_spi_ids[] = {
 };
 MODULE_DEVICE_TABLE(spi, spidev_spi_ids);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_OF
 static const struct of_device_id spidev_dt_ids[] = {
 	{ .compatible = "rohm,dh2228fv" },
 	{ .compatible = "lineartechnology,ltc2488" },
+<<<<<<< HEAD
+=======
+	{ .compatible = "ge,achc" },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ .compatible = "semtech,sx1301" },
 	{ .compatible = "lwn,bk4" },
 	{ .compatible = "dh,dhcom-board" },
@@ -831,7 +838,10 @@ static struct spi_driver spidev_spi_driver = {
 	},
 	.probe =	spidev_probe,
 	.remove =	spidev_remove,
+<<<<<<< HEAD
 	.id_table =	spidev_spi_ids,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* NOTE:  suspend/resume methods are not necessary here.
 	 * We don't do anything except pass the requests to/from

@@ -43,6 +43,7 @@ static int fprintf_json(void *out, const char *fmt, ...)
 {
 	va_list ap;
 	char *s;
+<<<<<<< HEAD
 	int err;
 
 	va_start(ap, fmt);
@@ -50,6 +51,13 @@ static int fprintf_json(void *out, const char *fmt, ...)
 	va_end(ap);
 	if (err < 0)
 		return -1;
+=======
+
+	va_start(ap, fmt);
+	if (vasprintf(&s, fmt, ap) < 0)
+		return -1;
+	va_end(ap);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!oper_count) {
 		int i;

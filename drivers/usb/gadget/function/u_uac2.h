@@ -22,6 +22,7 @@
 #define UAC2_DEF_CSRATE 64000
 #define UAC2_DEF_CSSIZE 2
 #define UAC2_DEF_CSYNC		USB_ENDPOINT_SYNC_ASYNC
+<<<<<<< HEAD
 
 #define UAC2_DEF_MUTE_PRESENT	1
 #define UAC2_DEF_VOLUME_PRESENT 1
@@ -32,6 +33,10 @@
 #define UAC2_DEF_REQ_NUM 2
 #define UAC2_DEF_FB_MAX 5
 #define UAC2_DEF_INT_REQ_NUM	10
+=======
+#define UAC2_DEF_REQ_NUM 2
+#define UAC2_DEF_FB_MAX 5
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct f_uac2_opts {
 	struct usb_function_instance	func_inst;
@@ -42,6 +47,7 @@ struct f_uac2_opts {
 	int				c_srate;
 	int				c_ssize;
 	int				c_sync;
+<<<<<<< HEAD
 
 	bool			p_mute_present;
 	bool			p_volume_present;
@@ -58,6 +64,11 @@ struct f_uac2_opts {
 	int				req_number;
 	int				fb_max;
 	bool			bound;
+=======
+	int				req_number;
+	int				fb_max;
+	bool				bound;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	struct mutex			lock;
 	int				refcnt;

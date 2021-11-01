@@ -87,6 +87,7 @@ properties:
       - const: ipa-setup-ready
 
   interconnects:
+<<<<<<< HEAD
     oneOf:
       - items:
           - description: Path leading to system memory
@@ -105,6 +106,18 @@ properties:
           - const: memory
           - const: imem
           - const: config
+=======
+    items:
+      - description: Interconnect path between IPA and main memory
+      - description: Interconnect path between IPA and internal memory
+      - description: Interconnect path between IPA and the AP subsystem
+
+  interconnect-names:
+    items:
+      - const: memory
+      - const: imem
+      - const: config
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   qcom,smem-states:
     $ref: /schemas/types.yaml#/definitions/phandle-array

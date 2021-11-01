@@ -39,7 +39,21 @@ properties:
   reg:
     maxItems: 1
 
+<<<<<<< HEAD
   adi,pwm-active-state:
+=======
+patternProperties:
+  "^adi,bypass-attenuator-in[0-4]$":
+    description: |
+      Configures bypassing the individual voltage input attenuator. If
+      set to 1 the attenuator is bypassed if set to 0 the attenuator is
+      not bypassed. If the property is absent then the attenuator
+      retains it's configuration from the bios/bootloader.
+    $ref: /schemas/types.yaml#/definitions/uint32
+    enum: [0, 1]
+
+  "^adi,pwm-active-state$":
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     description: |
       Integer array, represents the active state of the pwm outputs If set to 0
       the pwm uses a logic low output for 100% duty cycle. If set to 1 the pwm
@@ -51,6 +65,7 @@ properties:
       enum: [0, 1]
       default: 1
 
+<<<<<<< HEAD
 patternProperties:
   "^adi,bypass-attenuator-in[0-4]$":
     description: |
@@ -61,6 +76,8 @@ patternProperties:
     $ref: /schemas/types.yaml#/definitions/uint32
     enum: [0, 1]
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 required:
   - compatible
   - reg

@@ -8,6 +8,10 @@
  * Author: Jarkko Nikula <jarkko.nikula@linux.intel.com>
  * Author: Raymond Tan <raymond.tan@intel.com>
  */
+<<<<<<< HEAD
+=======
+#include <linux/bitops.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/counter.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -126,8 +130,13 @@ static int intel_qep_count_read(struct counter_device *counter,
 	return 0;
 }
 
+<<<<<<< HEAD
 static const enum counter_function intel_qep_count_functions[] = {
 	COUNTER_FUNCTION_QUADRATURE_X4,
+=======
+static const enum counter_count_function intel_qep_count_functions[] = {
+	COUNTER_COUNT_FUNCTION_QUADRATURE_X4,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int intel_qep_function_get(struct counter_device *counter,
@@ -319,7 +328,11 @@ static ssize_t spike_filter_ns_write(struct counter_device *counter,
 	}
 
 	if (length > INTEL_QEPFLT_MAX_COUNT(length))
+<<<<<<< HEAD
 		return -ERANGE;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mutex_lock(&qep->lock);
 	if (qep->enabled) {

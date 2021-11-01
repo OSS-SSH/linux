@@ -9,7 +9,10 @@
 
 #include "main.h"
 
+<<<<<<< HEAD
 #include <linux/kref.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/netdevice.h>
 #include <linux/skbuff.h>
 #include <linux/types.h>
@@ -22,6 +25,7 @@ void batadv_interface_rx(struct net_device *soft_iface,
 bool batadv_softif_is_valid(const struct net_device *net_dev);
 extern struct rtnl_link_ops batadv_link_ops;
 int batadv_softif_create_vlan(struct batadv_priv *bat_priv, unsigned short vid);
+<<<<<<< HEAD
 void batadv_softif_vlan_release(struct kref *ref);
 struct batadv_softif_vlan *batadv_softif_vlan_get(struct batadv_priv *bat_priv,
 						  unsigned short vid);
@@ -39,4 +43,10 @@ static inline void batadv_softif_vlan_put(struct batadv_softif_vlan *vlan)
 	kref_put(&vlan->refcount, batadv_softif_vlan_release);
 }
 
+=======
+void batadv_softif_vlan_put(struct batadv_softif_vlan *softif_vlan);
+struct batadv_softif_vlan *batadv_softif_vlan_get(struct batadv_priv *bat_priv,
+						  unsigned short vid);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _NET_BATMAN_ADV_SOFT_INTERFACE_H_ */

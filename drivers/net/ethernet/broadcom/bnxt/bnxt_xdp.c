@@ -87,7 +87,11 @@ void bnxt_tx_int_xdp(struct bnxt *bp, struct bnxt_napi *bnapi, int nr_pkts)
 			dma_unmap_single(&pdev->dev,
 					 dma_unmap_addr(tx_buf, mapping),
 					 dma_unmap_len(tx_buf, len),
+<<<<<<< HEAD
 					 DMA_TO_DEVICE);
+=======
+					 PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xdp_return_frame(tx_buf->xdpf);
 			tx_buf->action = 0;
 			tx_buf->xdpf = NULL;

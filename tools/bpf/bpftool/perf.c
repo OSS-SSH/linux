@@ -231,10 +231,14 @@ static int do_show(int argc, char **argv)
 static int do_help(int argc, char **argv)
 {
 	fprintf(stderr,
+<<<<<<< HEAD
 		"Usage: %1$s %2$s { show | list }\n"
 		"       %1$s %2$s help }\n"
 		"\n"
 		"       " HELP_SPEC_OPTIONS " }\n"
+=======
+		"Usage: %1$s %2$s { show | list | help }\n"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		"",
 		bin_name, argv[-2]);
 

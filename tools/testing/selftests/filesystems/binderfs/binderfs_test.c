@@ -62,9 +62,12 @@ static int __do_binderfs_test(struct __test_metadata *_metadata)
 	struct binder_version version = { 0 };
 	char binderfs_mntpt[] = P_tmpdir "/binderfs_XXXXXX",
 		device_path[sizeof(P_tmpdir "/binderfs_XXXXXX/") + BINDERFS_MAX_NAME];
+<<<<<<< HEAD
 	static const char * const binder_features[] = {
 		"oneway_spam_detection",
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	change_mountns(_metadata);
 
@@ -153,6 +156,7 @@ static int __do_binderfs_test(struct __test_metadata *_metadata)
 	}
 
 	/* success: binder-control device removal failed as expected */
+<<<<<<< HEAD
 
 	for (int i = 0; i < ARRAY_SIZE(binder_features); i++) {
 		snprintf(device_path, sizeof(device_path), "%s/features/%s",
@@ -167,6 +171,8 @@ static int __do_binderfs_test(struct __test_metadata *_metadata)
 	}
 
 	/* success: binder feature files found */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	result = 0;
 
 umount:

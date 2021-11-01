@@ -309,11 +309,31 @@ static void die_kernel_fault(const char *msg, unsigned long addr,
 static void report_tag_fault(unsigned long addr, unsigned int esr,
 			     struct pt_regs *regs)
 {
+<<<<<<< HEAD
+=======
+	static bool reported;
+	bool is_write;
+
+	if (READ_ONCE(reported))
+		return;
+
+	/*
+	 * This is used for KASAN tests and assumes that no MTE faults
+	 * happened before running the tests.
+	 */
+	if (mte_report_once())
+		WRITE_ONCE(reported, true);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * SAS bits aren't set for all faults reported in EL1, so we can't
 	 * find out access size.
 	 */
+<<<<<<< HEAD
 	bool is_write = !!(esr & ESR_ELx_WNR);
+=======
+	is_write = !!(esr & ESR_ELx_WNR);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kasan_report(addr, 0, is_write, regs->pc);
 }
 #else

@@ -710,8 +710,20 @@ out:
 int rtnetlink_send(struct sk_buff *skb, struct net *net, u32 pid, unsigned int group, int echo)
 {
 	struct sock *rtnl = net->rtnl;
+<<<<<<< HEAD
 
 	return nlmsg_notify(rtnl, skb, pid, group, echo, GFP_KERNEL);
+=======
+	int err = 0;
+
+	NETLINK_CB(skb).dst_group = group;
+	if (echo)
+		refcount_inc(&skb->users);
+	netlink_broadcast(rtnl, skb, pid, group, GFP_KERNEL);
+	if (echo)
+		err = netlink_unicast(rtnl, skb, pid, MSG_DONTWAIT);
+	return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int rtnl_unicast(struct sk_buff *skb, struct net *net, u32 pid)
@@ -726,8 +738,17 @@ void rtnl_notify(struct sk_buff *skb, struct net *net, u32 pid, u32 group,
 		 struct nlmsghdr *nlh, gfp_t flags)
 {
 	struct sock *rtnl = net->rtnl;
+<<<<<<< HEAD
 
 	nlmsg_notify(rtnl, skb, pid, group, nlmsg_report(nlh), flags);
+=======
+	int report = 0;
+
+	if (nlh)
+		report = nlmsg_report(nlh);
+
+	nlmsg_notify(rtnl, skb, pid, group, report, flags);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(rtnl_notify);
 
@@ -1959,6 +1980,7 @@ static bool link_master_filtered(struct net_device *dev, int master_idx)
 		return false;
 
 	master = netdev_master_upper_dev_get(dev);
+<<<<<<< HEAD
 
 	/* 0 is already used to denote IFLA_MASTER wasn't passed, therefore need
 	 * another invalid value for ifindex to denote "no master".
@@ -1966,6 +1988,8 @@ static bool link_master_filtered(struct net_device *dev, int master_idx)
 	if (master_idx == -1)
 		return !!master;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!master || master->ifindex != master_idx)
 		return true;
 
@@ -2264,8 +2288,12 @@ invalid_attr:
 	return -EINVAL;
 }
 
+<<<<<<< HEAD
 static int validate_linkmsg(struct net_device *dev, struct nlattr *tb[],
 			    struct netlink_ext_ack *extack)
+=======
+static int validate_linkmsg(struct net_device *dev, struct nlattr *tb[])
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	if (dev) {
 		if (tb[IFLA_ADDRESS] &&
@@ -2292,7 +2320,11 @@ static int validate_linkmsg(struct net_device *dev, struct nlattr *tb[],
 				return -EOPNOTSUPP;
 
 			if (af_ops->validate_link_af) {
+<<<<<<< HEAD
 				err = af_ops->validate_link_af(dev, af, extack);
+=======
+				err = af_ops->validate_link_af(dev, af);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (err < 0)
 					return err;
 			}
@@ -2600,12 +2632,19 @@ static int do_setlink(const struct sk_buff *skb,
 	const struct net_device_ops *ops = dev->netdev_ops;
 	int err;
 
+<<<<<<< HEAD
 	err = validate_linkmsg(dev, tb, extack);
+=======
+	err = validate_linkmsg(dev, tb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
 	if (tb[IFLA_NET_NS_PID] || tb[IFLA_NET_NS_FD] || tb[IFLA_TARGET_NETNSID]) {
+<<<<<<< HEAD
 		const char *pat = ifname && ifname[0] ? ifname : NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct net *net;
 		int new_ifindex;
 
@@ -2621,7 +2660,11 @@ static int do_setlink(const struct sk_buff *skb,
 		else
 			new_ifindex = 0;
 
+<<<<<<< HEAD
 		err = __dev_change_net_namespace(dev, net, pat, new_ifindex);
+=======
+		err = __dev_change_net_namespace(dev, net, ifname, new_ifindex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		put_net(net);
 		if (err)
 			goto errout;
@@ -3299,7 +3342,11 @@ replay:
 			m_ops = master_dev->rtnl_link_ops;
 	}
 
+<<<<<<< HEAD
 	err = validate_linkmsg(dev, tb, extack);
+=======
+	err = validate_linkmsg(dev, tb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -5262,7 +5309,11 @@ nla_put_failure:
 static size_t if_nlmsg_stats_size(const struct net_device *dev,
 				  u32 filter_mask)
 {
+<<<<<<< HEAD
 	size_t size = NLMSG_ALIGN(sizeof(struct if_stats_msg));
+=======
+	size_t size = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (stats_attr_valid(filter_mask, IFLA_STATS_LINK_64, 0))
 		size += nla_total_size_64bit(sizeof(struct rtnl_link_stats64));

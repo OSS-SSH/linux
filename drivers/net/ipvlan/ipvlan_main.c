@@ -732,7 +732,10 @@ static int ipvlan_device_event(struct notifier_block *unused,
 	port = ipvlan_port_get_rtnl(dev);
 
 	switch (event) {
+<<<<<<< HEAD
 	case NETDEV_UP:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case NETDEV_CHANGE:
 		list_for_each_entry(ipvlan, &port->ipvlans, pnode)
 			netif_stacked_transfer_operstate(ipvlan->phy_dev,

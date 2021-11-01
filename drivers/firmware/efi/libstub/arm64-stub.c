@@ -35,6 +35,7 @@ efi_status_t check_platform_features(void)
 }
 
 /*
+<<<<<<< HEAD
  * Distro versions of GRUB may ignore the BSS allocation entirely (i.e., fail
  * to provide space, and fail to zero it). Check for this condition by double
  * checking that the first and the last byte of the image are covered by the
@@ -77,6 +78,17 @@ static bool check_image_region(u64 base, u64 size)
 	efi_bs_call(free_pool, memory_map);
 
 	return ret;
+=======
+ * Although relocatable kernels can fix up the misalignment with respect to
+ * MIN_KIMG_ALIGN, the resulting virtual text addresses are subtly out of
+ * sync with those recorded in the vmlinux when kaslr is disabled but the
+ * image required relocation anyway. Therefore retain 2M alignment unless
+ * KASLR is in use.
+ */
+static u64 min_kimg_align(void)
+{
+	return efi_nokaslr ? MIN_KIMG_ALIGN : EFI_KIMG_ALIGN;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 efi_status_t handle_kernel_image(unsigned long *image_addr,
@@ -89,6 +101,7 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
 	unsigned long kernel_size, kernel_memsize = 0;
 	u32 phys_seed = 0;
 
+<<<<<<< HEAD
 	/*
 	 * Although relocatable kernels can fix up the misalignment with
 	 * respect to MIN_KIMG_ALIGN, the resulting virtual text addresses are
@@ -99,6 +112,8 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
 	 */
 	u64 min_kimg_align = efi_nokaslr ? MIN_KIMG_ALIGN : EFI_KIMG_ALIGN;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ENABLED(CONFIG_RANDOMIZE_BASE)) {
 		if (!efi_nokaslr) {
 			status = efi_get_random_bytes(sizeof(phys_seed),
@@ -119,10 +134,13 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
 	if (image->image_base != _text)
 		efi_err("FIRMWARE BUG: efi_loaded_image_t::image_base has bogus value\n");
 
+<<<<<<< HEAD
 	if (!IS_ALIGNED((u64)_text, EFI_KIMG_ALIGN))
 		efi_err("FIRMWARE BUG: kernel image not aligned on %ldk boundary\n",
 			EFI_KIMG_ALIGN >> 10);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kernel_size = _edata - _text;
 	kernel_memsize = kernel_size + (_end - _edata);
 	*reserve_size = kernel_memsize;
@@ -132,18 +150,27 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
 		 * If KASLR is enabled, and we have some randomness available,
 		 * locate the kernel at a randomized offset in physical memory.
 		 */
+<<<<<<< HEAD
 		status = efi_random_alloc(*reserve_size, min_kimg_align,
 					  reserve_addr, phys_seed);
 		if (status != EFI_SUCCESS)
 			efi_warn("efi_random_alloc() failed: 0x%lx\n", status);
+=======
+		status = efi_random_alloc(*reserve_size, min_kimg_align(),
+					  reserve_addr, phys_seed);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		status = EFI_OUT_OF_RESOURCES;
 	}
 
 	if (status != EFI_SUCCESS) {
+<<<<<<< HEAD
 		if (!check_image_region((u64)_text, kernel_memsize)) {
 			efi_err("FIRMWARE BUG: Image BSS overlaps adjacent EFI memory region\n");
 		} else if (IS_ALIGNED((u64)_text, min_kimg_align)) {
+=======
+		if (IS_ALIGNED((u64)_text, min_kimg_align())) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/*
 			 * Just execute from wherever we were loaded by the
 			 * UEFI PE/COFF loader if the alignment is suitable.
@@ -154,7 +181,11 @@ efi_status_t handle_kernel_image(unsigned long *image_addr,
 		}
 
 		status = efi_allocate_pages_aligned(*reserve_size, reserve_addr,
+<<<<<<< HEAD
 						    ULONG_MAX, min_kimg_align);
+=======
+						    ULONG_MAX, min_kimg_align());
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (status != EFI_SUCCESS) {
 			efi_err("Failed to relocate kernel\n");

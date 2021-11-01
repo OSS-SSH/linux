@@ -3,10 +3,14 @@
 .. include:: ../disclaimer-zh_CN.rst
 
 :Original: Documentation/core-api/padata.rst
+<<<<<<< HEAD
 
 :翻译:
 
  司延腾 Yanteng Si <siyanteng@loongson.cn>
+=======
+:Translator: Yanteng Si <siyanteng@loongson.cn>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 .. _cn_core_api_padata.rst:
 

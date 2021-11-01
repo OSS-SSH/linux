@@ -193,6 +193,11 @@ static int jazz_sonic_probe(struct platform_device *pdev)
 	SET_NETDEV_DEV(dev, &pdev->dev);
 	platform_set_drvdata(pdev, dev);
 
+<<<<<<< HEAD
+=======
+	netdev_boot_setup_check(dev);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev->base_addr = res->start;
 	dev->irq = platform_get_irq(pdev, 0);
 	err = sonic_probe1(dev);

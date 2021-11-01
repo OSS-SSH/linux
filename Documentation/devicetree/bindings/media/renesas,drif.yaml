@@ -96,7 +96,11 @@ properties:
       Indicates that the channel acts as primary among the bonded channels.
 
   port:
+<<<<<<< HEAD
     $ref: /schemas/graph.yaml#/$defs/port-base
+=======
+    $ref: /schemas/graph.yaml#/properties/port
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     unevaluatedProperties: false
     description:
       Child port node corresponding to the data input. The port node must
@@ -242,6 +246,10 @@ examples:
                     power-domains = <&sysc R8A7795_PD_ALWAYS_ON>;
                     resets = <&cpg 513>;
                     renesas,bonding = <&drif11>;
+<<<<<<< HEAD
+=======
+                    status = "disabled";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
             };
 
             drif11: rif@e6f70000 {

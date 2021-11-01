@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-only
 mangle_*
 fake_sigreturn_*
+<<<<<<< HEAD
 sve_*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 !*.[ch]

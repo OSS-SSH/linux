@@ -487,6 +487,7 @@ int bitmap_print_to_pagebuf(bool list, char *buf, const unsigned long *maskp,
 }
 EXPORT_SYMBOL(bitmap_print_to_pagebuf);
 
+<<<<<<< HEAD
 /**
  * bitmap_print_to_buf  - convert bitmap to list or hex format ASCII string
  * @list: indicates whether the bitmap must be list
@@ -608,6 +609,8 @@ int bitmap_print_list_to_buf(char *buf, const unsigned long *maskp,
 }
 EXPORT_SYMBOL(bitmap_print_list_to_buf);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Region 9-38:4/10 describes the following bitmap structure:
  * 0	   9  12    18			38	     N

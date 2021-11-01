@@ -48,6 +48,10 @@ struct vfio_platform_device {
 	u32				num_regions;
 	struct vfio_platform_irq	*irqs;
 	u32				num_irqs;
+<<<<<<< HEAD
+=======
+	int				refcnt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct mutex			igate;
 	const char			*compat;
 	const char			*acpihid;

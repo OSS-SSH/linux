@@ -53,12 +53,17 @@ static inline void sync_with_host(uint64_t phase)
 		     : "+a" (phase));
 }
 
+<<<<<<< HEAD
 static void self_smi(void)
+=======
+void self_smi(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	x2apic_write_reg(APIC_ICR,
 			 APIC_DEST_SELF | APIC_INT_ASSERT | APIC_DM_SMI);
 }
 
+<<<<<<< HEAD
 static void l2_guest_code(void)
 {
 	sync_with_host(8);
@@ -75,6 +80,11 @@ static void guest_code(void *arg)
 	uint64_t apicbase = rdmsr(MSR_IA32_APICBASE);
 	struct svm_test_data *svm = arg;
 	struct vmx_pages *vmx_pages = arg;
+=======
+void guest_code(void *arg)
+{
+	uint64_t apicbase = rdmsr(MSR_IA32_APICBASE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	sync_with_host(1);
 
@@ -87,6 +97,7 @@ static void guest_code(void *arg)
 	sync_with_host(4);
 
 	if (arg) {
+<<<<<<< HEAD
 		if (cpu_has_svm()) {
 			generic_svm_setup(svm, l2_guest_code,
 					  &l2_guest_stack[L2_GUEST_STACK_SIZE]);
@@ -96,12 +107,19 @@ static void guest_code(void *arg)
 			prepare_vmcs(vmx_pages, l2_guest_code,
 				     &l2_guest_stack[L2_GUEST_STACK_SIZE]);
 		}
+=======
+		if (cpu_has_svm())
+			generic_svm_setup(arg, NULL, NULL);
+		else
+			GUEST_ASSERT(prepare_for_vmx_operation(arg));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		sync_with_host(5);
 
 		self_smi();
 
 		sync_with_host(7);
+<<<<<<< HEAD
 
 		if (cpu_has_svm()) {
 			run_guest(svm->vmcb, svm->vmcb_gpa);
@@ -114,11 +132,14 @@ static void guest_code(void *arg)
 
 		/* Stages 8-11 are eaten by SMM (SMRAM_STAGE reported instead) */
 		sync_with_host(12);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	sync_with_host(DONE);
 }
 
+<<<<<<< HEAD
 void inject_smi(struct kvm_vm *vm)
 {
 	struct kvm_vcpu_events events;
@@ -131,6 +152,8 @@ void inject_smi(struct kvm_vm *vm)
 	vcpu_events_set(vm, VCPU_ID, &events);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int main(int argc, char *argv[])
 {
 	vm_vaddr_t nested_gva = 0;
@@ -189,6 +212,7 @@ int main(int argc, char *argv[])
 			    "Unexpected stage: #%x, got %x",
 			    stage, stage_reported);
 
+<<<<<<< HEAD
 		/*
 		 * Enter SMM during L2 execution and check that we correctly
 		 * return from it. Do not perform save/restore while in SMM yet.
@@ -205,6 +229,8 @@ int main(int argc, char *argv[])
 		if (stage == 10)
 			inject_smi(vm);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		state = vcpu_save_state(vm, VCPU_ID);
 		kvm_vm_release(vm);
 		kvm_vm_restart(vm, O_RDWR);

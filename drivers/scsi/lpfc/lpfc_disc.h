@@ -78,11 +78,18 @@ struct lpfc_node_rrqs {
 };
 
 enum lpfc_fc4_xpt_flags {
+<<<<<<< HEAD
 	NLP_XPT_REGD		= 0x1,
 	SCSI_XPT_REGD		= 0x2,
 	NVME_XPT_REGD		= 0x4,
 	NVME_XPT_UNREG_WAIT	= 0x8,
 	NLP_XPT_HAS_HH		= 0x10
+=======
+	NLP_WAIT_FOR_UNREG = 0x1,
+	SCSI_XPT_REGD      = 0x2,
+	NVME_XPT_REGD      = 0x4,
+	NLP_XPT_HAS_HH     = 0x8,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct lpfc_nodelist {

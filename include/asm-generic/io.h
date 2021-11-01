@@ -957,7 +957,11 @@ static inline void __iomem *ioremap(phys_addr_t offset, size_t size)
 
 #ifndef iounmap
 #define iounmap iounmap
+<<<<<<< HEAD
 static inline void iounmap(volatile void __iomem *addr)
+=======
+static inline void iounmap(void __iomem *addr)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 }
 #endif
@@ -1023,7 +1027,20 @@ static inline void __iomem *ioport_map(unsigned long port, unsigned int nr)
 	port &= IO_SPACE_LIMIT;
 	return (port > MMIO_UPPER_LIMIT) ? NULL : PCI_IOBASE + port;
 }
+<<<<<<< HEAD
 #define ARCH_HAS_GENERIC_IOPORT_MAP
+=======
+#define __pci_ioport_unmap __pci_ioport_unmap
+static inline void __pci_ioport_unmap(void __iomem *p)
+{
+	uintptr_t start = (uintptr_t) PCI_IOBASE;
+	uintptr_t addr = (uintptr_t) p;
+
+	if (addr >= start && addr < start + IO_SPACE_LIMIT)
+		return;
+	iounmap(p);
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifndef ioport_unmap
@@ -1039,10 +1056,28 @@ extern void ioport_unmap(void __iomem *p);
 #endif /* CONFIG_HAS_IOPORT_MAP */
 
 #ifndef CONFIG_GENERIC_IOMAP
+<<<<<<< HEAD
 #ifndef pci_iounmap
 #define ARCH_WANTS_GENERIC_PCI_IOUNMAP
 #endif
 #endif
+=======
+struct pci_dev;
+extern void __iomem *pci_iomap(struct pci_dev *dev, int bar, unsigned long max);
+
+#ifndef __pci_ioport_unmap
+static inline void __pci_ioport_unmap(void __iomem *p) {}
+#endif
+
+#ifndef pci_iounmap
+#define pci_iounmap pci_iounmap
+static inline void pci_iounmap(struct pci_dev *dev, void __iomem *p)
+{
+	__pci_ioport_unmap(p);
+}
+#endif
+#endif /* CONFIG_GENERIC_IOMAP */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifndef xlate_dev_mem_ptr
 #define xlate_dev_mem_ptr xlate_dev_mem_ptr

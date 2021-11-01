@@ -670,6 +670,7 @@ static bool cmp_key(const struct sw_flow_key *key1,
 {
 	const long *cp1 = (const long *)((const u8 *)key1 + key_start);
 	const long *cp2 = (const long *)((const u8 *)key2 + key_start);
+<<<<<<< HEAD
 	int i;
 
 	for (i = key_start; i < key_end; i += sizeof(long))
@@ -677,6 +678,15 @@ static bool cmp_key(const struct sw_flow_key *key1,
 			return false;
 
 	return true;
+=======
+	long diffs = 0;
+	int i;
+
+	for (i = key_start; i < key_end; i += sizeof(long))
+		diffs |= *cp1++ ^ *cp2++;
+
+	return diffs == 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static bool flow_cmp_masked_key(const struct sw_flow *flow,

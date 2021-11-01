@@ -315,10 +315,13 @@
 	};
 
 	/delete-node/ vreg-boost;
+<<<<<<< HEAD
 
 	adsp-pil {
 		cx-supply = <&pma8084_s2>;
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &soc {
@@ -835,6 +838,7 @@
 			vddio-supply = <&pma8084_l12>;
 		};
 	};
+<<<<<<< HEAD
 
 	remoteproc@fc880000 {
 		cx-supply = <&pma8084_s2>;
@@ -842,6 +846,8 @@
 		mx-supply = <&pma8084_s1>;
 		pll-supply = <&pma8084_l12>;
 	};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &spmi_bus {

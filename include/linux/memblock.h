@@ -99,6 +99,11 @@ void memblock_discard(void);
 static inline void memblock_discard(void) {}
 #endif
 
+<<<<<<< HEAD
+=======
+phys_addr_t memblock_find_in_range(phys_addr_t start, phys_addr_t end,
+				   phys_addr_t size, phys_addr_t align);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void memblock_allow_resize(void);
 int memblock_add_node(phys_addr_t base, phys_addr_t size, int nid);
 int memblock_add(phys_addr_t base, phys_addr_t size);
@@ -118,7 +123,10 @@ int memblock_mark_nomap(phys_addr_t base, phys_addr_t size);
 int memblock_clear_nomap(phys_addr_t base, phys_addr_t size);
 
 void memblock_free_all(void);
+<<<<<<< HEAD
 void memblock_free_ptr(void *ptr, size_t size);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void reset_node_managed_pages(pg_data_t *pgdat);
 void reset_all_zones_managed_pages(void);
 
@@ -208,7 +216,11 @@ static inline void __next_physmem_range(u64 *idx, struct memblock_type *type,
  */
 #define for_each_mem_range(i, p_start, p_end) \
 	__for_each_mem_range(i, &memblock.memory, NULL, NUMA_NO_NODE,	\
+<<<<<<< HEAD
 			     MEMBLOCK_HOTPLUG, p_start, p_end, NULL)
+=======
+			     MEMBLOCK_NONE, p_start, p_end, NULL)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * for_each_mem_range_rev - reverse iterate through memblock areas from
@@ -219,7 +231,11 @@ static inline void __next_physmem_range(u64 *idx, struct memblock_type *type,
  */
 #define for_each_mem_range_rev(i, p_start, p_end)			\
 	__for_each_mem_range_rev(i, &memblock.memory, NULL, NUMA_NO_NODE, \
+<<<<<<< HEAD
 				 MEMBLOCK_HOTPLUG, p_start, p_end, NULL)
+=======
+				 MEMBLOCK_NONE, p_start, p_end, NULL)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /**
  * for_each_reserved_mem_range - iterate over all reserved memblock areas

@@ -506,7 +506,11 @@ static int vsc85xx_ptp_cmp_init(struct phy_device *phydev, enum ts_blk blk)
 {
 	struct vsc8531_private *vsc8531 = phydev->priv;
 	bool base = phydev->mdio.addr == vsc8531->ts_base_addr;
+<<<<<<< HEAD
 	static const u8 msgs[] = {
+=======
+	u8 msgs[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		PTP_MSGTYPE_SYNC,
 		PTP_MSGTYPE_DELAY_REQ
 	};
@@ -847,7 +851,11 @@ static int vsc85xx_ts_ptp_action_flow(struct phy_device *phydev, enum ts_blk blk
 static int vsc85xx_ptp_conf(struct phy_device *phydev, enum ts_blk blk,
 			    bool one_step, bool enable)
 {
+<<<<<<< HEAD
 	static const u8 msgs[] = {
+=======
+	u8 msgs[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		PTP_MSGTYPE_SYNC,
 		PTP_MSGTYPE_DELAY_REQ
 	};
@@ -1268,8 +1276,13 @@ static void vsc8584_set_input_clk_configured(struct phy_device *phydev)
 static int __vsc8584_init_ptp(struct phy_device *phydev)
 {
 	struct vsc8531_private *vsc8531 = phydev->priv;
+<<<<<<< HEAD
 	static const u32 ltc_seq_e[] = { 0, 400000, 0, 0, 0 };
 	static const u8  ltc_seq_a[] = { 8, 6, 5, 4, 2 };
+=======
+	u32 ltc_seq_e[] = { 0, 400000, 0, 0, 0 };
+	u8  ltc_seq_a[] = { 8, 6, 5, 4, 2 };
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 val;
 
 	if (!vsc8584_is_1588_input_clk_configured(phydev)) {

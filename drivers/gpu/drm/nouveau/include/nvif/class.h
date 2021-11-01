@@ -61,6 +61,11 @@
 #define NV10_CHANNEL_DMA                              /* cl506b.h */ 0x0000006e
 #define NV17_CHANNEL_DMA                              /* cl506b.h */ 0x0000176e
 #define NV40_CHANNEL_DMA                              /* cl506b.h */ 0x0000406e
+<<<<<<< HEAD
+=======
+#define NV50_CHANNEL_DMA                              /* cl506e.h */ 0x0000506e
+#define G82_CHANNEL_DMA                               /* cl826e.h */ 0x0000826e
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define NV50_CHANNEL_GPFIFO                           /* cl506f.h */ 0x0000506f
 #define G82_CHANNEL_GPFIFO                            /* cl826f.h */ 0x0000826f
@@ -71,7 +76,10 @@
 #define PASCAL_CHANNEL_GPFIFO_A                       /* cla06f.h */ 0x0000c06f
 #define VOLTA_CHANNEL_GPFIFO_A                        /* clc36f.h */ 0x0000c36f
 #define TURING_CHANNEL_GPFIFO_A                       /* clc36f.h */ 0x0000c46f
+<<<<<<< HEAD
 #define AMPERE_CHANNEL_GPFIFO_B                       /* clc36f.h */ 0x0000c76f
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define NV50_DISP                                     /* cl5070.h */ 0x00005070
 #define G82_DISP                                      /* cl5070.h */ 0x00008270
@@ -201,7 +209,10 @@
 #define PASCAL_DMA_COPY_B                                            0x0000c1b5
 #define VOLTA_DMA_COPY_A                                             0x0000c3b5
 #define TURING_DMA_COPY_A                                            0x0000c5b5
+<<<<<<< HEAD
 #define AMPERE_DMA_COPY_B                                            0x0000c7b5
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define FERMI_DECOMPRESS                                             0x000090b8
 

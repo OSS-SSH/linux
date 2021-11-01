@@ -136,6 +136,7 @@ void read_trace_pipe(void)
 		}
 	}
 }
+<<<<<<< HEAD
 
 #if defined(__powerpc64__) && defined(_CALL_ELF) && _CALL_ELF == 2
 
@@ -223,3 +224,5 @@ ssize_t get_rel_offset(uintptr_t addr)
 	fclose(f);
 	return -EINVAL;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

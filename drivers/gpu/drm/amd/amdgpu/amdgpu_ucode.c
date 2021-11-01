@@ -409,12 +409,15 @@ amdgpu_ucode_get_load_type(struct amdgpu_device *adev, int load_type)
 			return AMDGPU_FW_LOAD_DIRECT;
 		else
 			return AMDGPU_FW_LOAD_PSP;
+<<<<<<< HEAD
 	case CHIP_CYAN_SKILLFISH:
 		if (!(load_type &&
 		      adev->apu_flags & AMD_APU_IS_CYAN_SKILLFISH2))
 			return AMDGPU_FW_LOAD_DIRECT;
 		else
 			return AMDGPU_FW_LOAD_PSP;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		DRM_ERROR("Unknown firmware load type\n");
 	}
@@ -422,6 +425,7 @@ amdgpu_ucode_get_load_type(struct amdgpu_device *adev, int load_type)
 	return AMDGPU_FW_LOAD_DIRECT;
 }
 
+<<<<<<< HEAD
 const char *amdgpu_ucode_name(enum AMDGPU_UCODE_ID ucode_id)
 {
 	switch (ucode_id) {
@@ -500,6 +504,8 @@ const char *amdgpu_ucode_name(enum AMDGPU_UCODE_ID ucode_id)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define FW_VERSION_ATTR(name, mode, field)				\
 static ssize_t show_##name(struct device *dev,				\
 			  struct device_attribute *attr,		\
@@ -524,10 +530,17 @@ FW_VERSION_ATTR(rlc_srlg_fw_version, 0444, gfx.rlc_srlg_fw_version);
 FW_VERSION_ATTR(rlc_srls_fw_version, 0444, gfx.rlc_srls_fw_version);
 FW_VERSION_ATTR(mec_fw_version, 0444, gfx.mec_fw_version);
 FW_VERSION_ATTR(mec2_fw_version, 0444, gfx.mec2_fw_version);
+<<<<<<< HEAD
 FW_VERSION_ATTR(sos_fw_version, 0444, psp.sos.fw_version);
 FW_VERSION_ATTR(asd_fw_version, 0444, psp.asd.fw_version);
 FW_VERSION_ATTR(ta_ras_fw_version, 0444, psp.ras.feature_version);
 FW_VERSION_ATTR(ta_xgmi_fw_version, 0444, psp.xgmi.feature_version);
+=======
+FW_VERSION_ATTR(sos_fw_version, 0444, psp.sos_fw_version);
+FW_VERSION_ATTR(asd_fw_version, 0444, psp.asd_fw_version);
+FW_VERSION_ATTR(ta_ras_fw_version, 0444, psp.ta_ras_ucode_version);
+FW_VERSION_ATTR(ta_xgmi_fw_version, 0444, psp.ta_xgmi_ucode_version);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 FW_VERSION_ATTR(smc_fw_version, 0444, pm.fw_version);
 FW_VERSION_ATTR(sdma_fw_version, 0444, sdma.instance[0].fw_version);
 FW_VERSION_ATTR(sdma2_fw_version, 0444, sdma.instance[1].fw_version);

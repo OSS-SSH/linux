@@ -1,16 +1,24 @@
 // SPDX-License-Identifier: GPL-2.0
+<<<<<<< HEAD
 // Copyright (C) 2013,2018,2020-2021 Intel Corporation
+=======
+// Copyright (C) 2013,2018 Intel Corporation
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <linux/bitops.h>
 #include <linux/dmaengine.h>
 #include <linux/errno.h>
+<<<<<<< HEAD
 #include <linux/io.h>
 #include <linux/pci.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/slab.h>
 #include <linux/types.h>
 
 #include "internal.h"
 
+<<<<<<< HEAD
 #define DMA_CTL_CH(x)			(0x1000 + (x) * 4)
 #define DMA_SRC_ADDR_FILLIN(x)		(0x1100 + (x) * 4)
 #define DMA_DST_ADDR_FILLIN(x)		(0x1200 + (x) * 4)
@@ -139,6 +147,9 @@ static void idma32_initialize_chan_xbar(struct dw_dma_chan *dwc)
 }
 
 static void idma32_initialize_chan_generic(struct dw_dma_chan *dwc)
+=======
+static void idma32_initialize_chan(struct dw_dma_chan *dwc)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u32 cfghi = 0;
 	u32 cfglo = 0;
@@ -263,10 +274,14 @@ int idma32_dma_probe(struct dw_dma_chip *chip)
 		return -ENOMEM;
 
 	/* Channel operations */
+<<<<<<< HEAD
 	if (chip->pdata->quirks & DW_DMA_QUIRK_XBAR_PRESENT)
 		dw->initialize_chan = idma32_initialize_chan_xbar;
 	else
 		dw->initialize_chan = idma32_initialize_chan_generic;
+=======
+	dw->initialize_chan = idma32_initialize_chan;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dw->suspend_chan = idma32_suspend_chan;
 	dw->resume_chan = idma32_resume_chan;
 	dw->prepare_ctllo = idma32_prepare_ctllo;

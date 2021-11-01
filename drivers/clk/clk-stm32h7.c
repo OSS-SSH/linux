@@ -845,10 +845,17 @@ static unsigned long odf_divider_recalc_rate(struct clk_hw *hw,
 	return clk_divider_ops.recalc_rate(hw, parent_rate);
 }
 
+<<<<<<< HEAD
 static int odf_divider_determine_rate(struct clk_hw *hw,
 				      struct clk_rate_request *req)
 {
 	return clk_divider_ops.determine_rate(hw, req);
+=======
+static long odf_divider_round_rate(struct clk_hw *hw, unsigned long rate,
+		unsigned long *prate)
+{
+	return clk_divider_ops.round_rate(hw, rate, prate);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int odf_divider_set_rate(struct clk_hw *hw, unsigned long rate,
@@ -875,7 +882,11 @@ static int odf_divider_set_rate(struct clk_hw *hw, unsigned long rate,
 
 static const struct clk_ops odf_divider_ops = {
 	.recalc_rate	= odf_divider_recalc_rate,
+<<<<<<< HEAD
 	.determine_rate	= odf_divider_determine_rate,
+=======
+	.round_rate	= odf_divider_round_rate,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.set_rate	= odf_divider_set_rate,
 };
 

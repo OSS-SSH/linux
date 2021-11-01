@@ -163,7 +163,11 @@ static void mmc_mq_recovery_handler(struct work_struct *work)
 	blk_mq_run_hw_queues(q, true);
 }
 
+<<<<<<< HEAD
 static struct scatterlist *mmc_alloc_sg(unsigned short sg_len, gfp_t gfp)
+=======
+static struct scatterlist *mmc_alloc_sg(int sg_len, gfp_t gfp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct scatterlist *sg;
 
@@ -193,12 +197,17 @@ static void mmc_queue_setup_discard(struct request_queue *q,
 		blk_queue_flag_set(QUEUE_FLAG_SECERASE, q);
 }
 
+<<<<<<< HEAD
 static unsigned short mmc_get_max_segments(struct mmc_host *host)
+=======
+static unsigned int mmc_get_max_segments(struct mmc_host *host)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return host->can_dma_map_merge ? MMC_DMA_MAP_MERGE_SEGMENTS :
 					 host->max_segs;
 }
 
+<<<<<<< HEAD
 static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
 			       unsigned int hctx_idx, unsigned int numa_node)
 {
@@ -208,14 +217,34 @@ static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
 	struct mmc_host *host = card->host;
 
 	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), GFP_KERNEL);
+=======
+/**
+ * mmc_init_request() - initialize the MMC-specific per-request data
+ * @mq: the request queue
+ * @req: the request
+ * @gfp: memory allocation policy
+ */
+static int __mmc_init_request(struct mmc_queue *mq, struct request *req,
+			      gfp_t gfp)
+{
+	struct mmc_queue_req *mq_rq = req_to_mmc_queue_req(req);
+	struct mmc_card *card = mq->card;
+	struct mmc_host *host = card->host;
+
+	mq_rq->sg = mmc_alloc_sg(mmc_get_max_segments(host), gfp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!mq_rq->sg)
 		return -ENOMEM;
 
 	return 0;
 }
 
+<<<<<<< HEAD
 static void mmc_mq_exit_request(struct blk_mq_tag_set *set, struct request *req,
 				unsigned int hctx_idx)
+=======
+static void mmc_exit_request(struct request_queue *q, struct request *req)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mmc_queue_req *mq_rq = req_to_mmc_queue_req(req);
 
@@ -223,6 +252,23 @@ static void mmc_mq_exit_request(struct blk_mq_tag_set *set, struct request *req,
 	mq_rq->sg = NULL;
 }
 
+<<<<<<< HEAD
+=======
+static int mmc_mq_init_request(struct blk_mq_tag_set *set, struct request *req,
+			       unsigned int hctx_idx, unsigned int numa_node)
+{
+	return __mmc_init_request(set->driver_data, req, GFP_KERNEL);
+}
+
+static void mmc_mq_exit_request(struct blk_mq_tag_set *set, struct request *req,
+				unsigned int hctx_idx)
+{
+	struct mmc_queue *mq = set->driver_data;
+
+	mmc_exit_request(mq->queue, req);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static blk_status_t mmc_mq_queue_rq(struct blk_mq_hw_ctx *hctx,
 				    const struct blk_mq_queue_data *bd)
 {

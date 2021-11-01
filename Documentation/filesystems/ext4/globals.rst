@@ -11,4 +11,7 @@ have static metadata at fixed locations.
 .. include:: bitmaps.rst
 .. include:: mmp.rst
 .. include:: journal.rst
+<<<<<<< HEAD
 .. include:: orphan.rst
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

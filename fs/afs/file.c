@@ -24,16 +24,23 @@ static void afs_invalidatepage(struct page *page, unsigned int offset,
 static int afs_releasepage(struct page *page, gfp_t gfp_flags);
 
 static void afs_readahead(struct readahead_control *ractl);
+<<<<<<< HEAD
 static ssize_t afs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter);
 static void afs_vm_open(struct vm_area_struct *area);
 static void afs_vm_close(struct vm_area_struct *area);
 static vm_fault_t afs_vm_map_pages(struct vm_fault *vmf, pgoff_t start_pgoff, pgoff_t end_pgoff);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 const struct file_operations afs_file_operations = {
 	.open		= afs_open,
 	.release	= afs_release,
 	.llseek		= generic_file_llseek,
+<<<<<<< HEAD
 	.read_iter	= afs_file_read_iter,
+=======
+	.read_iter	= generic_file_read_iter,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.write_iter	= afs_file_write,
 	.mmap		= afs_file_mmap,
 	.splice_read	= generic_file_splice_read,
@@ -63,10 +70,15 @@ const struct address_space_operations afs_fs_aops = {
 };
 
 static const struct vm_operations_struct afs_vm_ops = {
+<<<<<<< HEAD
 	.open		= afs_vm_open,
 	.close		= afs_vm_close,
 	.fault		= filemap_fault,
 	.map_pages	= afs_vm_map_pages,
+=======
+	.fault		= filemap_fault,
+	.map_pages	= filemap_map_pages,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.page_mkwrite	= afs_page_mkwrite,
 };
 
@@ -301,7 +313,11 @@ static void afs_req_issue_op(struct netfs_read_subrequest *subreq)
 	fsreq->subreq	= subreq;
 	fsreq->pos	= subreq->start + subreq->transferred;
 	fsreq->len	= subreq->len   - subreq->transferred;
+<<<<<<< HEAD
 	fsreq->key	= key_get(subreq->rreq->netfs_priv);
+=======
+	fsreq->key	= subreq->rreq->netfs_priv;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fsreq->vnode	= vnode;
 	fsreq->iter	= &fsreq->def_iter;
 
@@ -310,7 +326,10 @@ static void afs_req_issue_op(struct netfs_read_subrequest *subreq)
 			fsreq->pos, fsreq->len);
 
 	afs_fetch_data(fsreq->vnode, fsreq);
+<<<<<<< HEAD
 	afs_put_read(fsreq);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int afs_symlink_readpage(struct page *page)
@@ -497,6 +516,7 @@ static int afs_releasepage(struct page *page, gfp_t gfp_flags)
 	return 1;
 }
 
+<<<<<<< HEAD
 static void afs_add_open_mmap(struct afs_vnode *vnode)
 {
 	if (atomic_inc_return(&vnode->cb_nr_mmap) == 1) {
@@ -523,11 +543,14 @@ static void afs_drop_open_mmap(struct afs_vnode *vnode)
 	flush_work(&vnode->cb_work);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Handle setting up a memory mapping on an AFS file.
  */
 static int afs_file_mmap(struct file *file, struct vm_area_struct *vma)
 {
+<<<<<<< HEAD
 	struct afs_vnode *vnode = AFS_FS_I(file_inode(file));
 	int ret;
 
@@ -582,3 +605,12 @@ static ssize_t afs_file_read_iter(struct kiocb *iocb, struct iov_iter *iter)
 
 	return generic_file_read_iter(iocb, iter);
 }
+=======
+	int ret;
+
+	ret = generic_file_mmap(file, vma);
+	if (ret == 0)
+		vma->vm_ops = &afs_vm_ops;
+	return ret;
+}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

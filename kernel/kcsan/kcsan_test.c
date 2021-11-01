@@ -414,6 +414,7 @@ static noinline void test_kernel_atomic_builtins(void)
 	__atomic_load_n(&test_var, __ATOMIC_RELAXED);
 }
 
+<<<<<<< HEAD
 static noinline void test_kernel_xor_1bit(void)
 {
 	/* Do not report data races between the read-writes. */
@@ -422,6 +423,8 @@ static noinline void test_kernel_xor_1bit(void)
 	kcsan_nestable_atomic_end();
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* ===== Test cases ===== */
 
 /* Simple test with normal data race. */
@@ -960,6 +963,7 @@ static void test_atomic_builtins(struct kunit *test)
 	KUNIT_EXPECT_FALSE(test, match_never);
 }
 
+<<<<<<< HEAD
 __no_kcsan
 static void test_1bit_value_change(struct kunit *test)
 {
@@ -983,6 +987,8 @@ static void test_1bit_value_change(struct kunit *test)
 		KUNIT_EXPECT_TRUE(test, match);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Generate thread counts for all test cases. Values generated are in interval
  * [2, 5] followed by exponentially increasing thread counts from 8 to 32.
@@ -1055,7 +1061,10 @@ static struct kunit_case kcsan_test_cases[] = {
 	KCSAN_KUNIT_CASE(test_jiffies_noreport),
 	KCSAN_KUNIT_CASE(test_seqlock_noreport),
 	KCSAN_KUNIT_CASE(test_atomic_builtins),
+<<<<<<< HEAD
 	KCSAN_KUNIT_CASE(test_1bit_value_change),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{},
 };
 

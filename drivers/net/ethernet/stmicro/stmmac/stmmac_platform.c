@@ -9,7 +9,10 @@
 *******************************************************************************/
 
 #include <linux/platform_device.h>
+<<<<<<< HEAD
 #include <linux/pm_runtime.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/module.h>
 #include <linux/io.h>
 #include <linux/of.h>
@@ -398,7 +401,10 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
 	struct device_node *np = pdev->dev.of_node;
 	struct plat_stmmacenet_data *plat;
 	struct stmmac_dma_cfg *dma_cfg;
+<<<<<<< HEAD
 	int phy_mode;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void *ret;
 	int rc;
 
@@ -414,11 +420,18 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
 		eth_zero_addr(mac);
 	}
 
+<<<<<<< HEAD
 	phy_mode = device_get_phy_mode(&pdev->dev);
 	if (phy_mode < 0)
 		return ERR_PTR(phy_mode);
 
 	plat->phy_interface = phy_mode;
+=======
+	plat->phy_interface = device_get_phy_mode(&pdev->dev);
+	if (plat->phy_interface < 0)
+		return ERR_PTR(plat->phy_interface);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	plat->interface = stmmac_of_get_mac_mode(np);
 	if (plat->interface < 0)
 		plat->interface = plat->phy_interface;
@@ -508,6 +521,7 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
 		plat->pmt = 1;
 	}
 
+<<<<<<< HEAD
 	if (of_device_is_compatible(np, "snps,dwmac-3.40a")) {
 		plat->has_gmac = 1;
 		plat->enh_desc = 1;
@@ -516,6 +530,8 @@ stmmac_probe_config_dt(struct platform_device *pdev, u8 *mac)
 		plat->pmt = 1;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (of_device_is_compatible(np, "snps,dwmac-4.00") ||
 	    of_device_is_compatible(np, "snps,dwmac-4.10a") ||
 	    of_device_is_compatible(np, "snps,dwmac-4.20a") ||
@@ -780,6 +796,7 @@ static int __maybe_unused stmmac_runtime_resume(struct device *dev)
 	return stmmac_bus_clks_config(priv, true);
 }
 
+<<<<<<< HEAD
 static int __maybe_unused stmmac_pltfr_noirq_suspend(struct device *dev)
 {
 	struct net_device *ndev = dev_get_drvdata(dev);
@@ -826,6 +843,11 @@ const struct dev_pm_ops stmmac_pltfr_pm_ops = {
 	SET_SYSTEM_SLEEP_PM_OPS(stmmac_pltfr_suspend, stmmac_pltfr_resume)
 	SET_RUNTIME_PM_OPS(stmmac_runtime_suspend, stmmac_runtime_resume, NULL)
 	SET_NOIRQ_SYSTEM_SLEEP_PM_OPS(stmmac_pltfr_noirq_suspend, stmmac_pltfr_noirq_resume)
+=======
+const struct dev_pm_ops stmmac_pltfr_pm_ops = {
+	SET_SYSTEM_SLEEP_PM_OPS(stmmac_pltfr_suspend, stmmac_pltfr_resume)
+	SET_RUNTIME_PM_OPS(stmmac_runtime_suspend, stmmac_runtime_resume, NULL)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 EXPORT_SYMBOL_GPL(stmmac_pltfr_pm_ops);
 

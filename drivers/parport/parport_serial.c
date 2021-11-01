@@ -606,6 +606,7 @@ static int parport_register(struct pci_dev *dev, const struct pci_device_id *id)
                                         "hi" as an offset (see SYBA
                                         def.) */
 		/* TODO: test if sharing interrupts works */
+<<<<<<< HEAD
 		irq = pci_irq_vector(dev, 0);
 		if (irq < 0)
 			return irq;
@@ -615,6 +616,14 @@ static int parport_register(struct pci_dev *dev, const struct pci_device_id *id)
 			dev_dbg(&dev->dev,
 				"PCI parallel port detected: I/O at %#lx(%#lx)\n",
 				io_lo, io_hi);
+=======
+		irq = dev->irq;
+		if (irq == IRQ_NONE) {
+			dev_dbg(&dev->dev,
+				"PCI parallel port detected: I/O at %#lx(%#lx)\n",
+				io_lo, io_hi);
+			irq = PARPORT_IRQ_NONE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} else {
 			dev_dbg(&dev->dev,
 				"PCI parallel port detected: I/O at %#lx(%#lx), IRQ %d\n",

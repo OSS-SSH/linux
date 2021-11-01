@@ -9,12 +9,18 @@
 #include <linux/device.h>
 #include <linux/bitops.h>
 #include <linux/errno.h>
+<<<<<<< HEAD
 #include <linux/iio/consumer.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/init.h>
 #include <linux/interrupt.h>
 #include <linux/module.h>
 #include <linux/mfd/rn5t618.h>
+<<<<<<< HEAD
 #include <linux/of_device.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/platform_device.h>
 #include <linux/power_supply.h>
 #include <linux/regmap.h>
@@ -66,8 +72,11 @@ struct rn5t618_power_info {
 	struct power_supply *battery;
 	struct power_supply *usb;
 	struct power_supply *adp;
+<<<<<<< HEAD
 	struct iio_channel *channel_vusb;
 	struct iio_channel *channel_vadp;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int irq;
 };
 
@@ -81,7 +90,10 @@ static enum power_supply_usb_type rn5t618_usb_types[] = {
 static enum power_supply_property rn5t618_usb_props[] = {
 	/* input current limit is not very accurate */
 	POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
+<<<<<<< HEAD
 	POWER_SUPPLY_PROP_VOLTAGE_NOW,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	POWER_SUPPLY_PROP_STATUS,
 	POWER_SUPPLY_PROP_USB_TYPE,
 	POWER_SUPPLY_PROP_ONLINE,
@@ -90,7 +102,10 @@ static enum power_supply_property rn5t618_usb_props[] = {
 static enum power_supply_property rn5t618_adp_props[] = {
 	/* input current limit is not very accurate */
 	POWER_SUPPLY_PROP_INPUT_CURRENT_LIMIT,
+<<<<<<< HEAD
 	POWER_SUPPLY_PROP_VOLTAGE_NOW,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	POWER_SUPPLY_PROP_STATUS,
 	POWER_SUPPLY_PROP_ONLINE,
 };
@@ -470,6 +485,7 @@ static int rn5t618_adp_get_property(struct power_supply *psy,
 
 		val->intval = FROM_CUR_REG(regval);
 		break;
+<<<<<<< HEAD
 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
 		if (!info->channel_vadp)
 			return -ENODATA;
@@ -479,6 +495,8 @@ static int rn5t618_adp_get_property(struct power_supply *psy,
 			return ret;
 
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return -EINVAL;
 	}
@@ -604,6 +622,7 @@ static int rn5t618_usb_get_property(struct power_supply *psy,
 			val->intval = FROM_CUR_REG(regval);
 		}
 		break;
+<<<<<<< HEAD
 	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
 		if (!info->channel_vusb)
 			return -ENODATA;
@@ -613,6 +632,8 @@ static int rn5t618_usb_get_property(struct power_supply *psy,
 			return ret;
 
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	default:
 		return -EINVAL;
 	}
@@ -735,6 +756,7 @@ static int rn5t618_power_probe(struct platform_device *pdev)
 
 	platform_set_drvdata(pdev, info);
 
+<<<<<<< HEAD
 	info->channel_vusb = devm_iio_channel_get(&pdev->dev, "vusb");
 	if (IS_ERR(info->channel_vusb)) {
 		if (PTR_ERR(info->channel_vusb) == -ENODEV)
@@ -749,6 +771,8 @@ static int rn5t618_power_probe(struct platform_device *pdev)
 		return PTR_ERR(info->channel_vadp);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = regmap_read(info->rn5t618->regmap, RN5T618_CONTROL, &v);
 	if (ret)
 		return ret;

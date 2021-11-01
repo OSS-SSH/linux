@@ -433,10 +433,18 @@ struct snd_sof_dai *snd_sof_find_dai(struct snd_soc_component *scomp,
 	return NULL;
 }
 
+<<<<<<< HEAD
 #define SOF_DAI_CLK_INTEL_SSP_MCLK	0
 #define SOF_DAI_CLK_INTEL_SSP_BCLK	1
 
 static int sof_dai_get_clk(struct snd_soc_pcm_runtime *rtd, int clk_type)
+=======
+/*
+ * Helper to get SSP MCLK from a pcm_runtime.
+ * Return 0 if not exist.
+ */
+int sof_dai_get_mclk(struct snd_soc_pcm_runtime *rtd)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct snd_soc_component *component =
 		snd_soc_rtdcom_lookup(rtd, SOF_AUDIO_PCM_DRV_NAME);
@@ -449,6 +457,7 @@ static int sof_dai_get_clk(struct snd_soc_pcm_runtime *rtd, int clk_type)
 
 	switch (dai->dai_config->type) {
 	case SOF_DAI_INTEL_SSP:
+<<<<<<< HEAD
 		switch (clk_type) {
 		case SOF_DAI_CLK_INTEL_SSP_MCLK:
 			return dai->dai_config->ssp.mclk_rate;
@@ -463,10 +472,17 @@ static int sof_dai_get_clk(struct snd_soc_pcm_runtime *rtd, int clk_type)
 	default:
 		/* not yet implemented for platforms other than the above */
 		dev_err(rtd->dev, "DAI type %d not supported yet!\n",
+=======
+		return dai->dai_config->ssp.mclk_rate;
+	default:
+		/* not yet implemented for platforms other than the above */
+		dev_err(rtd->dev, "mclk for dai_config->type %d not supported yet!\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dai->dai_config->type);
 		return -EINVAL;
 	}
 }
+<<<<<<< HEAD
 
 /*
  * Helper to get SSP MCLK from a pcm_runtime.
@@ -489,6 +505,11 @@ int sof_dai_get_bclk(struct snd_soc_pcm_runtime *rtd)
 EXPORT_SYMBOL(sof_dai_get_bclk);
 
 /*
+=======
+EXPORT_SYMBOL(sof_dai_get_mclk);
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * SOF Driver enumeration.
  */
 int sof_machine_check(struct snd_sof_dev *sdev)

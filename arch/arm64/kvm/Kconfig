@@ -26,7 +26,10 @@ menuconfig KVM
 	select HAVE_KVM_ARCH_TLB_FLUSH_ALL
 	select KVM_MMIO
 	select KVM_GENERIC_DIRTYLOG_READ_PROTECT
+<<<<<<< HEAD
 	select KVM_XFER_TO_GUEST_WORK
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select SRCU
 	select KVM_VFIO
 	select HAVE_KVM_EVENTFD
@@ -47,6 +50,7 @@ if KVM
 
 source "virt/kvm/Kconfig"
 
+<<<<<<< HEAD
 config NVHE_EL2_DEBUG
 	bool "Debug mode for non-VHE EL2 object"
 	help
@@ -56,6 +60,8 @@ config NVHE_EL2_DEBUG
 
 	  If unsure, say N.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 endif # KVM
 
 endif # VIRTUALIZATION

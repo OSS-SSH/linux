@@ -516,6 +516,7 @@
 # define VC4_HDMI_AUDIO_PACKET_CEA_MASK_MASK			VC4_MASK(7, 0)
 # define VC4_HDMI_AUDIO_PACKET_CEA_MASK_SHIFT			0
 
+<<<<<<< HEAD
 # define VC4_HDMI_MAI_FORMAT_AUDIO_FORMAT_MASK		VC4_MASK(23, 16)
 # define VC4_HDMI_MAI_FORMAT_AUDIO_FORMAT_SHIFT		16
 
@@ -546,6 +547,8 @@ enum {
 	VC4_HDMI_MAI_SAMPLE_RATE_192000 = 15,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # define VC4_HDMI_RAM_PACKET_ENABLE		BIT(16)
 
 /* When set, the CTS_PERIOD counts based on MAI bus sync pulse instead

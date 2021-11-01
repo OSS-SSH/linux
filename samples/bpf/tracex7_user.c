@@ -14,11 +14,14 @@ int main(int argc, char **argv)
 	int ret = 0;
 	FILE *f;
 
+<<<<<<< HEAD
 	if (!argv[1]) {
 		fprintf(stderr, "ERROR: Run with the btrfs device argument!\n");
 		return 0;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	snprintf(filename, sizeof(filename), "%s_kern.o", argv[0]);
 	obj = bpf_object__open_file(filename, NULL);
 	if (libbpf_get_error(obj)) {

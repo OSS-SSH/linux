@@ -24,12 +24,21 @@ MODULE_DESCRIPTION("ip6tables security table, for MAC rules");
 				(1 << NF_INET_FORWARD) | \
 				(1 << NF_INET_LOCAL_OUT)
 
+<<<<<<< HEAD
+=======
+static int __net_init ip6table_security_table_init(struct net *net);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct xt_table security_table = {
 	.name		= "security",
 	.valid_hooks	= SECURITY_VALID_HOOKS,
 	.me		= THIS_MODULE,
 	.af		= NFPROTO_IPV6,
 	.priority	= NF_IP6_PRI_SECURITY,
+<<<<<<< HEAD
+=======
+	.table_init     = ip6table_security_table_init,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static unsigned int
@@ -41,7 +50,11 @@ ip6table_security_hook(void *priv, struct sk_buff *skb,
 
 static struct nf_hook_ops *sectbl_ops __read_mostly;
 
+<<<<<<< HEAD
 static int ip6table_security_table_init(struct net *net)
+=======
+static int __net_init ip6table_security_table_init(struct net *net)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ip6t_replace *repl;
 	int ret;
@@ -71,6 +84,7 @@ static struct pernet_operations ip6table_security_net_ops = {
 
 static int __init ip6table_security_init(void)
 {
+<<<<<<< HEAD
 	int ret = xt_register_template(&security_table,
 				       ip6table_security_table_init);
 
@@ -82,21 +96,42 @@ static int __init ip6table_security_init(void)
 		xt_unregister_template(&security_table);
 		return PTR_ERR(sectbl_ops);
 	}
+=======
+	int ret;
+
+	sectbl_ops = xt_hook_ops_alloc(&security_table, ip6table_security_hook);
+	if (IS_ERR(sectbl_ops))
+		return PTR_ERR(sectbl_ops);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = register_pernet_subsys(&ip6table_security_net_ops);
 	if (ret < 0) {
 		kfree(sectbl_ops);
+<<<<<<< HEAD
 		xt_unregister_template(&security_table);
 		return ret;
 	}
 
+=======
+		return ret;
+	}
+
+	ret = ip6table_security_table_init(&init_net);
+	if (ret) {
+		unregister_pernet_subsys(&ip6table_security_net_ops);
+		kfree(sectbl_ops);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
 static void __exit ip6table_security_fini(void)
 {
 	unregister_pernet_subsys(&ip6table_security_net_ops);
+<<<<<<< HEAD
 	xt_unregister_template(&security_table);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(sectbl_ops);
 }
 

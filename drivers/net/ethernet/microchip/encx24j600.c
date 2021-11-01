@@ -1023,6 +1023,7 @@ static int encx24j600_spi_probe(struct spi_device *spi)
 	priv->speed = SPEED_100;
 
 	priv->ctx.spi = spi;
+<<<<<<< HEAD
 	ndev->irq = spi->irq;
 	ndev->netdev_ops = &encx24j600_netdev_ops;
 
@@ -1030,6 +1031,12 @@ static int encx24j600_spi_probe(struct spi_device *spi)
 	if (ret)
 		goto out_free;
 
+=======
+	devm_regmap_init_encx24j600(&spi->dev, &priv->ctx);
+	ndev->irq = spi->irq;
+	ndev->netdev_ops = &encx24j600_netdev_ops;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_init(&priv->lock);
 
 	/* Reset device and check if it is connected */

@@ -287,12 +287,15 @@ static int array_map_get_next_key(struct bpf_map *map, void *key, void *next_key
 	return 0;
 }
 
+<<<<<<< HEAD
 static void check_and_free_timer_in_array(struct bpf_array *arr, void *val)
 {
 	if (unlikely(map_value_has_timer(&arr->map)))
 		bpf_timer_cancel_and_free(val + arr->map.timer_off);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Called from syscall or from eBPF program */
 static int array_map_update_elem(struct bpf_map *map, void *key, void *value,
 				 u64 map_flags)
@@ -327,7 +330,10 @@ static int array_map_update_elem(struct bpf_map *map, void *key, void *value,
 			copy_map_value_locked(map, val, value, false);
 		else
 			copy_map_value(map, val, value);
+<<<<<<< HEAD
 		check_and_free_timer_in_array(array, val);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return 0;
 }
@@ -381,6 +387,7 @@ static void *array_map_vmalloc_addr(struct bpf_array *array)
 	return (void *)round_down((unsigned long)array, PAGE_SIZE);
 }
 
+<<<<<<< HEAD
 static void array_map_free_timers(struct bpf_map *map)
 {
 	struct bpf_array *array = container_of(map, struct bpf_array, map);
@@ -394,6 +401,8 @@ static void array_map_free_timers(struct bpf_map *map)
 					  map->timer_off);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Called when map->refcnt goes to zero, either from workqueue or from syscall */
 static void array_map_free(struct bpf_map *map)
 {
@@ -688,7 +697,10 @@ const struct bpf_map_ops array_map_ops = {
 	.map_alloc = array_map_alloc,
 	.map_free = array_map_free,
 	.map_get_next_key = array_map_get_next_key,
+<<<<<<< HEAD
 	.map_release_uref = array_map_free_timers,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.map_lookup_elem = array_map_lookup_elem,
 	.map_update_elem = array_map_update_elem,
 	.map_delete_elem = array_map_delete_elem,
@@ -1072,6 +1084,10 @@ static struct bpf_map *prog_array_map_alloc(union bpf_attr *attr)
 	INIT_WORK(&aux->work, prog_array_map_clear_deferred);
 	INIT_LIST_HEAD(&aux->poke_progs);
 	mutex_init(&aux->poke_mutex);
+<<<<<<< HEAD
+=======
+	spin_lock_init(&aux->owner.lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	map = array_map_alloc(attr);
 	if (IS_ERR(map)) {

@@ -6,7 +6,10 @@
 #include <linux/compiler.h>
 #include <linux/linkage.h>
 #include <linux/types.h>
+<<<<<<< HEAD
 #include <linux/compat.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct rtas_args;
 
@@ -19,6 +22,7 @@ asmlinkage long sys_mmap2(unsigned long addr, size_t len,
 asmlinkage long ppc64_personality(unsigned long personality);
 asmlinkage long sys_rtas(struct rtas_args __user *uargs);
 
+<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 unsigned long compat_sys_mmap2(unsigned long addr, size_t len,
 			       unsigned long prot, unsigned long flags,
@@ -48,5 +52,7 @@ long compat_sys_sync_file_range2(int fd, unsigned int flags,
 				 unsigned int nbytes1, unsigned int nbytes2);
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __KERNEL__ */
 #endif /* __ASM_POWERPC_SYSCALLS_H */

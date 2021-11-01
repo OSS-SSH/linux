@@ -1176,14 +1176,31 @@ static int amd_ntb_init_pci(struct amd_ntb_dev *ndev,
 
 	pci_set_master(pdev);
 
+<<<<<<< HEAD
 	rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(64));
 	if (rc) {
 		rc = dma_set_mask_and_coherent(&pdev->dev, DMA_BIT_MASK(32));
+=======
+	rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(64));
+	if (rc) {
+		rc = pci_set_dma_mask(pdev, DMA_BIT_MASK(32));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rc)
 			goto err_dma_mask;
 		dev_warn(&pdev->dev, "Cannot DMA highmem\n");
 	}
 
+<<<<<<< HEAD
+=======
+	rc = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(64));
+	if (rc) {
+		rc = pci_set_consistent_dma_mask(pdev, DMA_BIT_MASK(32));
+		if (rc)
+			goto err_dma_mask;
+		dev_warn(&pdev->dev, "Cannot DMA consistent highmem\n");
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ndev->self_mmio = pci_iomap(pdev, 0, 0);
 	if (!ndev->self_mmio) {
 		rc = -EIO;

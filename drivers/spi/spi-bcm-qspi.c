@@ -1250,14 +1250,20 @@ static void bcm_qspi_hw_init(struct bcm_qspi *qspi)
 
 static void bcm_qspi_hw_uninit(struct bcm_qspi *qspi)
 {
+<<<<<<< HEAD
 	u32 status = bcm_qspi_read(qspi, MSPI, MSPI_MSPI_STATUS);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bcm_qspi_write(qspi, MSPI, MSPI_SPCR2, 0);
 	if (has_bspi(qspi))
 		bcm_qspi_write(qspi, MSPI, MSPI_WRITE_LOCK, 0);
 
+<<<<<<< HEAD
 	/* clear interrupt */
 	bcm_qspi_write(qspi, MSPI, MSPI_MSPI_STATUS, status & ~1);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static const struct spi_controller_mem_ops bcm_qspi_mem_ops = {
@@ -1401,6 +1407,7 @@ int bcm_qspi_probe(struct platform_device *pdev,
 	if (!qspi->dev_ids)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	/*
 	 * Some SoCs integrate spi controller (e.g., its interrupt bits)
 	 * in specific ways
@@ -1442,6 +1449,8 @@ int bcm_qspi_probe(struct platform_device *pdev,
 	 */
 	bcm_qspi_hw_uninit(qspi);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (val = 0; val < num_irqs; val++) {
 		irq = -1;
 		name = qspi_irq_tab[val].irq_name;
@@ -1478,6 +1487,41 @@ int bcm_qspi_probe(struct platform_device *pdev,
 		goto qspi_probe_err;
 	}
 
+<<<<<<< HEAD
+=======
+	/*
+	 * Some SoCs integrate spi controller (e.g., its interrupt bits)
+	 * in specific ways
+	 */
+	if (soc_intc) {
+		qspi->soc_intc = soc_intc;
+		soc_intc->bcm_qspi_int_set(soc_intc, MSPI_DONE, true);
+	} else {
+		qspi->soc_intc = NULL;
+	}
+
+	ret = clk_prepare_enable(qspi->clk);
+	if (ret) {
+		dev_err(dev, "failed to prepare clock\n");
+		goto qspi_probe_err;
+	}
+
+	qspi->base_clk = clk_get_rate(qspi->clk);
+
+	if (data->has_mspi_rev) {
+		rev = bcm_qspi_read(qspi, MSPI, MSPI_REV);
+		/* some older revs do not have a MSPI_REV register */
+		if ((rev & 0xff) == 0xff)
+			rev = 0;
+	}
+
+	qspi->mspi_maj_rev = (rev >> 4) & 0xf;
+	qspi->mspi_min_rev = rev & 0xf;
+	qspi->mspi_spcr3_sysclk = data->has_spcr3_sysclk;
+
+	qspi->max_speed_hz = qspi->base_clk / (bcm_qspi_spbr_min(qspi) * 2);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bcm_qspi_hw_init(qspi);
 	init_completion(&qspi->mspi_done);
 	init_completion(&qspi->bspi_done);

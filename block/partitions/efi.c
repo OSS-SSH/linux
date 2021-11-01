@@ -124,17 +124,30 @@ efi_crc32(const void *buf, unsigned long len)
 
 /**
  * last_lba(): return number of last logical block of device
+<<<<<<< HEAD
  * @disk: block device
+=======
+ * @bdev: block device
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * 
  * Description: Returns last LBA value on success, 0 on error.
  * This is stored (by sd and ide-geometry) in
  *  the part[0] entry for this disk, and is the number of
  *  physical sectors available on the disk.
  */
+<<<<<<< HEAD
 static u64 last_lba(struct gendisk *disk)
 {
 	return div_u64(disk->part0->bd_inode->i_size,
 		       queue_logical_block_size(disk->queue)) - 1ULL;
+=======
+static u64 last_lba(struct block_device *bdev)
+{
+	if (!bdev || !bdev->bd_inode)
+		return 0;
+	return div_u64(bdev->bd_inode->i_size,
+		       bdev_logical_block_size(bdev)) - 1ULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static inline int pmbr_part_valid(gpt_mbr_record *part)
@@ -229,17 +242,28 @@ done:
  * @buffer: destination buffer
  * @count: bytes to read
  *
+<<<<<<< HEAD
  * Description: Reads @count bytes from @state->disk into @buffer.
+=======
+ * Description: Reads @count bytes from @state->bdev into @buffer.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Returns number of bytes read on success, 0 on error.
  */
 static size_t read_lba(struct parsed_partitions *state,
 		       u64 lba, u8 *buffer, size_t count)
 {
 	size_t totalreadcount = 0;
+<<<<<<< HEAD
 	sector_t n = lba *
 		(queue_logical_block_size(state->disk->queue) / 512);
 
 	if (!buffer || lba > last_lba(state->disk))
+=======
+	struct block_device *bdev = state->bdev;
+	sector_t n = lba * (bdev_logical_block_size(bdev) / 512);
+
+	if (!buffer || lba > last_lba(bdev))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                 return 0;
 
 	while (count) {
@@ -300,14 +324,22 @@ static gpt_entry *alloc_read_gpt_entries(struct parsed_partitions *state,
  * @lba: the Logical Block Address of the partition table
  * 
  * Description: returns GPT header on success, NULL on error.   Allocates
+<<<<<<< HEAD
  * and fills a GPT header starting at @ from @state->disk.
+=======
+ * and fills a GPT header starting at @ from @state->bdev.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Note: remember to free gpt when finished with it.
  */
 static gpt_header *alloc_read_gpt_header(struct parsed_partitions *state,
 					 u64 lba)
 {
 	gpt_header *gpt;
+<<<<<<< HEAD
 	unsigned ssz = queue_logical_block_size(state->disk->queue);
+=======
+	unsigned ssz = bdev_logical_block_size(state->bdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	gpt = kmalloc(ssz, GFP_KERNEL);
 	if (!gpt)
@@ -354,10 +386,17 @@ static int is_gpt_valid(struct parsed_partitions *state, u64 lba,
 
 	/* Check the GUID Partition Table header size is too big */
 	if (le32_to_cpu((*gpt)->header_size) >
+<<<<<<< HEAD
 			queue_logical_block_size(state->disk->queue)) {
 		pr_debug("GUID Partition Table Header size is too large: %u > %u\n",
 			le32_to_cpu((*gpt)->header_size),
 			queue_logical_block_size(state->disk->queue));
+=======
+			bdev_logical_block_size(state->bdev)) {
+		pr_debug("GUID Partition Table Header size is too large: %u > %u\n",
+			le32_to_cpu((*gpt)->header_size),
+			bdev_logical_block_size(state->bdev));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto fail;
 	}
 
@@ -393,7 +432,11 @@ static int is_gpt_valid(struct parsed_partitions *state, u64 lba,
 	/* Check the first_usable_lba and last_usable_lba are
 	 * within the disk.
 	 */
+<<<<<<< HEAD
 	lastlba = last_lba(state->disk);
+=======
+	lastlba = last_lba(state->bdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (le64_to_cpu((*gpt)->first_usable_lba) > lastlba) {
 		pr_debug("GPT: first_usable_lba incorrect: %lld > %lld\n",
 			 (unsigned long long)le64_to_cpu((*gpt)->first_usable_lba),
@@ -585,15 +628,23 @@ static int find_valid_gpt(struct parsed_partitions *state, gpt_header **gpt,
 	gpt_header *pgpt = NULL, *agpt = NULL;
 	gpt_entry *pptes = NULL, *aptes = NULL;
 	legacy_mbr *legacymbr;
+<<<<<<< HEAD
 	struct gendisk *disk = state->disk;
 	const struct block_device_operations *fops = disk->fops;
 	sector_t total_sectors = get_capacity(state->disk);
+=======
+	sector_t total_sectors = i_size_read(state->bdev->bd_inode) >> 9;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 lastlba;
 
 	if (!ptes)
 		return 0;
 
+<<<<<<< HEAD
 	lastlba = last_lba(state->disk);
+=======
+	lastlba = last_lba(state->bdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         if (!force_gpt) {
 		/* This will be added to the EFI Spec. per Intel after v1.02. */
 		legacymbr = kzalloc(sizeof(*legacymbr), GFP_KERNEL);
@@ -621,6 +672,7 @@ static int find_valid_gpt(struct parsed_partitions *state, gpt_header **gpt,
         if (!good_agpt && force_gpt)
                 good_agpt = is_gpt_valid(state, lastlba, &agpt, &aptes);
 
+<<<<<<< HEAD
 	if (!good_agpt && force_gpt && fops->alternative_gpt_sector) {
 		sector_t agpt_sector;
 		int err;
@@ -631,6 +683,8 @@ static int find_valid_gpt(struct parsed_partitions *state, gpt_header **gpt,
 						 &agpt, &aptes);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         /* The obviously unsuccessful case */
         if (!good_pgpt && !good_agpt)
                 goto fail;
@@ -715,7 +769,11 @@ int efi_partition(struct parsed_partitions *state)
 	gpt_header *gpt = NULL;
 	gpt_entry *ptes = NULL;
 	u32 i;
+<<<<<<< HEAD
 	unsigned ssz = queue_logical_block_size(state->disk->queue) / 512;
+=======
+	unsigned ssz = bdev_logical_block_size(state->bdev) / 512;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!find_valid_gpt(state, &gpt, &ptes) || !gpt || !ptes) {
 		kfree(gpt);
@@ -732,7 +790,11 @@ int efi_partition(struct parsed_partitions *state)
 		u64 size = le64_to_cpu(ptes[i].ending_lba) -
 			   le64_to_cpu(ptes[i].starting_lba) + 1ULL;
 
+<<<<<<< HEAD
 		if (!is_pte_valid(&ptes[i], last_lba(state->disk)))
+=======
+		if (!is_pte_valid(&ptes[i], last_lba(state->bdev)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			continue;
 
 		put_partition(state, i+1, start * ssz, size * ssz);

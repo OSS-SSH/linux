@@ -9,6 +9,7 @@
 #include "i915_drv.h"
 #include "igt_mmap.h"
 
+<<<<<<< HEAD
 unsigned long igt_mmap_offset(struct drm_i915_private *i915,
 			      u64 offset,
 			      unsigned long size,
@@ -31,6 +32,17 @@ unsigned long igt_mmap_offset(struct drm_i915_private *i915,
 		return -ENOENT;
 	}
 
+=======
+unsigned long igt_mmap_node(struct drm_i915_private *i915,
+			    struct drm_vma_offset_node *node,
+			    unsigned long addr,
+			    unsigned long prot,
+			    unsigned long flags)
+{
+	struct file *file;
+	int err;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Pretend to open("/dev/dri/card0") */
 	file = mock_drm_getfile(i915->drm.primary, O_RDWR);
 	if (IS_ERR(file))
@@ -42,7 +54,11 @@ unsigned long igt_mmap_offset(struct drm_i915_private *i915,
 		goto out_file;
 	}
 
+<<<<<<< HEAD
 	addr = vm_mmap(file, 0, drm_vma_node_size(node) << PAGE_SHIFT,
+=======
+	addr = vm_mmap(file, addr, drm_vma_node_size(node) << PAGE_SHIFT,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		       prot, flags, drm_vma_node_offset_addr(node));
 
 	drm_vma_node_revoke(node, file->private_data);

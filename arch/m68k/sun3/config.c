@@ -31,6 +31,10 @@
 #include <asm/intersil.h>
 #include <asm/irq.h>
 #include <asm/sections.h>
+<<<<<<< HEAD
+=======
+#include <asm/segment.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/sun3ints.h>
 
 char sun3_reserved_pmeg[SUN3_PMEGS_NUM];
@@ -88,7 +92,11 @@ void __init sun3_init(void)
 	sun3_reserved_pmeg[249] = 1;
 	sun3_reserved_pmeg[252] = 1;
 	sun3_reserved_pmeg[253] = 1;
+<<<<<<< HEAD
 	set_fc(USER_DATA);
+=======
+	set_fs(KERNEL_DS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* Without this, Bad Things happen when something calls arch_reset. */

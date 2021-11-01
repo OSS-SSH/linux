@@ -1,6 +1,10 @@
 /* SPDX-License-Identifier: LGPL-2.1 */
 /*
+<<<<<<< HEAD
  *   SPNEGO upcall management for CIFS
+=======
+ *   fs/cifs/cifs_spnego.h -- SPNEGO upcall management for CIFS
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  *   Copyright (c) 2007 Red Hat, Inc.
  *   Author(s): Jeff Layton (jlayton@redhat.com)

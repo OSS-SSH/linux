@@ -83,6 +83,11 @@ int atomisp_q_dis_buffer_to_css(struct atomisp_sub_device *asd,
 
 void ia_css_mmu_invalidate_cache(void);
 
+<<<<<<< HEAD
+=======
+void ia_css_mmu_invalidate_cache(void);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int atomisp_css_start(struct atomisp_sub_device *asd,
 		      enum ia_css_pipe_id pipe_id, bool in_reset);
 

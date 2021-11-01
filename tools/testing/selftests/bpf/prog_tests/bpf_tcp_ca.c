@@ -4,6 +4,7 @@
 #include <linux/err.h>
 #include <netinet/tcp.h>
 #include <test_progs.h>
+<<<<<<< HEAD
 #include "network_helpers.h"
 #include "bpf_dctcp.skel.h"
 #include "bpf_cubic.skel.h"
@@ -20,6 +21,39 @@ static const unsigned int total_bytes = 10 * 1024 * 1024;
 static int expected_stg = 0xeB9F;
 static int stop, duration;
 
+=======
+#include "bpf_dctcp.skel.h"
+#include "bpf_cubic.skel.h"
+#include "bpf_tcp_nogpl.skel.h"
+
+#define min(a, b) ((a) < (b) ? (a) : (b))
+
+static const unsigned int total_bytes = 10 * 1024 * 1024;
+static const struct timeval timeo_sec = { .tv_sec = 10 };
+static const size_t timeo_optlen = sizeof(timeo_sec);
+static int expected_stg = 0xeB9F;
+static int stop, duration;
+
+static int settimeo(int fd)
+{
+	int err;
+
+	err = setsockopt(fd, SOL_SOCKET, SO_RCVTIMEO, &timeo_sec,
+			 timeo_optlen);
+	if (CHECK(err == -1, "setsockopt(fd, SO_RCVTIMEO)", "errno:%d\n",
+		  errno))
+		return -1;
+
+	err = setsockopt(fd, SOL_SOCKET, SO_SNDTIMEO, &timeo_sec,
+			 timeo_optlen);
+	if (CHECK(err == -1, "setsockopt(fd, SO_SNDTIMEO)", "errno:%d\n",
+		  errno))
+		return -1;
+
+	return 0;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int settcpca(int fd, const char *tcp_ca)
 {
 	int err;
@@ -46,7 +80,11 @@ static void *server(void *arg)
 		goto done;
 	}
 
+<<<<<<< HEAD
 	if (settimeo(fd, 0)) {
+=======
+	if (settimeo(fd)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = -errno;
 		goto done;
 	}
@@ -99,7 +137,11 @@ static void do_test(const char *tcp_ca, const struct bpf_map *sk_stg_map)
 	}
 
 	if (settcpca(lfd, tcp_ca) || settcpca(fd, tcp_ca) ||
+<<<<<<< HEAD
 	    settimeo(lfd, 0) || settimeo(fd, 0))
+=======
+	    settimeo(lfd) || settimeo(fd))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto done;
 
 	/* bind, listen and start server thread to accept */
@@ -252,6 +294,7 @@ static void test_invalid_license(void)
 	libbpf_set_print(old_print_fn);
 }
 
+<<<<<<< HEAD
 static void test_dctcp_fallback(void)
 {
 	int err, lfd = -1, cli_fd = -1, srv_fd = -1;
@@ -323,6 +366,8 @@ static void test_rel_setsockopt(void)
 	bpf_dctcp_release__destroy(rel_skel);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void test_bpf_tcp_ca(void)
 {
 	if (test__start_subtest("dctcp"))
@@ -331,8 +376,11 @@ void test_bpf_tcp_ca(void)
 		test_cubic();
 	if (test__start_subtest("invalid_license"))
 		test_invalid_license();
+<<<<<<< HEAD
 	if (test__start_subtest("dctcp_fallback"))
 		test_dctcp_fallback();
 	if (test__start_subtest("rel_setsockopt"))
 		test_rel_setsockopt();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

@@ -22,6 +22,7 @@
 	(void)__tmp; \
 })
 
+<<<<<<< HEAD
 /*
  * Check at compile time that something is a pointer type.
  */
@@ -31,4 +32,6 @@
 	1; \
 })
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif		/* TYPECHECK_H_INCLUDED */

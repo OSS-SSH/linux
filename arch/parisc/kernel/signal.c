@@ -237,6 +237,7 @@ setup_rt_frame(struct ksignal *ksig, sigset_t *set, struct pt_regs *regs,
 #endif
 	
 	usp = (regs->gr[30] & ~(0x01UL));
+<<<<<<< HEAD
 	sigframe_size = PARISC_RT_SIGFRAME_SIZE;
 #ifdef CONFIG_64BIT
 	if (is_compat_task()) {
@@ -246,13 +247,20 @@ setup_rt_frame(struct ksignal *ksig, sigset_t *set, struct pt_regs *regs,
 	}
 #endif
 	frame = get_sigframe(&ksig->ka, usp, sigframe_size);
+=======
+	/*FIXME: frame_size parameter is unused, remove it. */
+	frame = get_sigframe(&ksig->ka, usp, sizeof(*frame));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	DBG(1,"SETUP_RT_FRAME: START\n");
 	DBG(1,"setup_rt_frame: frame %p info %p\n", frame, ksig->info);
 
+<<<<<<< HEAD
 	start = (unsigned long) frame;
 	if (start >= user_addr_max() - sigframe_size)
 		return -EFAULT;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	
 #ifdef CONFIG_64BIT
 
@@ -288,6 +296,7 @@ setup_rt_frame(struct ksignal *ksig, sigset_t *set, struct pt_regs *regs,
 	   already in userspace. The first words of tramp are used to
 	   save the previous sigrestartblock trampoline that might be
 	   on the stack. We start the sigreturn trampoline at 
+<<<<<<< HEAD
 	   SIGRESTARTBLOCK_TRAMP. */
 	err |= __put_user(in_syscall ? INSN_LDI_R25_1 : INSN_LDI_R25_0,
 			&frame->tramp[SIGRESTARTBLOCK_TRAMP+0]);
@@ -298,11 +307,38 @@ setup_rt_frame(struct ksignal *ksig, sigset_t *set, struct pt_regs *regs,
 
 	start = (unsigned long) &frame->tramp[SIGRESTARTBLOCK_TRAMP+0];
 	end = (unsigned long) &frame->tramp[SIGRESTARTBLOCK_TRAMP+3];
+=======
+	   SIGRESTARTBLOCK_TRAMP+X. */
+	err |= __put_user(in_syscall ? INSN_LDI_R25_1 : INSN_LDI_R25_0,
+			&frame->tramp[SIGRESTARTBLOCK_TRAMP+0]);
+	err |= __put_user(INSN_LDI_R20, 
+			&frame->tramp[SIGRESTARTBLOCK_TRAMP+1]);
+	err |= __put_user(INSN_BLE_SR2_R0, 
+			&frame->tramp[SIGRESTARTBLOCK_TRAMP+2]);
+	err |= __put_user(INSN_NOP, &frame->tramp[SIGRESTARTBLOCK_TRAMP+3]);
+
+#if DEBUG_SIG
+	/* Assert that we're flushing in the correct space... */
+	{
+		unsigned long sid;
+		asm ("mfsp %%sr3,%0" : "=r" (sid));
+		DBG(1,"setup_rt_frame: Flushing 64 bytes at space %#x offset %p\n",
+		       sid, frame->tramp);
+	}
+#endif
+
+	start = (unsigned long) &frame->tramp[0];
+	end = (unsigned long) &frame->tramp[TRAMP_SIZE];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	flush_user_dcache_range_asm(start, end);
 	flush_user_icache_range_asm(start, end);
 
 	/* TRAMP Words 0-4, Length 5 = SIGRESTARTBLOCK_TRAMP
+<<<<<<< HEAD
 	 * TRAMP Words 5-7, Length 3 = SIGRETURN_TRAMP
+=======
+	 * TRAMP Words 5-9, Length 4 = SIGRETURN_TRAMP
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * So the SIGRETURN_TRAMP is at the end of SIGRESTARTBLOCK_TRAMP
 	 */
 	rp = (unsigned long) &frame->tramp[SIGRESTARTBLOCK_TRAMP];
@@ -346,6 +382,14 @@ setup_rt_frame(struct ksignal *ksig, sigset_t *set, struct pt_regs *regs,
 
 	/* The syscall return path will create IAOQ values from r31.
 	 */
+<<<<<<< HEAD
+=======
+	sigframe_size = PARISC_RT_SIGFRAME_SIZE;
+#ifdef CONFIG_64BIT
+	if (is_compat_task())
+		sigframe_size = PARISC_RT_SIGFRAME_SIZE32;
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (in_syscall) {
 		regs->gr[31] = haddr;
 #ifdef CONFIG_64BIT
@@ -489,6 +533,10 @@ syscall_restart(struct pt_regs *regs, struct k_sigaction *ka)
 		DBG(1,"ERESTARTNOHAND: returning -EINTR\n");
 		regs->gr[28] = -EINTR;
 		break;
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case -ERESTARTSYS:
 		if (!(ka->sa.sa_flags & SA_RESTART)) {
 			DBG(1,"ERESTARTSYS: putting -EINTR\n");
@@ -516,10 +564,13 @@ insert_restart_trampoline(struct pt_regs *regs)
 		unsigned long end  = (unsigned long) &usp[5];
 		long err = 0;
 
+<<<<<<< HEAD
 		/* check that we don't exceed the stack */
 		if (A(&usp[0]) >= user_addr_max() - 5 * sizeof(int))
 			return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		/* Setup a trampoline to restart the syscall
 		 * with __NR_restart_syscall
 		 *
@@ -560,6 +611,13 @@ insert_restart_trampoline(struct pt_regs *regs)
 }
 
 /*
+<<<<<<< HEAD
+=======
+ * Note that 'init' is a special process: it doesn't get signals it doesn't
+ * want to handle. Thus you cannot kill init even with a SIGKILL even by
+ * mistake.
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * We need to be able to restore the syscall arguments (r21-r26) to
  * restart syscalls.  Thus, the syscall path should save them in the
  * pt_regs structure (it's okay to do so since they are caller-save

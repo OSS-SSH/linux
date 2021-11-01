@@ -85,7 +85,11 @@
 #define IVTV_ADAPTEC_IR_ADDR		0x6b
 
 /* This array should match the IVTV_HW_ defines */
+<<<<<<< HEAD
 static const u8 hw_addrs[IVTV_HW_MAX_BITS] = {
+=======
+static const u8 hw_addrs[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	IVTV_CX25840_I2C_ADDR,
 	IVTV_SAA7115_I2C_ADDR,
 	IVTV_SAA7127_I2C_ADDR,
@@ -110,7 +114,11 @@ static const u8 hw_addrs[IVTV_HW_MAX_BITS] = {
 };
 
 /* This array should match the IVTV_HW_ defines */
+<<<<<<< HEAD
 static const char * const hw_devicenames[IVTV_HW_MAX_BITS] = {
+=======
+static const char * const hw_devicenames[] = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	"cx25840",
 	"saa7115",
 	"saa7127_auto",	/* saa7127 or saa7129 */
@@ -240,6 +248,7 @@ void ivtv_i2c_new_ir_legacy(struct ivtv *itv)
 
 int ivtv_i2c_register(struct ivtv *itv, unsigned idx)
 {
+<<<<<<< HEAD
 	struct i2c_adapter *adap = &itv->i2c_adap;
 	struct v4l2_subdev *sd;
 	const char *type;
@@ -250,6 +259,12 @@ int ivtv_i2c_register(struct ivtv *itv, unsigned idx)
 
 	type = hw_devicenames[idx];
 	hw = 1 << idx;
+=======
+	struct v4l2_subdev *sd;
+	struct i2c_adapter *adap = &itv->i2c_adap;
+	const char *type = hw_devicenames[idx];
+	u32 hw = 1 << idx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (hw == IVTV_HW_TUNER) {
 		/* special tuner handling */

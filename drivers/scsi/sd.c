@@ -98,7 +98,15 @@ MODULE_ALIAS_SCSI_DEVICE(TYPE_MOD);
 MODULE_ALIAS_SCSI_DEVICE(TYPE_RBC);
 MODULE_ALIAS_SCSI_DEVICE(TYPE_ZBC);
 
+<<<<<<< HEAD
 #define SD_MINORS	16
+=======
+#if !defined(CONFIG_DEBUG_BLOCK_EXT_DEVT)
+#define SD_MINORS	16
+#else
+#define SD_MINORS	0
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void sd_config_discard(struct scsi_disk *, unsigned int);
 static void sd_config_write_same(struct scsi_disk *);
@@ -110,7 +118,10 @@ static void sd_shutdown(struct device *);
 static int sd_suspend_system(struct device *);
 static int sd_suspend_runtime(struct device *);
 static int sd_resume(struct device *);
+<<<<<<< HEAD
 static int sd_resume_runtime(struct device *);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void sd_rescan(struct device *);
 static blk_status_t sd_init_command(struct scsi_cmnd *SCpnt);
 static void sd_uninit_command(struct scsi_cmnd *SCpnt);
@@ -130,7 +141,10 @@ static DEFINE_MUTEX(sd_ref_mutex);
 static struct kmem_cache *sd_cdb_cache;
 static mempool_t *sd_cdb_pool;
 static mempool_t *sd_page_pool;
+<<<<<<< HEAD
 static struct lock_class_key sd_bio_compl_lkclass;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static const char *sd_cache_types[] = {
 	"write through", "none", "write back",
@@ -606,7 +620,11 @@ static const struct dev_pm_ops sd_pm_ops = {
 	.poweroff		= sd_suspend_system,
 	.restore		= sd_resume,
 	.runtime_suspend	= sd_suspend_runtime,
+<<<<<<< HEAD
 	.runtime_resume		= sd_resume_runtime,
+=======
+	.runtime_resume		= sd_resume,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static struct scsi_driver sd_template = {
@@ -777,9 +795,14 @@ static unsigned int sd_prot_flag_mask(unsigned int prot_op)
 static unsigned char sd_setup_protect_cmnd(struct scsi_cmnd *scmd,
 					   unsigned int dix, unsigned int dif)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(scmd);
 	struct bio *bio = rq->bio;
 	unsigned int prot_op = sd_prot_op(rq_data_dir(rq), dix, dif);
+=======
+	struct bio *bio = scmd->request->bio;
+	unsigned int prot_op = sd_prot_op(rq_data_dir(scmd->request), dix, dif);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int protect = 0;
 
 	if (dix) {				/* DIX Type 0, 1, 2, 3 */
@@ -870,7 +893,11 @@ static void sd_config_discard(struct scsi_disk *sdkp, unsigned int mode)
 static blk_status_t sd_setup_unmap_cmnd(struct scsi_cmnd *cmd)
 {
 	struct scsi_device *sdp = cmd->device;
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
@@ -889,7 +916,11 @@ static blk_status_t sd_setup_unmap_cmnd(struct scsi_cmnd *cmd)
 	cmd->cmnd[0] = UNMAP;
 	cmd->cmnd[8] = 24;
 
+<<<<<<< HEAD
 	buf = bvec_virt(&rq->special_vec);
+=======
+	buf = page_address(rq->special_vec.bv_page);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	put_unaligned_be16(6 + 16, &buf[0]);
 	put_unaligned_be16(16, &buf[2]);
 	put_unaligned_be64(lba, &buf[8]);
@@ -906,7 +937,11 @@ static blk_status_t sd_setup_write_same16_cmnd(struct scsi_cmnd *cmd,
 		bool unmap)
 {
 	struct scsi_device *sdp = cmd->device;
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
@@ -938,7 +973,11 @@ static blk_status_t sd_setup_write_same10_cmnd(struct scsi_cmnd *cmd,
 		bool unmap)
 {
 	struct scsi_device *sdp = cmd->device;
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
 	u32 nr_blocks = sectors_to_logical(sdp, blk_rq_sectors(rq));
@@ -968,7 +1007,11 @@ static blk_status_t sd_setup_write_same10_cmnd(struct scsi_cmnd *cmd,
 
 static blk_status_t sd_setup_write_zeroes_cmnd(struct scsi_cmnd *cmd)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_device *sdp = cmd->device;
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	u64 lba = sectors_to_logical(sdp, blk_rq_pos(rq));
@@ -1065,7 +1108,11 @@ out:
  **/
 static blk_status_t sd_setup_write_same_cmnd(struct scsi_cmnd *cmd)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_device *sdp = cmd->device;
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	struct bio *bio = rq->bio;
@@ -1114,7 +1161,11 @@ static blk_status_t sd_setup_write_same_cmnd(struct scsi_cmnd *cmd)
 
 static blk_status_t sd_setup_flush_cmnd(struct scsi_cmnd *cmd)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 
 	/* flush requests don't perform I/O, zero the S/G table */
@@ -1212,7 +1263,11 @@ static blk_status_t sd_setup_rw6_cmnd(struct scsi_cmnd *cmd, bool write,
 
 static blk_status_t sd_setup_read_write_cmnd(struct scsi_cmnd *cmd)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_device *sdp = cmd->device;
 	struct scsi_disk *sdkp = scsi_disk(rq->rq_disk);
 	sector_t lba = sectors_to_logical(sdp, blk_rq_pos(rq));
@@ -1326,7 +1381,11 @@ fail:
 
 static blk_status_t sd_init_command(struct scsi_cmnd *cmd)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(cmd);
+=======
+	struct request *rq = cmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (req_op(rq)) {
 	case REQ_OP_DISCARD:
@@ -1372,7 +1431,11 @@ static blk_status_t sd_init_command(struct scsi_cmnd *cmd)
 
 static void sd_uninit_command(struct scsi_cmnd *SCpnt)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(SCpnt);
+=======
+	struct request *rq = SCpnt->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 *cmnd;
 
 	if (rq->rq_flags & RQF_SPECIAL_PAYLOAD)
@@ -1532,11 +1595,19 @@ static int sd_getgeo(struct block_device *bdev, struct hd_geometry *geo)
 }
 
 /**
+<<<<<<< HEAD
  *	sd_ioctl - process an ioctl
  *	@bdev: target block device
  *	@mode: FMODE_* mask
  *	@cmd: ioctl command number
  *	@arg: this is third argument given to ioctl(2) system call.
+=======
+ *	sd_ioctl_common - process an ioctl
+ *	@bdev: target block device
+ *	@mode: FMODE_* mask
+ *	@cmd: ioctl command number
+ *	@p: this is third argument given to ioctl(2) system call.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *	Often contains a pointer.
  *
  *	Returns 0 if successful (some ioctls return positive numbers on
@@ -1545,20 +1616,34 @@ static int sd_getgeo(struct block_device *bdev, struct hd_geometry *geo)
  *	Note: most ioctls are forward onto the block subsystem or further
  *	down in the scsi subsystem.
  **/
+<<<<<<< HEAD
 static int sd_ioctl(struct block_device *bdev, fmode_t mode,
 		    unsigned int cmd, unsigned long arg)
+=======
+static int sd_ioctl_common(struct block_device *bdev, fmode_t mode,
+			   unsigned int cmd, void __user *p)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct gendisk *disk = bdev->bd_disk;
 	struct scsi_disk *sdkp = scsi_disk(disk);
 	struct scsi_device *sdp = sdkp->device;
+<<<<<<< HEAD
 	void __user *p = (void __user *)arg;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int error;
     
 	SCSI_LOG_IOCTL(1, sd_printk(KERN_INFO, sdkp, "sd_ioctl: disk=%s, "
 				    "cmd=0x%x\n", disk->disk_name, cmd));
 
+<<<<<<< HEAD
 	if (bdev_is_partition(bdev) && !capable(CAP_SYS_RAWIO))
 		return -ENOIOCTLCMD;
+=======
+	error = scsi_verify_blk_ioctl(bdev, cmd);
+	if (error < 0)
+		return error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * If we are in the middle of error recovery, don't let anyone
@@ -1569,11 +1654,35 @@ static int sd_ioctl(struct block_device *bdev, fmode_t mode,
 	error = scsi_ioctl_block_when_processing_errors(sdp, cmd,
 			(mode & FMODE_NDELAY) != 0);
 	if (error)
+<<<<<<< HEAD
 		return error;
 
 	if (is_sed_ioctl(cmd))
 		return sed_ioctl(sdkp->opal_dev, cmd, p);
 	return scsi_ioctl(sdp, disk, mode, cmd, p);
+=======
+		goto out;
+
+	if (is_sed_ioctl(cmd))
+		return sed_ioctl(sdkp->opal_dev, cmd, p);
+
+	/*
+	 * Send SCSI addressing ioctls directly to mid level, send other
+	 * ioctls to block level and then onto mid level if they can't be
+	 * resolved.
+	 */
+	switch (cmd) {
+		case SCSI_IOCTL_GET_IDLUN:
+		case SCSI_IOCTL_GET_BUS_NUMBER:
+			error = scsi_ioctl(sdp, cmd, p);
+			break;
+		default:
+			error = scsi_cmd_blk_ioctl(bdev, mode, cmd, p);
+			break;
+	}
+out:
+	return error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void set_media_not_present(struct scsi_disk *sdkp)
@@ -1756,6 +1865,37 @@ static void sd_rescan(struct device *dev)
 	sd_revalidate_disk(sdkp->disk);
 }
 
+<<<<<<< HEAD
+=======
+static int sd_ioctl(struct block_device *bdev, fmode_t mode,
+		    unsigned int cmd, unsigned long arg)
+{
+	void __user *p = (void __user *)arg;
+	int ret;
+
+	ret = sd_ioctl_common(bdev, mode, cmd, p);
+	if (ret != -ENOTTY)
+		return ret;
+
+	return scsi_ioctl(scsi_disk(bdev->bd_disk)->device, cmd, p);
+}
+
+#ifdef CONFIG_COMPAT
+static int sd_compat_ioctl(struct block_device *bdev, fmode_t mode,
+			   unsigned int cmd, unsigned long arg)
+{
+	void __user *p = compat_ptr(arg);
+	int ret;
+
+	ret = sd_ioctl_common(bdev, mode, cmd, p);
+	if (ret != -ENOTTY)
+		return ret;
+
+	return scsi_compat_ioctl(scsi_disk(bdev->bd_disk)->device, cmd, p);
+}
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static char sd_pr_type(enum pr_type type)
 {
 	switch (type) {
@@ -1856,7 +1996,13 @@ static const struct block_device_operations sd_fops = {
 	.release		= sd_release,
 	.ioctl			= sd_ioctl,
 	.getgeo			= sd_getgeo,
+<<<<<<< HEAD
 	.compat_ioctl		= blkdev_compat_ptr_ioctl,
+=======
+#ifdef CONFIG_COMPAT
+	.compat_ioctl		= sd_compat_ioctl,
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.check_events		= sd_check_events,
 	.unlock_native_capacity	= sd_unlock_native_capacity,
 	.report_zones		= sd_zbc_report_zones,
@@ -1877,7 +2023,11 @@ static const struct block_device_operations sd_fops = {
  **/
 static void sd_eh_reset(struct scsi_cmnd *scmd)
 {
+<<<<<<< HEAD
 	struct scsi_disk *sdkp = scsi_disk(scsi_cmd_to_rq(scmd)->rq_disk);
+=======
+	struct scsi_disk *sdkp = scsi_disk(scmd->request->rq_disk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* New SCSI EH run, reset gate variable */
 	sdkp->ignore_medium_access_errors = false;
@@ -1897,7 +2047,11 @@ static void sd_eh_reset(struct scsi_cmnd *scmd)
  **/
 static int sd_eh_action(struct scsi_cmnd *scmd, int eh_disp)
 {
+<<<<<<< HEAD
 	struct scsi_disk *sdkp = scsi_disk(scsi_cmd_to_rq(scmd)->rq_disk);
+=======
+	struct scsi_disk *sdkp = scsi_disk(scmd->request->rq_disk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_device *sdev = scmd->device;
 
 	if (!scsi_device_online(sdev) ||
@@ -1938,7 +2092,11 @@ static int sd_eh_action(struct scsi_cmnd *scmd, int eh_disp)
 
 static unsigned int sd_completed_bytes(struct scsi_cmnd *scmd)
 {
+<<<<<<< HEAD
 	struct request *req = scsi_cmd_to_rq(scmd);
+=======
+	struct request *req = scmd->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_device *sdev = scmd->device;
 	unsigned int transferred, good_bytes;
 	u64 start_lba, end_lba, bad_lba;
@@ -1993,8 +2151,13 @@ static int sd_done(struct scsi_cmnd *SCpnt)
 	unsigned int sector_size = SCpnt->device->sector_size;
 	unsigned int resid;
 	struct scsi_sense_hdr sshdr;
+<<<<<<< HEAD
 	struct request *req = scsi_cmd_to_rq(SCpnt);
 	struct scsi_disk *sdkp = scsi_disk(req->rq_disk);
+=======
+	struct scsi_disk *sdkp = scsi_disk(SCpnt->request->rq_disk);
+	struct request *req = SCpnt->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int sense_valid = 0;
 	int sense_deferred = 0;
 
@@ -2124,8 +2287,11 @@ sd_spinup_disk(struct scsi_disk *sdkp)
 		retries = 0;
 
 		do {
+<<<<<<< HEAD
 			bool media_was_present = sdkp->media_present;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			cmd[0] = TEST_UNIT_READY;
 			memset((void *) &cmd[1], 0, 9);
 
@@ -2139,11 +2305,16 @@ sd_spinup_disk(struct scsi_disk *sdkp)
 			 * doesn't have any media in it, don't bother
 			 * with any more polling.
 			 */
+<<<<<<< HEAD
 			if (media_not_present(sdkp, &sshdr)) {
 				if (media_was_present)
 					sd_printk(KERN_NOTICE, sdkp, "Media removed, stopped polling\n");
 				return;
 			}
+=======
+			if (media_not_present(sdkp, &sshdr))
+				return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 			if (the_result)
 				sense_valid = scsi_sense_valid(&sshdr);
@@ -3370,8 +3541,12 @@ static int sd_probe(struct device *dev)
 	if (!sdkp)
 		goto out;
 
+<<<<<<< HEAD
 	gd = __alloc_disk_node(sdp->request_queue, NUMA_NO_NODE,
 			       &sd_bio_compl_lkclass);
+=======
+	gd = alloc_disk(SD_MINORS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!gd)
 		goto out_free;
 
@@ -3404,24 +3579,42 @@ static int sd_probe(struct device *dev)
 	}
 
 	device_initialize(&sdkp->dev);
+<<<<<<< HEAD
 	sdkp->dev.parent = get_device(dev);
+=======
+	sdkp->dev.parent = dev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sdkp->dev.class = &sd_disk_class;
 	dev_set_name(&sdkp->dev, "%s", dev_name(dev));
 
 	error = device_add(&sdkp->dev);
+<<<<<<< HEAD
 	if (error) {
 		put_device(&sdkp->dev);
 		goto out;
 	}
 
+=======
+	if (error)
+		goto out_free_index;
+
+	get_device(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev_set_drvdata(dev, sdkp);
 
 	gd->major = sd_major((index & 0xf0) >> 4);
 	gd->first_minor = ((index & 0xf) << 4) | (index & 0xfff00);
+<<<<<<< HEAD
 	gd->minors = SD_MINORS;
 
 	gd->fops = &sd_fops;
 	gd->private_data = &sdkp->driver;
+=======
+
+	gd->fops = &sd_fops;
+	gd->private_data = &sdkp->driver;
+	gd->queue = sdkp->device->request_queue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* defaults, until the device tells us otherwise */
 	sdp->sector_size = 512;
@@ -3680,6 +3873,7 @@ static int sd_resume(struct device *dev)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int sd_resume_runtime(struct device *dev)
 {
 	struct scsi_disk *sdkp = dev_get_drvdata(dev);
@@ -3699,6 +3893,8 @@ static int sd_resume_runtime(struct device *dev)
 	return sd_resume(dev);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  *	init_sd - entry point for this driver (both when built in or when
  *	a module).

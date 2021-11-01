@@ -30,7 +30,10 @@
 #include <subdev/bios/dcb.h>
 
 #include <drm/drm_encoder_slave.h>
+<<<<<<< HEAD
 #include <drm/drm_dp_helper.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <drm/drm_dp_mst_helper.h>
 #include "dispnv04/disp.h"
 struct nv50_head_atom;

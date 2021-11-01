@@ -18,7 +18,10 @@ static int n_root_addr_cells, n_root_size_cells;
 
 static struct drmem_lmb_info __drmem_info;
 struct drmem_lmb_info *drmem_info = &__drmem_info;
+<<<<<<< HEAD
 static bool in_drmem_update;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 u64 drmem_lmb_memory_max(void)
 {
@@ -179,11 +182,14 @@ int drmem_update_dt(void)
 	if (!memory)
 		return -1;
 
+<<<<<<< HEAD
 	/*
 	 * Set in_drmem_update to prevent the notifier callback to process the
 	 * DT property back since the change is coming from the LMB tree.
 	 */
 	in_drmem_update = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	prop = of_find_property(memory, "ibm,dynamic-memory", NULL);
 	if (prop) {
 		rc = drmem_update_dt_v1(memory, prop);
@@ -192,7 +198,10 @@ int drmem_update_dt(void)
 		if (prop)
 			rc = drmem_update_dt_v2(memory, prop);
 	}
+<<<<<<< HEAD
 	in_drmem_update = false;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	of_node_put(memory);
 	return rc;
@@ -314,6 +323,7 @@ int __init walk_drmem_lmbs_early(unsigned long node, void *data,
 	return ret;
 }
 
+<<<<<<< HEAD
 /*
  * Update the LMB associativity index.
  */
@@ -353,6 +363,8 @@ void drmem_update_lmbs(struct property *prop)
 	else if (!strcmp(prop->name, "ibm,dynamic-memory-v2"))
 		__walk_drmem_v2_lmbs(prop->value, NULL, NULL, update_lmb);
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 static int init_drmem_lmb_size(struct device_node *dn)

@@ -131,7 +131,11 @@ unsigned long ia64_cache_stride_shift = ~0;
  * We use a special marker for the end of memory and it uses the extra (+1) slot
  */
 struct rsvd_region rsvd_region[IA64_MAX_RSVD_REGIONS + 1] __initdata;
+<<<<<<< HEAD
 static int num_rsvd_regions __initdata;
+=======
+int num_rsvd_regions __initdata;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 
 /*
@@ -325,6 +329,7 @@ static inline void __init setup_crashkernel(unsigned long total, int *n)
 {}
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_CRASH_DUMP
 static int __init reserve_elfcorehdr(u64 *start, u64 *end)
 {
@@ -350,6 +355,8 @@ static int __init reserve_elfcorehdr(u64 *start, u64 *end)
 }
 #endif /* CONFIG_CRASH_DUMP */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * reserve_memory - setup reserved memory areas
  *
@@ -547,6 +554,35 @@ static __init int setup_nomca(char *s)
 }
 early_param("nomca", setup_nomca);
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_CRASH_DUMP
+int __init reserve_elfcorehdr(u64 *start, u64 *end)
+{
+	u64 length;
+
+	/* We get the address using the kernel command line,
+	 * but the size is extracted from the EFI tables.
+	 * Both address and size are required for reservation
+	 * to work properly.
+	 */
+
+	if (!is_vmcore_usable())
+		return -EINVAL;
+
+	if ((length = vmcore_find_descriptor_size(elfcorehdr_addr)) == 0) {
+		vmcore_unusable();
+		return -EINVAL;
+	}
+
+	*start = (unsigned long)__va(elfcorehdr_addr);
+	*end = *start + length;
+	return 0;
+}
+
+#endif /* CONFIG_PROC_VMCORE */
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void __init
 setup_arch (char **cmdline_p)
 {

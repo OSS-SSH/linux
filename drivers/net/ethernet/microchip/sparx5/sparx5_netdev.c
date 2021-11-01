@@ -13,6 +13,7 @@
  */
 #define VSTAX 73
 
+<<<<<<< HEAD
 #define ifh_encode_bitfield(ifh, value, pos, _width)			\
 	({								\
 		u32 width = (_width);					\
@@ -26,13 +27,25 @@
 	})
 
 static void __ifh_encode_bitfield(void *ifh, u64 value, u32 pos, u32 width)
+=======
+static void ifh_encode_bitfield(void *ifh, u64 value, u32 pos, u32 width)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u8 *ifh_hdr = ifh;
 	/* Calculate the Start IFH byte position of this IFH bit position */
 	u32 byte = (35 - (pos / 8));
 	/* Calculate the Start bit position in the Start IFH byte */
 	u32 bit  = (pos % 8);
+<<<<<<< HEAD
 	u64 encode = GENMASK_ULL(bit + width - 1, bit) & (value << bit);
+=======
+	u64 encode = GENMASK(bit + width - 1, bit) & (value << bit);
+
+	/* Max width is 5 bytes - 40 bits. In worst case this will
+	 * spread over 6 bytes - 48 bits
+	 */
+	compiletime_assert(width <= 40, "Unsupported width, must be <= 40");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* The b0-b7 goes into the start IFH byte */
 	if (encode & 0xFF)

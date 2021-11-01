@@ -23,6 +23,10 @@
 #include <net/netns/ieee802154_6lowpan.h>
 #include <net/netns/sctp.h>
 #include <net/netns/netfilter.h>
+<<<<<<< HEAD
+=======
+#include <net/netns/x_tables.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if defined(CONFIG_NF_CONNTRACK) || defined(CONFIG_NF_CONNTRACK_MODULE)
 #include <net/netns/conntrack.h>
 #endif
@@ -33,7 +37,10 @@
 #include <net/netns/xdp.h>
 #include <net/netns/smc.h>
 #include <net/netns/bpf.h>
+<<<<<<< HEAD
 #include <net/netns/mctp.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/ns_common.h>
 #include <linux/idr.h>
 #include <linux/skbuff.h>
@@ -132,6 +139,10 @@ struct net {
 #endif
 #ifdef CONFIG_NETFILTER
 	struct netns_nf		nf;
+<<<<<<< HEAD
+=======
+	struct netns_xt		xt;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if defined(CONFIG_NF_CONNTRACK) || defined(CONFIG_NF_CONNTRACK_MODULE)
 	struct netns_ct		ct;
 #endif
@@ -166,9 +177,12 @@ struct net {
 #ifdef CONFIG_XDP_SOCKETS
 	struct netns_xdp	xdp;
 #endif
+<<<<<<< HEAD
 #if IS_ENABLED(CONFIG_MCTP)
 	struct netns_mctp	mctp;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if IS_ENABLED(CONFIG_CRYPTO_USER)
 	struct sock		*crypto_nlsk;
 #endif

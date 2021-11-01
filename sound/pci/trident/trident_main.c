@@ -42,7 +42,11 @@ static int snd_trident_sis_reset(struct snd_trident *trident);
 
 static void snd_trident_clear_voices(struct snd_trident * trident,
 				     unsigned short v_min, unsigned short v_max);
+<<<<<<< HEAD
 static void snd_trident_free(struct snd_card *card);
+=======
+static int snd_trident_free(struct snd_trident *trident);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  *  common I/O routines
@@ -3299,6 +3303,15 @@ static void snd_trident_proc_init(struct snd_trident *trident)
 	snd_card_ro_proc_new(trident->card, s, trident, snd_trident_proc_read);
 }
 
+<<<<<<< HEAD
+=======
+static int snd_trident_dev_free(struct snd_device *device)
+{
+	struct snd_trident *trident = device->device_data;
+	return snd_trident_free(trident);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*---------------------------------------------------------------------------
    snd_trident_tlb_alloc
   
@@ -3318,6 +3331,7 @@ static int snd_trident_tlb_alloc(struct snd_trident *trident)
 	/* TLB array must be aligned to 16kB !!! so we allocate
 	   32kB region and correct offset when necessary */
 
+<<<<<<< HEAD
 	trident->tlb.buffer =
 		snd_devm_alloc_pages(&trident->pci->dev, SNDRV_DMA_TYPE_DEV,
 				     2 * SNDRV_TRIDENT_MAX_PAGES * 4);
@@ -3339,6 +3353,25 @@ static int snd_trident_tlb_alloc(struct snd_trident *trident)
 	memset(trident->tlb.silent_page->area, 0, SNDRV_TRIDENT_PAGE_SIZE);
 	for (i = 0; i < SNDRV_TRIDENT_MAX_PAGES; i++)
 		trident->tlb.entries[i] = cpu_to_le32(trident->tlb.silent_page->addr & ~(SNDRV_TRIDENT_PAGE_SIZE-1));
+=======
+	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &trident->pci->dev,
+				2 * SNDRV_TRIDENT_MAX_PAGES * 4, &trident->tlb.buffer) < 0) {
+		dev_err(trident->card->dev, "unable to allocate TLB buffer\n");
+		return -ENOMEM;
+	}
+	trident->tlb.entries = (__le32 *)ALIGN((unsigned long)trident->tlb.buffer.area, SNDRV_TRIDENT_MAX_PAGES * 4);
+	trident->tlb.entries_dmaaddr = ALIGN(trident->tlb.buffer.addr, SNDRV_TRIDENT_MAX_PAGES * 4);
+
+	/* allocate and setup silent page and initialise TLB entries */
+	if (snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, &trident->pci->dev,
+				SNDRV_TRIDENT_PAGE_SIZE, &trident->tlb.silent_page) < 0) {
+		dev_err(trident->card->dev, "unable to allocate silent page\n");
+		return -ENOMEM;
+	}
+	memset(trident->tlb.silent_page.area, 0, SNDRV_TRIDENT_PAGE_SIZE);
+	for (i = 0; i < SNDRV_TRIDENT_MAX_PAGES; i++)
+		trident->tlb.entries[i] = cpu_to_le32(trident->tlb.silent_page.addr & ~(SNDRV_TRIDENT_PAGE_SIZE-1));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* use emu memory block manager code to manage tlb page allocation */
 	trident->tlb.memhdr = snd_util_memhdr_new(SNDRV_TRIDENT_PAGE_SIZE * SNDRV_TRIDENT_MAX_PAGES);
@@ -3495,6 +3528,7 @@ int snd_trident_create(struct snd_card *card,
 		       struct pci_dev *pci,
 		       int pcm_streams,
 		       int pcm_spdif_device,
+<<<<<<< HEAD
 		       int max_wavetable_size)
 {
 	struct snd_trident *trident = card->private_data;
@@ -3504,15 +3538,44 @@ int snd_trident_create(struct snd_card *card,
 
 	/* enable PCI device */
 	err = pcim_enable_device(pci);
+=======
+		       int max_wavetable_size,
+		       struct snd_trident ** rtrident)
+{
+	struct snd_trident *trident;
+	int i, err;
+	struct snd_trident_voice *voice;
+	struct snd_trident_pcm_mixer *tmix;
+	static const struct snd_device_ops ops = {
+		.dev_free =	snd_trident_dev_free,
+	};
+
+	*rtrident = NULL;
+
+	/* enable PCI device */
+	err = pci_enable_device(pci);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 	/* check, if we can restrict PCI DMA transfers to 30 bits */
 	if (dma_set_mask_and_coherent(&pci->dev, DMA_BIT_MASK(30))) {
 		dev_err(card->dev,
 			"architecture does not support 30bit PCI busmaster DMA\n");
+<<<<<<< HEAD
 		return -ENXIO;
 	}
 	
+=======
+		pci_disable_device(pci);
+		return -ENXIO;
+	}
+	
+	trident = kzalloc(sizeof(*trident), GFP_KERNEL);
+	if (trident == NULL) {
+		pci_disable_device(pci);
+		return -ENOMEM;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	trident->device = (pci->vendor << 16) | pci->device;
 	trident->card = card;
 	trident->pci = pci;
@@ -3528,12 +3591,16 @@ int snd_trident_create(struct snd_card *card,
 		max_wavetable_size = 0;
 	trident->synth.max_size = max_wavetable_size * 1024;
 	trident->irq = -1;
+<<<<<<< HEAD
 	card->private_free = snd_trident_free;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	trident->midi_port = TRID_REG(trident, T4D_MPU401_BASE);
 	pci_set_master(pci);
 
 	err = pci_request_regions(pci, "Trident Audio");
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
 	trident->port = pci_resource_start(pci, 0);
@@ -3541,6 +3608,19 @@ int snd_trident_create(struct snd_card *card,
 	if (devm_request_irq(&pci->dev, pci->irq, snd_trident_interrupt,
 			     IRQF_SHARED, KBUILD_MODNAME, trident)) {
 		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+=======
+	if (err < 0) {
+		kfree(trident);
+		pci_disable_device(pci);
+		return err;
+	}
+	trident->port = pci_resource_start(pci, 0);
+
+	if (request_irq(pci->irq, snd_trident_interrupt, IRQF_SHARED,
+			KBUILD_MODNAME, trident)) {
+		dev_err(card->dev, "unable to grab IRQ %d\n", pci->irq);
+		snd_trident_free(trident);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EBUSY;
 	}
 	trident->irq = pci->irq;
@@ -3548,10 +3628,20 @@ int snd_trident_create(struct snd_card *card,
 
 	/* allocate 16k-aligned TLB for NX cards */
 	trident->tlb.entries = NULL;
+<<<<<<< HEAD
 	if (trident->device == TRIDENT_DEVICE_ID_NX) {
 		err = snd_trident_tlb_alloc(trident);
 		if (err < 0)
 			return err;
+=======
+	trident->tlb.buffer.area = NULL;
+	if (trident->device == TRIDENT_DEVICE_ID_NX) {
+		err = snd_trident_tlb_alloc(trident);
+		if (err < 0) {
+			snd_trident_free(trident);
+			return err;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	trident->spdif_bits = trident->spdif_pcm_bits = SNDRV_PCM_DEFAULT_CON_SPDIF;
@@ -3571,8 +3661,21 @@ int snd_trident_create(struct snd_card *card,
 		snd_BUG();
 		break;
 	}
+<<<<<<< HEAD
 	if (err < 0)
 		return err;
+=======
+	if (err < 0) {
+		snd_trident_free(trident);
+		return err;
+	}
+
+	err = snd_device_new(card, SNDRV_DEV_LOWLEVEL, trident, &ops);
+	if (err < 0) {
+		snd_trident_free(trident);
+		return err;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = snd_trident_mixer(trident, pcm_spdif_device);
 	if (err < 0)
@@ -3596,6 +3699,10 @@ int snd_trident_create(struct snd_card *card,
 	snd_trident_enable_eso(trident);
 
 	snd_trident_proc_init(trident);
+<<<<<<< HEAD
+=======
+	*rtrident = trident;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -3605,16 +3712,25 @@ int snd_trident_create(struct snd_card *card,
    Description: This routine will free the device specific class for
                 the 4DWave card. 
                 
+<<<<<<< HEAD
    Parameters:  card - card to release
+=======
+   Parameters:  trident  - device specific private data for 4DWave card
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
    Returns:     None.
   
   ---------------------------------------------------------------------------*/
 
+<<<<<<< HEAD
 static void snd_trident_free(struct snd_card *card)
 {
 	struct snd_trident *trident = card->private_data;
 
+=======
+static int snd_trident_free(struct snd_trident *trident)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	snd_trident_free_gameport(trident);
 	snd_trident_disable_eso(trident);
 	// Disable S/PDIF out
@@ -3623,10 +3739,26 @@ static void snd_trident_free(struct snd_card *card)
 	else if (trident->device == TRIDENT_DEVICE_ID_SI7018) {
 		outl(0, TRID_REG(trident, SI_SERIAL_INTF_CTRL));
 	}
+<<<<<<< HEAD
 	if (trident->tlb.buffer) {
 		outl(0, TRID_REG(trident, NX_TLBC));
 		snd_util_memhdr_free(trident->tlb.memhdr);
 	}
+=======
+	if (trident->irq >= 0)
+		free_irq(trident->irq, trident);
+	if (trident->tlb.buffer.area) {
+		outl(0, TRID_REG(trident, NX_TLBC));
+		snd_util_memhdr_free(trident->tlb.memhdr);
+		if (trident->tlb.silent_page.area)
+			snd_dma_free_pages(&trident->tlb.silent_page);
+		snd_dma_free_pages(&trident->tlb.buffer);
+	}
+	pci_release_regions(trident->pci);
+	pci_disable_device(trident->pci);
+	kfree(trident);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*---------------------------------------------------------------------------

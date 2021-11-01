@@ -92,7 +92,12 @@ void dn_fib_free_info(struct dn_fib_info *fi)
 	}
 
 	change_nexthops(fi) {
+<<<<<<< HEAD
 		dev_put(nh->nh_dev);
+=======
+		if (nh->nh_dev)
+			dev_put(nh->nh_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		nh->nh_dev = NULL;
 	} endfor_nexthops(fi);
 	kfree(fi);
@@ -101,7 +106,11 @@ void dn_fib_free_info(struct dn_fib_info *fi)
 void dn_fib_release_info(struct dn_fib_info *fi)
 {
 	spin_lock(&dn_fib_info_lock);
+<<<<<<< HEAD
 	if (fi && refcount_dec_and_test(&fi->fib_treeref)) {
+=======
+	if (fi && --fi->fib_treeref == 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (fi->fib_next)
 			fi->fib_next->fib_prev = fi->fib_prev;
 		if (fi->fib_prev)
@@ -384,11 +393,19 @@ link_it:
 	if ((ofi = dn_fib_find_info(fi)) != NULL) {
 		fi->fib_dead = 1;
 		dn_fib_free_info(fi);
+<<<<<<< HEAD
 		refcount_inc(&ofi->fib_treeref);
 		return ofi;
 	}
 
 	refcount_set(&fi->fib_treeref, 1);
+=======
+		ofi->fib_treeref++;
+		return ofi;
+	}
+
+	fi->fib_treeref++;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	refcount_set(&fi->fib_clntref, 1);
 	spin_lock(&dn_fib_info_lock);
 	fi->fib_next = dn_fib_info_list;

@@ -26,7 +26,11 @@
  * it to find the directory entry again if requested.  Naively, that would just
  * mean using the ciphertext filenames.  However, since the ciphertext filenames
  * can contain illegal characters ('\0' and '/'), they must be encoded in some
+<<<<<<< HEAD
  * way.  We use base64url.  But that can cause names to exceed NAME_MAX (255
+=======
+ * way.  We use base64.  But that can cause names to exceed NAME_MAX (255
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * bytes), so we also need to use a strong hash to abbreviate long names.
  *
  * The filesystem may also need another kind of hash, the "dirhash", to quickly
@@ -38,7 +42,11 @@
  * casefolded directories use this type of dirhash.  At least in these cases,
  * each no-key name must include the name's dirhash too.
  *
+<<<<<<< HEAD
  * To meet all these requirements, we base64url-encode the following
+=======
+ * To meet all these requirements, we base64-encode the following
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * variable-length structure.  It contains the dirhash, or 0's if the filesystem
  * didn't provide one; up to 149 bytes of the ciphertext name; and for
  * ciphertexts longer than 149 bytes, also the SHA-256 of the remaining bytes.
@@ -52,19 +60,29 @@ struct fscrypt_nokey_name {
 	u32 dirhash[2];
 	u8 bytes[149];
 	u8 sha256[SHA256_DIGEST_SIZE];
+<<<<<<< HEAD
 }; /* 189 bytes => 252 bytes base64url-encoded, which is <= NAME_MAX (255) */
 
 /*
  * Decoded size of max-size no-key name, i.e. a name that was abbreviated using
+=======
+}; /* 189 bytes => 252 bytes base64-encoded, which is <= NAME_MAX (255) */
+
+/*
+ * Decoded size of max-size nokey name, i.e. a name that was abbreviated using
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * the strong hash and thus includes the 'sha256' field.  This isn't simply
  * sizeof(struct fscrypt_nokey_name), as the padding at the end isn't included.
  */
 #define FSCRYPT_NOKEY_NAME_MAX	offsetofend(struct fscrypt_nokey_name, sha256)
 
+<<<<<<< HEAD
 /* Encoded size of max-size no-key name */
 #define FSCRYPT_NOKEY_NAME_MAX_ENCODED \
 		FSCRYPT_BASE64URL_CHARS(FSCRYPT_NOKEY_NAME_MAX)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline bool fscrypt_is_dot_dotdot(const struct qstr *str)
 {
 	if (str->len == 1 && str->name[0] == '.')
@@ -179,6 +197,7 @@ static int fname_decrypt(const struct inode *inode,
 	return 0;
 }
 
+<<<<<<< HEAD
 static const char base64url_table[65] =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
@@ -255,6 +274,64 @@ static int fscrypt_base64url_decode(const char *src, int srclen, u8 *dst)
 	if (ac & ((1 << bits) - 1))
 		return -1;
 	return bp - dst;
+=======
+static const char lookup_table[65] =
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+,";
+
+#define BASE64_CHARS(nbytes)	DIV_ROUND_UP((nbytes) * 4, 3)
+
+/**
+ * base64_encode() - base64-encode some bytes
+ * @src: the bytes to encode
+ * @len: number of bytes to encode
+ * @dst: (output) the base64-encoded string.  Not NUL-terminated.
+ *
+ * Encodes the input string using characters from the set [A-Za-z0-9+,].
+ * The encoded string is roughly 4/3 times the size of the input string.
+ *
+ * Return: length of the encoded string
+ */
+static int base64_encode(const u8 *src, int len, char *dst)
+{
+	int i, bits = 0, ac = 0;
+	char *cp = dst;
+
+	for (i = 0; i < len; i++) {
+		ac += src[i] << bits;
+		bits += 8;
+		do {
+			*cp++ = lookup_table[ac & 0x3f];
+			ac >>= 6;
+			bits -= 6;
+		} while (bits >= 6);
+	}
+	if (bits)
+		*cp++ = lookup_table[ac & 0x3f];
+	return cp - dst;
+}
+
+static int base64_decode(const char *src, int len, u8 *dst)
+{
+	int i, bits = 0, ac = 0;
+	const char *p;
+	u8 *cp = dst;
+
+	for (i = 0; i < len; i++) {
+		p = strchr(lookup_table, src[i]);
+		if (p == NULL || src[i] == 0)
+			return -2;
+		ac += (p - lookup_table) << bits;
+		bits += 6;
+		if (bits >= 8) {
+			*cp++ = ac & 0xff;
+			ac >>= 8;
+			bits -= 8;
+		}
+	}
+	if (ac)
+		return -1;
+	return cp - dst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 bool fscrypt_fname_encrypted_size(const union fscrypt_policy *policy,
@@ -287,8 +364,15 @@ bool fscrypt_fname_encrypted_size(const union fscrypt_policy *policy,
 int fscrypt_fname_alloc_buffer(u32 max_encrypted_len,
 			       struct fscrypt_str *crypto_str)
 {
+<<<<<<< HEAD
 	u32 max_presented_len = max_t(u32, FSCRYPT_NOKEY_NAME_MAX_ENCODED,
 				      max_encrypted_len);
+=======
+	const u32 max_encoded_len = BASE64_CHARS(FSCRYPT_NOKEY_NAME_MAX);
+	u32 max_presented_len;
+
+	max_presented_len = max(max_encoded_len, max_encrypted_len);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	crypto_str->name = kmalloc(max_presented_len + 1, GFP_NOFS);
 	if (!crypto_str->name)
@@ -364,7 +448,11 @@ int fscrypt_fname_disk_to_usr(const struct inode *inode,
 		     offsetof(struct fscrypt_nokey_name, bytes));
 	BUILD_BUG_ON(offsetofend(struct fscrypt_nokey_name, bytes) !=
 		     offsetof(struct fscrypt_nokey_name, sha256));
+<<<<<<< HEAD
 	BUILD_BUG_ON(FSCRYPT_NOKEY_NAME_MAX_ENCODED > NAME_MAX);
+=======
+	BUILD_BUG_ON(BASE64_CHARS(FSCRYPT_NOKEY_NAME_MAX) > NAME_MAX);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	nokey_name.dirhash[0] = hash;
 	nokey_name.dirhash[1] = minor_hash;
@@ -380,8 +468,12 @@ int fscrypt_fname_disk_to_usr(const struct inode *inode,
 		       nokey_name.sha256);
 		size = FSCRYPT_NOKEY_NAME_MAX;
 	}
+<<<<<<< HEAD
 	oname->len = fscrypt_base64url_encode((const u8 *)&nokey_name, size,
 					      oname->name);
+=======
+	oname->len = base64_encode((const u8 *)&nokey_name, size, oname->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 EXPORT_SYMBOL(fscrypt_fname_disk_to_usr);
@@ -455,15 +547,23 @@ int fscrypt_setup_filename(struct inode *dir, const struct qstr *iname,
 	 * user-supplied name
 	 */
 
+<<<<<<< HEAD
 	if (iname->len > FSCRYPT_NOKEY_NAME_MAX_ENCODED)
+=======
+	if (iname->len > BASE64_CHARS(FSCRYPT_NOKEY_NAME_MAX))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOENT;
 
 	fname->crypto_buf.name = kmalloc(FSCRYPT_NOKEY_NAME_MAX, GFP_KERNEL);
 	if (fname->crypto_buf.name == NULL)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	ret = fscrypt_base64url_decode(iname->name, iname->len,
 				       fname->crypto_buf.name);
+=======
+	ret = base64_decode(iname->name, iname->len, fname->crypto_buf.name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret < (int)offsetof(struct fscrypt_nokey_name, bytes[1]) ||
 	    (ret > offsetof(struct fscrypt_nokey_name, sha256) &&
 	     ret != FSCRYPT_NOKEY_NAME_MAX)) {

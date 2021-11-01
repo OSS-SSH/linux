@@ -21,6 +21,7 @@ static ssize_t name##_show(struct device *dev,				\
 	return sysfs_emit(buf, "%d\n", topology_##name(dev->id));	\
 }
 
+<<<<<<< HEAD
 #define define_siblings_read_func(name, mask)					\
 static ssize_t name##_read(struct file *file, struct kobject *kobj,		\
 			   struct bin_attribute *attr, char *buf,		\
@@ -42,6 +43,27 @@ static ssize_t name##_list_read(struct file *file, struct kobject *kobj,	\
 					off, count);				\
 }
 
+=======
+#define define_siblings_show_map(name, mask)				\
+static ssize_t name##_show(struct device *dev,				\
+			   struct device_attribute *attr, char *buf)	\
+{									\
+	return cpumap_print_to_pagebuf(false, buf, topology_##mask(dev->id));\
+}
+
+#define define_siblings_show_list(name, mask)				\
+static ssize_t name##_list_show(struct device *dev,			\
+				struct device_attribute *attr,		\
+				char *buf)				\
+{									\
+	return cpumap_print_to_pagebuf(true, buf, topology_##mask(dev->id));\
+}
+
+#define define_siblings_show_func(name, mask)	\
+	define_siblings_show_map(name, mask);	\
+	define_siblings_show_list(name, mask)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 define_id_show_func(physical_package_id);
 static DEVICE_ATTR_RO(physical_package_id);
 
@@ -51,6 +73,7 @@ static DEVICE_ATTR_RO(die_id);
 define_id_show_func(core_id);
 static DEVICE_ATTR_RO(core_id);
 
+<<<<<<< HEAD
 define_siblings_read_func(thread_siblings, sibling_cpumask);
 static BIN_ATTR_RO(thread_siblings, 0);
 static BIN_ATTR_RO(thread_siblings_list, 0);
@@ -70,18 +93,46 @@ static BIN_ATTR_RO(die_cpus_list, 0);
 define_siblings_read_func(package_cpus, core_cpumask);
 static BIN_ATTR_RO(package_cpus, 0);
 static BIN_ATTR_RO(package_cpus_list, 0);
+=======
+define_siblings_show_func(thread_siblings, sibling_cpumask);
+static DEVICE_ATTR_RO(thread_siblings);
+static DEVICE_ATTR_RO(thread_siblings_list);
+
+define_siblings_show_func(core_cpus, sibling_cpumask);
+static DEVICE_ATTR_RO(core_cpus);
+static DEVICE_ATTR_RO(core_cpus_list);
+
+define_siblings_show_func(core_siblings, core_cpumask);
+static DEVICE_ATTR_RO(core_siblings);
+static DEVICE_ATTR_RO(core_siblings_list);
+
+define_siblings_show_func(die_cpus, die_cpumask);
+static DEVICE_ATTR_RO(die_cpus);
+static DEVICE_ATTR_RO(die_cpus_list);
+
+define_siblings_show_func(package_cpus, core_cpumask);
+static DEVICE_ATTR_RO(package_cpus);
+static DEVICE_ATTR_RO(package_cpus_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef CONFIG_SCHED_BOOK
 define_id_show_func(book_id);
 static DEVICE_ATTR_RO(book_id);
+<<<<<<< HEAD
 define_siblings_read_func(book_siblings, book_cpumask);
 static BIN_ATTR_RO(book_siblings, 0);
 static BIN_ATTR_RO(book_siblings_list, 0);
+=======
+define_siblings_show_func(book_siblings, book_cpumask);
+static DEVICE_ATTR_RO(book_siblings);
+static DEVICE_ATTR_RO(book_siblings_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifdef CONFIG_SCHED_DRAWER
 define_id_show_func(drawer_id);
 static DEVICE_ATTR_RO(drawer_id);
+<<<<<<< HEAD
 define_siblings_read_func(drawer_siblings, drawer_cpumask);
 static BIN_ATTR_RO(drawer_siblings, 0);
 static BIN_ATTR_RO(drawer_siblings_list, 0);
@@ -109,22 +160,54 @@ static struct bin_attribute *bin_attrs[] = {
 	NULL
 };
 
+=======
+define_siblings_show_func(drawer_siblings, drawer_cpumask);
+static DEVICE_ATTR_RO(drawer_siblings);
+static DEVICE_ATTR_RO(drawer_siblings_list);
+#endif
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct attribute *default_attrs[] = {
 	&dev_attr_physical_package_id.attr,
 	&dev_attr_die_id.attr,
 	&dev_attr_core_id.attr,
+<<<<<<< HEAD
 #ifdef CONFIG_SCHED_BOOK
 	&dev_attr_book_id.attr,
 #endif
 #ifdef CONFIG_SCHED_DRAWER
 	&dev_attr_drawer_id.attr,
+=======
+	&dev_attr_thread_siblings.attr,
+	&dev_attr_thread_siblings_list.attr,
+	&dev_attr_core_cpus.attr,
+	&dev_attr_core_cpus_list.attr,
+	&dev_attr_core_siblings.attr,
+	&dev_attr_core_siblings_list.attr,
+	&dev_attr_die_cpus.attr,
+	&dev_attr_die_cpus_list.attr,
+	&dev_attr_package_cpus.attr,
+	&dev_attr_package_cpus_list.attr,
+#ifdef CONFIG_SCHED_BOOK
+	&dev_attr_book_id.attr,
+	&dev_attr_book_siblings.attr,
+	&dev_attr_book_siblings_list.attr,
+#endif
+#ifdef CONFIG_SCHED_DRAWER
+	&dev_attr_drawer_id.attr,
+	&dev_attr_drawer_siblings.attr,
+	&dev_attr_drawer_siblings_list.attr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	NULL
 };
 
 static const struct attribute_group topology_attr_group = {
 	.attrs = default_attrs,
+<<<<<<< HEAD
 	.bin_attrs = bin_attrs,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.name = "topology"
 };
 

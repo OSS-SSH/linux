@@ -337,7 +337,10 @@ struct wacom_wac {
 	int tool[2];
 	int id[2];
 	__u64 serial[2];
+<<<<<<< HEAD
 	bool probe_complete;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool reporting_data;
 	struct wacom_features features;
 	struct wacom_shared *shared;
@@ -353,7 +356,10 @@ struct wacom_wac {
 	int mode_value;
 	struct hid_data hid_data;
 	bool has_mute_touch_switch;
+<<<<<<< HEAD
 	bool is_soft_touch_switch;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool has_mode_change;
 	bool is_direct_mode;
 	bool is_invalid_bt_frame;

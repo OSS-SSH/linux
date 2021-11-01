@@ -16,6 +16,7 @@ void test_xdp_with_devmap_helpers(void)
 		.ifindex = IFINDEX_LO,
 	};
 	__u32 len = sizeof(info);
+<<<<<<< HEAD
 	int err, dm_fd, map_fd;
 	__u32 idx = 0;
 
@@ -31,15 +32,39 @@ void test_xdp_with_devmap_helpers(void)
 
 	err = bpf_set_link_xdp_fd(IFINDEX_LO, -1, XDP_FLAGS_SKB_MODE);
 	ASSERT_OK(err, "XDP program detach");
+=======
+	__u32 duration = 0, idx = 0;
+	int err, dm_fd, map_fd;
+
+
+	skel = test_xdp_with_devmap_helpers__open_and_load();
+	if (CHECK_FAIL(!skel)) {
+		perror("test_xdp_with_devmap_helpers__open_and_load");
+		return;
+	}
+
+	/* can not attach program with DEVMAPs that allow programs
+	 * as xdp generic
+	 */
+	dm_fd = bpf_program__fd(skel->progs.xdp_redir_prog);
+	err = bpf_set_link_xdp_fd(IFINDEX_LO, dm_fd, XDP_FLAGS_SKB_MODE);
+	CHECK(err == 0, "Generic attach of program with 8-byte devmap",
+	      "should have failed\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dm_fd = bpf_program__fd(skel->progs.xdp_dummy_dm);
 	map_fd = bpf_map__fd(skel->maps.dm_ports);
 	err = bpf_obj_get_info_by_fd(dm_fd, &info, &len);
+<<<<<<< HEAD
 	if (!ASSERT_OK(err, "bpf_obj_get_info_by_fd"))
+=======
+	if (CHECK_FAIL(err))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out_close;
 
 	val.bpf_prog.fd = dm_fd;
 	err = bpf_map_update_elem(map_fd, &idx, &val, 0);
+<<<<<<< HEAD
 	ASSERT_OK(err, "Add program to devmap entry");
 
 	err = bpf_map_lookup_elem(map_fd, &idx, &val);
@@ -50,11 +75,30 @@ void test_xdp_with_devmap_helpers(void)
 	err = bpf_set_link_xdp_fd(IFINDEX_LO, dm_fd, XDP_FLAGS_SKB_MODE);
 	if (!ASSERT_NEQ(err, 0, "Attach of BPF_XDP_DEVMAP program"))
 		bpf_set_link_xdp_fd(IFINDEX_LO, -1, XDP_FLAGS_SKB_MODE);
+=======
+	CHECK(err, "Add program to devmap entry",
+	      "err %d errno %d\n", err, errno);
+
+	err = bpf_map_lookup_elem(map_fd, &idx, &val);
+	CHECK(err, "Read devmap entry", "err %d errno %d\n", err, errno);
+	CHECK(info.id != val.bpf_prog.id, "Expected program id in devmap entry",
+	      "expected %u read %u\n", info.id, val.bpf_prog.id);
+
+	/* can not attach BPF_XDP_DEVMAP program to a device */
+	err = bpf_set_link_xdp_fd(IFINDEX_LO, dm_fd, XDP_FLAGS_SKB_MODE);
+	CHECK(err == 0, "Attach of BPF_XDP_DEVMAP program",
+	      "should have failed\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	val.ifindex = 1;
 	val.bpf_prog.fd = bpf_program__fd(skel->progs.xdp_dummy_prog);
 	err = bpf_map_update_elem(map_fd, &idx, &val, 0);
+<<<<<<< HEAD
 	ASSERT_NEQ(err, 0, "Add non-BPF_XDP_DEVMAP program to devmap entry");
+=======
+	CHECK(err == 0, "Add non-BPF_XDP_DEVMAP program to devmap entry",
+	      "should have failed\n");
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 out_close:
 	test_xdp_with_devmap_helpers__destroy(skel);
@@ -63,10 +107,19 @@ out_close:
 void test_neg_xdp_devmap_helpers(void)
 {
 	struct test_xdp_devmap_helpers *skel;
+<<<<<<< HEAD
 
 	skel = test_xdp_devmap_helpers__open_and_load();
 	if (!ASSERT_EQ(skel, NULL,
 		    "Load of XDP program accessing egress ifindex without attach type")) {
+=======
+	__u32 duration = 0;
+
+	skel = test_xdp_devmap_helpers__open_and_load();
+	if (CHECK(skel,
+		  "Load of XDP program accessing egress ifindex without attach type",
+		  "should have failed\n")) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		test_xdp_devmap_helpers__destroy(skel);
 	}
 }

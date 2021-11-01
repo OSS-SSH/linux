@@ -3,7 +3,11 @@
  * Copyright (C) 2019 Texas Instruments Incorporated - https://www.ti.com/
  */
 
+<<<<<<< HEAD
 #include "dra74x-p.dtsi"
+=======
+#include "dra76x.dtsi"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "am57-pruss.dtsi"
 
 / {
@@ -25,6 +29,13 @@
 	status = "disabled";
 };
 
+<<<<<<< HEAD
+=======
+&usb4_tm {
+	status = "disabled";
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &atl_tm {
 	status = "disabled";
 };

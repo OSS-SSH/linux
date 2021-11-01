@@ -9,6 +9,11 @@
 
 #define NR_syscalls	__NR_syscalls
 
+<<<<<<< HEAD
+=======
+#define __NR__exit __NR_exit
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifndef __ASSEMBLY__
 
 #include <linux/types.h>

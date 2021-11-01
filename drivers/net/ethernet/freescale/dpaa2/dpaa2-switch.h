@@ -21,7 +21,10 @@
 #include <net/pkt_cls.h>
 #include <soc/fsl/dpaa2-io.h>
 
+<<<<<<< HEAD
 #include "dpaa2-mac.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "dpsw.h"
 
 /* Number of IRQs supported */
@@ -114,6 +117,7 @@ struct dpaa2_switch_acl_entry {
 	struct dpsw_acl_key	key;
 };
 
+<<<<<<< HEAD
 struct dpaa2_switch_mirror_entry {
 	struct list_head	list;
 	struct dpsw_reflection_cfg cfg;
@@ -137,6 +141,22 @@ static inline bool
 dpaa2_switch_acl_tbl_is_full(struct dpaa2_switch_filter_block *filter_block)
 {
 	if ((filter_block->num_acl_rules + DPAA2_ETHSW_PORT_DEFAULT_TRAPS) >=
+=======
+struct dpaa2_switch_acl_tbl {
+	struct list_head	entries;
+	struct ethsw_core	*ethsw;
+	u64			ports;
+
+	u16			id;
+	u8			num_rules;
+	bool			in_use;
+};
+
+static inline bool
+dpaa2_switch_acl_tbl_is_full(struct dpaa2_switch_acl_tbl *acl_tbl)
+{
+	if ((acl_tbl->num_rules + DPAA2_ETHSW_PORT_DEFAULT_TRAPS) >=
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    DPAA2_ETHSW_PORT_MAX_ACL_ENTRIES)
 		return true;
 	return false;
@@ -159,8 +179,12 @@ struct ethsw_port_priv {
 	bool			ucast_flood;
 	bool			learn_ena;
 
+<<<<<<< HEAD
 	struct dpaa2_switch_filter_block *filter_block;
 	struct dpaa2_mac	*mac;
+=======
+	struct dpaa2_switch_acl_tbl *acl_tbl;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Switch data */
@@ -186,8 +210,12 @@ struct ethsw_core {
 	int				napi_users;
 
 	struct dpaa2_switch_fdb		*fdbs;
+<<<<<<< HEAD
 	struct dpaa2_switch_filter_block *filter_blocks;
 	u16				mirror_port;
+=======
+	struct dpaa2_switch_acl_tbl	*acls;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static inline int dpaa2_switch_get_index(struct ethsw_core *ethsw,
@@ -227,6 +255,7 @@ static inline bool dpaa2_switch_supports_cpu_traffic(struct ethsw_core *ethsw)
 	return true;
 }
 
+<<<<<<< HEAD
 static inline bool
 dpaa2_switch_port_is_type_phy(struct ethsw_port_priv *port_priv)
 {
@@ -243,6 +272,8 @@ static inline bool dpaa2_switch_port_has_mac(struct ethsw_port_priv *port_priv)
 	return port_priv->mac ? true : false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 bool dpaa2_switch_port_dev_check(const struct net_device *netdev);
 
 int dpaa2_switch_port_vlans_add(struct net_device *netdev,
@@ -257,6 +288,7 @@ typedef int dpaa2_switch_fdb_cb_t(struct ethsw_port_priv *port_priv,
 
 /* TC offload */
 
+<<<<<<< HEAD
 int dpaa2_switch_cls_flower_replace(struct dpaa2_switch_filter_block *block,
 				    struct flow_cls_offload *cls);
 
@@ -277,4 +309,20 @@ int dpaa2_switch_block_offload_mirror(struct dpaa2_switch_filter_block *block,
 
 int dpaa2_switch_block_unoffload_mirror(struct dpaa2_switch_filter_block *block,
 					struct ethsw_port_priv *port_priv);
+=======
+int dpaa2_switch_cls_flower_replace(struct dpaa2_switch_acl_tbl *acl_tbl,
+				    struct flow_cls_offload *cls);
+
+int dpaa2_switch_cls_flower_destroy(struct dpaa2_switch_acl_tbl *acl_tbl,
+				    struct flow_cls_offload *cls);
+
+int dpaa2_switch_cls_matchall_replace(struct dpaa2_switch_acl_tbl *acl_tbl,
+				      struct tc_cls_matchall_offload *cls);
+
+int dpaa2_switch_cls_matchall_destroy(struct dpaa2_switch_acl_tbl *acl_tbl,
+				      struct tc_cls_matchall_offload *cls);
+
+int dpaa2_switch_acl_entry_add(struct dpaa2_switch_acl_tbl *acl_tbl,
+			       struct dpaa2_switch_acl_entry *entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif	/* __ETHSW_H */

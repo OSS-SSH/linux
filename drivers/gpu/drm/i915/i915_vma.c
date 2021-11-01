@@ -34,20 +34,39 @@
 #include "gt/intel_gt_requests.h"
 
 #include "i915_drv.h"
+<<<<<<< HEAD
+=======
+#include "i915_globals.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "i915_sw_fence_work.h"
 #include "i915_trace.h"
 #include "i915_vma.h"
 
+<<<<<<< HEAD
 static struct kmem_cache *slab_vmas;
 
 struct i915_vma *i915_vma_alloc(void)
 {
 	return kmem_cache_zalloc(slab_vmas, GFP_KERNEL);
+=======
+static struct i915_global_vma {
+	struct i915_global base;
+	struct kmem_cache *slab_vmas;
+} global;
+
+struct i915_vma *i915_vma_alloc(void)
+{
+	return kmem_cache_zalloc(global.slab_vmas, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void i915_vma_free(struct i915_vma *vma)
 {
+<<<<<<< HEAD
 	return kmem_cache_free(slab_vmas, vma);
+=======
+	return kmem_cache_free(global.slab_vmas, vma);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #if IS_ENABLED(CONFIG_DRM_I915_ERRLOG_GEM) && IS_ENABLED(CONFIG_DRM_DEBUG_MM)
@@ -296,13 +315,21 @@ struct i915_vma_work {
 	unsigned int flags;
 };
 
+<<<<<<< HEAD
 static void __vma_bind(struct dma_fence_work *work)
+=======
+static int __vma_bind(struct dma_fence_work *work)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct i915_vma_work *vw = container_of(work, typeof(*vw), base);
 	struct i915_vma *vma = vw->vma;
 
 	vma->ops->bind_vma(vw->vm, &vw->stash,
 			   vma, vw->cache_level, vw->flags);
+<<<<<<< HEAD
+=======
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void __vma_release(struct dma_fence_work *work)
@@ -1410,6 +1437,7 @@ void i915_vma_make_purgeable(struct i915_vma *vma)
 #include "selftests/i915_vma.c"
 #endif
 
+<<<<<<< HEAD
 void i915_vma_module_exit(void)
 {
 	kmem_cache_destroy(slab_vmas);
@@ -1421,5 +1449,29 @@ int __init i915_vma_module_init(void)
 	if (!slab_vmas)
 		return -ENOMEM;
 
+=======
+static void i915_global_vma_shrink(void)
+{
+	kmem_cache_shrink(global.slab_vmas);
+}
+
+static void i915_global_vma_exit(void)
+{
+	kmem_cache_destroy(global.slab_vmas);
+}
+
+static struct i915_global_vma global = { {
+	.shrink = i915_global_vma_shrink,
+	.exit = i915_global_vma_exit,
+} };
+
+int __init i915_global_vma_init(void)
+{
+	global.slab_vmas = KMEM_CACHE(i915_vma, SLAB_HWCACHE_ALIGN);
+	if (!global.slab_vmas)
+		return -ENOMEM;
+
+	i915_global_register(&global.base);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }

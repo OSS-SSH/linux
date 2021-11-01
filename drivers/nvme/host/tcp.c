@@ -45,7 +45,10 @@ struct nvme_tcp_request {
 	u32			pdu_len;
 	u32			pdu_sent;
 	u16			ttag;
+<<<<<<< HEAD
 	__le16			status;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct list_head	entry;
 	struct llist_node	lentry;
 	__le32			ddgst;
@@ -124,6 +127,10 @@ struct nvme_tcp_ctrl {
 	struct blk_mq_tag_set	admin_tag_set;
 	struct sockaddr_storage addr;
 	struct sockaddr_storage src_addr;
+<<<<<<< HEAD
+=======
+	struct net_device	*ndev;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct nvme_ctrl	ctrl;
 
 	struct work_struct	err_work;
@@ -274,12 +281,15 @@ static inline void nvme_tcp_send_all(struct nvme_tcp_queue *queue)
 	} while (ret > 0);
 }
 
+<<<<<<< HEAD
 static inline bool nvme_tcp_queue_more(struct nvme_tcp_queue *queue)
 {
 	return !list_empty(&queue->send_list) ||
 		!llist_empty(&queue->req_list) || queue->more_requests;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void nvme_tcp_queue_request(struct nvme_tcp_request *req,
 		bool sync, bool last)
 {
@@ -300,10 +310,16 @@ static inline void nvme_tcp_queue_request(struct nvme_tcp_request *req,
 		nvme_tcp_send_all(queue);
 		queue->more_requests = false;
 		mutex_unlock(&queue->send_mutex);
+<<<<<<< HEAD
 	}
 
 	if (last && nvme_tcp_queue_more(queue))
 		queue_work_on(queue->io_cpu, nvme_tcp_wq, &queue->io_work);
+=======
+	} else if (last) {
+		queue_work_on(queue->io_cpu, nvme_tcp_wq, &queue->io_work);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void nvme_tcp_process_req_list(struct nvme_tcp_queue *queue)
@@ -493,6 +509,7 @@ static void nvme_tcp_error_recovery(struct nvme_ctrl *ctrl)
 static int nvme_tcp_process_nvme_cqe(struct nvme_tcp_queue *queue,
 		struct nvme_completion *cqe)
 {
+<<<<<<< HEAD
 	struct nvme_tcp_request *req;
 	struct request *rq;
 
@@ -501,15 +518,28 @@ static int nvme_tcp_process_nvme_cqe(struct nvme_tcp_queue *queue,
 		dev_err(queue->ctrl->ctrl.device,
 			"got bad cqe.command_id %#x on queue %d\n",
 			cqe->command_id, nvme_tcp_queue_id(queue));
+=======
+	struct request *rq;
+
+	rq = blk_mq_tag_to_rq(nvme_tcp_tagset(queue), cqe->command_id);
+	if (!rq) {
+		dev_err(queue->ctrl->ctrl.device,
+			"queue %d tag 0x%x not found\n",
+			nvme_tcp_queue_id(queue), cqe->command_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		nvme_tcp_error_recovery(&queue->ctrl->ctrl);
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	req = blk_mq_rq_to_pdu(rq);
 	if (req->status == cpu_to_le16(NVME_SC_SUCCESS))
 		req->status = cqe->status;
 
 	if (!nvme_try_complete_req(rq, req->status, cqe->result))
+=======
+	if (!nvme_try_complete_req(rq, cqe->status, cqe->result))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		nvme_complete_rq(rq);
 	queue->nr_cqe++;
 
@@ -521,11 +551,19 @@ static int nvme_tcp_handle_c2h_data(struct nvme_tcp_queue *queue,
 {
 	struct request *rq;
 
+<<<<<<< HEAD
 	rq = nvme_find_rq(nvme_tcp_tagset(queue), pdu->command_id);
 	if (!rq) {
 		dev_err(queue->ctrl->ctrl.device,
 			"got bad c2hdata.command_id %#x on queue %d\n",
 			pdu->command_id, nvme_tcp_queue_id(queue));
+=======
+	rq = blk_mq_tag_to_rq(nvme_tcp_tagset(queue), pdu->command_id);
+	if (!rq) {
+		dev_err(queue->ctrl->ctrl.device,
+			"queue %d tag %#x not found\n",
+			nvme_tcp_queue_id(queue), pdu->command_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOENT;
 	}
 
@@ -619,8 +657,13 @@ static int nvme_tcp_setup_h2c_data_pdu(struct nvme_tcp_request *req,
 	data->hdr.plen =
 		cpu_to_le32(data->hdr.hlen + hdgst + req->pdu_len + ddgst);
 	data->ttag = pdu->ttag;
+<<<<<<< HEAD
 	data->command_id = nvme_cid(rq);
 	data->data_offset = pdu->r2t_offset;
+=======
+	data->command_id = rq->tag;
+	data->data_offset = cpu_to_le32(req->data_sent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	data->data_length = cpu_to_le32(req->pdu_len);
 	return 0;
 }
@@ -632,11 +675,19 @@ static int nvme_tcp_handle_r2t(struct nvme_tcp_queue *queue,
 	struct request *rq;
 	int ret;
 
+<<<<<<< HEAD
 	rq = nvme_find_rq(nvme_tcp_tagset(queue), pdu->command_id);
 	if (!rq) {
 		dev_err(queue->ctrl->ctrl.device,
 			"got bad r2t.command_id %#x on queue %d\n",
 			pdu->command_id, nvme_tcp_queue_id(queue));
+=======
+	rq = blk_mq_tag_to_rq(nvme_tcp_tagset(queue), pdu->command_id);
+	if (!rq) {
+		dev_err(queue->ctrl->ctrl.device,
+			"queue %d tag %#x not found\n",
+			nvme_tcp_queue_id(queue), pdu->command_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOENT;
 	}
 	req = blk_mq_rq_to_pdu(rq);
@@ -715,9 +766,23 @@ static int nvme_tcp_recv_data(struct nvme_tcp_queue *queue, struct sk_buff *skb,
 			      unsigned int *offset, size_t *len)
 {
 	struct nvme_tcp_data_pdu *pdu = (void *)queue->pdu;
+<<<<<<< HEAD
 	struct request *rq =
 		nvme_cid_to_rq(nvme_tcp_tagset(queue), pdu->command_id);
 	struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
+=======
+	struct nvme_tcp_request *req;
+	struct request *rq;
+
+	rq = blk_mq_tag_to_rq(nvme_tcp_tagset(queue), pdu->command_id);
+	if (!rq) {
+		dev_err(queue->ctrl->ctrl.device,
+			"queue %d tag %#x not found\n",
+			nvme_tcp_queue_id(queue), pdu->command_id);
+		return -ENOENT;
+	}
+	req = blk_mq_rq_to_pdu(rq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	while (true) {
 		int recv_len, ret;
@@ -771,8 +836,12 @@ static int nvme_tcp_recv_data(struct nvme_tcp_queue *queue, struct sk_buff *skb,
 			queue->ddgst_remaining = NVME_TCP_DIGEST_LENGTH;
 		} else {
 			if (pdu->hdr.flags & NVME_TCP_F_DATA_SUCCESS) {
+<<<<<<< HEAD
 				nvme_tcp_end_request(rq,
 						le16_to_cpu(req->status));
+=======
+				nvme_tcp_end_request(rq, NVME_SC_SUCCESS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				queue->nr_cqe++;
 			}
 			nvme_tcp_init_recv_ctx(queue);
@@ -802,16 +871,20 @@ static int nvme_tcp_recv_ddgst(struct nvme_tcp_queue *queue,
 		return 0;
 
 	if (queue->recv_ddgst != queue->exp_ddgst) {
+<<<<<<< HEAD
 		struct request *rq = nvme_cid_to_rq(nvme_tcp_tagset(queue),
 					pdu->command_id);
 		struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
 
 		req->status = cpu_to_le16(NVME_SC_DATA_XFER_ERROR);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(queue->ctrl->ctrl.device,
 			"data digest error: recv %#x expected %#x\n",
 			le32_to_cpu(queue->recv_ddgst),
 			le32_to_cpu(queue->exp_ddgst));
+<<<<<<< HEAD
 	}
 
 	if (pdu->hdr.flags & NVME_TCP_F_DATA_SUCCESS) {
@@ -820,6 +893,16 @@ static int nvme_tcp_recv_ddgst(struct nvme_tcp_queue *queue,
 		struct nvme_tcp_request *req = blk_mq_rq_to_pdu(rq);
 
 		nvme_tcp_end_request(rq, le16_to_cpu(req->status));
+=======
+		return -EIO;
+	}
+
+	if (pdu->hdr.flags & NVME_TCP_F_DATA_SUCCESS) {
+		struct request *rq = blk_mq_tag_to_rq(nvme_tcp_tagset(queue),
+						pdu->command_id);
+
+		nvme_tcp_end_request(rq, NVME_SC_SUCCESS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		queue->nr_cqe++;
 	}
 
@@ -913,6 +996,15 @@ done:
 	read_unlock_bh(&sk->sk_callback_lock);
 }
 
+<<<<<<< HEAD
+=======
+static inline bool nvme_tcp_queue_more(struct nvme_tcp_queue *queue)
+{
+	return !list_empty(&queue->send_list) ||
+		!llist_empty(&queue->req_list) || queue->more_requests;
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline void nvme_tcp_done_send_req(struct nvme_tcp_queue *queue)
 {
 	queue->request = NULL;
@@ -953,6 +1045,7 @@ static int nvme_tcp_try_send_data(struct nvme_tcp_request *req)
 			nvme_tcp_ddgst_update(queue->snd_hash, page,
 					offset, ret);
 
+<<<<<<< HEAD
 		/*
 		 * update the request iterator except for the last payload send
 		 * in the request where we don't want to modify it as we may
@@ -962,6 +1055,9 @@ static int nvme_tcp_try_send_data(struct nvme_tcp_request *req)
 			nvme_tcp_advance_req(req, ret);
 
 		/* fully successful last send in current PDU */
+=======
+		/* fully successful last write*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (last && ret == len) {
 			if (queue->data_digest) {
 				nvme_tcp_ddgst_final(queue->snd_hash,
@@ -973,6 +1069,10 @@ static int nvme_tcp_try_send_data(struct nvme_tcp_request *req)
 			}
 			return 1;
 		}
+<<<<<<< HEAD
+=======
+		nvme_tcp_advance_req(req, ret);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	return -EAGAIN;
 }
@@ -1153,7 +1253,12 @@ static void nvme_tcp_io_work(struct work_struct *w)
 				pending = true;
 			else if (unlikely(result < 0))
 				break;
+<<<<<<< HEAD
 		}
+=======
+		} else
+			pending = !llist_empty(&queue->req_list);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		result = nvme_tcp_try_recv(queue);
 		if (result > 0)
@@ -1240,7 +1345,10 @@ static void nvme_tcp_free_queue(struct nvme_ctrl *nctrl, int qid)
 
 	sock_release(queue->sock);
 	kfree(queue->pdu);
+<<<<<<< HEAD
 	mutex_destroy(&queue->send_mutex);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_destroy(&queue->queue_lock);
 }
 
@@ -1546,7 +1654,10 @@ err_sock:
 	sock_release(queue->sock);
 	queue->sock = NULL;
 err_destroy_mutex:
+<<<<<<< HEAD
 	mutex_destroy(&queue->send_mutex);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_destroy(&queue->queue_lock);
 	return ret;
 }
@@ -1783,13 +1894,21 @@ static int nvme_tcp_alloc_io_queues(struct nvme_ctrl *ctrl)
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	if (nr_io_queues == 0) {
+=======
+	ctrl->queue_count = nr_io_queues + 1;
+	if (ctrl->queue_count < 2) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_err(ctrl->device,
 			"unable to set any I/O queues\n");
 		return -ENOMEM;
 	}
 
+<<<<<<< HEAD
 	ctrl->queue_count = nr_io_queues + 1;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev_info(ctrl->device,
 		"creating %d I/O queues.\n", nr_io_queues);
 
@@ -2313,7 +2432,10 @@ static blk_status_t nvme_tcp_setup_cmd_pdu(struct nvme_ns *ns,
 		return ret;
 
 	req->state = NVME_TCP_SEND_CMD_PDU;
+<<<<<<< HEAD
 	req->status = cpu_to_le16(NVME_SC_SUCCESS);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	req->offset = 0;
 	req->data_sent = 0;
 	req->pdu_len = 0;
@@ -2547,7 +2669,12 @@ static struct nvme_ctrl *nvme_tcp_create_ctrl(struct device *dev,
 	}
 
 	if (opts->mask & NVMF_OPT_HOST_IFACE) {
+<<<<<<< HEAD
 		if (!__dev_get_by_name(&init_net, opts->host_iface)) {
+=======
+		ctrl->ndev = dev_get_by_name(&init_net, opts->host_iface);
+		if (!ctrl->ndev) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			pr_err("invalid interface passed: %s\n",
 			       opts->host_iface);
 			ret = -ENODEV;

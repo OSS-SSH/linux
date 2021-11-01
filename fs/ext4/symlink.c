@@ -52,6 +52,7 @@ static const char *ext4_encrypted_get_link(struct dentry *dentry,
 	return paddr;
 }
 
+<<<<<<< HEAD
 static int ext4_encrypted_symlink_getattr(struct user_namespace *mnt_userns,
 					  const struct path *path,
 					  struct kstat *stat, u32 request_mask,
@@ -66,6 +67,12 @@ const struct inode_operations ext4_encrypted_symlink_inode_operations = {
 	.get_link	= ext4_encrypted_get_link,
 	.setattr	= ext4_setattr,
 	.getattr	= ext4_encrypted_symlink_getattr,
+=======
+const struct inode_operations ext4_encrypted_symlink_inode_operations = {
+	.get_link	= ext4_encrypted_get_link,
+	.setattr	= ext4_setattr,
+	.getattr	= ext4_getattr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.listxattr	= ext4_listxattr,
 };
 

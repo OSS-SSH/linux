@@ -22,6 +22,11 @@
 #define XS100_8390_DATA_WRITE32_BASE 0x0C80
 #define XS100_8390_DATA_AREA_SIZE 0x80
 
+<<<<<<< HEAD
+=======
+#define __NS8390_init ax_NS8390_init
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* force unsigned long back to 'void __iomem *' */
 #define ax_convert_addr(_a) ((void __force __iomem *)(_a))
 
@@ -40,7 +45,14 @@
 /* Ensure we have our RCR base value */
 #define AX88796_PLATFORM
 
+<<<<<<< HEAD
 #include "8390.h"
+=======
+static unsigned char version[] =
+		"ax88796.c: Copyright 2005,2007 Simtec Electronics\n";
+
+#include "lib8390.c"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* from ne.c */
 #define NE_CMD		EI_SHIFT(0x00)
@@ -227,7 +239,11 @@ static void xs100_block_output(struct net_device *dev, int count,
 		if (jiffies - dma_start > 2 * HZ / 100) {	/* 20ms */
 			netdev_warn(dev, "timeout waiting for Tx RDC.\n");
 			ei_local->reset_8390(dev);
+<<<<<<< HEAD
 			ax_NS8390_reinit(dev);
+=======
+			ax_NS8390_init(dev, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			break;
 		}
 	}

@@ -125,6 +125,7 @@ Note that kprobe and synthetic event definitions can be written under
 instance node, but those are also visible from other instances. So please
 take care for event name conflict.
 
+<<<<<<< HEAD
 Ftrace Histogram Options
 ------------------------
 
@@ -190,6 +191,8 @@ ftrace.[instance.INSTANCE.]event.GROUP.EVENT.hist.filter = FILTER_EXPR
 Note that this 'hist' option can conflict with the per-event 'actions'
 option if the 'actions' option has a histogram action.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 When to Start
 =============
@@ -224,6 +227,7 @@ below::
         }
         synthetic.initcall_latency {
                 fields = "unsigned long func", "u64 lat"
+<<<<<<< HEAD
                 hist {
                         keys = func.sym, lat
                         values = lat
@@ -241,6 +245,15 @@ below::
                         event = initcall.initcall_start
                         trace = initcall_latency, func, $lat
                 }
+=======
+                actions = "hist:keys=func.sym,lat:vals=lat:sort=lat"
+        }
+        initcall.initcall_start {
+                actions = "hist:keys=func:ts0=common_timestamp.usecs"
+        }
+        initcall.initcall_finish {
+                actions = "hist:keys=func:lat=common_timestamp.usecs-$ts0:onmatch(initcall.initcall_start).initcall_latency(func,$lat)"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         }
   }
 

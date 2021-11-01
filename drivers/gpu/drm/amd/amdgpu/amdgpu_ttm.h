@@ -52,7 +52,11 @@ struct amdgpu_gtt_mgr {
 	struct ttm_resource_manager manager;
 	struct drm_mm mm;
 	spinlock_t lock;
+<<<<<<< HEAD
 	atomic64_t used;
+=======
+	atomic64_t available;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct amdgpu_preempt_mgr {

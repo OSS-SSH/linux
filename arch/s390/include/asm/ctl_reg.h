@@ -111,6 +111,7 @@ union ctlreg2 {
 	};
 };
 
+<<<<<<< HEAD
 union ctlreg5 {
 	unsigned long val;
 	struct {
@@ -128,6 +129,8 @@ union ctlreg15 {
 	};
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define ctl_set_bit(cr, bit) smp_ctl_set_bit(cr, bit)
 #define ctl_clear_bit(cr, bit) smp_ctl_clear_bit(cr, bit)
 

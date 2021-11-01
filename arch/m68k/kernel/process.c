@@ -92,7 +92,11 @@ void show_regs(struct pt_regs * regs)
 
 void flush_thread(void)
 {
+<<<<<<< HEAD
 	current->thread.fc = USER_DATA;
+=======
+	current->thread.fs = __USER_DS;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_FPU
 	if (!FPU_IS_EMU) {
 		unsigned long zero = 0;
@@ -155,7 +159,11 @@ int copy_thread(unsigned long clone_flags, unsigned long usp, unsigned long arg,
 	 * Must save the current SFC/DFC value, NOT the value when
 	 * the parent was last descheduled - RGH  10-08-96
 	 */
+<<<<<<< HEAD
 	p->thread.fc = USER_DATA;
+=======
+	p->thread.fs = get_fs().seg;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (unlikely(p->flags & (PF_KTHREAD | PF_IO_WORKER))) {
 		/* kernel thread */

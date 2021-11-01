@@ -1253,6 +1253,7 @@ struct cfg80211_csa_settings {
 };
 
 /**
+<<<<<<< HEAD
  * struct cfg80211_color_change_settings - color change settings
  *
  * Used for bss color change
@@ -1274,6 +1275,8 @@ struct cfg80211_color_change_settings {
 };
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * struct iface_combination_params - input parameters for interface combinations
  *
  * Used to pass interface combination parameters
@@ -4016,8 +4019,11 @@ struct mgmt_frame_regs {
  *	given TIDs. This callback may sleep.
  *
  * @set_sar_specs: Update the SAR (TX power) settings.
+<<<<<<< HEAD
  *
  * @color_change: Initiate a color change.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct cfg80211_ops {
 	int	(*suspend)(struct wiphy *wiphy, struct cfg80211_wowlan *wow);
@@ -4345,9 +4351,12 @@ struct cfg80211_ops {
 				    const u8 *peer, u8 tids);
 	int	(*set_sar_specs)(struct wiphy *wiphy,
 				 struct cfg80211_sar_specs *sar);
+<<<<<<< HEAD
 	int	(*color_change)(struct wiphy *wiphy,
 				struct net_device *dev,
 				struct cfg80211_color_change_settings *params);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -5376,7 +5385,10 @@ static inline void wiphy_unlock(struct wiphy *wiphy)
  *	netdev and may otherwise be used by driver read-only, will be update
  *	by cfg80211 on change_interface
  * @mgmt_registrations: list of registrations for management frames
+<<<<<<< HEAD
  * @mgmt_registrations_lock: lock for the list
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @mgmt_registrations_need_update: mgmt registrations were updated,
  *	need to propagate the update to the driver
  * @mtx: mutex used to lock data in this struct, may be used by drivers
@@ -5423,7 +5435,10 @@ struct wireless_dev {
 	u32 identifier;
 
 	struct list_head mgmt_registrations;
+<<<<<<< HEAD
 	spinlock_t mgmt_registrations_lock;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 mgmt_registrations_need_update:1;
 
 	struct mutex mtx;
@@ -8244,6 +8259,7 @@ void cfg80211_update_owe_info_event(struct net_device *netdev,
  */
 void cfg80211_bss_flush(struct wiphy *wiphy);
 
+<<<<<<< HEAD
 /**
  * cfg80211_bss_color_notify - notify about bss color event
  * @dev: network device
@@ -8310,4 +8326,6 @@ static inline int cfg80211_color_change_notify(struct net_device *dev)
 					 0, 0);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* __NET_CFG80211_H */

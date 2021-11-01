@@ -628,7 +628,10 @@ static int moxart_probe(struct platform_device *pdev)
 			 host->dma_chan_tx, host->dma_chan_rx);
 		host->have_dma = true;
 
+<<<<<<< HEAD
 		memset(&cfg, 0, sizeof(cfg));
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		cfg.src_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
 		cfg.dst_addr_width = DMA_SLAVE_BUSWIDTH_4_BYTES;
 

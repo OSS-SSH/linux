@@ -75,7 +75,11 @@ struct intel_scu_ipc_dev {
 #define IPC_READ_BUFFER		0x90
 
 /* Timeout in jiffies */
+<<<<<<< HEAD
 #define IPC_TIMEOUT		(10 * HZ)
+=======
+#define IPC_TIMEOUT		(5 * HZ)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct intel_scu_ipc_dev *ipcdev; /* Only one for now */
 static DEFINE_MUTEX(ipclock); /* lock used to prevent multiple call to SCU */
@@ -232,7 +236,11 @@ static inline u32 ipc_data_readl(struct intel_scu_ipc_dev *scu, u32 offset)
 /* Wait till scu status is busy */
 static inline int busy_loop(struct intel_scu_ipc_dev *scu)
 {
+<<<<<<< HEAD
 	unsigned long end = jiffies + IPC_TIMEOUT;
+=======
+	unsigned long end = jiffies + msecs_to_jiffies(IPC_TIMEOUT);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	do {
 		u32 status;
@@ -247,7 +255,11 @@ static inline int busy_loop(struct intel_scu_ipc_dev *scu)
 	return -ETIMEDOUT;
 }
 
+<<<<<<< HEAD
 /* Wait till ipc ioc interrupt is received or timeout in 10 HZ */
+=======
+/* Wait till ipc ioc interrupt is received or timeout in 3 HZ */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int ipc_wait_for_interrupt(struct intel_scu_ipc_dev *scu)
 {
 	int status;
@@ -457,7 +469,11 @@ int intel_scu_ipc_dev_simple_command(struct intel_scu_ipc_dev *scu, int cmd,
 EXPORT_SYMBOL(intel_scu_ipc_dev_simple_command);
 
 /**
+<<<<<<< HEAD
  * intel_scu_ipc_dev_command_with_size() - Command with data
+=======
+ * intel_scu_ipc_command_with_size() - Command with data
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @scu: Optional SCU IPC instance
  * @cmd: Command
  * @sub: Sub type

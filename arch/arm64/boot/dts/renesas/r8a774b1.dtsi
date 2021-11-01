@@ -588,7 +588,11 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		iic_pmic: i2c@e60b0000 {
+=======
+		i2c_dvfs: i2c@e60b0000 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			#address-cells = <1>;
 			#size-cells = <0>;
 			compatible = "renesas,iic-r8a774b1",

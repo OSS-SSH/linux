@@ -16,4 +16,7 @@ extern void __divlu(void);
 extern void __remlu(void);
 extern void __divqu(void);
 extern void __remqu(void);
+<<<<<<< HEAD
 extern unsigned long __udiv_qrnnd(unsigned long *, unsigned long, unsigned long , unsigned long);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

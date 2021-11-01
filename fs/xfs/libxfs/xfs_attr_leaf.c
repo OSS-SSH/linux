@@ -384,7 +384,11 @@ xfs_attr3_leaf_write_verify(
 		return;
 	}
 
+<<<<<<< HEAD
 	if (!xfs_has_crc(mp))
+=======
+	if (!xfs_sb_version_hascrc(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	if (bip)
@@ -406,7 +410,11 @@ xfs_attr3_leaf_read_verify(
 	struct xfs_mount	*mp = bp->b_mount;
 	xfs_failaddr_t		fa;
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp) &&
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	     !xfs_buf_verify_cksum(bp, XFS_ATTR3_LEAF_CRC_OFF))
 		xfs_verifier_error(bp, -EFSBADCRC, __this_address);
 	else {
@@ -489,7 +497,11 @@ xfs_attr_copy_value(
 	}
 
 	if (!args->value) {
+<<<<<<< HEAD
 		args->value = kvmalloc(valuelen, GFP_KERNEL | __GFP_NOLOCKDEP);
+=======
+		args->value = kmem_alloc_large(valuelen, KM_NOLOCKDEP);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!args->value)
 			return -ENOMEM;
 	}
@@ -568,7 +580,11 @@ xfs_attr_shortform_bytesfit(
 	 * literal area, but for the old format we are done if there is no
 	 * space in the fixed attribute fork.
 	 */
+<<<<<<< HEAD
 	if (!xfs_has_attr2(mp))
+=======
+	if (!(mp->m_flags & XFS_MOUNT_ATTR2))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 0;
 
 	dsize = dp->i_df.if_bytes;
@@ -576,7 +592,11 @@ xfs_attr_shortform_bytesfit(
 	switch (dp->i_df.if_format) {
 	case XFS_DINODE_FMT_EXTENTS:
 		/*
+<<<<<<< HEAD
 		 * If there is no attr fork and the data fork is extents,
+=======
+		 * If there is no attr fork and the data fork is extents, 
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		 * determine if creating the default attr fork will result
 		 * in the extents form migrating to btree. If so, the
 		 * minimum offset only needs to be the space required for
@@ -621,6 +641,7 @@ xfs_attr_shortform_bytesfit(
 }
 
 /*
+<<<<<<< HEAD
  * Switch on the ATTR2 superblock bit (implies also FEATURES2) unless:
  * - noattr2 mount option is set,
  * - on-disk version bit says it is already set, or
@@ -642,6 +663,23 @@ xfs_sbversion_add_attr2(
 	xfs_add_attr2(mp);
 	spin_unlock(&mp->m_sb_lock);
 	xfs_log_sb(tp);
+=======
+ * Switch on the ATTR2 superblock bit (implies also FEATURES2)
+ */
+STATIC void
+xfs_sbversion_add_attr2(xfs_mount_t *mp, xfs_trans_t *tp)
+{
+	if ((mp->m_flags & XFS_MOUNT_ATTR2) &&
+	    !(xfs_sb_version_hasattr2(&mp->m_sb))) {
+		spin_lock(&mp->m_sb_lock);
+		if (!xfs_sb_version_hasattr2(&mp->m_sb)) {
+			xfs_sb_version_addattr2(&mp->m_sb);
+			spin_unlock(&mp->m_sb_lock);
+			xfs_log_sb(tp);
+		} else
+			spin_unlock(&mp->m_sb_lock);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -816,7 +854,12 @@ xfs_attr_sf_removename(
 	 * Fix up the start offset of the attribute fork
 	 */
 	totsize -= size;
+<<<<<<< HEAD
 	if (totsize == sizeof(xfs_attr_sf_hdr_t) && xfs_has_attr2(mp) &&
+=======
+	if (totsize == sizeof(xfs_attr_sf_hdr_t) &&
+	    (mp->m_flags & XFS_MOUNT_ATTR2) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    (dp->i_df.if_format != XFS_DINODE_FMT_BTREE) &&
 	    !(args->op_flags & XFS_DA_OP_ADDNAME)) {
 		xfs_attr_fork_remove(dp, args->trans);
@@ -826,7 +869,11 @@ xfs_attr_sf_removename(
 		ASSERT(dp->i_forkoff);
 		ASSERT(totsize > sizeof(xfs_attr_sf_hdr_t) ||
 				(args->op_flags & XFS_DA_OP_ADDNAME) ||
+<<<<<<< HEAD
 				!xfs_has_attr2(mp) ||
+=======
+				!(mp->m_flags & XFS_MOUNT_ATTR2) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dp->i_df.if_format == XFS_DINODE_FMT_BTREE);
 		xfs_trans_log_inode(args->trans, dp,
 					XFS_ILOG_CORE | XFS_ILOG_ADATA);
@@ -1002,7 +1049,11 @@ xfs_attr_shortform_allfit(
 		bytes += xfs_attr_sf_entsize_byname(name_loc->namelen,
 					be16_to_cpu(name_loc->valuelen));
 	}
+<<<<<<< HEAD
 	if (xfs_has_attr2(dp->i_mount) &&
+=======
+	if ((dp->i_mount->m_flags & XFS_MOUNT_ATTR2) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    (dp->i_df.if_format != XFS_DINODE_FMT_BTREE) &&
 	    (bytes == sizeof(struct xfs_attr_sf_hdr)))
 		return -1;
@@ -1127,7 +1178,11 @@ xfs_attr3_leaf_to_shortform(
 		goto out;
 
 	if (forkoff == -1) {
+<<<<<<< HEAD
 		ASSERT(xfs_has_attr2(dp->i_mount));
+=======
+		ASSERT(dp->i_mount->m_flags & XFS_MOUNT_ATTR2);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ASSERT(dp->i_df.if_format != XFS_DINODE_FMT_BTREE);
 		xfs_attr_fork_remove(dp, args->trans);
 		goto out;
@@ -1204,9 +1259,15 @@ xfs_attr3_leaf_to_node(
 	xfs_trans_buf_set_type(args->trans, bp2, XFS_BLFT_ATTR_LEAF_BUF);
 	bp2->b_ops = bp1->b_ops;
 	memcpy(bp2->b_addr, bp1->b_addr, args->geo->blksize);
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
 		struct xfs_da3_blkinfo *hdr3 = bp2->b_addr;
 		hdr3->blkno = cpu_to_be64(xfs_buf_daddr(bp2));
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+		struct xfs_da3_blkinfo *hdr3 = bp2->b_addr;
+		hdr3->blkno = cpu_to_be64(bp2->b_bn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	xfs_trans_log_buf(args->trans, bp2, 0, args->geo->blksize - 1);
 
@@ -1269,12 +1330,20 @@ xfs_attr3_leaf_create(
 	memset(&ichdr, 0, sizeof(ichdr));
 	ichdr.firstused = args->geo->blksize;
 
+<<<<<<< HEAD
 	if (xfs_has_crc(mp)) {
+=======
+	if (xfs_sb_version_hascrc(&mp->m_sb)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct xfs_da3_blkinfo *hdr3 = bp->b_addr;
 
 		ichdr.magic = XFS_ATTR3_LEAF_MAGIC;
 
+<<<<<<< HEAD
 		hdr3->blkno = cpu_to_be64(xfs_buf_daddr(bp));
+=======
+		hdr3->blkno = cpu_to_be64(bp->b_bn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		hdr3->owner = cpu_to_be64(dp->i_ino);
 		uuid_copy(&hdr3->uuid, &mp->m_sb.sb_meta_uuid);
 

@@ -88,13 +88,21 @@ static struct time_namespace *clone_time_ns(struct user_namespace *user_ns,
 		goto fail;
 
 	err = -ENOMEM;
+<<<<<<< HEAD
 	ns = kmalloc(sizeof(*ns), GFP_KERNEL_ACCOUNT);
+=======
+	ns = kmalloc(sizeof(*ns), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!ns)
 		goto fail_dec;
 
 	refcount_set(&ns->ns.count, 1);
 
+<<<<<<< HEAD
 	ns->vvar_page = alloc_page(GFP_KERNEL_ACCOUNT | __GFP_ZERO);
+=======
+	ns->vvar_page = alloc_page(GFP_KERNEL | __GFP_ZERO);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!ns->vvar_page)
 		goto fail_free;
 

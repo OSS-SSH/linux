@@ -32,6 +32,7 @@
 #include "internal.h"
 
 /*
+<<<<<<< HEAD
  * New pipe buffers will be restricted to this size while the user is exceeding
  * their pipe buffer quota. The general pipe use case needs at least two
  * buffers: one for data yet to be read, and one for new data. If this is less
@@ -47,6 +48,8 @@
 #define PIPE_MIN_DEF_BUFFERS 2
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * The max size that a non-root user is allowed to grow the pipe. Can
  * be set by root in /proc/sys/fs/pipe-max-size
  */
@@ -363,9 +366,16 @@ pipe_read(struct kiocb *iocb, struct iov_iter *to)
 		 * _very_ unlikely case that the pipe was full, but we got
 		 * no data.
 		 */
+<<<<<<< HEAD
 		if (unlikely(was_full))
 			wake_up_interruptible_sync_poll(&pipe->wr_wait, EPOLLOUT | EPOLLWRNORM);
 		kill_fasync(&pipe->fasync_writers, SIGIO, POLL_OUT);
+=======
+		if (unlikely(was_full)) {
+			wake_up_interruptible_sync_poll(&pipe->wr_wait, EPOLLOUT | EPOLLWRNORM);
+			kill_fasync(&pipe->fasync_writers, SIGIO, POLL_OUT);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * But because we didn't read anything, at this point we can
@@ -384,11 +394,20 @@ pipe_read(struct kiocb *iocb, struct iov_iter *to)
 		wake_next_reader = false;
 	__pipe_unlock(pipe);
 
+<<<<<<< HEAD
 	if (was_full)
 		wake_up_interruptible_sync_poll(&pipe->wr_wait, EPOLLOUT | EPOLLWRNORM);
 	if (wake_next_reader)
 		wake_up_interruptible_sync_poll(&pipe->rd_wait, EPOLLIN | EPOLLRDNORM);
 	kill_fasync(&pipe->fasync_writers, SIGIO, POLL_OUT);
+=======
+	if (was_full) {
+		wake_up_interruptible_sync_poll(&pipe->wr_wait, EPOLLOUT | EPOLLWRNORM);
+		kill_fasync(&pipe->fasync_writers, SIGIO, POLL_OUT);
+	}
+	if (wake_next_reader)
+		wake_up_interruptible_sync_poll(&pipe->rd_wait, EPOLLIN | EPOLLRDNORM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret > 0)
 		file_accessed(filp);
 	return ret;
@@ -442,11 +461,21 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
 #endif
 
 	/*
+<<<<<<< HEAD
+=======
+	 * Only wake up if the pipe started out empty, since
+	 * otherwise there should be no readers waiting.
+	 *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * If it wasn't empty we try to merge new data into
 	 * the last buffer.
 	 *
 	 * That naturally merges small writes, but it also
+<<<<<<< HEAD
 	 * page-aligns the rest of the writes for large writes
+=======
+	 * page-aligs the rest of the writes for large writes
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * spanning multiple pages.
 	 */
 	head = pipe->head;
@@ -563,9 +592,16 @@ pipe_write(struct kiocb *iocb, struct iov_iter *from)
 		 * become empty while we dropped the lock.
 		 */
 		__pipe_unlock(pipe);
+<<<<<<< HEAD
 		if (was_empty)
 			wake_up_interruptible_sync_poll(&pipe->rd_wait, EPOLLIN | EPOLLRDNORM);
 		kill_fasync(&pipe->fasync_readers, SIGIO, POLL_IN);
+=======
+		if (was_empty) {
+			wake_up_interruptible_sync_poll(&pipe->rd_wait, EPOLLIN | EPOLLRDNORM);
+			kill_fasync(&pipe->fasync_readers, SIGIO, POLL_IN);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		wait_event_interruptible_exclusive(pipe->wr_wait, pipe_writable(pipe));
 		__pipe_lock(pipe);
 		was_empty = pipe_empty(pipe->head, pipe->tail);
@@ -584,6 +620,7 @@ out:
 	 * This is particularly important for small writes, because of
 	 * how (for example) the GNU make jobserver uses small writes to
 	 * wake up pending jobs
+<<<<<<< HEAD
 	 *
 	 * Epoll nonsensically wants a wakeup whether the pipe
 	 * was already empty or not.
@@ -591,6 +628,13 @@ out:
 	if (was_empty || pipe->poll_usage)
 		wake_up_interruptible_sync_poll(&pipe->rd_wait, EPOLLIN | EPOLLRDNORM);
 	kill_fasync(&pipe->fasync_readers, SIGIO, POLL_IN);
+=======
+	 */
+	if (was_empty) {
+		wake_up_interruptible_sync_poll(&pipe->rd_wait, EPOLLIN | EPOLLRDNORM);
+		kill_fasync(&pipe->fasync_readers, SIGIO, POLL_IN);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (wake_next_writer)
 		wake_up_interruptible_sync_poll(&pipe->wr_wait, EPOLLOUT | EPOLLWRNORM);
 	if (ret > 0 && sb_start_write_trylock(file_inode(filp)->i_sb)) {
@@ -650,9 +694,12 @@ pipe_poll(struct file *filp, poll_table *wait)
 	struct pipe_inode_info *pipe = filp->private_data;
 	unsigned int head, tail;
 
+<<<<<<< HEAD
 	/* Epoll has some historical nasty semantics, this enables them */
 	pipe->poll_usage = 1;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Reading pipe state only -- no need for acquiring the semaphore.
 	 *
@@ -795,8 +842,13 @@ struct pipe_inode_info *alloc_pipe_info(void)
 	user_bufs = account_pipe_buffers(user, 0, pipe_bufs);
 
 	if (too_many_pipe_buffers_soft(user_bufs) && pipe_is_unprivileged_user()) {
+<<<<<<< HEAD
 		user_bufs = account_pipe_buffers(user, pipe_bufs, PIPE_MIN_DEF_BUFFERS);
 		pipe_bufs = PIPE_MIN_DEF_BUFFERS;
+=======
+		user_bufs = account_pipe_buffers(user, pipe_bufs, 1);
+		pipe_bufs = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (too_many_pipe_buffers_hard(user_bufs) && pipe_is_unprivileged_user())

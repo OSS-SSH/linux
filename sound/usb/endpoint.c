@@ -240,11 +240,14 @@ static void retire_inbound_urb(struct snd_usb_endpoint *ep,
 	call_retire_callback(ep, urb);
 }
 
+<<<<<<< HEAD
 static inline bool has_tx_length_quirk(struct snd_usb_audio *chip)
 {
 	return chip->quirk_flags & QUIRK_FLAG_TX_LENGTH;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void prepare_silent_urb(struct snd_usb_endpoint *ep,
 			       struct snd_urb_ctx *ctx)
 {
@@ -255,7 +258,11 @@ static void prepare_silent_urb(struct snd_usb_endpoint *ep,
 	int i;
 
 	/* For tx_length_quirk, put packet length at start of packet */
+<<<<<<< HEAD
 	if (has_tx_length_quirk(ep->chip))
+=======
+	if (ep->chip->tx_length_quirk)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		extra = sizeof(packet_length);
 
 	for (i = 0; i < ctx->packets; ++i) {
@@ -808,8 +815,12 @@ static int endpoint_set_interface(struct snd_usb_audio *chip,
 		return err;
 	}
 
+<<<<<<< HEAD
 	if (chip->quirk_flags & QUIRK_FLAG_IFACE_DELAY)
 		msleep(50);
+=======
+	snd_usb_set_interface_quirk(chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -958,7 +969,11 @@ static int data_ep_set_params(struct snd_usb_endpoint *ep)
 	unsigned int max_urbs, i;
 	const struct audioformat *fmt = ep->cur_audiofmt;
 	int frame_bits = ep->cur_frame_bytes * 8;
+<<<<<<< HEAD
 	int tx_length_quirk = (has_tx_length_quirk(chip) &&
+=======
+	int tx_length_quirk = (chip->tx_length_quirk &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			       usb_pipeout(ep->pipe));
 
 	usb_audio_dbg(chip, "Setting params for data EP 0x%x, pipe 0x%x\n",
@@ -1132,10 +1147,13 @@ static int data_ep_set_params(struct snd_usb_endpoint *ep)
 		INIT_LIST_HEAD(&u->ready_list);
 	}
 
+<<<<<<< HEAD
 	/* total buffer bytes of all URBs plus the next queue;
 	 * referred in pcm.c
 	 */
 	ep->nominal_queue_size = maxsize * urb_packs * (ep->nurbs + 1);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 
 out_of_memory:
@@ -1297,9 +1315,12 @@ int snd_usb_endpoint_configure(struct snd_usb_audio *chip,
 	 * to be set up before parameter setups
 	 */
 	iface_first = ep->cur_audiofmt->protocol == UAC_VERSION_1;
+<<<<<<< HEAD
 	/* Workaround for devices that require the interface setup at first like UAC1 */
 	if (chip->quirk_flags & QUIRK_FLAG_SET_IFACE_FIRST)
 		iface_first = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (iface_first) {
 		err = endpoint_set_interface(chip, ep, true);
 		if (err < 0)
@@ -1390,7 +1411,11 @@ int snd_usb_endpoint_start(struct snd_usb_endpoint *ep)
 		goto __error;
 
 	if (snd_usb_endpoint_implicit_feedback_sink(ep) &&
+<<<<<<< HEAD
 	    !(ep->chip->quirk_flags & QUIRK_FLAG_PLAYBACK_FIRST)) {
+=======
+	    !ep->chip->playback_first) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		for (i = 0; i < ep->nurbs; i++) {
 			struct snd_urb_ctx *ctx = ep->urb + i;
 			list_add_tail(&ctx->ready_list, &ep->ready_playback_urbs);

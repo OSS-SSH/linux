@@ -115,6 +115,7 @@ void timerfd_clock_was_set(void)
 	rcu_read_unlock();
 }
 
+<<<<<<< HEAD
 static void timerfd_resume_work(struct work_struct *work)
 {
 	timerfd_clock_was_set();
@@ -131,6 +132,8 @@ void timerfd_resume(void)
 	schedule_work(&timerfd_work);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void __timerfd_remove_cancel(struct timerfd_ctx *ctx)
 {
 	if (ctx->might_cancel) {

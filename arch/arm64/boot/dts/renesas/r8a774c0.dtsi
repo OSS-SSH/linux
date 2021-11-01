@@ -574,6 +574,7 @@
 			status = "disabled";
 		};
 
+<<<<<<< HEAD
 		iic_pmic: i2c@e60b0000 {
 			#address-cells = <1>;
 			#size-cells = <0>;
@@ -581,6 +582,13 @@
 				     "renesas,rcar-gen3-iic",
 				     "renesas,rmobile-iic";
 			reg = <0 0xe60b0000 0 0x425>;
+=======
+		i2c_dvfs: i2c@e60b0000 {
+			#address-cells = <1>;
+			#size-cells = <0>;
+			compatible = "renesas,iic-r8a774c0";
+			reg = <0 0xe60b0000 0 0x15>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			interrupts = <GIC_SPI 173 IRQ_TYPE_LEVEL_HIGH>;
 			clocks = <&cpg CPG_MOD 926>;
 			power-domains = <&sysc R8A774C0_PD_ALWAYS_ON>;

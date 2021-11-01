@@ -7,6 +7,10 @@
 
 #include <linux/debugfs.h>
 #include <linux/delay.h>
+<<<<<<< HEAD
+=======
+#include <linux/dma-buf.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/gpio/consumer.h>
 #include <linux/module.h>
 #include <linux/regulator/consumer.h>
@@ -201,17 +205,34 @@ int mipi_dbi_buf_copy(void *dst, struct drm_framebuffer *fb,
 {
 	struct drm_gem_object *gem = drm_gem_fb_get_obj(fb, 0);
 	struct drm_gem_cma_object *cma_obj = to_drm_gem_cma_obj(gem);
+<<<<<<< HEAD
 	void *src = cma_obj->vaddr;
 	int ret;
 
 	ret = drm_gem_fb_begin_cpu_access(fb, DMA_FROM_DEVICE);
 	if (ret)
 		return ret;
+=======
+	struct dma_buf_attachment *import_attach = gem->import_attach;
+	void *src = cma_obj->vaddr;
+	int ret = 0;
+
+	if (import_attach) {
+		ret = dma_buf_begin_cpu_access(import_attach->dmabuf,
+					       DMA_FROM_DEVICE);
+		if (ret)
+			return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (fb->format->format) {
 	case DRM_FORMAT_RGB565:
 		if (swap)
+<<<<<<< HEAD
 			drm_fb_swab(dst, src, fb, clip, !gem->import_attach);
+=======
+			drm_fb_swab(dst, src, fb, clip, !import_attach);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		else
 			drm_fb_memcpy(dst, src, fb, clip);
 		break;
@@ -224,8 +245,14 @@ int mipi_dbi_buf_copy(void *dst, struct drm_framebuffer *fb,
 		return -EINVAL;
 	}
 
+<<<<<<< HEAD
 	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
 
+=======
+	if (import_attach)
+		ret = dma_buf_end_cpu_access(import_attach->dmabuf,
+					     DMA_FROM_DEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 EXPORT_SYMBOL(mipi_dbi_buf_copy);
@@ -922,6 +949,7 @@ static int mipi_dbi_spi1_transfer(struct mipi_dbi *dbi, int dc,
 	return 0;
 }
 
+<<<<<<< HEAD
 static int mipi_dbi_typec1_command_read(struct mipi_dbi *dbi, u8 *cmd,
 					u8 *data, size_t len)
 {
@@ -975,6 +1003,8 @@ static int mipi_dbi_typec1_command_read(struct mipi_dbi *dbi, u8 *cmd,
 	return ret;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int mipi_dbi_typec1_command(struct mipi_dbi *dbi, u8 *cmd,
 				   u8 *parameters, size_t num)
 {
@@ -982,7 +1012,11 @@ static int mipi_dbi_typec1_command(struct mipi_dbi *dbi, u8 *cmd,
 	int ret;
 
 	if (mipi_dbi_command_is_read(dbi, *cmd))
+<<<<<<< HEAD
 		return mipi_dbi_typec1_command_read(dbi, cmd, parameters, num);
+=======
+		return -EOPNOTSUPP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	MIPI_DBI_DEBUG_COMMAND(*cmd, parameters, num);
 

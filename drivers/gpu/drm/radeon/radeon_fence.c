@@ -50,7 +50,11 @@
  * for GPU/CPU synchronization.  When the fence is written,
  * it is expected that all buffers associated with that fence
  * are no longer in use by the associated ring on the GPU and
+<<<<<<< HEAD
  * that the relevant GPU caches have been flushed.  Whether
+=======
+ * that the the relevant GPU caches have been flushed.  Whether
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * we use a scratch register or memory location depends on the asic
  * and whether writeback is enabled.
  */
@@ -288,7 +292,11 @@ static void radeon_fence_check_lockup(struct work_struct *work)
 		return;
 	}
 
+<<<<<<< HEAD
 	if (fence_drv->delayed_irq && rdev->irq.installed) {
+=======
+	if (fence_drv->delayed_irq && rdev->ddev->irq_enabled) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		unsigned long irqflags;
 
 		fence_drv->delayed_irq = false;

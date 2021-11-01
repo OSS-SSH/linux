@@ -20,7 +20,11 @@
 #include <math_support.h>
 #include <type_support.h>
 #include <platform_support.h>
+<<<<<<< HEAD
 #include <linux/stdarg.h>
+=======
+#include <stdarg.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #if !defined(ISP2401)
 #include "input_formatter.h"

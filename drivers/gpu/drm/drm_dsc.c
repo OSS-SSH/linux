@@ -98,7 +98,11 @@ void drm_dsc_pps_payload_pack(struct drm_dsc_picture_parameter_set *pps_payload,
 {
 	int i;
 
+<<<<<<< HEAD
 	/* Protect against someone accidentally changing struct size */
+=======
+	/* Protect against someone accidently changing struct size */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BUILD_BUG_ON(sizeof(*pps_payload) !=
 		     DP_SDP_PPS_HEADER_PAYLOAD_BYTES_MINUS_1 + 1);
 

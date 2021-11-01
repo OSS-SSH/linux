@@ -360,6 +360,7 @@ bool bpf_iter_prog_supported(struct bpf_prog *prog)
 	return supported;
 }
 
+<<<<<<< HEAD
 const struct bpf_func_proto *
 bpf_iter_get_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
 {
@@ -382,6 +383,8 @@ bpf_iter_get_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
 	return fn;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void bpf_iter_link_release(struct bpf_link *link)
 {
 	struct bpf_iter_link *iter_link =
@@ -686,7 +689,11 @@ int bpf_iter_run_prog(struct bpf_prog *prog, void *ctx)
 
 	rcu_read_lock();
 	migrate_disable();
+<<<<<<< HEAD
 	ret = bpf_prog_run(prog, ctx);
+=======
+	ret = BPF_PROG_RUN(prog, ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	migrate_enable();
 	rcu_read_unlock();
 

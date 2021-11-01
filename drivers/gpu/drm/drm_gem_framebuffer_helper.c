@@ -15,8 +15,11 @@
 #include <drm/drm_gem_framebuffer_helper.h>
 #include <drm/drm_modeset_helper.h>
 
+<<<<<<< HEAD
 #include "drm_internal.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define AFBC_HEADER_SIZE		16
 #define AFBC_TH_LAYOUT_ALIGNMENT	8
 #define AFBC_HDR_ALIGN			64
@@ -50,7 +53,11 @@
 struct drm_gem_object *drm_gem_fb_get_obj(struct drm_framebuffer *fb,
 					  unsigned int plane)
 {
+<<<<<<< HEAD
 	if (plane >= ARRAY_SIZE(fb->obj))
+=======
+	if (plane >= 4)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return NULL;
 
 	return fb->obj[plane];
@@ -64,8 +71,12 @@ drm_gem_fb_init(struct drm_device *dev,
 		 struct drm_gem_object **obj, unsigned int num_planes,
 		 const struct drm_framebuffer_funcs *funcs)
 {
+<<<<<<< HEAD
 	unsigned int i;
 	int ret;
+=======
+	int ret, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	drm_helper_mode_fill_fb_struct(dev, fb, mode_cmd);
 
@@ -89,9 +100,15 @@ drm_gem_fb_init(struct drm_device *dev,
  */
 void drm_gem_fb_destroy(struct drm_framebuffer *fb)
 {
+<<<<<<< HEAD
 	size_t i;
 
 	for (i = 0; i < ARRAY_SIZE(fb->obj); i++)
+=======
+	int i;
+
+	for (i = 0; i < 4; i++)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		drm_gem_object_put(fb->obj[i]);
 
 	drm_framebuffer_cleanup(fb);
@@ -148,9 +165,14 @@ int drm_gem_fb_init_with_funcs(struct drm_device *dev,
 			       const struct drm_framebuffer_funcs *funcs)
 {
 	const struct drm_format_info *info;
+<<<<<<< HEAD
 	struct drm_gem_object *objs[DRM_FORMAT_MAX_PLANES];
 	unsigned int i;
 	int ret;
+=======
+	struct drm_gem_object *objs[4];
+	int ret, i;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	info = drm_get_format_info(dev, mode_cmd);
 	if (!info) {
@@ -191,10 +213,16 @@ int drm_gem_fb_init_with_funcs(struct drm_device *dev,
 	return 0;
 
 err_gem_object_put:
+<<<<<<< HEAD
 	while (i > 0) {
 		--i;
 		drm_gem_object_put(objs[i]);
 	}
+=======
+	for (i--; i >= 0; i--)
+		drm_gem_object_put(objs[i]);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 EXPORT_SYMBOL_GPL(drm_gem_fb_init_with_funcs);
@@ -311,6 +339,7 @@ drm_gem_fb_create_with_dirty(struct drm_device *dev, struct drm_file *file,
 }
 EXPORT_SYMBOL_GPL(drm_gem_fb_create_with_dirty);
 
+<<<<<<< HEAD
 /**
  * drm_gem_fb_vmap - maps all framebuffer BOs into kernel address space
  * @fb: the framebuffer
@@ -489,6 +518,8 @@ void drm_gem_fb_end_cpu_access(struct drm_framebuffer *fb, enum dma_data_directi
 }
 EXPORT_SYMBOL(drm_gem_fb_end_cpu_access);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static __u32 drm_gem_afbc_get_bpp(struct drm_device *dev,
 				  const struct drm_mode_fb_cmd2 *mode_cmd)
 {

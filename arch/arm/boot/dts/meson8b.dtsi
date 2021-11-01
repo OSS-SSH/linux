@@ -279,6 +279,7 @@
 	};
 }; /* end of / */
 
+<<<<<<< HEAD
 &aiu {
 	compatible = "amlogic,aiu-meson8b", "amlogic,aiu";
 	clocks = <&clkc CLKID_AIU_GLUE>,
@@ -302,6 +303,8 @@
 	resets = <&reset RESET_AIU>;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &aobus {
 	pmu: pmu@e0 {
 		compatible = "amlogic,meson8b-pmu", "syscon";
@@ -325,6 +328,7 @@
 			gpio-ranges = <&pinctrl_aobus 0 0 16>;
 		};
 
+<<<<<<< HEAD
 		i2s_am_clk_pins: i2s-am-clk-out {
 			mux {
 				groups = "i2s_am_clk_out";
@@ -365,6 +369,8 @@
 			};
 		};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		uart_ao_a_pins: uart_ao_a {
 			mux {
 				groups = "uart_tx_ao_a", "uart_rx_ao_a";

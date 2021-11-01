@@ -369,8 +369,14 @@ enum rsc_handling_status {
  * @da_to_va:	optional platform hook to perform address translations
  * @parse_fw:	parse firmware to extract information (e.g. resource table)
  * @handle_rsc:	optional platform hook to handle vendor resources. Should return
+<<<<<<< HEAD
  *		RSC_HANDLED if resource was handled, RSC_IGNORED if not handled
  *		and a negative value on error
+=======
+ * RSC_HANDLED if resource was handled, RSC_IGNORED if not handled and a
+ * negative value on error
+ * @load_rsc_table:	load resource table from firmware image
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @find_loaded_rsc_table: find the loaded resource table from firmware image
  * @get_loaded_rsc_table: get resource table installed in memory
  *			  by external entity

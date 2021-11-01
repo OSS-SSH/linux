@@ -417,8 +417,13 @@ QCOM_OPEN(chip_id, qcom_show_chip_id);
 static int show_image_##type(struct seq_file *seq, void *p)		  \
 {								  \
 	struct smem_image_version *image_version = seq->private;  \
+<<<<<<< HEAD
 	if (image_version->type[0] != '\0')			  \
 		seq_printf(seq, "%s\n", image_version->type);	  \
+=======
+	seq_puts(seq, image_version->type);			  \
+	seq_putc(seq, '\n');					  \
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;						  \
 }								  \
 static int open_image_##type(struct inode *inode, struct file *file)	  \
@@ -628,7 +633,11 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
 	/* Feed the soc specific unique data into entropy pool */
 	add_device_randomness(info, item_size);
 
+<<<<<<< HEAD
 	platform_set_drvdata(pdev, qs);
+=======
+	platform_set_drvdata(pdev, qs->soc_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

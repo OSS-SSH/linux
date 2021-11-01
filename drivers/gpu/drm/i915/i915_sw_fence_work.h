@@ -17,7 +17,11 @@ struct dma_fence_work;
 
 struct dma_fence_work_ops {
 	const char *name;
+<<<<<<< HEAD
 	void (*work)(struct dma_fence_work *f);
+=======
+	int (*work)(struct dma_fence_work *f);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*release)(struct dma_fence_work *f);
 };
 

@@ -1005,7 +1005,10 @@ static int do_help(int argc, char **argv)
 		"       %1$s %2$s help\n"
 		"\n"
 		"       COMPONENT := { kernel | dev NAME }\n"
+<<<<<<< HEAD
 		"       " HELP_SPEC_OPTIONS " }\n"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		"",
 		bin_name, argv[-2]);
 

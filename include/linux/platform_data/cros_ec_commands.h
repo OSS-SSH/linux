@@ -4228,7 +4228,10 @@ enum ec_device_event {
 	EC_DEVICE_EVENT_TRACKPAD,
 	EC_DEVICE_EVENT_DSP,
 	EC_DEVICE_EVENT_WIFI,
+<<<<<<< HEAD
 	EC_DEVICE_EVENT_WLC,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 enum ec_device_event_param {
@@ -5461,6 +5464,7 @@ struct ec_response_rollback_info {
 /* Issue AP reset */
 #define EC_CMD_AP_RESET 0x0125
 
+<<<<<<< HEAD
 /**
  * Get the number of peripheral charge ports
  */
@@ -5527,6 +5531,8 @@ enum pchg_state {
 	[PCHG_STATE_CONNECTED] = "CONNECTED", \
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*****************************************************************************/
 /* Voltage regulator controls */
 

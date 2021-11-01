@@ -42,7 +42,10 @@ struct backing_dev_info;
 struct bio_list;
 struct blk_plug;
 struct bpf_local_storage;
+<<<<<<< HEAD
 struct bpf_run_ctx;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct capture_control;
 struct cfs_rq;
 struct fs_struct;
@@ -96,9 +99,13 @@ struct task_group;
 #define TASK_WAKING			0x0200
 #define TASK_NOLOAD			0x0400
 #define TASK_NEW			0x0800
+<<<<<<< HEAD
 /* RT specific auxilliary flag to mark RT lock waiters */
 #define TASK_RTLOCK_WAIT		0x1000
 #define TASK_STATE_MAX			0x2000
+=======
+#define TASK_STATE_MAX			0x1000
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Convenience macros for the sake of set_current_state: */
 #define TASK_KILLABLE			(TASK_WAKEKILL | TASK_UNINTERRUPTIBLE)
@@ -124,6 +131,11 @@ struct task_group;
 
 #define task_is_stopped_or_traced(task)	((READ_ONCE(task->__state) & (__TASK_STOPPED | __TASK_TRACED)) != 0)
 
+<<<<<<< HEAD
+=======
+#ifdef CONFIG_DEBUG_ATOMIC_SLEEP
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Special states are those that do not use the normal wait-loop pattern. See
  * the comment with set_special_state().
@@ -131,6 +143,7 @@ struct task_group;
 #define is_special_task_state(state)				\
 	((state) & (__TASK_STOPPED | __TASK_TRACED | TASK_PARKED | TASK_DEAD))
 
+<<<<<<< HEAD
 #ifdef CONFIG_DEBUG_ATOMIC_SLEEP
 # define debug_normal_state_change(state_value)				\
 	do {								\
@@ -162,6 +175,32 @@ struct task_group;
 # define debug_rtlock_wait_restore_state()	do { } while (0)
 #endif
 
+=======
+#define __set_current_state(state_value)			\
+	do {							\
+		WARN_ON_ONCE(is_special_task_state(state_value));\
+		current->task_state_change = _THIS_IP_;		\
+		WRITE_ONCE(current->__state, (state_value));	\
+	} while (0)
+
+#define set_current_state(state_value)				\
+	do {							\
+		WARN_ON_ONCE(is_special_task_state(state_value));\
+		current->task_state_change = _THIS_IP_;		\
+		smp_store_mb(current->__state, (state_value));	\
+	} while (0)
+
+#define set_special_state(state_value)					\
+	do {								\
+		unsigned long flags; /* may shadow */			\
+		WARN_ON_ONCE(!is_special_task_state(state_value));	\
+		raw_spin_lock_irqsave(&current->pi_lock, flags);	\
+		current->task_state_change = _THIS_IP_;			\
+		WRITE_ONCE(current->__state, (state_value));		\
+		raw_spin_unlock_irqrestore(&current->pi_lock, flags);	\
+	} while (0)
+#else
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * set_current_state() includes a barrier so that the write of current->state
  * is correctly serialised wrt the caller's subsequent test of whether to
@@ -200,6 +239,7 @@ struct task_group;
  * Also see the comments of try_to_wake_up().
  */
 #define __set_current_state(state_value)				\
+<<<<<<< HEAD
 	do {								\
 		debug_normal_state_change((state_value));		\
 		WRITE_ONCE(current->__state, (state_value));		\
@@ -210,23 +250,39 @@ struct task_group;
 		debug_normal_state_change((state_value));		\
 		smp_store_mb(current->__state, (state_value));		\
 	} while (0)
+=======
+	WRITE_ONCE(current->__state, (state_value))
+
+#define set_current_state(state_value)					\
+	smp_store_mb(current->__state, (state_value))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * set_special_state() should be used for those states when the blocking task
  * can not use the regular condition based wait-loop. In that case we must
+<<<<<<< HEAD
  * serialize against wakeups such that any possible in-flight TASK_RUNNING
  * stores will not collide with our state change.
+=======
+ * serialize against wakeups such that any possible in-flight TASK_RUNNING stores
+ * will not collide with our state change.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #define set_special_state(state_value)					\
 	do {								\
 		unsigned long flags; /* may shadow */			\
+<<<<<<< HEAD
 									\
 		raw_spin_lock_irqsave(&current->pi_lock, flags);	\
 		debug_special_state_change((state_value));		\
+=======
+		raw_spin_lock_irqsave(&current->pi_lock, flags);	\
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		WRITE_ONCE(current->__state, (state_value));		\
 		raw_spin_unlock_irqrestore(&current->pi_lock, flags);	\
 	} while (0)
 
+<<<<<<< HEAD
 /*
  * PREEMPT_RT specific variants for "sleeping" spin/rwlocks
  *
@@ -271,6 +327,9 @@ struct task_group;
 		current->saved_state = TASK_RUNNING;			\
 		raw_spin_unlock(&current->pi_lock);			\
 	} while (0);
+=======
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define get_current_state()	READ_ONCE(current->__state)
 
@@ -289,9 +348,12 @@ extern long schedule_timeout_idle(long timeout);
 asmlinkage void schedule(void);
 extern void schedule_preempt_disabled(void);
 asmlinkage void preempt_schedule_irq(void);
+<<<<<<< HEAD
 #ifdef CONFIG_PREEMPT_RT
  extern void schedule_rtlock(void);
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 extern int __must_check io_schedule_prepare(void);
 extern void io_schedule_finish(int token);
@@ -730,11 +792,14 @@ struct task_struct {
 #endif
 	unsigned int			__state;
 
+<<<<<<< HEAD
 #ifdef CONFIG_PREEMPT_RT
 	/* saved state for "spinlock sleepers" */
 	unsigned int			saved_state;
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * This begins the randomizable portion of task_struct. Only
 	 * scheduling-critical items should be added above here.
@@ -815,7 +880,10 @@ struct task_struct {
 	unsigned int			policy;
 	int				nr_cpus_allowed;
 	const cpumask_t			*cpus_ptr;
+<<<<<<< HEAD
 	cpumask_t			*user_cpus_ptr;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cpumask_t			cpus_mask;
 	void				*migration_pending;
 #ifdef CONFIG_SMP
@@ -931,10 +999,13 @@ struct task_struct {
 	/* Used by page_owner=on to detect recursion in page tracking. */
 	unsigned			in_page_owner:1;
 #endif
+<<<<<<< HEAD
 #ifdef CONFIG_EVENTFD
 	/* Recursion prevention for eventfd_signal() */
 	unsigned			in_eventfd_signal:1;
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	unsigned long			atomic_flags; /* Flags requiring atomic access. */
 
@@ -1429,9 +1500,12 @@ struct task_struct {
 	struct kmap_ctrl		kmap_ctrl;
 #ifdef CONFIG_DEBUG_ATOMIC_SLEEP
 	unsigned long			task_state_change;
+<<<<<<< HEAD
 # ifdef CONFIG_PREEMPT_RT
 	unsigned long			saved_state_change;
 # endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 	int				pagefault_disabled;
 #ifdef CONFIG_MMU
@@ -1454,8 +1528,11 @@ struct task_struct {
 #ifdef CONFIG_BPF_SYSCALL
 	/* Used by BPF task local storage */
 	struct bpf_local_storage __rcu	*bpf_storage;
+<<<<<<< HEAD
 	/* Used for BPF run context */
 	struct bpf_run_ctx		*bpf_ctx;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifdef CONFIG_GCC_PLUGIN_STACKLEAK
@@ -1471,13 +1548,17 @@ struct task_struct {
 					mce_whole_page : 1,
 					__mce_reserved : 62;
 	struct callback_head		mce_kill_me;
+<<<<<<< HEAD
 	int				mce_count;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 #ifdef CONFIG_KRETPROBES
 	struct llist_head               kretprobe_instances;
 #endif
 
+<<<<<<< HEAD
 #ifdef CONFIG_ARCH_HAS_PARANOID_L1D_FLUSH
 	/*
 	 * If L1D flush is supported on mm context switch
@@ -1488,6 +1569,8 @@ struct task_struct {
 	struct callback_head		l1d_flush_kill;
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * New fields for task_struct should be added above here, so that
 	 * they are included in the randomized portion of task_struct.
@@ -1720,7 +1803,11 @@ extern struct pid *cad_pid;
 #define tsk_used_math(p)			((p)->flags & PF_USED_MATH)
 #define used_math()				tsk_used_math(current)
 
+<<<<<<< HEAD
 static __always_inline bool is_percpu_thread(void)
+=======
+static inline bool is_percpu_thread(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 #ifdef CONFIG_SMP
 	return (current->flags & PF_NO_SETAFFINITY) &&
@@ -1793,11 +1880,14 @@ extern int task_can_attach(struct task_struct *p, const struct cpumask *cs_cpus_
 #ifdef CONFIG_SMP
 extern void do_set_cpus_allowed(struct task_struct *p, const struct cpumask *new_mask);
 extern int set_cpus_allowed_ptr(struct task_struct *p, const struct cpumask *new_mask);
+<<<<<<< HEAD
 extern int dup_user_cpus_ptr(struct task_struct *dst, struct task_struct *src, int node);
 extern void release_user_cpus_ptr(struct task_struct *p);
 extern int dl_task_check_affinity(struct task_struct *p, const struct cpumask *mask);
 extern void force_compatible_cpus_allowed_ptr(struct task_struct *p);
 extern void relax_compatible_cpus_allowed_ptr(struct task_struct *p);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #else
 static inline void do_set_cpus_allowed(struct task_struct *p, const struct cpumask *new_mask)
 {
@@ -1808,6 +1898,7 @@ static inline int set_cpus_allowed_ptr(struct task_struct *p, const struct cpuma
 		return -EINVAL;
 	return 0;
 }
+<<<<<<< HEAD
 static inline int dup_user_cpus_ptr(struct task_struct *dst, struct task_struct *src, int node)
 {
 	if (src->user_cpus_ptr)
@@ -1823,6 +1914,8 @@ static inline int dl_task_check_affinity(struct task_struct *p, const struct cpu
 {
 	return 0;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif
 
 extern int yield_to(struct task_struct *p, bool preempt);

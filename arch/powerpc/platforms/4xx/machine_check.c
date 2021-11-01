@@ -10,7 +10,11 @@
 
 int machine_check_4xx(struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	unsigned long reason = regs->esr;
+=======
+	unsigned long reason = regs->dsisr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (reason & ESR_IMCP) {
 		printk("Instruction");

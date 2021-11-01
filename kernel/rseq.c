@@ -282,6 +282,7 @@ void __rseq_handle_notify_resume(struct ksignal *ksig, struct pt_regs *regs)
 
 	if (unlikely(t->flags & PF_EXITING))
 		return;
+<<<<<<< HEAD
 
 	/*
 	 * regs is NULL if and only if the caller is in a syscall path.  Skip
@@ -293,6 +294,11 @@ void __rseq_handle_notify_resume(struct ksignal *ksig, struct pt_regs *regs)
 		if (unlikely(ret < 0))
 			goto error;
 	}
+=======
+	ret = rseq_ip_fixup(regs);
+	if (unlikely(ret < 0))
+		goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (unlikely(rseq_update_cpu_id(t)))
 		goto error;
 	return;

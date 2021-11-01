@@ -49,11 +49,14 @@ static int zpci_bus_prepare_device(struct zpci_dev *zdev)
 		rc = zpci_enable_device(zdev);
 		if (rc)
 			return rc;
+<<<<<<< HEAD
 		rc = zpci_dma_init_device(zdev);
 		if (rc) {
 			zpci_disable_device(zdev);
 			return rc;
 		}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (!zdev->has_resources) {
@@ -348,11 +351,18 @@ static int zpci_bus_add_device(struct zpci_bus *zbus, struct zpci_dev *zdev)
 {
 	int rc = -EINVAL;
 
+<<<<<<< HEAD
+=======
+	zdev->zbus = zbus;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (zbus->function[zdev->devfn]) {
 		pr_err("devfn %04x is already assigned\n", zdev->devfn);
 		return rc;
 	}
+<<<<<<< HEAD
 	zdev->zbus = zbus;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	zbus->function[zdev->devfn] = zdev;
 	zpci_nb_devices++;
 
@@ -372,7 +382,10 @@ static int zpci_bus_add_device(struct zpci_bus *zbus, struct zpci_dev *zdev)
 
 error:
 	zbus->function[zdev->devfn] = NULL;
+<<<<<<< HEAD
 	zdev->zbus = NULL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	zpci_nb_devices--;
 	return rc;
 }

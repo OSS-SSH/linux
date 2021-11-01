@@ -168,9 +168,12 @@ enum yfs_lock_type {
 	yfs_LockMandatoryWrite	= 0x101,
 	yfs_LockMandatoryExtend	= 0x102,
 };
+<<<<<<< HEAD
 
 /* RXYFS Viced Capability Flags */
 #define YFS_VICED_CAPABILITY_ERRORTRANS		0x0001 /* Deprecated v0.195 */
 #define YFS_VICED_CAPABILITY_64BITFILES		0x0002 /* Deprecated v0.195 */
 #define YFS_VICED_CAPABILITY_WRITELOCKACL	0x0004 /* Can lock a file even without lock perm */
 #define YFS_VICED_CAPABILITY_SANEACLS		0x0008 /* Deprecated v0.195 */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

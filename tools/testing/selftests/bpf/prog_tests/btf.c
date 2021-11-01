@@ -4350,8 +4350,12 @@ static void do_test_file(unsigned int test_num)
 		goto done;
 	}
 
+<<<<<<< HEAD
 	btf = btf__load_from_kernel_by_id(info.btf_id);
 	err = libbpf_get_error(btf);
+=======
+	err = btf__get_from_id(info.btf_id, &btf);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (CHECK(err, "cannot get btf from kernel, err: %d", err))
 		goto done;
 
@@ -4387,7 +4391,10 @@ skip:
 	fprintf(stderr, "OK");
 
 done:
+<<<<<<< HEAD
 	btf__free(btf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	free(func_info);
 	bpf_object__close(obj);
 }

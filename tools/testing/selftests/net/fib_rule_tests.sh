@@ -3,9 +3,12 @@
 
 # This test is for checking IPv4 and IPv6 FIB rules API
 
+<<<<<<< HEAD
 # Kselftest framework requirement - SKIP code is 4.
 ksft_skip=4
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 ret=0
 
 PAUSE_ON_FAIL=${PAUSE_ON_FAIL:=no}
@@ -241,12 +244,20 @@ run_fibrule_tests()
 
 if [ "$(id -u)" -ne 0 ];then
 	echo "SKIP: Need root privileges"
+<<<<<<< HEAD
 	exit $ksft_skip
+=======
+	exit 0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 fi
 
 if [ ! -x "$(command -v ip)" ]; then
 	echo "SKIP: Could not run test without ip tool"
+<<<<<<< HEAD
 	exit $ksft_skip
+=======
+	exit 0
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 fi
 
 # start clean

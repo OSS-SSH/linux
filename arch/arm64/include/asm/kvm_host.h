@@ -66,7 +66,11 @@ DECLARE_STATIC_KEY_FALSE(userspace_irqchip_in_use);
 extern unsigned int kvm_sve_max_vl;
 int kvm_arm_init_sve(void);
 
+<<<<<<< HEAD
 u32 __attribute_const__ kvm_target_cpu(void);
+=======
+int __attribute_const__ kvm_target_cpu(void);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int kvm_reset_vcpu(struct kvm_vcpu *vcpu);
 void kvm_arm_vcpu_destroy(struct kvm_vcpu *vcpu);
 
@@ -185,6 +189,10 @@ enum vcpu_sysreg {
 	PMCNTENSET_EL0,	/* Count Enable Set Register */
 	PMINTENSET_EL1,	/* Interrupt Enable Set Register */
 	PMOVSSET_EL0,	/* Overflow Flag Status Set Register */
+<<<<<<< HEAD
+=======
+	PMSWINC_EL0,	/* Software Increment Register */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	PMUSERENR_EL0,	/* User Enable Register */
 
 	/* Pointer Authentication Registers in a strict increasing order. */
@@ -286,6 +294,7 @@ struct kvm_vcpu_arch {
 	/* Stage 2 paging state used by the hardware on next switch */
 	struct kvm_s2_mmu *hw_mmu;
 
+<<<<<<< HEAD
 	/* Values of trap registers for the guest. */
 	u64 hcr_el2;
 	u64 mdcr_el2;
@@ -293,6 +302,11 @@ struct kvm_vcpu_arch {
 
 	/* Values of trap registers for the host before guest entry. */
 	u64 mdcr_el2_host;
+=======
+	/* HYP configuration */
+	u64 hcr_el2;
+	u32 mdcr_el2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Exception Information */
 	struct kvm_vcpu_fault_info fault;
@@ -579,7 +593,10 @@ struct kvm_vcpu_stat {
 	u64 wfi_exit_stat;
 	u64 mmio_exit_user;
 	u64 mmio_exit_kernel;
+<<<<<<< HEAD
 	u64 signal_exits;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u64 exits;
 };
 
@@ -775,11 +792,14 @@ void kvm_arch_free_vm(struct kvm *kvm);
 
 int kvm_arm_setup_stage2(struct kvm *kvm, unsigned long type);
 
+<<<<<<< HEAD
 static inline bool kvm_vm_is_protected(struct kvm *kvm)
 {
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int kvm_arm_vcpu_finalize(struct kvm_vcpu *vcpu, int feature);
 bool kvm_arm_vcpu_is_finalized(struct kvm_vcpu *vcpu);
 

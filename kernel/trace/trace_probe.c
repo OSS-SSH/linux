@@ -233,9 +233,12 @@ int traceprobe_parse_event_name(const char **pevent, const char **pgroup,
 	int len;
 
 	slash = strchr(event, '/');
+<<<<<<< HEAD
 	if (!slash)
 		slash = strchr(event, '.');
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (slash) {
 		if (slash == event) {
 			trace_probe_log_err(offset, NO_GROUP_NAME);
@@ -319,6 +322,7 @@ static int parse_probe_vars(char *arg, const struct fetch_type *t,
 		code->op = FETCH_OP_ARG;
 		code->param = (unsigned int)param - 1;
 #endif
+<<<<<<< HEAD
 	} else if (flags & TPARG_FL_TPOINT) {
 		if (code->data)
 			return -EFAULT;
@@ -326,6 +330,8 @@ static int parse_probe_vars(char *arg, const struct fetch_type *t,
 		if (!code->data)
 			return -ENOMEM;
 		code->op = FETCH_OP_TP_ARG;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else
 		goto inval_var;
 
@@ -550,11 +556,16 @@ static int __parse_bitfield_probe_arg(const char *bf,
 }
 
 /* String length checking wrapper */
+<<<<<<< HEAD
 static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
+=======
+static int traceprobe_parse_probe_arg_body(char *arg, ssize_t *size,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		struct probe_arg *parg, unsigned int flags, int offset)
 {
 	struct fetch_insn *code, *scode, *tmp = NULL;
 	char *t, *t2, *t3;
+<<<<<<< HEAD
 	char *arg;
 	int ret, len;
 
@@ -578,6 +589,23 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 		goto out;
 
 	ret = -EINVAL;
+=======
+	int ret, len;
+
+	len = strlen(arg);
+	if (len > MAX_ARGSTR_LEN) {
+		trace_probe_log_err(offset, ARG_TOO_LONG);
+		return -EINVAL;
+	} else if (len == 0) {
+		trace_probe_log_err(offset, NO_ARG_BODY);
+		return -EINVAL;
+	}
+
+	parg->comm = kstrdup(arg, GFP_KERNEL);
+	if (!parg->comm)
+		return -ENOMEM;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	t = strchr(arg, ':');
 	if (t) {
 		*t = '\0';
@@ -589,22 +617,38 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 				offset += t2 + strlen(t2) - arg;
 				trace_probe_log_err(offset,
 						    ARRAY_NO_CLOSE);
+<<<<<<< HEAD
 				goto out;
 			} else if (t3[1] != '\0') {
 				trace_probe_log_err(offset + t3 + 1 - arg,
 						    BAD_ARRAY_SUFFIX);
 				goto out;
+=======
+				return -EINVAL;
+			} else if (t3[1] != '\0') {
+				trace_probe_log_err(offset + t3 + 1 - arg,
+						    BAD_ARRAY_SUFFIX);
+				return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 			*t3 = '\0';
 			if (kstrtouint(t2, 0, &parg->count) || !parg->count) {
 				trace_probe_log_err(offset + t2 - arg,
 						    BAD_ARRAY_NUM);
+<<<<<<< HEAD
 				goto out;
+=======
+				return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 			if (parg->count > MAX_ARRAY_LEN) {
 				trace_probe_log_err(offset + t2 - arg,
 						    ARRAY_TOO_BIG);
+<<<<<<< HEAD
 				goto out;
+=======
+				return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 		}
 	}
@@ -616,30 +660,49 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 	if (strcmp(arg, "$comm") == 0 || strncmp(arg, "\\\"", 2) == 0) {
 		/* The type of $comm must be "string", and not an array. */
 		if (parg->count || (t && strcmp(t, "string")))
+<<<<<<< HEAD
 			goto out;
+=======
+			return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		parg->type = find_fetch_type("string");
 	} else
 		parg->type = find_fetch_type(t);
 	if (!parg->type) {
 		trace_probe_log_err(offset + (t ? (t - arg) : 0), BAD_TYPE);
+<<<<<<< HEAD
 		goto out;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	parg->offset = *size;
 	*size += parg->type->size * (parg->count ?: 1);
 
+<<<<<<< HEAD
 	ret = -ENOMEM;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (parg->count) {
 		len = strlen(parg->type->fmttype) + 6;
 		parg->fmt = kmalloc(len, GFP_KERNEL);
 		if (!parg->fmt)
+<<<<<<< HEAD
 			goto out;
+=======
+			return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		snprintf(parg->fmt, len, "%s[%d]", parg->type->fmttype,
 			 parg->count);
 	}
 
 	code = tmp = kcalloc(FETCH_INSN_MAX, sizeof(*code), GFP_KERNEL);
 	if (!code)
+<<<<<<< HEAD
 		goto out;
+=======
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	code[FETCH_INSN_MAX - 1].op = FETCH_OP_END;
 
 	ret = parse_probe_arg(arg, parg->type, &code, &code[FETCH_INSN_MAX - 1],
@@ -647,12 +710,16 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 	if (ret)
 		goto fail;
 
+<<<<<<< HEAD
 	ret = -EINVAL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Store operation */
 	if (!strcmp(parg->type->name, "string") ||
 	    !strcmp(parg->type->name, "ustring")) {
 		if (code->op != FETCH_OP_DEREF && code->op != FETCH_OP_UDEREF &&
 		    code->op != FETCH_OP_IMM && code->op != FETCH_OP_COMM &&
+<<<<<<< HEAD
 		    code->op != FETCH_OP_DATA && code->op != FETCH_OP_TP_ARG) {
 			trace_probe_log_err(offset + (t ? (t - arg) : 0),
 					    BAD_STRING);
@@ -661,6 +728,16 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 		if ((code->op == FETCH_OP_IMM || code->op == FETCH_OP_COMM ||
 		     code->op == FETCH_OP_DATA) || code->op == FETCH_OP_TP_ARG ||
 		     parg->count) {
+=======
+		    code->op != FETCH_OP_DATA) {
+			trace_probe_log_err(offset + (t ? (t - arg) : 0),
+					    BAD_STRING);
+			ret = -EINVAL;
+			goto fail;
+		}
+		if ((code->op == FETCH_OP_IMM || code->op == FETCH_OP_COMM ||
+		     code->op == FETCH_OP_DATA) || parg->count) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/*
 			 * IMM, DATA and COMM is pointing actual address, those
 			 * must be kept, and if parg->count != 0, this is an
@@ -670,6 +747,10 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 			code++;
 			if (code->op != FETCH_OP_NOP) {
 				trace_probe_log_err(offset, TOO_MANY_OPS);
+<<<<<<< HEAD
+=======
+				ret = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				goto fail;
 			}
 		}
@@ -691,6 +772,10 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 		code++;
 		if (code->op != FETCH_OP_NOP) {
 			trace_probe_log_err(offset, TOO_MANY_OPS);
+<<<<<<< HEAD
+=======
+			ret = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto fail;
 		}
 		code->op = FETCH_OP_ST_RAW;
@@ -705,7 +790,10 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 			goto fail;
 		}
 	}
+<<<<<<< HEAD
 	ret = -EINVAL;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Loop(Array) operation */
 	if (parg->count) {
 		if (scode->op != FETCH_OP_ST_MEM &&
@@ -713,11 +801,19 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 		    scode->op != FETCH_OP_ST_USTRING) {
 			trace_probe_log_err(offset + (t ? (t - arg) : 0),
 					    BAD_STRING);
+<<<<<<< HEAD
+=======
+			ret = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto fail;
 		}
 		code++;
 		if (code->op != FETCH_OP_NOP) {
 			trace_probe_log_err(offset, TOO_MANY_OPS);
+<<<<<<< HEAD
+=======
+			ret = -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			goto fail;
 		}
 		code->op = FETCH_OP_LP_ARRAY;
@@ -726,7 +822,10 @@ static int traceprobe_parse_probe_arg_body(const char *argv, ssize_t *size,
 	code++;
 	code->op = FETCH_OP_END;
 
+<<<<<<< HEAD
 	ret = 0;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Shrink down the code buffer */
 	parg->code = kcalloc(code - tmp + 1, sizeof(*code), GFP_KERNEL);
 	if (!parg->code)
@@ -742,8 +841,11 @@ fail:
 				kfree(code->data);
 	}
 	kfree(tmp);
+<<<<<<< HEAD
 out:
 	kfree(arg);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -765,11 +867,19 @@ static int traceprobe_conflict_field_name(const char *name,
 	return 0;
 }
 
+<<<<<<< HEAD
 int traceprobe_parse_probe_arg(struct trace_probe *tp, int i, const char *arg,
 				unsigned int flags)
 {
 	struct probe_arg *parg = &tp->args[i];
 	const char *body;
+=======
+int traceprobe_parse_probe_arg(struct trace_probe *tp, int i, char *arg,
+				unsigned int flags)
+{
+	struct probe_arg *parg = &tp->args[i];
+	char *body;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Increment count for freeing args in error case */
 	tp->nr_args++;
@@ -859,13 +969,18 @@ int traceprobe_update_arg(struct probe_arg *arg)
 /* When len=0, we just calculate the needed length */
 #define LEN_OR_ZERO (len ? len - pos : 0)
 static int __set_print_fmt(struct trace_probe *tp, char *buf, int len,
+<<<<<<< HEAD
 			   enum probe_print_type ptype)
+=======
+			   bool is_return)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct probe_arg *parg;
 	int i, j;
 	int pos = 0;
 	const char *fmt, *arg;
 
+<<<<<<< HEAD
 	switch (ptype) {
 	case PROBE_PRINT_NORMAL:
 		fmt = "(%lx)";
@@ -882,6 +997,14 @@ static int __set_print_fmt(struct trace_probe *tp, char *buf, int len,
 	default:
 		WARN_ON_ONCE(1);
 		return 0;
+=======
+	if (!is_return) {
+		fmt = "(%lx)";
+		arg = "REC->" FIELD_STRING_IP;
+	} else {
+		fmt = "(%lx <- %lx)";
+		arg = "REC->" FIELD_STRING_FUNC ", REC->" FIELD_STRING_RETIP;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	pos += snprintf(buf + pos, LEN_OR_ZERO, "\"%s", fmt);
@@ -930,20 +1053,32 @@ static int __set_print_fmt(struct trace_probe *tp, char *buf, int len,
 }
 #undef LEN_OR_ZERO
 
+<<<<<<< HEAD
 int traceprobe_set_print_fmt(struct trace_probe *tp, enum probe_print_type ptype)
+=======
+int traceprobe_set_print_fmt(struct trace_probe *tp, bool is_return)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct trace_event_call *call = trace_probe_event_call(tp);
 	int len;
 	char *print_fmt;
 
 	/* First: called with 0 length to calculate the needed length */
+<<<<<<< HEAD
 	len = __set_print_fmt(tp, NULL, 0, ptype);
+=======
+	len = __set_print_fmt(tp, NULL, 0, is_return);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	print_fmt = kmalloc(len + 1, GFP_KERNEL);
 	if (!print_fmt)
 		return -ENOMEM;
 
 	/* Second: actually write the @print_fmt */
+<<<<<<< HEAD
 	__set_print_fmt(tp, print_fmt, len + 1, ptype);
+=======
+	__set_print_fmt(tp, print_fmt, len + 1, is_return);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	call->print_fmt = print_fmt;
 
 	return 0;
@@ -1059,6 +1194,7 @@ error:
 	return ret;
 }
 
+<<<<<<< HEAD
 static struct trace_event_call *
 find_trace_event_call(const char *system, const char *event_name)
 {
@@ -1078,17 +1214,22 @@ find_trace_event_call(const char *system, const char *event_name)
 	return NULL;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int trace_probe_register_event_call(struct trace_probe *tp)
 {
 	struct trace_event_call *call = trace_probe_event_call(tp);
 	int ret;
 
+<<<<<<< HEAD
 	lockdep_assert_held(&event_mutex);
 
 	if (find_trace_event_call(trace_probe_group_name(tp),
 				  trace_probe_name(tp)))
 		return -EEXIST;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = register_trace_event(&call->event);
 	if (!ret)
 		return -ENODEV;

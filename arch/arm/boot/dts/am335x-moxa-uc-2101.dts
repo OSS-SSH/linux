@@ -52,17 +52,30 @@
 	};
 };
 
+<<<<<<< HEAD
 &davinci_mdio_sw {
+=======
+&davinci_mdio {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy0: ethernet-phy@4 {
 		reg = <4>;
 	};
 };
 
+<<<<<<< HEAD
 &cpsw_port1 {
+=======
+&cpsw_emac0 {
+	status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy-handle = <&phy0>;
 	phy-mode = "rmii";
 };
 
+<<<<<<< HEAD
 &cpsw_port2 {
+=======
+&cpsw_emac1 {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	status = "disabled";
 };

@@ -5,7 +5,10 @@
 
 #include <asm/thread_info.h>
 #include <asm/page.h>
+<<<<<<< HEAD
 #include <asm/ftrace.lds.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Put .bss..swapper_pg_dir as the first thing in .bss. This will
@@ -47,7 +50,10 @@ SECTIONS
 		KPROBES_TEXT
 		IRQENTRY_TEXT
 		SOFTIRQENTRY_TEXT
+<<<<<<< HEAD
 		FTRACE_HOTPATCH_TRAMPOLINES_TEXT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		*(.text.*_indirect_*)
 		*(.fixup)
 		*(.gnu.warning)
@@ -73,6 +79,7 @@ SECTIONS
 	RW_DATA(0x100, PAGE_SIZE, THREAD_SIZE)
 	BOOT_DATA_PRESERVED
 
+<<<<<<< HEAD
 	. = ALIGN(8);
 	.amode31.refs : {
 		_start_amode31_refs = .;
@@ -80,6 +87,8 @@ SECTIONS
 		_end_amode31_refs = .;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	_edata = .;		/* End of data section */
 
 	/* will be freed after init */
@@ -145,6 +154,7 @@ SECTIONS
 
 	BOOT_DATA
 
+<<<<<<< HEAD
 	/*
 	 * .amode31 section for code, data, ex_table that need to stay
 	 * below 2 GB, even when the kernel is relocated above 2 GB.
@@ -171,6 +181,8 @@ SECTIONS
 	. = ALIGN(PAGE_SIZE);
 	_eamode31 = .;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* early.c uses stsi, which requires page aligned data. */
 	. = ALIGN(PAGE_SIZE);
 	INIT_DATA_SECTION(0x100)

@@ -4,6 +4,10 @@
  * Copyright(c) 2007 - 2012 Realtek Corporation. All rights reserved.
  *
  ******************************************************************************/
+<<<<<<< HEAD
+=======
+#define _RTW_DEBUG_C_
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <drv_types.h>
 #include <rtw_debug.h>
@@ -58,6 +62,7 @@ static void dump_4_rf_regs(struct adapter *adapter, int path, int offset)
 
 void rf_reg_dump(struct adapter *adapter)
 {
+<<<<<<< HEAD
 	int i, path = 0;
 
 	netdev_dbg(adapter->pnetdev, "======= RF REG =======\n");
@@ -65,4 +70,23 @@ void rf_reg_dump(struct adapter *adapter)
 	netdev_dbg(adapter->pnetdev, "RF_Path(%x)\n", path);
 	for (i = 0; i < 0x100; i++)
 		dump_4_rf_regs(adapter, path, i);
+=======
+	int i, path;
+	u8 rf_type = 0;
+	u8 path_nums = 0;
+
+	rtw_hal_get_hwreg(adapter, HW_VAR_RF_TYPE, (u8 *)(&rf_type));
+	if ((RF_1T2R == rf_type) || (RF_1T1R == rf_type))
+		path_nums = 1;
+	else
+		path_nums = 2;
+
+	netdev_dbg(adapter->pnetdev, "======= RF REG =======\n");
+
+	for (path = 0; path < path_nums; path++) {
+		netdev_dbg(adapter->pnetdev, "RF_Path(%x)\n", path);
+		for (i = 0; i < 0x100; i++)
+			dump_4_rf_regs(adapter, path, i);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

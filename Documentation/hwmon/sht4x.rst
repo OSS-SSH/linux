@@ -42,4 +42,8 @@ humidity1_input Measured humidity in %H
 update_interval The minimum interval for polling the sensor,
                 in milliseconds. Writable. Must be at least
                 2000.
+<<<<<<< HEAD
 =============== ============================================
+=======
+============== =============================================
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

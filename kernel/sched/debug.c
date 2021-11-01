@@ -173,13 +173,17 @@ static ssize_t sched_scaling_write(struct file *filp, const char __user *ubuf,
 				   size_t cnt, loff_t *ppos)
 {
 	char buf[16];
+<<<<<<< HEAD
 	unsigned int scaling;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (cnt > 15)
 		cnt = 15;
 
 	if (copy_from_user(&buf, ubuf, cnt))
 		return -EFAULT;
+<<<<<<< HEAD
 	buf[cnt] = '\0';
 
 	if (kstrtouint(buf, 10, &scaling))
@@ -189,6 +193,12 @@ static ssize_t sched_scaling_write(struct file *filp, const char __user *ubuf,
 		return -EINVAL;
 
 	sysctl_sched_tunable_scaling = scaling;
+=======
+
+	if (kstrtouint(buf, 10, &sysctl_sched_tunable_scaling))
+		return -EINVAL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (sched_update_scaling())
 		return -EINVAL;
 
@@ -394,6 +404,7 @@ void update_sched_domain_debugfs(void)
 {
 	int cpu, i;
 
+<<<<<<< HEAD
 	/*
 	 * This can unfortunately be invoked before sched_debug_init() creates
 	 * the debug directory. Don't touch sd_sysctl_cpus until then.
@@ -401,6 +412,8 @@ void update_sched_domain_debugfs(void)
 	if (!debugfs_sched)
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!cpumask_available(sd_sysctl_cpus)) {
 		if (!alloc_cpumask_var(&sd_sysctl_cpus, GFP_KERNEL))
 			return;
@@ -613,9 +626,12 @@ void print_cfs_rq(struct seq_file *m, int cpu, struct cfs_rq *cfs_rq)
 	SEQ_printf(m, "  .%-30s: %d\n", "nr_spread_over",
 			cfs_rq->nr_spread_over);
 	SEQ_printf(m, "  .%-30s: %d\n", "nr_running", cfs_rq->nr_running);
+<<<<<<< HEAD
 	SEQ_printf(m, "  .%-30s: %d\n", "h_nr_running", cfs_rq->h_nr_running);
 	SEQ_printf(m, "  .%-30s: %d\n", "idle_h_nr_running",
 			cfs_rq->idle_h_nr_running);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	SEQ_printf(m, "  .%-30s: %ld\n", "load", cfs_rq->load.weight);
 #ifdef CONFIG_SMP
 	SEQ_printf(m, "  .%-30s: %lu\n", "load_avg",

@@ -1740,7 +1740,11 @@ int cmd_top(int argc, const char **argv)
 		signal(SIGWINCH, winch_sig);
 	}
 
+<<<<<<< HEAD
 	top.session = perf_session__new(NULL, NULL);
+=======
+	top.session = perf_session__new(NULL, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(top.session)) {
 		status = PTR_ERR(top.session);
 		goto out_delete_evlist;

@@ -596,7 +596,11 @@ static int sparx5_port_max_tags_set(struct sparx5 *sparx5,
 	return 0;
 }
 
+<<<<<<< HEAD
 int sparx5_port_fwd_urg(struct sparx5 *sparx5, u32 speed)
+=======
+static int sparx5_port_fwd_urg(struct sparx5 *sparx5, u32 speed)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	u32 clk_period_ps = 1600; /* 625Mhz for now */
 	u32 urg = 672000;

@@ -1,7 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0
 obj-$(CONFIG_TEGRA_SOCTHERM)		+= tegra-soctherm.o
 obj-$(CONFIG_TEGRA_BPMP_THERMAL)	+= tegra-bpmp-thermal.o
+<<<<<<< HEAD
 obj-$(CONFIG_TEGRA30_TSENSOR)		+= tegra30-tsensor.o
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 tegra-soctherm-y				:= soctherm.o soctherm-fuse.o
 tegra-soctherm-$(CONFIG_ARCH_TEGRA_124_SOC)	+= tegra124-soctherm.o

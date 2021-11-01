@@ -104,6 +104,7 @@ static int gve_prefill_rx_pages(struct gve_rx_ring *rx)
 	if (!rx->data.page_info)
 		return -ENOMEM;
 
+<<<<<<< HEAD
 	if (!rx->data.raw_addressing) {
 		rx->data.qpl = gve_assign_rx_qpl(priv);
 		if (!rx->data.qpl) {
@@ -112,6 +113,10 @@ static int gve_prefill_rx_pages(struct gve_rx_ring *rx)
 			return -ENOMEM;
 		}
 	}
+=======
+	if (!rx->data.raw_addressing)
+		rx->data.qpl = gve_assign_rx_qpl(priv);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	for (i = 0; i < slots; i++) {
 		if (!rx->data.raw_addressing) {
 			struct page *page = rx->data.qpl->pages[i];

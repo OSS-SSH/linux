@@ -23,6 +23,7 @@ static int nft_last_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
 {
 	struct nft_last_priv *priv = nft_expr_priv(expr);
 	u64 last_jiffies;
+<<<<<<< HEAD
 	u32 last_set = 0;
 	int err;
 
@@ -33,11 +34,21 @@ static int nft_last_init(const struct nft_ctx *ctx, const struct nft_expr *expr,
 	}
 
 	if (last_set && tb[NFTA_LAST_MSECS]) {
+=======
+	int err;
+
+	if (tb[NFTA_LAST_MSECS]) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		err = nf_msecs_to_jiffies64(tb[NFTA_LAST_MSECS], &last_jiffies);
 		if (err < 0)
 			return err;
 
+<<<<<<< HEAD
 		priv->last_jiffies = jiffies - (unsigned long)last_jiffies;
+=======
+		priv->last_jiffies = jiffies + (unsigned long)last_jiffies;
+		priv->last_set = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return 0;
@@ -48,15 +59,21 @@ static void nft_last_eval(const struct nft_expr *expr,
 {
 	struct nft_last_priv *priv = nft_expr_priv(expr);
 
+<<<<<<< HEAD
 	if (READ_ONCE(priv->last_jiffies) != jiffies)
 		WRITE_ONCE(priv->last_jiffies, jiffies);
 	if (READ_ONCE(priv->last_set) == 0)
 		WRITE_ONCE(priv->last_set, 1);
+=======
+	priv->last_jiffies = jiffies;
+	priv->last_set = 1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int nft_last_dump(struct sk_buff *skb, const struct nft_expr *expr)
 {
 	struct nft_last_priv *priv = nft_expr_priv(expr);
+<<<<<<< HEAD
 	unsigned long last_jiffies = READ_ONCE(priv->last_jiffies);
 	u32 last_set = READ_ONCE(priv->last_set);
 	__be64 msecs;
@@ -72,6 +89,19 @@ static int nft_last_dump(struct sk_buff *skb, const struct nft_expr *expr)
 		msecs = 0;
 
 	if (nla_put_be32(skb, NFTA_LAST_SET, htonl(last_set)) ||
+=======
+	__be64 msecs;
+
+	if (time_before(jiffies, priv->last_jiffies))
+		priv->last_set = 0;
+
+	if (priv->last_set)
+		msecs = nf_jiffies64_to_msecs(jiffies - priv->last_jiffies);
+	else
+		msecs = 0;
+
+	if (nla_put_be32(skb, NFTA_LAST_SET, htonl(priv->last_set)) ||
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    nla_put_be64(skb, NFTA_LAST_MSECS, msecs, NFTA_LAST_PAD))
 		goto nla_put_failure;
 

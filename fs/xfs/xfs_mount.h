@@ -57,6 +57,7 @@ struct xfs_error_cfg {
 };
 
 /*
+<<<<<<< HEAD
  * Per-cpu deferred inode inactivation GC lists.
  */
 struct xfs_inodegc {
@@ -69,6 +70,8 @@ struct xfs_inodegc {
 };
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * The struct xfsmount layout is optimised to separate read-mostly variables
  * from variables that are frequently modified. We put the read-mostly variables
  * first, then place all the other variables at the end.
@@ -94,9 +97,12 @@ typedef struct xfs_mount {
 	xfs_buftarg_t		*m_ddev_targp;	/* saves taking the address */
 	xfs_buftarg_t		*m_logdev_targp;/* ptr to log device */
 	xfs_buftarg_t		*m_rtdev_targp;	/* ptr to rt device */
+<<<<<<< HEAD
 	struct list_head	m_mount_list;	/* global mount list */
 	void __percpu		*m_inodegc;	/* percpu inodegc structures */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Optional cache of rt summary level per bitmap block with the
 	 * invariant that m_rsum_cache[bbno] <= the minimum i for which
@@ -107,10 +113,17 @@ typedef struct xfs_mount {
 	struct xfs_mru_cache	*m_filestream;  /* per-mount filestream data */
 	struct workqueue_struct *m_buf_workqueue;
 	struct workqueue_struct	*m_unwritten_workqueue;
+<<<<<<< HEAD
 	struct workqueue_struct	*m_reclaim_workqueue;
 	struct workqueue_struct	*m_sync_workqueue;
 	struct workqueue_struct *m_blockgc_wq;
 	struct workqueue_struct *m_inodegc_wq;
+=======
+	struct workqueue_struct	*m_cil_workqueue;
+	struct workqueue_struct	*m_reclaim_workqueue;
+	struct workqueue_struct *m_gc_workqueue;
+	struct workqueue_struct	*m_sync_workqueue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	int			m_bsize;	/* fs logical block size */
 	uint8_t			m_blkbit_log;	/* blocklog + NBBY */
@@ -146,6 +159,7 @@ typedef struct xfs_mount {
 	uint			m_rsumsize;	/* size of rt summary, bytes */
 	int			m_fixedfsid[2];	/* unchanged for life of FS */
 	uint			m_qflags;	/* quota status flags */
+<<<<<<< HEAD
 	uint64_t		m_features;	/* active filesystem features */
 	uint64_t		m_low_space[XFS_LOWSP_MAX];
 	uint64_t		m_low_rtexts[XFS_LOWSP_MAX];
@@ -153,6 +167,13 @@ typedef struct xfs_mount {
 	struct xfs_trans_resv	m_resv;		/* precomputed res values */
 						/* low free space thresholds */
 	unsigned long		m_opstate;	/* dynamic state flags */
+=======
+	uint64_t		m_flags;	/* global mount flags */
+	int64_t			m_low_space[XFS_LOWSP_MAX];
+	struct xfs_ino_geometry	m_ino_geo;	/* inode geometry */
+	struct xfs_trans_resv	m_resv;		/* precomputed res values */
+						/* low free space thresholds */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool			m_always_cow;
 	bool			m_fail_unmount;
 	bool			m_finobt_nores; /* no per-AG finobt resv. */
@@ -210,8 +231,11 @@ typedef struct xfs_mount {
 	xfs_agnumber_t		m_agirotor;	/* last ag dir inode alloced */
 	spinlock_t		m_agirotor_lock;/* .. and lock protecting it */
 
+<<<<<<< HEAD
 	/* Memory shrinker to throttle and reprioritize inodegc */
 	struct shrinker		m_inodegc_shrinker;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Workqueue item so that we can coalesce multiple inode flush attempts
 	 * into a single flush.
@@ -244,6 +268,7 @@ typedef struct xfs_mount {
 #define M_IGEO(mp)		(&(mp)->m_ino_geo)
 
 /*
+<<<<<<< HEAD
  * Flags for m_features.
  *
  * These are all the active features in the filesystem, regardless of how
@@ -416,6 +441,40 @@ __XFS_IS_OPSTATE(blockgc_enabled, BLOCKGC_ENABLED)
 	{ (1UL << XFS_OPSTATE_READONLY),		"read_only" }, \
 	{ (1UL << XFS_OPSTATE_INODEGC_ENABLED),		"inodegc" }, \
 	{ (1UL << XFS_OPSTATE_BLOCKGC_ENABLED),		"blockgc" }
+=======
+ * Flags for m_flags.
+ */
+#define XFS_MOUNT_WSYNC		(1ULL << 0)	/* for nfs - all metadata ops
+						   must be synchronous except
+						   for space allocations */
+#define XFS_MOUNT_UNMOUNTING	(1ULL << 1)	/* filesystem is unmounting */
+#define XFS_MOUNT_WAS_CLEAN	(1ULL << 3)
+#define XFS_MOUNT_FS_SHUTDOWN	(1ULL << 4)	/* atomic stop of all filesystem
+						   operations, typically for
+						   disk errors in metadata */
+#define XFS_MOUNT_DISCARD	(1ULL << 5)	/* discard unused blocks */
+#define XFS_MOUNT_NOALIGN	(1ULL << 7)	/* turn off stripe alignment
+						   allocations */
+#define XFS_MOUNT_ATTR2		(1ULL << 8)	/* allow use of attr2 format */
+#define XFS_MOUNT_GRPID		(1ULL << 9)	/* group-ID assigned from directory */
+#define XFS_MOUNT_NORECOVERY	(1ULL << 10)	/* no recovery - dirty fs */
+#define XFS_MOUNT_ALLOCSIZE	(1ULL << 12)	/* specified allocation size */
+#define XFS_MOUNT_SMALL_INUMS	(1ULL << 14)	/* user wants 32bit inodes */
+#define XFS_MOUNT_32BITINODES	(1ULL << 15)	/* inode32 allocator active */
+#define XFS_MOUNT_NOUUID	(1ULL << 16)	/* ignore uuid during mount */
+#define XFS_MOUNT_IKEEP		(1ULL << 18)	/* keep empty inode clusters*/
+#define XFS_MOUNT_SWALLOC	(1ULL << 19)	/* turn on stripe width
+						 * allocation */
+#define XFS_MOUNT_RDONLY	(1ULL << 20)	/* read-only fs */
+#define XFS_MOUNT_DIRSYNC	(1ULL << 21)	/* synchronous directory ops */
+#define XFS_MOUNT_LARGEIO	(1ULL << 22)	/* report large preferred
+						 * I/O size in stat() */
+#define XFS_MOUNT_FILESTREAMS	(1ULL << 24)	/* enable the filestreams
+						   allocator */
+#define XFS_MOUNT_NOATTR2	(1ULL << 25)	/* disable use of attr2 format */
+#define XFS_MOUNT_DAX_ALWAYS	(1ULL << 26)
+#define XFS_MOUNT_DAX_NEVER	(1ULL << 27)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /*
  * Max and min values for mount-option defined I/O
@@ -424,7 +483,13 @@ __XFS_IS_OPSTATE(blockgc_enabled, BLOCKGC_ENABLED)
 #define XFS_MAX_IO_LOG		30	/* 1G */
 #define XFS_MIN_IO_LOG		PAGE_SHIFT
 
+<<<<<<< HEAD
 #define xfs_is_shutdown(mp)		xfs_is_shutdown(mp)
+=======
+#define XFS_LAST_UNMOUNT_WAS_CLEAN(mp)	\
+				((mp)->m_flags & XFS_MOUNT_WAS_CLEAN)
+#define XFS_FORCED_SHUTDOWN(mp)	((mp)->m_flags & XFS_MOUNT_FS_SHUTDOWN)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void xfs_do_force_shutdown(struct xfs_mount *mp, int flags, char *fname,
 		int lnnum);
 #define xfs_force_shutdown(m,f)	\
@@ -435,12 +500,15 @@ void xfs_do_force_shutdown(struct xfs_mount *mp, int flags, char *fname,
 #define SHUTDOWN_FORCE_UMOUNT	0x0004	/* shutdown from a forced unmount */
 #define SHUTDOWN_CORRUPT_INCORE	0x0008	/* corrupt in-memory data structures */
 
+<<<<<<< HEAD
 #define XFS_SHUTDOWN_STRINGS \
 	{ SHUTDOWN_META_IO_ERROR,	"metadata_io" }, \
 	{ SHUTDOWN_LOG_IO_ERROR,	"log_io" }, \
 	{ SHUTDOWN_FORCE_UMOUNT,	"force_umount" }, \
 	{ SHUTDOWN_CORRUPT_INCORE,	"corruption" }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * Flags for xfs_mountfs
  */
@@ -469,6 +537,7 @@ extern uint64_t xfs_default_resblks(xfs_mount_t *mp);
 extern int	xfs_mountfs(xfs_mount_t *mp);
 extern void	xfs_unmountfs(xfs_mount_t *);
 
+<<<<<<< HEAD
 /*
  * Deltas for the block count can vary from 1 to very large, but lock contention
  * only occurs on frequent small block count updates such as in the delayed
@@ -478,6 +547,8 @@ extern void	xfs_unmountfs(xfs_mount_t *);
  */
 #define XFS_FDBLOCKS_BATCH	1024
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 extern int	xfs_mod_fdblocks(struct xfs_mount *mp, int64_t delta,
 				 bool reserved);
 extern int	xfs_mod_frextents(struct xfs_mount *mp, int64_t delta);
@@ -497,8 +568,11 @@ int	xfs_zero_extent(struct xfs_inode *ip, xfs_fsblock_t start_fsb,
 struct xfs_error_cfg * xfs_error_get_cfg(struct xfs_mount *mp,
 		int error_class, int error);
 void xfs_force_summary_recalc(struct xfs_mount *mp);
+<<<<<<< HEAD
 int xfs_add_incompat_log_feature(struct xfs_mount *mp, uint32_t feature);
 bool xfs_clear_incompat_log_features(struct xfs_mount *mp);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void xfs_mod_delalloc(struct xfs_mount *mp, int64_t delta);
 
 #endif	/* __XFS_MOUNT_H__ */

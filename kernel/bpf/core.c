@@ -32,8 +32,11 @@
 #include <linux/perf_event.h>
 #include <linux/extable.h>
 #include <linux/log2.h>
+<<<<<<< HEAD
 
 #include <asm/barrier.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <asm/unaligned.h>
 
 /* Registers */
@@ -524,6 +527,10 @@ int bpf_jit_enable   __read_mostly = IS_BUILTIN(CONFIG_BPF_JIT_DEFAULT_ON);
 int bpf_jit_kallsyms __read_mostly = IS_BUILTIN(CONFIG_BPF_JIT_DEFAULT_ON);
 int bpf_jit_harden   __read_mostly;
 long bpf_jit_limit   __read_mostly;
+<<<<<<< HEAD
+=======
+long bpf_jit_limit_max __read_mostly;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void
 bpf_prog_ksym_set_addr(struct bpf_prog *prog)
@@ -817,7 +824,12 @@ u64 __weak bpf_jit_alloc_exec_limit(void)
 static int __init bpf_jit_charge_init(void)
 {
 	/* Only used as heuristic here to derive limit. */
+<<<<<<< HEAD
 	bpf_jit_limit = min_t(u64, round_up(bpf_jit_alloc_exec_limit() >> 2,
+=======
+	bpf_jit_limit_max = bpf_jit_alloc_exec_limit();
+	bpf_jit_limit = min_t(u64, round_up(bpf_jit_limit_max >> 2,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 					    PAGE_SIZE), LONG_MAX);
 	return 0;
 }
@@ -827,7 +839,11 @@ int bpf_jit_charge_modmem(u32 pages)
 {
 	if (atomic_long_add_return(pages, &bpf_jit_current) >
 	    (bpf_jit_limit >> PAGE_SHIFT)) {
+<<<<<<< HEAD
 		if (!bpf_capable()) {
+=======
+		if (!capable(CAP_SYS_ADMIN)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			atomic_long_sub(pages, &bpf_jit_current);
 			return -EPERM;
 		}
@@ -1362,13 +1378,20 @@ u64 __weak bpf_probe_read_kernel(void *dst, u32 size, const void *unsafe_ptr)
 }
 
 /**
+<<<<<<< HEAD
  *	___bpf_prog_run - run eBPF program on a given context
+=======
+ *	__bpf_prog_run - run eBPF program on a given context
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *	@regs: is the array of MAX_BPF_EXT_REG eBPF pseudo-registers
  *	@insn: is the array of eBPF instructions
  *
  * Decode and execute eBPF instructions.
+<<<<<<< HEAD
  *
  * Return: whatever value is in %BPF_R0 at program exit
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
 {
@@ -1381,7 +1404,10 @@ static u64 ___bpf_prog_run(u64 *regs, const struct bpf_insn *insn)
 		/* Non-UAPI available opcodes. */
 		[BPF_JMP | BPF_CALL_ARGS] = &&JMP_CALL_ARGS,
 		[BPF_JMP | BPF_TAIL_CALL] = &&JMP_TAIL_CALL,
+<<<<<<< HEAD
 		[BPF_ST  | BPF_NOSPEC] = &&ST_NOSPEC,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		[BPF_LDX | BPF_PROBE_MEM | BPF_B] = &&LDX_PROBE_MEM_B,
 		[BPF_LDX | BPF_PROBE_MEM | BPF_H] = &&LDX_PROBE_MEM_H,
 		[BPF_LDX | BPF_PROBE_MEM | BPF_W] = &&LDX_PROBE_MEM_W,
@@ -1626,6 +1652,7 @@ out:
 	COND_JMP(s, JSGE, >=)
 	COND_JMP(s, JSLE, <=)
 #undef COND_JMP
+<<<<<<< HEAD
 	/* ST, STX and LDX*/
 	ST_NOSPEC:
 		/* Speculation barrier for mitigating Speculative Store Bypass.
@@ -1641,6 +1668,9 @@ out:
 		barrier_nospec();
 #endif
 		CONT;
+=======
+	/* STX and ST and LDX*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define LDST(SIZEOP, SIZE)						\
 	STX_MEM_##SIZEOP:						\
 		*(SIZE *)(unsigned long) (DST + insn->off) = SRC;	\
@@ -1821,6 +1851,7 @@ static unsigned int __bpf_prog_ret0_warn(const void *ctx,
 bool bpf_prog_array_compatible(struct bpf_array *array,
 			       const struct bpf_prog *fp)
 {
+<<<<<<< HEAD
 	if (fp->kprobe_override)
 		return false;
 
@@ -1835,6 +1866,28 @@ bool bpf_prog_array_compatible(struct bpf_array *array,
 
 	return array->aux->type  == fp->type &&
 	       array->aux->jited == fp->jited;
+=======
+	bool ret;
+
+	if (fp->kprobe_override)
+		return false;
+
+	spin_lock(&array->aux->owner.lock);
+
+	if (!array->aux->owner.type) {
+		/* There's no owner yet where we could check for
+		 * compatibility.
+		 */
+		array->aux->owner.type  = fp->type;
+		array->aux->owner.jited = fp->jited;
+		ret = true;
+	} else {
+		ret = array->aux->owner.type  == fp->type &&
+		      array->aux->owner.jited == fp->jited;
+	}
+	spin_unlock(&array->aux->owner.lock);
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int bpf_check_tail_call(const struct bpf_prog *fp)
@@ -1879,10 +1932,14 @@ static void bpf_prog_select_func(struct bpf_prog *fp)
  *	@err: pointer to error variable
  *
  * Try to JIT eBPF program, if JIT is not available, use interpreter.
+<<<<<<< HEAD
  * The BPF program will be executed via bpf_prog_run() function.
  *
  * Return: the &fp argument along with &err set to 0 for success or
  * a negative errno code on failure
+=======
+ * The BPF program will be executed via BPF_PROG_RUN() macro.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct bpf_prog *bpf_prog_select_runtime(struct bpf_prog *fp, int *err)
 {
@@ -2119,6 +2176,7 @@ int bpf_prog_array_update_at(struct bpf_prog_array *array, int index,
 int bpf_prog_array_copy(struct bpf_prog_array *old_array,
 			struct bpf_prog *exclude_prog,
 			struct bpf_prog *include_prog,
+<<<<<<< HEAD
 			u64 bpf_cookie,
 			struct bpf_prog_array **new_array)
 {
@@ -2126,6 +2184,15 @@ int bpf_prog_array_copy(struct bpf_prog_array *old_array,
 	struct bpf_prog_array_item *existing, *new;
 	struct bpf_prog_array *array;
 	bool found_exclude = false;
+=======
+			struct bpf_prog_array **new_array)
+{
+	int new_prog_cnt, carry_prog_cnt = 0;
+	struct bpf_prog_array_item *existing;
+	struct bpf_prog_array *array;
+	bool found_exclude = false;
+	int new_prog_idx = 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Figure out how many existing progs we need to carry over to
 	 * the new array.
@@ -2162,11 +2229,15 @@ int bpf_prog_array_copy(struct bpf_prog_array *old_array,
 	array = bpf_prog_array_alloc(new_prog_cnt + 1, GFP_KERNEL);
 	if (!array)
 		return -ENOMEM;
+<<<<<<< HEAD
 	new = array->items;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Fill in the new prog array */
 	if (carry_prog_cnt) {
 		existing = old_array->items;
+<<<<<<< HEAD
 		for (; existing->prog; existing++) {
 			if (existing->prog == exclude_prog ||
 			    existing->prog == &dummy_bpf_prog.prog)
@@ -2183,6 +2254,18 @@ int bpf_prog_array_copy(struct bpf_prog_array *old_array,
 		new++;
 	}
 	new->prog = NULL;
+=======
+		for (; existing->prog; existing++)
+			if (existing->prog != exclude_prog &&
+			    existing->prog != &dummy_bpf_prog.prog) {
+				array->items[new_prog_idx++].prog =
+					existing->prog;
+			}
+	}
+	if (include_prog)
+		array->items[new_prog_idx++].prog = include_prog;
+	array->items[new_prog_idx].prog = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	*new_array = array;
 	return 0;
 }
@@ -2265,6 +2348,7 @@ static void bpf_prog_free_deferred(struct work_struct *work)
 #endif
 	if (aux->dst_trampoline)
 		bpf_trampoline_put(aux->dst_trampoline);
+<<<<<<< HEAD
 	for (i = 0; i < aux->func_cnt; i++) {
 		/* We can just unlink the subprog poke descriptor table as
 		 * it was originally linked to the main program and is also
@@ -2273,6 +2357,10 @@ static void bpf_prog_free_deferred(struct work_struct *work)
 		aux->func[i]->aux->poke_tab = NULL;
 		bpf_jit_free(aux->func[i]);
 	}
+=======
+	for (i = 0; i < aux->func_cnt; i++)
+		bpf_jit_free(aux->func[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (aux->func_cnt) {
 		kfree(aux->func);
 		bpf_prog_unlock_free(aux->prog);

@@ -68,7 +68,11 @@ static unsigned int bcm_sf2_num_active_ports(struct dsa_switch *ds)
 	struct bcm_sf2_priv *priv = bcm_sf2_to_priv(ds);
 	unsigned int port, count = 0;
 
+<<<<<<< HEAD
 	for (port = 0; port < ds->num_ports; port++) {
+=======
+	for (port = 0; port < ARRAY_SIZE(priv->port_sts); port++) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (dsa_is_cpu_port(ds, port))
 			continue;
 		if (priv->port_sts[port].enabled)
@@ -1199,6 +1203,10 @@ static const struct dsa_switch_ops bcm_sf2_ops = {
 	.port_pre_bridge_flags	= b53_br_flags_pre,
 	.port_bridge_flags	= b53_br_flags,
 	.port_stp_state_set	= b53_br_set_stp_state,
+<<<<<<< HEAD
+=======
+	.port_set_mrouter	= b53_set_mrouter,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.port_fast_age		= b53_br_fast_age,
 	.port_vlan_filtering	= b53_vlan_filtering,
 	.port_vlan_add		= b53_vlan_add,
@@ -1512,9 +1520,12 @@ static int bcm_sf2_sw_remove(struct platform_device *pdev)
 {
 	struct bcm_sf2_priv *priv = platform_get_drvdata(pdev);
 
+<<<<<<< HEAD
 	if (!priv)
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	priv->wol_ports_mask = 0;
 	/* Disable interrupts */
 	bcm_sf2_intr_disable(priv);
@@ -1526,8 +1537,11 @@ static int bcm_sf2_sw_remove(struct platform_device *pdev)
 	if (priv->type == BCM7278_DEVICE_ID)
 		reset_control_assert(priv->rcdev);
 
+<<<<<<< HEAD
 	platform_set_drvdata(pdev, NULL);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 
@@ -1535,9 +1549,12 @@ static void bcm_sf2_sw_shutdown(struct platform_device *pdev)
 {
 	struct bcm_sf2_priv *priv = platform_get_drvdata(pdev);
 
+<<<<<<< HEAD
 	if (!priv)
 		return;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* For a kernel about to be kexec'd we want to keep the GPHY on for a
 	 * successful MDIO bus scan to occur. If we did turn off the GPHY
 	 * before (e.g: port_disable), this will also power it back on.
@@ -1546,10 +1563,13 @@ static void bcm_sf2_sw_shutdown(struct platform_device *pdev)
 	 */
 	if (priv->hw_params.num_gphy == 1)
 		bcm_sf2_gphy_enable_set(priv->dev->ds, true);
+<<<<<<< HEAD
 
 	dsa_switch_shutdown(priv->dev->ds);
 
 	platform_set_drvdata(pdev, NULL);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 #ifdef CONFIG_PM_SLEEP

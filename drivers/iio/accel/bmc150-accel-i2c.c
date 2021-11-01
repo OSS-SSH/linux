@@ -176,7 +176,10 @@ static int bmc150_accel_probe(struct i2c_client *client,
 {
 	struct regmap *regmap;
 	const char *name = NULL;
+<<<<<<< HEAD
 	enum bmc150_type type = BOSCH_UNKNOWN;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool block_supported =
 		i2c_check_functionality(client->adapter, I2C_FUNC_I2C) ||
 		i2c_check_functionality(client->adapter,
@@ -189,6 +192,7 @@ static int bmc150_accel_probe(struct i2c_client *client,
 		return PTR_ERR(regmap);
 	}
 
+<<<<<<< HEAD
 	if (id) {
 		name = id->name;
 		type = id->driver_data;
@@ -196,6 +200,12 @@ static int bmc150_accel_probe(struct i2c_client *client,
 
 	ret = bmc150_accel_core_probe(&client->dev, regmap, client->irq,
 				      type, name, block_supported);
+=======
+	if (id)
+		name = id->name;
+
+	ret = bmc150_accel_core_probe(&client->dev, regmap, client->irq, name, block_supported);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret)
 		return ret;
 
@@ -240,7 +250,10 @@ static const struct i2c_device_id bmc150_accel_id[] = {
 	{"bma255"},
 	{"bma280"},
 	{"bmc150_accel"},
+<<<<<<< HEAD
 	{"bmc156_accel", BOSCH_BMC156},
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{"bmi055_accel"},
 	{}
 };
@@ -256,7 +269,10 @@ static const struct of_device_id bmc150_accel_of_match[] = {
 	{ .compatible = "bosch,bma255" },
 	{ .compatible = "bosch,bma280" },
 	{ .compatible = "bosch,bmc150_accel" },
+<<<<<<< HEAD
 	{ .compatible = "bosch,bmc156_accel" },
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ .compatible = "bosch,bmi055_accel" },
 	{ },
 };

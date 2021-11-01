@@ -668,7 +668,11 @@ static int convert_to_trace_point(Dwarf_Die *sp_die, Dwfl_Module *mod,
 	}
 
 	tp->offset = (unsigned long)(paddr - eaddr);
+<<<<<<< HEAD
 	tp->address = paddr;
+=======
+	tp->address = (unsigned long)paddr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tp->symbol = strdup(symbol);
 	if (!tp->symbol)
 		return -ENOMEM;
@@ -1707,7 +1711,11 @@ int debuginfo__get_text_offset(struct debuginfo *dbg, Dwarf_Addr *offs,
 }
 
 /* Reverse search */
+<<<<<<< HEAD
 int debuginfo__find_probe_point(struct debuginfo *dbg, u64 addr,
+=======
+int debuginfo__find_probe_point(struct debuginfo *dbg, unsigned long addr,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				struct perf_probe_point *ppt)
 {
 	Dwarf_Die cudie, spdie, indie;
@@ -1720,14 +1728,22 @@ int debuginfo__find_probe_point(struct debuginfo *dbg, u64 addr,
 		addr += baseaddr;
 	/* Find cu die */
 	if (!dwarf_addrdie(dbg->dbg, (Dwarf_Addr)addr, &cudie)) {
+<<<<<<< HEAD
 		pr_warning("Failed to find debug information for address %" PRIx64 "\n",
+=======
+		pr_warning("Failed to find debug information for address %lx\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			   addr);
 		ret = -EINVAL;
 		goto end;
 	}
 
 	/* Find a corresponding line (filename and lineno) */
+<<<<<<< HEAD
 	cu_find_lineinfo(&cudie, (Dwarf_Addr)addr, &fname, &lineno);
+=======
+	cu_find_lineinfo(&cudie, addr, &fname, &lineno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Don't care whether it failed or not */
 
 	/* Find a corresponding function (name, baseline and baseaddr) */
@@ -1742,7 +1758,11 @@ int debuginfo__find_probe_point(struct debuginfo *dbg, u64 addr,
 		}
 
 		fname = dwarf_decl_file(&spdie);
+<<<<<<< HEAD
 		if (addr == baseaddr) {
+=======
+		if (addr == (unsigned long)baseaddr) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			/* Function entry - Relative line number is 0 */
 			lineno = baseline;
 			goto post;
@@ -1788,7 +1808,11 @@ post:
 	if (lineno)
 		ppt->line = lineno - baseline;
 	else if (basefunc) {
+<<<<<<< HEAD
 		ppt->offset = addr - baseaddr;
+=======
+		ppt->offset = addr - (unsigned long)baseaddr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		func = basefunc;
 	}
 
@@ -1828,7 +1852,12 @@ static int line_range_add_line(const char *src, unsigned int lineno,
 }
 
 static int line_range_walk_cb(const char *fname, int lineno,
+<<<<<<< HEAD
 			      Dwarf_Addr addr, void *data)
+=======
+			      Dwarf_Addr addr __maybe_unused,
+			      void *data)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct line_finder *lf = data;
 	const char *__fname;

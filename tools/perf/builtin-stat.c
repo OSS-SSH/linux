@@ -1996,7 +1996,11 @@ static int __cmd_record(int argc, const char **argv)
 		return -1;
 	}
 
+<<<<<<< HEAD
 	session = perf_session__new(data, NULL);
+=======
+	session = perf_session__new(data, false, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(session)) {
 		pr_err("Perf session creation failed\n");
 		return PTR_ERR(session);
@@ -2168,7 +2172,11 @@ static int __cmd_report(int argc, const char **argv)
 	perf_stat.data.path = input_name;
 	perf_stat.data.mode = PERF_DATA_MODE_READ;
 
+<<<<<<< HEAD
 	session = perf_session__new(&perf_stat.data, &perf_stat.tool);
+=======
+	session = perf_session__new(&perf_stat.data, false, &perf_stat.tool);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(session))
 		return PTR_ERR(session);
 
@@ -2386,8 +2394,12 @@ int cmd_stat(int argc, const char **argv)
 	 * --per-thread is aggregated per thread, we dont mix it with cpu mode
 	 */
 	if (((stat_config.aggr_mode != AGGR_GLOBAL &&
+<<<<<<< HEAD
 	      stat_config.aggr_mode != AGGR_THREAD) ||
 	     (nr_cgroups || stat_config.cgroup_list)) &&
+=======
+	      stat_config.aggr_mode != AGGR_THREAD) || nr_cgroups) &&
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    !target__has_cpu(&target)) {
 		fprintf(stderr, "both cgroup and no-aggregation "
 			"modes only available in system-wide mode\n");
@@ -2395,7 +2407,10 @@ int cmd_stat(int argc, const char **argv)
 		parse_options_usage(stat_usage, stat_options, "G", 1);
 		parse_options_usage(NULL, stat_options, "A", 1);
 		parse_options_usage(NULL, stat_options, "a", 1);
+<<<<<<< HEAD
 		parse_options_usage(NULL, stat_options, "for-each-cgroup", 0);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out;
 	}
 
@@ -2408,8 +2423,11 @@ int cmd_stat(int argc, const char **argv)
 			goto out;
 		} else if (verbose)
 			iostat_list(evsel_list, &stat_config);
+<<<<<<< HEAD
 		if (iostat_mode == IOSTAT_RUN && !target__has_cpu(&target))
 			target.system_wide = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (add_default_attributes())
@@ -2434,12 +2452,15 @@ int cmd_stat(int argc, const char **argv)
 	if ((stat_config.aggr_mode == AGGR_THREAD) && (target.system_wide))
 		target.per_thread = true;
 
+<<<<<<< HEAD
 	if (evlist__fix_hybrid_cpus(evsel_list, target.cpu_list)) {
 		pr_err("failed to use cpu list %s\n", target.cpu_list);
 		goto out;
 	}
 
 	target.hybrid = perf_pmu__has_hybrid();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (evlist__create_maps(evsel_list, &target) < 0) {
 		if (target__has_task(&target)) {
 			pr_err("Problems finding threads of monitor\n");
@@ -2455,6 +2476,12 @@ int cmd_stat(int argc, const char **argv)
 
 	evlist__check_cpu_maps(evsel_list);
 
+<<<<<<< HEAD
+=======
+	if (perf_pmu__has_hybrid())
+		stat_config.no_merge = true;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/*
 	 * Initialize thread_map with comm names,
 	 * so we could print it out on output.

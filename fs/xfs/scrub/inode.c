@@ -73,6 +73,7 @@ xchk_inode_extsize(
 	uint16_t		flags)
 {
 	xfs_failaddr_t		fa;
+<<<<<<< HEAD
 	uint32_t		value = be32_to_cpu(dip->di_extsize);
 
 	fa = xfs_inode_validate_extsize(sc->mp, value, mode, flags);
@@ -92,6 +93,13 @@ xchk_inode_extsize(
 	    (flags & XFS_DIFLAG_EXTSZINHERIT) &&
 	    value % sc->mp->m_sb.sb_rextsize > 0)
 		xchk_ino_set_warning(sc, ino);
+=======
+
+	fa = xfs_inode_validate_extsize(sc->mp, be32_to_cpu(dip->di_extsize),
+			mode, flags);
+	if (fa)
+		xchk_ino_set_corrupt(sc, ino);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /*
@@ -181,7 +189,11 @@ xchk_inode_flags2(
 
 	/* reflink flag requires reflink feature */
 	if ((flags2 & XFS_DIFLAG2_REFLINK) &&
+<<<<<<< HEAD
 	    !xfs_has_reflink(mp))
+=======
+	    !xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto bad;
 
 	/* cowextsize flag is checked w.r.t. mode separately */
@@ -199,7 +211,12 @@ xchk_inode_flags2(
 		goto bad;
 
 	/* no bigtime iflag without the bigtime feature */
+<<<<<<< HEAD
 	if (xfs_dinode_has_bigtime(dip) && !xfs_has_bigtime(mp))
+=======
+	if (xfs_dinode_has_bigtime(dip) &&
+	    !xfs_sb_version_hasbigtime(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto bad;
 
 	return;
@@ -277,7 +294,11 @@ xchk_dinode(
 			xchk_ino_set_corrupt(sc, ino);
 
 		if (dip->di_projid_hi != 0 &&
+<<<<<<< HEAD
 		    !xfs_has_projid32(mp))
+=======
+		    !xfs_sb_version_hasprojid32bit(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xchk_ino_set_corrupt(sc, ino);
 		break;
 	default:
@@ -531,9 +552,15 @@ xchk_inode_xref(
 	agno = XFS_INO_TO_AGNO(sc->mp, ino);
 	agbno = XFS_INO_TO_AGBNO(sc->mp, ino);
 
+<<<<<<< HEAD
 	error = xchk_ag_init_existing(sc, agno, &sc->sa);
 	if (!xchk_xref_process_error(sc, agno, agbno, &error))
 		goto out_free;
+=======
+	error = xchk_ag_init(sc, agno, &sc->sa);
+	if (!xchk_xref_process_error(sc, agno, agbno, &error))
+		return;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	xchk_xref_is_used_space(sc, agbno, 1);
 	xchk_inode_xref_finobt(sc, ino);
@@ -541,7 +568,10 @@ xchk_inode_xref(
 	xchk_xref_is_not_shared(sc, agbno, 1);
 	xchk_inode_xref_bmap(sc, dip);
 
+<<<<<<< HEAD
 out_free:
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xchk_ag_free(sc, &sc->sa);
 }
 
@@ -560,7 +590,11 @@ xchk_inode_check_reflink_iflag(
 	bool			has_shared;
 	int			error;
 
+<<<<<<< HEAD
 	if (!xfs_has_reflink(mp))
+=======
+	if (!xfs_sb_version_hasreflink(&mp->m_sb))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	error = xfs_reflink_inode_has_shared_extents(sc->tp, sc->ip,

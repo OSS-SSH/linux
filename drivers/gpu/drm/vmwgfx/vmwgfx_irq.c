@@ -25,7 +25,10 @@
  *
  **************************************************************************/
 
+<<<<<<< HEAD
 #include <linux/pci.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/sched/signal.h>
 
 #include "vmwgfx_drv.h"
@@ -288,18 +291,32 @@ static void vmw_irq_preinstall(struct drm_device *dev)
 void vmw_irq_uninstall(struct drm_device *dev)
 {
 	struct vmw_private *dev_priv = vmw_priv(dev);
+<<<<<<< HEAD
 	struct pci_dev *pdev = to_pci_dev(dev->dev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint32_t status;
 
 	if (!(dev_priv->capabilities & SVGA_CAP_IRQMASK))
 		return;
 
+<<<<<<< HEAD
+=======
+	if (!dev->irq_enabled)
+		return;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vmw_write(dev_priv, SVGA_REG_IRQMASK, 0);
 
 	status = vmw_irq_status_read(dev_priv);
 	vmw_irq_status_write(dev_priv, status);
 
+<<<<<<< HEAD
 	free_irq(pdev->irq, dev);
+=======
+	dev->irq_enabled = false;
+	free_irq(dev->irq, dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -311,8 +328,27 @@ void vmw_irq_uninstall(struct drm_device *dev)
  */
 int vmw_irq_install(struct drm_device *dev, int irq)
 {
+<<<<<<< HEAD
 	vmw_irq_preinstall(dev);
 
 	return request_threaded_irq(irq, vmw_irq_handler, vmw_thread_fn,
 				    IRQF_SHARED, VMWGFX_DRIVER_NAME, dev);
+=======
+	int ret;
+
+	if (dev->irq_enabled)
+		return -EBUSY;
+
+	vmw_irq_preinstall(dev);
+
+	ret = request_threaded_irq(irq, vmw_irq_handler, vmw_thread_fn,
+				   IRQF_SHARED, VMWGFX_DRIVER_NAME, dev);
+	if (ret < 0)
+		return ret;
+
+	dev->irq_enabled = true;
+	dev->irq = irq;
+
+	return ret;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }

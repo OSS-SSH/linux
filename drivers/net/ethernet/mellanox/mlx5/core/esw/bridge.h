@@ -7,7 +7,10 @@
 #include <linux/notifier.h>
 #include <linux/list.h>
 #include <linux/workqueue.h>
+<<<<<<< HEAD
 #include <linux/xarray.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "eswitch.h"
 
 struct mlx5_flow_table;
@@ -16,8 +19,11 @@ struct mlx5_flow_group;
 struct mlx5_esw_bridge_offloads {
 	struct mlx5_eswitch *esw;
 	struct list_head bridges;
+<<<<<<< HEAD
 	struct xarray ports;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct notifier_block netdev_nb;
 	struct notifier_block nb_blk;
 	struct notifier_block nb;
@@ -34,6 +40,7 @@ struct mlx5_esw_bridge_offloads {
 
 struct mlx5_esw_bridge_offloads *mlx5_esw_bridge_init(struct mlx5_eswitch *esw);
 void mlx5_esw_bridge_cleanup(struct mlx5_eswitch *esw);
+<<<<<<< HEAD
 int mlx5_esw_bridge_vport_link(int ifindex, u16 vport_num, u16 esw_owner_vhca_id,
 			       struct mlx5_esw_bridge_offloads *br_offloads,
 			       struct netlink_ext_ack *extack);
@@ -65,5 +72,25 @@ int mlx5_esw_bridge_port_vlan_add(u16 vport_num, u16 esw_owner_vhca_id, u16 vid,
 				  struct netlink_ext_ack *extack);
 void mlx5_esw_bridge_port_vlan_del(u16 vport_num, u16 esw_owner_vhca_id, u16 vid,
 				   struct mlx5_esw_bridge_offloads *br_offloads);
+=======
+int mlx5_esw_bridge_vport_link(int ifindex, struct mlx5_esw_bridge_offloads *br_offloads,
+			       struct mlx5_vport *vport, struct netlink_ext_ack *extack);
+int mlx5_esw_bridge_vport_unlink(int ifindex, struct mlx5_esw_bridge_offloads *br_offloads,
+				 struct mlx5_vport *vport, struct netlink_ext_ack *extack);
+void mlx5_esw_bridge_fdb_create(struct net_device *dev, struct mlx5_eswitch *esw,
+				struct mlx5_vport *vport,
+				struct switchdev_notifier_fdb_info *fdb_info);
+void mlx5_esw_bridge_fdb_remove(struct net_device *dev, struct mlx5_eswitch *esw,
+				struct mlx5_vport *vport,
+				struct switchdev_notifier_fdb_info *fdb_info);
+void mlx5_esw_bridge_update(struct mlx5_esw_bridge_offloads *br_offloads);
+int mlx5_esw_bridge_ageing_time_set(unsigned long ageing_time, struct mlx5_eswitch *esw,
+				    struct mlx5_vport *vport);
+int mlx5_esw_bridge_vlan_filtering_set(bool enable, struct mlx5_eswitch *esw,
+				       struct mlx5_vport *vport);
+int mlx5_esw_bridge_port_vlan_add(u16 vid, u16 flags, struct mlx5_eswitch *esw,
+				  struct mlx5_vport *vport, struct netlink_ext_ack *extack);
+void mlx5_esw_bridge_port_vlan_del(u16 vid, struct mlx5_eswitch *esw, struct mlx5_vport *vport);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #endif /* __MLX5_ESW_BRIDGE_H__ */

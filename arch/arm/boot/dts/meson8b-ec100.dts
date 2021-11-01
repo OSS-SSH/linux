@@ -96,6 +96,7 @@
 		#clock-cells = <0>;
 	};
 
+<<<<<<< HEAD
 	sound {
 		compatible = "amlogic,gx-sound-card";
 		model = "M8B-EC100";
@@ -122,6 +123,8 @@
 		};
 	};
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	usb_vbus: regulator-usb-vbus {
 		/*
 		 * Silergy SY6288CCAC-GP 2A Power Distribution Switch.
@@ -174,7 +177,11 @@
 		regulator-min-microvolt = <860000>;
 		regulator-max-microvolt = <1140000>;
 
+<<<<<<< HEAD
 		pwm-supply = <&vcc_5v>;
+=======
+		vin-supply = <&vcc_5v>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pwms = <&pwm_cd 0 1148 0>;
 		pwm-dutycycle-range = <100 0>;
@@ -258,7 +265,11 @@
 		regulator-min-microvolt = <860000>;
 		regulator-max-microvolt = <1140000>;
 
+<<<<<<< HEAD
 		pwm-supply = <&vcc_5v>;
+=======
+		vin-supply = <&vcc_5v>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		pwms = <&pwm_cd 1 1148 0>;
 		pwm-dutycycle-range = <100 0>;
@@ -268,6 +279,7 @@
 	};
 };
 
+<<<<<<< HEAD
 &aiu {
 	status = "okay";
 
@@ -276,6 +288,8 @@
 	pinctrl-names = "default";
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 &cpu0 {
 	cpu-supply = <&vcck>;
 };
@@ -317,6 +331,7 @@
 
 	rt5640: codec@1c {
 		compatible = "realtek,rt5640";
+<<<<<<< HEAD
 
 		reg = <0x1c>;
 
@@ -330,6 +345,11 @@
 		 * We currently cannot configure this pin correctly.
 		 * Luckily for us it's in the "right" state by default.
 		 */
+=======
+		reg = <0x1c>;
+		interrupt-parent = <&gpio_intc>;
+		interrupts = <13 IRQ_TYPE_EDGE_BOTH>; /* GPIOAO_13 */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		realtek,in1-differential;
 	};
 };

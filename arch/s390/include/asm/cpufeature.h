@@ -23,7 +23,11 @@
 #define MAX_ELF_HWCAP_FEATURES	(8 * sizeof(elf_hwcap))
 #define MAX_CPU_FEATURES	MAX_ELF_HWCAP_FEATURES
 
+<<<<<<< HEAD
 #define cpu_feature(feat)	ilog2(HWCAP_ ## feat)
+=======
+#define cpu_feature(feat)	ilog2(HWCAP_S390_ ## feat)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int cpu_have_feature(unsigned int nr);
 

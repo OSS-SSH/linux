@@ -11,7 +11,11 @@
 
 int machine_check_440A(struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	unsigned long reason = regs->esr;
+=======
+	unsigned long reason = regs->dsisr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	printk("Machine check in kernel mode.\n");
 	if (reason & ESR_IMCP){
@@ -48,7 +52,11 @@ int machine_check_440A(struct pt_regs *regs)
 #ifdef CONFIG_PPC_47x
 int machine_check_47x(struct pt_regs *regs)
 {
+<<<<<<< HEAD
 	unsigned long reason = regs->esr;
+=======
+	unsigned long reason = regs->dsisr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 mcsr;
 
 	printk(KERN_ERR "Machine check in kernel mode.\n");

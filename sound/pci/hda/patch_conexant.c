@@ -177,17 +177,26 @@ static int cx_auto_init(struct hda_codec *codec)
 	return 0;
 }
 
+<<<<<<< HEAD
 static void cx_auto_shutdown(struct hda_codec *codec)
+=======
+static void cx_auto_reboot_notify(struct hda_codec *codec)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct conexant_spec *spec = codec->spec;
 
 	/* Turn the problematic codec into D3 to avoid spurious noises
 	   from the internal speaker during (and after) reboot */
 	cx_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, false);
+<<<<<<< HEAD
+=======
+	snd_hda_gen_reboot_notify(codec);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void cx_auto_free(struct hda_codec *codec)
 {
+<<<<<<< HEAD
 	cx_auto_shutdown(codec);
 	snd_hda_gen_free(codec);
 }
@@ -200,14 +209,27 @@ static int cx_auto_suspend(struct hda_codec *codec)
 }
 #endif
 
+=======
+	cx_auto_reboot_notify(codec);
+	snd_hda_gen_free(codec);
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct hda_codec_ops cx_auto_patch_ops = {
 	.build_controls = snd_hda_gen_build_controls,
 	.build_pcms = snd_hda_gen_build_pcms,
 	.init = cx_auto_init,
+<<<<<<< HEAD
 	.free = cx_auto_free,
 	.unsol_event = snd_hda_jack_unsol_event,
 #ifdef CONFIG_PM
 	.suspend = cx_auto_suspend,
+=======
+	.reboot_notify = cx_auto_reboot_notify,
+	.free = cx_auto_free,
+	.unsol_event = snd_hda_jack_unsol_event,
+#ifdef CONFIG_PM
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.check_power_status = snd_hda_gen_check_power_status,
 #endif
 };

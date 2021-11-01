@@ -11,9 +11,13 @@ maintainers:
 
 properties:
   compatible:
+<<<<<<< HEAD
     enum:
       - mmc-pwrseq-sd8787
       - mmc-pwrseq-wilc1000
+=======
+    const: mmc-pwrseq-sd8787
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
   powerdown-gpios:
     minItems: 1

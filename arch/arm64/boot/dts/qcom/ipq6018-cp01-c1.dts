@@ -78,6 +78,7 @@
 		nand-bus-width = <8>;
 	};
 };
+<<<<<<< HEAD
 
 &qusb_phy_1 {
 	status = "ok";
@@ -86,3 +87,5 @@
 &usb2 {
 	status = "ok";
 };
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

@@ -354,10 +354,16 @@ spider_net_free_rx_chain_contents(struct spider_net_card *card)
 	descr = card->rx_chain.head;
 	do {
 		if (descr->skb) {
+<<<<<<< HEAD
 			dma_unmap_single(&card->pdev->dev,
 					 descr->hwdescr->buf_addr,
 					 SPIDER_NET_MAX_FRAME,
 					 DMA_BIDIRECTIONAL);
+=======
+			pci_unmap_single(card->pdev, descr->hwdescr->buf_addr,
+					 SPIDER_NET_MAX_FRAME,
+					 PCI_DMA_BIDIRECTIONAL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dev_kfree_skb(descr->skb);
 			descr->skb = NULL;
 		}
@@ -412,9 +418,15 @@ spider_net_prepare_rx_descr(struct spider_net_card *card,
 	if (offset)
 		skb_reserve(descr->skb, SPIDER_NET_RXBUF_ALIGN - offset);
 	/* iommu-map the skb */
+<<<<<<< HEAD
 	buf = dma_map_single(&card->pdev->dev, descr->skb->data,
 			     SPIDER_NET_MAX_FRAME, DMA_FROM_DEVICE);
 	if (dma_mapping_error(&card->pdev->dev, buf)) {
+=======
+	buf = pci_map_single(card->pdev, descr->skb->data,
+			SPIDER_NET_MAX_FRAME, PCI_DMA_FROMDEVICE);
+	if (pci_dma_mapping_error(card->pdev, buf)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		dev_kfree_skb_any(descr->skb);
 		descr->skb = NULL;
 		if (netif_msg_rx_err(card) && net_ratelimit())
@@ -654,9 +666,14 @@ spider_net_prepare_tx_descr(struct spider_net_card *card,
 	dma_addr_t buf;
 	unsigned long flags;
 
+<<<<<<< HEAD
 	buf = dma_map_single(&card->pdev->dev, skb->data, skb->len,
 			     DMA_TO_DEVICE);
 	if (dma_mapping_error(&card->pdev->dev, buf)) {
+=======
+	buf = pci_map_single(card->pdev, skb->data, skb->len, PCI_DMA_TODEVICE);
+	if (pci_dma_mapping_error(card->pdev, buf)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (netif_msg_tx_err(card) && net_ratelimit())
 			dev_err(&card->netdev->dev, "could not iommu-map packet (%p, %i). "
 				  "Dropping packet\n", skb->data, skb->len);
@@ -668,8 +685,12 @@ spider_net_prepare_tx_descr(struct spider_net_card *card,
 	descr = card->tx_chain.head;
 	if (descr->next == chain->tail->prev) {
 		spin_unlock_irqrestore(&chain->lock, flags);
+<<<<<<< HEAD
 		dma_unmap_single(&card->pdev->dev, buf, skb->len,
 				 DMA_TO_DEVICE);
+=======
+		pci_unmap_single(card->pdev, buf, skb->len, PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 	}
 	hwdescr = descr->hwdescr;
@@ -825,8 +846,13 @@ spider_net_release_tx_chain(struct spider_net_card *card, int brutal)
 
 		/* unmap the skb */
 		if (skb) {
+<<<<<<< HEAD
 			dma_unmap_single(&card->pdev->dev, buf_addr, skb->len,
 					 DMA_TO_DEVICE);
+=======
+			pci_unmap_single(card->pdev, buf_addr, skb->len,
+					PCI_DMA_TODEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			dev_consume_skb_any(skb);
 		}
 	}
@@ -1168,8 +1194,13 @@ spider_net_decode_one_descr(struct spider_net_card *card)
 	/* unmap descriptor */
 	hw_buf_addr = hwdescr->buf_addr;
 	hwdescr->buf_addr = 0xffffffff;
+<<<<<<< HEAD
 	dma_unmap_single(&card->pdev->dev, hw_buf_addr, SPIDER_NET_MAX_FRAME,
 			 DMA_FROM_DEVICE);
+=======
+	pci_unmap_single(card->pdev, hw_buf_addr,
+			SPIDER_NET_MAX_FRAME, PCI_DMA_FROMDEVICE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if ( (status == SPIDER_NET_DESCR_RESPONSE_ERROR) ||
 	     (status == SPIDER_NET_DESCR_PROTECTION_ERROR) ||
@@ -2217,7 +2248,11 @@ static const struct net_device_ops spider_net_ops = {
 	.ndo_start_xmit		= spider_net_xmit,
 	.ndo_set_rx_mode	= spider_net_set_multi,
 	.ndo_set_mac_address	= spider_net_set_mac,
+<<<<<<< HEAD
 	.ndo_eth_ioctl		= spider_net_do_ioctl,
+=======
+	.ndo_do_ioctl		= spider_net_do_ioctl,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ndo_tx_timeout		= spider_net_tx_timeout,
 	.ndo_validate_addr	= eth_validate_addr,
 	/* HW VLAN */

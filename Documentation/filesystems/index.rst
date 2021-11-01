@@ -34,7 +34,10 @@ algorithms work.
    quota
    seq_file
    sharedsubtree
+<<<<<<< HEAD
    idmappings
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
    automount-support
 
@@ -73,7 +76,11 @@ Documentation for filesystem implementations.
    befs
    bfs
    btrfs
+<<<<<<< HEAD
    cifs/index
+=======
+   cifs/cifsroot
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
    ceph
    coda
    configfs
@@ -101,7 +108,10 @@ Documentation for filesystem implementations.
    nilfs2
    nfs/index
    ntfs
+<<<<<<< HEAD
    ntfs3
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
    ocfs2
    ocfs2-online-filecheck
    omfs

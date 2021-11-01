@@ -21,10 +21,13 @@ properties:
           - const: "qcom,sc7180-pdc-global"
           - const: "qcom,sdm845-pdc-global"
 
+<<<<<<< HEAD
       - description: on SC7280 SoCs the following compatibles must be specified
         items:
           - const: "qcom,sc7280-pdc-global"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - description: on SDM845 SoCs the following compatibles must be specified
         items:
           - const: "qcom,sdm845-pdc-global"

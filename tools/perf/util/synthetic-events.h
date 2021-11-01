@@ -14,7 +14,10 @@ struct evsel;
 struct machine;
 struct perf_counts_values;
 struct perf_cpu_map;
+<<<<<<< HEAD
 struct perf_data;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct perf_event_attr;
 struct perf_event_mmap_page;
 struct perf_sample;
@@ -102,9 +105,12 @@ static inline int perf_event__synthesize_bpf_events(struct perf_session *session
 }
 #endif // HAVE_LIBBPF_SUPPORT
 
+<<<<<<< HEAD
 int perf_event__synthesize_for_pipe(struct perf_tool *tool,
 				    struct perf_session *session,
 				    struct perf_data *data,
 				    perf_event__handler_t process);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif // __PERF_SYNTHETIC_EVENTS_H

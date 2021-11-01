@@ -140,8 +140,11 @@
 
 #define SO_NETNS_COOKIE		71
 
+<<<<<<< HEAD
 #define SO_BUF_LOCK		72
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if !defined(__KERNEL__)
 
 #if __BITS_PER_LONG == 64

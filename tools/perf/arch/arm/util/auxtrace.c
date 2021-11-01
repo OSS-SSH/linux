@@ -8,10 +8,17 @@
 #include <linux/coresight-pmu.h>
 #include <linux/zalloc.h>
 
+<<<<<<< HEAD
 #include "../../../util/auxtrace.h"
 #include "../../../util/debug.h"
 #include "../../../util/evlist.h"
 #include "../../../util/pmu.h"
+=======
+#include "../../util/auxtrace.h"
+#include "../../util/debug.h"
+#include "../../util/evlist.h"
+#include "../../util/pmu.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "cs-etm.h"
 #include "arm-spe.h"
 
@@ -107,6 +114,7 @@ struct auxtrace_record
 	*err = 0;
 	return NULL;
 }
+<<<<<<< HEAD
 
 #if defined(__arm__)
 u64 compat_auxtrace_mmap__read_head(struct auxtrace_mmap *mm)
@@ -139,3 +147,5 @@ int compat_auxtrace_mmap__write_tail(struct auxtrace_mmap *mm, u64 tail)
 	return 0;
 }
 #endif
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

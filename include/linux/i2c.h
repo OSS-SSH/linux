@@ -1010,7 +1010,10 @@ struct acpi_resource_i2c_serialbus;
 #if IS_ENABLED(CONFIG_ACPI)
 bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
 			       struct acpi_resource_i2c_serialbus **i2c);
+<<<<<<< HEAD
 int i2c_acpi_client_count(struct acpi_device *adev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 u32 i2c_acpi_find_bus_speed(struct device *dev);
 struct i2c_client *i2c_acpi_new_device(struct device *dev, int index,
 				       struct i2c_board_info *info);
@@ -1021,10 +1024,13 @@ static inline bool i2c_acpi_get_i2c_resource(struct acpi_resource *ares,
 {
 	return false;
 }
+<<<<<<< HEAD
 static inline int i2c_acpi_client_count(struct acpi_device *adev)
 {
 	return 0;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline u32 i2c_acpi_find_bus_speed(struct device *dev)
 {
 	return 0;

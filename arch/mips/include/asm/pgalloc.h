@@ -58,6 +58,7 @@ do {							\
 
 static inline pmd_t *pmd_alloc_one(struct mm_struct *mm, unsigned long address)
 {
+<<<<<<< HEAD
 	pmd_t *pmd;
 	struct page *pg;
 
@@ -72,6 +73,17 @@ static inline pmd_t *pmd_alloc_one(struct mm_struct *mm, unsigned long address)
 
 	pmd = (pmd_t *)page_address(pg);
 	pmd_init((unsigned long)pmd, (unsigned long)invalid_pte_table);
+=======
+	pmd_t *pmd = NULL;
+	struct page *pg;
+
+	pg = alloc_pages(GFP_KERNEL | __GFP_ACCOUNT, PMD_ORDER);
+	if (pg) {
+		pgtable_pmd_page_ctor(pg);
+		pmd = (pmd_t *)page_address(pg);
+		pmd_init((unsigned long)pmd, (unsigned long)invalid_pte_table);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return pmd;
 }
 

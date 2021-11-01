@@ -239,6 +239,7 @@ struct drm_sched_backend_ops {
 	 * @timedout_job: Called when a job has taken too long to execute,
 	 * to trigger GPU recovery.
 	 *
+<<<<<<< HEAD
 	 * This method is called in a workqueue context.
 	 *
 	 * Drivers typically issue a reset to recover from GPU hangs, and this
@@ -271,6 +272,8 @@ struct drm_sched_backend_ops {
 	 * 5. Restart all schedulers that were stopped in step #1 using
 	 *    drm_sched_start()
 	 *
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	 * Return DRM_GPU_SCHED_STAT_NOMINAL, when all is normal,
 	 * and the underlying driver has started or completed recovery.
 	 *
@@ -301,7 +304,10 @@ struct drm_sched_backend_ops {
  *                 finished.
  * @hw_rq_count: the number of jobs currently in the hardware queue.
  * @job_id_count: used to assign unique id to the each job.
+<<<<<<< HEAD
  * @timeout_wq: workqueue used to queue @work_tdr
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @work_tdr: schedules a delayed call to @drm_sched_job_timedout after the
  *            timeout interval is over.
  * @thread: the kthread on which the scheduler which run.
@@ -326,7 +332,10 @@ struct drm_gpu_scheduler {
 	wait_queue_head_t		job_scheduled;
 	atomic_t			hw_rq_count;
 	atomic64_t			job_id_count;
+<<<<<<< HEAD
 	struct workqueue_struct		*timeout_wq;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct delayed_work		work_tdr;
 	struct task_struct		*thread;
 	struct list_head		pending_list;
@@ -340,8 +349,12 @@ struct drm_gpu_scheduler {
 
 int drm_sched_init(struct drm_gpu_scheduler *sched,
 		   const struct drm_sched_backend_ops *ops,
+<<<<<<< HEAD
 		   uint32_t hw_submission, unsigned hang_limit,
 		   long timeout, struct workqueue_struct *timeout_wq,
+=======
+		   uint32_t hw_submission, unsigned hang_limit, long timeout,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		   atomic_t *score, const char *name);
 
 void drm_sched_fini(struct drm_gpu_scheduler *sched);

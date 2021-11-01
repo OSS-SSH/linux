@@ -53,7 +53,11 @@ struct drm_vma_offset_node {
 	rwlock_t vm_lock;
 	struct drm_mm_node vm_node;
 	struct rb_root vm_files;
+<<<<<<< HEAD
 	void *driver_private;
+=======
+	bool readonly:1;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 struct drm_vma_offset_manager {

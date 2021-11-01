@@ -7,7 +7,10 @@ EXCEPTION
 #EXHAUST_STACK Corrupts memory on failure
 #CORRUPT_STACK Crashes entire system on success
 #CORRUPT_STACK_STRONG Crashes entire system on success
+<<<<<<< HEAD
 ARRAY_BOUNDS
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 CORRUPT_LIST_ADD list_add corruption
 CORRUPT_LIST_DEL list_del corruption
 STACK_GUARD_PAGE_LEADING
@@ -73,6 +76,9 @@ USERCOPY_KERNEL
 STACKLEAK_ERASING OK: the rest of the thread stack is properly erased
 CFI_FORWARD_PROTO
 FORTIFIED_STRSCPY
+<<<<<<< HEAD
 FORTIFIED_OBJECT
 FORTIFIED_SUBOBJECT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 PPC_SLB_MULTIHIT Recovered

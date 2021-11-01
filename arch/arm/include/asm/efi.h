@@ -17,7 +17,10 @@
 
 #ifdef CONFIG_EFI
 void efi_init(void);
+<<<<<<< HEAD
 extern void efifb_setup_from_dmi(struct screen_info *si, const char *opt);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 int efi_create_mapping(struct mm_struct *mm, efi_memory_desc_t *md);
 int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
@@ -53,6 +56,13 @@ void efi_virtmap_unload(void);
 struct screen_info *alloc_screen_info(void);
 void free_screen_info(struct screen_info *si);
 
+<<<<<<< HEAD
+=======
+static inline void efifb_setup_from_dmi(struct screen_info *si, const char *opt)
+{
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * A reasonable upper bound for the uncompressed kernel size is 32 MBytes,
  * so we will reserve that amount of memory. We have no easy way to tell what

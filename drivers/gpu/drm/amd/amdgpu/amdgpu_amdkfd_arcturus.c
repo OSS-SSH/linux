@@ -305,6 +305,10 @@ const struct kfd2kgd_calls arcturus_kfd2kgd = {
 				kgd_gfx_v9_get_atc_vmid_pasid_mapping_info,
 	.set_vm_context_page_table_base =
 				kgd_gfx_v9_set_vm_context_page_table_base,
+<<<<<<< HEAD
 	.get_cu_occupancy = kgd_gfx_v9_get_cu_occupancy,
 	.program_trap_handler_settings = kgd_gfx_v9_program_trap_handler_settings
+=======
+	.get_cu_occupancy = kgd_gfx_v9_get_cu_occupancy
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };

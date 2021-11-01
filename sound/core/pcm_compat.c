@@ -468,6 +468,7 @@ static int snd_pcm_ioctl_sync_ptr_x32(struct snd_pcm_substream *substream,
 }
 #endif /* CONFIG_X86_X32 */
 
+<<<<<<< HEAD
 #ifdef __BIG_ENDIAN
 typedef char __pad_before_u32[4];
 typedef char __pad_after_u32[0];
@@ -538,6 +539,8 @@ static int snd_pcm_ioctl_sync_ptr_buggy(struct snd_pcm_substream *substream,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  */
 enum {
@@ -607,7 +610,11 @@ static long snd_pcm_ioctl_compat(struct file *file, unsigned int cmd, unsigned l
 		if (in_x32_syscall())
 			return snd_pcm_ioctl_sync_ptr_x32(substream, argp);
 #endif /* CONFIG_X86_X32 */
+<<<<<<< HEAD
 		return snd_pcm_ioctl_sync_ptr_buggy(substream, argp);
+=======
+		return snd_pcm_common_ioctl(file, substream, cmd, argp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	case SNDRV_PCM_IOCTL_HW_REFINE32:
 		return snd_pcm_ioctl_hw_params_compat(substream, 1, argp);
 	case SNDRV_PCM_IOCTL_HW_PARAMS32:

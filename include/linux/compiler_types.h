@@ -294,6 +294,15 @@ struct ftrace_likely_data {
 #ifndef __compiletime_object_size
 # define __compiletime_object_size(obj) -1
 #endif
+<<<<<<< HEAD
+=======
+#ifndef __compiletime_warning
+# define __compiletime_warning(message)
+#endif
+#ifndef __compiletime_error
+# define __compiletime_error(message)
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #ifdef __OPTIMIZE__
 # define __compiletime_assert(condition, msg, prefix, suffix)		\

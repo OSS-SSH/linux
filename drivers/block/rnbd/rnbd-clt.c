@@ -271,7 +271,11 @@ unlock:
 	 */
 	if (cpu_q)
 		*cpup = cpu_q->cpu;
+<<<<<<< HEAD
 	put_cpu_ptr(sess->cpu_rr);
+=======
+	put_cpu_var(sess->cpu_rr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (q)
 		rnbd_clt_dev_requeue(q);

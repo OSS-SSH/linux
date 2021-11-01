@@ -324,7 +324,11 @@ static inline void assert_pte_locked(struct mm_struct *mm, unsigned long addr)
 }
 #endif /* !CONFIG_DEBUG_VM */
 
+<<<<<<< HEAD
 static __always_inline bool radix_enabled(void)
+=======
+static inline bool radix_enabled(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	return mmu_has_feature(MMU_FTR_TYPE_RADIX);
 }

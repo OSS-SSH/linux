@@ -775,7 +775,11 @@ static const u64 rc[WHIRLPOOL_ROUNDS] = {
 	0xca2dbf07ad5a8333ULL,
 };
 
+<<<<<<< HEAD
 /*
+=======
+/**
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * The core Whirlpool transform.
  */
 

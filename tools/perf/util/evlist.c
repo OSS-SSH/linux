@@ -27,7 +27,10 @@
 #include "util/perf_api_probe.h"
 #include "util/evsel_fprintf.h"
 #include "util/evlist-hybrid.h"
+<<<<<<< HEAD
 #include "util/pmu.h"
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <signal.h>
 #include <unistd.h>
 #include <sched.h>
@@ -1003,7 +1006,11 @@ int evlist__create_maps(struct evlist *evlist, struct target *target)
 	if (!cpus)
 		goto out_delete_threads;
 
+<<<<<<< HEAD
 	evlist->core.has_user_cpus = !!target->cpu_list && !target->hybrid;
+=======
+	evlist->core.has_user_cpus = !!target->cpu_list;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	perf_evlist__set_maps(&evlist->core, cpus, threads);
 

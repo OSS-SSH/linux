@@ -42,6 +42,14 @@
 static struct ida bl_ida;
 #define BL_NAME_SIZE 15 // 12 for name + 2 for digits + 1 for '\0'
 
+<<<<<<< HEAD
+=======
+struct nouveau_backlight {
+	struct backlight_device *dev;
+	int id;
+};
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool
 nouveau_get_backlight_name(char backlight_name[BL_NAME_SIZE],
 			   struct nouveau_backlight *bl)
@@ -143,6 +151,7 @@ static const struct backlight_ops nv50_bl_ops = {
 	.update_status = nv50_set_intensity,
 };
 
+<<<<<<< HEAD
 /*
  * eDP brightness callbacks need to happen under lock, since we need to
  * enable/disable the backlight ourselves for modesets
@@ -235,6 +244,8 @@ static const struct backlight_ops nv50_edp_bl_ops = {
 	.update_status = nv50_edp_set_brightness,
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int
 nva3_get_intensity(struct backlight_device *bd)
 {
@@ -281,6 +292,7 @@ static const struct backlight_ops nva3_bl_ops = {
 	.update_status = nva3_set_intensity,
 };
 
+<<<<<<< HEAD
 /* FIXME: perform backlight probing for eDP _before_ this, this only gets called after connector
  * registration which happens after the initial modeset
  */
@@ -288,6 +300,10 @@ static int
 nv50_backlight_init(struct nouveau_backlight *bl,
 		    struct nouveau_connector *nv_conn,
 		    struct nouveau_encoder *nv_encoder,
+=======
+static int
+nv50_backlight_init(struct nouveau_encoder *nv_encoder,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    struct backlight_properties *props,
 		    const struct backlight_ops **ops)
 {
@@ -297,6 +313,7 @@ nv50_backlight_init(struct nouveau_backlight *bl,
 	if (!nvif_rd32(device, NV50_PDISP_SOR_PWM_CTL(ffs(nv_encoder->dcb->or) - 1)))
 		return -ENODEV;
 
+<<<<<<< HEAD
 	if (nv_conn->type == DCB_CONNECTOR_eDP) {
 		int ret;
 		u16 current_level;
@@ -332,6 +349,8 @@ nv50_backlight_init(struct nouveau_backlight *bl,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (drm->client.device.info.chipset <= 0xa0 ||
 	    drm->client.device.info.chipset == 0xaa ||
 	    drm->client.device.info.chipset == 0xac)
@@ -372,10 +391,13 @@ nouveau_backlight_init(struct drm_connector *connector)
 	if (!nv_encoder)
 		return 0;
 
+<<<<<<< HEAD
 	bl = kzalloc(sizeof(*bl), GFP_KERNEL);
 	if (!bl)
 		return -ENOMEM;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (device->info.family) {
 	case NV_DEVICE_INFO_V0_CURIE:
 		ret = nv40_backlight_init(nv_encoder, &props, &ops);
@@ -388,6 +410,7 @@ nouveau_backlight_init(struct drm_connector *connector)
 	case NV_DEVICE_INFO_V0_VOLTA:
 	case NV_DEVICE_INFO_V0_TURING:
 	case NV_DEVICE_INFO_V0_AMPERE: //XXX: not confirmed
+<<<<<<< HEAD
 		ret = nv50_backlight_init(bl, nouveau_connector(connector),
 					  nv_encoder, &props, &ops);
 		break;
@@ -401,6 +424,22 @@ nouveau_backlight_init(struct drm_connector *connector)
 			ret = 0;
 		goto fail_alloc;
 	}
+=======
+		ret = nv50_backlight_init(nv_encoder, &props, &ops);
+		break;
+	default:
+		return 0;
+	}
+
+	if (ret == -ENODEV)
+		return 0;
+	else if (ret)
+		return ret;
+
+	bl = kzalloc(sizeof(*bl), GFP_KERNEL);
+	if (!bl)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!nouveau_get_backlight_name(backlight_name, bl)) {
 		NV_ERROR(drm, "Failed to retrieve a unique name for the backlight interface\n");
@@ -417,9 +456,13 @@ nouveau_backlight_init(struct drm_connector *connector)
 	}
 
 	nouveau_connector(connector)->backlight = bl;
+<<<<<<< HEAD
 	if (!bl->dev->props.brightness)
 		bl->dev->props.brightness =
 			bl->dev->ops->get_brightness(bl->dev);
+=======
+	bl->dev->props.brightness = bl->dev->ops->get_brightness(bl->dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	backlight_update_status(bl->dev);
 
 	return 0;

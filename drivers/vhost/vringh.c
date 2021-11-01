@@ -359,7 +359,11 @@ __vringh_iov(struct vringh *vrh, u16 i,
 			iov = wiov;
 		else {
 			iov = riov;
+<<<<<<< HEAD
 			if (unlikely(wiov && wiov->used)) {
+=======
+			if (unlikely(wiov && wiov->i)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				vringh_bad("Readable desc %p after writable",
 					   &descs[i]);
 				err = -EINVAL;

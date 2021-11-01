@@ -975,6 +975,10 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_QUERY_EQN)(
 	struct mlx5_ib_dev *dev;
 	int user_vector;
 	int dev_eqn;
+<<<<<<< HEAD
+=======
+	unsigned int irqn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int err;
 
 	if (uverbs_copy_from(&user_vector, attrs,
@@ -986,7 +990,11 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_QUERY_EQN)(
 		return PTR_ERR(c);
 	dev = to_mdev(c->ibucontext.device);
 
+<<<<<<< HEAD
 	err = mlx5_vector2eqn(dev->mdev, user_vector, &dev_eqn);
+=======
+	err = mlx5_vector2eqn(dev->mdev, user_vector, &dev_eqn, &irqn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
@@ -1436,10 +1444,18 @@ out:
 	rcu_read_unlock();
 }
 
+<<<<<<< HEAD
 static bool is_apu_cq(struct mlx5_ib_dev *dev, const void *in)
 {
 	if (!MLX5_CAP_GEN(dev->mdev, apu) ||
 	    !MLX5_GET(cqc, MLX5_ADDR_OF(create_cq_in, in, cq_context), apu_cq))
+=======
+static bool is_apu_thread_cq(struct mlx5_ib_dev *dev, const void *in)
+{
+	if (!MLX5_CAP_GEN(dev->mdev, apu) ||
+	    !MLX5_GET(cqc, MLX5_ADDR_OF(create_cq_in, in, cq_context),
+		      apu_thread_cq))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return false;
 
 	return true;
@@ -1499,7 +1515,11 @@ static int UVERBS_HANDLER(MLX5_IB_METHOD_DEVX_OBJ_CREATE)(
 		err = mlx5_core_create_dct(dev, &obj->core_dct, cmd_in,
 					   cmd_in_len, cmd_out, cmd_out_len);
 	} else if (opcode == MLX5_CMD_OP_CREATE_CQ &&
+<<<<<<< HEAD
 		   !is_apu_cq(dev, cmd_in)) {
+=======
+		   !is_apu_thread_cq(dev, cmd_in)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		obj->flags |= DEVX_OBJ_FLAGS_CQ;
 		obj->core_cq.comp = devx_cq_comp;
 		err = mlx5_core_create_cq(dev->mdev, &obj->core_cq,

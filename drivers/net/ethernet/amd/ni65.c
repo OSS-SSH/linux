@@ -748,7 +748,11 @@ static void ni65_stop_start(struct net_device *dev,struct priv *p)
 #ifdef XMT_VIA_SKB
 			skb_save[i] = p->tmd_skb[i];
 #endif
+<<<<<<< HEAD
 			buffer[i] = (unsigned long)isa_bus_to_virt(tmdp->u.buffer);
+=======
+			buffer[i] = (u32) isa_bus_to_virt(tmdp->u.buffer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			blen[i] = tmdp->blen;
 			tmdp->u.s.status = 0x0;
 		}
@@ -1230,20 +1234,32 @@ MODULE_PARM_DESC(irq, "ni6510 IRQ number (ignored for some cards)");
 MODULE_PARM_DESC(io, "ni6510 I/O base address");
 MODULE_PARM_DESC(dma, "ni6510 ISA DMA channel (ignored for some cards)");
 
+<<<<<<< HEAD
 static int __init ni65_init_module(void)
+=======
+int __init init_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	dev_ni65 = ni65_probe(-1);
 	return PTR_ERR_OR_ZERO(dev_ni65);
 }
+<<<<<<< HEAD
 module_init(ni65_init_module);
 
 static void __exit ni65_cleanup_module(void)
+=======
+
+void __exit cleanup_module(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unregister_netdev(dev_ni65);
 	cleanup_card(dev_ni65);
 	free_netdev(dev_ni65);
 }
+<<<<<<< HEAD
 module_exit(ni65_cleanup_module);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* MODULE */
 
 MODULE_LICENSE("GPL");

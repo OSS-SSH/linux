@@ -135,8 +135,13 @@ static struct parsed_partitions *check_partition(struct gendisk *hd)
 	}
 	state->pp_buf[0] = '\0';
 
+<<<<<<< HEAD
 	state->disk = hd;
 	snprintf(state->name, BDEVNAME_SIZE, "%s", hd->disk_name);
+=======
+	state->bdev = hd->part0;
+	disk_name(hd, 0, state->name);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	snprintf(state->pp_buf, PAGE_SIZE, " %s:", state->name);
 	if (isdigit(state->name[strlen(state->name)-1]))
 		sprintf(state->name, "p");
@@ -259,8 +264,14 @@ static const struct attribute_group *part_attr_groups[] = {
 
 static void part_release(struct device *dev)
 {
+<<<<<<< HEAD
 	put_disk(dev_to_bdev(dev)->bd_disk);
 	iput(dev_to_bdev(dev)->bd_inode);
+=======
+	if (MAJOR(dev->devt) == BLOCK_EXT_MAJOR)
+		blk_free_ext_minor(MINOR(dev->devt));
+	bdput(dev_to_bdev(dev));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int part_uevent(struct device *dev, struct kobj_uevent_env *env)
@@ -280,10 +291,19 @@ struct device_type part_type = {
 	.uevent		= part_uevent,
 };
 
+<<<<<<< HEAD
 static void delete_partition(struct block_device *part)
 {
 	lockdep_assert_held(&part->bd_disk->open_mutex);
 
+=======
+/*
+ * Must be called either with open_mutex held, before a disk can be opened or
+ * after all disk users are gone.
+ */
+static void delete_partition(struct block_device *part)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fsync_bdev(part);
 	__invalidate_device(part, true);
 
@@ -348,6 +368,7 @@ static struct block_device *add_partition(struct gendisk *disk, int partno,
 	if (xa_load(&disk->part_tbl, partno))
 		return ERR_PTR(-EBUSY);
 
+<<<<<<< HEAD
 	/* ensure we always have a reference to the whole disk */
 	get_device(disk_to_dev(disk));
 
@@ -355,10 +376,25 @@ static struct block_device *add_partition(struct gendisk *disk, int partno,
 	bdev = bdev_alloc(disk, partno);
 	if (!bdev)
 		goto out_put_disk;
+=======
+	bdev = bdev_alloc(disk, partno);
+	if (!bdev)
+		return ERR_PTR(-ENOMEM);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	bdev->bd_start_sect = start;
 	bdev_set_nr_sectors(bdev, len);
 
+<<<<<<< HEAD
+=======
+	if (info) {
+		err = -ENOMEM;
+		bdev->bd_meta_info = kmemdup(info, sizeof(*info), GFP_KERNEL);
+		if (!bdev->bd_meta_info)
+			goto out_bdput;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pdev = &bdev->bd_device;
 	dname = dev_name(ddev);
 	if (isdigit(dname[strlen(dname) - 1]))
@@ -382,6 +418,7 @@ static struct block_device *add_partition(struct gendisk *disk, int partno,
 	}
 	pdev->devt = devt;
 
+<<<<<<< HEAD
 	if (info) {
 		err = -ENOMEM;
 		bdev->bd_meta_info = kmemdup(info, sizeof(*info), GFP_KERNEL);
@@ -389,6 +426,8 @@ static struct block_device *add_partition(struct gendisk *disk, int partno,
 			goto out_put;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* delay uevent until 'holders' subdir is created */
 	dev_set_uevent_suppress(pdev, 1);
 	err = device_add(pdev);
@@ -418,13 +457,22 @@ static struct block_device *add_partition(struct gendisk *disk, int partno,
 		kobject_uevent(&pdev->kobj, KOBJ_ADD);
 	return bdev;
 
+<<<<<<< HEAD
+=======
+out_bdput:
+	bdput(bdev);
+	return ERR_PTR(err);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 out_del:
 	kobject_put(bdev->bd_holder_dir);
 	device_del(pdev);
 out_put:
 	put_device(pdev);
+<<<<<<< HEAD
 out_put_disk:
 	put_disk(disk);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ERR_PTR(err);
 }
 
@@ -449,6 +497,7 @@ static bool partition_overlaps(struct gendisk *disk, sector_t start,
 	return overlap;
 }
 
+<<<<<<< HEAD
 int bdev_add_partition(struct gendisk *disk, int partno, sector_t start,
 		sector_t length)
 {
@@ -457,6 +506,17 @@ int bdev_add_partition(struct gendisk *disk, int partno, sector_t start,
 
 	mutex_lock(&disk->open_mutex);
 	if (!disk_live(disk)) {
+=======
+int bdev_add_partition(struct block_device *bdev, int partno,
+		sector_t start, sector_t length)
+{
+	struct block_device *part;
+	struct gendisk *disk = bdev->bd_disk;
+	int ret;
+
+	mutex_lock(&disk->open_mutex);
+	if (!(disk->flags & GENHD_FL_UP)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = -ENXIO;
 		goto out;
 	}
@@ -474,13 +534,22 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 int bdev_del_partition(struct gendisk *disk, int partno)
+=======
+int bdev_del_partition(struct block_device *bdev, int partno)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct block_device *part = NULL;
 	int ret = -ENXIO;
 
+<<<<<<< HEAD
 	mutex_lock(&disk->open_mutex);
 	part = xa_load(&disk->part_tbl, partno);
+=======
+	mutex_lock(&bdev->bd_disk->open_mutex);
+	part = xa_load(&bdev->bd_disk->part_tbl, partno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!part)
 		goto out_unlock;
 
@@ -491,18 +560,32 @@ int bdev_del_partition(struct gendisk *disk, int partno)
 	delete_partition(part);
 	ret = 0;
 out_unlock:
+<<<<<<< HEAD
 	mutex_unlock(&disk->open_mutex);
 	return ret;
 }
 
 int bdev_resize_partition(struct gendisk *disk, int partno, sector_t start,
 		sector_t length)
+=======
+	mutex_unlock(&bdev->bd_disk->open_mutex);
+	return ret;
+}
+
+int bdev_resize_partition(struct block_device *bdev, int partno,
+		sector_t start, sector_t length)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct block_device *part = NULL;
 	int ret = -ENXIO;
 
+<<<<<<< HEAD
 	mutex_lock(&disk->open_mutex);
 	part = xa_load(&disk->part_tbl, partno);
+=======
+	mutex_lock(&bdev->bd_disk->open_mutex);
+	part = xa_load(&bdev->bd_disk->part_tbl, partno);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!part)
 		goto out_unlock;
 
@@ -511,14 +594,22 @@ int bdev_resize_partition(struct gendisk *disk, int partno, sector_t start,
 		goto out_unlock;
 
 	ret = -EBUSY;
+<<<<<<< HEAD
 	if (partition_overlaps(disk, start, length, partno))
+=======
+	if (partition_overlaps(bdev->bd_disk, start, length, partno))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out_unlock;
 
 	bdev_set_nr_sectors(part, length);
 
 	ret = 0;
 out_unlock:
+<<<<<<< HEAD
 	mutex_unlock(&disk->open_mutex);
+=======
+	mutex_unlock(&bdev->bd_disk->open_mutex);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -666,7 +757,11 @@ int bdev_disk_changed(struct gendisk *disk, bool invalidate)
 
 	lockdep_assert_held(&disk->open_mutex);
 
+<<<<<<< HEAD
 	if (!disk_live(disk))
+=======
+	if (!(disk->flags & GENHD_FL_UP))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENXIO;
 
 rescan:
@@ -714,10 +809,17 @@ EXPORT_SYMBOL_GPL(bdev_disk_changed);
 
 void *read_part_sector(struct parsed_partitions *state, sector_t n, Sector *p)
 {
+<<<<<<< HEAD
 	struct address_space *mapping = state->disk->part0->bd_inode->i_mapping;
 	struct page *page;
 
 	if (n >= get_capacity(state->disk)) {
+=======
+	struct address_space *mapping = state->bdev->bd_inode->i_mapping;
+	struct page *page;
+
+	if (n >= get_capacity(state->bdev->bd_disk)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		state->access_beyond_eod = true;
 		return NULL;
 	}

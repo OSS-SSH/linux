@@ -56,6 +56,7 @@ static unsigned long um_pci_msi_used[BITS_TO_LONGS(MAX_MSI_VECTORS)];
 
 #define UM_VIRT_PCI_MAXDELAY 40000
 
+<<<<<<< HEAD
 struct um_pci_message_buffer {
 	struct virtio_pcidev_msg hdr;
 	u8 data[8];
@@ -63,6 +64,8 @@ struct um_pci_message_buffer {
 
 static struct um_pci_message_buffer __percpu *um_pci_msg_bufs;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int um_pci_send_cmd(struct um_pci_device *dev,
 			   struct virtio_pcidev_msg *cmd,
 			   unsigned int cmd_size,
@@ -75,12 +78,19 @@ static int um_pci_send_cmd(struct um_pci_device *dev,
 		[1] = extra ? &extra_sg : &in_sg,
 		[2] = extra ? &in_sg : NULL,
 	};
+<<<<<<< HEAD
 	struct um_pci_message_buffer *buf;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int delay_count = 0;
 	int ret, len;
 	bool posted;
 
+<<<<<<< HEAD
 	if (WARN_ON(cmd_size < sizeof(*cmd) || cmd_size > sizeof(*buf)))
+=======
+	if (WARN_ON(cmd_size < sizeof(*cmd)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -EINVAL;
 
 	switch (cmd->op) {
@@ -96,9 +106,12 @@ static int um_pci_send_cmd(struct um_pci_device *dev,
 		break;
 	}
 
+<<<<<<< HEAD
 	buf = get_cpu_var(um_pci_msg_bufs);
 	memcpy(buf, cmd, cmd_size);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (posted) {
 		u8 *ncmd = kmalloc(cmd_size + extra_size, GFP_ATOMIC);
 
@@ -113,10 +126,14 @@ static int um_pci_send_cmd(struct um_pci_device *dev,
 		} else {
 			/* try without allocating memory */
 			posted = false;
+<<<<<<< HEAD
 			cmd = (void *)buf;
 		}
 	} else {
 		cmd = (void *)buf;
+=======
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	sg_init_one(&out_sg, cmd, cmd_size);
@@ -132,12 +149,20 @@ static int um_pci_send_cmd(struct um_pci_device *dev,
 				posted ? cmd : HANDLE_NO_FREE(cmd),
 				GFP_ATOMIC);
 	if (ret)
+<<<<<<< HEAD
 		goto out;
 
 	if (posted) {
 		virtqueue_kick(dev->cmd_vq);
 		ret = 0;
 		goto out;
+=======
+		return ret;
+
+	if (posted) {
+		virtqueue_kick(dev->cmd_vq);
+		return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* kick and poll for getting a response on the queue */
@@ -163,8 +188,11 @@ static int um_pci_send_cmd(struct um_pci_device *dev,
 	}
 	clear_bit(UM_PCI_STAT_WAITING, &dev->status);
 
+<<<<<<< HEAD
 out:
 	put_cpu_var(um_pci_msg_bufs);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -178,17 +206,25 @@ static unsigned long um_pci_cfgspace_read(void *priv, unsigned int offset,
 		.size = size,
 		.addr = offset,
 	};
+<<<<<<< HEAD
 	/* buf->data is maximum size - we may only use parts of it */
 	struct um_pci_message_buffer *buf;
 	u8 *data;
 	unsigned long ret = ~0ULL;
+=======
+	/* maximum size - we may only use parts of it */
+	u8 data[8];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!dev)
 		return ~0ULL;
 
+<<<<<<< HEAD
 	buf = get_cpu_var(um_pci_msg_bufs);
 	data = buf->data;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	memset(data, 0xff, sizeof(data));
 
 	switch (size) {
@@ -201,6 +237,7 @@ static unsigned long um_pci_cfgspace_read(void *priv, unsigned int offset,
 		break;
 	default:
 		WARN(1, "invalid config space read size %d\n", size);
+<<<<<<< HEAD
 		goto out;
 	}
 
@@ -229,6 +266,29 @@ static unsigned long um_pci_cfgspace_read(void *priv, unsigned int offset,
 out:
 	put_cpu_var(um_pci_msg_bufs);
 	return ret;
+=======
+		return ~0ULL;
+	}
+
+	if (um_pci_send_cmd(dev, &hdr, sizeof(hdr), NULL, 0,
+			    data, sizeof(data)))
+		return ~0ULL;
+
+	switch (size) {
+	case 1:
+		return data[0];
+	case 2:
+		return le16_to_cpup((void *)data);
+	case 4:
+		return le32_to_cpup((void *)data);
+#ifdef CONFIG_64BIT
+	case 8:
+		return le64_to_cpup((void *)data);
+#endif
+	default:
+		return ~0ULL;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void um_pci_cfgspace_write(void *priv, unsigned int offset, int size,
@@ -301,6 +361,7 @@ static void um_pci_bar_copy_from(void *priv, void *buffer,
 static unsigned long um_pci_bar_read(void *priv, unsigned int offset,
 				     int size)
 {
+<<<<<<< HEAD
 	/* buf->data is maximum size - we may only use parts of it */
 	struct um_pci_message_buffer *buf;
 	u8 *data;
@@ -308,6 +369,10 @@ static unsigned long um_pci_bar_read(void *priv, unsigned int offset,
 
 	buf = get_cpu_var(um_pci_msg_bufs);
 	data = buf->data;
+=======
+	/* maximum size - we may only use parts of it */
+	u8 data[8];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	switch (size) {
 	case 1:
@@ -319,13 +384,18 @@ static unsigned long um_pci_bar_read(void *priv, unsigned int offset,
 		break;
 	default:
 		WARN(1, "invalid config space read size %d\n", size);
+<<<<<<< HEAD
 		goto out;
+=======
+		return ~0ULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	um_pci_bar_copy_from(priv, data, offset, size);
 
 	switch (size) {
 	case 1:
+<<<<<<< HEAD
 		ret = data[0];
 		break;
 	case 2:
@@ -346,6 +416,20 @@ static unsigned long um_pci_bar_read(void *priv, unsigned int offset,
 out:
 	put_cpu_var(um_pci_msg_bufs);
 	return ret;
+=======
+		return data[0];
+	case 2:
+		return le16_to_cpup((void *)data);
+	case 4:
+		return le32_to_cpup((void *)data);
+#ifdef CONFIG_64BIT
+	case 8:
+		return le64_to_cpup((void *)data);
+#endif
+	default:
+		return ~0ULL;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void um_pci_bar_copy_to(void *priv, unsigned int offset,
@@ -852,7 +936,11 @@ void *pci_root_bus_fwnode(struct pci_bus *bus)
 	return um_pci_fwnode;
 }
 
+<<<<<<< HEAD
 static int um_pci_init(void)
+=======
+int um_pci_init(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	int err, i;
 
@@ -865,6 +953,7 @@ static int um_pci_init(void)
 		 "No virtio device ID configured for PCI - no PCI support\n"))
 		return 0;
 
+<<<<<<< HEAD
 	um_pci_msg_bufs = alloc_percpu(struct um_pci_message_buffer);
 	if (!um_pci_msg_bufs)
 		return -ENOMEM;
@@ -874,6 +963,11 @@ static int um_pci_init(void)
 		err = -ENOMEM;
 		goto free;
 	}
+=======
+	bridge = pci_alloc_host_bridge(0);
+	if (!bridge)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	um_pci_fwnode = irq_domain_alloc_named_fwnode("um-pci");
 	if (!um_pci_fwnode) {
@@ -926,22 +1020,34 @@ free:
 		irq_domain_remove(um_pci_inner_domain);
 	if (um_pci_fwnode)
 		irq_domain_free_fwnode(um_pci_fwnode);
+<<<<<<< HEAD
 	if (bridge) {
 		pci_free_resource_list(&bridge->windows);
 		pci_free_host_bridge(bridge);
 	}
 	free_percpu(um_pci_msg_bufs);
+=======
+	pci_free_resource_list(&bridge->windows);
+	pci_free_host_bridge(bridge);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return err;
 }
 module_init(um_pci_init);
 
+<<<<<<< HEAD
 static void um_pci_exit(void)
+=======
+void um_pci_exit(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	unregister_virtio_driver(&um_pci_virtio_driver);
 	irq_domain_remove(um_pci_msi_domain);
 	irq_domain_remove(um_pci_inner_domain);
 	pci_free_resource_list(&bridge->windows);
 	pci_free_host_bridge(bridge);
+<<<<<<< HEAD
 	free_percpu(um_pci_msg_bufs);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 module_exit(um_pci_exit);

@@ -472,10 +472,27 @@ static void snd_galaxy_free(struct snd_card *card)
 {
 	struct snd_galaxy *galaxy = card->private_data;
 
+<<<<<<< HEAD
 	if (galaxy->wss_port)
 		wss_set_config(galaxy->wss_port, 0);
 	if (galaxy->config_port)
 		galaxy_set_config(galaxy, galaxy->config);
+=======
+	if (galaxy->wss_port) {
+		wss_set_config(galaxy->wss_port, 0);
+		ioport_unmap(galaxy->wss_port);
+		release_and_free_resource(galaxy->res_wss_port);
+	}
+	if (galaxy->config_port) {
+		galaxy_set_config(galaxy, galaxy->config);
+		ioport_unmap(galaxy->config_port);
+		release_and_free_resource(galaxy->res_config_port);
+	}
+	if (galaxy->port) {
+		ioport_unmap(galaxy->port);
+		release_and_free_resource(galaxy->res_port);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int snd_galaxy_probe(struct device *dev, unsigned int n)
@@ -486,14 +503,20 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 	u8 type;
 	int err;
 
+<<<<<<< HEAD
 	err = snd_devm_card_new(dev, index[n], id[n], THIS_MODULE,
 				sizeof(*galaxy), &card);
+=======
+	err = snd_card_new(dev, index[n], id[n], THIS_MODULE,
+			   sizeof(*galaxy), &card);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (err < 0)
 		return err;
 
 	card->private_free = snd_galaxy_free;
 	galaxy = card->private_data;
 
+<<<<<<< HEAD
 	galaxy->res_port = devm_request_region(dev, port[n], 16, DRV_NAME);
 	if (!galaxy->res_port) {
 		dev_err(dev, "could not grab ports %#lx-%#lx\n", port[n],
@@ -503,10 +526,21 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 	galaxy->port = devm_ioport_map(dev, port[n], 16);
 	if (!galaxy->port)
 		return -ENOMEM;
+=======
+	galaxy->res_port = request_region(port[n], 16, DRV_NAME);
+	if (!galaxy->res_port) {
+		dev_err(dev, "could not grab ports %#lx-%#lx\n", port[n],
+			port[n] + 15);
+		err = -EBUSY;
+		goto error;
+	}
+	galaxy->port = ioport_map(port[n], 16);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = galaxy_init(galaxy, &type);
 	if (err < 0) {
 		dev_err(dev, "did not find a Sound Galaxy at %#lx\n", port[n]);
+<<<<<<< HEAD
 		return err;
 	}
 	dev_info(dev, "Sound Galaxy (type %d) found at %#lx\n", type, port[n]);
@@ -514,10 +548,19 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 	galaxy->res_config_port =
 		devm_request_region(dev, port[n] + GALAXY_PORT_CONFIG, 16,
 				    DRV_NAME);
+=======
+		goto error;
+	}
+	dev_info(dev, "Sound Galaxy (type %d) found at %#lx\n", type, port[n]);
+
+	galaxy->res_config_port = request_region(port[n] + GALAXY_PORT_CONFIG,
+						 16, DRV_NAME);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!galaxy->res_config_port) {
 		dev_err(dev, "could not grab ports %#lx-%#lx\n",
 			port[n] + GALAXY_PORT_CONFIG,
 			port[n] + GALAXY_PORT_CONFIG + 15);
+<<<<<<< HEAD
 		return -EBUSY;
 	}
 	galaxy->config_port =
@@ -535,11 +578,32 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 	galaxy->wss_port = devm_ioport_map(dev, wss_port[n], 4);
 	if (!galaxy->wss_port)
 		return -ENOMEM;
+=======
+		err = -EBUSY;
+		goto error;
+	}
+	galaxy->config_port = ioport_map(port[n] + GALAXY_PORT_CONFIG, 16);
+
+	galaxy_config(galaxy, config[n]);
+
+	galaxy->res_wss_port = request_region(wss_port[n], 4, DRV_NAME);
+	if (!galaxy->res_wss_port)  {
+		dev_err(dev, "could not grab ports %#lx-%#lx\n", wss_port[n],
+			wss_port[n] + 3);
+		err = -EBUSY;
+		goto error;
+	}
+	galaxy->wss_port = ioport_map(wss_port[n], 4);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	err = galaxy_wss_config(galaxy, wss_config[n]);
 	if (err < 0) {
 		dev_err(dev, "could not configure WSS\n");
+<<<<<<< HEAD
 		return err;
+=======
+		goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	strcpy(card->driver, DRV_NAME);
@@ -551,6 +615,7 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 	err = snd_wss_create(card, wss_port[n] + 4, -1, irq[n], dma1[n],
 			     dma2[n], WSS_HW_DETECT, 0, &chip);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	err = snd_wss_pcm(chip, 0);
@@ -564,12 +629,31 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 	err = snd_wss_timer(chip, 0);
 	if (err < 0)
 		return err;
+=======
+		goto error;
+
+	err = snd_wss_pcm(chip, 0);
+	if (err < 0)
+		goto error;
+
+	err = snd_wss_mixer(chip);
+	if (err < 0)
+		goto error;
+
+	err = snd_wss_timer(chip, 0);
+	if (err < 0)
+		goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (mpu_port[n] >= 0) {
 		err = snd_mpu401_uart_new(card, 0, MPU401_HW_MPU401,
 					  mpu_port[n], 0, mpu_irq[n], NULL);
 		if (err < 0)
+<<<<<<< HEAD
 			return err;
+=======
+			goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	if (fm_port[n] >= 0) {
@@ -579,6 +663,7 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 				      OPL3_HW_AUTO, 0, &opl3);
 		if (err < 0) {
 			dev_err(dev, "no OPL device at %#lx\n", fm_port[n]);
+<<<<<<< HEAD
 			return err;
 		}
 		err = snd_opl3_timer_new(opl3, 1, 2);
@@ -588,19 +673,50 @@ static int snd_galaxy_probe(struct device *dev, unsigned int n)
 		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
 		if (err < 0)
 			return err;
+=======
+			goto error;
+		}
+		err = snd_opl3_timer_new(opl3, 1, 2);
+		if (err < 0)
+			goto error;
+
+		err = snd_opl3_hwdep_new(opl3, 0, 1, NULL);
+		if (err < 0)
+			goto error;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	err = snd_card_register(card);
 	if (err < 0)
+<<<<<<< HEAD
 		return err;
 
 	dev_set_drvdata(dev, card);
 	return 0;
+=======
+		goto error;
+
+	dev_set_drvdata(dev, card);
+	return 0;
+
+error:
+	snd_card_free(card);
+	return err;
+}
+
+static void snd_galaxy_remove(struct device *dev, unsigned int n)
+{
+	snd_card_free(dev_get_drvdata(dev));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct isa_driver snd_galaxy_driver = {
 	.match		= snd_galaxy_match,
 	.probe		= snd_galaxy_probe,
+<<<<<<< HEAD
+=======
+	.remove		= snd_galaxy_remove,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	.driver		= {
 		.name	= DEV_NAME

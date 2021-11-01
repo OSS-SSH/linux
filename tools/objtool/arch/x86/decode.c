@@ -684,7 +684,11 @@ static int elf_add_alternative(struct elf *elf,
 	sec = find_section_by_name(elf, ".altinstructions");
 	if (!sec) {
 		sec = elf_create_section(elf, ".altinstructions",
+<<<<<<< HEAD
 					 SHF_ALLOC, 0, 0);
+=======
+					 SHF_ALLOC, size, 0);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		if (!sec) {
 			WARN_ELF("elf_create_section");

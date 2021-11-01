@@ -149,6 +149,16 @@ struct fuse_inode {
 	/** Lock to protect write related fields */
 	spinlock_t lock;
 
+<<<<<<< HEAD
+=======
+	/**
+	 * Can't take inode lock in fault path (leads to circular dependency).
+	 * Introduce another semaphore which can be taken in fault path and
+	 * then other filesystem paths can take this to block faults.
+	 */
+	struct rw_semaphore i_mmap_sem;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_FUSE_DAX
 	/*
 	 * Dax specific inode data
@@ -482,7 +492,10 @@ struct fuse_dev {
 
 struct fuse_fs_context {
 	int fd;
+<<<<<<< HEAD
 	struct file *file;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned int rootmode;
 	kuid_t user_id;
 	kgid_t group_id;
@@ -509,6 +522,7 @@ struct fuse_fs_context {
 	void **fudptr;
 };
 
+<<<<<<< HEAD
 struct fuse_sync_bucket {
 	/* count is a possible scalability bottleneck */
 	atomic_t count;
@@ -516,6 +530,8 @@ struct fuse_sync_bucket {
 	struct rcu_head rcu;
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * A Fuse connection.
  *
@@ -808,9 +824,12 @@ struct fuse_conn {
 
 	/** List of filesystems using this connection */
 	struct list_head mounts;
+<<<<<<< HEAD
 
 	/* New writepages go into this bucket */
 	struct fuse_sync_bucket __rcu *curr_bucket;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /*
@@ -914,6 +933,7 @@ static inline void fuse_page_descs_length_init(struct fuse_page_desc *descs,
 		descs[i].length = PAGE_SIZE - descs[i].offset;
 }
 
+<<<<<<< HEAD
 static inline void fuse_sync_bucket_dec(struct fuse_sync_bucket *bucket)
 {
 	/* Need RCU protection to prevent use after free after the decrement */
@@ -923,6 +943,8 @@ static inline void fuse_sync_bucket_dec(struct fuse_sync_bucket *bucket)
 	rcu_read_unlock();
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /** Device operations */
 extern const struct file_operations fuse_dev_operations;
 
@@ -1229,7 +1251,11 @@ extern const struct xattr_handler *fuse_acl_xattr_handlers[];
 extern const struct xattr_handler *fuse_no_acl_xattr_handlers[];
 
 struct posix_acl;
+<<<<<<< HEAD
 struct posix_acl *fuse_get_acl(struct inode *inode, int type, bool rcu);
+=======
+struct posix_acl *fuse_get_acl(struct inode *inode, int type);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int fuse_set_acl(struct user_namespace *mnt_userns, struct inode *inode,
 		 struct posix_acl *acl, int type);
 

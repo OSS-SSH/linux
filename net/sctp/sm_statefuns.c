@@ -1109,12 +1109,21 @@ enum sctp_disposition sctp_sf_send_probe(struct net *net,
 	if (!sctp_transport_pl_enabled(transport))
 		return SCTP_DISPOSITION_CONSUME;
 
+<<<<<<< HEAD
 	if (sctp_transport_pl_send(transport)) {
 		reply = sctp_make_heartbeat(asoc, transport, transport->pl.probe_size);
 		if (!reply)
 			return SCTP_DISPOSITION_NOMEM;
 		sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(reply));
 	}
+=======
+	sctp_transport_pl_send(transport);
+
+	reply = sctp_make_heartbeat(asoc, transport, transport->pl.probe_size);
+	if (!reply)
+		return SCTP_DISPOSITION_NOMEM;
+	sctp_add_cmd_sf(commands, SCTP_CMD_REPLY, SCTP_CHUNK(reply));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sctp_add_cmd_sf(commands, SCTP_CMD_PROBE_TIMER_UPDATE,
 			SCTP_TRANSPORT(transport));
 
@@ -1274,7 +1283,12 @@ enum sctp_disposition sctp_sf_backbeat_8_3(struct net *net,
 		    !sctp_transport_pl_enabled(link))
 			return SCTP_DISPOSITION_DISCARD;
 
+<<<<<<< HEAD
 		if (sctp_transport_pl_recv(link))
+=======
+		sctp_transport_pl_recv(link);
+		if (link->pl.state == SCTP_PL_COMPLETE)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return SCTP_DISPOSITION_CONSUME;
 
 		return sctp_sf_send_probe(net, ep, asoc, type, link, commands);

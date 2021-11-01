@@ -31,7 +31,10 @@ properties:
           - mediatek,mt8173-xhci
           - mediatek,mt8183-xhci
           - mediatek,mt8192-xhci
+<<<<<<< HEAD
           - mediatek,mt8195-xhci
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       - const: mediatek,mtk-xhci
 
   reg:
@@ -153,11 +156,14 @@ properties:
     description: The mask to disable u3ports, bit0 for u3port0,
       bit1 for u3port1, ... etc
 
+<<<<<<< HEAD
   mediatek,u2p-dis-msk:
     $ref: /schemas/types.yaml#/definitions/uint32
     description: The mask to disable u2ports, bit0 for u2port0,
       bit1 for u2port1, ... etc
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   "#address-cells":
     const: 1
 

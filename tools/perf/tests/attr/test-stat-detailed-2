@@ -70,6 +70,7 @@ type=0
 config=5
 optional=1
 
+<<<<<<< HEAD
 # PERF_TYPE_RAW / slots (0x400)
 [event11:base-stat]
 fd=11
@@ -167,12 +168,19 @@ enable_on_exec=0
 read_format=15
 optional=1
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 # PERF_TYPE_HW_CACHE /
 #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+<<<<<<< HEAD
 [event20:base-stat]
 fd=20
+=======
+[event11:base-stat]
+fd=11
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=0
 optional=1
@@ -181,8 +189,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_L1D                <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+<<<<<<< HEAD
 [event21:base-stat]
 fd=21
+=======
+[event12:base-stat]
+fd=12
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=65536
 optional=1
@@ -191,8 +204,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+<<<<<<< HEAD
 [event22:base-stat]
 fd=22
+=======
+[event13:base-stat]
+fd=13
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=2
 optional=1
@@ -201,8 +219,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_LL                 <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+<<<<<<< HEAD
 [event23:base-stat]
 fd=23
+=======
+[event14:base-stat]
+fd=14
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=65538
 optional=1
@@ -211,8 +234,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_L1I                <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+<<<<<<< HEAD
 [event24:base-stat]
 fd=24
+=======
+[event15:base-stat]
+fd=15
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=1
 optional=1
@@ -221,8 +249,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_L1I                <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+<<<<<<< HEAD
 [event25:base-stat]
 fd=25
+=======
+[event16:base-stat]
+fd=16
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=65537
 optional=1
@@ -231,8 +264,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_DTLB               <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+<<<<<<< HEAD
 [event26:base-stat]
 fd=26
+=======
+[event17:base-stat]
+fd=17
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=3
 optional=1
@@ -241,8 +279,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_DTLB               <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+<<<<<<< HEAD
 [event27:base-stat]
 fd=27
+=======
+[event18:base-stat]
+fd=18
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=65539
 optional=1
@@ -251,8 +294,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_ITLB               <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_ACCESS      << 16)
+<<<<<<< HEAD
 [event28:base-stat]
 fd=28
+=======
+[event19:base-stat]
+fd=19
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=4
 optional=1
@@ -261,8 +309,13 @@ optional=1
 #  PERF_COUNT_HW_CACHE_ITLB               <<  0  |
 # (PERF_COUNT_HW_CACHE_OP_READ            <<  8) |
 # (PERF_COUNT_HW_CACHE_RESULT_MISS        << 16)
+<<<<<<< HEAD
 [event29:base-stat]
 fd=29
+=======
+[event20:base-stat]
+fd=20
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 type=3
 config=65540
 optional=1

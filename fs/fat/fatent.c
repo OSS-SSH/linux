@@ -5,7 +5,10 @@
 
 #include <linux/blkdev.h>
 #include <linux/sched/signal.h>
+<<<<<<< HEAD
 #include <linux/backing-dev-defs.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include "fat.h"
 
 struct fatent_operations {

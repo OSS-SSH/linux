@@ -97,9 +97,16 @@ static int lt3593_led_probe(struct platform_device *pdev)
 	init_data.default_label = ":";
 
 	ret = devm_led_classdev_register_ext(dev, &led_data->cdev, &init_data);
+<<<<<<< HEAD
 	fwnode_handle_put(child);
 	if (ret < 0)
 		return ret;
+=======
+	if (ret < 0) {
+		fwnode_handle_put(child);
+		return ret;
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	platform_set_drvdata(pdev, led_data);
 

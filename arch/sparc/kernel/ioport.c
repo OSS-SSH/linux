@@ -356,9 +356,13 @@ err_nomem:
 void arch_dma_free(struct device *dev, size_t size, void *cpu_addr,
 		dma_addr_t dma_addr, unsigned long attrs)
 {
+<<<<<<< HEAD
 	size = PAGE_ALIGN(size);
 
 	if (!sparc_dma_free_resource(cpu_addr, size))
+=======
+	if (!sparc_dma_free_resource(cpu_addr, PAGE_ALIGN(size)))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	dma_make_coherent(dma_addr, size);

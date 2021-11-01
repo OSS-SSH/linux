@@ -121,6 +121,7 @@ Description:
 		child buses, and re-discover devices removed earlier
 		from this part of the device tree.
 
+<<<<<<< HEAD
 What:		/sys/bus/pci/devices/.../reset_method
 Date:		August 2021
 Contact:	Amey Narkhede <ameynarkhede03@gmail.com>
@@ -138,6 +139,8 @@ Description:
 		"default" enables all supported reset methods in the
 		default ordering.
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 What:		/sys/bus/pci/devices/.../reset
 Date:		July 2009
 Contact:	Michael S. Tsirkin <mst@redhat.com>

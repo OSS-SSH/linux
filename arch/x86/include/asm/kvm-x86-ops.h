@@ -72,6 +72,10 @@ KVM_X86_OP(enable_nmi_window)
 KVM_X86_OP(enable_irq_window)
 KVM_X86_OP(update_cr8_intercept)
 KVM_X86_OP(check_apicv_inhibit_reasons)
+<<<<<<< HEAD
+=======
+KVM_X86_OP_NULL(pre_update_apicv_exec_ctrl)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 KVM_X86_OP(refresh_apicv_exec_ctrl)
 KVM_X86_OP(hwapic_irr_update)
 KVM_X86_OP(hwapic_isr_update)

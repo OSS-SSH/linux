@@ -1704,13 +1704,18 @@ int btrfs_qgroup_trace_extent_nolock(struct btrfs_fs_info *fs_info,
 	return 0;
 }
 
+<<<<<<< HEAD
 int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
+=======
+int btrfs_qgroup_trace_extent_post(struct btrfs_fs_info *fs_info,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				   struct btrfs_qgroup_extent_record *qrecord)
 {
 	struct ulist *old_root;
 	u64 bytenr = qrecord->bytenr;
 	int ret;
 
+<<<<<<< HEAD
 	/*
 	 * We are always called in a context where we are already holding a
 	 * transaction handle. Often we are called when adding a data delayed
@@ -1737,6 +1742,12 @@ int btrfs_qgroup_trace_extent_post(struct btrfs_trans_handle *trans,
 	if (ret < 0) {
 		trans->fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
 		btrfs_warn(trans->fs_info,
+=======
+	ret = btrfs_find_all_roots(NULL, fs_info, bytenr, 0, &old_root, false);
+	if (ret < 0) {
+		fs_info->qgroup_flags |= BTRFS_QGROUP_STATUS_FLAG_INCONSISTENT;
+		btrfs_warn(fs_info,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 "error accounting new delayed refs extent (err code: %d), quota inconsistent",
 			ret);
 		return 0;
@@ -1780,7 +1791,11 @@ int btrfs_qgroup_trace_extent(struct btrfs_trans_handle *trans, u64 bytenr,
 		kfree(record);
 		return 0;
 	}
+<<<<<<< HEAD
 	return btrfs_qgroup_trace_extent_post(trans, record);
+=======
+	return btrfs_qgroup_trace_extent_post(fs_info, record);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int btrfs_qgroup_trace_leaf_items(struct btrfs_trans_handle *trans,
@@ -2667,7 +2682,11 @@ int btrfs_qgroup_account_extents(struct btrfs_trans_handle *trans)
 			 * current root. It's safe inside commit_transaction().
 			 */
 			ret = btrfs_find_all_roots(trans, fs_info,
+<<<<<<< HEAD
 			   record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
+=======
+				record->bytenr, BTRFS_SEQ_LAST, &new_roots, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			if (ret < 0)
 				goto cleanup;
 			if (qgroup_to_skip) {

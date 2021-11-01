@@ -505,11 +505,16 @@ static int smcr_tx_sndbuf_nonempty(struct smc_connection *conn)
 	struct smc_wr_buf *wr_buf;
 	int rc;
 
+<<<<<<< HEAD
 	if (!link || !smc_wr_tx_link_hold(link))
 		return -ENOLINK;
 	rc = smc_cdc_get_free_slot(conn, link, &wr_buf, &wr_rdma_buf, &pend);
 	if (rc < 0) {
 		smc_wr_tx_link_put(link);
+=======
+	rc = smc_cdc_get_free_slot(conn, link, &wr_buf, &wr_rdma_buf, &pend);
+	if (rc < 0) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (rc == -EBUSY) {
 			struct smc_sock *smc =
 				container_of(conn, struct smc_sock, conn);
@@ -550,7 +555,10 @@ static int smcr_tx_sndbuf_nonempty(struct smc_connection *conn)
 
 out_unlock:
 	spin_unlock_bh(&conn->send_lock);
+<<<<<<< HEAD
 	smc_wr_tx_link_put(link);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return rc;
 }
 

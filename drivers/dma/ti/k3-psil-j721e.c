@@ -58,6 +58,7 @@
 		},					\
 	}
 
+<<<<<<< HEAD
 #define PSIL_CSI2RX(x)					\
 	{						\
 		.thread_id = x,				\
@@ -66,6 +67,8 @@
 		},					\
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* PSI-L source thread IDs, used for RX (DMA_DEV_TO_MEM) */
 static struct psil_ep j721e_src_ep_map[] = {
 	/* SA2UL */
@@ -146,6 +149,7 @@ static struct psil_ep j721e_src_ep_map[] = {
 	PSIL_PDMA_XY_PKT(0x4707),
 	PSIL_PDMA_XY_PKT(0x4708),
 	PSIL_PDMA_XY_PKT(0x4709),
+<<<<<<< HEAD
 	/* CSI2RX */
 	PSIL_CSI2RX(0x4940),
 	PSIL_CSI2RX(0x4941),
@@ -211,6 +215,8 @@ static struct psil_ep j721e_src_ep_map[] = {
 	PSIL_CSI2RX(0x497d),
 	PSIL_CSI2RX(0x497e),
 	PSIL_CSI2RX(0x497f),
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* CPSW9 */
 	PSIL_ETHERNET(0x4a00),
 	/* CPSW0 */

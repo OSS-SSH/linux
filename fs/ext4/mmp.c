@@ -138,7 +138,11 @@ static int kmmpd(void *data)
 	unsigned mmp_check_interval;
 	unsigned long last_update_time;
 	unsigned long diff;
+<<<<<<< HEAD
 	int retval = 0;
+=======
+	int retval;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	mmp_block = le64_to_cpu(es->s_mmp_block);
 	mmp = (struct mmp_struct *)(bh->b_data);

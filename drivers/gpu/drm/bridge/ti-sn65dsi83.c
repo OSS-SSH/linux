@@ -137,6 +137,10 @@ enum sn65dsi83_model {
 
 struct sn65dsi83 {
 	struct drm_bridge		bridge;
+<<<<<<< HEAD
+=======
+	struct drm_display_mode		mode;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct device			*dev;
 	struct regmap			*regmap;
 	struct device_node		*host_node;
@@ -146,6 +150,11 @@ struct sn65dsi83 {
 	int				dsi_lanes;
 	bool				lvds_dual_link;
 	bool				lvds_dual_link_even_odd_swap;
+<<<<<<< HEAD
+=======
+	bool				lvds_format_24bpp;
+	bool				lvds_format_jeida;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static const struct regmap_range sn65dsi83_readable_ranges[] = {
@@ -288,8 +297,12 @@ err_dsi_attach:
 	return ret;
 }
 
+<<<<<<< HEAD
 static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
 					struct drm_bridge_state *old_bridge_state)
+=======
+static void sn65dsi83_pre_enable(struct drm_bridge *bridge)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
 
@@ -304,8 +317,12 @@ static void sn65dsi83_atomic_pre_enable(struct drm_bridge *bridge,
 	usleep_range(1000, 1100);
 }
 
+<<<<<<< HEAD
 static u8 sn65dsi83_get_lvds_range(struct sn65dsi83 *ctx,
 				   const struct drm_display_mode *mode)
+=======
+static u8 sn65dsi83_get_lvds_range(struct sn65dsi83 *ctx)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	/*
 	 * The encoding of the LVDS_CLK_RANGE is as follows:
@@ -321,7 +338,11 @@ static u8 sn65dsi83_get_lvds_range(struct sn65dsi83 *ctx,
 	 * the clock to 25..154 MHz, the range calculation can be simplified
 	 * as follows:
 	 */
+<<<<<<< HEAD
 	int mode_clock = mode->clock;
+=======
+	int mode_clock = ctx->mode.clock;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (ctx->lvds_dual_link)
 		mode_clock /= 2;
@@ -329,8 +350,12 @@ static u8 sn65dsi83_get_lvds_range(struct sn65dsi83 *ctx,
 	return (mode_clock - 12500) / 25000;
 }
 
+<<<<<<< HEAD
 static u8 sn65dsi83_get_dsi_range(struct sn65dsi83 *ctx,
 				  const struct drm_display_mode *mode)
+=======
+static u8 sn65dsi83_get_dsi_range(struct sn65dsi83 *ctx)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	/*
 	 * The encoding of the CHA_DSI_CLK_RANGE is as follows:
@@ -346,7 +371,11 @@ static u8 sn65dsi83_get_dsi_range(struct sn65dsi83 *ctx,
 	 *  DSI_CLK = mode clock * bpp / dsi_data_lanes / 2
 	 * the 2 is there because the bus is DDR.
 	 */
+<<<<<<< HEAD
 	return DIV_ROUND_UP(clamp((unsigned int)mode->clock *
+=======
+	return DIV_ROUND_UP(clamp((unsigned int)ctx->mode.clock *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			    mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
 			    ctx->dsi_lanes / 2, 40000U, 500000U), 5000U);
 }
@@ -364,6 +393,7 @@ static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
 	return dsi_div - 1;
 }
 
+<<<<<<< HEAD
 static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 				    struct drm_bridge_state *old_bridge_state)
 {
@@ -421,16 +451,32 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 	crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
 	mode = &crtc_state->adjusted_mode;
 
+=======
+static void sn65dsi83_enable(struct drm_bridge *bridge)
+{
+	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
+	unsigned int pval;
+	u16 val;
+	int ret;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Clear reset, disable PLL */
 	regmap_write(ctx->regmap, REG_RC_RESET, 0x00);
 	regmap_write(ctx->regmap, REG_RC_PLL_EN, 0x00);
 
 	/* Reference clock derived from DSI link clock. */
 	regmap_write(ctx->regmap, REG_RC_LVDS_PLL,
+<<<<<<< HEAD
 		     REG_RC_LVDS_PLL_LVDS_CLK_RANGE(sn65dsi83_get_lvds_range(ctx, mode)) |
 		     REG_RC_LVDS_PLL_HS_CLK_SRC_DPHY);
 	regmap_write(ctx->regmap, REG_DSI_CLK,
 		     REG_DSI_CLK_CHA_DSI_CLK_RANGE(sn65dsi83_get_dsi_range(ctx, mode)));
+=======
+		     REG_RC_LVDS_PLL_LVDS_CLK_RANGE(sn65dsi83_get_lvds_range(ctx)) |
+		     REG_RC_LVDS_PLL_HS_CLK_SRC_DPHY);
+	regmap_write(ctx->regmap, REG_DSI_CLK,
+		     REG_DSI_CLK_CHA_DSI_CLK_RANGE(sn65dsi83_get_dsi_range(ctx)));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	regmap_write(ctx->regmap, REG_RC_DSI_CLK,
 		     REG_RC_DSI_CLK_DSI_CLK_DIVIDER(sn65dsi83_get_dsi_div(ctx)));
 
@@ -444,6 +490,7 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 	regmap_write(ctx->regmap, REG_DSI_EQ, 0x00);
 
 	/* Set up sync signal polarity. */
+<<<<<<< HEAD
 	val = (mode->flags & DRM_MODE_FLAG_NHSYNC ?
 	       REG_LVDS_FMT_HS_NEG_POLARITY : 0) |
 	      (mode->flags & DRM_MODE_FLAG_NVSYNC ?
@@ -451,13 +498,26 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 
 	/* Set up bits-per-pixel, 18bpp or 24bpp. */
 	if (lvds_format_24bpp) {
+=======
+	val = (ctx->mode.flags & DRM_MODE_FLAG_NHSYNC ?
+	       REG_LVDS_FMT_HS_NEG_POLARITY : 0) |
+	      (ctx->mode.flags & DRM_MODE_FLAG_NVSYNC ?
+	       REG_LVDS_FMT_VS_NEG_POLARITY : 0);
+
+	/* Set up bits-per-pixel, 18bpp or 24bpp. */
+	if (ctx->lvds_format_24bpp) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		val |= REG_LVDS_FMT_CHA_24BPP_MODE;
 		if (ctx->lvds_dual_link)
 			val |= REG_LVDS_FMT_CHB_24BPP_MODE;
 	}
 
 	/* Set up LVDS format, JEIDA/Format 1 or SPWG/Format 2 */
+<<<<<<< HEAD
 	if (lvds_format_jeida) {
+=======
+	if (ctx->lvds_format_jeida) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		val |= REG_LVDS_FMT_CHA_24BPP_FORMAT1;
 		if (ctx->lvds_dual_link)
 			val |= REG_LVDS_FMT_CHB_24BPP_FORMAT1;
@@ -476,6 +536,7 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 		     REG_LVDS_LANE_CHB_LVDS_TERM);
 	regmap_write(ctx->regmap, REG_LVDS_CM, 0x00);
 
+<<<<<<< HEAD
 	le16val = cpu_to_le16(mode->hdisplay);
 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_ACTIVE_LINE_LENGTH_LOW,
 			  &le16val, 2);
@@ -499,6 +560,31 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 		     mode->hsync_start - mode->hdisplay);
 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH,
 		     mode->vsync_start - mode->vdisplay);
+=======
+	val = cpu_to_le16(ctx->mode.hdisplay);
+	regmap_bulk_write(ctx->regmap, REG_VID_CHA_ACTIVE_LINE_LENGTH_LOW,
+			  &val, 2);
+	val = cpu_to_le16(ctx->mode.vdisplay);
+	regmap_bulk_write(ctx->regmap, REG_VID_CHA_VERTICAL_DISPLAY_SIZE_LOW,
+			  &val, 2);
+	/* 32 + 1 pixel clock to ensure proper operation */
+	val = cpu_to_le16(32 + 1);
+	regmap_bulk_write(ctx->regmap, REG_VID_CHA_SYNC_DELAY_LOW, &val, 2);
+	val = cpu_to_le16(ctx->mode.hsync_end - ctx->mode.hsync_start);
+	regmap_bulk_write(ctx->regmap, REG_VID_CHA_HSYNC_PULSE_WIDTH_LOW,
+			  &val, 2);
+	val = cpu_to_le16(ctx->mode.vsync_end - ctx->mode.vsync_start);
+	regmap_bulk_write(ctx->regmap, REG_VID_CHA_VSYNC_PULSE_WIDTH_LOW,
+			  &val, 2);
+	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_BACK_PORCH,
+		     ctx->mode.htotal - ctx->mode.hsync_end);
+	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_BACK_PORCH,
+		     ctx->mode.vtotal - ctx->mode.vsync_end);
+	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_FRONT_PORCH,
+		     ctx->mode.hsync_start - ctx->mode.hdisplay);
+	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH,
+		     ctx->mode.vsync_start - ctx->mode.vdisplay);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x00);
 
 	/* Enable PLL */
@@ -522,8 +608,12 @@ static void sn65dsi83_atomic_enable(struct drm_bridge *bridge,
 	regmap_write(ctx->regmap, REG_IRQ_STAT, pval);
 }
 
+<<<<<<< HEAD
 static void sn65dsi83_atomic_disable(struct drm_bridge *bridge,
 				     struct drm_bridge_state *old_bridge_state)
+=======
+static void sn65dsi83_disable(struct drm_bridge *bridge)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
 
@@ -532,8 +622,12 @@ static void sn65dsi83_atomic_disable(struct drm_bridge *bridge,
 	regmap_write(ctx->regmap, REG_RC_PLL_EN, 0x00);
 }
 
+<<<<<<< HEAD
 static void sn65dsi83_atomic_post_disable(struct drm_bridge *bridge,
 					  struct drm_bridge_state *old_bridge_state)
+=======
+static void sn65dsi83_post_disable(struct drm_bridge *bridge)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
 
@@ -555,6 +649,7 @@ sn65dsi83_mode_valid(struct drm_bridge *bridge,
 	return MODE_OK;
 }
 
+<<<<<<< HEAD
 #define MAX_INPUT_SEL_FORMATS	1
 
 static u32 *
@@ -593,6 +688,72 @@ static const struct drm_bridge_funcs sn65dsi83_funcs = {
 	.atomic_destroy_state = drm_atomic_helper_bridge_destroy_state,
 	.atomic_reset = drm_atomic_helper_bridge_reset,
 	.atomic_get_input_bus_fmts = sn65dsi83_atomic_get_input_bus_fmts,
+=======
+static void sn65dsi83_mode_set(struct drm_bridge *bridge,
+			       const struct drm_display_mode *mode,
+			       const struct drm_display_mode *adj)
+{
+	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
+
+	ctx->mode = *adj;
+}
+
+static bool sn65dsi83_mode_fixup(struct drm_bridge *bridge,
+				 const struct drm_display_mode *mode,
+				 struct drm_display_mode *adj)
+{
+	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
+	u32 input_bus_format = MEDIA_BUS_FMT_RGB888_1X24;
+	struct drm_encoder *encoder = bridge->encoder;
+	struct drm_device *ddev = encoder->dev;
+	struct drm_connector *connector;
+
+	/* The DSI format is always RGB888_1X24 */
+	list_for_each_entry(connector, &ddev->mode_config.connector_list, head) {
+		switch (connector->display_info.bus_formats[0]) {
+		case MEDIA_BUS_FMT_RGB666_1X7X3_SPWG:
+			ctx->lvds_format_24bpp = false;
+			ctx->lvds_format_jeida = true;
+			break;
+		case MEDIA_BUS_FMT_RGB888_1X7X4_JEIDA:
+			ctx->lvds_format_24bpp = true;
+			ctx->lvds_format_jeida = true;
+			break;
+		case MEDIA_BUS_FMT_RGB888_1X7X4_SPWG:
+			ctx->lvds_format_24bpp = true;
+			ctx->lvds_format_jeida = false;
+			break;
+		default:
+			/*
+			 * Some bridges still don't set the correct
+			 * LVDS bus pixel format, use SPWG24 default
+			 * format until those are fixed.
+			 */
+			ctx->lvds_format_24bpp = true;
+			ctx->lvds_format_jeida = false;
+			dev_warn(ctx->dev,
+				 "Unsupported LVDS bus format 0x%04x, please check output bridge driver. Falling back to SPWG24.\n",
+				 connector->display_info.bus_formats[0]);
+			break;
+		}
+
+		drm_display_info_set_bus_formats(&connector->display_info,
+						 &input_bus_format, 1);
+	}
+
+	return true;
+}
+
+static const struct drm_bridge_funcs sn65dsi83_funcs = {
+	.attach		= sn65dsi83_attach,
+	.pre_enable	= sn65dsi83_pre_enable,
+	.enable		= sn65dsi83_enable,
+	.disable	= sn65dsi83_disable,
+	.post_disable	= sn65dsi83_post_disable,
+	.mode_valid	= sn65dsi83_mode_valid,
+	.mode_set	= sn65dsi83_mode_set,
+	.mode_fixup	= sn65dsi83_mode_fixup,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 static int sn65dsi83_parse_dt(struct sn65dsi83 *ctx, enum sn65dsi83_model model)

@@ -479,22 +479,31 @@ enum {
 
 /* flags used in BRIDGE_VLANDB_DUMP_FLAGS attribute to affect dumps */
 #define BRIDGE_VLANDB_DUMPF_STATS	(1 << 0) /* Include stats in the dump */
+<<<<<<< HEAD
 #define BRIDGE_VLANDB_DUMPF_GLOBAL	(1 << 1) /* Dump global vlan options only */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Bridge vlan RTM attributes
  * [BRIDGE_VLANDB_ENTRY] = {
  *     [BRIDGE_VLANDB_ENTRY_INFO]
  *     ...
  * }
+<<<<<<< HEAD
  * [BRIDGE_VLANDB_GLOBAL_OPTIONS] = {
  *     [BRIDGE_VLANDB_GOPTS_ID]
  *     ...
  * }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 enum {
 	BRIDGE_VLANDB_UNSPEC,
 	BRIDGE_VLANDB_ENTRY,
+<<<<<<< HEAD
 	BRIDGE_VLANDB_GLOBAL_OPTIONS,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__BRIDGE_VLANDB_MAX,
 };
 #define BRIDGE_VLANDB_MAX (__BRIDGE_VLANDB_MAX - 1)
@@ -506,7 +515,10 @@ enum {
 	BRIDGE_VLANDB_ENTRY_STATE,
 	BRIDGE_VLANDB_ENTRY_TUNNEL_INFO,
 	BRIDGE_VLANDB_ENTRY_STATS,
+<<<<<<< HEAD
 	BRIDGE_VLANDB_ENTRY_MCAST_ROUTER,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__BRIDGE_VLANDB_ENTRY_MAX,
 };
 #define BRIDGE_VLANDB_ENTRY_MAX (__BRIDGE_VLANDB_ENTRY_MAX - 1)
@@ -545,6 +557,7 @@ enum {
 };
 #define BRIDGE_VLANDB_STATS_MAX (__BRIDGE_VLANDB_STATS_MAX - 1)
 
+<<<<<<< HEAD
 enum {
 	BRIDGE_VLANDB_GOPTS_UNSPEC,
 	BRIDGE_VLANDB_GOPTS_ID,
@@ -568,6 +581,8 @@ enum {
 };
 #define BRIDGE_VLANDB_GOPTS_MAX (__BRIDGE_VLANDB_GOPTS_MAX - 1)
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Bridge multicast database attributes
  * [MDBA_MDB] = {
  *     [MDBA_MDB_ENTRY] = {
@@ -659,7 +674,10 @@ enum {
 	MDBA_ROUTER_PATTR_TYPE,
 	MDBA_ROUTER_PATTR_INET_TIMER,
 	MDBA_ROUTER_PATTR_INET6_TIMER,
+<<<<<<< HEAD
 	MDBA_ROUTER_PATTR_VID,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__MDBA_ROUTER_PATTR_MAX
 };
 #define MDBA_ROUTER_PATTR_MAX (__MDBA_ROUTER_PATTR_MAX - 1)
@@ -751,14 +769,20 @@ struct br_mcast_stats {
 
 /* bridge boolean options
  * BR_BOOLOPT_NO_LL_LEARN - disable learning from link-local packets
+<<<<<<< HEAD
  * BR_BOOLOPT_MCAST_VLAN_SNOOPING - control vlan multicast snooping
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * IMPORTANT: if adding a new option do not forget to handle
  *            it in br_boolopt_toggle/get and bridge sysfs
  */
 enum br_boolopt_id {
 	BR_BOOLOPT_NO_LL_LEARN,
+<<<<<<< HEAD
 	BR_BOOLOPT_MCAST_VLAN_SNOOPING,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	BR_BOOLOPT_MAX
 };
 
@@ -771,6 +795,7 @@ struct br_boolopt_multi {
 	__u32 optval;
 	__u32 optmask;
 };
+<<<<<<< HEAD
 
 enum {
 	BRIDGE_QUERIER_UNSPEC,
@@ -784,4 +809,6 @@ enum {
 	__BRIDGE_QUERIER_MAX
 };
 #define BRIDGE_QUERIER_MAX (__BRIDGE_QUERIER_MAX - 1)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif /* _UAPI_LINUX_IF_BRIDGE_H */

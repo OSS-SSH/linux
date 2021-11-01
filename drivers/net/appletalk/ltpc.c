@@ -1015,7 +1015,11 @@ static const struct net_device_ops ltpc_netdev = {
 	.ndo_set_rx_mode	= set_multicast_list,
 };
 
+<<<<<<< HEAD
 static struct net_device * __init ltpc_probe(void)
+=======
+struct net_device * __init ltpc_probe(void)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct net_device *dev;
 	int err = -ENOMEM;
@@ -1221,10 +1225,19 @@ static int __init ltpc_setup(char *str)
 }
 
 __setup("ltpc=", ltpc_setup);
+<<<<<<< HEAD
 #endif
 
 static struct net_device *dev_ltpc;
 
+=======
+#endif /* MODULE */
+
+static struct net_device *dev_ltpc;
+
+#ifdef MODULE
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 MODULE_LICENSE("GPL");
 module_param(debug, int, 0);
 module_param_hw(io, int, ioport, 0);
@@ -1242,6 +1255,10 @@ static int __init ltpc_module_init(void)
 	return PTR_ERR_OR_ZERO(dev_ltpc);
 }
 module_init(ltpc_module_init);
+<<<<<<< HEAD
+=======
+#endif
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static void __exit ltpc_cleanup(void)
 {

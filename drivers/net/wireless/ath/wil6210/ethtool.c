@@ -11,11 +11,16 @@
 
 #include "wil6210.h"
 
+<<<<<<< HEAD
 static int
 wil_ethtoolops_get_coalesce(struct net_device *ndev,
 			    struct ethtool_coalesce *cp,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+=======
+static int wil_ethtoolops_get_coalesce(struct net_device *ndev,
+				       struct ethtool_coalesce *cp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct wil6210_priv *wil = ndev_to_wil(ndev);
 	u32 tx_itr_en, tx_itr_val = 0;
@@ -48,11 +53,16 @@ out:
 	return ret;
 }
 
+<<<<<<< HEAD
 static int
 wil_ethtoolops_set_coalesce(struct net_device *ndev,
 			    struct ethtool_coalesce *cp,
 			    struct kernel_ethtool_coalesce *kernel_coal,
 			    struct netlink_ext_ack *extack)
+=======
+static int wil_ethtoolops_set_coalesce(struct net_device *ndev,
+				       struct ethtool_coalesce *cp)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct wil6210_priv *wil = ndev_to_wil(ndev);
 	struct wireless_dev *wdev = ndev->ieee80211_ptr;

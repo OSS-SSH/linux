@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * Copyright 2021 Advanced Micro Devices, Inc.
  *
@@ -23,6 +24,8 @@
  *
  */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <inc/core_status.h>
 #include <dc_link.h>
 #include <inc/link_hwss.h>

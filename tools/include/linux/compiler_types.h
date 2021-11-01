@@ -13,6 +13,7 @@
 #define __has_builtin(x) (0)
 #endif
 
+<<<<<<< HEAD
 #ifdef __CHECKER__
 /* context/locking */
 # define __must_hold(x)	__attribute__((context(x,1,1)))
@@ -31,6 +32,8 @@
 # define __cond_lock(x,c) (c)
 #endif /* __CHECKER__ */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Compiler specific macros. */
 #ifdef __GNUC__
 #include <linux/compiler-gcc.h>

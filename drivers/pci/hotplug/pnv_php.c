@@ -526,7 +526,11 @@ scan:
 	return 0;
 }
 
+<<<<<<< HEAD
 static int pnv_php_reset_slot(struct hotplug_slot *slot, bool probe)
+=======
+static int pnv_php_reset_slot(struct hotplug_slot *slot, int probe)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pnv_php_slot *php_slot = to_pnv_php_slot(slot);
 	struct pci_dev *bridge = php_slot->pdev;

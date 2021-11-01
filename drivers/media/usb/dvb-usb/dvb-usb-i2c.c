@@ -17,8 +17,12 @@ int dvb_usb_i2c_init(struct dvb_usb_device *d)
 
 	if (d->props.i2c_algo == NULL) {
 		err("no i2c algorithm specified");
+<<<<<<< HEAD
 		ret = -EINVAL;
 		goto err;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	strscpy(d->i2c_adap.name, d->desc->name, sizeof(d->i2c_adap.name));
@@ -28,6 +32,7 @@ int dvb_usb_i2c_init(struct dvb_usb_device *d)
 
 	i2c_set_adapdata(&d->i2c_adap, d);
 
+<<<<<<< HEAD
 	ret = i2c_add_adapter(&d->i2c_adap);
 	if (ret < 0) {
 		err("could not add i2c adapter");
@@ -37,6 +42,13 @@ int dvb_usb_i2c_init(struct dvb_usb_device *d)
 	d->state |= DVB_USB_STATE_I2C;
 
 err:
+=======
+	if ((ret = i2c_add_adapter(&d->i2c_adap)) < 0)
+		err("could not add i2c adapter");
+
+	d->state |= DVB_USB_STATE_I2C;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 

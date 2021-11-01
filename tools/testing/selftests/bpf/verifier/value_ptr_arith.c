@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
 	"map access: known scalar += value_ptr unknown vs const",
 	.insns = {
 	BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_1,
@@ -228,6 +229,8 @@
 	.retval = 1,
 },
 {
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	"map access: known scalar += value_ptr from different maps",
 	.insns = {
 	BPF_LDX_MEM(BPF_W, BPF_REG_0, BPF_REG_1,

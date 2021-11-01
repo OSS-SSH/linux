@@ -13,7 +13,10 @@
 #include <linux/blkdev.h>
 #include <linux/device.h>
 #include <linux/pm_runtime.h>
+<<<<<<< HEAD
 #include <linux/bsg.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include <scsi/scsi.h>
 #include <scsi/scsi_device.h>
@@ -808,6 +811,7 @@ store_state_field(struct device *dev, struct device_attribute *attr,
 	mutex_lock(&sdev->state_mutex);
 	ret = scsi_device_set_state(sdev, state);
 	/*
+<<<<<<< HEAD
 	 * If the device state changes to SDEV_RUNNING, we need to
 	 * run the queue to avoid I/O hang, and rescan the device
 	 * to revalidate it. Running the queue first is necessary
@@ -819,6 +823,13 @@ store_state_field(struct device *dev, struct device_attribute *attr,
 		blk_mq_run_hw_queues(sdev->request_queue, true);
 		scsi_rescan_device(dev);
 	}
+=======
+	 * If the device state changes to SDEV_RUNNING, we need to run
+	 * the queue to avoid I/O hang.
+	 */
+	if (ret == 0 && state == SDEV_RUNNING)
+		blk_mq_run_hw_queues(sdev->request_queue, true);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&sdev->state_mutex);
 
 	return ret == 0 ? count : -EINVAL;
@@ -1334,6 +1345,10 @@ static int scsi_target_add(struct scsi_target *starget)
 int scsi_sysfs_add_sdev(struct scsi_device *sdev)
 {
 	int error, i;
+<<<<<<< HEAD
+=======
+	struct request_queue *rq = sdev->request_queue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_target *starget = sdev->sdev_target;
 
 	error = scsi_target_add(starget);
@@ -1372,6 +1387,7 @@ int scsi_sysfs_add_sdev(struct scsi_device *sdev)
 	transport_add_device(&sdev->sdev_gendev);
 	sdev->is_visible = 1;
 
+<<<<<<< HEAD
 	if (IS_ENABLED(CONFIG_BLK_DEV_BSG)) {
 		sdev->bsg_dev = scsi_bsg_register_queue(sdev);
 		if (IS_ERR(sdev->bsg_dev)) {
@@ -1385,6 +1401,14 @@ int scsi_sysfs_add_sdev(struct scsi_device *sdev)
 			sdev->bsg_dev = NULL;
 		}
 	}
+=======
+	error = bsg_scsi_register_queue(rq, &sdev->sdev_gendev);
+	if (error)
+		/* we're treating error on bsg register as non-fatal,
+		 * so pretend nothing went wrong */
+		sdev_printk(KERN_INFO, sdev,
+			    "Failed to register bsg queue, errno=%d\n", error);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* add additional host specific attributes */
 	if (sdev->host->hostt->sdev_attrs) {
@@ -1446,8 +1470,12 @@ void __scsi_remove_device(struct scsi_device *sdev)
 			sysfs_remove_groups(&sdev->sdev_gendev.kobj,
 					sdev->host->hostt->sdev_groups);
 
+<<<<<<< HEAD
 		if (IS_ENABLED(CONFIG_BLK_DEV_BSG) && sdev->bsg_dev)
 			bsg_unregister_queue(sdev->bsg_dev);
+=======
+		bsg_unregister_queue(sdev->request_queue);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		device_unregister(&sdev->sdev_dev);
 		transport_remove_device(dev);
 		device_del(dev);

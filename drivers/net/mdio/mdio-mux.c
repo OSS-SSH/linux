@@ -82,6 +82,7 @@ out:
 
 static int parent_count;
 
+<<<<<<< HEAD
 static void mdio_mux_uninit_children(struct mdio_mux_parent_bus *pb)
 {
 	struct mdio_mux_child_bus *cb = pb->children;
@@ -93,6 +94,8 @@ static void mdio_mux_uninit_children(struct mdio_mux_parent_bus *pb)
 	}
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int mdio_mux_init(struct device *dev,
 		  struct device_node *mux_node,
 		  int (*switch_fn)(int cur, int desired, void *data),
@@ -155,7 +158,11 @@ int mdio_mux_init(struct device *dev,
 		cb = devm_kzalloc(dev, sizeof(*cb), GFP_KERNEL);
 		if (!cb) {
 			ret_val = -ENOMEM;
+<<<<<<< HEAD
 			goto err_loop;
+=======
+			continue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		cb->bus_number = v;
 		cb->parent = pb;
@@ -163,7 +170,12 @@ int mdio_mux_init(struct device *dev,
 		cb->mii_bus = mdiobus_alloc();
 		if (!cb->mii_bus) {
 			ret_val = -ENOMEM;
+<<<<<<< HEAD
 			goto err_loop;
+=======
+			devm_kfree(dev, cb);
+			continue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 		cb->mii_bus->priv = cb;
 
@@ -175,6 +187,7 @@ int mdio_mux_init(struct device *dev,
 		cb->mii_bus->write = mdio_mux_write;
 		r = of_mdiobus_register(cb->mii_bus, child_bus_node);
 		if (r) {
+<<<<<<< HEAD
 			mdiobus_free(cb->mii_bus);
 			if (r == -EPROBE_DEFER) {
 				ret_val = r;
@@ -184,6 +197,13 @@ int mdio_mux_init(struct device *dev,
 			dev_err(dev,
 				"Error: Failed to register MDIO bus for child %pOF\n",
 				child_bus_node);
+=======
+			dev_err(dev,
+				"Error: Failed to register MDIO bus for child %pOF\n",
+				child_bus_node);
+			mdiobus_free(cb->mii_bus);
+			devm_kfree(dev, cb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		} else {
 			cb->next = pb->children;
 			pb->children = cb;
@@ -195,10 +215,14 @@ int mdio_mux_init(struct device *dev,
 	}
 
 	dev_err(dev, "Error: No acceptable child buses found\n");
+<<<<<<< HEAD
 
 err_loop:
 	mdio_mux_uninit_children(pb);
 	of_node_put(child_bus_node);
+=======
+	devm_kfree(dev, pb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_pb_kz:
 	put_device(&parent_bus->dev);
 err_parent_bus:
@@ -210,8 +234,19 @@ EXPORT_SYMBOL_GPL(mdio_mux_init);
 void mdio_mux_uninit(void *mux_handle)
 {
 	struct mdio_mux_parent_bus *pb = mux_handle;
+<<<<<<< HEAD
 
 	mdio_mux_uninit_children(pb);
+=======
+	struct mdio_mux_child_bus *cb = pb->children;
+
+	while (cb) {
+		mdiobus_unregister(cb->mii_bus);
+		mdiobus_free(cb->mii_bus);
+		cb = cb->next;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	put_device(&pb->mii_bus->dev);
 }
 EXPORT_SYMBOL_GPL(mdio_mux_uninit);

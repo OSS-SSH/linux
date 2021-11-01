@@ -37,6 +37,11 @@
 
 &blsp1_uart2 {
 	status = "okay";
+<<<<<<< HEAD
+=======
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart_console_active>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 &tlmm {

@@ -974,7 +974,11 @@ int btrfs_add_delayed_tree_ref(struct btrfs_trans_handle *trans,
 		kmem_cache_free(btrfs_delayed_tree_ref_cachep, ref);
 
 	if (qrecord_inserted)
+<<<<<<< HEAD
 		btrfs_qgroup_trace_extent_post(trans, record);
+=======
+		btrfs_qgroup_trace_extent_post(fs_info, record);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }
@@ -1069,7 +1073,11 @@ int btrfs_add_delayed_data_ref(struct btrfs_trans_handle *trans,
 
 
 	if (qrecord_inserted)
+<<<<<<< HEAD
 		return btrfs_qgroup_trace_extent_post(trans, record);
+=======
+		return btrfs_qgroup_trace_extent_post(fs_info, record);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

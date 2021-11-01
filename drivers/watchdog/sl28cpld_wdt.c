@@ -108,7 +108,11 @@ static const struct watchdog_info sl28cpld_wdt_info = {
 	.identity = "sl28cpld watchdog",
 };
 
+<<<<<<< HEAD
 static const struct watchdog_ops sl28cpld_wdt_ops = {
+=======
+static struct watchdog_ops sl28cpld_wdt_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.owner = THIS_MODULE,
 	.start = sl28cpld_wdt_start,
 	.stop = sl28cpld_wdt_stop,

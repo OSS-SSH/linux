@@ -10,7 +10,10 @@
 #include <linux/delay.h>
 #include <linux/slab.h>
 #include <linux/acpi.h>
+<<<<<<< HEAD
 #include <linux/of_irq.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/pm.h>
 #include <linux/pm_runtime.h>
 #include <linux/iio/iio.h>
@@ -58,6 +61,7 @@
 #define BMC150_ACCEL_RESET_VAL			0xB6
 
 #define BMC150_ACCEL_REG_INT_MAP_0		0x19
+<<<<<<< HEAD
 #define BMC150_ACCEL_INT_MAP_0_BIT_INT1_SLOPE	BIT(2)
 
 #define BMC150_ACCEL_REG_INT_MAP_1		0x1A
@@ -70,6 +74,14 @@
 
 #define BMC150_ACCEL_REG_INT_MAP_2		0x1B
 #define BMC150_ACCEL_INT_MAP_2_BIT_INT2_SLOPE	BIT(2)
+=======
+#define BMC150_ACCEL_INT_MAP_0_BIT_SLOPE	BIT(2)
+
+#define BMC150_ACCEL_REG_INT_MAP_1		0x1A
+#define BMC150_ACCEL_INT_MAP_1_BIT_DATA		BIT(0)
+#define BMC150_ACCEL_INT_MAP_1_BIT_FWM		BIT(1)
+#define BMC150_ACCEL_INT_MAP_1_BIT_FFULL	BIT(2)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define BMC150_ACCEL_REG_INT_RST_LATCH		0x21
 #define BMC150_ACCEL_INT_MODE_LATCH_RESET	0x80
@@ -88,7 +100,10 @@
 
 #define BMC150_ACCEL_REG_INT_OUT_CTRL		0x20
 #define BMC150_ACCEL_INT_OUT_CTRL_INT1_LVL	BIT(0)
+<<<<<<< HEAD
 #define BMC150_ACCEL_INT_OUT_CTRL_INT2_LVL	BIT(2)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define BMC150_ACCEL_REG_INT_5			0x27
 #define BMC150_ACCEL_SLOPE_DUR_MASK		0x03
@@ -484,11 +499,16 @@ static bool bmc150_apply_acpi_orientation(struct device *dev,
 }
 #endif
 
+<<<<<<< HEAD
 struct bmc150_accel_interrupt_info {
+=======
+static const struct bmc150_accel_interrupt_info {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u8 map_reg;
 	u8 map_bitmask;
 	u8 en_reg;
 	u8 en_bitmask;
+<<<<<<< HEAD
 };
 
 static const struct bmc150_accel_interrupt_info
@@ -496,12 +516,22 @@ bmc150_accel_interrupts_int1[BMC150_ACCEL_INTERRUPTS] = {
 	{ /* data ready interrupt */
 		.map_reg = BMC150_ACCEL_REG_INT_MAP_1,
 		.map_bitmask = BMC150_ACCEL_INT_MAP_1_BIT_INT1_DATA,
+=======
+} bmc150_accel_interrupts[BMC150_ACCEL_INTERRUPTS] = {
+	{ /* data ready interrupt */
+		.map_reg = BMC150_ACCEL_REG_INT_MAP_1,
+		.map_bitmask = BMC150_ACCEL_INT_MAP_1_BIT_DATA,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.en_reg = BMC150_ACCEL_REG_INT_EN_1,
 		.en_bitmask = BMC150_ACCEL_INT_EN_BIT_DATA_EN,
 	},
 	{  /* motion interrupt */
 		.map_reg = BMC150_ACCEL_REG_INT_MAP_0,
+<<<<<<< HEAD
 		.map_bitmask = BMC150_ACCEL_INT_MAP_0_BIT_INT1_SLOPE,
+=======
+		.map_bitmask = BMC150_ACCEL_INT_MAP_0_BIT_SLOPE,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.en_reg = BMC150_ACCEL_REG_INT_EN_0,
 		.en_bitmask =  BMC150_ACCEL_INT_EN_BIT_SLP_X |
 			BMC150_ACCEL_INT_EN_BIT_SLP_Y |
@@ -509,6 +539,7 @@ bmc150_accel_interrupts_int1[BMC150_ACCEL_INTERRUPTS] = {
 	},
 	{ /* fifo watermark interrupt */
 		.map_reg = BMC150_ACCEL_REG_INT_MAP_1,
+<<<<<<< HEAD
 		.map_bitmask = BMC150_ACCEL_INT_MAP_1_BIT_INT1_FWM,
 		.en_reg = BMC150_ACCEL_REG_INT_EN_1,
 		.en_bitmask = BMC150_ACCEL_INT_EN_BIT_FWM_EN,
@@ -534,12 +565,16 @@ bmc150_accel_interrupts_int2[BMC150_ACCEL_INTERRUPTS] = {
 	{ /* fifo watermark interrupt */
 		.map_reg = BMC150_ACCEL_REG_INT_MAP_1,
 		.map_bitmask = BMC150_ACCEL_INT_MAP_1_BIT_INT2_FWM,
+=======
+		.map_bitmask = BMC150_ACCEL_INT_MAP_1_BIT_FWM,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.en_reg = BMC150_ACCEL_REG_INT_EN_1,
 		.en_bitmask = BMC150_ACCEL_INT_EN_BIT_FWM_EN,
 	},
 };
 
 static void bmc150_accel_interrupts_setup(struct iio_dev *indio_dev,
+<<<<<<< HEAD
 					  struct bmc150_accel_data *data, int irq)
 {
 	const struct bmc150_accel_interrupt_info *irq_info = NULL;
@@ -559,6 +594,14 @@ static void bmc150_accel_interrupts_setup(struct iio_dev *indio_dev,
 
 	for (i = 0; i < BMC150_ACCEL_INTERRUPTS; i++)
 		data->interrupts[i].info = &irq_info[i];
+=======
+					  struct bmc150_accel_data *data)
+{
+	int i;
+
+	for (i = 0; i < BMC150_ACCEL_INTERRUPTS; i++)
+		data->interrupts[i].info = &bmc150_accel_interrupts[i];
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int bmc150_accel_set_interrupt(struct bmc150_accel_data *data, int i,
@@ -1175,7 +1218,11 @@ static const struct bmc150_accel_chip_info bmc150_accel_chip_info_tbl[] = {
 				 {306458, BMC150_ACCEL_DEF_RANGE_16G} },
 	},
 	{
+<<<<<<< HEAD
 		.name = "BMA253/BMA254/BMA255/BMC150/BMC156/BMI055",
+=======
+		.name = "BMA253/BMA254/BMA255/BMC150/BMI055",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		.chip_id = 0xFA,
 		.channels = bmc150_accel_channels,
 		.num_channels = ARRAY_SIZE(bmc150_accel_channels),
@@ -1662,8 +1709,12 @@ static int bmc150_accel_chip_init(struct bmc150_accel_data *data)
 }
 
 int bmc150_accel_core_probe(struct device *dev, struct regmap *regmap, int irq,
+<<<<<<< HEAD
 			    enum bmc150_type type, const char *name,
 			    bool block_supported)
+=======
+			    const char *name, bool block_supported)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	const struct attribute **fifo_attrs;
 	struct bmc150_accel_data *data;
@@ -1678,7 +1729,10 @@ int bmc150_accel_core_probe(struct device *dev, struct regmap *regmap, int irq,
 	dev_set_drvdata(dev, indio_dev);
 
 	data->regmap = regmap;
+<<<<<<< HEAD
 	data->type = type;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!bmc150_apply_acpi_orientation(dev, &data->orientation)) {
 		ret = iio_read_mount_matrix(dev, &data->orientation);
@@ -1764,7 +1818,11 @@ int bmc150_accel_core_probe(struct device *dev, struct regmap *regmap, int irq,
 			goto err_buffer_cleanup;
 		}
 
+<<<<<<< HEAD
 		bmc150_accel_interrupts_setup(indio_dev, data, irq);
+=======
+		bmc150_accel_interrupts_setup(indio_dev, data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		ret = bmc150_accel_triggers_setup(indio_dev, data);
 		if (ret)

@@ -360,6 +360,12 @@ int blkdev_report_zones_ioctl(struct block_device *bdev, fmode_t mode,
 	if (!blk_queue_is_zoned(q))
 		return -ENOTTY;
 
+<<<<<<< HEAD
+=======
+	if (!capable(CAP_SYS_ADMIN))
+		return -EACCES;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (copy_from_user(&rep, argp, sizeof(struct blk_zone_report)))
 		return -EFAULT;
 
@@ -418,6 +424,12 @@ int blkdev_zone_mgmt_ioctl(struct block_device *bdev, fmode_t mode,
 	if (!blk_queue_is_zoned(q))
 		return -ENOTTY;
 
+<<<<<<< HEAD
+=======
+	if (!capable(CAP_SYS_ADMIN))
+		return -EACCES;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!(mode & FMODE_WRITE))
 		return -EBADF;
 

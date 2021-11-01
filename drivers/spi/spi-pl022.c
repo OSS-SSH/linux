@@ -1716,12 +1716,21 @@ static int verify_controller_parameters(struct pl022 *pl022,
 				return -EINVAL;
 			}
 		} else {
+<<<<<<< HEAD
 			if (chip_info->duplex != SSP_MICROWIRE_CHANNEL_FULL_DUPLEX)
+=======
+			if (chip_info->duplex != SSP_MICROWIRE_CHANNEL_FULL_DUPLEX) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				dev_err(&pl022->adev->dev,
 					"Microwire half duplex mode requested,"
 					" but this is only available in the"
 					" ST version of PL022\n");
+<<<<<<< HEAD
 			return -EINVAL;
+=======
+				return -EINVAL;
+			}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 	return 0;

@@ -17,8 +17,13 @@
 #define __IA_CSS_ANR_TYPES_H
 
 /* @file
+<<<<<<< HEAD
  * CSS-API header file for Advanced Noise Reduction kernel v1
  */
+=======
+* CSS-API header file for Advanced Noise Reduction kernel v1
+*/
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Application specific DMA settings  */
 #define ANR_BPP                 10

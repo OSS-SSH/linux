@@ -86,7 +86,11 @@ static int tb_service_probe(struct device *dev)
 	return driver->probe(svc, id);
 }
 
+<<<<<<< HEAD
 static void tb_service_remove(struct device *dev)
+=======
+static int tb_service_remove(struct device *dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct tb_service *svc = tb_to_service(dev);
 	struct tb_service_driver *driver;
@@ -94,6 +98,11 @@ static void tb_service_remove(struct device *dev)
 	driver = container_of(dev->driver, struct tb_service_driver, driver);
 	if (driver->remove)
 		driver->remove(svc);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void tb_service_shutdown(struct device *dev)

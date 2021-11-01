@@ -367,8 +367,12 @@ static int hid_accel_3d_probe(struct platform_device *pdev)
 		dev_err(&pdev->dev, "failed to setup common attributes\n");
 		return ret;
 	}
+<<<<<<< HEAD
 	indio_dev->channels = devm_kmemdup(&pdev->dev, channel_spec,
 					   channel_size, GFP_KERNEL);
+=======
+	indio_dev->channels = kmemdup(channel_spec, channel_size, GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (!indio_dev->channels) {
 		dev_err(&pdev->dev, "failed to duplicate channels\n");
@@ -379,7 +383,11 @@ static int hid_accel_3d_probe(struct platform_device *pdev)
 				hsdev->usage, accel_state);
 	if (ret) {
 		dev_err(&pdev->dev, "failed to setup attributes\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto error_free_dev_mem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	indio_dev->info = &accel_3d_info;
@@ -392,7 +400,11 @@ static int hid_accel_3d_probe(struct platform_device *pdev)
 					&accel_state->common_attributes);
 	if (ret < 0) {
 		dev_err(&pdev->dev, "trigger setup failed\n");
+<<<<<<< HEAD
 		return ret;
+=======
+		goto error_free_dev_mem;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	ret = iio_device_register(indio_dev);
@@ -417,6 +429,11 @@ error_iio_unreg:
 	iio_device_unregister(indio_dev);
 error_remove_trigger:
 	hid_sensor_remove_trigger(indio_dev, &accel_state->common_attributes);
+<<<<<<< HEAD
+=======
+error_free_dev_mem:
+	kfree(indio_dev->channels);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -430,6 +447,10 @@ static int hid_accel_3d_remove(struct platform_device *pdev)
 	sensor_hub_remove_callback(hsdev, hsdev->usage);
 	iio_device_unregister(indio_dev);
 	hid_sensor_remove_trigger(indio_dev, &accel_state->common_attributes);
+<<<<<<< HEAD
+=======
+	kfree(indio_dev->channels);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return 0;
 }

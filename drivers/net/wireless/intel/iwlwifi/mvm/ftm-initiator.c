@@ -754,6 +754,7 @@ iwl_mvm_ftm_set_ndp_params(struct iwl_mvm *mvm,
 	target->i2r_max_total_ltf = IWL_MVM_FTM_I2R_MAX_TOTAL_LTF;
 }
 
+<<<<<<< HEAD
 static int
 iwl_mvm_ftm_put_target_v8(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
 			  struct cfg80211_pmsr_request_peer *peer,
@@ -781,6 +782,8 @@ iwl_mvm_ftm_put_target_v8(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int iwl_mvm_ftm_start_v12(struct iwl_mvm *mvm,
 				 struct ieee80211_vif *vif,
 				 struct cfg80211_pmsr_request *req)
@@ -800,6 +803,7 @@ static int iwl_mvm_ftm_start_v12(struct iwl_mvm *mvm,
 	for (i = 0; i < cmd.num_of_ap; i++) {
 		struct cfg80211_pmsr_request_peer *peer = &req->peers[i];
 		struct iwl_tof_range_req_ap_entry_v8 *target = &cmd.ap[i];
+<<<<<<< HEAD
 
 		err = iwl_mvm_ftm_put_target_v8(mvm, vif, peer, target);
 		if (err)
@@ -847,6 +851,26 @@ static int iwl_mvm_ftm_start_v13(struct iwl_mvm *mvm,
 
 		target->band =
 			iwl_mvm_phy_band_from_nl80211(peer->chandef.chan->band);
+=======
+		u32 flags;
+
+		err = iwl_mvm_ftm_put_target_v7(mvm, vif, peer, (void *)target);
+		if (err)
+			return err;
+
+		iwl_mvm_ftm_set_ndp_params(mvm, target);
+
+		/*
+		 * If secure LTF is turned off, replace the flag with PMF only
+		 */
+		flags = le32_to_cpu(target->initiator_ap_flags);
+		if ((flags & IWL_INITIATOR_AP_FLAGS_SECURED) &&
+		    !IWL_MVM_FTM_INITIATOR_SECURE_LTF) {
+			flags &= ~IWL_INITIATOR_AP_FLAGS_SECURED;
+			flags |= IWL_INITIATOR_AP_FLAGS_PMF;
+			target->initiator_ap_flags = cpu_to_le32(flags);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	return iwl_mvm_ftm_send_cmd(mvm, &hcmd);
@@ -870,9 +894,12 @@ int iwl_mvm_ftm_start(struct iwl_mvm *mvm, struct ieee80211_vif *vif,
 						   IWL_FW_CMD_VER_UNKNOWN);
 
 		switch (cmd_ver) {
+<<<<<<< HEAD
 		case 13:
 			err = iwl_mvm_ftm_start_v13(mvm, vif, req);
 			break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		case 12:
 			err = iwl_mvm_ftm_start_v12(mvm, vif, req);
 			break;

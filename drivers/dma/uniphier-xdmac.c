@@ -209,8 +209,13 @@ static int uniphier_xdmac_chan_stop(struct uniphier_xdmac_chan *xc)
 	writel(0, xc->reg_ch_base + XDMAC_TSS);
 
 	/* wait until transfer is stopped */
+<<<<<<< HEAD
 	return readl_poll_timeout_atomic(xc->reg_ch_base + XDMAC_STAT, val,
 					 !(val & XDMAC_STAT_TENF), 100, 1000);
+=======
+	return readl_poll_timeout(xc->reg_ch_base + XDMAC_STAT, val,
+				  !(val & XDMAC_STAT_TENF), 100, 1000);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* xc->vc.lock must be held by caller */

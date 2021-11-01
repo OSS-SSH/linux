@@ -193,8 +193,15 @@ netdev_tx_t ax25_ip_xmit(struct sk_buff *skb)
 	skb_pull(skb, AX25_KISS_HEADER_LEN);
 
 	if (digipeat != NULL) {
+<<<<<<< HEAD
 		if ((ourskb = ax25_rt_build_path(skb, src, dst, route->digipeat)) == NULL)
 			goto put;
+=======
+		if ((ourskb = ax25_rt_build_path(skb, src, dst, route->digipeat)) == NULL) {
+			kfree_skb(skb);
+			goto put;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		skb = ourskb;
 	}

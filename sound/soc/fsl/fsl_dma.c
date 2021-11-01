@@ -290,9 +290,38 @@ static int fsl_dma_new(struct snd_soc_component *component,
 	if (ret)
 		return ret;
 
+<<<<<<< HEAD
 	return snd_pcm_set_fixed_buffer_all(pcm, SNDRV_DMA_TYPE_DEV,
 					    card->dev,
 					    fsl_dma_hardware.buffer_bytes_max);
+=======
+	/* Some codecs have separate DAIs for playback and capture, so we
+	 * should allocate a DMA buffer only for the streams that are valid.
+	 */
+
+	if (pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream) {
+		ret = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, card->dev,
+			fsl_dma_hardware.buffer_bytes_max,
+			&pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream->dma_buffer);
+		if (ret) {
+			dev_err(card->dev, "can't alloc playback dma buffer\n");
+			return ret;
+		}
+	}
+
+	if (pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream) {
+		ret = snd_dma_alloc_pages(SNDRV_DMA_TYPE_DEV, card->dev,
+			fsl_dma_hardware.buffer_bytes_max,
+			&pcm->streams[SNDRV_PCM_STREAM_CAPTURE].substream->dma_buffer);
+		if (ret) {
+			dev_err(card->dev, "can't alloc capture dma buffer\n");
+			snd_dma_free_pages(&pcm->streams[SNDRV_PCM_STREAM_PLAYBACK].substream->dma_buffer);
+			return ret;
+		}
+	}
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /**
@@ -419,6 +448,10 @@ static int fsl_dma_open(struct snd_soc_component *component,
 
 	dma->assigned = true;
 
+<<<<<<< HEAD
+=======
+	snd_pcm_set_runtime_buffer(substream, &substream->dma_buffer);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	snd_soc_set_runtime_hwparams(substream, &fsl_dma_hardware);
 	runtime->private_data = dma_private;
 
@@ -791,6 +824,28 @@ static int fsl_dma_close(struct snd_soc_component *component,
 	return 0;
 }
 
+<<<<<<< HEAD
+=======
+/*
+ * Remove this PCM driver.
+ */
+static void fsl_dma_free_dma_buffers(struct snd_soc_component *component,
+				     struct snd_pcm *pcm)
+{
+	struct snd_pcm_substream *substream;
+	unsigned int i;
+
+	for (i = 0; i < ARRAY_SIZE(pcm->streams); i++) {
+		substream = pcm->streams[i].substream;
+		if (substream) {
+			snd_dma_free_pages(&substream->dma_buffer);
+			substream->dma_buffer.area = NULL;
+			substream->dma_buffer.addr = 0;
+		}
+	}
+}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /**
  * find_ssi_node -- returns the SSI node that points to its DMA channel node
  *
@@ -861,6 +916,10 @@ static int fsl_soc_dma_probe(struct platform_device *pdev)
 	dma->dai.hw_free = fsl_dma_hw_free;
 	dma->dai.pointer = fsl_dma_pointer;
 	dma->dai.pcm_construct = fsl_dma_new;
+<<<<<<< HEAD
+=======
+	dma->dai.pcm_destruct = fsl_dma_free_dma_buffers;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Store the SSI-specific information that we need */
 	dma->ssi_stx_phys = res.start + REG_SSI_STX0;

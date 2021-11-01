@@ -45,9 +45,13 @@ skb_tunnel_info(const struct sk_buff *skb)
 		return &md_dst->u.tun_info;
 
 	dst = skb_dst(skb);
+<<<<<<< HEAD
 	if (dst && dst->lwtstate &&
 	    (dst->lwtstate->type == LWTUNNEL_ENCAP_IP ||
 	     dst->lwtstate->type == LWTUNNEL_ENCAP_IP6))
+=======
+	if (dst && dst->lwtstate)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return lwt_tun_info(dst->lwtstate);
 
 	return NULL;

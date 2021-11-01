@@ -1435,6 +1435,7 @@ static void mirror_status(struct dm_target *ti, status_type_t type,
 		}
 
 		break;
+<<<<<<< HEAD
 
 	case STATUSTYPE_IMA:
 		DMEMIT_TARGET_NAME_VERSION(ti->type);
@@ -1452,6 +1453,8 @@ static void mirror_status(struct dm_target *ti, status_type_t type,
 		sz += log->type->status(log, type, result+sz, maxlen-sz);
 		DMEMIT(";");
 		break;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 

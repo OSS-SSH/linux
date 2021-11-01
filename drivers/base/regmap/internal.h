@@ -53,10 +53,13 @@ struct regmap {
 			spinlock_t spinlock;
 			unsigned long spinlock_flags;
 		};
+<<<<<<< HEAD
 		struct {
 			raw_spinlock_t raw_spinlock;
 			unsigned long raw_spinlock_flags;
 		};
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 	regmap_lock lock;
 	regmap_unlock unlock;

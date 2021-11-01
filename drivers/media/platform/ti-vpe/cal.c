@@ -290,6 +290,7 @@ void cal_quickdump_regs(struct cal_dev *cal)
  * ------------------------------------------------------------------
  */
 
+<<<<<<< HEAD
 #define CAL_MAX_PIX_PROC 4
 
 static int cal_reserve_pix_proc(struct cal_dev *cal)
@@ -321,11 +322,17 @@ static void cal_release_pix_proc(struct cal_dev *cal, unsigned int pix_proc_num)
 	spin_unlock(&cal->v4l2_dev.lock);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void cal_ctx_csi2_config(struct cal_ctx *ctx)
 {
 	u32 val;
 
+<<<<<<< HEAD
 	val = cal_read(ctx->cal, CAL_CSI2_CTX(ctx->phy->instance, ctx->csi2_ctx));
+=======
+	val = cal_read(ctx->cal, CAL_CSI2_CTX0(ctx->index));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cal_set_field(&val, ctx->cport, CAL_CSI2_CTX_CPORT_MASK);
 	/*
 	 * DT type: MIPI CSI-2 Specs
@@ -335,16 +342,27 @@ static void cal_ctx_csi2_config(struct cal_ctx *ctx)
 	 *  0x2A: RAW8   1 pixel  = 1 byte
 	 *  0x1E: YUV422 2 pixels = 4 bytes
 	 */
+<<<<<<< HEAD
 	cal_set_field(&val, ctx->datatype, CAL_CSI2_CTX_DT_MASK);
 	cal_set_field(&val, ctx->vc, CAL_CSI2_CTX_VC_MASK);
+=======
+	cal_set_field(&val, 0x1, CAL_CSI2_CTX_DT_MASK);
+	cal_set_field(&val, 0, CAL_CSI2_CTX_VC_MASK);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cal_set_field(&val, ctx->v_fmt.fmt.pix.height, CAL_CSI2_CTX_LINES_MASK);
 	cal_set_field(&val, CAL_CSI2_CTX_ATT_PIX, CAL_CSI2_CTX_ATT_MASK);
 	cal_set_field(&val, CAL_CSI2_CTX_PACK_MODE_LINE,
 		      CAL_CSI2_CTX_PACK_MODE_MASK);
+<<<<<<< HEAD
 	cal_write(ctx->cal, CAL_CSI2_CTX(ctx->phy->instance, ctx->csi2_ctx), val);
 	ctx_dbg(3, ctx, "CAL_CSI2_CTX(%u, %u) = 0x%08x\n",
 		ctx->phy->instance, ctx->csi2_ctx,
 		cal_read(ctx->cal, CAL_CSI2_CTX(ctx->phy->instance, ctx->csi2_ctx)));
+=======
+	cal_write(ctx->cal, CAL_CSI2_CTX0(ctx->index), val);
+	ctx_dbg(3, ctx, "CAL_CSI2_CTX0(%d) = 0x%08x\n", ctx->index,
+		cal_read(ctx->cal, CAL_CSI2_CTX0(ctx->index)));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void cal_ctx_pix_proc_config(struct cal_ctx *ctx)
@@ -386,16 +404,26 @@ static void cal_ctx_pix_proc_config(struct cal_ctx *ctx)
 		break;
 	}
 
+<<<<<<< HEAD
 	val = cal_read(ctx->cal, CAL_PIX_PROC(ctx->pix_proc));
+=======
+	val = cal_read(ctx->cal, CAL_PIX_PROC(ctx->index));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cal_set_field(&val, extract, CAL_PIX_PROC_EXTRACT_MASK);
 	cal_set_field(&val, CAL_PIX_PROC_DPCMD_BYPASS, CAL_PIX_PROC_DPCMD_MASK);
 	cal_set_field(&val, CAL_PIX_PROC_DPCME_BYPASS, CAL_PIX_PROC_DPCME_MASK);
 	cal_set_field(&val, pack, CAL_PIX_PROC_PACK_MASK);
 	cal_set_field(&val, ctx->cport, CAL_PIX_PROC_CPORT_MASK);
 	cal_set_field(&val, 1, CAL_PIX_PROC_EN_MASK);
+<<<<<<< HEAD
 	cal_write(ctx->cal, CAL_PIX_PROC(ctx->pix_proc), val);
 	ctx_dbg(3, ctx, "CAL_PIX_PROC(%u) = 0x%08x\n", ctx->pix_proc,
 		cal_read(ctx->cal, CAL_PIX_PROC(ctx->pix_proc)));
+=======
+	cal_write(ctx->cal, CAL_PIX_PROC(ctx->index), val);
+	ctx_dbg(3, ctx, "CAL_PIX_PROC(%d) = 0x%08x\n", ctx->index,
+		cal_read(ctx->cal, CAL_PIX_PROC(ctx->index)));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void cal_ctx_wr_dma_config(struct cal_ctx *ctx)
@@ -403,12 +431,17 @@ static void cal_ctx_wr_dma_config(struct cal_ctx *ctx)
 	unsigned int stride = ctx->v_fmt.fmt.pix.bytesperline;
 	u32 val;
 
+<<<<<<< HEAD
 	val = cal_read(ctx->cal, CAL_WR_DMA_CTRL(ctx->dma_ctx));
+=======
+	val = cal_read(ctx->cal, CAL_WR_DMA_CTRL(ctx->index));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cal_set_field(&val, ctx->cport, CAL_WR_DMA_CTRL_CPORT_MASK);
 	cal_set_field(&val, ctx->v_fmt.fmt.pix.height,
 		      CAL_WR_DMA_CTRL_YSIZE_MASK);
 	cal_set_field(&val, CAL_WR_DMA_CTRL_DTAG_PIX_DAT,
 		      CAL_WR_DMA_CTRL_DTAG_MASK);
+<<<<<<< HEAD
 	cal_set_field(&val, CAL_WR_DMA_CTRL_PATTERN_LINEAR,
 		      CAL_WR_DMA_CTRL_PATTERN_MASK);
 	cal_set_field(&val, 1, CAL_WR_DMA_CTRL_STALL_RD_MASK);
@@ -422,6 +455,23 @@ static void cal_ctx_wr_dma_config(struct cal_ctx *ctx)
 		cal_read(ctx->cal, CAL_WR_DMA_OFST(ctx->dma_ctx)));
 
 	val = cal_read(ctx->cal, CAL_WR_DMA_XSIZE(ctx->dma_ctx));
+=======
+	cal_set_field(&val, CAL_WR_DMA_CTRL_MODE_CONST,
+		      CAL_WR_DMA_CTRL_MODE_MASK);
+	cal_set_field(&val, CAL_WR_DMA_CTRL_PATTERN_LINEAR,
+		      CAL_WR_DMA_CTRL_PATTERN_MASK);
+	cal_set_field(&val, 1, CAL_WR_DMA_CTRL_STALL_RD_MASK);
+	cal_write(ctx->cal, CAL_WR_DMA_CTRL(ctx->index), val);
+	ctx_dbg(3, ctx, "CAL_WR_DMA_CTRL(%d) = 0x%08x\n", ctx->index,
+		cal_read(ctx->cal, CAL_WR_DMA_CTRL(ctx->index)));
+
+	cal_write_field(ctx->cal, CAL_WR_DMA_OFST(ctx->index),
+			stride / 16, CAL_WR_DMA_OFST_MASK);
+	ctx_dbg(3, ctx, "CAL_WR_DMA_OFST(%d) = 0x%08x\n", ctx->index,
+		cal_read(ctx->cal, CAL_WR_DMA_OFST(ctx->index)));
+
+	val = cal_read(ctx->cal, CAL_WR_DMA_XSIZE(ctx->index));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* 64 bit word means no skipping */
 	cal_set_field(&val, 0, CAL_WR_DMA_XSIZE_XSKIP_MASK);
 	/*
@@ -430,6 +480,7 @@ static void cal_ctx_wr_dma_config(struct cal_ctx *ctx)
 	 * written per line.
 	 */
 	cal_set_field(&val, stride / 8, CAL_WR_DMA_XSIZE_MASK);
+<<<<<<< HEAD
 	cal_write(ctx->cal, CAL_WR_DMA_XSIZE(ctx->dma_ctx), val);
 	ctx_dbg(3, ctx, "CAL_WR_DMA_XSIZE(%d) = 0x%08x\n", ctx->dma_ctx,
 		cal_read(ctx->cal, CAL_WR_DMA_XSIZE(ctx->dma_ctx)));
@@ -447,15 +498,44 @@ static void cal_ctx_wr_dma_enable(struct cal_ctx *ctx)
 	cal_set_field(&val, CAL_WR_DMA_CTRL_MODE_CONST,
 		      CAL_WR_DMA_CTRL_MODE_MASK);
 	cal_write(ctx->cal, CAL_WR_DMA_CTRL(ctx->dma_ctx), val);
+=======
+	cal_write(ctx->cal, CAL_WR_DMA_XSIZE(ctx->index), val);
+	ctx_dbg(3, ctx, "CAL_WR_DMA_XSIZE(%d) = 0x%08x\n", ctx->index,
+		cal_read(ctx->cal, CAL_WR_DMA_XSIZE(ctx->index)));
+
+	val = cal_read(ctx->cal, CAL_CTRL);
+	cal_set_field(&val, CAL_CTRL_BURSTSIZE_BURST128,
+		      CAL_CTRL_BURSTSIZE_MASK);
+	cal_set_field(&val, 0xF, CAL_CTRL_TAGCNT_MASK);
+	cal_set_field(&val, CAL_CTRL_POSTED_WRITES_NONPOSTED,
+		      CAL_CTRL_POSTED_WRITES_MASK);
+	cal_set_field(&val, 0xFF, CAL_CTRL_MFLAGL_MASK);
+	cal_set_field(&val, 0xFF, CAL_CTRL_MFLAGH_MASK);
+	cal_write(ctx->cal, CAL_CTRL, val);
+	ctx_dbg(3, ctx, "CAL_CTRL = 0x%08x\n", cal_read(ctx->cal, CAL_CTRL));
+}
+
+void cal_ctx_set_dma_addr(struct cal_ctx *ctx, dma_addr_t addr)
+{
+	cal_write(ctx->cal, CAL_WR_DMA_ADDR(ctx->index), addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void cal_ctx_wr_dma_disable(struct cal_ctx *ctx)
 {
+<<<<<<< HEAD
 	u32 val = cal_read(ctx->cal, CAL_WR_DMA_CTRL(ctx->dma_ctx));
 
 	cal_set_field(&val, CAL_WR_DMA_CTRL_MODE_DIS,
 		      CAL_WR_DMA_CTRL_MODE_MASK);
 	cal_write(ctx->cal, CAL_WR_DMA_CTRL(ctx->dma_ctx), val);
+=======
+	u32 val = cal_read(ctx->cal, CAL_WR_DMA_CTRL(ctx->index));
+
+	cal_set_field(&val, CAL_WR_DMA_CTRL_MODE_DIS,
+		      CAL_WR_DMA_CTRL_MODE_MASK);
+	cal_write(ctx->cal, CAL_WR_DMA_CTRL(ctx->index), val);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static bool cal_ctx_wr_dma_stopped(struct cal_ctx *ctx)
@@ -469,6 +549,7 @@ static bool cal_ctx_wr_dma_stopped(struct cal_ctx *ctx)
 	return stopped;
 }
 
+<<<<<<< HEAD
 int cal_ctx_prepare(struct cal_ctx *ctx)
 {
 	int ret;
@@ -494,6 +575,8 @@ void cal_ctx_unprepare(struct cal_ctx *ctx)
 		cal_release_pix_proc(ctx->cal, ctx->pix_proc);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 void cal_ctx_start(struct cal_ctx *ctx)
 {
 	ctx->sequence = 0;
@@ -501,17 +584,27 @@ void cal_ctx_start(struct cal_ctx *ctx)
 
 	/* Configure the CSI-2, pixel processing and write DMA contexts. */
 	cal_ctx_csi2_config(ctx);
+<<<<<<< HEAD
 	if (ctx->use_pix_proc)
 		cal_ctx_pix_proc_config(ctx);
+=======
+	cal_ctx_pix_proc_config(ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cal_ctx_wr_dma_config(ctx);
 
 	/* Enable IRQ_WDMA_END and IRQ_WDMA_START. */
 	cal_write(ctx->cal, CAL_HL_IRQENABLE_SET(1),
+<<<<<<< HEAD
 		  CAL_HL_IRQ_WDMA_END_MASK(ctx->dma_ctx));
 	cal_write(ctx->cal, CAL_HL_IRQENABLE_SET(2),
 		  CAL_HL_IRQ_WDMA_START_MASK(ctx->dma_ctx));
 
 	cal_ctx_wr_dma_enable(ctx);
+=======
+		  CAL_HL_IRQ_MASK(ctx->index));
+	cal_write(ctx->cal, CAL_HL_IRQENABLE_SET(2),
+		  CAL_HL_IRQ_MASK(ctx->index));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 void cal_ctx_stop(struct cal_ctx *ctx)
@@ -535,6 +628,7 @@ void cal_ctx_stop(struct cal_ctx *ctx)
 
 	/* Disable IRQ_WDMA_END and IRQ_WDMA_START. */
 	cal_write(ctx->cal, CAL_HL_IRQENABLE_CLR(1),
+<<<<<<< HEAD
 		  CAL_HL_IRQ_WDMA_END_MASK(ctx->dma_ctx));
 	cal_write(ctx->cal, CAL_HL_IRQENABLE_CLR(2),
 		  CAL_HL_IRQ_WDMA_START_MASK(ctx->dma_ctx));
@@ -547,6 +641,13 @@ void cal_ctx_stop(struct cal_ctx *ctx)
 	/* Disable pix proc */
 	if (ctx->use_pix_proc)
 		cal_write(ctx->cal, CAL_PIX_PROC(ctx->pix_proc), 0);
+=======
+		  CAL_HL_IRQ_MASK(ctx->index));
+	cal_write(ctx->cal, CAL_HL_IRQENABLE_CLR(2),
+		  CAL_HL_IRQ_MASK(ctx->index));
+
+	ctx->dma.state = CAL_DMA_STOPPED;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 /* ------------------------------------------------------------------
@@ -640,6 +741,7 @@ static irqreturn_t cal_irq(int irq_cal, void *data)
 				cal_write(cal, CAL_CSI2_COMPLEXIO_IRQSTATUS(i),
 					  cio_stat);
 			}
+<<<<<<< HEAD
 
 			if (status & CAL_HL_IRQ_VC_MASK(i)) {
 				u32 vc_stat = cal_read(cal, CAL_CSI2_VC_IRQSTATUS(i));
@@ -650,6 +752,8 @@ static irqreturn_t cal_irq(int irq_cal, void *data)
 
 				cal_write(cal, CAL_CSI2_VC_IRQSTATUS(i), vc_stat);
 			}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 
@@ -661,8 +765,13 @@ static irqreturn_t cal_irq(int irq_cal, void *data)
 		/* Clear Interrupt status */
 		cal_write(cal, CAL_HL_IRQSTATUS(1), status);
 
+<<<<<<< HEAD
 		for (i = 0; i < cal->num_contexts; ++i) {
 			if (status & CAL_HL_IRQ_WDMA_END_MASK(i))
+=======
+		for (i = 0; i < ARRAY_SIZE(cal->ctx); ++i) {
+			if (status & CAL_HL_IRQ_MASK(i))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				cal_irq_wdma_end(cal->ctx[i]);
 		}
 	}
@@ -675,8 +784,13 @@ static irqreturn_t cal_irq(int irq_cal, void *data)
 		/* Clear Interrupt status */
 		cal_write(cal, CAL_HL_IRQSTATUS(2), status);
 
+<<<<<<< HEAD
 		for (i = 0; i < cal->num_contexts; ++i) {
 			if (status & CAL_HL_IRQ_WDMA_START_MASK(i))
+=======
+		for (i = 0; i < ARRAY_SIZE(cal->ctx); ++i) {
+			if (status & CAL_HL_IRQ_MASK(i))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				cal_irq_wdma_start(cal->ctx[i]);
 		}
 	}
@@ -708,12 +822,17 @@ static int cal_async_notifier_bound(struct v4l2_async_notifier *notifier,
 	int pad;
 	int ret;
 
+<<<<<<< HEAD
 	if (phy->source) {
+=======
+	if (phy->sensor) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		phy_info(phy, "Rejecting subdev %s (Already set!!)",
 			 subdev->name);
 		return 0;
 	}
 
+<<<<<<< HEAD
 	phy->source = subdev;
 	phy_dbg(1, phy, "Using source %s for capture\n", subdev->name);
 
@@ -722,6 +841,16 @@ static int cal_async_notifier_bound(struct v4l2_async_notifier *notifier,
 					  MEDIA_PAD_FL_SOURCE);
 	if (pad < 0) {
 		phy_err(phy, "Source %s has no connected source pad\n",
+=======
+	phy->sensor = subdev;
+	phy_dbg(1, phy, "Using sensor %s for capture\n", subdev->name);
+
+	pad = media_entity_get_fwnode_pad(&subdev->entity,
+					  of_fwnode_handle(phy->sensor_ep_node),
+					  MEDIA_PAD_FL_SOURCE);
+	if (pad < 0) {
+		phy_err(phy, "Sensor %s has no connected source pad\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			subdev->name);
 		return pad;
 	}
@@ -731,7 +860,11 @@ static int cal_async_notifier_bound(struct v4l2_async_notifier *notifier,
 				    MEDIA_LNK_FL_IMMUTABLE |
 				    MEDIA_LNK_FL_ENABLED);
 	if (ret) {
+<<<<<<< HEAD
 		phy_err(phy, "Failed to create media link for source %s\n",
+=======
+		phy_err(phy, "Failed to create media link for sensor %s\n",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			subdev->name);
 		return ret;
 	}
@@ -743,6 +876,7 @@ static int cal_async_notifier_complete(struct v4l2_async_notifier *notifier)
 {
 	struct cal_dev *cal = container_of(notifier, struct cal_dev, notifier);
 	unsigned int i;
+<<<<<<< HEAD
 	int ret;
 
 	for (i = 0; i < cal->num_contexts; ++i) {
@@ -767,6 +901,17 @@ err_ctx_unreg:
 
 		cal_ctx_v4l2_unregister(cal->ctx[i - 1]);
 	}
+=======
+	int ret = 0;
+
+	for (i = 0; i < ARRAY_SIZE(cal->ctx); ++i) {
+		if (cal->ctx[i])
+			cal_ctx_v4l2_register(cal->ctx[i]);
+	}
+
+	if (cal_mc_api)
+		ret = v4l2_device_register_subdev_nodes(&cal->v4l2_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -789,10 +934,17 @@ static int cal_async_notifier_register(struct cal_dev *cal)
 		struct cal_v4l2_async_subdev *casd;
 		struct fwnode_handle *fwnode;
 
+<<<<<<< HEAD
 		if (!phy->source_node)
 			continue;
 
 		fwnode = of_fwnode_handle(phy->source_node);
+=======
+		if (!phy->sensor_node)
+			continue;
+
+		fwnode = of_fwnode_handle(phy->sensor_node);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		casd = v4l2_async_notifier_add_fwnode_subdev(&cal->notifier,
 							     fwnode,
 							     struct cal_v4l2_async_subdev);
@@ -865,8 +1017,15 @@ static void cal_media_unregister(struct cal_dev *cal)
 	unsigned int i;
 
 	/* Unregister all the V4L2 video devices. */
+<<<<<<< HEAD
 	for (i = 0; i < cal->num_contexts; i++)
 		cal_ctx_v4l2_unregister(cal->ctx[i]);
+=======
+	for (i = 0; i < ARRAY_SIZE(cal->ctx); i++) {
+		if (cal->ctx[i])
+			cal_ctx_v4l2_unregister(cal->ctx[i]);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	cal_async_notifier_unregister(cal);
 	media_device_unregister(&cal->mdev);
@@ -911,6 +1070,16 @@ static int cal_media_init(struct cal_dev *cal)
  */
 static void cal_media_cleanup(struct cal_dev *cal)
 {
+<<<<<<< HEAD
+=======
+	unsigned int i;
+
+	for (i = 0; i < ARRAY_SIZE(cal->ctx); i++) {
+		if (cal->ctx[i])
+			cal_ctx_v4l2_cleanup(cal->ctx[i]);
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	v4l2_device_unregister(&cal->v4l2_dev);
 	media_device_cleanup(&cal->mdev);
 
@@ -927,17 +1096,26 @@ static struct cal_ctx *cal_ctx_create(struct cal_dev *cal, int inst)
 	struct cal_ctx *ctx;
 	int ret;
 
+<<<<<<< HEAD
 	ctx = kzalloc(sizeof(*ctx), GFP_KERNEL);
+=======
+	ctx = devm_kzalloc(cal->dev, sizeof(*ctx), GFP_KERNEL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!ctx)
 		return NULL;
 
 	ctx->cal = cal;
 	ctx->phy = cal->phy[inst];
+<<<<<<< HEAD
 	ctx->dma_ctx = inst;
 	ctx->csi2_ctx = inst;
 	ctx->cport = inst;
 	ctx->vc = 0;
 	ctx->datatype = CAL_CSI2_CTX_DT_ANY;
+=======
+	ctx->index = inst;
+	ctx->cport = inst;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	ret = cal_ctx_v4l2_init(ctx);
 	if (ret)
@@ -946,6 +1124,7 @@ static struct cal_ctx *cal_ctx_create(struct cal_dev *cal, int inst)
 	return ctx;
 }
 
+<<<<<<< HEAD
 static void cal_ctx_destroy(struct cal_ctx *ctx)
 {
 	cal_ctx_v4l2_cleanup(ctx);
@@ -953,6 +1132,8 @@ static void cal_ctx_destroy(struct cal_ctx *ctx)
 	kfree(ctx);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct of_device_id cal_of_match[] = {
 	{
 		.compatible = "ti,dra72-cal",
@@ -1065,6 +1246,10 @@ static int cal_init_camerarx_regmap(struct cal_dev *cal)
 static int cal_probe(struct platform_device *pdev)
 {
 	struct cal_dev *cal;
+<<<<<<< HEAD
+=======
+	struct cal_ctx *ctx;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bool connected = false;
 	unsigned int i;
 	int ret;
@@ -1133,7 +1318,11 @@ static int cal_probe(struct platform_device *pdev)
 			goto error_camerarx;
 		}
 
+<<<<<<< HEAD
 		if (cal->phy[i]->source_node)
+=======
+		if (cal->phy[i]->sensor_node)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			connected = true;
 	}
 
@@ -1145,6 +1334,7 @@ static int cal_probe(struct platform_device *pdev)
 
 	/* Create contexts. */
 	for (i = 0; i < cal->data->num_csi2_phy; ++i) {
+<<<<<<< HEAD
 		if (!cal->phy[i]->source_node)
 			continue;
 
@@ -1156,6 +1346,17 @@ static int cal_probe(struct platform_device *pdev)
 		}
 
 		cal->num_contexts++;
+=======
+		if (!cal->phy[i]->sensor_node)
+			continue;
+
+		cal->ctx[i] = cal_ctx_create(cal, i);
+		if (!cal->ctx[i]) {
+			cal_err(cal, "Failed to create context %u\n", i);
+			ret = -ENODEV;
+			goto error_context;
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	/* Register the media device. */
@@ -1166,8 +1367,16 @@ static int cal_probe(struct platform_device *pdev)
 	return 0;
 
 error_context:
+<<<<<<< HEAD
 	for (i = 0; i < cal->num_contexts; i++)
 		cal_ctx_destroy(cal->ctx[i]);
+=======
+	for (i = 0; i < ARRAY_SIZE(cal->ctx); i++) {
+		ctx = cal->ctx[i];
+		if (ctx)
+			cal_ctx_v4l2_cleanup(ctx);
+	}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 error_camerarx:
 	for (i = 0; i < cal->data->num_csi2_phy; i++)
@@ -1193,17 +1402,29 @@ static int cal_remove(struct platform_device *pdev)
 
 	cal_media_unregister(cal);
 
+<<<<<<< HEAD
 	for (i = 0; i < cal->data->num_csi2_phy; i++)
 		cal_camerarx_disable(cal->phy[i]);
 
 	for (i = 0; i < cal->num_contexts; i++)
 		cal_ctx_destroy(cal->ctx[i]);
+=======
+	for (i = 0; i < ARRAY_SIZE(cal->phy); i++) {
+		if (cal->phy[i])
+			cal_camerarx_disable(cal->phy[i]);
+	}
+
+	cal_media_cleanup(cal);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	for (i = 0; i < cal->data->num_csi2_phy; i++)
 		cal_camerarx_destroy(cal->phy[i]);
 
+<<<<<<< HEAD
 	cal_media_cleanup(cal);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (ret >= 0)
 		pm_runtime_put_sync(&pdev->dev);
 	pm_runtime_disable(&pdev->dev);
@@ -1215,7 +1436,10 @@ static int cal_runtime_resume(struct device *dev)
 {
 	struct cal_dev *cal = dev_get_drvdata(dev);
 	unsigned int i;
+<<<<<<< HEAD
 	u32 val;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (cal->data->flags & DRA72_CAL_PRE_ES2_LDO_DISABLE) {
 		/*
@@ -1232,6 +1456,7 @@ static int cal_runtime_resume(struct device *dev)
 	 */
 	cal_write(cal, CAL_HL_IRQENABLE_SET(0), CAL_HL_IRQ_OCPO_ERR_MASK);
 
+<<<<<<< HEAD
 	val = cal_read(cal, CAL_CTRL);
 	cal_set_field(&val, CAL_CTRL_BURSTSIZE_BURST128,
 		      CAL_CTRL_BURSTSIZE_MASK);
@@ -1243,6 +1468,8 @@ static int cal_runtime_resume(struct device *dev)
 	cal_write(cal, CAL_CTRL, val);
 	cal_dbg(3, cal, "CAL_CTRL = 0x%08x\n", cal_read(cal, CAL_CTRL));
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return 0;
 }
 

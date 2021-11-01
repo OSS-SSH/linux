@@ -9,9 +9,20 @@
 
 #include <linux/module.h>
 #include <linux/kernel.h>
+<<<<<<< HEAD
 #include <linux/iio/iio.h>
 #include <linux/iio/buffer.h>
 #include <linux/iio/trigger.h>
+=======
+#include <linux/slab.h>
+#include <linux/stat.h>
+#include <linux/interrupt.h>
+#include <linux/i2c.h>
+#include <linux/delay.h>
+#include <linux/iio/iio.h>
+#include <linux/iio/buffer.h>
+#include <linux/iio/trigger_consumer.h>
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/iio/triggered_buffer.h>
 
 #include <linux/iio/common/st_sensors.h>
@@ -62,8 +73,18 @@ static const struct iio_buffer_setup_ops st_accel_buffer_setup_ops = {
 
 int st_accel_allocate_ring(struct iio_dev *indio_dev)
 {
+<<<<<<< HEAD
 	return devm_iio_triggered_buffer_setup(indio_dev->dev.parent, indio_dev,
 		NULL, &st_sensors_trigger_handler, &st_accel_buffer_setup_ops);
+=======
+	return iio_triggered_buffer_setup(indio_dev, NULL,
+		&st_sensors_trigger_handler, &st_accel_buffer_setup_ops);
+}
+
+void st_accel_deallocate_ring(struct iio_dev *indio_dev)
+{
+	iio_triggered_buffer_cleanup(indio_dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 MODULE_AUTHOR("Denis Ciocca <denis.ciocca@st.com>");

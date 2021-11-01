@@ -191,7 +191,10 @@ struct tcmu_cmd {
 	unsigned long deadline;
 
 #define TCMU_CMD_BIT_EXPIRED 0
+<<<<<<< HEAD
 #define TCMU_CMD_BIT_KEEP_BUF 1
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	unsigned long flags;
 };
 
@@ -1316,13 +1319,20 @@ unlock:
 	mutex_unlock(&udev->cmdr_lock);
 }
 
+<<<<<<< HEAD
 static bool tcmu_handle_completion(struct tcmu_cmd *cmd,
 				   struct tcmu_cmd_entry *entry, bool keep_buf)
+=======
+static void tcmu_handle_completion(struct tcmu_cmd *cmd, struct tcmu_cmd_entry *entry)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct se_cmd *se_cmd = cmd->se_cmd;
 	struct tcmu_dev *udev = cmd->tcmu_dev;
 	bool read_len_valid = false;
+<<<<<<< HEAD
 	bool ret = true;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	uint32_t read_len;
 
 	/*
@@ -1333,6 +1343,7 @@ static bool tcmu_handle_completion(struct tcmu_cmd *cmd,
 		WARN_ON_ONCE(se_cmd);
 		goto out;
 	}
+<<<<<<< HEAD
 	if (test_bit(TCMU_CMD_BIT_KEEP_BUF, &cmd->flags)) {
 		pr_err("cmd_id %u already completed with KEEP_BUF, ring is broken\n",
 		       entry->hdr.cmd_id);
@@ -1340,6 +1351,8 @@ static bool tcmu_handle_completion(struct tcmu_cmd *cmd,
 		ret = false;
 		goto out;
 	}
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	list_del_init(&cmd->queue_entry);
 
@@ -1389,6 +1402,7 @@ done:
 		target_complete_cmd(cmd->se_cmd, entry->rsp.scsi_status);
 
 out:
+<<<<<<< HEAD
 	if (!keep_buf) {
 		tcmu_cmd_free_data(cmd, cmd->dbi_cnt);
 		tcmu_free_cmd(cmd);
@@ -1405,6 +1419,10 @@ out:
 		set_bit(TCMU_CMD_BIT_KEEP_BUF, &cmd->flags);
 	}
 	return ret;
+=======
+	tcmu_cmd_free_data(cmd, cmd->dbi_cnt);
+	tcmu_free_cmd(cmd);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int tcmu_run_tmr_queue(struct tcmu_dev *udev)
@@ -1456,7 +1474,10 @@ static bool tcmu_handle_completions(struct tcmu_dev *udev)
 	while (udev->cmdr_last_cleaned != READ_ONCE(mb->cmd_tail)) {
 
 		struct tcmu_cmd_entry *entry = udev->cmdr + udev->cmdr_last_cleaned;
+<<<<<<< HEAD
 		bool keep_buf;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/*
 		 * Flush max. up to end of cmd ring since current entry might
@@ -1478,11 +1499,15 @@ static bool tcmu_handle_completions(struct tcmu_dev *udev)
 		}
 		WARN_ON(tcmu_hdr_get_op(entry->hdr.len_op) != TCMU_OP_CMD);
 
+<<<<<<< HEAD
 		keep_buf = !!(entry->hdr.uflags & TCMU_UFLAG_KEEP_BUF);
 		if (keep_buf)
 			cmd = xa_load(&udev->commands, entry->hdr.cmd_id);
 		else
 			cmd = xa_erase(&udev->commands, entry->hdr.cmd_id);
+=======
+		cmd = xa_erase(&udev->commands, entry->hdr.cmd_id);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!cmd) {
 			pr_err("cmd_id %u not found, ring is broken\n",
 			       entry->hdr.cmd_id);
@@ -1490,8 +1515,12 @@ static bool tcmu_handle_completions(struct tcmu_dev *udev)
 			return false;
 		}
 
+<<<<<<< HEAD
 		if (!tcmu_handle_completion(cmd, entry, keep_buf))
 			break;
+=======
+		tcmu_handle_completion(cmd, entry);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		UPDATE_HEAD(udev->cmdr_last_cleaned,
 			    tcmu_hdr_get_len(entry->hdr.len_op),
@@ -1649,8 +1678,12 @@ static void tcmu_dev_call_rcu(struct rcu_head *p)
 
 static int tcmu_check_and_free_pending_cmd(struct tcmu_cmd *cmd)
 {
+<<<<<<< HEAD
 	if (test_bit(TCMU_CMD_BIT_EXPIRED, &cmd->flags) ||
 	    test_bit(TCMU_CMD_BIT_KEEP_BUF, &cmd->flags)) {
+=======
+	if (test_bit(TCMU_CMD_BIT_EXPIRED, &cmd->flags)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		kmem_cache_free(tcmu_cmd_cache, cmd);
 		return 0;
 	}
@@ -1934,6 +1967,7 @@ static int tcmu_open(struct uio_info *info, struct inode *inode)
 static int tcmu_release(struct uio_info *info, struct inode *inode)
 {
 	struct tcmu_dev *udev = container_of(info, struct tcmu_dev, uio_info);
+<<<<<<< HEAD
 	struct tcmu_cmd *cmd;
 	unsigned long i;
 	bool freed = false;
@@ -1966,6 +2000,8 @@ static int tcmu_release(struct uio_info *info, struct inode *inode)
 		run_qfull_queue(udev, false);
 
 	mutex_unlock(&udev->cmdr_lock);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	clear_bit(TCMU_DEV_BIT_OPEN, &udev->flags);
 
@@ -2210,8 +2246,12 @@ static int tcmu_configure_device(struct se_device *dev)
 	mb->version = TCMU_MAILBOX_VERSION;
 	mb->flags = TCMU_MAILBOX_FLAG_CAP_OOOC |
 		    TCMU_MAILBOX_FLAG_CAP_READ_LEN |
+<<<<<<< HEAD
 		    TCMU_MAILBOX_FLAG_CAP_TMR |
 		    TCMU_MAILBOX_FLAG_CAP_KEEP_BUF;
+=======
+		    TCMU_MAILBOX_FLAG_CAP_TMR;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mb->cmdr_off = CMDR_OFF;
 	mb->cmdr_size = udev->cmdr_size;
 
@@ -2343,6 +2383,7 @@ static void tcmu_reset_ring(struct tcmu_dev *udev, u8 err_level)
 	mutex_lock(&udev->cmdr_lock);
 
 	xa_for_each(&udev->commands, i, cmd) {
+<<<<<<< HEAD
 		pr_debug("removing cmd %u on dev %s from ring %s\n",
 			 cmd->cmd_id, udev->name,
 			 test_bit(TCMU_CMD_BIT_EXPIRED, &cmd->flags) ?
@@ -2353,6 +2394,14 @@ static void tcmu_reset_ring(struct tcmu_dev *udev, u8 err_level)
 		xa_erase(&udev->commands, i);
 		if (!test_bit(TCMU_CMD_BIT_EXPIRED, &cmd->flags) &&
 		    !test_bit(TCMU_CMD_BIT_KEEP_BUF, &cmd->flags)) {
+=======
+		pr_debug("removing cmd %u on dev %s from ring (is expired %d)\n",
+			  cmd->cmd_id, udev->name,
+			  test_bit(TCMU_CMD_BIT_EXPIRED, &cmd->flags));
+
+		xa_erase(&udev->commands, i);
+		if (!test_bit(TCMU_CMD_BIT_EXPIRED, &cmd->flags)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			WARN_ON(!cmd->se_cmd);
 			list_del_init(&cmd->queue_entry);
 			cmd->se_cmd->priv = NULL;
@@ -3001,6 +3050,7 @@ static ssize_t tcmu_reset_ring_store(struct config_item *item, const char *page,
 }
 CONFIGFS_ATTR_WO(tcmu_, reset_ring);
 
+<<<<<<< HEAD
 static ssize_t tcmu_free_kept_buf_store(struct config_item *item, const char *page,
 					size_t count)
 {
@@ -3060,6 +3110,8 @@ out_unlock:
 }
 CONFIGFS_ATTR_WO(tcmu_, free_kept_buf);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static struct configfs_attribute *tcmu_attrib_attrs[] = {
 	&tcmu_attr_cmd_time_out,
 	&tcmu_attr_qfull_time_out,
@@ -3078,7 +3130,10 @@ static struct configfs_attribute **tcmu_attrs;
 static struct configfs_attribute *tcmu_action_attrs[] = {
 	&tcmu_attr_block_dev,
 	&tcmu_attr_reset_ring,
+<<<<<<< HEAD
 	&tcmu_attr_free_kept_buf,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	NULL,
 };
 

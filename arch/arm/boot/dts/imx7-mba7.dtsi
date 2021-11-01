@@ -216,6 +216,10 @@
 	phy-mode = "rgmii-id";
 	phy-reset-gpios = <&gpio7 15 GPIO_ACTIVE_LOW>;
 	phy-reset-duration = <1>;
+<<<<<<< HEAD
+=======
+	phy-reset-delay = <1>;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	phy-supply = <&reg_fec1_pwdn>;
 	phy-handle = <&ethphy1_0>;
 	fsl,magic-packet;

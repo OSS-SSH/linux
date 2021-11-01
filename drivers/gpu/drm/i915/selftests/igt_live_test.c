@@ -5,7 +5,11 @@
  */
 
 #include "i915_drv.h"
+<<<<<<< HEAD
 #include "gt/intel_gt.h"
+=======
+#include "gt/intel_gt_requests.h"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #include "../i915_selftest.h"
 #include "igt_flush_test.h"

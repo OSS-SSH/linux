@@ -180,6 +180,10 @@ examples:
       pinctrl-names = "default", "sleep";
       pinctrl-0 = <&sai2a_pins_a>, <&sai2b_pins_b>;
       pinctrl-1 = <&sai2a_sleep_pins_a>, <&sai2b_sleep_pins_b>;
+<<<<<<< HEAD
+=======
+      status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
       sai2a: audio-controller@4400b004 {
         #sound-dai-cells = <0>;
@@ -189,6 +193,10 @@ examples:
         dma-names = "tx";
         clocks = <&rcc SAI2_K>;
         clock-names = "sai_ck";
+<<<<<<< HEAD
+=======
+        status = "okay";
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
       };
     };
 

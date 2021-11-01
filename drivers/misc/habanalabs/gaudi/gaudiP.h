@@ -36,8 +36,11 @@
 #define NUMBER_OF_INTERRUPTS		(NUMBER_OF_CMPLT_QUEUES + \
 						NUMBER_OF_CPU_HW_QUEUES)
 
+<<<<<<< HEAD
 #define GAUDI_STREAM_MASTER_ARR_SIZE	8
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #if (NUMBER_OF_INTERRUPTS > GAUDI_MSI_ENTRIES)
 #error "Number of MSI interrupts must be smaller or equal to GAUDI_MSI_ENTRIES"
 #endif
@@ -52,8 +55,11 @@
 #define DC_POWER_DEFAULT_PCI		60000		/* 60W */
 #define DC_POWER_DEFAULT_PMC		60000		/* 60W */
 
+<<<<<<< HEAD
 #define DC_POWER_DEFAULT_PMC_SEC	97000		/* 97W */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define GAUDI_CPU_TIMEOUT_USEC		30000000	/* 30s */
 
 #define TPC_ENABLED_MASK		0xFF
@@ -66,7 +72,11 @@
 
 #define DMA_MAX_TRANSFER_SIZE		U32_MAX
 
+<<<<<<< HEAD
 #define GAUDI_DEFAULT_CARD_NAME		"HL205"
+=======
+#define GAUDI_DEFAULT_CARD_NAME		"HL2000"
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define GAUDI_MAX_PENDING_CS		SZ_16K
 
@@ -121,7 +131,10 @@
 	(((mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_STATUS_511 - \
 	mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_MON_STATUS_0) + 4) >> 2)
 
+<<<<<<< HEAD
 #define MONITOR_MAX_SOBS	8
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* DRAM Memory Map */
 
@@ -205,6 +218,7 @@
 #define HW_CAP_TPC_MASK		GENMASK(31, 24)
 #define HW_CAP_TPC_SHIFT	24
 
+<<<<<<< HEAD
 #define NEXT_SYNC_OBJ_ADDR_INTERVAL \
 	(mmSYNC_MNGR_W_N_SYNC_MNGR_OBJS_SOB_OBJ_0 - \
 	 mmSYNC_MNGR_E_N_SYNC_MNGR_OBJS_SOB_OBJ_0)
@@ -217,6 +231,8 @@
 #define NUM_OF_FENCES				4
 
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define GAUDI_CPU_PCI_MSB_ADDR(addr)	(((addr) & GENMASK_ULL(49, 39)) >> 39)
 #define GAUDI_PCI_TO_CPU_ADDR(addr)			\
 	do {						\

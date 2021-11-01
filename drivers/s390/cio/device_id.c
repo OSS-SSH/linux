@@ -91,7 +91,11 @@ static int diag210_to_senseid(struct senseid *senseid, struct diag210 *diag)
 }
 
 /**
+<<<<<<< HEAD
  * diag210_get_dev_info - retrieve device information via diag 0x210
+=======
+ * diag_get_dev_info - retrieve device information via diag 0x210
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * @cdev: ccw device
  *
  * Returns zero on success, non-zero otherwise.

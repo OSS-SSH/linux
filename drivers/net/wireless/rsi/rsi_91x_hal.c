@@ -1038,10 +1038,15 @@ static int rsi_load_9116_firmware(struct rsi_hw *adapter)
 	}
 
 	ta_firmware = kmemdup(fw_entry->data, fw_entry->size, GFP_KERNEL);
+<<<<<<< HEAD
 	if (!ta_firmware) {
 		status = -ENOMEM;
 		goto fail_release_fw;
 	}
+=======
+	if (!ta_firmware)
+		goto fail_release_fw;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	fw_p = ta_firmware;
 	instructions_sz = fw_entry->size;
 	rsi_dbg(INFO_ZONE, "FW Length = %d bytes\n", instructions_sz);

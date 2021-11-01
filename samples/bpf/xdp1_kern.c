@@ -57,7 +57,10 @@ int xdp_prog1(struct xdp_md *ctx)
 
 	h_proto = eth->h_proto;
 
+<<<<<<< HEAD
 	/* Handle VLAN tagged packet */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (h_proto == htons(ETH_P_8021Q) || h_proto == htons(ETH_P_8021AD)) {
 		struct vlan_hdr *vhdr;
 
@@ -67,7 +70,10 @@ int xdp_prog1(struct xdp_md *ctx)
 			return rc;
 		h_proto = vhdr->h_vlan_encapsulated_proto;
 	}
+<<<<<<< HEAD
 	/* Handle double VLAN tagged packet */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (h_proto == htons(ETH_P_8021Q) || h_proto == htons(ETH_P_8021AD)) {
 		struct vlan_hdr *vhdr;
 

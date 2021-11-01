@@ -582,7 +582,12 @@ struct net_device *nr_dev_first(void)
 			if (first == NULL || strncmp(dev->name, first->name, 3) < 0)
 				first = dev;
 	}
+<<<<<<< HEAD
 	dev_hold(first);
+=======
+	if (first)
+		dev_hold(first);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rcu_read_unlock();
 
 	return first;

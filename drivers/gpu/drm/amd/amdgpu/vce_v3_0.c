@@ -490,6 +490,7 @@ static int vce_v3_0_hw_fini(void *handle)
 	int r;
 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
 
+<<<<<<< HEAD
 	/*
 	 * Proper cleanups before halting the HW engine:
 	 *   - cancel the delayed idle work
@@ -513,6 +514,8 @@ static int vce_v3_0_hw_fini(void *handle)
 						       AMD_CG_STATE_GATE);
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	r = vce_v3_0_wait_for_idle(handle);
 	if (r)
 		return r;

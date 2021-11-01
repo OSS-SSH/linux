@@ -251,7 +251,11 @@ _xfs_buf_alloc(
 		return error;
 	}
 
+<<<<<<< HEAD
 	bp->b_rhash_key = map[0].bm_bn;
+=======
+	bp->b_bn = map[0].bm_bn;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bp->b_length = 0;
 	for (i = 0; i < nmaps; i++) {
 		bp->b_maps[i].bm_bn = map[i].bm_bn;
@@ -315,6 +319,10 @@ xfs_buf_alloc_kmem(
 	struct xfs_buf	*bp,
 	xfs_buf_flags_t	flags)
 {
+<<<<<<< HEAD
+=======
+	int		align_mask = xfs_buftarg_dma_alignment(bp->b_target);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	xfs_km_flags_t	kmflag_mask = KM_NOFS;
 	size_t		size = BBTOB(bp->b_length);
 
@@ -322,7 +330,11 @@ xfs_buf_alloc_kmem(
 	if (!(flags & XBF_READ))
 		kmflag_mask |= KM_ZERO;
 
+<<<<<<< HEAD
 	bp->b_addr = kmem_alloc(size, kmflag_mask);
+=======
+	bp->b_addr = kmem_alloc_io(size, align_mask, kmflag_mask);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!bp->b_addr)
 		return -ENOMEM;
 
@@ -459,7 +471,11 @@ _xfs_buf_obj_cmp(
 	 */
 	BUILD_BUG_ON(offsetof(struct xfs_buf_map, bm_bn) != 0);
 
+<<<<<<< HEAD
 	if (bp->b_rhash_key != map->bm_bn)
+=======
+	if (bp->b_bn != map->bm_bn)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return 1;
 
 	if (unlikely(bp->b_length != map->bm_len)) {
@@ -481,7 +497,11 @@ static const struct rhashtable_params xfs_buf_hash_params = {
 	.min_size		= 32,	/* empty AGs have minimal footprint */
 	.nelem_hint		= 16,
 	.key_len		= sizeof(xfs_daddr_t),
+<<<<<<< HEAD
 	.key_offset		= offsetof(struct xfs_buf, b_rhash_key),
+=======
+	.key_offset		= offsetof(struct xfs_buf, b_bn),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.head_offset		= offsetof(struct xfs_buf, b_rhash_head),
 	.automatic_shrinking	= true,
 	.obj_cmpfn		= _xfs_buf_obj_cmp,
@@ -813,7 +833,11 @@ xfs_buf_read_map(
 	 * buffer.
 	 */
 	if (error) {
+<<<<<<< HEAD
 		if (!xfs_is_shutdown(target->bt_mount))
+=======
+		if (!XFS_FORCED_SHUTDOWN(target->bt_mount))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			xfs_buf_ioerror_alert(bp, fa);
 
 		bp->b_flags &= ~XBF_DONE;
@@ -843,7 +867,11 @@ xfs_buf_readahead_map(
 {
 	struct xfs_buf		*bp;
 
+<<<<<<< HEAD
 	if (bdi_read_congested(target->bt_bdev->bd_disk->bdi))
+=======
+	if (bdi_read_congested(target->bt_bdev->bd_bdi))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return;
 
 	xfs_buf_read_map(target, map, nmaps,
@@ -853,9 +881,13 @@ xfs_buf_readahead_map(
 
 /*
  * Read an uncached buffer from disk. Allocates and returns a locked
+<<<<<<< HEAD
  * buffer containing the disk contents or nothing. Uncached buffers always have
  * a cache index of XFS_BUF_DADDR_NULL so we can easily determine if the buffer
  * is cached or uncached during fault diagnosis.
+=======
+ * buffer containing the disk contents or nothing.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 int
 xfs_buf_read_uncached(
@@ -877,7 +909,11 @@ xfs_buf_read_uncached(
 
 	/* set up the buffer for a read IO */
 	ASSERT(bp->b_map_count == 1);
+<<<<<<< HEAD
 	bp->b_rhash_key = XFS_BUF_DADDR_NULL;
+=======
+	bp->b_bn = XFS_BUF_DADDR_NULL;  /* always null for uncached buffers */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	bp->b_maps[0].bm_bn = daddr;
 	bp->b_flags |= XBF_READ;
 	bp->b_ops = ops;
@@ -1146,7 +1182,11 @@ xfs_buf_ioerror_permanent(
 		return true;
 
 	/* At unmount we may treat errors differently */
+<<<<<<< HEAD
 	if (xfs_is_unmounting(mp) && mp->m_fail_unmount)
+=======
+	if ((mp->m_flags & XFS_MOUNT_UNMOUNTING) && mp->m_fail_unmount)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return true;
 
 	return false;
@@ -1180,7 +1220,11 @@ xfs_buf_ioend_handle_error(
 	 * If we've already decided to shutdown the filesystem because of I/O
 	 * errors, there's no point in giving this a retry.
 	 */
+<<<<<<< HEAD
 	if (xfs_is_shutdown(mp))
+=======
+	if (XFS_FORCED_SHUTDOWN(mp))
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		goto out_stale;
 
 	xfs_buf_ioerror_alert_ratelimited(bp);
@@ -1337,7 +1381,11 @@ xfs_buf_ioerror_alert(
 {
 	xfs_buf_alert_ratelimited(bp, "XFS: metadata IO error",
 		"metadata I/O error in \"%pS\" at daddr 0x%llx len %d error %d",
+<<<<<<< HEAD
 				  func, (uint64_t)xfs_buf_daddr(bp),
+=======
+				  func, (uint64_t)XFS_BUF_ADDR(bp),
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				  bp->b_length, -bp->b_error);
 }
 
@@ -1515,18 +1563,29 @@ _xfs_buf_ioapply(
 						   SHUTDOWN_CORRUPT_INCORE);
 				return;
 			}
+<<<<<<< HEAD
 		} else if (bp->b_rhash_key != XFS_BUF_DADDR_NULL) {
+=======
+		} else if (bp->b_bn != XFS_BUF_DADDR_NULL) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			struct xfs_mount *mp = bp->b_mount;
 
 			/*
 			 * non-crc filesystems don't attach verifiers during
 			 * log recovery, so don't warn for such filesystems.
 			 */
+<<<<<<< HEAD
 			if (xfs_has_crc(mp)) {
 				xfs_warn(mp,
 					"%s: no buf ops on daddr 0x%llx len %d",
 					__func__, xfs_buf_daddr(bp),
 					bp->b_length);
+=======
+			if (xfs_sb_version_hascrc(&mp->m_sb)) {
+				xfs_warn(mp,
+					"%s: no buf ops on daddr 0x%llx len %d",
+					__func__, bp->b_bn, bp->b_length);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				xfs_hex_dump(bp->b_addr,
 						XFS_CORRUPTION_DUMP_LEN);
 				dump_stack();
@@ -1594,7 +1653,11 @@ __xfs_buf_submit(
 	ASSERT(!(bp->b_flags & _XBF_DELWRI_Q));
 
 	/* on shutdown we stale and complete the buffer immediately */
+<<<<<<< HEAD
 	if (xfs_is_shutdown(bp->b_mount)) {
+=======
+	if (XFS_FORCED_SHUTDOWN(bp->b_mount)) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_buf_ioend_fail(bp);
 		return -EIO;
 	}
@@ -1796,7 +1859,11 @@ xfs_buftarg_drain(
 				xfs_buf_alert_ratelimited(bp,
 					"XFS: Corruption Alert",
 "Corruption Alert: Buffer at daddr 0x%llx had permanent write failures!",
+<<<<<<< HEAD
 					(long long)xfs_buf_daddr(bp));
+=======
+					(long long)bp->b_bn);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			}
 			xfs_buf_rele(bp);
 		}
@@ -1811,7 +1878,11 @@ xfs_buftarg_drain(
 	 * down the fs.
 	 */
 	if (write_fail) {
+<<<<<<< HEAD
 		ASSERT(xfs_is_shutdown(btp->bt_mount));
+=======
+		ASSERT(XFS_FORCED_SHUTDOWN(btp->bt_mount));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		xfs_alert(btp->bt_mount,
 	      "Please run xfs_repair to determine the extent of the problem.");
 	}
@@ -2304,7 +2375,11 @@ xfs_verify_magic(
 	struct xfs_mount	*mp = bp->b_mount;
 	int			idx;
 
+<<<<<<< HEAD
 	idx = xfs_has_crc(mp);
+=======
+	idx = xfs_sb_version_hascrc(&mp->m_sb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (WARN_ON(!bp->b_ops || !bp->b_ops->magic[idx]))
 		return false;
 	return dmagic == bp->b_ops->magic[idx];
@@ -2322,7 +2397,11 @@ xfs_verify_magic16(
 	struct xfs_mount	*mp = bp->b_mount;
 	int			idx;
 
+<<<<<<< HEAD
 	idx = xfs_has_crc(mp);
+=======
+	idx = xfs_sb_version_hascrc(&mp->m_sb);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (WARN_ON(!bp->b_ops || !bp->b_ops->magic16[idx]))
 		return false;
 	return dmagic == bp->b_ops->magic16[idx];

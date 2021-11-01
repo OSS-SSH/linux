@@ -104,6 +104,9 @@ void mlx5_core_eq_free_irqs(struct mlx5_core_dev *dev);
 struct cpu_rmap *mlx5_eq_table_get_rmap(struct mlx5_core_dev *dev);
 #endif
 
+<<<<<<< HEAD
 int mlx5_vector2irqn(struct mlx5_core_dev *dev, int vector, unsigned int *irqn);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #endif

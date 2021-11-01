@@ -190,16 +190,23 @@ fail:
  * inode->i_mutex: down
  * BKL held [before 2.5.x]
  */
+<<<<<<< HEAD
 struct posix_acl *reiserfs_get_acl(struct inode *inode, int type, bool rcu)
+=======
+struct posix_acl *reiserfs_get_acl(struct inode *inode, int type)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	char *name, *value;
 	struct posix_acl *acl;
 	int size;
 	int retval;
 
+<<<<<<< HEAD
 	if (rcu)
 		return ERR_PTR(-ECHILD);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	switch (type) {
 	case ACL_TYPE_ACCESS:
 		name = XATTR_NAME_POSIX_ACL_ACCESS;

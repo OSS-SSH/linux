@@ -48,9 +48,16 @@ struct ext2_group_desc * ext2_get_group_desc(struct super_block * sb,
 	struct ext2_sb_info *sbi = EXT2_SB(sb);
 
 	if (block_group >= sbi->s_groups_count) {
+<<<<<<< HEAD
 		WARN(1, "block_group >= groups_count - "
 		     "block_group = %d, groups_count = %lu",
 		     block_group, sbi->s_groups_count);
+=======
+		ext2_error (sb, "ext2_get_group_desc",
+			    "block_group >= groups_count - "
+			    "block_group = %d, groups_count = %lu",
+			    block_group, sbi->s_groups_count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		return NULL;
 	}
@@ -58,9 +65,16 @@ struct ext2_group_desc * ext2_get_group_desc(struct super_block * sb,
 	group_desc = block_group >> EXT2_DESC_PER_BLOCK_BITS(sb);
 	offset = block_group & (EXT2_DESC_PER_BLOCK(sb) - 1);
 	if (!sbi->s_group_desc[group_desc]) {
+<<<<<<< HEAD
 		WARN(1, "Group descriptor not loaded - "
 		     "block_group = %d, group_desc = %lu, desc = %lu",
 		      block_group, group_desc, offset);
+=======
+		ext2_error (sb, "ext2_get_group_desc",
+			    "Group descriptor not loaded - "
+			    "block_group = %d, group_desc = %lu, desc = %lu",
+			     block_group, group_desc, offset);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return NULL;
 	}
 

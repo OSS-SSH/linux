@@ -762,7 +762,13 @@ static int zynqmp_clk_setup(struct device_node *np)
 	zynqmp_register_clocks(np);
 
 	zynqmp_data->num = clock_max_idx;
+<<<<<<< HEAD
 	return of_clk_add_hw_provider(np, of_clk_hw_onecell_get, zynqmp_data);
+=======
+	of_clk_add_hw_provider(np, of_clk_hw_onecell_get, zynqmp_data);
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int zynqmp_clock_probe(struct platform_device *pdev)

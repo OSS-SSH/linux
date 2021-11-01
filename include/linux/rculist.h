@@ -11,6 +11,18 @@
 #include <linux/rcupdate.h>
 
 /*
+<<<<<<< HEAD
+=======
+ * Why is there no list_empty_rcu()?  Because list_empty() serves this
+ * purpose.  The list_empty() function fetches the RCU-protected pointer
+ * and compares it to the address of the list head, but neither dereferences
+ * this pointer itself nor provides this pointer to the caller.  Therefore,
+ * it is not necessary to use rcu_dereference(), so that list_empty() can
+ * be used anywhere you would want to use a list_empty_rcu().
+ */
+
+/*
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * INIT_LIST_HEAD_RCU - Initialize a list_head visible to RCU readers
  * @list: list to be initialized
  *
@@ -309,13 +321,20 @@ static inline void list_splice_tail_init_rcu(struct list_head *list,
 /*
  * Where are list_empty_rcu() and list_first_entry_rcu()?
  *
+<<<<<<< HEAD
  * They do not exist because they would lead to subtle race conditions:
+=======
+ * Implementing those functions following their counterparts list_empty() and
+ * list_first_entry() is not advisable because they lead to subtle race
+ * conditions as the following snippet shows:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * if (!list_empty_rcu(mylist)) {
  *	struct foo *bar = list_first_entry_rcu(mylist, struct foo, list_member);
  *	do_something(bar);
  * }
  *
+<<<<<<< HEAD
  * The list might be non-empty when list_empty_rcu() checks it, but it
  * might have become empty by the time that list_first_entry_rcu() rereads
  * the ->next pointer, which would result in a SEGV.
@@ -332,6 +351,14 @@ static inline void list_splice_tail_init_rcu(struct list_head *list,
  * used anywhere you would want to use list_empty_rcu().  Just don't
  * expect anything useful to happen if you do a subsequent lockless
  * call to list_first_entry_rcu()!!!
+=======
+ * The list may not be empty when list_empty_rcu checks it, but it may be when
+ * list_first_entry_rcu rereads the ->next pointer.
+ *
+ * Rereading the ->next pointer is not a problem for list_empty() and
+ * list_first_entry() because they would be protected by a lock that blocks
+ * writers.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * See list_first_or_null_rcu for an alternative.
  */

@@ -40,7 +40,11 @@
 
 struct mlx5_vxlan {
 	struct mlx5_core_dev		*mdev;
+<<<<<<< HEAD
 	/* max_num_ports is usually 4, 16 buckets is more than enough */
+=======
+	/* max_num_ports is usuallly 4, 16 buckets is more than enough */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	DECLARE_HASHTABLE(htable, 4);
 	struct mutex                    sync_lock; /* sync add/del port HW operations */
 };

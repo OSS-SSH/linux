@@ -492,6 +492,7 @@ int trace_print_lat_fmt(struct trace_seq *s, struct trace_entry *entry)
 	trace_seq_printf(s, "%c%c%c",
 			 irqs_off, need_resched, hardsoft_irq);
 
+<<<<<<< HEAD
 	if (entry->preempt_count & 0xf)
 		trace_seq_printf(s, "%x", entry->preempt_count & 0xf);
 	else
@@ -499,6 +500,10 @@ int trace_print_lat_fmt(struct trace_seq *s, struct trace_entry *entry)
 
 	if (entry->preempt_count & 0xf0)
 		trace_seq_printf(s, "%x", entry->preempt_count >> 4);
+=======
+	if (entry->preempt_count)
+		trace_seq_printf(s, "%x", entry->preempt_count);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	else
 		trace_seq_putc(s, '.');
 
@@ -661,7 +666,11 @@ int trace_print_lat_context(struct trace_iterator *iter)
 		trace_seq_printf(
 			s, "%16s %7d %3d %d %08x %08lx ",
 			comm, entry->pid, iter->cpu, entry->flags,
+<<<<<<< HEAD
 			entry->preempt_count & 0xf, iter->idx);
+=======
+			entry->preempt_count, iter->idx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} else {
 		lat_print_generic(s, entry, iter->cpu);
 	}

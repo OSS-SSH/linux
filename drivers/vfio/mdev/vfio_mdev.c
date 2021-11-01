@@ -17,11 +17,16 @@
 
 #include "mdev_private.h"
 
+<<<<<<< HEAD
 static int vfio_mdev_open_device(struct vfio_device *core_vdev)
+=======
+static int vfio_mdev_open(struct vfio_device *core_vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mdev_device *mdev = to_mdev_device(core_vdev->dev);
 	struct mdev_parent *parent = mdev->type->parent;
 
+<<<<<<< HEAD
 	if (unlikely(!parent->ops->open_device))
 		return 0;
 
@@ -29,12 +34,26 @@ static int vfio_mdev_open_device(struct vfio_device *core_vdev)
 }
 
 static void vfio_mdev_close_device(struct vfio_device *core_vdev)
+=======
+	if (unlikely(!parent->ops->open))
+		return -EINVAL;
+
+	return parent->ops->open(mdev);
+}
+
+static void vfio_mdev_release(struct vfio_device *core_vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mdev_device *mdev = to_mdev_device(core_vdev->dev);
 	struct mdev_parent *parent = mdev->type->parent;
 
+<<<<<<< HEAD
 	if (likely(parent->ops->close_device))
 		parent->ops->close_device(mdev);
+=======
+	if (likely(parent->ops->release))
+		parent->ops->release(mdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static long vfio_mdev_unlocked_ioctl(struct vfio_device *core_vdev,
@@ -44,7 +63,11 @@ static long vfio_mdev_unlocked_ioctl(struct vfio_device *core_vdev,
 	struct mdev_parent *parent = mdev->type->parent;
 
 	if (unlikely(!parent->ops->ioctl))
+<<<<<<< HEAD
 		return 0;
+=======
+		return -EINVAL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return parent->ops->ioctl(mdev, cmd, arg);
 }
@@ -100,8 +123,13 @@ static void vfio_mdev_request(struct vfio_device *core_vdev, unsigned int count)
 
 static const struct vfio_device_ops vfio_mdev_dev_ops = {
 	.name		= "vfio-mdev",
+<<<<<<< HEAD
 	.open_device	= vfio_mdev_open_device,
 	.close_device	= vfio_mdev_close_device,
+=======
+	.open		= vfio_mdev_open,
+	.release	= vfio_mdev_release,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.ioctl		= vfio_mdev_unlocked_ioctl,
 	.read		= vfio_mdev_read,
 	.write		= vfio_mdev_write,
@@ -120,6 +148,7 @@ static int vfio_mdev_probe(struct mdev_device *mdev)
 
 	vfio_init_group_dev(vdev, &mdev->dev, &vfio_mdev_dev_ops);
 	ret = vfio_register_group_dev(vdev);
+<<<<<<< HEAD
 	if (ret)
 		goto out_uninit;
 
@@ -130,6 +159,14 @@ out_uninit:
 	vfio_uninit_group_dev(vdev);
 	kfree(vdev);
 	return ret;
+=======
+	if (ret) {
+		kfree(vdev);
+		return ret;
+	}
+	dev_set_drvdata(&mdev->dev, vdev);
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static void vfio_mdev_remove(struct mdev_device *mdev)
@@ -137,7 +174,10 @@ static void vfio_mdev_remove(struct mdev_device *mdev)
 	struct vfio_device *vdev = dev_get_drvdata(&mdev->dev);
 
 	vfio_unregister_group_dev(vdev);
+<<<<<<< HEAD
 	vfio_uninit_group_dev(vdev);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(vdev);
 }
 

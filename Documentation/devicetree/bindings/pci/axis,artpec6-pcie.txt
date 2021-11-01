@@ -1,7 +1,11 @@
 * Axis ARTPEC-6 PCIe interface
 
 This PCIe host controller is based on the Synopsys DesignWare PCIe IP
+<<<<<<< HEAD
 and thus inherits all the common properties defined in snps,dw-pcie.yaml.
+=======
+and thus inherits all the common properties defined in designware-pcie.txt.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 Required properties:
 - compatible: "axis,artpec6-pcie", "snps,dw-pcie" for ARTPEC-6 in RC mode;

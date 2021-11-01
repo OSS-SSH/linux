@@ -229,8 +229,13 @@ static void __init init_resources(void)
 	}
 
 	/* Clean-up any unused pre-allocated resources */
+<<<<<<< HEAD
 	if (res_idx >= 0)
 		memblock_free(__pa(mem_res), (res_idx + 1) * sizeof(*mem_res));
+=======
+	mem_res_sz = (num_resources - res_idx + 1) * sizeof(*mem_res);
+	memblock_free(__pa(mem_res), mem_res_sz);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return;
 
  error:
@@ -255,7 +260,11 @@ static void __init parse_dtb(void)
 
 	pr_err("No DTB passed to the kernel\n");
 #ifdef CONFIG_CMDLINE_FORCE
+<<<<<<< HEAD
 	strscpy(boot_command_line, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
+=======
+	strlcpy(boot_command_line, CONFIG_CMDLINE, COMMAND_LINE_SIZE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pr_info("Forcing kernel command line to: %s\n", boot_command_line);
 #endif
 }

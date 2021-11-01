@@ -502,7 +502,10 @@ void kmem_cache_destroy(struct kmem_cache *s)
 	if (unlikely(!s))
 		return;
 
+<<<<<<< HEAD
 	cpus_read_lock();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_lock(&slab_mutex);
 
 	s->refcount--;
@@ -517,7 +520,10 @@ void kmem_cache_destroy(struct kmem_cache *s)
 	}
 out_unlock:
 	mutex_unlock(&slab_mutex);
+<<<<<<< HEAD
 	cpus_read_unlock();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL(kmem_cache_destroy);
 

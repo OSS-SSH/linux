@@ -265,8 +265,11 @@ struct uart_amba_port {
 	unsigned int		old_cr;		/* state during shutdown */
 	unsigned int		fixed_baud;	/* vendor-set fixed baud rate */
 	char			type[12];
+<<<<<<< HEAD
 	bool			rs485_tx_started;
 	unsigned int		rs485_tx_drain_interval; /* usecs */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef CONFIG_DMA_ENGINE
 	/* DMA stuff */
 	bool			using_tx_dma;
@@ -277,8 +280,11 @@ struct uart_amba_port {
 #endif
 };
 
+<<<<<<< HEAD
 static unsigned int pl011_tx_empty(struct uart_port *port);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static unsigned int pl011_reg_to_offset(const struct uart_amba_port *uap,
 	unsigned int reg)
 {
@@ -1286,6 +1292,7 @@ static inline bool pl011_dma_rx_running(struct uart_amba_port *uap)
 #define pl011_dma_flush_buffer	NULL
 #endif
 
+<<<<<<< HEAD
 static void pl011_rs485_tx_stop(struct uart_amba_port *uap)
 {
 	struct uart_port *port = &uap->port;
@@ -1322,6 +1329,8 @@ static void pl011_rs485_tx_stop(struct uart_amba_port *uap)
 	uap->rs485_tx_started = false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static void pl011_stop_tx(struct uart_port *port)
 {
 	struct uart_amba_port *uap =
@@ -1330,9 +1339,12 @@ static void pl011_stop_tx(struct uart_port *port)
 	uap->im &= ~UART011_TXIM;
 	pl011_write(uap->im, uap, REG_IMSC);
 	pl011_dma_tx_stop(uap);
+<<<<<<< HEAD
 
 	if ((port->rs485.flags & SER_RS485_ENABLED) && uap->rs485_tx_started)
 		pl011_rs485_tx_stop(uap);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static bool pl011_tx_chars(struct uart_amba_port *uap, bool from_irq);
@@ -1423,6 +1435,7 @@ static bool pl011_tx_char(struct uart_amba_port *uap, unsigned char c,
 	return true;
 }
 
+<<<<<<< HEAD
 static void pl011_rs485_tx_start(struct uart_amba_port *uap)
 {
 	struct uart_port *port = &uap->port;
@@ -1449,6 +1462,8 @@ static void pl011_rs485_tx_start(struct uart_amba_port *uap)
 	uap->rs485_tx_started = true;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Returns true if tx interrupts have to be (kept) enabled  */
 static bool pl011_tx_chars(struct uart_amba_port *uap, bool from_irq)
 {
@@ -1466,10 +1481,13 @@ static bool pl011_tx_chars(struct uart_amba_port *uap, bool from_irq)
 		return false;
 	}
 
+<<<<<<< HEAD
 	if ((uap->port.rs485.flags & SER_RS485_ENABLED) &&
 	    !uap->rs485_tx_started)
 		pl011_rs485_tx_start(uap);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* If we are using DMA mode, try to send some characters. */
 	if (pl011_dma_tx_irq(uap))
 		return true;
@@ -1615,9 +1633,12 @@ static void pl011_set_mctrl(struct uart_port *port, unsigned int mctrl)
 	    container_of(port, struct uart_amba_port, port);
 	unsigned int cr;
 
+<<<<<<< HEAD
 	if (port->rs485.flags & SER_RS485_ENABLED)
 		mctrl &= ~TIOCM_RTS;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	cr = pl011_read(uap, REG_CR);
 
 #define	TIOCMBIT(tiocmbit, uartbit)		\
@@ -1839,6 +1860,7 @@ static int pl011_startup(struct uart_port *port)
 
 	/* restore RTS and DTR */
 	cr = uap->old_cr & (UART011_CR_RTS | UART011_CR_DTR);
+<<<<<<< HEAD
 	cr |= UART01x_CR_UARTEN | UART011_CR_RXE;
 
 	if (port->rs485.flags & SER_RS485_ENABLED) {
@@ -1850,6 +1872,9 @@ static int pl011_startup(struct uart_port *port)
 		cr |= UART011_CR_TXE;
 	}
 
+=======
+	cr |= UART01x_CR_UARTEN | UART011_CR_RXE | UART011_CR_TXE;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pl011_write(cr, uap, REG_CR);
 
 	spin_unlock_irq(&uap->port.lock);
@@ -1950,9 +1975,12 @@ static void pl011_shutdown(struct uart_port *port)
 
 	pl011_dma_shutdown(uap);
 
+<<<<<<< HEAD
 	if ((port->rs485.flags & SER_RS485_ENABLED) && uap->rs485_tx_started)
 		pl011_rs485_tx_stop(uap);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	free_irq(uap->port.irq, uap);
 
 	pl011_disable_uart(uap);
@@ -2030,7 +2058,10 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
 	unsigned int lcr_h, old_cr;
 	unsigned long flags;
 	unsigned int baud, quot, clkdiv;
+<<<<<<< HEAD
 	unsigned int bits;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (uap->vendor->oversampling)
 		clkdiv = 8;
@@ -2081,8 +2112,11 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
 	if (uap->fifosize > 1)
 		lcr_h |= UART01x_LCRH_FEN;
 
+<<<<<<< HEAD
 	bits = tty_get_frame_size(termios->c_cflag);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	spin_lock_irqsave(&port->lock, flags);
 
 	/*
@@ -2090,6 +2124,7 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
 	 */
 	uart_update_timeout(port, termios->c_cflag, baud);
 
+<<<<<<< HEAD
 	/*
 	 * Calculate the approximated time it takes to transmit one character
 	 * with the given baud rate. We use this as the poll interval when we
@@ -2097,14 +2132,19 @@ pl011_set_termios(struct uart_port *port, struct ktermios *termios,
 	 */
 	uap->rs485_tx_drain_interval = (bits * 1000 * 1000) / baud;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	pl011_setup_status_masks(port, termios);
 
 	if (UART_ENABLE_MS(port, termios->c_cflag))
 		pl011_enable_ms(port);
 
+<<<<<<< HEAD
 	if (port->rs485.flags & SER_RS485_ENABLED)
 		termios->c_cflag &= ~CRTSCTS;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* first, disable everything */
 	old_cr = pl011_read(uap, REG_CR);
 	pl011_write(0, uap, REG_CR);
@@ -2226,6 +2266,7 @@ static int pl011_verify_port(struct uart_port *port, struct serial_struct *ser)
 	return ret;
 }
 
+<<<<<<< HEAD
 static int pl011_rs485_config(struct uart_port *port,
 			      struct serial_rs485 *rs485)
 {
@@ -2261,6 +2302,8 @@ static int pl011_rs485_config(struct uart_port *port,
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct uart_ops amba_pl011_pops = {
 	.tx_empty	= pl011_tx_empty,
 	.set_mctrl	= pl011_set_mctrl,
@@ -2725,6 +2768,7 @@ static int pl011_find_free_port(void)
 	return -EBUSY;
 }
 
+<<<<<<< HEAD
 static int pl011_get_rs485_mode(struct uart_amba_port *uap)
 {
 	struct uart_port *port = &uap->port;
@@ -2742,11 +2786,16 @@ static int pl011_get_rs485_mode(struct uart_amba_port *uap)
 	return 0;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static int pl011_setup_port(struct device *dev, struct uart_amba_port *uap,
 			    struct resource *mmiobase, int index)
 {
 	void __iomem *base;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	base = devm_ioremap_resource(dev, mmiobase);
 	if (IS_ERR(base))
@@ -2763,10 +2812,13 @@ static int pl011_setup_port(struct device *dev, struct uart_amba_port *uap,
 	uap->port.flags = UPF_BOOT_AUTOCONF;
 	uap->port.line = index;
 
+<<<<<<< HEAD
 	ret = pl011_get_rs485_mode(uap);
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	amba_ports[index] = uap;
 
 	return 0;
@@ -2824,7 +2876,11 @@ static int pl011_probe(struct amba_device *dev, const struct amba_id *id)
 	uap->port.iotype = vendor->access_32b ? UPIO_MEM32 : UPIO_MEM;
 	uap->port.irq = dev->irq[0];
 	uap->port.ops = &amba_pl011_pops;
+<<<<<<< HEAD
 	uap->port.rs485_config = pl011_rs485_config;
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	snprintf(uap->type, sizeof(uap->type), "PL011 rev%u", amba_rev(dev));
 
 	ret = pl011_setup_port(&dev->dev, uap, &dev->res, portnr);

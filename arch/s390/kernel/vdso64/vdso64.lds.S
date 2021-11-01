@@ -51,7 +51,10 @@ SECTIONS
 
 	.rela.dyn ALIGN(8) : { *(.rela.dyn) }
 	.got ALIGN(8)	: { *(.got .toc) }
+<<<<<<< HEAD
 	.got.plt ALIGN(8) : { *(.got.plt) }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	_end = .;
 	PROVIDE(end = .);

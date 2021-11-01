@@ -105,7 +105,11 @@ enum scm_event {SCM_CHANGE, SCM_AVAIL};
 struct scm_driver {
 	struct device_driver drv;
 	int (*probe) (struct scm_device *scmdev);
+<<<<<<< HEAD
 	void (*remove) (struct scm_device *scmdev);
+=======
+	int (*remove) (struct scm_device *scmdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	void (*notify) (struct scm_device *scmdev, enum scm_event event);
 	void (*handler) (struct scm_device *scmdev, void *data,
 			blk_status_t error);

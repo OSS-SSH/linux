@@ -113,14 +113,23 @@ static Dwarf_Line *cu_getsrc_die(Dwarf_Die *cu_die, Dwarf_Addr addr)
  *
  * Find a line number and file name for @addr in @cu_die.
  */
+<<<<<<< HEAD
 int cu_find_lineinfo(Dwarf_Die *cu_die, Dwarf_Addr addr,
 		     const char **fname, int *lineno)
+=======
+int cu_find_lineinfo(Dwarf_Die *cu_die, unsigned long addr,
+		    const char **fname, int *lineno)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	Dwarf_Line *line;
 	Dwarf_Die die_mem;
 	Dwarf_Addr faddr;
 
+<<<<<<< HEAD
 	if (die_find_realfunc(cu_die, addr, &die_mem)
+=======
+	if (die_find_realfunc(cu_die, (Dwarf_Addr)addr, &die_mem)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	    && die_entrypc(&die_mem, &faddr) == 0 &&
 	    faddr == addr) {
 		*fname = dwarf_decl_file(&die_mem);
@@ -128,7 +137,11 @@ int cu_find_lineinfo(Dwarf_Die *cu_die, Dwarf_Addr addr,
 		goto out;
 	}
 
+<<<<<<< HEAD
 	line = cu_getsrc_die(cu_die, addr);
+=======
+	line = cu_getsrc_die(cu_die, (Dwarf_Addr)addr);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (line && dwarf_lineno(line, lineno) == 0) {
 		*fname = dwarf_linesrc(line, NULL, NULL);
 		if (!*fname)

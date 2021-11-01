@@ -896,7 +896,10 @@ static int __init efi_memreserve_map_root(void)
 static int efi_mem_reserve_iomem(phys_addr_t addr, u64 size)
 {
 	struct resource *res, *parent;
+<<<<<<< HEAD
 	int ret;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	res = kzalloc(sizeof(struct resource), GFP_ATOMIC);
 	if (!res)
@@ -909,6 +912,7 @@ static int efi_mem_reserve_iomem(phys_addr_t addr, u64 size)
 
 	/* we expect a conflict with a 'System RAM' region */
 	parent = request_resource_conflict(&iomem_resource, res);
+<<<<<<< HEAD
 	ret = parent ? request_resource(parent, res) : 0;
 
 	/*
@@ -920,6 +924,9 @@ static int efi_mem_reserve_iomem(phys_addr_t addr, u64 size)
 		memblock_reserve(addr, size);
 
 	return ret;
+=======
+	return parent ? request_resource(parent, res) : 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 int __ref efi_mem_reserve_persistent(phys_addr_t addr, u64 size)

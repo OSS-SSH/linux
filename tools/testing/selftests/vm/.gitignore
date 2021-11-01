@@ -27,4 +27,7 @@ hmm-tests
 memfd_secret
 local_config.*
 split_huge_page_test
+<<<<<<< HEAD
 ksm_tests
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

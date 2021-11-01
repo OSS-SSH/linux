@@ -1581,6 +1581,13 @@ int dso__load_bfd_symbols(struct dso *dso, const char *debugfile)
 	if (bfd_get_flavour(abfd) == bfd_target_elf_flavour)
 		goto out_close;
 
+<<<<<<< HEAD
+=======
+	section = bfd_get_section_by_name(abfd, ".text");
+	if (section)
+		dso->text_offset = section->vma - section->filepos;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	symbols_size = bfd_get_symtab_upper_bound(abfd);
 	if (symbols_size == 0) {
 		bfd_close(abfd);
@@ -1598,6 +1605,7 @@ int dso__load_bfd_symbols(struct dso *dso, const char *debugfile)
 	if (symbols_count < 0)
 		goto out_free;
 
+<<<<<<< HEAD
 	section = bfd_get_section_by_name(abfd, ".text");
 	if (section) {
 		for (i = 0; i < symbols_count; ++i) {
@@ -1614,6 +1622,8 @@ int dso__load_bfd_symbols(struct dso *dso, const char *debugfile)
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	qsort(symbols, symbols_count, sizeof(asymbol *), bfd_symbols__cmpvalue);
 
 #ifdef bfd_get_section

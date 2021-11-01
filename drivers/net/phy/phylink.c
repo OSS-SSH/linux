@@ -33,7 +33,10 @@
 enum {
 	PHYLINK_DISABLE_STOPPED,
 	PHYLINK_DISABLE_LINK,
+<<<<<<< HEAD
 	PHYLINK_DISABLE_MAC_WOL,
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /**
@@ -943,11 +946,18 @@ static void phylink_phy_change(struct phy_device *phydev, bool up)
 
 	phylink_run_resolve(pl);
 
+<<<<<<< HEAD
 	phylink_dbg(pl, "phy link %s %s/%s/%s/%s\n", up ? "up" : "down",
 		    phy_modes(phydev->interface),
 		    phy_speed_to_str(phydev->speed),
 		    phy_duplex_to_str(phydev->duplex),
 		    phylink_pause_to_str(pl->phy_state.pause));
+=======
+	phylink_dbg(pl, "phy link %s %s/%s/%s\n", up ? "up" : "down",
+		    phy_modes(phydev->interface),
+		    phy_speed_to_str(phydev->speed),
+		    phy_duplex_to_str(phydev->duplex));
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static int phylink_bringup_phy(struct phylink *pl, struct phy_device *phy,
@@ -1283,9 +1293,12 @@ EXPORT_SYMBOL_GPL(phylink_start);
  * network device driver's &struct net_device_ops ndo_stop() method.  The
  * network device's carrier state should not be changed prior to calling this
  * function.
+<<<<<<< HEAD
  *
  * This will synchronously bring down the link if the link is not already
  * down (in other words, it will trigger a mac_link_down() method call.)
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 void phylink_stop(struct phylink *pl)
 {
@@ -1306,6 +1319,7 @@ void phylink_stop(struct phylink *pl)
 EXPORT_SYMBOL_GPL(phylink_stop);
 
 /**
+<<<<<<< HEAD
  * phylink_suspend() - handle a network device suspend event
  * @pl: a pointer to a &struct phylink returned from phylink_create()
  * @mac_wol: true if the MAC needs to receive packets for Wake-on-Lan
@@ -1384,6 +1398,8 @@ void phylink_resume(struct phylink *pl)
 EXPORT_SYMBOL_GPL(phylink_resume);
 
 /**
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * phylink_ethtool_get_wol() - get the wake on lan parameters for the PHY
  * @pl: a pointer to a &struct phylink returned from phylink_create()
  * @wol: a pointer to &struct ethtool_wolinfo to hold the read parameters
@@ -1540,11 +1556,23 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 		return phy_ethtool_ksettings_set(pl->phydev, kset);
 	}
 
+<<<<<<< HEAD
 	config = pl->link_config;
 
 	/* Mask out unsupported advertisements */
 	linkmode_and(config.advertising, kset->link_modes.advertising,
 		     pl->supported);
+=======
+	linkmode_copy(support, pl->supported);
+	config = pl->link_config;
+	config.an_enabled = kset->base.autoneg == AUTONEG_ENABLE;
+
+	/* Mask out unsupported advertisements, and force the autoneg bit */
+	linkmode_and(config.advertising, kset->link_modes.advertising,
+		     support);
+	linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, config.advertising,
+			 config.an_enabled);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* FIXME: should we reject autoneg if phy/mac does not support it? */
 	switch (kset->base.autoneg) {
@@ -1553,7 +1581,11 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 		 * duplex.
 		 */
 		s = phy_lookup_setting(kset->base.speed, kset->base.duplex,
+<<<<<<< HEAD
 				       pl->supported, false);
+=======
+				       support, false);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		if (!s)
 			return -EINVAL;
 
@@ -1594,12 +1626,15 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 	/* We have ruled out the case with a PHY attached, and the
 	 * fixed-link cases.  All that is left are in-band links.
 	 */
+<<<<<<< HEAD
 	config.an_enabled = kset->base.autoneg == AUTONEG_ENABLE;
 	linkmode_mod_bit(ETHTOOL_LINK_MODE_Autoneg_BIT, config.advertising,
 			 config.an_enabled);
 
 	/* Validate without changing the current supported mask. */
 	linkmode_copy(support, pl->supported);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (phylink_validate(pl, support, &config))
 		return -EINVAL;
 
@@ -1607,6 +1642,7 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 	if (config.an_enabled && phylink_is_empty_linkmode(config.advertising))
 		return -EINVAL;
 
+<<<<<<< HEAD
 	/* If this link is with an SFP, ensure that changes to advertised modes
 	 * also cause the associated interface to be selected such that the
 	 * link can be configured correctly.
@@ -1633,6 +1669,8 @@ int phylink_ethtool_ksettings_set(struct phylink *pl,
 		}
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_lock(&pl->state_mutex);
 	pl->link_config.speed = config.speed;
 	pl->link_config.duplex = config.duplex;
@@ -2212,9 +2250,13 @@ static int phylink_sfp_config(struct phylink *pl, u8 mode,
 	if (phy_interface_mode_is_8023z(iface) && pl->phydev)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	changed = !linkmode_equal(pl->supported, support) ||
 		  !linkmode_equal(pl->link_config.advertising,
 				  config.advertising);
+=======
+	changed = !linkmode_equal(pl->supported, support);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (changed) {
 		linkmode_copy(pl->supported, support);
 		linkmode_copy(pl->link_config.advertising, config.advertising);

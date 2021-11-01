@@ -129,7 +129,11 @@ static dev_t		mbochs_devt;
 static struct class	*mbochs_class;
 static struct cdev	mbochs_cdev;
 static struct device	mbochs_dev;
+<<<<<<< HEAD
 static atomic_t mbochs_avail_mbytes;
+=======
+static int		mbochs_used_mbytes;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static const struct vfio_device_ops mbochs_dev_ops;
 
 struct vfio_region_info_ext {
@@ -507,13 +511,17 @@ static int mbochs_reset(struct mdev_state *mdev_state)
 
 static int mbochs_probe(struct mdev_device *mdev)
 {
+<<<<<<< HEAD
 	int avail_mbytes = atomic_read(&mbochs_avail_mbytes);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	const struct mbochs_type *type =
 		&mbochs_types[mdev_get_type_group_id(mdev)];
 	struct device *dev = mdev_dev(mdev);
 	struct mdev_state *mdev_state;
 	int ret = -ENOMEM;
 
+<<<<<<< HEAD
 	do {
 		if (avail_mbytes < type->mbytes)
 			return -ENOSPC;
@@ -523,6 +531,14 @@ static int mbochs_probe(struct mdev_device *mdev)
 	mdev_state = kzalloc(sizeof(struct mdev_state), GFP_KERNEL);
 	if (mdev_state == NULL)
 		goto err_avail;
+=======
+	if (type->mbytes + mbochs_used_mbytes > max_mbytes)
+		return -ENOMEM;
+
+	mdev_state = kzalloc(sizeof(struct mdev_state), GFP_KERNEL);
+	if (mdev_state == NULL)
+		return -ENOMEM;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	vfio_init_group_dev(&mdev_state->vdev, &mdev->dev, &mbochs_dev_ops);
 
 	mdev_state->vconfig = kzalloc(MBOCHS_CONFIG_SPACE_SIZE, GFP_KERNEL);
@@ -553,11 +569,17 @@ static int mbochs_probe(struct mdev_device *mdev)
 	mbochs_create_config_space(mdev_state);
 	mbochs_reset(mdev_state);
 
+<<<<<<< HEAD
+=======
+	mbochs_used_mbytes += type->mbytes;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = vfio_register_group_dev(&mdev_state->vdev);
 	if (ret)
 		goto err_mem;
 	dev_set_drvdata(&mdev->dev, mdev_state);
 	return 0;
+<<<<<<< HEAD
 err_mem:
 	vfio_uninit_group_dev(&mdev_state->vdev);
 	kfree(mdev_state->pages);
@@ -565,6 +587,12 @@ err_mem:
 	kfree(mdev_state);
 err_avail:
 	atomic_add(type->mbytes, &mbochs_avail_mbytes);
+=======
+
+err_mem:
+	kfree(mdev_state->vconfig);
+	kfree(mdev_state);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -572,9 +600,14 @@ static void mbochs_remove(struct mdev_device *mdev)
 {
 	struct mdev_state *mdev_state = dev_get_drvdata(&mdev->dev);
 
+<<<<<<< HEAD
 	vfio_unregister_group_dev(&mdev_state->vdev);
 	vfio_uninit_group_dev(&mdev_state->vdev);
 	atomic_add(mdev_state->type->mbytes, &mbochs_avail_mbytes);
+=======
+	mbochs_used_mbytes -= mdev_state->type->mbytes;
+	vfio_unregister_group_dev(&mdev_state->vdev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(mdev_state->pages);
 	kfree(mdev_state->vconfig);
 	kfree(mdev_state);
@@ -1278,7 +1311,19 @@ static long mbochs_ioctl(struct vfio_device *vdev, unsigned int cmd,
 	return -ENOTTY;
 }
 
+<<<<<<< HEAD
 static void mbochs_close_device(struct vfio_device *vdev)
+=======
+static int mbochs_open(struct vfio_device *vdev)
+{
+	if (!try_module_get(THIS_MODULE))
+		return -ENODEV;
+
+	return 0;
+}
+
+static void mbochs_close(struct vfio_device *vdev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct mdev_state *mdev_state =
 		container_of(vdev, struct mdev_state, vdev);
@@ -1298,6 +1343,10 @@ static void mbochs_close_device(struct vfio_device *vdev)
 	mbochs_put_pages(mdev_state);
 
 	mutex_unlock(&mdev_state->ops_lock);
+<<<<<<< HEAD
+=======
+	module_put(THIS_MODULE);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static ssize_t
@@ -1352,7 +1401,11 @@ static ssize_t available_instances_show(struct mdev_type *mtype,
 {
 	const struct mbochs_type *type =
 		&mbochs_types[mtype_get_type_group_id(mtype)];
+<<<<<<< HEAD
 	int count = atomic_read(&mbochs_avail_mbytes) / type->mbytes;
+=======
+	int count = (max_mbytes - mbochs_used_mbytes) / type->mbytes;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return sprintf(buf, "%d\n", count);
 }
@@ -1396,7 +1449,12 @@ static struct attribute_group *mdev_type_groups[] = {
 };
 
 static const struct vfio_device_ops mbochs_dev_ops = {
+<<<<<<< HEAD
 	.close_device = mbochs_close_device,
+=======
+	.open = mbochs_open,
+	.release = mbochs_close,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.read = mbochs_read,
 	.write = mbochs_write,
 	.ioctl = mbochs_ioctl,
@@ -1433,8 +1491,11 @@ static int __init mbochs_dev_init(void)
 {
 	int ret = 0;
 
+<<<<<<< HEAD
 	atomic_set(&mbochs_avail_mbytes, max_mbytes);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	ret = alloc_chrdev_region(&mbochs_devt, 0, MINORMASK + 1, MBOCHS_NAME);
 	if (ret < 0) {
 		pr_err("Error: failed to register mbochs_dev, err: %d\n", ret);

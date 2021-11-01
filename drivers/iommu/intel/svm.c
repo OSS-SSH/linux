@@ -31,6 +31,11 @@ static irqreturn_t prq_event_thread(int irq, void *d);
 static void intel_svm_drain_prq(struct device *dev, u32 pasid);
 #define to_intel_svm_dev(handle) container_of(handle, struct intel_svm_dev, sva)
 
+<<<<<<< HEAD
+=======
+#define PRQ_ORDER 0
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static DEFINE_XARRAY_ALLOC(pasid_private_array);
 static int pasid_private_add(ioasid_t pasid, void *priv)
 {
@@ -514,6 +519,12 @@ static void load_pasid(struct mm_struct *mm, u32 pasid)
 {
 	mutex_lock(&mm->context.lock);
 
+<<<<<<< HEAD
+=======
+	/* Synchronize with READ_ONCE in update_pasid(). */
+	smp_store_release(&mm->pasid, pasid);
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* Update PASID MSR on all CPUs running the mm's tasks. */
 	on_each_cpu_mask(mm_cpumask(mm), _load_pasid, NULL, true);
 
@@ -670,6 +681,10 @@ static int intel_svm_unbind_mm(struct device *dev, u32 pasid)
 			kfree_rcu(sdev, rcu);
 
 			if (list_empty(&svm->devs)) {
+<<<<<<< HEAD
+=======
+				intel_svm_free_pasid(mm);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 				if (svm->notifier.ops) {
 					mmu_notifier_unregister(&svm->notifier, mm);
 					/* Clear mm's pasid. */
@@ -684,8 +699,11 @@ static int intel_svm_unbind_mm(struct device *dev, u32 pasid)
 				kfree(svm);
 			}
 		}
+<<<<<<< HEAD
 		/* Drop a PASID reference and free it if no reference. */
 		intel_svm_free_pasid(mm);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 out:
 	return ret;
@@ -720,6 +738,11 @@ struct page_req_dsc {
 	u64 priv_data[2];
 };
 
+<<<<<<< HEAD
+=======
+#define PRQ_RING_MASK	((0x1000 << PRQ_ORDER) - 0x20)
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static bool is_canonical_address(u64 addr)
 {
 	int shift = 64 - (__VIRTUAL_MASK_SHIFT + 1);
@@ -789,6 +812,7 @@ prq_retry:
 		goto prq_retry;
 	}
 
+<<<<<<< HEAD
 	/*
 	 * A work in IO page fault workqueue may try to lock pasid_mutex now.
 	 * Holding pasid_mutex while waiting in iopf_queue_flush_dev() for
@@ -802,6 +826,9 @@ prq_retry:
 	mutex_unlock(&pasid_mutex);
 	iopf_queue_flush_dev(dev);
 	mutex_lock(&pasid_mutex);
+=======
+	iopf_queue_flush_dev(dev);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/*
 	 * Perform steps described in VT-d spec CH7.10 to drain page

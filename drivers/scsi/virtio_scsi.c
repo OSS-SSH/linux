@@ -300,7 +300,11 @@ static void virtscsi_handle_transport_reset(struct virtio_scsi *vscsi,
 		}
 		break;
 	default:
+<<<<<<< HEAD
 		pr_info("Unsupported virtio scsi event reason %x\n", event->reason);
+=======
+		pr_info("Unsupport virtio scsi event reason %x\n", event->reason);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 }
 
@@ -392,7 +396,11 @@ static void virtscsi_handle_event(struct work_struct *work)
 		virtscsi_handle_param_change(vscsi, event);
 		break;
 	default:
+<<<<<<< HEAD
 		pr_err("Unsupported virtio scsi event %x\n", event->event);
+=======
+		pr_err("Unsupport virtio scsi event %x\n", event->event);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 	virtscsi_kick_event(vscsi, event_node);
 }
@@ -519,7 +527,11 @@ static void virtio_scsi_init_hdr_pi(struct virtio_device *vdev,
 				    struct virtio_scsi_cmd_req_pi *cmd_pi,
 				    struct scsi_cmnd *sc)
 {
+<<<<<<< HEAD
 	struct request *rq = scsi_cmd_to_rq(sc);
+=======
+	struct request *rq = sc->request;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct blk_integrity *bi;
 
 	virtio_scsi_init_hdr(vdev, (struct virtio_scsi_cmd_req *)cmd_pi, sc);
@@ -543,7 +555,11 @@ static void virtio_scsi_init_hdr_pi(struct virtio_device *vdev,
 static struct virtio_scsi_vq *virtscsi_pick_vq_mq(struct virtio_scsi *vscsi,
 						  struct scsi_cmnd *sc)
 {
+<<<<<<< HEAD
 	u32 tag = blk_mq_unique_tag(scsi_cmd_to_rq(sc));
+=======
+	u32 tag = blk_mq_unique_tag(sc->request);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u16 hwq = blk_mq_unique_tag_to_hwq(tag);
 
 	return &vscsi->req_vqs[hwq];

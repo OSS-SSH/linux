@@ -7,7 +7,10 @@
 #include <linux/vmalloc.h>
 #include <linux/etherdevice.h>
 #include <linux/filter.h>
+<<<<<<< HEAD
 #include <linux/rcupdate_trace.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/sched/signal.h>
 #include <net/bpf_sk_storage.h>
 #include <net/sock.h>
@@ -16,7 +19,10 @@
 #include <linux/error-injection.h>
 #include <linux/smp.h>
 #include <linux/sock_diag.h>
+<<<<<<< HEAD
 #include <net/xdp.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define CREATE_TRACE_POINTS
 #include <trace/events/bpf_test_run.h>
@@ -89,19 +95,31 @@ reset:
 static int bpf_test_run(struct bpf_prog *prog, void *ctx, u32 repeat,
 			u32 *retval, u32 *time, bool xdp)
 {
+<<<<<<< HEAD
 	struct bpf_prog_array_item item = {.prog = prog};
 	struct bpf_run_ctx *old_ctx;
 	struct bpf_cg_run_ctx run_ctx;
+=======
+	struct bpf_cgroup_storage *storage[MAX_BPF_CGROUP_STORAGE_TYPE] = { NULL };
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct bpf_test_timer t = { NO_MIGRATE };
 	enum bpf_cgroup_storage_type stype;
 	int ret;
 
 	for_each_cgroup_storage_type(stype) {
+<<<<<<< HEAD
 		item.cgroup_storage[stype] = bpf_cgroup_storage_alloc(prog, stype);
 		if (IS_ERR(item.cgroup_storage[stype])) {
 			item.cgroup_storage[stype] = NULL;
 			for_each_cgroup_storage_type(stype)
 				bpf_cgroup_storage_free(item.cgroup_storage[stype]);
+=======
+		storage[stype] = bpf_cgroup_storage_alloc(prog, stype);
+		if (IS_ERR(storage[stype])) {
+			storage[stype] = NULL;
+			for_each_cgroup_storage_type(stype)
+				bpf_cgroup_storage_free(storage[stype]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			return -ENOMEM;
 		}
 	}
@@ -110,6 +128,7 @@ static int bpf_test_run(struct bpf_prog *prog, void *ctx, u32 repeat,
 		repeat = 1;
 
 	bpf_test_timer_enter(&t);
+<<<<<<< HEAD
 	old_ctx = bpf_set_run_ctx(&run_ctx.run_ctx);
 	do {
 		run_ctx.prog_item = &item;
@@ -123,6 +142,24 @@ static int bpf_test_run(struct bpf_prog *prog, void *ctx, u32 repeat,
 
 	for_each_cgroup_storage_type(stype)
 		bpf_cgroup_storage_free(item.cgroup_storage[stype]);
+=======
+	do {
+		ret = bpf_cgroup_storage_set(storage);
+		if (ret)
+			break;
+
+		if (xdp)
+			*retval = bpf_prog_run_xdp(prog, ctx);
+		else
+			*retval = BPF_PROG_RUN(prog, ctx);
+
+		bpf_cgroup_storage_unset();
+	} while (bpf_test_timer_continue(&t, repeat, &ret, time));
+	bpf_test_timer_leave(&t);
+
+	for_each_cgroup_storage_type(stype)
+		bpf_cgroup_storage_free(storage[stype]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	return ret;
 }
@@ -327,7 +364,11 @@ __bpf_prog_test_run_raw_tp(void *data)
 	struct bpf_raw_tp_test_run_info *info = data;
 
 	rcu_read_lock();
+<<<<<<< HEAD
 	info->retval = bpf_prog_run(info->prog, info->ctx);
+=======
+	info->retval = BPF_PROG_RUN(info->prog, info->ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	rcu_read_unlock();
 }
 
@@ -552,12 +593,15 @@ static void convert_skb_to___skb(struct sk_buff *skb, struct __sk_buff *__skb)
 	__skb->gso_segs = skb_shinfo(skb)->gso_segs;
 }
 
+<<<<<<< HEAD
 static struct proto bpf_dummy_proto = {
 	.name   = "bpf_dummy",
 	.owner  = THIS_MODULE,
 	.obj_size = sizeof(struct sock),
 };
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
 			  union bpf_attr __user *uattr)
 {
@@ -602,19 +646,31 @@ int bpf_prog_test_run_skb(struct bpf_prog *prog, const union bpf_attr *kattr,
 		break;
 	}
 
+<<<<<<< HEAD
 	sk = sk_alloc(net, AF_UNSPEC, GFP_USER, &bpf_dummy_proto, 1);
+=======
+	sk = kzalloc(sizeof(struct sock), GFP_USER);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (!sk) {
 		kfree(data);
 		kfree(ctx);
 		return -ENOMEM;
 	}
+<<<<<<< HEAD
+=======
+	sock_net_set(sk, net);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	sock_init_data(NULL, sk);
 
 	skb = build_skb(data, 0);
 	if (!skb) {
 		kfree(data);
 		kfree(ctx);
+<<<<<<< HEAD
 		sk_free(sk);
+=======
+		kfree(sk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		return -ENOMEM;
 	}
 	skb->sk = sk;
@@ -687,11 +743,17 @@ out:
 	if (dev && dev != net->loopback_dev)
 		dev_put(dev);
 	kfree_skb(skb);
+<<<<<<< HEAD
 	sk_free(sk);
+=======
+	bpf_sk_storage_free(sk);
+	kfree(sk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(ctx);
 	return ret;
 }
 
+<<<<<<< HEAD
 static int xdp_convert_md_to_buff(struct xdp_md *xdp_md, struct xdp_buff *xdp)
 {
 	unsigned int ingress_ifindex, rx_queue_index;
@@ -750,6 +812,8 @@ static void xdp_convert_buff_to_md(struct xdp_buff *xdp, struct xdp_md *xdp_md)
 		dev_put(xdp->rxq->dev);
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
 			  union bpf_attr __user *uattr)
 {
@@ -760,6 +824,7 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
 	struct netdev_rx_queue *rxqueue;
 	struct xdp_buff xdp = {};
 	u32 retval, duration;
+<<<<<<< HEAD
 	struct xdp_md *ctx;
 	u32 max_data_sz;
 	void *data;
@@ -783,20 +848,35 @@ int bpf_prog_test_run_xdp(struct bpf_prog *prog, const union bpf_attr *kattr,
 		headroom -= ctx->data;
 	}
 
+=======
+	u32 max_data_sz;
+	void *data;
+	int ret;
+
+	if (kattr->test.ctx_in || kattr->test.ctx_out)
+		return -EINVAL;
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* XDP have extra tailroom as (most) drivers use full page */
 	max_data_sz = 4096 - headroom - tailroom;
 
 	data = bpf_test_init(kattr, max_data_sz, headroom, tailroom);
+<<<<<<< HEAD
 	if (IS_ERR(data)) {
 		ret = PTR_ERR(data);
 		goto free_ctx;
 	}
+=======
+	if (IS_ERR(data))
+		return PTR_ERR(data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	rxqueue = __netif_get_rx_queue(current->nsproxy->net_ns->loopback_dev, 0);
 	xdp_init_buff(&xdp, headroom + max_data_sz + tailroom,
 		      &rxqueue->xdp_rxq);
 	xdp_prepare_buff(&xdp, data, headroom, size, true);
 
+<<<<<<< HEAD
 	ret = xdp_convert_md_to_buff(ctx, &xdp);
 	if (ret)
 		goto free_data;
@@ -827,6 +907,18 @@ free_data:
 	kfree(data);
 free_ctx:
 	kfree(ctx);
+=======
+	bpf_prog_change_xdp(NULL, prog);
+	ret = bpf_test_run(prog, &xdp, repeat, &retval, &duration, true);
+	if (ret)
+		goto out;
+	if (xdp.data != data + headroom || xdp.data_end != xdp.data + size)
+		size = xdp.data_end - xdp.data;
+	ret = bpf_test_finish(kattr, uattr, xdp.data, size, retval, duration);
+out:
+	bpf_prog_change_xdp(prog, NULL);
+	kfree(data);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -993,7 +1085,11 @@ int bpf_prog_test_run_sk_lookup(struct bpf_prog *prog, const union bpf_attr *kat
 	bpf_test_timer_enter(&t);
 	do {
 		ctx.selected_sk = NULL;
+<<<<<<< HEAD
 		retval = BPF_PROG_SK_LOOKUP_RUN_ARRAY(progs, ctx, bpf_prog_run);
+=======
+		retval = BPF_PROG_SK_LOOKUP_RUN_ARRAY(progs, ctx, BPF_PROG_RUN);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	} while (bpf_test_timer_continue(&t, repeat, &ret, &duration));
 	bpf_test_timer_leave(&t);
 
@@ -1049,10 +1145,14 @@ int bpf_prog_test_run_syscall(struct bpf_prog *prog,
 			goto out;
 		}
 	}
+<<<<<<< HEAD
 
 	rcu_read_lock_trace();
 	retval = bpf_prog_run_pin_on_cpu(prog, ctx);
 	rcu_read_unlock_trace();
+=======
+	retval = bpf_prog_run_pin_on_cpu(prog, ctx);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	if (copy_to_user(&uattr->test.retval, &retval, sizeof(u32))) {
 		err = -EFAULT;

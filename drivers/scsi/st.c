@@ -309,8 +309,18 @@ static char * st_incompatible(struct scsi_device* SDp)
 }
 
 
+<<<<<<< HEAD
 #define st_printk(prefix, t, fmt, a...) \
 	sdev_prefix_printk(prefix, (t)->device, (t)->name, fmt, ##a)
+=======
+static inline char *tape_name(struct scsi_tape *tape)
+{
+	return tape->disk->disk_name;
+}
+
+#define st_printk(prefix, t, fmt, a...) \
+	sdev_prefix_printk(prefix, (t)->device, tape_name(t), fmt, ##a)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #ifdef DEBUG
 #define DEBC_printk(t, fmt, a...) \
 	if (debugging) { st_printk(ST_DEB_MSG, t, fmt, ##a ); }
@@ -358,7 +368,11 @@ static int st_chk_result(struct scsi_tape *STp, struct st_request * SRpnt)
 	int result = SRpnt->result;
 	u8 scode;
 	DEB(const char *stp;)
+<<<<<<< HEAD
 	char *name = STp->name;
+=======
+	char *name = tape_name(STp);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct st_cmdstatus *cmdstatp;
 
 	if (!result)
@@ -3494,9 +3508,14 @@ out:
 
 
 /* The ioctl command */
+<<<<<<< HEAD
 static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
 {
 	void __user *p = (void __user *)arg;
+=======
+static long st_ioctl_common(struct file *file, unsigned int cmd_in, void __user *p)
+{
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	int i, cmd_nr, cmd_type, bt;
 	int retval = 0;
 	unsigned int blk;
@@ -3816,6 +3835,7 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
 		goto out;
 	}
 	mutex_unlock(&STp->lock);
+<<<<<<< HEAD
 
 	switch (cmd_in) {
 	case SG_IO:
@@ -3835,12 +3855,43 @@ static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
 		STp->ready = ST_NO_TAPE;
 	}
 	return retval;
+=======
+	switch (cmd_in) {
+		case SCSI_IOCTL_STOP_UNIT:
+			/* unload */
+			retval = scsi_ioctl(STp->device, cmd_in, p);
+			if (!retval) {
+				STp->rew_at_close = 0;
+				STp->ready = ST_NO_TAPE;
+			}
+			return retval;
+
+		case SCSI_IOCTL_GET_IDLUN:
+		case SCSI_IOCTL_GET_BUS_NUMBER:
+			break;
+
+		default:
+			if ((cmd_in == SG_IO ||
+			     cmd_in == SCSI_IOCTL_SEND_COMMAND ||
+			     cmd_in == CDROM_SEND_PACKET) &&
+			    !capable(CAP_SYS_RAWIO))
+				i = -EPERM;
+			else
+				i = scsi_cmd_ioctl(STp->disk->queue, STp->disk,
+						   file->f_mode, cmd_in, p);
+			if (i != -ENOTTY)
+				return i;
+			break;
+	}
+	return -ENOTTY;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
  out:
 	mutex_unlock(&STp->lock);
 	return retval;
 }
 
+<<<<<<< HEAD
 #ifdef CONFIG_COMPAT
 static long st_compat_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
 {
@@ -3855,6 +3906,41 @@ static long st_compat_ioctl(struct file *file, unsigned int cmd_in, unsigned lon
 	}
 
 	return st_ioctl(file, cmd_in, arg);
+=======
+static long st_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+{
+	void __user *p = (void __user *)arg;
+	struct scsi_tape *STp = file->private_data;
+	int ret;
+
+	ret = st_ioctl_common(file, cmd_in, p);
+	if (ret != -ENOTTY)
+		return ret;
+
+	return scsi_ioctl(STp->device, cmd_in, p);
+}
+
+#ifdef CONFIG_COMPAT
+static long st_compat_ioctl(struct file *file, unsigned int cmd_in, unsigned long arg)
+{
+	void __user *p = compat_ptr(arg);
+	struct scsi_tape *STp = file->private_data;
+	int ret;
+
+	/* argument conversion is handled using put_user_mtpos/put_user_mtget */
+	switch (cmd_in) {
+	case MTIOCPOS32:
+		return st_ioctl_common(file, MTIOCPOS, p);
+	case MTIOCGET32:
+		return st_ioctl_common(file, MTIOCGET, p);
+	}
+
+	ret = st_ioctl_common(file, cmd_in, p);
+	if (ret != -ENOTTY)
+		return ret;
+
+	return scsi_compat_ioctl(STp->device, cmd_in, p);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 #endif
 
@@ -4184,7 +4270,11 @@ static int create_one_cdev(struct scsi_tape *tape, int mode, int rew)
 
 	i = mode << (4 - ST_NBR_MODE_BITS);
 	snprintf(name, 10, "%s%s%s", rew ? "n" : "",
+<<<<<<< HEAD
 		 tape->name, st_formats[i]);
+=======
+		 tape->disk->disk_name, st_formats[i]);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev = device_create(&st_sysfs_class, &tape->device->sdev_gendev,
 			    cdev_devno, &tape->modes[mode], "%s", name);
@@ -4239,6 +4329,10 @@ static void remove_cdevs(struct scsi_tape *tape)
 static int st_probe(struct device *dev)
 {
 	struct scsi_device *SDp = to_scsi_device(dev);
+<<<<<<< HEAD
+=======
+	struct gendisk *disk = NULL;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct scsi_tape *tpnt = NULL;
 	struct st_modedef *STm;
 	struct st_partstat *STps;
@@ -4268,13 +4362,36 @@ static int st_probe(struct device *dev)
 		goto out;
 	}
 
+<<<<<<< HEAD
+=======
+	disk = alloc_disk(1);
+	if (!disk) {
+		sdev_printk(KERN_ERR, SDp,
+			    "st: out of memory. Device not attached.\n");
+		goto out_buffer_free;
+	}
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tpnt = kzalloc(sizeof(struct scsi_tape), GFP_KERNEL);
 	if (tpnt == NULL) {
 		sdev_printk(KERN_ERR, SDp,
 			    "st: Can't allocate device descriptor.\n");
+<<<<<<< HEAD
 		goto out_buffer_free;
 	}
 	kref_init(&tpnt->kref);
+=======
+		goto out_put_disk;
+	}
+	kref_init(&tpnt->kref);
+	tpnt->disk = disk;
+	disk->private_data = &tpnt->driver;
+	/* SCSI tape doesn't register this gendisk via add_disk().  Manually
+	 * take queue reference that release_disk() expects. */
+	if (!blk_get_queue(SDp->request_queue))
+		goto out_put_disk;
+	disk->queue = SDp->request_queue;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tpnt->driver = &st_template;
 
 	tpnt->device = SDp;
@@ -4347,10 +4464,17 @@ static int st_probe(struct device *dev)
 	idr_preload_end();
 	if (error < 0) {
 		pr_warn("st: idr allocation failed: %d\n", error);
+<<<<<<< HEAD
 		goto out_free_tape;
 	}
 	tpnt->index = error;
 	sprintf(tpnt->name, "st%d", tpnt->index);
+=======
+		goto out_put_queue;
+	}
+	tpnt->index = error;
+	sprintf(disk->disk_name, "st%d", tpnt->index);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	tpnt->stats = kzalloc(sizeof(struct scsi_tape_stats), GFP_KERNEL);
 	if (tpnt->stats == NULL) {
 		sdev_printk(KERN_ERR, SDp,
@@ -4367,9 +4491,15 @@ static int st_probe(struct device *dev)
 	scsi_autopm_put_device(SDp);
 
 	sdev_printk(KERN_NOTICE, SDp,
+<<<<<<< HEAD
 		    "Attached scsi tape %s\n", tpnt->name);
 	sdev_printk(KERN_INFO, SDp, "%s: try direct i/o: %s (alignment %d B)\n",
 		    tpnt->name, tpnt->try_dio ? "yes" : "no",
+=======
+		    "Attached scsi tape %s\n", tape_name(tpnt));
+	sdev_printk(KERN_INFO, SDp, "%s: try direct i/o: %s (alignment %d B)\n",
+		    tape_name(tpnt), tpnt->try_dio ? "yes" : "no",
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		    queue_dma_alignment(SDp->request_queue) + 1);
 
 	return 0;
@@ -4381,7 +4511,14 @@ out_idr_remove:
 	spin_lock(&st_index_lock);
 	idr_remove(&st_index_idr, tpnt->index);
 	spin_unlock(&st_index_lock);
+<<<<<<< HEAD
 out_free_tape:
+=======
+out_put_queue:
+	blk_put_queue(disk->queue);
+out_put_disk:
+	put_disk(disk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(tpnt);
 out_buffer_free:
 	kfree(buffer);
@@ -4420,6 +4557,10 @@ static int st_remove(struct device *dev)
 static void scsi_tape_release(struct kref *kref)
 {
 	struct scsi_tape *tpnt = to_scsi_tape(kref);
+<<<<<<< HEAD
+=======
+	struct gendisk *disk = tpnt->disk;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	tpnt->device = NULL;
 
@@ -4429,6 +4570,11 @@ static void scsi_tape_release(struct kref *kref)
 		kfree(tpnt->buffer);
 	}
 
+<<<<<<< HEAD
+=======
+	disk->private_data = NULL;
+	put_disk(disk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	kfree(tpnt->stats);
 	kfree(tpnt);
 	return;

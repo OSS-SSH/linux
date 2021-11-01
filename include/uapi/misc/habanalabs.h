@@ -276,6 +276,7 @@ enum hl_device_status {
 	HL_DEVICE_STATUS_OPERATIONAL,
 	HL_DEVICE_STATUS_IN_RESET,
 	HL_DEVICE_STATUS_MALFUNCTION,
+<<<<<<< HEAD
 	HL_DEVICE_STATUS_NEEDS_RESET,
 	HL_DEVICE_STATUS_IN_DEVICE_CREATION,
 	HL_DEVICE_STATUS_LAST = HL_DEVICE_STATUS_IN_DEVICE_CREATION
@@ -287,6 +288,9 @@ enum hl_server_type {
 	HL_SERVER_GAUDI_HLS1H = 2,
 	HL_SERVER_GAUDI_TYPE1 = 3,
 	HL_SERVER_GAUDI_TYPE2 = 4
+=======
+	HL_DEVICE_STATUS_NEEDS_RESET
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 /* Opcode for management ioctl
@@ -347,6 +351,7 @@ enum hl_server_type {
 #define HL_INFO_VERSION_MAX_LEN	128
 #define HL_INFO_CARD_NAME_MAX_LEN	16
 
+<<<<<<< HEAD
 /**
  * struct hl_info_hw_ip_info - hardware information on various IPs in the ASIC
  * @sram_base_address: The first SRAM physical base address that is free to be
@@ -379,17 +384,27 @@ enum hl_server_type {
  * @card_name: The card name as passed by the f/w.
  * @dram_page_size: The DRAM physical page size.
  */
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 struct hl_info_hw_ip_info {
 	__u64 sram_base_address;
 	__u64 dram_base_address;
 	__u64 dram_size;
 	__u32 sram_size;
 	__u32 num_of_events;
+<<<<<<< HEAD
 	__u32 device_id;
 	__u32 module_id;
 	__u32 reserved;
 	__u16 first_available_interrupt_id;
 	__u16 server_type;
+=======
+	__u32 device_id; /* PCI Device ID */
+	__u32 module_id; /* For mezzanine cards in servers (From OCP spec.) */
+	__u32 reserved;
+	__u16 first_available_interrupt_id;
+	__u16 reserved2;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u32 cpld_version;
 	__u32 psoc_pci_pll_nr;
 	__u32 psoc_pci_pll_nf;
@@ -400,7 +415,11 @@ struct hl_info_hw_ip_info {
 	__u8 pad[2];
 	__u8 cpucp_version[HL_INFO_VERSION_MAX_LEN];
 	__u8 card_name[HL_INFO_CARD_NAME_MAX_LEN];
+<<<<<<< HEAD
 	__u64 reserved2;
+=======
+	__u64 reserved3;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	__u64 dram_page_size;
 };
 
@@ -670,6 +689,7 @@ struct hl_cs_chunk {
 		__u64 cb_handle;
 
 		/* Relevant only when HL_CS_FLAGS_WAIT or
+<<<<<<< HEAD
 		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set
 		 * This holds address of array of u64 values that contain
 		 * signal CS sequence numbers. The wait described by
@@ -685,6 +705,14 @@ struct hl_cs_chunk {
 		 * This is the CS sequence which has the encapsulated signals.
 		 */
 		__u64 encaps_signal_seq;
+=======
+		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set.
+		 * This holds address of array of u64 values that contain
+		 * signal CS sequence numbers. The wait described by this job
+		 * will listen on all those signals (wait event per signal)
+		 */
+		__u64 signal_seq_arr;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	/* Index of queue to put the CB on */
@@ -702,6 +730,7 @@ struct hl_cs_chunk {
 		 * Number of entries in signal_seq_arr
 		 */
 		__u32 num_signal_seq_arr;
+<<<<<<< HEAD
 
 		/* Relevant only when HL_CS_FLAGS_WAIT or
 		 * HL_CS_FLAGS_COLLECTIVE_WAIT is set along
@@ -713,6 +742,8 @@ struct hl_cs_chunk {
 		 * he call the API again with 9 and so on till 20.
 		 */
 		__u32 encaps_signal_offset;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	};
 
 	/* HL_CS_CHUNK_FLAGS_* */
@@ -740,6 +771,7 @@ struct hl_cs_chunk {
 #define HL_CS_FLAGS_CUSTOM_TIMEOUT		0x200
 #define HL_CS_FLAGS_SKIP_RESET_ON_TIMEOUT	0x400
 
+<<<<<<< HEAD
 /*
  * The encapsulated signals CS is merged into the existing CS ioctls.
  * In order to use this feature need to follow the below procedure:
@@ -762,6 +794,8 @@ struct hl_cs_chunk {
 #define HL_CS_FLAGS_RESERVE_SIGNALS_ONLY	0x1000
 #define HL_CS_FLAGS_UNRESERVE_SIGNALS_ONLY	0x2000
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #define HL_CS_STATUS_SUCCESS		0
 
 #define HL_MAX_JOBS_PER_CS		512
@@ -774,6 +808,7 @@ struct hl_cs_in {
 	/* holds address of array of hl_cs_chunk for execution phase */
 	__u64 chunks_execute;
 
+<<<<<<< HEAD
 	union {
 		/*
 		 * Sequence number of a staged submission CS
@@ -803,6 +838,12 @@ struct hl_cs_in {
 			__u32 encaps_signals_q_idx;
 		};
 	};
+=======
+	/* Sequence number of a staged submission CS
+	 * valid only if HL_CS_FLAGS_STAGED_SUBMISSION is set
+	 */
+	__u64 seq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	/* Number of chunks in restore phase array. Maximum number is
 	 * HL_MAX_JOBS_PER_CS
@@ -827,6 +868,7 @@ struct hl_cs_in {
 };
 
 struct hl_cs_out {
+<<<<<<< HEAD
 	union {
 		/*
 		 * seq holds the sequence number of the CS to pass to wait
@@ -852,6 +894,16 @@ struct hl_cs_out {
 	 * Valid only when HL_CS_FLAGS_RESERVE_SIGNALS_ONLY is set
 	 */
 	__u32 sob_base_addr_offset;
+=======
+	/*
+	 * seq holds the sequence number of the CS to pass to wait ioctl. All
+	 * values are valid except for 0 and ULLONG_MAX
+	 */
+	__u64 seq;
+	/* HL_CS_STATUS_* */
+	__u32 status;
+	__u32 pad;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 union hl_cs_args {
@@ -861,18 +913,25 @@ union hl_cs_args {
 
 #define HL_WAIT_CS_FLAGS_INTERRUPT	0x2
 #define HL_WAIT_CS_FLAGS_INTERRUPT_MASK 0xFFF00000
+<<<<<<< HEAD
 #define HL_WAIT_CS_FLAGS_MULTI_CS	0x4
 
 #define HL_WAIT_MULTI_CS_LIST_MAX_LEN	32
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct hl_wait_cs_in {
 	union {
 		struct {
+<<<<<<< HEAD
 			/*
 			 * In case of wait_cs holds the CS sequence number.
 			 * In case of wait for multi CS hold a user pointer to
 			 * an array of CS sequence numbers
 			 */
+=======
+			/* Command submission sequence number */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 			__u64 seq;
 			/* Absolute timeout to wait for command submission
 			 * in microseconds
@@ -900,23 +959,33 @@ struct hl_wait_cs_in {
 
 	/* Context ID - Currently not in use */
 	__u32 ctx_id;
+<<<<<<< HEAD
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	/* HL_WAIT_CS_FLAGS_*
 	 * If HL_WAIT_CS_FLAGS_INTERRUPT is set, this field should include
 	 * interrupt id according to HL_WAIT_CS_FLAGS_INTERRUPT_MASK, in order
 	 * not to specify an interrupt id ,set mask to all 1s.
 	 */
 	__u32 flags;
+<<<<<<< HEAD
 
 	/* Multi CS API info- valid entries in multi-CS array */
 	__u8 seq_arr_len;
 	__u8 pad[7];
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 #define HL_WAIT_CS_STATUS_COMPLETED	0
 #define HL_WAIT_CS_STATUS_BUSY		1
 #define HL_WAIT_CS_STATUS_TIMEDOUT	2
 #define HL_WAIT_CS_STATUS_ABORTED	3
+<<<<<<< HEAD
+=======
+#define HL_WAIT_CS_STATUS_INTERRUPTED	4
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define HL_WAIT_CS_STATUS_FLAG_GONE		0x1
 #define HL_WAIT_CS_STATUS_FLAG_TIMESTAMP_VLD	0x2
@@ -926,6 +995,7 @@ struct hl_wait_cs_out {
 	__u32 status;
 	/* HL_WAIT_CS_STATUS_FLAG* */
 	__u32 flags;
+<<<<<<< HEAD
 	/*
 	 * valid only if HL_WAIT_CS_STATUS_FLAG_TIMESTAMP_VLD is set
 	 * for wait_cs: timestamp of CS completion
@@ -935,6 +1005,10 @@ struct hl_wait_cs_out {
 	/* multi CS completion bitmap */
 	__u32 cs_completion_map;
 	__u32 pad;
+=======
+	/* valid only if HL_WAIT_CS_STATUS_FLAG_TIMESTAMP_VLD is set */
+	__s64 timestamp_nsec;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 };
 
 union hl_wait_cs_args {
@@ -957,7 +1031,10 @@ union hl_wait_cs_args {
 #define HL_MEM_CONTIGUOUS	0x1
 #define HL_MEM_SHARED		0x2
 #define HL_MEM_USERPTR		0x4
+<<<<<<< HEAD
 #define HL_MEM_FORCE_HINT	0x8
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 struct hl_mem_in {
 	union {
@@ -1285,8 +1362,12 @@ struct hl_debug_args {
  * EIO       - The CS was aborted (usually because the device was reset)
  * ENODEV    - The device wants to do hard-reset (so user need to close FD)
  *
+<<<<<<< HEAD
  * The driver also returns a custom define in case the IOCTL call returned 0.
  * The define can be one of the following:
+=======
+ * The driver also returns a custom define inside the IOCTL which can be:
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  *
  * HL_WAIT_CS_STATUS_COMPLETED   - The CS has been completed successfully (0)
  * HL_WAIT_CS_STATUS_BUSY        - The CS is still executing (0)
@@ -1294,6 +1375,11 @@ struct hl_debug_args {
  *                                 (ETIMEDOUT)
  * HL_WAIT_CS_STATUS_ABORTED     - The CS was aborted, usually because the
  *                                 device was reset (EIO)
+<<<<<<< HEAD
+=======
+ * HL_WAIT_CS_STATUS_INTERRUPTED - Waiting for the CS was interrupted (EINTR)
+ *
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 
 #define HL_IOCTL_WAIT_CS			\

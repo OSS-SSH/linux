@@ -12,7 +12,10 @@ config DRM_VC4
 	select SND_PCM
 	select SND_PCM_ELD
 	select SND_SOC_GENERIC_DMAENGINE_PCM
+<<<<<<< HEAD
 	select SND_SOC_HDMI_CODEC
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select DRM_MIPI_DSI
 	help
 	  Choose this option if you have a system that has a Broadcom

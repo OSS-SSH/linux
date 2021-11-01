@@ -17,6 +17,7 @@
 #define IGC_WUC_PME_EN	0x00000002 /* PME Enable */
 
 /* Wake Up Filter Control */
+<<<<<<< HEAD
 #define IGC_WUFC_LNKC		0x00000001 /* Link Status Change Wakeup Enable */
 #define IGC_WUFC_MAG		0x00000002 /* Magic Packet Wakeup Enable */
 #define IGC_WUFC_EX		0x00000004 /* Directed Exact Wakeup Enable */
@@ -33,6 +34,13 @@
 #define IGC_WUFC_FLX7		BIT(23)	   /* Flexible Filter 7 Enable */
 
 #define IGC_WUFC_FILTER_MASK GENMASK(23, 14)
+=======
+#define IGC_WUFC_LNKC	0x00000001 /* Link Status Change Wakeup Enable */
+#define IGC_WUFC_MAG	0x00000002 /* Magic Packet Wakeup Enable */
+#define IGC_WUFC_EX	0x00000004 /* Directed Exact Wakeup Enable */
+#define IGC_WUFC_MC	0x00000008 /* Directed Multicast Wakeup Enable */
+#define IGC_WUFC_BC	0x00000010 /* Broadcast Wakeup Enable */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 #define IGC_CTRL_ADVD3WUC	0x00100000  /* D3 WUC */
 
@@ -57,6 +65,7 @@
 /* Wake Up Packet Memory stores the first 128 bytes of the wake up packet */
 #define IGC_WUPM_BYTES	128
 
+<<<<<<< HEAD
 /* Wakeup Filter Control Extended */
 #define IGC_WUFC_EXT_FLX8	BIT(8)	/* Flexible Filter 8 Enable */
 #define IGC_WUFC_EXT_FLX9	BIT(9)	/* Flexible Filter 9 Enable */
@@ -88,6 +97,8 @@
 /* Physical Func Reset Done Indication */
 #define IGC_CTRL_EXT_LINK_MODE_MASK	0x00C00000
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* Loop limit on how long we wait for auto-negotiation to complete */
 #define COPPER_LINK_UP_LIMIT		10
 #define PHY_AUTO_NEG_LIMIT		45
@@ -518,6 +529,7 @@
 #define IGC_TXQCTL_QUEUE_MODE_LAUNCHT	0x00000001
 #define IGC_TXQCTL_STRICT_CYCLE		0x00000002
 #define IGC_TXQCTL_STRICT_END		0x00000004
+<<<<<<< HEAD
 #define IGC_TXQCTL_QAV_SEL_MASK		0x000000C0
 #define IGC_TXQCTL_QAV_SEL_CBS0		0x00000080
 #define IGC_TXQCTL_QAV_SEL_CBS1		0x000000C0
@@ -526,11 +538,14 @@
 #define IGC_TQAVCC_KEEP_CREDITS		BIT(30)
 
 #define IGC_MAX_SR_QUEUES		2
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 /* Receive Checksum Control */
 #define IGC_RXCSUM_CRCOFL	0x00000800   /* CRC32 offload enable */
 #define IGC_RXCSUM_PCSD		0x00002000   /* packet checksum disabled */
 
+<<<<<<< HEAD
 /* PCIe PTM Control */
 #define IGC_PTM_CTRL_START_NOW	BIT(29) /* Start PTM Now */
 #define IGC_PTM_CTRL_EN		BIT(30) /* Enable PTM */
@@ -562,6 +577,8 @@
 #define IGC_PTM_CYCLE_CTRL_CYC_TIME(msec)	((msec) & 0x3ff) /* PTM Cycle Time (msec) */
 #define IGC_PTM_CYCLE_CTRL_AUTO_CYC_EN		BIT(31) /* PTM Cycle Control */
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /* GPY211 - I225 defines */
 #define GPY_MMD_MASK		0xFFFF0000
 #define GPY_MMD_SHIFT		16

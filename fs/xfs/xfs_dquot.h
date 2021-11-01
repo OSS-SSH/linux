@@ -54,6 +54,7 @@ struct xfs_dquot_res {
 	xfs_qwarncnt_t		warnings;
 };
 
+<<<<<<< HEAD
 static inline bool
 xfs_dquot_res_over_limits(
 	const struct xfs_dquot_res	*qres)
@@ -64,6 +65,8 @@ xfs_dquot_res_over_limits(
 	return false;
 }
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 /*
  * The incore dquot structure
  */

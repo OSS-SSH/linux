@@ -37,8 +37,12 @@ properties:
 
     properties:
       port@0:
+<<<<<<< HEAD
         $ref: /schemas/graph.yaml#/$defs/port-base
         unevaluatedProperties: false
+=======
+        $ref: /schemas/graph.yaml#/properties/port
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         description: Video port for MIPI DSI Channel-A input
 
         properties:
@@ -50,6 +54,10 @@ properties:
               data-lanes:
                 description: array of physical DSI data lane indexes.
                 minItems: 1
+<<<<<<< HEAD
+=======
+                maxItems: 4
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                 items:
                   - const: 1
                   - const: 2
@@ -57,8 +65,12 @@ properties:
                   - const: 4
 
       port@1:
+<<<<<<< HEAD
         $ref: /schemas/graph.yaml#/$defs/port-base
         unevaluatedProperties: false
+=======
+        $ref: /schemas/graph.yaml#/properties/port
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
         description: Video port for MIPI DSI Channel-B input
 
         properties:
@@ -70,6 +82,10 @@ properties:
               data-lanes:
                 description: array of physical DSI data lane indexes.
                 minItems: 1
+<<<<<<< HEAD
+=======
+                maxItems: 4
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
                 items:
                   - const: 1
                   - const: 2

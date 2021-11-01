@@ -3156,10 +3156,15 @@ int qlcnic_83xx_flash_read32(struct qlcnic_adapter *adapter, u32 flash_addr,
 
 		indirect_addr = QLC_83XX_FLASH_DIRECT_DATA(addr);
 		ret = QLCRD32(adapter, indirect_addr, &err);
+<<<<<<< HEAD
 		if (err == -EIO) {
 			qlcnic_83xx_unlock_flash(adapter);
 			return err;
 		}
+=======
+		if (err == -EIO)
+			return err;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		word = ret;
 		*(u32 *)p_data  = word;

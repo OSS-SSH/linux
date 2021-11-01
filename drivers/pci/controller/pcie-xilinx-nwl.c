@@ -6,7 +6,10 @@
  * (C) Copyright 2014 - 2015, Xilinx, Inc.
  */
 
+<<<<<<< HEAD
 #include <linux/clk.h>
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/delay.h>
 #include <linux/interrupt.h>
 #include <linux/irq.h>
@@ -170,7 +173,10 @@ struct nwl_pcie {
 	u8 last_busno;
 	struct nwl_msi msi;
 	struct irq_domain *legacy_irq_domain;
+<<<<<<< HEAD
 	struct clk *clk;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	raw_spinlock_t leg_mask_lock;
 };
 
@@ -320,14 +326,26 @@ static void nwl_pcie_leg_handler(struct irq_desc *desc)
 	struct nwl_pcie *pcie;
 	unsigned long status;
 	u32 bit;
+<<<<<<< HEAD
+=======
+	u32 virq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	chained_irq_enter(chip, desc);
 	pcie = irq_desc_get_handler_data(desc);
 
 	while ((status = nwl_bridge_readl(pcie, MSGF_LEG_STATUS) &
 				MSGF_LEG_SR_MASKALL) != 0) {
+<<<<<<< HEAD
 		for_each_set_bit(bit, &status, PCI_NUM_INTX)
 			generic_handle_domain_irq(pcie->legacy_irq_domain, bit);
+=======
+		for_each_set_bit(bit, &status, PCI_NUM_INTX) {
+			virq = irq_find_mapping(pcie->legacy_irq_domain, bit);
+			if (virq)
+				generic_handle_irq(virq);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	}
 
 	chained_irq_exit(chip, desc);
@@ -338,13 +356,23 @@ static void nwl_pcie_handle_msi_irq(struct nwl_pcie *pcie, u32 status_reg)
 	struct nwl_msi *msi;
 	unsigned long status;
 	u32 bit;
+<<<<<<< HEAD
+=======
+	u32 virq;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	msi = &pcie->msi;
 
 	while ((status = nwl_bridge_readl(pcie, status_reg)) != 0) {
 		for_each_set_bit(bit, &status, 32) {
 			nwl_bridge_writel(pcie, 1 << bit, status_reg);
+<<<<<<< HEAD
 			generic_handle_domain_irq(msi->dev_domain, bit);
+=======
+			virq = irq_find_mapping(msi->dev_domain, bit);
+			if (virq)
+				generic_handle_irq(virq);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		}
 	}
 }
@@ -818,6 +846,7 @@ static int nwl_pcie_probe(struct platform_device *pdev)
 		return err;
 	}
 
+<<<<<<< HEAD
 	pcie->clk = devm_clk_get(dev, NULL);
 	if (IS_ERR(pcie->clk))
 		return PTR_ERR(pcie->clk);
@@ -828,6 +857,8 @@ static int nwl_pcie_probe(struct platform_device *pdev)
 		return err;
 	}
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	err = nwl_pcie_bridge_init(pcie);
 	if (err) {
 		dev_err(dev, "HW Initialization failed\n");

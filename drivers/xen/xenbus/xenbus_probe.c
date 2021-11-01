@@ -325,7 +325,11 @@ fail:
 }
 EXPORT_SYMBOL_GPL(xenbus_dev_probe);
 
+<<<<<<< HEAD
 void xenbus_dev_remove(struct device *_dev)
+=======
+int xenbus_dev_remove(struct device *_dev)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct xenbus_device *dev = to_xenbus_device(_dev);
 	struct xenbus_driver *drv = to_xenbus_driver(_dev->driver);
@@ -355,6 +359,11 @@ void xenbus_dev_remove(struct device *_dev)
 	if (!drv->allow_rebind ||
 	    xenbus_read_driver_state(dev->nodename) == XenbusStateClosing)
 		xenbus_switch_state(dev, XenbusStateClosed);
+<<<<<<< HEAD
+=======
+
+	return 0;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 EXPORT_SYMBOL_GPL(xenbus_dev_remove);
 

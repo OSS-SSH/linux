@@ -384,12 +384,32 @@ static int rockchip_pwm_remove(struct platform_device *pdev)
 {
 	struct rockchip_pwm_chip *pc = platform_get_drvdata(pdev);
 
+<<<<<<< HEAD
 	pwmchip_remove(&pc->chip);
+=======
+	/*
+	 * Disable the PWM clk before unpreparing it if the PWM device is still
+	 * running. This should only happen when the last PWM user left it
+	 * enabled, or when nobody requested a PWM that was previously enabled
+	 * by the bootloader.
+	 *
+	 * FIXME: Maybe the core should disable all PWM devices in
+	 * pwmchip_remove(). In this case we'd only have to call
+	 * clk_unprepare() after pwmchip_remove().
+	 *
+	 */
+	if (pwm_is_enabled(pc->chip.pwms))
+		clk_disable(pc->clk);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	clk_unprepare(pc->pclk);
 	clk_unprepare(pc->clk);
 
+<<<<<<< HEAD
 	return 0;
+=======
+	return pwmchip_remove(&pc->chip);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 
 static struct platform_driver rockchip_pwm_driver = {

@@ -29,7 +29,10 @@ properties:
           - enum:
               - rockchip,px30-pwm
               - rockchip,rk3308-pwm
+<<<<<<< HEAD
               - rockchip,rk3568-pwm
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
           - const: rockchip,rk3328-pwm
 
   reg:

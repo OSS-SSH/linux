@@ -597,6 +597,7 @@ static int dwc3_ep0_set_address(struct dwc3 *dwc, struct usb_ctrlrequest *ctrl)
 
 static int dwc3_ep0_delegate_req(struct dwc3 *dwc, struct usb_ctrlrequest *ctrl)
 {
+<<<<<<< HEAD
 	int ret = -EINVAL;
 
 	if (dwc->async_callbacks) {
@@ -604,6 +605,13 @@ static int dwc3_ep0_delegate_req(struct dwc3 *dwc, struct usb_ctrlrequest *ctrl)
 		ret = dwc->gadget_driver->setup(dwc->gadget, ctrl);
 		spin_lock(&dwc->lock);
 	}
+=======
+	int ret;
+
+	spin_unlock(&dwc->lock);
+	ret = dwc->gadget_driver->setup(dwc->gadget, ctrl);
+	spin_lock(&dwc->lock);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return ret;
 }
 
@@ -621,8 +629,11 @@ static int dwc3_ep0_set_config(struct dwc3 *dwc, struct usb_ctrlrequest *ctrl)
 		return -EINVAL;
 
 	case USB_STATE_ADDRESS:
+<<<<<<< HEAD
 		dwc3_gadget_clear_tx_fifos(dwc);
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		ret = dwc3_ep0_delegate_req(dwc, ctrl);
 		/* if the cfg matches and the cfg is non zero */
 		if (cfg && (!ret || (ret == USB_GADGET_DELAYED_STATUS))) {

@@ -1818,7 +1818,10 @@ DEFINE_EVENT(f2fs_zip_end, f2fs_decompress_pages_end,
 	TP_ARGS(inode, cluster_idx, compressed_size, ret)
 );
 
+<<<<<<< HEAD
 #ifdef CONFIG_F2FS_IOSTAT
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 TRACE_EVENT(f2fs_iostat,
 
 	TP_PROTO(struct f2fs_sb_info *sbi, unsigned long long *iostat),
@@ -1895,6 +1898,7 @@ TRACE_EVENT(f2fs_iostat,
 		__entry->fs_cdrio, __entry->fs_nrio, __entry->fs_mrio)
 );
 
+<<<<<<< HEAD
 #ifndef __F2FS_IOSTAT_LATENCY_TYPE
 #define __F2FS_IOSTAT_LATENCY_TYPE
 struct f2fs_iostat_latency {
@@ -1991,6 +1995,8 @@ TRACE_EVENT(f2fs_iostat_latency,
 );
 #endif
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 TRACE_EVENT(f2fs_bmap,
 
 	TP_PROTO(struct inode *inode, sector_t lblock, sector_t pblock),

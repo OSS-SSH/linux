@@ -289,6 +289,7 @@ properties:
     maximum: 16
 
   tx-fifo-resize:
+<<<<<<< HEAD
     description: Determines if the TX fifos can be dynamically resized depending
       on the number of IN endpoints used and if bursting is supported.  This
       may help improve bandwidth on platforms with higher system latencies, as
@@ -304,6 +305,12 @@ properties:
     $ref: /schemas/types.yaml#/definitions/uint8
     minimum: 3
 
+=======
+    description: Determines if the FIFO *has* to be reallocated
+    deprecated: true
+    type: boolean
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
   snps,incr-burst-type-adjustment:
     description:
       Value for INCR burst type of GSBUSCFG0 register, undefined length INCR

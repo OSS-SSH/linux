@@ -533,7 +533,11 @@ static uint32_t pp_dpm_get_fan_control_mode(void *handle)
 	return mode;
 }
 
+<<<<<<< HEAD
 static int pp_dpm_set_fan_speed_pwm(void *handle, uint32_t speed)
+=======
+static int pp_dpm_set_fan_speed_percent(void *handle, uint32_t percent)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pp_hwmgr *hwmgr = handle;
 	int ret = 0;
@@ -541,17 +545,29 @@ static int pp_dpm_set_fan_speed_pwm(void *handle, uint32_t speed)
 	if (!hwmgr || !hwmgr->pm_en)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (hwmgr->hwmgr_func->set_fan_speed_pwm == NULL) {
+=======
+	if (hwmgr->hwmgr_func->set_fan_speed_percent == NULL) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pr_info_ratelimited("%s was not implemented.\n", __func__);
 		return 0;
 	}
 	mutex_lock(&hwmgr->smu_lock);
+<<<<<<< HEAD
 	ret = hwmgr->hwmgr_func->set_fan_speed_pwm(hwmgr, speed);
+=======
+	ret = hwmgr->hwmgr_func->set_fan_speed_percent(hwmgr, percent);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&hwmgr->smu_lock);
 	return ret;
 }
 
+<<<<<<< HEAD
 static int pp_dpm_get_fan_speed_pwm(void *handle, uint32_t *speed)
+=======
+static int pp_dpm_get_fan_speed_percent(void *handle, uint32_t *speed)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct pp_hwmgr *hwmgr = handle;
 	int ret = 0;
@@ -559,13 +575,21 @@ static int pp_dpm_get_fan_speed_pwm(void *handle, uint32_t *speed)
 	if (!hwmgr || !hwmgr->pm_en)
 		return -EINVAL;
 
+<<<<<<< HEAD
 	if (hwmgr->hwmgr_func->get_fan_speed_pwm == NULL) {
+=======
+	if (hwmgr->hwmgr_func->get_fan_speed_percent == NULL) {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		pr_info_ratelimited("%s was not implemented.\n", __func__);
 		return 0;
 	}
 
 	mutex_lock(&hwmgr->smu_lock);
+<<<<<<< HEAD
 	ret = hwmgr->hwmgr_func->get_fan_speed_pwm(hwmgr, speed);
+=======
+	ret = hwmgr->hwmgr_func->get_fan_speed_percent(hwmgr, speed);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_unlock(&hwmgr->smu_lock);
 	return ret;
 }
@@ -1691,8 +1715,13 @@ static const struct amd_pm_funcs pp_dpm_funcs = {
 	.dispatch_tasks = pp_dpm_dispatch_tasks,
 	.set_fan_control_mode = pp_dpm_set_fan_control_mode,
 	.get_fan_control_mode = pp_dpm_get_fan_control_mode,
+<<<<<<< HEAD
 	.set_fan_speed_pwm = pp_dpm_set_fan_speed_pwm,
 	.get_fan_speed_pwm = pp_dpm_get_fan_speed_pwm,
+=======
+	.set_fan_speed_percent = pp_dpm_set_fan_speed_percent,
+	.get_fan_speed_percent = pp_dpm_get_fan_speed_percent,
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.get_fan_speed_rpm = pp_dpm_get_fan_speed_rpm,
 	.set_fan_speed_rpm = pp_dpm_set_fan_speed_rpm,
 	.get_pp_num_states = pp_dpm_get_pp_num_states,

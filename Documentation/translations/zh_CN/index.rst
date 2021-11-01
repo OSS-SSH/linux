@@ -5,7 +5,10 @@
 	\renewcommand\thesection*
 	\renewcommand\thesubsection*
 	\kerneldocCJKon
+<<<<<<< HEAD
 	\kerneldocBeginSC
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 .. _linux_doc_zh:
 
@@ -18,11 +21,14 @@
    **翻译计划:**
    内核中文文档欢迎任何翻译投稿，特别是关于内核用户和管理员指南部分。
 
+<<<<<<< HEAD
 这是中文内核文档树的顶级目录。内核文档，就像内核本身一样，在很大程度上是一
 项正在进行的工作；当我们努力将许多分散的文件整合成一个连贯的整体时尤其如此。
 另外，随时欢迎您对内核文档进行改进；如果您想提供帮助，请加入vger.kernel.org
 上的linux-doc邮件列表。
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 许可证文档
 ----------
 
@@ -103,14 +109,21 @@ TODOList:
    iio/index
    sound/index
    filesystems/index
+<<<<<<< HEAD
    virt/index
    infiniband/index
    accounting/index
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 TODOList:
 
 * driver-api/index
 * locking/index
+<<<<<<< HEAD
+=======
+* accounting/index
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 * block/index
 * cdrom/index
 * ide/index
@@ -119,6 +132,10 @@ TODOList:
 * hid/index
 * i2c/index
 * isdn/index
+<<<<<<< HEAD
+=======
+* infiniband/index
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 * leds/index
 * netlabel/index
 * networking/index
@@ -129,6 +146,10 @@ TODOList:
 * spi/index
 * w1/index
 * watchdog/index
+<<<<<<< HEAD
+=======
+* virt/index
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 * input/index
 * hwmon/index
 * gpu/index
@@ -190,7 +211,10 @@ TODOList:
 ----------
 
 * :ref:`genindex`
+<<<<<<< HEAD
 
 .. raw:: latex
 
 	\kerneldocEndSC
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

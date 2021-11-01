@@ -8,6 +8,12 @@
 /*
  * This file handles the architecture-dependent parts of process handling..
  */
+<<<<<<< HEAD
+=======
+
+#include <stdarg.h>
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 #include <linux/elfcore.h>
 #include <linux/errno.h>
 #include <linux/module.h>

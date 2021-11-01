@@ -326,6 +326,10 @@ int amdgpu_uvd_sw_fini(struct amdgpu_device *adev)
 {
 	int i, j;
 
+<<<<<<< HEAD
+=======
+	cancel_delayed_work_sync(&adev->uvd.idle_work);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	drm_sched_entity_destroy(&adev->uvd.entity);
 
 	for (j = 0; j < adev->uvd.num_uvd_inst; ++j) {

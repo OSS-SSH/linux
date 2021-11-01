@@ -434,9 +434,18 @@ struct drm_gem_object *qxl_gem_prime_import_sg_table(
 int qxl_gem_prime_vmap(struct drm_gem_object *obj, struct dma_buf_map *map);
 void qxl_gem_prime_vunmap(struct drm_gem_object *obj,
 			  struct dma_buf_map *map);
+<<<<<<< HEAD
 
 /* qxl_irq.c */
 int qxl_irq_init(struct qxl_device *qdev);
+=======
+int qxl_gem_prime_mmap(struct drm_gem_object *obj,
+				struct vm_area_struct *vma);
+
+/* qxl_irq.c */
+int qxl_irq_init(struct qxl_device *qdev);
+irqreturn_t qxl_irq_handler(int irq, void *arg);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 void qxl_debugfs_add_files(struct qxl_device *qdev,
 			   struct drm_info_list *files,

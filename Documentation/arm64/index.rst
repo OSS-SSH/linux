@@ -10,7 +10,10 @@ ARM64 Architecture
     acpi_object_usage
     amu
     arm-acpi
+<<<<<<< HEAD
     asymmetric-32bit
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
     booting
     cpu-feature-registers
     elf_hwcaps

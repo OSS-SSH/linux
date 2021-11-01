@@ -60,7 +60,10 @@ void vgic_v2_fold_lr_state(struct kvm_vcpu *vcpu)
 		u32 val = cpuif->vgic_lr[lr];
 		u32 cpuid, intid = val & GICH_LR_VIRTUALID;
 		struct vgic_irq *irq;
+<<<<<<< HEAD
 		bool deactivated;
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		/* Extract the source vCPU id from the LR */
 		cpuid = val & GICH_LR_PHYSID_CPUID;
@@ -76,8 +79,12 @@ void vgic_v2_fold_lr_state(struct kvm_vcpu *vcpu)
 
 		raw_spin_lock(&irq->irq_lock);
 
+<<<<<<< HEAD
 		/* Always preserve the active bit, note deactivation */
 		deactivated = irq->active && !(val & GICH_LR_ACTIVE_BIT);
+=======
+		/* Always preserve the active bit */
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		irq->active = !!(val & GICH_LR_ACTIVE_BIT);
 
 		if (irq->active && vgic_irq_is_sgi(intid))
@@ -98,8 +105,41 @@ void vgic_v2_fold_lr_state(struct kvm_vcpu *vcpu)
 		if (irq->config == VGIC_CONFIG_LEVEL && !(val & GICH_LR_STATE))
 			irq->pending_latch = false;
 
+<<<<<<< HEAD
 		/* Handle resampling for mapped interrupts if required */
 		vgic_irq_handle_resampling(irq, deactivated, val & GICH_LR_PENDING_BIT);
+=======
+		/*
+		 * Level-triggered mapped IRQs are special because we only
+		 * observe rising edges as input to the VGIC.
+		 *
+		 * If the guest never acked the interrupt we have to sample
+		 * the physical line and set the line level, because the
+		 * device state could have changed or we simply need to
+		 * process the still pending interrupt later.
+		 *
+		 * If this causes us to lower the level, we have to also clear
+		 * the physical active state, since we will otherwise never be
+		 * told when the interrupt becomes asserted again.
+		 *
+		 * Another case is when the interrupt requires a helping hand
+		 * on deactivation (no HW deactivation, for example).
+		 */
+		if (vgic_irq_is_mapped_level(irq)) {
+			bool resample = false;
+
+			if (val & GICH_LR_PENDING_BIT) {
+				irq->line_level = vgic_get_phys_line_level(irq);
+				resample = !irq->line_level;
+			} else if (vgic_irq_needs_resampling(irq) &&
+				   !(irq->active || irq->pending_latch)) {
+				resample = true;
+			}
+
+			if (resample)
+				vgic_irq_set_phys_active(irq, false);
+		}
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 		raw_spin_unlock(&irq->irq_lock);
 		vgic_put_irq(vcpu->kvm, irq);

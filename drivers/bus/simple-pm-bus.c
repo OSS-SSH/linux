@@ -13,6 +13,7 @@
 #include <linux/platform_device.h>
 #include <linux/pm_runtime.h>
 
+<<<<<<< HEAD
 static int simple_pm_bus_probe(struct platform_device *pdev)
 {
 	const struct device *dev = &pdev->dev;
@@ -43,6 +44,13 @@ static int simple_pm_bus_probe(struct platform_device *pdev)
 		else
 			return -ENODEV;
 	}
+=======
+
+static int simple_pm_bus_probe(struct platform_device *pdev)
+{
+	const struct of_dev_auxdata *lookup = dev_get_platdata(&pdev->dev);
+	struct device_node *np = pdev->dev.of_node;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 	dev_dbg(&pdev->dev, "%s\n", __func__);
 
@@ -56,17 +64,21 @@ static int simple_pm_bus_probe(struct platform_device *pdev)
 
 static int simple_pm_bus_remove(struct platform_device *pdev)
 {
+<<<<<<< HEAD
 	const void *data = of_device_get_match_data(&pdev->dev);
 
 	if (pdev->driver_override || data)
 		return 0;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dev_dbg(&pdev->dev, "%s\n", __func__);
 
 	pm_runtime_disable(&pdev->dev);
 	return 0;
 }
 
+<<<<<<< HEAD
 #define ONLY_BUS	((void *) 1) /* Match if the device is only a bus. */
 
 static const struct of_device_id simple_pm_bus_of_match[] = {
@@ -75,6 +87,10 @@ static const struct of_device_id simple_pm_bus_of_match[] = {
 	{ .compatible = "simple-mfd",	.data = ONLY_BUS },
 	{ .compatible = "isa",		.data = ONLY_BUS },
 	{ .compatible = "arm,amba-bus",	.data = ONLY_BUS },
+=======
+static const struct of_device_id simple_pm_bus_of_match[] = {
+	{ .compatible = "simple-pm-bus", },
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	{ /* sentinel */ }
 };
 MODULE_DEVICE_TABLE(of, simple_pm_bus_of_match);

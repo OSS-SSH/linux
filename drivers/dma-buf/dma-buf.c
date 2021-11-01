@@ -29,8 +29,11 @@
 #include <uapi/linux/dma-buf.h>
 #include <uapi/linux/magic.h>
 
+<<<<<<< HEAD
 #include "dma-buf-sysfs-stats.h"
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 static inline int is_dma_buf_file(struct file *);
 
 struct dma_buf_list {
@@ -76,7 +79,10 @@ static void dma_buf_release(struct dentry *dentry)
 	 */
 	BUG_ON(dmabuf->cb_shared.active || dmabuf->cb_excl.active);
 
+<<<<<<< HEAD
 	dma_buf_stats_teardown(dmabuf);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dmabuf->ops->release(dmabuf);
 
 	if (dmabuf->resv == (struct dma_resv *)&dmabuf[1])
@@ -583,10 +589,13 @@ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info)
 	file->f_mode |= FMODE_LSEEK;
 	dmabuf->file = file;
 
+<<<<<<< HEAD
 	ret = dma_buf_stats_setup(dmabuf);
 	if (ret)
 		goto err_sysfs;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	mutex_init(&dmabuf->lock);
 	INIT_LIST_HEAD(&dmabuf->attachments);
 
@@ -596,6 +605,7 @@ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info)
 
 	return dmabuf;
 
+<<<<<<< HEAD
 err_sysfs:
 	/*
 	 * Set file->f_path.dentry->d_fsdata to NULL so that when
@@ -604,6 +614,8 @@ err_sysfs:
 	 */
 	file->f_path.dentry->d_fsdata = NULL;
 	fput(file);
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 err_dmabuf:
 	kfree(dmabuf);
 err_module:
@@ -941,9 +953,12 @@ EXPORT_SYMBOL_GPL(dma_buf_unpin);
  * the underlying backing storage is pinned for as long as a mapping exists,
  * therefore users/importers should not hold onto a mapping for undue amounts of
  * time.
+<<<<<<< HEAD
  *
  * Important: Dynamic importers must wait for the exclusive fence of the struct
  * dma_resv attached to the DMA-BUF first.
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 struct sg_table *dma_buf_map_attachment(struct dma_buf_attachment *attach,
 					enum dma_data_direction direction)
@@ -1010,6 +1025,10 @@ struct sg_table *dma_buf_map_attachment(struct dma_buf_attachment *attach,
 		}
 	}
 #endif /* CONFIG_DMA_API_DEBUG */
+<<<<<<< HEAD
+=======
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	return sg_table;
 }
 EXPORT_SYMBOL_GPL(dma_buf_map_attachment);
@@ -1486,12 +1505,15 @@ static inline void dma_buf_uninit_debugfs(void)
 
 static int __init dma_buf_init(void)
 {
+<<<<<<< HEAD
 	int ret;
 
 	ret = dma_buf_init_sysfs_statistics();
 	if (ret)
 		return ret;
 
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	dma_buf_mnt = kern_mount(&dma_buf_fs_type);
 	if (IS_ERR(dma_buf_mnt))
 		return PTR_ERR(dma_buf_mnt);
@@ -1507,6 +1529,9 @@ static void __exit dma_buf_deinit(void)
 {
 	dma_buf_uninit_debugfs();
 	kern_unmount(dma_buf_mnt);
+<<<<<<< HEAD
 	dma_buf_uninit_sysfs_statistics();
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 }
 __exitcall(dma_buf_deinit);

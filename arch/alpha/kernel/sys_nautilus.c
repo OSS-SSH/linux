@@ -212,7 +212,11 @@ nautilus_init_pci(void)
 
 	/* Use default IO. */
 	pci_add_resource(&bridge->windows, &ioport_resource);
+<<<<<<< HEAD
 	/* Irongate PCI memory aperture, calculate required size before
+=======
+	/* Irongate PCI memory aperture, calculate requred size before
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	   setting it up. */
 	pci_add_resource(&bridge->windows, &irongate_mem);
 

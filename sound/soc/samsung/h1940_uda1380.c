@@ -112,7 +112,11 @@ static int h1940_hw_params(struct snd_pcm_substream *substream,
 	return 0;
 }
 
+<<<<<<< HEAD
 static const struct snd_soc_ops h1940_ops = {
+=======
+static struct snd_soc_ops h1940_ops = {
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	.startup	= h1940_startup,
 	.hw_params	= h1940_hw_params,
 };

@@ -69,7 +69,10 @@ config CHELSIO_T3
 config CHELSIO_T4
 	tristate "Chelsio Communications T4/T5/T6 Ethernet support"
 	depends on PCI && (IPV6 || IPV6=n) && (TLS || TLS=n)
+<<<<<<< HEAD
 	depends on PTP_1588_CLOCK_OPTIONAL
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	select FW_LOADER
 	select MDIO
 	select ZLIB_DEFLATE

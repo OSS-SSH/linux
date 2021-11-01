@@ -111,6 +111,18 @@ Component Helper Usage
 .. kernel-doc:: drivers/gpu/drm/drm_drv.c
    :doc: component helper usage recommendations
 
+<<<<<<< HEAD
+=======
+IRQ Helper Library
+~~~~~~~~~~~~~~~~~~
+
+.. kernel-doc:: drivers/gpu/drm/drm_irq.c
+   :doc: irq helpers
+
+.. kernel-doc:: drivers/gpu/drm/drm_irq.c
+   :export:
+
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 Memory Manager Initialization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

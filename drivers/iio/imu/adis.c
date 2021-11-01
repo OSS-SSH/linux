@@ -411,11 +411,19 @@ int __adis_initial_startup(struct adis *adis)
 	int ret;
 
 	/* check if the device has rst pin low */
+<<<<<<< HEAD
 	gpio = devm_gpiod_get_optional(&adis->spi->dev, "reset", GPIOD_OUT_HIGH);
+=======
+	gpio = devm_gpiod_get_optional(&adis->spi->dev, "reset", GPIOD_ASIS);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	if (IS_ERR(gpio))
 		return PTR_ERR(gpio);
 
 	if (gpio) {
+<<<<<<< HEAD
+=======
+		gpiod_set_value_cansleep(gpio, 1);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 		msleep(10);
 		/* bring device out of reset */
 		gpiod_set_value_cansleep(gpio, 0);

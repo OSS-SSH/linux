@@ -530,7 +530,11 @@ free_msg:
 
 int nfc_genl_se_connectivity(struct nfc_dev *dev, u8 se_idx)
 {
+<<<<<<< HEAD
 	const struct nfc_se *se;
+=======
+	struct nfc_se *se;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	struct sk_buff *msg;
 	void *hdr;
 
@@ -1531,7 +1535,11 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
 			       struct genl_info *info)
 {
 	struct nfc_dev *dev;
+<<<<<<< HEAD
 	const struct nfc_vendor_cmd *cmd;
+=======
+	struct nfc_vendor_cmd *cmd;
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 	u32 dev_idx, vid, subcmd;
 	u8 *data;
 	size_t data_len;

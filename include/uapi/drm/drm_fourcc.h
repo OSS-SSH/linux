@@ -900,9 +900,15 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
 
 /*
  * The top 4 bits (out of the 56 bits alloted for specifying vendor specific
+<<<<<<< HEAD
  * modifiers) denote the category for modifiers. Currently we have three
  * categories of modifiers ie AFBC, MISC and AFRC. We can have a maximum of
  * sixteen different categories.
+=======
+ * modifiers) denote the category for modifiers. Currently we have only two
+ * categories of modifiers ie AFBC and MISC. We can have a maximum of sixteen
+ * different categories.
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  */
 #define DRM_FORMAT_MOD_ARM_CODE(__type, __val) \
 	fourcc_mod_code(ARM, ((__u64)(__type) << 52) | ((__val) & 0x000fffffffffffffULL))
@@ -1018,6 +1024,7 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
 #define AFBC_FORMAT_MOD_USM	(1ULL << 12)
 
 /*
+<<<<<<< HEAD
  * Arm Fixed-Rate Compression (AFRC) modifiers
  *
  * AFRC is a proprietary fixed rate image compression protocol and format,
@@ -1121,6 +1128,8 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
 #define AFRC_FORMAT_MOD_LAYOUT_SCAN (1ULL << 8)
 
 /*
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
  * Arm 16x16 Block U-Interleaved modifier
  *
  * This is used by Arm Mali Utgard and Midgard GPUs. It divides the image

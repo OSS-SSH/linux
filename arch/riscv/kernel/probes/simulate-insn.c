@@ -83,6 +83,7 @@ bool __kprobes simulate_jalr(u32 opcode, unsigned long addr, struct pt_regs *reg
 
 	return ret;
 }
+<<<<<<< HEAD
 
 #define auipc_rd_idx(opcode) \
 	((opcode >> 7) & 0x1f)
@@ -195,3 +196,5 @@ bool __kprobes simulate_branch(u32 opcode, unsigned long addr, struct pt_regs *r
 
 	return true;
 }
+=======
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554

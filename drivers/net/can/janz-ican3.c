@@ -1815,9 +1815,15 @@ static int ican3_get_berr_counter(const struct net_device *ndev,
  * Sysfs Attributes
  */
 
+<<<<<<< HEAD
 static ssize_t termination_show(struct device *dev,
 				struct device_attribute *attr,
 				char *buf)
+=======
+static ssize_t ican3_sysfs_show_term(struct device *dev,
+				     struct device_attribute *attr,
+				     char *buf)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ican3_dev *mod = netdev_priv(to_net_dev(dev));
 	int ret;
@@ -1834,9 +1840,15 @@ static ssize_t termination_show(struct device *dev,
 	return snprintf(buf, PAGE_SIZE, "%u\n", mod->termination_enabled);
 }
 
+<<<<<<< HEAD
 static ssize_t termination_store(struct device *dev,
 				 struct device_attribute *attr,
 				 const char *buf, size_t count)
+=======
+static ssize_t ican3_sysfs_set_term(struct device *dev,
+				    struct device_attribute *attr,
+				    const char *buf, size_t count)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ican3_dev *mod = netdev_priv(to_net_dev(dev));
 	unsigned long enable;
@@ -1852,17 +1864,29 @@ static ssize_t termination_store(struct device *dev,
 	return count;
 }
 
+<<<<<<< HEAD
 static ssize_t fwinfo_show(struct device *dev,
 			   struct device_attribute *attr,
 			   char *buf)
+=======
+static ssize_t ican3_sysfs_show_fwinfo(struct device *dev,
+				       struct device_attribute *attr,
+				       char *buf)
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 {
 	struct ican3_dev *mod = netdev_priv(to_net_dev(dev));
 
 	return scnprintf(buf, PAGE_SIZE, "%s\n", mod->fwinfo);
 }
 
+<<<<<<< HEAD
 static DEVICE_ATTR_RW(termination);
 static DEVICE_ATTR_RO(fwinfo);
+=======
+static DEVICE_ATTR(termination, 0644, ican3_sysfs_show_term,
+		   ican3_sysfs_set_term);
+static DEVICE_ATTR(fwinfo, 0444, ican3_sysfs_show_fwinfo, NULL);
+>>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 
 static struct attribute *ican3_sysfs_attrs[] = {
 	&dev_attr_termination.attr,
