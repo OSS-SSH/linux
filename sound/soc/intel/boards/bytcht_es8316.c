@@ -463,10 +463,13 @@ static const struct dmi_system_id byt_cht_es8316_quirk_table[] = {
 
 static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 {
+	struct device *dev = &pdev->dev;
 	static const char * const mic_name[] = { "in1", "in2" };
+	struct snd_soc_acpi_mach *mach = dev_get_platdata(dev);
 	struct property_entry props[MAX_NO_PROPS] = {};
 	struct byt_cht_es8316_private *priv;
 	const struct dmi_system_id *dmi_id;
+<<<<<<< HEAD
 	struct device *dev = &pdev->dev;
 	struct snd_soc_acpi_mach *mach;
 <<<<<<< HEAD
@@ -475,6 +478,8 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	struct fwnode_handle *fwnode;
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	const char *platform_name;
@@ -490,7 +495,6 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 	if (!priv)
 		return -ENOMEM;
 
-	mach = dev->platform_data;
 	/* fix index of codec dai */
 	for (i = 0; i < ARRAY_SIZE(byt_cht_es8316_dais); i++) {
 		if (!strcmp(byt_cht_es8316_dais[i].codecs->name,
@@ -510,7 +514,7 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 <<<<<<< HEAD
 <<<<<<< HEAD
 	} else {
-		dev_err(&pdev->dev, "Error cannot find '%s' dev\n", mach->id);
+		dev_err(dev, "Error cannot find '%s' dev\n", mach->id);
 		return -ENXIO;
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
@@ -556,11 +560,8 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 
 	/* get the clock */
 	priv->mclk = devm_clk_get(dev, "pmc_plt_clk_3");
-	if (IS_ERR(priv->mclk)) {
-		ret = PTR_ERR(priv->mclk);
-		dev_err(dev, "clk_get pmc_plt_clk_3 failed: %d\n", ret);
-		return ret;
-	}
+	if (IS_ERR(priv->mclk))
+		return dev_err_probe(dev, PTR_ERR(priv->mclk), "clk_get pmc_plt_clk_3 failed\n");
 
 	/* get speaker enable GPIO */
 <<<<<<< HEAD
@@ -613,6 +614,7 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 
 	devm_acpi_dev_add_driver_gpios(codec_dev, byt_cht_es8316_gpios);
 	priv->speaker_en_gpio =
+<<<<<<< HEAD
 		gpiod_get_index(codec_dev, "speaker-enable", 0,
 				/* see comment in byt_cht_es8316_resume */
 				GPIOD_OUT_LOW | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
@@ -644,6 +646,15 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 			goto err_put_codec;
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		}
+=======
+		gpiod_get_optional(codec_dev, "speaker-enable",
+				   /* see comment in byt_cht_es8316_resume() */
+				   GPIOD_OUT_LOW | GPIOD_FLAGS_BIT_NONEXCLUSIVE);
+	if (IS_ERR(priv->speaker_en_gpio)) {
+		ret = dev_err_probe(dev, PTR_ERR(priv->speaker_en_gpio),
+				    "get speaker GPIO failed\n");
+		goto err_put_codec;
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	}
 
 	snprintf(components_string, sizeof(components_string),
@@ -658,7 +669,7 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
 	byt_cht_es8316_card.long_name = long_name;
 #endif
 
-	sof_parent = snd_soc_acpi_sof_parent(&pdev->dev);
+	sof_parent = snd_soc_acpi_sof_parent(dev);
 
 	/* set card and driver name */
 	if (sof_parent) {

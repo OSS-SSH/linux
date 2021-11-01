@@ -1163,12 +1163,8 @@ void acpi_turn_off_unused_power_resources(void)
 	list_for_each_entry_reverse(resource, &acpi_power_resource_list, list_node) {
 		mutex_lock(&resource->resource_lock);
 
-		/*
-		 * Turn off power resources in an unknown state too, because the
-		 * platform firmware on some system expects the OS to turn off
-		 * power resources without any users unconditionally.
-		 */
 		if (!resource->ref_count &&
+<<<<<<< HEAD
 		    resource->state != ACPI_POWER_RESOURCE_STATE_OFF) {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1177,6 +1173,9 @@ void acpi_turn_off_unused_power_resources(void)
 			dev_dbg(&resource->device.dev, "Turning OFF\n");
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======
+=======
+		    resource->state == ACPI_POWER_RESOURCE_STATE_ON) {
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 			acpi_handle_debug(resource->device.handle, "Turning OFF\n");
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 			__acpi_power_off(resource);

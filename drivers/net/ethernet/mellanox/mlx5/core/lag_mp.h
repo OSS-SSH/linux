@@ -31,6 +31,7 @@ void mlx5_lag_mp_reset(struct mlx5_lag *ldev);
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 int mlx5_lag_mp_init(struct mlx5_lag *ldev);
 void mlx5_lag_mp_cleanup(struct mlx5_lag *ldev);
+bool mlx5_lag_is_multipath(struct mlx5_core_dev *dev);
 
 #else /* CONFIG_MLX5_ESWITCH */
 
@@ -44,6 +45,7 @@ static inline void mlx5_lag_mp_reset(struct mlx5_lag *ldev) {};
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static inline int mlx5_lag_mp_init(struct mlx5_lag *ldev) { return 0; }
 static inline void mlx5_lag_mp_cleanup(struct mlx5_lag *ldev) {}
+bool mlx5_lag_is_multipath(struct mlx5_core_dev *dev) { return false; }
 
 #endif /* CONFIG_MLX5_ESWITCH */
 #endif /* __MLX5_LAG_MP_H__ */

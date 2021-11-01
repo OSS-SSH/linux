@@ -1392,6 +1392,7 @@ static enum drm_mode_status ast_mode_valid(struct drm_connector *connector,
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 static enum drm_connector_status ast_connector_detect(struct drm_connector
@@ -1406,6 +1407,8 @@ static enum drm_connector_status ast_connector_detect(struct drm_connector
 	return connector_status_connected;
 }
 
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 static void ast_connector_destroy(struct drm_connector *connector)
 {
 	struct ast_connector *ast_connector = to_ast_connector(connector);
@@ -1431,12 +1434,15 @@ static const struct drm_connector_funcs ast_connector_funcs = {
 	.reset = drm_atomic_helper_connector_reset,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	.detect = ast_connector_detect,
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======
 	.detect = ast_connector_detect,
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	.fill_modes = drm_helper_probe_single_connector_modes,
 	.destroy = ast_connector_destroy,
 	.atomic_duplicate_state = drm_atomic_helper_connector_duplicate_state,
@@ -1466,6 +1472,7 @@ static int ast_connector_init(struct drm_device *dev)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	connector->polled = DRM_CONNECTOR_POLL_CONNECT |
 						DRM_CONNECTOR_POLL_DISCONNECT;
 =======
@@ -1475,6 +1482,9 @@ static int ast_connector_init(struct drm_device *dev)
 	connector->polled = DRM_CONNECTOR_POLL_CONNECT |
 						DRM_CONNECTOR_POLL_DISCONNECT;
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	connector->polled = DRM_CONNECTOR_POLL_CONNECT;
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 
 	drm_connector_attach_encoder(connector, encoder);
 
@@ -1545,6 +1555,7 @@ int ast_mode_config_init(struct ast_private *ast)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	drm_kms_helper_poll_init(dev);
 
 =======
@@ -1553,6 +1564,8 @@ int ast_mode_config_init(struct ast_private *ast)
 	drm_kms_helper_poll_init(dev);
 
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	return 0;
 }
 

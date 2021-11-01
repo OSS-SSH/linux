@@ -157,6 +157,7 @@ static void dump_mem(const char *lvl, const char *str, unsigned long bottom,
 				unsigned long val;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 				if (get_kernel_nofault(val, (unsigned long *)p))
 =======
 				if (__get_user(val, (unsigned long *)p) == 0)
@@ -164,6 +165,9 @@ static void dump_mem(const char *lvl, const char *str, unsigned long bottom,
 =======
 				if (get_kernel_nofault(val, (unsigned long *)p))
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+				if (!get_kernel_nofault(val, (unsigned long *)p))
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 					sprintf(str + i * 9, " %08lx", val);
 				else
 					sprintf(str + i * 9, " ????????");

@@ -214,20 +214,31 @@ static inline void mlx5e_insert_vlan(void *start, struct sk_buff *skb, u16 ihs)
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* If packet is not IP's CHECKSUM_PARTIAL (e.g. icmd packet),
  * need to set L3 checksum flag for IPsec
  */
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 static void
 ipsec_txwqe_build_eseg_csum(struct mlx5e_txqsq *sq, struct sk_buff *skb,
 			    struct mlx5_wqe_eth_seg *eseg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	struct xfrm_offload *xo = xfrm_offload(skb);
+
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	eseg->cs_flags = MLX5_ETH_WQE_L3_CSUM;
-	if (skb->encapsulation) {
-		eseg->cs_flags |= MLX5_ETH_WQE_L3_INNER_CSUM;
+	if (xo->inner_ipproto) {
+		eseg->cs_flags |= MLX5_ETH_WQE_L4_INNER_CSUM | MLX5_ETH_WQE_L3_INNER_CSUM;
+	} else if (likely(skb->ip_summed == CHECKSUM_PARTIAL)) {
+		eseg->cs_flags |= MLX5_ETH_WQE_L4_CSUM;
 		sq->stats->csum_partial_inner++;
+<<<<<<< HEAD
 	} else {
 		sq->stats->csum_partial++;
 =======
@@ -240,6 +251,8 @@ ipsec_txwqe_build_eseg_csum(struct mlx5e_txqsq *sq, struct sk_buff *skb,
 		eseg->cs_flags |= MLX5_ETH_WQE_L4_CSUM;
 		sq->stats->csum_partial_inner++;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	}
 }
 
@@ -249,13 +262,19 @@ mlx5e_txwqe_build_eseg_csum(struct mlx5e_txqsq *sq, struct sk_buff *skb,
 			    struct mlx5_wqe_eth_seg *eseg)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	if (unlikely(mlx5e_ipsec_eseg_meta(eseg))) {
 		ipsec_txwqe_build_eseg_csum(sq, skb, eseg);
 		return;
 	}
 
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	if (likely(skb->ip_summed == CHECKSUM_PARTIAL)) {
 		eseg->cs_flags = MLX5_ETH_WQE_L3_CSUM;
 		if (skb->encapsulation) {
@@ -272,10 +291,13 @@ mlx5e_txwqe_build_eseg_csum(struct mlx5e_txqsq *sq, struct sk_buff *skb,
 		sq->stats->csum_partial++;
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 	} else if (unlikely(mlx5e_ipsec_eseg_meta(eseg))) {
 		ipsec_txwqe_build_eseg_csum(sq, skb, eseg);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	} else
 		sq->stats->csum_none++;
 }

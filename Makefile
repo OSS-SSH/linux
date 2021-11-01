@@ -5,6 +5,7 @@ VERSION = 5
 <<<<<<< HEAD
 PATCHLEVEL = 15
 SUBLEVEL = 0
+<<<<<<< HEAD
 EXTRAVERSION = -rc6
 =======
 PATCHLEVEL = 14
@@ -21,6 +22,9 @@ PATCHLEVEL = 15
 SUBLEVEL = 0
 EXTRAVERSION = -rc6
 >>>>>>> 5317c4fd9dc283b3d338b05661e435e0a83baaee
+=======
+EXTRAVERSION = -rc7
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 NAME = Opossums on Parade
 
 # *DOCUMENTATION*

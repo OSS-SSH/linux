@@ -343,11 +343,17 @@ void mlx5e_destroy_flow_steering(struct mlx5e_priv *priv);
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 u8 mlx5e_get_proto_by_tunnel_type(enum mlx5e_tunnel_types tt);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+int mlx5e_fs_init(struct mlx5e_priv *priv);
+void mlx5e_fs_cleanup(struct mlx5e_priv *priv);
+
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 int mlx5e_add_vlan_trap(struct mlx5e_priv *priv, int  trap_id, int tir_num);
 void mlx5e_remove_vlan_trap(struct mlx5e_priv *priv);
 int mlx5e_add_mac_trap(struct mlx5e_priv *priv, int  trap_id, int tir_num);

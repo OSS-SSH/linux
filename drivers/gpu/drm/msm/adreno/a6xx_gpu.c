@@ -2231,6 +2231,13 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 		adreno_gpu->base.hw_apriv = true;
 
+	/*
+	 * For now only clamp to idle freq for devices where this is known not
+	 * to cause power supply issues:
+	 */
+	if (info && (info->revn == 618))
+		gpu->clamp_to_idle = true;
+
 	a6xx_llc_slices_init(pdev, a6xx_gpu);
 
 <<<<<<< HEAD

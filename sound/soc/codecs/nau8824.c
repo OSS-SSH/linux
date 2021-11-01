@@ -915,6 +915,7 @@ static void nau8824_jdet_work(struct work_struct *work)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	snd_soc_dapm_enable_pin(dapm, "MICBIAS");
 	snd_soc_dapm_enable_pin(dapm, "SAR");
 =======
@@ -925,6 +926,10 @@ static void nau8824_jdet_work(struct work_struct *work)
 	snd_soc_dapm_enable_pin(dapm, "MICBIAS");
 	snd_soc_dapm_enable_pin(dapm, "SAR");
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	snd_soc_dapm_force_enable_pin(dapm, "MICBIAS");
+	snd_soc_dapm_force_enable_pin(dapm, "SAR");
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	snd_soc_dapm_sync(dapm);
 
 	msleep(100);

@@ -966,10 +966,14 @@ int __init_memblock memblock_mark_mirror(phys_addr_t base, phys_addr_t size)
  * covered by the memory map. The struct page representing NOMAP memory
  * frames in the memory map will be PageReserved()
  *
+ * Note: if the memory being marked %MEMBLOCK_NOMAP was allocated from
+ * memblock, the caller must inform kmemleak to ignore that memory
+ *
  * Return: 0 on success, -errno on failure.
  */
 int __init_memblock memblock_mark_nomap(phys_addr_t base, phys_addr_t size)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -986,6 +990,9 @@ int __init_memblock memblock_mark_nomap(phys_addr_t base, phys_addr_t size)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	return memblock_setclr_flag(base, size, 1, MEMBLOCK_NOMAP);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 }
 
 /**
@@ -1791,9 +1798,13 @@ void __init memblock_cap_memory_range(phys_addr_t base, phys_addr_t size)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (memblock.memory.cnt <= 1) {
+=======
+	if (!memblock_memory->total_size) {
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 		pr_warn("%s: No memory registered yet\n", __func__);
 		return;
 	}

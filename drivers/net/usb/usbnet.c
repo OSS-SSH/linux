@@ -1815,12 +1815,18 @@ usbnet_probe (struct usb_interface *udev, const struct usb_device_id *prod)
 		dev->rx_urb_size = dev->hard_mtu;
 	dev->maxpacket = usb_maxpacket (dev->udev, dev->out, 1);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	if (dev->maxpacket == 0) {
 		/* that is a broken device */
 		goto out4;
 	}
+<<<<<<< HEAD
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 
 	/* let userspace know we have a random address */
 	if (ether_addr_equal(net->dev_addr, node_id))

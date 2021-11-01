@@ -275,9 +275,13 @@ __create_page_tables:
 	adr_l	r5, kernel_sec_start		@ _pa(kernel_sec_start)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_CPU_ENDIAN_BE8
+=======
+#if defined CONFIG_CPU_ENDIAN_BE8 || defined CONFIG_CPU_ENDIAN_BE32
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	str	r8, [r5, #4]			@ Save physical start of kernel (BE)
 #else
 	str	r8, [r5]			@ Save physical start of kernel (LE)
@@ -298,9 +302,13 @@ __create_page_tables:
 	adr_l	r5, kernel_sec_end		@ _pa(kernel_sec_end)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 #ifdef CONFIG_CPU_ENDIAN_BE8
+=======
+#if defined CONFIG_CPU_ENDIAN_BE8 || defined CONFIG_CPU_ENDIAN_BE32
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	str	r3, [r5, #4]			@ Save physical end of kernel (BE)
 #else
 	str	r3, [r5]			@ Save physical end of kernel (LE)

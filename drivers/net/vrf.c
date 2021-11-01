@@ -1410,6 +1410,7 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nf_reset_ct(skb);
 
 =======
@@ -1418,6 +1419,8 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
 	nf_reset_ct(skb);
 
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	/* loopback, multicast & non-ND link-local traffic; do not push through
 	 * packet taps again. Reset pkt_type for upper layers to process skb.
 	 * For strict packets with a source LLA, determine the dst using the
@@ -1482,6 +1485,7 @@ static struct sk_buff *vrf_ip_rcv(struct net_device *vrf_dev,
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	nf_reset_ct(skb);
 
 =======
@@ -1490,6 +1494,8 @@ static struct sk_buff *vrf_ip_rcv(struct net_device *vrf_dev,
 	nf_reset_ct(skb);
 
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	if (ipv4_is_multicast(ip_hdr(skb)->daddr))
 		goto out;
 

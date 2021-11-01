@@ -7046,10 +7046,14 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 					 struct buffer_head *di_bh)
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	int ret, i, has_data, num_pages = 0;
 =======
 	int ret, has_data, num_pages = 0;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	int ret, has_data, num_pages = 0;
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	int need_free = 0;
 	u32 bit_off, num;
 	handle_t *handle;
@@ -7059,17 +7063,22 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 	struct ocfs2_dinode *di = (struct ocfs2_dinode *)di_bh->b_data;
 	struct ocfs2_alloc_context *data_ac = NULL;
 <<<<<<< HEAD
+<<<<<<< HEAD
 	struct page **pages = NULL;
 	loff_t end = osb->s_clustersize;
 =======
 	struct page *page = NULL;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	struct page *page = NULL;
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	struct ocfs2_extent_tree et;
 	int did_quota = 0;
 
 	has_data = i_size_read(inode) ? 1 : 0;
 
 	if (has_data) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 		pages = kcalloc(ocfs2_pages_per_cluster(osb->sb),
 				sizeof(struct page *), GFP_NOFS);
@@ -7089,6 +7098,12 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 			mlog_errno(ret);
 			goto out;
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = ocfs2_reserve_clusters(osb, 1, &data_ac);
+		if (ret) {
+			mlog_errno(ret);
+			goto out;
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 		}
 	}
 
@@ -7109,11 +7124,16 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 
 	if (has_data) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		unsigned int page_end;
 =======
 		unsigned int page_end = min_t(unsigned, PAGE_SIZE,
 							osb->s_clustersize);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		unsigned int page_end = min_t(unsigned, PAGE_SIZE,
+							osb->s_clustersize);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 		u64 phys;
 
 		ret = dquot_alloc_space_nodirty(inode,
@@ -7138,6 +7158,7 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 		block = phys = ocfs2_clusters_to_blocks(inode->i_sb, bit_off);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 		/*
 		 * Non sparse file systems zero on extend, so no need
 		 * to do that now.
@@ -7151,6 +7172,10 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 		ret = ocfs2_grab_eof_pages(inode, 0, page_end, &page,
 					   &num_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = ocfs2_grab_eof_pages(inode, 0, page_end, &page,
+					   &num_pages);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 		if (ret) {
 			mlog_errno(ret);
 			need_free = 1;
@@ -7162,16 +7187,21 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 		 * it up to date.
 		 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 		ret = ocfs2_read_inline_data(inode, pages[0], di_bh);
 =======
 		ret = ocfs2_read_inline_data(inode, page, di_bh);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ret = ocfs2_read_inline_data(inode, page, di_bh);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 		if (ret) {
 			mlog_errno(ret);
 			need_free = 1;
 			goto out_unlock;
 		}
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 		page_end = PAGE_SIZE;
 		if (PAGE_SIZE > osb->s_clustersize)
@@ -7184,6 +7214,10 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 		ocfs2_map_and_dirty_page(inode, handle, 0, page_end, page, 0,
 					 &phys);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		ocfs2_map_and_dirty_page(inode, handle, 0, page_end, page, 0,
+					 &phys);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	}
 
 	spin_lock(&oi->ip_lock);
@@ -7215,12 +7249,17 @@ int ocfs2_convert_inline_data_to_extents(struct inode *inode,
 
 out_unlock:
 <<<<<<< HEAD
+<<<<<<< HEAD
 	if (pages)
 		ocfs2_unlock_and_free_pages(pages, num_pages);
 =======
 	if (page)
 		ocfs2_unlock_and_free_pages(&page, num_pages);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	if (page)
+		ocfs2_unlock_and_free_pages(&page, num_pages);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 
 out_commit:
 	if (ret < 0 && did_quota)
@@ -7245,10 +7284,13 @@ out:
 	if (data_ac)
 		ocfs2_free_alloc_context(data_ac);
 <<<<<<< HEAD
+<<<<<<< HEAD
 free_pages:
 	kfree(pages);
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	return ret;
 }
 

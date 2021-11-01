@@ -203,6 +203,7 @@ static void ptp_clock_release(struct device *dev)
 	struct ptp_clock *ptp = container_of(dev, struct ptp_clock, dev);
 
 	ptp_cleanup_pin_groups(ptp);
+	kfree(ptp->vclock_index);
 	mutex_destroy(&ptp->tsevq_mux);
 	mutex_destroy(&ptp->pincfg_mux);
 <<<<<<< HEAD
@@ -355,6 +356,7 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
 	err = posix_clock_register(&ptp->clock, &ptp->dev);
 	if (err) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		pr_err("failed to create posix clock\n");
 		goto no_clock;
 =======
@@ -371,14 +373,29 @@ struct ptp_clock *ptp_clock_register(struct ptp_clock_info *info,
 		pr_err("failed to create posix clock\n");
 		return ERR_PTR(err);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+	        if (ptp->pps_source)
+	                pps_unregister_source(ptp->pps_source);
+
+		if (ptp->kworker)
+	                kthread_destroy_worker(ptp->kworker);
+
+		put_device(&ptp->dev);
+
+		pr_err("failed to create posix clock\n");
+		return ERR_PTR(err);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	}
 
 	return ptp;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 no_clock:
 	if (ptp->pps_source)
 		pps_unregister_source(ptp->pps_source);
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 no_pps:
 	ptp_cleanup_pin_groups(ptp);
 no_pin_groups:
@@ -439,9 +456,12 @@ int ptp_clock_unregister(struct ptp_clock *ptp)
 	ptp->defunct = 1;
 	wake_up_interruptible(&ptp->tsev_wq);
 
+<<<<<<< HEAD
 	kfree(ptp->vclock_index);
 
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	if (ptp->kworker) {
 		kthread_cancel_delayed_work_sync(&ptp->aux_work);
 		kthread_destroy_worker(ptp->kworker);

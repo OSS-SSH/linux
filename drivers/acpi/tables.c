@@ -21,6 +21,7 @@
 #include <linux/earlycpio.h>
 #include <linux/initrd.h>
 #include <linux/security.h>
+#include <linux/kmemleak.h>
 #include "internal.h"
 
 #ifdef CONFIG_ACPI_CUSTOM_DSDT
@@ -617,6 +618,8 @@ void __init acpi_table_upgrade(void)
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	arch_reserve_mem_area(acpi_tables_addr, all_tables_size);
+
+	kmemleak_ignore_phys(acpi_tables_addr);
 
 	/*
 	 * early_ioremap only can remap 256k one time. If we map all

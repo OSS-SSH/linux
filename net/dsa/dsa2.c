@@ -1661,6 +1661,7 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 	for_each_available_child_of_node(ports, port) {
 		err = of_property_read_u32(port, "reg", &reg);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (err)
 			goto out_put_node;
 =======
@@ -1669,14 +1670,24 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 			goto out_put_node;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (err) {
+			of_node_put(port);
+			goto out_put_node;
+		}
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 
 		if (reg >= ds->num_ports) {
 			dev_err(ds->dev, "port %pOF index %u exceeds num_ports (%zu)\n",
 				port, reg, ds->num_ports);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 			of_node_put(port);
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+			of_node_put(port);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 			err = -EINVAL;
 			goto out_put_node;
 		}
@@ -1685,6 +1696,7 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 
 		err = dsa_port_parse_of(dp, port);
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if (err)
 			goto out_put_node;
 =======
@@ -1693,6 +1705,12 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 			goto out_put_node;
 		}
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
+=======
+		if (err) {
+			of_node_put(port);
+			goto out_put_node;
+		}
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	}
 
 out_put_node:

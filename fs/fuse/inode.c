@@ -481,14 +481,6 @@ static void fuse_send_destroy(struct fuse_mount *fm)
 	}
 }
 
-static void fuse_put_super(struct super_block *sb)
-{
-	struct fuse_mount *fm = get_fuse_mount_super(sb);
-
-	fuse_conn_put(fm->fc);
-	kfree(fm);
-}
-
 static void convert_fuse_statfs(struct kstatfs *stbuf, struct fuse_kstatfs *attr)
 {
 	stbuf->f_type    = FUSE_SUPER_MAGIC;
@@ -1168,7 +1160,6 @@ static const struct super_operations fuse_super_operations = {
 	.evict_inode	= fuse_evict_inode,
 	.write_inode	= fuse_write_inode,
 	.drop_inode	= generic_delete_inode,
-	.put_super	= fuse_put_super,
 	.umount_begin	= fuse_umount_begin,
 	.statfs		= fuse_statfs,
 	.sync_fs	= fuse_sync_fs,
@@ -1589,20 +1580,17 @@ static int fuse_get_tree_submount(struct fs_context *fsc)
 	if (!fm)
 		return -ENOMEM;
 
+	fm->fc = fuse_conn_get(fc);
 	fsc->s_fs_info = fm;
 	sb = sget_fc(fsc, NULL, set_anon_super_fc);
-	if (IS_ERR(sb)) {
-		kfree(fm);
+	if (fsc->s_fs_info)
+		fuse_mount_destroy(fm);
+	if (IS_ERR(sb))
 		return PTR_ERR(sb);
-	}
-	fm->fc = fuse_conn_get(fc);
 
 	/* Initialize superblock, making @mp_fi its root */
 	err = fuse_fill_super_submount(sb, mp_fi);
 	if (err) {
-		fuse_conn_put(fc);
-		kfree(fm);
-		sb->s_fs_info = NULL;
 		deactivate_locked_super(sb);
 		return err;
 	}
@@ -1748,8 +1736,6 @@ static int fuse_fill_super(struct super_block *sb, struct fs_context *fsc)
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	int err;
-	struct fuse_conn *fc;
-	struct fuse_mount *fm;
 
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1774,12 +1760,15 @@ static int fuse_fill_super(struct super_block *sb, struct fs_context *fsc)
 	 */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	err = -EINVAL;
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	if ((ctx->file->f_op != &fuse_dev_operations) ||
 	    (ctx->file->f_cred->user_ns != sb->s_user_ns))
-		goto err;
+		return -EINVAL;
 	ctx->fudptr = &ctx->file->private_data;
 <<<<<<< HEAD
 =======
@@ -1791,6 +1780,7 @@ static int fuse_fill_super(struct super_block *sb, struct fs_context *fsc)
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 
+<<<<<<< HEAD
 	fc = kmalloc(sizeof(*fc), GFP_KERNEL);
 	err = -ENOMEM;
 	if (!fc)
@@ -1828,6 +1818,11 @@ static int fuse_fill_super(struct super_block *sb, struct fs_context *fsc)
 		goto err_put_conn;
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+	err = fuse_fill_super_common(sb, ctx);
+	if (err)
+		return err;
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	/* file->private_data shall be visible on all CPUs after this */
 	smp_mb();
 =======
@@ -1844,6 +1839,7 @@ static int fuse_fill_super(struct super_block *sb, struct fs_context *fsc)
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	fuse_send_init(get_fuse_mount_super(sb));
 	return 0;
+<<<<<<< HEAD
 
  err_put_conn:
 	fuse_conn_put(fc);
@@ -1859,6 +1855,8 @@ static int fuse_fill_super(struct super_block *sb, struct fs_context *fsc)
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
  err:
 	return err;
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 }
 
 <<<<<<< HEAD
@@ -1942,22 +1940,40 @@ static int fuse_get_tree(struct fs_context *fsc)
 {
 	struct fuse_fs_context *ctx = fsc->fs_private;
 	struct fuse_dev *fud;
+	struct fuse_conn *fc;
+	struct fuse_mount *fm;
 	struct super_block *sb;
 	int err;
+
+	fc = kmalloc(sizeof(*fc), GFP_KERNEL);
+	if (!fc)
+		return -ENOMEM;
+
+	fm = kzalloc(sizeof(*fm), GFP_KERNEL);
+	if (!fm) {
+		kfree(fc);
+		return -ENOMEM;
+	}
+
+	fuse_conn_init(fc, fm, fsc->user_ns, &fuse_dev_fiq_ops, NULL);
+	fc->release = fuse_free_conn;
+
+	fsc->s_fs_info = fm;
 
 	if (ctx->fd_present)
 		ctx->file = fget(ctx->fd);
 
 	if (IS_ENABLED(CONFIG_BLOCK) && ctx->is_bdev) {
 		err = get_tree_bdev(fsc, fuse_fill_super);
-		goto out_fput;
+		goto out;
 	}
 	/*
 	 * While block dev mount can be initialized with a dummy device fd
 	 * (found by device name), normal fuse mounts can't
 	 */
+	err = -EINVAL;
 	if (!ctx->file)
-		return -EINVAL;
+		goto out;
 
 	/*
 	 * Allow creating a fuse mount with an already initialized fuse
@@ -1973,7 +1989,9 @@ static int fuse_get_tree(struct fs_context *fsc)
 	} else {
 		err = get_tree_nodev(fsc, fuse_fill_super);
 	}
-out_fput:
+out:
+	if (fsc->s_fs_info)
+		fuse_mount_destroy(fm);
 	if (ctx->file)
 		fput(ctx->file);
 	return err;
@@ -2083,17 +2101,25 @@ static void fuse_sb_destroy(struct super_block *sb)
 	struct fuse_mount *fm = get_fuse_mount_super(sb);
 	bool last;
 
-	if (fm) {
+	if (sb->s_root) {
 		last = fuse_mount_remove(fm);
 		if (last)
 			fuse_conn_destroy(fm);
 	}
 }
 
+void fuse_mount_destroy(struct fuse_mount *fm)
+{
+	fuse_conn_put(fm->fc);
+	kfree(fm);
+}
+EXPORT_SYMBOL(fuse_mount_destroy);
+
 static void fuse_kill_sb_anon(struct super_block *sb)
 {
 	fuse_sb_destroy(sb);
 	kill_anon_super(sb);
+	fuse_mount_destroy(get_fuse_mount_super(sb));
 }
 
 static struct file_system_type fuse_fs_type = {
@@ -2111,6 +2137,7 @@ static void fuse_kill_sb_blk(struct super_block *sb)
 {
 	fuse_sb_destroy(sb);
 	kill_block_super(sb);
+	fuse_mount_destroy(get_fuse_mount_super(sb));
 }
 
 static struct file_system_type fuseblk_fs_type = {

@@ -508,6 +508,10 @@ out_put:
 	put_device(pdev);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+	return ERR_PTR(err);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 out_put_disk:
 	put_disk(disk);
 =======

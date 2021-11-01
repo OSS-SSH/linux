@@ -20,12 +20,15 @@
 #include <linux/sched/signal.h>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <linux/refcount.h>
 =======
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======
 #include <linux/refcount.h>
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 
 #include <uapi/linux/magic.h>
 
@@ -50,6 +53,7 @@ MODULE_PARM_DESC(secretmem_enable,
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 static refcount_t secretmem_users;
 
 bool secretmem_active(void)
@@ -69,6 +73,13 @@ bool secretmem_active(void)
 {
 	return !!refcount_read(&secretmem_users);
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+static atomic_t secretmem_users;
+
+bool secretmem_active(void)
+{
+	return !!atomic_read(&secretmem_users);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 }
 
 static vm_fault_t secretmem_fault(struct vm_fault *vmf)
@@ -129,6 +140,7 @@ static int secretmem_release(struct inode *inode, struct file *file)
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refcount_dec(&secretmem_users);
 =======
 	atomic_dec(&secretmem_users);
@@ -136,6 +148,9 @@ static int secretmem_release(struct inode *inode, struct file *file)
 =======
 	refcount_dec(&secretmem_users);
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	atomic_dec(&secretmem_users);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	return 0;
 }
 
@@ -242,6 +257,8 @@ SYSCALL_DEFINE1(memfd_secret, unsigned int, flags)
 
 	if (flags & ~(SECRETMEM_FLAGS_MASK | O_CLOEXEC))
 		return -EINVAL;
+	if (atomic_read(&secretmem_users) < 0)
+		return -ENFILE;
 
 	fd = get_unused_fd_flags(flags & O_CLOEXEC);
 	if (fd < 0)
@@ -258,6 +275,7 @@ SYSCALL_DEFINE1(memfd_secret, unsigned int, flags)
 	fd_install(fd, file);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	refcount_inc(&secretmem_users);
 =======
 	atomic_inc(&secretmem_users);
@@ -265,6 +283,9 @@ SYSCALL_DEFINE1(memfd_secret, unsigned int, flags)
 =======
 	refcount_inc(&secretmem_users);
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	atomic_inc(&secretmem_users);
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	return fd;
 
 err_put_fd:

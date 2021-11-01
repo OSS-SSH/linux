@@ -2339,6 +2339,7 @@ EXPORT_SYMBOL_GPL(kvm_apic_update_apicv);
 void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
 {
 	struct kvm_lapic *apic = vcpu->arch.apic;
+	u64 msr_val;
 	int i;
 
 <<<<<<< HEAD
@@ -2346,10 +2347,10 @@ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
 	if (!init_event) {
-		vcpu->arch.apic_base = APIC_DEFAULT_PHYS_BASE |
-				       MSR_IA32_APICBASE_ENABLE;
+		msr_val = APIC_DEFAULT_PHYS_BASE | MSR_IA32_APICBASE_ENABLE;
 		if (kvm_vcpu_is_reset_bsp(vcpu))
-			vcpu->arch.apic_base |= MSR_IA32_APICBASE_BSP;
+			msr_val |= MSR_IA32_APICBASE_BSP;
+		kvm_lapic_set_base(vcpu, msr_val);
 	}
 
 <<<<<<< HEAD
@@ -2363,6 +2364,7 @@ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
 	/* Stop the timer in case it's a reset to an active apic */
 	hrtimer_cancel(&apic->lapic_timer.timer);
 
+<<<<<<< HEAD
 	if (!init_event) {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2376,8 +2378,11 @@ void kvm_lapic_reset(struct kvm_vcpu *vcpu, bool init_event)
 		apic->base_address = APIC_DEFAULT_PHYS_BASE;
 
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	/* The xAPIC ID is set at RESET even if the APIC was already enabled. */
+	if (!init_event)
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 		kvm_apic_set_xapic_id(apic, vcpu->vcpu_id);
-	}
 	kvm_apic_set_version(apic->vcpu);
 
 	for (i = 0; i < KVM_APIC_LVT_NUM; i++)
@@ -2530,6 +2535,7 @@ int kvm_create_lapic(struct kvm_vcpu *vcpu, int timer_advance_ns)
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 	/*
 	 * APIC is created enabled. This will prevent kvm_lapic_set_base from
@@ -2539,6 +2545,13 @@ int kvm_create_lapic(struct kvm_vcpu *vcpu, int timer_advance_ns)
 >>>>>>> d5cf6b5674f37a44bbece21e8ef09dbcf9515554
 =======
 >>>>>>> a8fa06cfb065a2e9663fe7ce32162762b5fcef5b
+=======
+	/*
+	 * Stuff the APIC ENABLE bit in lieu of temporarily incrementing
+	 * apic_hw_disabled; the full RESET value is set by kvm_lapic_reset().
+	 */
+	vcpu->arch.apic_base = MSR_IA32_APICBASE_ENABLE;
+>>>>>>> 46d7e6997a768a578d08ddf53f65e779dd1b1776
 	static_branch_inc(&apic_sw_disabled.key); /* sw disabled at reset */
 	kvm_iodevice_init(&apic->dev, &apic_mmio_ops);
 
@@ -3000,5 +3013,7 @@ int kvm_apic_accept_events(struct kvm_vcpu *vcpu)
 void kvm_lapic_exit(void)
 {
 	static_key_deferred_flush(&apic_hw_disabled);
+	WARN_ON(static_branch_unlikely(&apic_hw_disabled.key));
 	static_key_deferred_flush(&apic_sw_disabled);
+	WARN_ON(static_branch_unlikely(&apic_sw_disabled.key));
 }
