@@ -1220,15 +1220,12 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 
 	for_each_available_child_of_node(ports, port) {
 		err = of_property_read_u32(port, "reg", &reg);
-		if (err) {
-			of_node_put(port);
+		if (err)
 			goto out_put_node;
-		}
 
 		if (reg >= ds->num_ports) {
 			dev_err(ds->dev, "port %pOF index %u exceeds num_ports (%zu)\n",
 				port, reg, ds->num_ports);
-			of_node_put(port);
 			err = -EINVAL;
 			goto out_put_node;
 		}
@@ -1236,10 +1233,8 @@ static int dsa_switch_parse_ports_of(struct dsa_switch *ds,
 		dp = dsa_to_port(ds, reg);
 
 		err = dsa_port_parse_of(dp, port);
-		if (err) {
-			of_node_put(port);
+		if (err)
 			goto out_put_node;
-		}
 	}
 
 out_put_node:
